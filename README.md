@@ -1,23 +1,13 @@
-IntelliJ IDEA SBT plugin
-========================
+SBT plugin to generate xml project structure
+============================================
 
-SBT support in IntelliJ IDEA.
+It have to commands:
+read-project: Just returns xml of project structure
+read-project-and-repository: Returns xml of project structure, additionally downloads all required dependencies
 
-Currently the plugin is in an alpha stage.
+To publish xml to file, use artifactPath setting.
 
-[More info & Nightly builds](http://blog.jetbrains.com/scala/2013/07/17/sbt-plugin-nightly-builds/)
+Plugin usage
+-----
 
-Features
---------
-
-* SBT project import (via "Open" or "Import project")
-* Auto-import on project changes
-* .sbt files support
-
-
-TODO
-----
-
-* Console
-* Command tool window
-* SBT project make
+Generally this plugin will be used by IntelliJ IDEA SBT plugin. However it's possible to use it by any IDE.
