@@ -33,6 +33,14 @@ object Extractor {
     ScalaData(provider.version, libraryJar, provider.compilerJar, extraJars.toSeq, Seq.empty)
   }
 
+  private def mapProjectDependencies[T](project: ResolvedProject, state: State, structure: BuildStructure)
+                                       (map: ProjectData => T): Seq[T] = {
+    project.dependencies.flatMap {
+      case ResolvedClasspathDependency(projectRef, conf) => Seq(map(extractProject(state, structure, projectRef)))
+      case _ => Seq.empty
+    }
+  }
+
   def extractProject(state: State, structure: BuildStructure, projectRef: ProjectRef): ProjectData = {
     val name = Keys.name.in(projectRef, Compile).get(structure.data).get
 
@@ -79,7 +87,8 @@ object Extractor {
 
     val project = Project.getProject(projectRef, structure).get
 
-    val projects = project.aggregate.map(extractProject(state, structure, _))
+    val projects = project.aggregate.map(extractProject(state, structure, _)) ++
+      mapProjectDependencies(project, state, structure)(identity)
 
     ProjectData(name, organization, version, base, build, configurations, java, scala, projects)
   }
@@ -101,7 +110,7 @@ object Extractor {
       moduleIDs.map(it => ModuleIdentifier(it.organization, it.name, it.revision))
     }
 
-    val projectDependencies = Project.getProject(projectRef, structure).get.dependencies.map(it => it.project.project)
+    val projectDependencies = mapProjectDependencies(Project.getProject(projectRef, structure).get, state, structure)(_.name)
 
     val jarDependencies: Seq[File] = {
       val classpath: Option[Classpath] = Project.runTask(unmanagedJars.in(projectRef, configuration), state) collect {
