@@ -10,7 +10,7 @@ object Loader {
   private val JavaVM = path(new File(new File(new File(System.getProperty("java.home")), "bin"), "java"))
   private val SbtLauncher = path(new File("sbt-launch.jar"))
   private val SbtVersion = "0.12.4"
-  private val SbtPlugin = path(new File("target/scala-2.10/sbt-0.13/classes/"))
+  private val SbtPlugin = path(new File("target/scala-2.9.2/sbt-0.12/classes/"))
 
   def load(project: File, download: Boolean): Seq[String] = {
     val structureFile = createTempFile("sbt-structure", ".xml")
@@ -24,7 +24,7 @@ object Loader {
 
     val commands = Seq(JavaVM,
 //      "-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=5005",
-      s"-Dsbt.version=$SbtVersion",
+      "-Dsbt.version=" + SbtVersion,
       "-jar", SbtLauncher,
       "< " + path(commandsFile))
 
