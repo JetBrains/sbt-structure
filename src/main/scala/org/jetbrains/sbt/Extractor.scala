@@ -5,7 +5,6 @@ import sbt._
 import sbt.BuildStructure
 import sbt.Value
 import Utilities._
-import scala.collection.mutable
 
 /**
  * @author Pavel Fatin
@@ -16,14 +15,16 @@ object Extractor {
 
     val scalaData = extractScala(state)
 
-    val projectData = extractProject(state, structure, Project.current(state))(mutable.HashMap.empty, mutable.HashSet.empty)
+    val allProjectRefs = structure.allProjectRefs
+
+    val projectsData = allProjectRefs.map(extractProject(state, structure, _))
 
     val repositoryData = download.option {
-      val modulesData = structure.allProjectRefs.flatMap(extractModules(state, _)).distinctBy(_.id)
+      val modulesData = allProjectRefs.flatMap(extractModules(state, _)).distinctBy(_.id)
       RepositoryData(modulesData)
     }
 
-    StructureData(scalaData, projectData, repositoryData)
+    StructureData(scalaData, projectsData.sortBy(_.base), repositoryData)
   }
 
   def extractScala(state: State): ScalaData = {
@@ -34,32 +35,7 @@ object Extractor {
     ScalaData(provider.version, libraryJar, provider.compilerJar, extraJars.toSeq, Seq.empty)
   }
 
-  private def mapProjectDependencies[T](project: ResolvedProject, state: State, structure: BuildStructure)
-                                       (map: ProjectData => T)
-                                       (implicit extractedMap: mutable.HashMap[ProjectRef, ProjectData],
-                                                 writtenProjects: mutable.HashSet[String]): Seq[T] = {
-    project.dependencies.flatMap {
-      case ResolvedClasspathDependency(projectRef, conf) => Seq(map(extractProject(state, structure, projectRef)))
-      case _ => Seq.empty
-    }
-  }
-
-  private def filterExistingProjects(projects: Seq[ProjectData])
-                                    (implicit writtenProjects: mutable.HashSet[String]): Seq[ProjectData] = {
-    projects.flatMap {
-      case project if !writtenProjects.contains(project.name) => Seq(project)
-      case _ => Seq.empty
-    }
-  }
-
-  def extractProject(state: State, structure: BuildStructure, projectRef: ProjectRef)
-                    (implicit extractedMap: mutable.HashMap[ProjectRef, ProjectData],
-                              writtenProjects: mutable.HashSet[String]): ProjectData = {
-    extractedMap.get(projectRef) match {
-      case Some(data) => return data
-      case _ =>
-    }
-
+  def extractProject(state: State, structure: BuildStructure, projectRef: ProjectRef): ProjectData = {
     val name = Keys.name.in(projectRef, Compile).get(structure.data).get
 
     val organization = Keys.organization.in(projectRef, Compile).get(structure.data).get
@@ -103,20 +79,15 @@ object Extractor {
       BuildData(classpath, unit.imports)
     }
 
-    val project = Project.getProject(projectRef, structure).get
+    val dependencies = {
+      val project = Project.getProject(projectRef, structure).get
+      project.dependencies.map(_.project.project)
+    }
 
-    val projects = filterExistingProjects(project.aggregate.map(extractProject(state, structure, _)) ++
-      mapProjectDependencies(project, state, structure)(identity))
-
-    val data = ProjectData(name, organization, version, base, build, configurations, java, scala, projects)
-    extractedMap += ((projectRef, data))
-    writtenProjects ++= projects.map(_.name)
-    data
+    ProjectData(name, organization, version, base, build, dependencies, configurations, java, scala)
   }
 
-  def extractConfiguration(state: State, structure: BuildStructure, projectRef: ProjectRef, configuration: Configuration)
-                          (implicit extractedMap: mutable.HashMap[ProjectRef, ProjectData],
-                                    writtenProjects: mutable.HashSet[String]): ConfigurationData = {
+  def extractConfiguration(state: State, structure: BuildStructure, projectRef: ProjectRef, configuration: Configuration): ConfigurationData = {
     val sources = Keys.sourceDirectories.in(projectRef, configuration).get(structure.data).get
 
     val resources = Keys.resourceDirectories.in(projectRef, configuration).get(structure.data).get
@@ -133,8 +104,6 @@ object Extractor {
       moduleIDs.map(it => ModuleIdentifier(it.organization, it.name, it.revision))
     }
 
-    val projectDependencies = mapProjectDependencies(Project.getProject(projectRef, structure).get, state, structure)(_.name)
-
     val jarDependencies: Seq[File] = {
       val classpath: Option[Classpath] = Project.runTask(unmanagedJars.in(projectRef, configuration), state) collect {
         case (_, Value(it)) => it
@@ -142,7 +111,7 @@ object Extractor {
       classpath.get.map(_.data)
     }
 
-    ConfigurationData(configuration.name, sources, resources, output, projectDependencies, moduleDependencies, jarDependencies)
+    ConfigurationData(configuration.name, sources, resources, output, moduleDependencies, jarDependencies)
   }
 
   def extractModules(state: State, projectRef: ProjectRef): Seq[ModuleData] = {

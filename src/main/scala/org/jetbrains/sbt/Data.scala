@@ -37,18 +37,18 @@ object FS {
   def toPath(file: File) = file.getAbsolutePath.replace('\\', '/')
 }
 
-case class StructureData(scala: ScalaData, project: ProjectData, repository: Option[RepositoryData]) {
+case class StructureData(scala: ScalaData, projects: Seq[ProjectData], repository: Option[RepositoryData]) {
   def toXML(home: File): Elem = {
     val fs = new FS(home)
 
     <structure>
-      {project.toXML(fs.withBase(project.base))}
+      {projects.map(project => project.toXML(fs.withBase(project.base)))}
       {repository.map(_.toXML(fs)).toSeq}
     </structure>
   }
 }
 
-case class ProjectData(name: String, organization: String, version: String, base: File, build: BuildData, configurations: Seq[ConfigurationData], java: Option[JavaData], scala: Option[ScalaData], projects: Seq[ProjectData]) {
+case class ProjectData(name: String, organization: String, version: String, base: File, build: BuildData, dependencies: Seq[String], configurations: Seq[ConfigurationData], java: Option[JavaData], scala: Option[ScalaData]) {
   def toXML(implicit fs: FS): Elem = {
     <project>
       <name>{name}</name>
@@ -58,8 +58,10 @@ case class ProjectData(name: String, organization: String, version: String, base
       {build.toXML}
       {java.map(_.toXML).toSeq}
       {scala.map(_.toXML).toSeq}
+      {dependencies.map { dependency =>
+        <dependency>{dependency}</dependency>
+      }}
       {configurations.map(_.toXML)}
-      {projects.map(it => it.toXML(fs.withBase(it.base)))}
     </project>
   }
 }
@@ -77,7 +79,7 @@ case class BuildData(classpath: Seq[File], imports: Seq[String]) {
   }
 }
 
-case class ConfigurationData(id: String, sources: Seq[File], resources: Seq[File], classes: File, dependencies: Seq[String], modules: Seq[ModuleIdentifier], jars: Seq[File]) {
+case class ConfigurationData(id: String, sources: Seq[File], resources: Seq[File], classes: File, modules: Seq[ModuleIdentifier], jars: Seq[File]) {
   def toXML(implicit fs: FS): Elem = {
     <configuration id={id}>
       {sources.map { directory =>
@@ -87,9 +89,6 @@ case class ConfigurationData(id: String, sources: Seq[File], resources: Seq[File
         <resources>{directory.path}</resources>
       }}
       <classes>{classes.path}</classes>
-      {dependencies.map { dependency =>
-        <dependency>{dependency}</dependency>
-      }}
       {modules.map { module =>
         <module organization={module.organization} name={module.name} revision={module.revision}/>
        }}
