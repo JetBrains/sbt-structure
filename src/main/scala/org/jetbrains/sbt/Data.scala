@@ -79,14 +79,23 @@ case class BuildData(classpath: Seq[File], imports: Seq[String]) {
   }
 }
 
-case class ConfigurationData(id: String, sources: Seq[File], resources: Seq[File], classes: File, modules: Seq[ModuleIdentifier], jars: Seq[File]) {
+case class ConfigurationData(id: String, sources: Seq[DirectoryData], resources: Seq[DirectoryData], classes: File, modules: Seq[ModuleIdentifier], jars: Seq[File]) {
   def toXML(implicit fs: FS): Elem = {
+    val (managedSources, unmanagedSources) = sources.partition(_.managed)
+    val (managedResources, unmanagedResources) = resources.partition(_.managed)
+
     <configuration id={id}>
-      {sources.map { directory =>
-        <sources>{directory.path}</sources>
+      {unmanagedSources.map { directory =>
+        <sources>{directory.file.path}</sources>
+       }}
+      {managedSources.map { directory =>
+          <sources managed="true">{directory.file.path}</sources>
       }}
-      {resources.map { directory =>
-        <resources>{directory.path}</resources>
+      {unmanagedResources.map { directory =>
+        <resources>{directory.file.path}</resources>
+      }}
+      {managedResources.map { directory =>
+        <resources managed="true">{directory.file.path}</resources>
       }}
       <classes>{classes.path}</classes>
       {modules.map { module =>
@@ -98,6 +107,8 @@ case class ConfigurationData(id: String, sources: Seq[File], resources: Seq[File
     </configuration>
   }
 }
+
+case class DirectoryData(file: File, managed: Boolean)
 
 case class JavaData(home: File, options: Seq[String]) {
   def toXML(implicit fs: FS): Elem = {

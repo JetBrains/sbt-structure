@@ -59,9 +59,9 @@
     <configuration id="compile">
       <sources>src/main/scala</sources>
       <sources>src/main/java</sources>
-      <sources>target/scala-2.10/src_managed/main</sources>
+      <sources managed="true">target/scala-2.10/src_managed/main</sources>
       <resources>src/main/resources</resources>
-      <resources>target/scala-2.10/resource_managed/main</resources>
+      <resources managed="true">target/scala-2.10/resource_managed/main</resources>
       <classes>target/scala-2.10/classes</classes>
       <module organization="org.scala-lang" name="scala-library" revision="2.10.1"/>
       <jar>lib/unmanaged.jar</jar>
@@ -69,9 +69,9 @@
     <configuration id="test">
       <sources>src/test/scala</sources>
       <sources>src/test/java</sources>
-      <sources>target/scala-2.10/src_managed/test</sources>
+      <sources managed="true">target/scala-2.10/src_managed/test</sources>
       <resources>src/test/resources</resources>
-      <resources>target/scala-2.10/resource_managed/test</resources>
+      <resources managed="true">target/scala-2.10/resource_managed/test</resources>
       <classes>target/scala-2.10/test-classes</classes>
       <module organization="org.scala-lang" name="scala-library" revision="2.10.1"/>
       <module organization="junit" name="junit" revision="3.8.1"/>
@@ -80,9 +80,9 @@
     <configuration id="runtime">
       <sources>src/main/scala</sources>
       <sources>src/main/java</sources>
-      <sources>target/scala-2.10/src_managed/main</sources>
+      <sources managed="true">target/scala-2.10/src_managed/main</sources>
       <resources>src/main/resources</resources>
-      <resources>target/scala-2.10/resource_managed/main</resources>
+      <resources managed="true">target/scala-2.10/resource_managed/main</resources>
       <classes>target/scala-2.10/classes</classes>
       <module organization="org.scala-lang" name="scala-library" revision="2.10.1"/>
       <jar>lib/unmanaged.jar</jar>
