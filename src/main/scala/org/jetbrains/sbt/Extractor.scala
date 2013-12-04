@@ -1,9 +1,9 @@
 package org.jetbrains.sbt
 
-import sbt.Keys._
 import sbt._
-import sbt.Load.BuildStructure
+import sbt.Keys._
 import sbt.Value
+import sbt.Load.BuildStructure
 import Utilities._
 
 /**
