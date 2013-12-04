@@ -9,6 +9,7 @@ import scala.io.Source
 object Loader {
   private val JavaVM = path(new File(new File(new File(System.getProperty("java.home")), "bin"), "java"))
   private val SbtLauncher = path(new File("sbt-launch.jar"))
+  private val SbtVersion = "0.12.4"
   private val SbtPlugin = path(new File("target/scala-2.10/sbt-0.13/classes/"))
 
   def load(project: File, download: Boolean): Seq[String] = {
@@ -21,7 +22,7 @@ object Loader {
       "set artifactPath := file(\"" + path(structureFile) + "\")",
       "apply -cp " + SbtPlugin + " org.jetbrains.sbt." + className)
 
-    val commands = Seq(JavaVM, "-jar", SbtLauncher, "< " + path(commandsFile))
+    val commands = Seq(JavaVM, s"-Dsbt.version=$SbtVersion", "-jar", SbtLauncher, "< " + path(commandsFile))
 
     run(commands, project)
 
