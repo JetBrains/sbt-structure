@@ -58,27 +58,27 @@
     <configuration id="compile">
       <sources>src/main/scala</sources>
       <sources>src/main/java</sources>
-      <sources>target/scala-2.10/src_managed/main</sources>
+      <sources managed="true">target/scala-2.10/src_managed/main</sources>
       <resources>src/main/resources</resources>
-      <resources>target/scala-2.10/resource_managed/main</resources>
+      <resources managed="true">target/scala-2.10/resource_managed/main</resources>
       <classes>target/scala-2.10/classes</classes>
       <module revision="2.10.1" name="scala-library" organization="org.scala-lang"></module>
     </configuration>
     <configuration id="test">
       <sources>src/test/scala</sources>
       <sources>src/test/java</sources>
-      <sources>target/scala-2.10/src_managed/test</sources>
+      <sources managed="true">target/scala-2.10/src_managed/test</sources>
       <resources>src/test/resources</resources>
-      <resources>target/scala-2.10/resource_managed/test</resources>
+      <resources managed="true">target/scala-2.10/resource_managed/test</resources>
       <classes>target/scala-2.10/test-classes</classes>
       <module revision="2.10.1" name="scala-library" organization="org.scala-lang"></module>
     </configuration>
     <configuration id="runtime">
       <sources>src/main/scala</sources>
       <sources>src/main/java</sources>
-      <sources>target/scala-2.10/src_managed/main</sources>
+      <sources managed="true">target/scala-2.10/src_managed/main</sources>
       <resources>src/main/resources</resources>
-      <resources>target/scala-2.10/resource_managed/main</resources>
+      <resources managed="true">target/scala-2.10/resource_managed/main</resources>
       <classes>target/scala-2.10/classes</classes>
       <module revision="2.10.1" name="scala-library" organization="org.scala-lang"></module>
     </configuration>
@@ -142,27 +142,27 @@
     <configuration id="compile">
       <sources>src/main/scala</sources>
       <sources>src/main/java</sources>
-      <sources>target/scala-2.10/src_managed/main</sources>
+      <sources managed="true">target/scala-2.10/src_managed/main</sources>
       <resources>src/main/resources</resources>
-      <resources>target/scala-2.10/resource_managed/main</resources>
+      <resources managed="true">target/scala-2.10/resource_managed/main</resources>
       <classes>target/scala-2.10/classes</classes>
       <module revision="2.10.1" name="scala-library" organization="org.scala-lang"></module>
     </configuration>
     <configuration id="test">
       <sources>src/test/scala</sources>
       <sources>src/test/java</sources>
-      <sources>target/scala-2.10/src_managed/test</sources>
+      <sources managed="true">target/scala-2.10/src_managed/test</sources>
       <resources>src/test/resources</resources>
-      <resources>target/scala-2.10/resource_managed/test</resources>
+      <resources managed="true">target/scala-2.10/resource_managed/test</resources>
       <classes>target/scala-2.10/test-classes</classes>
       <module revision="2.10.1" name="scala-library" organization="org.scala-lang"></module>
     </configuration>
     <configuration id="runtime">
       <sources>src/main/scala</sources>
       <sources>src/main/java</sources>
-      <sources>target/scala-2.10/src_managed/main</sources>
+      <sources managed="true">target/scala-2.10/src_managed/main</sources>
       <resources>src/main/resources</resources>
-      <resources>target/scala-2.10/resource_managed/main</resources>
+      <resources managed="true">target/scala-2.10/resource_managed/main</resources>
       <classes>target/scala-2.10/classes</classes>
       <module revision="2.10.1" name="scala-library" organization="org.scala-lang"></module>
     </configuration>
@@ -225,27 +225,27 @@
     <configuration id="compile">
       <sources>src/main/scala</sources>
       <sources>src/main/java</sources>
-      <sources>target/scala-2.10/src_managed/main</sources>
+      <sources managed="true">target/scala-2.10/src_managed/main</sources>
       <resources>src/main/resources</resources>
-      <resources>target/scala-2.10/resource_managed/main</resources>
+      <resources managed="true">target/scala-2.10/resource_managed/main</resources>
       <classes>target/scala-2.10/classes</classes>
       <module revision="2.9.2" name="scala-library" organization="org.scala-lang"></module>
     </configuration>
     <configuration id="test">
       <sources>src/test/scala</sources>
       <sources>src/test/java</sources>
-      <sources>target/scala-2.10/src_managed/test</sources>
+      <sources managed="true">target/scala-2.10/src_managed/test</sources>
       <resources>src/test/resources</resources>
-      <resources>target/scala-2.10/resource_managed/test</resources>
+      <resources managed="true">target/scala-2.10/resource_managed/test</resources>
       <classes>target/scala-2.10/test-classes</classes>
       <module revision="2.9.2" name="scala-library" organization="org.scala-lang"></module>
     </configuration>
     <configuration id="runtime">
       <sources>src/main/scala</sources>
       <sources>src/main/java</sources>
-      <sources>target/scala-2.10/src_managed/main</sources>
+      <sources managed="true">target/scala-2.10/src_managed/main</sources>
       <resources>src/main/resources</resources>
-      <resources>target/scala-2.10/resource_managed/main</resources>
+      <resources managed="true">target/scala-2.10/resource_managed/main</resources>
       <classes>target/scala-2.10/classes</classes>
       <module revision="2.9.2" name="scala-library" organization="org.scala-lang"></module>
     </configuration>
