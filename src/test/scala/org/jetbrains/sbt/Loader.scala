@@ -22,7 +22,11 @@ object Loader {
       "set artifactPath := file(\"" + path(structureFile) + "\")",
       "apply -cp " + SbtPlugin + " org.jetbrains.sbt." + className)
 
-    val commands = Seq(JavaVM, s"-Dsbt.version=$SbtVersion", "-jar", SbtLauncher, "< " + path(commandsFile))
+    val commands = Seq(JavaVM,
+//      "-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=5005",
+      s"-Dsbt.version=$SbtVersion",
+      "-jar", SbtLauncher,
+      "< " + path(commandsFile))
 
     run(commands, project)
 
