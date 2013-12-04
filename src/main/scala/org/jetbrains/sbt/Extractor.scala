@@ -1,15 +1,17 @@
 package org.jetbrains.sbt
 
-import sbt.Keys._
 import sbt._
-import sbt.BuildStructure
+import sbt.Keys._
 import sbt.Value
+import sbt.BuildStructure
 import Utilities._
 
 /**
  * @author Pavel Fatin
  */
 object Extractor {
+  private val RelevantConfigurations = Seq(Compile, Test, Runtime)
+  
   def extractStructure(state: State, download: Boolean): StructureData = {
     val structure = Project.extract(state).structure
 
@@ -44,10 +46,7 @@ object Extractor {
 
     val base = Keys.baseDirectory.in(projectRef, Compile).get(structure.data).get
 
-    val configurations = Seq(
-      extractConfiguration(state, structure, projectRef, Compile),
-      extractConfiguration(state, structure, projectRef, Test),
-      extractConfiguration(state, structure, projectRef, Runtime))
+    val configurations = RelevantConfigurations.map(extractConfiguration(state, structure, projectRef, _))
 
     val java = {
       val home = Keys.javaHome.in(projectRef, Compile).get(structure.data).get
@@ -121,8 +120,13 @@ object Extractor {
       } getOrElse {
         throw new RuntimeException()
       }
-
-      updateReport.configurations.flatMap(_.modules).filter(_.artifacts.nonEmpty)
+      
+      val configurationReports = {
+        val relevantConfigurationNames = RelevantConfigurations.map(_.name).toSet
+        updateReport.configurations.filter(report => relevantConfigurationNames.contains(report.configuration))
+      }
+      
+      configurationReports.flatMap(_.modules).filter(_.artifacts.nonEmpty)
     }
 
     val moduleReports = run(update) ++ run(updateClassifiers) //++ run(updateSbtClassifiers)
