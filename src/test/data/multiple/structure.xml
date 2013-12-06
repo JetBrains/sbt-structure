@@ -1,5 +1,6 @@
 <structure>
   <project>
+    <id>root</id>
     <name>some-name</name>
     <organization>some-organization</organization>
     <version>1.2.3</version>
@@ -84,6 +85,7 @@
     </configuration>
   </project>
   <project>
+    <id>bar</id>
     <name>bar</name>
     <organization>bar</organization>
     <version>0.1-SNAPSHOT</version>
@@ -168,6 +170,7 @@
     </configuration>
   </project>
   <project>
+    <id>foo</id>
     <name>foo</name>
     <organization>foo</organization>
     <version>0.1-SNAPSHOT</version>

@@ -36,6 +36,8 @@ object Extractor {
   }
 
   def extractProject(state: State, structure: BuildStructure, projectRef: ProjectRef): ProjectData = {
+    val id = projectRef.project
+
     val name = Keys.name.in(projectRef, Compile).get(structure.data).get
 
     val organization = Keys.organization.in(projectRef, Compile).get(structure.data).get
@@ -84,7 +86,7 @@ object Extractor {
       project.dependencies.map(_.project.project)
     }
 
-    ProjectData(name, organization, version, base, build, dependencies, configurations, java, scala)
+    ProjectData(id, name, organization, version, base, build, dependencies, configurations, java, scala)
   }
 
   def extractConfiguration(state: State, structure: BuildStructure, projectRef: ProjectRef, configuration: Configuration): ConfigurationData = {
