@@ -48,9 +48,10 @@ case class StructureData(scala: ScalaData, projects: Seq[ProjectData], repositor
   }
 }
 
-case class ProjectData(name: String, organization: String, version: String, base: File, build: BuildData, dependencies: Seq[String], configurations: Seq[ConfigurationData], java: Option[JavaData], scala: Option[ScalaData]) {
+case class ProjectData(id: String, name: String, organization: String, version: String, base: File, build: BuildData, dependencies: Seq[String], configurations: Seq[ConfigurationData], java: Option[JavaData], scala: Option[ScalaData]) {
   def toXML(implicit fs: FS): Elem = {
     <project>
+      <id>{id}</id>
       <name>{name}</name>
       <organization>{organization}</organization>
       <version>{version}</version>

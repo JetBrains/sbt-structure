@@ -4,7 +4,7 @@ name := "sbt-structure"
 
 organization := "org.jetbrains"
 
-version := "1.0.2"
+version := "1.0.3"
 
 libraryDependencies += "org.scalatest" %% "scalatest" % "1.9.2" % "test"
 
