@@ -13,6 +13,8 @@ object Extractor {
   def extractStructure(state: State, download: Boolean): StructureData = {
     val structure = Project.extract(state).structure
 
+    val sbtVersion = Keys.sbtVersion.get(structure.data).get
+
     val scalaData = extractScala(state)
 
     val allProjectRefs = structure.allProjectRefs
@@ -24,7 +26,7 @@ object Extractor {
       RepositoryData(modulesData)
     }
 
-    StructureData(scalaData, projectsData.sortBy(_.base), repositoryData)
+    StructureData(sbtVersion, scalaData, projectsData.sortBy(_.base), repositoryData)
   }
 
   def extractScala(state: State): ScalaData = {

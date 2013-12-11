@@ -37,11 +37,11 @@ object FS {
   def toPath(file: File) = file.getAbsolutePath.replace('\\', '/')
 }
 
-case class StructureData(scala: ScalaData, projects: Seq[ProjectData], repository: Option[RepositoryData]) {
+case class StructureData(sbt: String, scala: ScalaData, projects: Seq[ProjectData], repository: Option[RepositoryData]) {
   def toXML(home: File): Elem = {
     val fs = new FS(home)
 
-    <structure>
+    <structure sbt={sbt}>
       {projects.map(project => project.toXML(fs.withBase(project.base)))}
       {repository.map(_.toXML(fs)).toSeq}
     </structure>

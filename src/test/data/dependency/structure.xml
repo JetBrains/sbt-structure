@@ -1,4 +1,4 @@
-<structure>
+<structure sbt="0.13.0">
   <project>
     <id>dependency</id>
     <name>some-name</name>
