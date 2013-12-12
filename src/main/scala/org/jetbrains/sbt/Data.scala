@@ -48,7 +48,7 @@ case class StructureData(sbt: String, scala: ScalaData, projects: Seq[ProjectDat
   }
 }
 
-case class ProjectData(id: String, name: String, organization: String, version: String, base: File, build: BuildData, dependencies: Seq[String], configurations: Seq[ConfigurationData], java: Option[JavaData], scala: Option[ScalaData]) {
+case class ProjectData(id: String, name: String, organization: String, version: String, base: File, build: BuildData, dependencies: Seq[String], configurations: Seq[ConfigurationData], java: JavaData, scala: Option[ScalaData]) {
   def toXML(implicit fs: FS): Elem = {
     <project>
       <id>{id}</id>
@@ -57,7 +57,7 @@ case class ProjectData(id: String, name: String, organization: String, version: 
       <version>{version}</version>
       <base>{base.absolutePath}</base>
       {build.toXML}
-      {java.map(_.toXML).toSeq}
+      {if (java.isEmpty) () else java.toXML}
       {scala.map(_.toXML).toSeq}
       {dependencies.map { dependency =>
         <dependency>{dependency}</dependency>
@@ -111,15 +111,19 @@ case class ConfigurationData(id: String, sources: Seq[DirectoryData], resources:
 
 case class DirectoryData(file: File, managed: Boolean)
 
-case class JavaData(home: File, options: Seq[String]) {
+case class JavaData(home: Option[File], options: Seq[String]) {
   def toXML(implicit fs: FS): Elem = {
     <java>
-      <home>{home.path}</home>
+      {home.toSeq.map { file =>
+        <home>{file.path}</home>
+      }}
       {options.map { option =>
         <option>{option}</option>
       }}
     </java>
   }
+
+  def isEmpty: Boolean = home.isEmpty && options.isEmpty
 }
 
 case class ScalaData(version: String, libraryJar: File, compilerJar: File, extraJars: Seq[File], options: Seq[String]) {

@@ -60,7 +60,7 @@ object Extractor {
         case _ => Seq.empty
       }
 
-      home.map(JavaData(_, options))
+      JavaData(home, options)
     }
 
     val scala: Option[ScalaData] = {
