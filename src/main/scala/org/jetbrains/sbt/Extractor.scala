@@ -60,7 +60,7 @@ object Extractor {
         case _ => Seq.empty
       }
 
-      JavaData(home, options)
+      if (home.isDefined || options.nonEmpty) Some(JavaData(home, options)) else None
     }
 
     val scala: Option[ScalaData] = {
