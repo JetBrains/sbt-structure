@@ -30,7 +30,7 @@ object Extractor {
       RepositoryData(modulesData)
     }
 
-    StructureData(sbtVersion, scalaData, projectsData.sortBy(_.base), repositoryData)
+    StructureData(sbtVersion, scalaData, projectsData, repositoryData)
   }
 
   def extractScala(state: State): ScalaData = {
