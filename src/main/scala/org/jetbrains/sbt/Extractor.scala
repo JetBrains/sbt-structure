@@ -10,8 +10,10 @@ import Utilities._
  * @author Pavel Fatin
  */
 object Extractor {
-  private val RelevantConfigurations = Seq(Compile, Test, Runtime)
-  
+  private val ExportableConfigurations = Seq(Compile, Test)
+  private val DependencyConfigurations = Seq(Compile, Test, Runtime, Provided)
+  private val DefaultConfigurations = Set(Compile, Test, Runtime)
+
   def extractStructure(state: State, download: Boolean): StructureData = {
     val structure = Project.extract(state).structure
 
@@ -50,7 +52,7 @@ object Extractor {
 
     val base = Keys.baseDirectory.in(projectRef, Compile).get(structure.data).get
 
-    val configurations = RelevantConfigurations.map(extractConfiguration(state, structure, projectRef, _))
+    val configurations = ExportableConfigurations.map(extractConfiguration(state, structure, projectRef, _))
 
     val java = {
       val home = Keys.javaHome.in(projectRef, Compile).get(structure.data).get
@@ -82,12 +84,9 @@ object Extractor {
       BuildData(classpath, unit.imports)
     }
 
-    val dependencies = {
-      val project = Project.getProject(projectRef, structure).get
-      project.dependencies.map(_.project.project)
-    }
+    val dependencies = extractDependencies(state, structure, projectRef)
 
-    ProjectData(id, name, organization, version, base, build, dependencies, configurations, java, scala)
+    ProjectData(id, name, organization, version, base, build, configurations, java, scala, dependencies)
   }
 
   def extractConfiguration(state: State, structure: BuildStructure, projectRef: ProjectRef, configuration: Configuration): ConfigurationData = {
@@ -105,26 +104,52 @@ object Extractor {
 
     val output = Keys.classDirectory.in(projectRef, configuration).get(structure.data).get
 
-    val moduleDependencies = {
-      val classpath: Option[Classpath] = Project.runTask(externalDependencyClasspath.in(projectRef, configuration), state) collect {
-        case (_, Value(it)) => it
-      }
-
-      val moduleIDs = classpath.get.flatMap(_.get(Keys.moduleID.key))
-
-      moduleIDs.map(it => ModuleIdentifier(it.organization, it.name, it.revision))
-    }
-
-    val jarDependencies: Seq[File] = {
-      val classpath: Option[Classpath] = Project.runTask(unmanagedJars.in(projectRef, configuration), state) collect {
-        case (_, Value(it)) => it
-      }
-      classpath.get.map(_.data)
-    }
-
-    ConfigurationData(configuration.name, sources, resources, output, moduleDependencies, jarDependencies)
+    ConfigurationData(configuration.name, sources, resources, output)
   }
 
+  def extractDependencies(state: State, structure: BuildStructure, projectRef: ProjectRef): DependencyData = {
+    val projectDependencies = {
+      val project = Project.getProject(projectRef, structure).get
+      project.dependencies.map(it => ProjectDependencyData(it.project.project, it.configuration))
+    }
+
+    val moduleDependencies = moduleDependenciesIn(state, projectRef)
+
+    val jarDependencies: Seq[File] = {
+      val classpath: Option[Classpath] = Project.runTask(unmanagedJars.in(projectRef), state) collect {
+        case (_, Value(it)) => it
+      }
+      classpath.map(_.map(_.data)).getOrElse(Seq.empty)
+    }
+
+    DependencyData(projectDependencies, moduleDependencies, jarDependencies)
+  }
+
+  def moduleDependenciesIn(state: State, projectRef: ProjectRef): Seq[ModuleDependencyData] = {
+    def modulesIn(configuration: Configuration): Seq[ModuleID] = {
+      Project.runTask(externalDependencyClasspath.in(projectRef, configuration), state) match {
+        case Some((_, Value(it))) => it.flatMap(_.get(Keys.moduleID.key))
+        case _ => Seq.empty
+      }
+    }
+
+    val moduleToConfigurations = DependencyConfigurations
+      .flatMap(configuration => modulesIn(configuration).map(module => (module, configuration)))
+      .groupBy(_._1)
+      .mapValues(_.unzip._2)
+      .toSeq
+
+    moduleToConfigurations.map { case (moduleId, configurations) =>
+      val identifier = ModuleIdentifier(moduleId.organization, moduleId.name, moduleId.revision)
+
+      val scope =
+        if (configurations.isEmpty || DefaultConfigurations == configurations.toSet) None
+        else Some(configurations.mkString(";"))
+
+      ModuleDependencyData(identifier, scope)
+    }
+  }
+  
   def extractModules(state: State, projectRef: ProjectRef): Seq[ModuleData] = {
     def run(task: TaskKey[UpdateReport]): Seq[ModuleReport] = {
       val updateReport: UpdateReport = Project.runTask(task.in(projectRef), state) collect {
@@ -134,7 +159,7 @@ object Extractor {
       }
 
       val configurationReports = {
-        val relevantConfigurationNames = RelevantConfigurations.map(_.name).toSet
+        val relevantConfigurationNames = DependencyConfigurations.map(_.name).toSet
         updateReport.configurations.filter(report => relevantConfigurationNames.contains(report.configuration))
       }
       

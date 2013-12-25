@@ -1,7 +1,7 @@
 package org.jetbrains.sbt
 
 import java.io.File
-import scala.xml.Elem
+import scala.xml.{Text, Elem}
 import FS._
 
 /**
@@ -48,7 +48,7 @@ case class StructureData(sbt: String, scala: ScalaData, projects: Seq[ProjectDat
   }
 }
 
-case class ProjectData(id: String, name: String, organization: String, version: String, base: File, build: BuildData, dependencies: Seq[String], configurations: Seq[ConfigurationData], java: Option[JavaData], scala: Option[ScalaData]) {
+case class ProjectData(id: String, name: String, organization: String, version: String, base: File, build: BuildData, configurations: Seq[ConfigurationData], java: Option[JavaData], scala: Option[ScalaData], dependencies: DependencyData) {
   def toXML(implicit fs: FS): Elem = {
     <project>
       <id>{id}</id>
@@ -59,10 +59,8 @@ case class ProjectData(id: String, name: String, organization: String, version: 
       {build.toXML}
       {java.map(_.toXML).toSeq}
       {scala.map(_.toXML).toSeq}
-      {dependencies.map { dependency =>
-        <dependency>{dependency}</dependency>
-      }}
       {configurations.map(_.toXML)}
+      {dependencies.toXML}
     </project>
   }
 }
@@ -80,7 +78,7 @@ case class BuildData(classpath: Seq[File], imports: Seq[String]) {
   }
 }
 
-case class ConfigurationData(id: String, sources: Seq[DirectoryData], resources: Seq[DirectoryData], classes: File, modules: Seq[ModuleIdentifier], jars: Seq[File]) {
+case class ConfigurationData(id: String, sources: Seq[DirectoryData], resources: Seq[DirectoryData], classes: File) {
   def toXML(implicit fs: FS): Elem = {
     val (managedSources, unmanagedSources) = sources.partition(_.managed)
     val (managedResources, unmanagedResources) = resources.partition(_.managed)
@@ -99,12 +97,6 @@ case class ConfigurationData(id: String, sources: Seq[DirectoryData], resources:
         <resources managed="true">{directory.file.path}</resources>
       }}
       <classes>{classes.path}</classes>
-      {modules.map { module =>
-        <module organization={module.organization} name={module.name} revision={module.revision}/>
-       }}
-      {jars.map { jar =>
-        <jar>{jar.path}</jar>
-      }}
     </configuration>
   }
 }
@@ -137,6 +129,24 @@ case class ScalaData(version: String, libraryJar: File, compilerJar: File, extra
         <option>{option}</option>
       }}
     </scala>
+  }
+}
+
+case class DependencyData(projects: Seq[ProjectDependencyData], modules: Seq[ModuleDependencyData], jars: Seq[File]) {
+  def toXML(implicit fs: FS): Seq[Elem] = {
+    projects.map(_.toXML) ++ modules.map(_.toXML) ++ jars.map(file => <jar>{file.path}</jar>)
+  }
+}
+
+case class ProjectDependencyData(project: String, configuration: Option[String]) {
+  def toXML: Elem = {
+    <project configurations={configuration.map(Text(_))}>{project}</project>
+  }
+}
+
+case class ModuleDependencyData(id: ModuleIdentifier, configurations: Option[String]) {
+  def toXML: Elem = {
+    <module organization={id.organization} name={id.name} revision={id.revision} configurations={configurations.map(Text(_))}/>
   }
 }
 
