@@ -42,7 +42,7 @@ case class StructureData(sbt: String, scala: ScalaData, projects: Seq[ProjectDat
     val fs = new FS(home)
 
     <structure sbt={sbt}>
-      {projects.map(project => project.toXML(fs.withBase(project.base)))}
+      {projects.sortBy(_.base).map(project => project.toXML(fs.withBase(project.base)))}
       {repository.map(_.toXML(fs)).toSeq}
     </structure>
   }
@@ -59,7 +59,7 @@ case class ProjectData(id: String, name: String, organization: String, version: 
       {build.toXML}
       {java.map(_.toXML).toSeq}
       {scala.map(_.toXML).toSeq}
-      {configurations.map(_.toXML)}
+      {configurations.sortBy(_.id).map(_.toXML)}
       {dependencies.toXML}
     </project>
   }
@@ -68,7 +68,7 @@ case class ProjectData(id: String, name: String, organization: String, version: 
 case class BuildData(classpath: Seq[File], imports: Seq[String]) {
   def toXML(implicit fs: FS): Elem = {
     <build>
-      {classpath.map(_.path).filter(_.startsWith(FS.Home)).map { it =>
+      {classpath.map(_.path).filter(_.startsWith(FS.Home)).sorted.map { it =>
         <classes>{it}</classes>
       }}
       {imports.map { it =>
@@ -80,25 +80,18 @@ case class BuildData(classpath: Seq[File], imports: Seq[String]) {
 
 case class ConfigurationData(id: String, sources: Seq[DirectoryData], resources: Seq[DirectoryData], classes: File) {
   def toXML(implicit fs: FS): Elem = {
-    val (managedSources, unmanagedSources) = sources.partition(_.managed)
-    val (managedResources, unmanagedResources) = resources.partition(_.managed)
-
     <configuration id={id}>
-      {unmanagedSources.map { directory =>
-        <sources>{directory.file.path}</sources>
-       }}
-      {managedSources.map { directory =>
-          <sources managed="true">{directory.file.path}</sources>
+      {sources.sortBy(it => (it.managed, it.file)).map { directory =>
+          <sources managed={format(directory.managed)}>{directory.file.path}</sources>
       }}
-      {unmanagedResources.map { directory =>
-        <resources>{directory.file.path}</resources>
-      }}
-      {managedResources.map { directory =>
-        <resources managed="true">{directory.file.path}</resources>
+      {resources.sortBy(it => (it.managed, it.file)).map { directory =>
+        <resources managed={format(directory.managed)}>{directory.file.path}</resources>
       }}
       <classes>{classes.path}</classes>
     </configuration>
   }
+
+  private def format(b: Boolean) = if (b) Some(Text("true")) else None
 }
 
 case class DirectoryData(file: File, managed: Boolean)
@@ -134,7 +127,9 @@ case class ScalaData(version: String, libraryJar: File, compilerJar: File, extra
 
 case class DependencyData(projects: Seq[ProjectDependencyData], modules: Seq[ModuleDependencyData], jars: Seq[File]) {
   def toXML(implicit fs: FS): Seq[Elem] = {
-    projects.map(_.toXML) ++ modules.map(_.toXML) ++ jars.map(file => <jar>{file.path}</jar>)
+    projects.sortBy(_.project).map(_.toXML) ++
+      modules.sortBy(_.id.key).map(_.toXML) ++
+      jars.sorted.map(file => <jar>{file.path}</jar>)
   }
 }
 
@@ -154,6 +149,8 @@ case class ModuleIdentifier(organization: String, name: String, revision: String
   def toXML: Elem = {
     <module organization={organization} name={name} revision={revision}/>
   }
+
+  def key: Iterable[String] = productIterator.toIterable.asInstanceOf[Iterable[String]]
 }
 
 case class ModuleData(id: ModuleIdentifier, binaries: Seq[File], docs: Seq[File], sources: Seq[File]) {
@@ -170,7 +167,7 @@ case class ModuleData(id: ModuleIdentifier, binaries: Seq[File], docs: Seq[File]
 case class RepositoryData(modules: Seq[ModuleData]) {
   def toXML(implicit fs: FS): Elem = {
     <repository>
-      {modules.sortBy(it => (it.id.organization, it.id.name)).map(_.toXML)}
+      {modules.sortBy(_.id.key).map(_.toXML)}
     </repository>
   }
 }
