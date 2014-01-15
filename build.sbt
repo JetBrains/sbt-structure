@@ -4,7 +4,7 @@ name := "sbt-structure"
 
 organization := "org.jetbrains"
 
-version := "2.0.0" // Semantic Versioning
+version := "2.1.0" // Semantic Versioning
 
 libraryDependencies += "org.scalatest" %% "scalatest" % "1.9.2" % "test"
 

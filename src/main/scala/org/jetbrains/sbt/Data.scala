@@ -125,11 +125,11 @@ case class ScalaData(version: String, libraryJar: File, compilerJar: File, extra
   }
 }
 
-case class DependencyData(projects: Seq[ProjectDependencyData], modules: Seq[ModuleDependencyData], jars: Seq[File]) {
+case class DependencyData(projects: Seq[ProjectDependencyData], modules: Seq[ModuleDependencyData], jars: Seq[JarDependencyData]) {
   def toXML(implicit fs: FS): Seq[Elem] = {
     projects.sortBy(_.project).map(_.toXML) ++
       modules.sortBy(_.id.key).map(_.toXML) ++
-      jars.sorted.map(file => <jar>{file.path}</jar>)
+      jars.sortBy(_.file).map(_.toXML)
   }
 }
 
@@ -142,6 +142,12 @@ case class ProjectDependencyData(project: String, configuration: Option[String])
 case class ModuleDependencyData(id: ModuleIdentifier, configurations: Option[String]) {
   def toXML: Elem = {
     <module organization={id.organization} name={id.name} revision={id.revision} configurations={configurations.map(Text(_))}/>
+  }
+}
+
+case class JarDependencyData(file: File, configurations: Option[String]) {
+  def toXML(implicit fs: FS): Elem = {
+    <jar configurations={configurations.map(Text(_))}>{file.path}</jar>
   }
 }
 
