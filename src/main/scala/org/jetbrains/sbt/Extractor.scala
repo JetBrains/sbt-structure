@@ -115,12 +115,7 @@ object Extractor {
 
     val moduleDependencies = moduleDependenciesIn(state, projectRef)
 
-    val jarDependencies: Seq[File] = {
-      val classpath: Option[Classpath] = Project.runTask(unmanagedJars.in(projectRef), state) collect {
-        case (_, Value(it)) => it
-      }
-      classpath.map(_.map(_.data)).getOrElse(Seq.empty)
-    }
+    val jarDependencies = jarDependenciesIn(state, projectRef)
 
     DependencyData(projectDependencies, moduleDependencies, jarDependencies)
   }
@@ -147,6 +142,29 @@ object Extractor {
         else Some(configurations.mkString(";"))
 
       ModuleDependencyData(identifier, scope)
+    }
+  }
+
+  def jarDependenciesIn(state: State, projectRef: ProjectRef): Seq[JarDependencyData] = {
+    def jarsIn(configuration: Configuration): Seq[File] = {
+      val classpath: Option[Classpath] = Project.runTask(unmanagedJars.in(projectRef, configuration), state) collect {
+        case (_, Value(it)) => it
+      }
+      classpath.map(_.map(_.data)).getOrElse(Seq.empty)
+    }
+
+    val jarToConfigurations = DependencyConfigurations
+      .flatMap(configuration => jarsIn(configuration).map(file => (file, configuration)))
+      .groupBy(_._1)
+      .mapValues(_.unzip._2)
+      .toSeq
+
+    jarToConfigurations.map { case (file, configurations) =>
+      val scope =
+        if (configurations.isEmpty || DefaultConfigurations == configurations.toSet) None
+        else Some(configurations.mkString(";"))
+
+      JarDependencyData(file, scope)
     }
   }
   
