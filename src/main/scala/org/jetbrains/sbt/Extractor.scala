@@ -12,7 +12,6 @@ import Utilities._
 object Extractor {
   private val ExportableConfigurations = Seq(Compile, Test)
   private val DependencyConfigurations = Seq(Compile, Test, Runtime, Provided)
-  private val DefaultConfigurations = Set(Compile, Test, Runtime)
 
   def extractStructure(state: State, download: Boolean): StructureData = {
     val structure = Project.extract(state).structure
@@ -135,13 +134,9 @@ object Extractor {
       .toSeq
 
     moduleToConfigurations.map { case (moduleId, configurations) =>
-      val identifier = ModuleIdentifier(moduleId.organization, moduleId.name, moduleId.revision)
-
-      val scope =
-        if (configurations.isEmpty || DefaultConfigurations == configurations.toSet) None
-        else Some(configurations.mkString(";"))
-
-      ModuleDependencyData(identifier, scope)
+      ModuleDependencyData(
+        ModuleIdentifier(moduleId.organization, moduleId.name, moduleId.revision),
+        scopeFor(configurations))
     }
   }
 
@@ -160,14 +155,30 @@ object Extractor {
       .toSeq
 
     jarToConfigurations.map { case (file, configurations) =>
-      val scope =
-        if (configurations.isEmpty || DefaultConfigurations == configurations.toSet) None
-        else Some(configurations.mkString(";"))
-
-      JarDependencyData(file, scope)
+      JarDependencyData(file, scopeFor(configurations))
     }
   }
+
+  def scopeFor(configurations: Seq[Configuration]): Option[String] = {
+    val mapped = map(configurations)
+    if (mapped.nonEmpty) Some(mapped.mkString(";")) else None
+  }
   
+  // We have to perform this configurations mapping because we're using externalDependencyClasspath
+  // rather than libraryDependencies (to aquire transitive dependencies),  so we detect
+  // module presence (in external classpath) instead of explicitly declared configurations.
+  def map(configurations: Seq[Configuration]): Seq[Configuration] = {
+    val cs = configurations.toSet
+    
+    if (cs == Set(Compile, Test, Runtime)) {
+      Seq.empty
+    } else if (cs == Set(Compile, Test)) {
+      Seq(Provided)
+    } else {
+      configurations
+    }
+  }
+
   def extractModules(state: State, projectRef: ProjectRef): Seq[ModuleData] = {
     def run(task: TaskKey[UpdateReport]): Seq[ModuleReport] = {
       val updateReport: UpdateReport = Project.runTask(task.in(projectRef), state) collect {
