@@ -12,8 +12,8 @@ case class FS(home: File, base: Option[File] = None) {
 }
 
 object FS {
-  val Home = "~/"
-  val Base = ""
+  val HomePrefix = "~/"
+  val BasePrefix = "./"
 
   private val Windows = System.getProperty("os.name").startsWith("Win")
 
@@ -23,7 +23,7 @@ object FS {
       val base = fs.base.map(toPath)
 
       val path = toPath(file)
-      replace(base.map(it => replace(path, it + "/", Base)).getOrElse(path), home + "/", Home)
+      replace(base.map(it => replace(path, it + "/", BasePrefix)).getOrElse(path), home + "/", HomePrefix)
     }
 
     def absolutePath: String = toPath(file)
@@ -68,7 +68,7 @@ case class ProjectData(id: String, name: String, organization: String, version: 
 case class BuildData(classpath: Seq[File], imports: Seq[String]) {
   def toXML(implicit fs: FS): Elem = {
     <build>
-      {classpath.map(_.path).filter(_.startsWith(FS.Home)).sorted.map { it =>
+      {classpath.map(_.path).filter(_.startsWith(FS.HomePrefix)).sorted.map { it =>
         <classes>{it}</classes>
       }}
       {imports.map { it =>
