@@ -65,14 +65,20 @@ case class ProjectData(id: String, name: String, organization: String, version: 
   }
 }
 
-case class BuildData(classpath: Seq[File], imports: Seq[String]) {
+case class BuildData(imports: Seq[String], classes: Seq[File], docs: Seq[File], sources: Seq[File]) {
   def toXML(implicit fs: FS): Elem = {
     <build>
-      {classpath.map(_.path).filter(_.startsWith(FS.HomePrefix)).sorted.map { it =>
-        <classes>{it}</classes>
-      }}
       {imports.map { it =>
         <import>{it}</import>
+      }}
+      {classes.map(_.path).filter(_.startsWith(FS.HomePrefix)).sorted.map { it =>
+        <classes>{it}</classes>
+      }}
+      {docs.map { it =>
+        <docs>{it.path}</docs>
+      }}
+      {sources.map { it =>
+        <sources>{it.path}</sources>
       }}
     </build>
   }

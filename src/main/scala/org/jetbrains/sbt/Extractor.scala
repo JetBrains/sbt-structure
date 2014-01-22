@@ -22,7 +22,7 @@ object Extractor {
 
     val allProjectRefs = structure.allProjectRefs
 
-    val projectsData = allProjectRefs.map(extractProject(state, structure, _))
+    val projectsData = allProjectRefs.map(extractProject(state, structure, _, download))
 
     val repositoryData = download.option {
       val modulesData = allProjectRefs.flatMap(extractModules(state, _)).distinctBy(_.id)
@@ -40,7 +40,7 @@ object Extractor {
     ScalaData(provider.version, libraryJar, provider.compilerJar, extraJars.toSeq, Seq.empty)
   }
 
-  def extractProject(state: State, structure: BuildStructure, projectRef: ProjectRef): ProjectData = {
+  def extractProject(state: State, structure: BuildStructure, projectRef: ProjectRef, download: Boolean): ProjectData = {
     val id = projectRef.project
 
     val name = Keys.name.in(projectRef, Compile).get(structure.data).get
@@ -79,8 +79,8 @@ object Extractor {
 
     val build = {
       val unit = structure.units(projectRef.build)
-      val classpath = unit.classpath
-      BuildData(classpath, unit.imports)
+      val (docs, sources) = if (download) extractSbtClassifiers(state, projectRef) else (Seq.empty, Seq.empty)
+      BuildData(unit.imports, unit.classpath, docs, sources)
     }
 
     val dependencies = extractDependencies(state, structure, projectRef)
@@ -165,7 +165,7 @@ object Extractor {
   }
   
   // We have to perform this configurations mapping because we're using externalDependencyClasspath
-  // rather than libraryDependencies (to aquire transitive dependencies),  so we detect
+  // rather than libraryDependencies (to acquire transitive dependencies),  so we detect
   // module presence (in external classpath) instead of explicitly declared configurations.
   def map(configurations: Seq[Configuration]): Seq[Configuration] = {
     val cs = configurations.toSet
@@ -186,16 +186,16 @@ object Extractor {
       } getOrElse {
         throw new RuntimeException()
       }
-      
+
       val configurationReports = {
         val relevantConfigurationNames = DependencyConfigurations.map(_.name).toSet
         updateReport.configurations.filter(report => relevantConfigurationNames.contains(report.configuration))
       }
-      
+
       configurationReports.flatMap(_.modules).filter(_.artifacts.nonEmpty)
     }
 
-    val moduleReports = run(update) ++ run(updateClassifiers) //++ run(updateSbtClassifiers)
+    val moduleReports = run(update) ++ run(updateClassifiers)
 
     merge(moduleReports)
   }
@@ -210,5 +210,19 @@ object Extractor {
 
       ModuleData(id, artifacts("jar"), artifacts("doc"), artifacts("src"))
     }
+  }
+
+  def extractSbtClassifiers(state: State, projectRef: ProjectRef): (Seq[File], Seq[File]) = {
+    val updateReport: UpdateReport = Project.runTask(updateSbtClassifiers.in(projectRef), state) collect {
+      case (_, Value(it)) => it
+    } getOrElse {
+      throw new RuntimeException()
+    }
+
+    val allArtifacts = updateReport.configurations.flatMap(_.modules.flatMap(_.artifacts))
+
+    def artifacts(kind: String) = allArtifacts.filter(_._1.`type` == kind).map(_._2).distinct
+
+    (artifacts("doc"), artifacts("src"))
   }
 }
