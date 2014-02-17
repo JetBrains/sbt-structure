@@ -1,7 +1,7 @@
 package org.jetbrains.sbt
 
 import scala.xml.PrettyPrinter
-import java.io.FileWriter
+import java.io.{OutputStreamWriter, BufferedWriter, FileOutputStream}
 import sbt._
 import Keys._
 
@@ -33,10 +33,12 @@ object StructurePlugin extends Plugin {
     }
   }
 
-  private def write(file: File, text: String) {
-    val writer = new FileWriter(file)
+  private def write(file: File, xml: String) {
+    val writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), "UTF-8"))
     try {
-      writer.write(text)
+      writer.write("""<?xml version="1.0" encoding="UTF-8"?>""")
+      writer.newLine()
+      writer.write(xml)
       writer.flush()
     } finally {
       writer.close()
