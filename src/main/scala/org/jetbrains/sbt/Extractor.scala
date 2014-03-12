@@ -51,6 +51,8 @@ object Extractor {
 
     val base = Keys.baseDirectory.in(projectRef, Compile).get(structure.data).get
 
+    val target = Keys.target.in(projectRef, Compile).get(structure.data).get
+
     val configurations = ExportableConfigurations.map(extractConfiguration(state, structure, projectRef, _))
 
     val java = {
@@ -85,7 +87,7 @@ object Extractor {
 
     val dependencies = extractDependencies(state, structure, projectRef)
 
-    ProjectData(id, name, organization, version, base, build, configurations, java, scala, dependencies)
+    ProjectData(id, name, organization, version, base, target, build, configurations, java, scala, dependencies)
   }
 
   def extractConfiguration(state: State, structure: BuildStructure, projectRef: ProjectRef, configuration: Configuration): ConfigurationData = {
