@@ -5,6 +5,7 @@
     <organization>some-organization</organization>
     <version>1.2.3</version>
     <base>$BASE</base>
+    <target>./target</target>
     <build>
       <classes>~/.sbt/boot/scala-2.10.2/org.scala-sbt/sbt/0.13.0/actions-0.13.0.jar</classes>
       <classes>~/.sbt/boot/scala-2.10.2/org.scala-sbt/sbt/0.13.0/api-0.13.0.jar</classes>
