@@ -20,7 +20,7 @@ object Extractor {
 
     val scalaData = extractScala(state)
 
-    val allProjectRefs = structure.allProjectRefs
+    val allProjectRefs = allProjectRefsIn(structure, Project.current(state))
 
     val projectsData = allProjectRefs.map(extractProject(state, structure, _, download))
 
@@ -30,6 +30,14 @@ object Extractor {
     }
 
     StructureData(sbtVersion, scalaData, projectsData, repositoryData)
+  }
+  
+  def allProjectRefsIn(structure: BuildStructure, root: ProjectRef): Seq[ProjectRef] = {
+    def findAllIn(visited: Set[ProjectRef], projectRef: ProjectRef): Set[ProjectRef] = {
+      val children = Project.getProject(projectRef, structure).get.uses
+      children.filterNot(visited.contains).foldLeft(visited + projectRef)(findAllIn)
+    }
+    findAllIn(Set.empty, root).toSeq
   }
 
   def extractScala(state: State): ScalaData = {
