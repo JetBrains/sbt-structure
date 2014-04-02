@@ -1,6 +1,9 @@
-resolvers += Resolver.url(
-  "bintray-sbt-plugin-releases",
-   url("http://dl.bintray.com/content/sbt/sbt-plugin-releases"))(
-       Resolver.ivyStylePatterns)
+import bintray.Keys._
 
-addSbtPlugin("me.lessis" % "bintray-sbt" % "0.1.1")
+publishMavenStyle := false
+
+bintrayPublishSettings
+
+repository in bintray := "sbt-plugins"
+
+bintrayOrganization in bintray := Some("jetbrains")
