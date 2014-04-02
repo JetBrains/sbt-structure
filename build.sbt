@@ -6,10 +6,6 @@ organization := "org.jetbrains"
 
 version := "2.3.2" // Semantic Versioning
 
+licenses += ("Apache-2.0", url("http://www.apache.org/licenses/LICENSE-2.0.html"))
+
 libraryDependencies += "org.scalatest" %% "scalatest" % "1.9.2" % "test"
-
-publishTo := Some(Resolver.url("Artifatory Realm", new URL("http://repo.scala-sbt.org/scalasbt/sbt-plugin-releases/"))(Resolver.ivyStylePatterns))
-
-publishMavenStyle := false
-
-credentials += Credentials(Path.userHome / ".ivy2" / ".credentials")
