@@ -10,7 +10,7 @@ import Utilities._
  * @author Pavel Fatin
  */
 object Extractor {
-  private val ExportableConfigurations = Seq(Compile, Test)
+  private val ExportableConfigurations = Seq(Compile, Test, IntegrationTest)
   private val DependencyConfigurations = Seq(Compile, Test, Runtime, Provided)
 
   def extractStructure(state: State, download: Boolean): StructureData = {
@@ -53,7 +53,7 @@ object Extractor {
 
     val target = Keys.target.in(projectRef, Compile).get(structure.data).get
 
-    val configurations = ExportableConfigurations.map(extractConfiguration(state, structure, projectRef, _))
+    val configurations = ExportableConfigurations.flatMap(extractConfiguration(state, structure, projectRef, _))
 
     val java = {
       val home = Keys.javaHome.in(projectRef, Compile).get(structure.data).get
@@ -90,22 +90,22 @@ object Extractor {
     ProjectData(id, name, organization, version, base, target, build, configurations, java, scala, dependencies)
   }
 
-  def extractConfiguration(state: State, structure: BuildStructure, projectRef: ProjectRef, configuration: Configuration): ConfigurationData = {
-    val sources = {
-      val managed = Keys.managedSourceDirectories.in(projectRef, configuration).get(structure.data).get
-      val unmanaged = Keys.unmanagedSourceDirectories.in(projectRef, configuration).get(structure.data).get
-      managed.map(DirectoryData(_, managed = true)) ++ unmanaged.map(DirectoryData(_, managed = false))
+  def extractConfiguration(state: State, structure: BuildStructure, projectRef: ProjectRef, configuration: Configuration): Option[ConfigurationData] = {
+    Keys.classDirectory.in(projectRef, configuration).get(structure.data).map { output =>
+      val sources = {
+        val managed = Keys.managedSourceDirectories.in(projectRef, configuration).get(structure.data).get
+        val unmanaged = Keys.unmanagedSourceDirectories.in(projectRef, configuration).get(structure.data).get
+        managed.map(DirectoryData(_, managed = true)) ++ unmanaged.map(DirectoryData(_, managed = false))
+      }
+
+      val resources = {
+        val managed = Keys.managedResourceDirectories.in(projectRef, configuration).get(structure.data).get
+        val unmanaged = Keys.unmanagedResourceDirectories.in(projectRef, configuration).get(structure.data).get
+        managed.map(DirectoryData(_, managed = true)) ++ unmanaged.map(DirectoryData(_, managed = false))
+      }
+
+      ConfigurationData(configuration.name, sources, resources, output)
     }
-
-    val resources = {
-      val managed = Keys.managedResourceDirectories.in(projectRef, configuration).get(structure.data).get
-      val unmanaged = Keys.unmanagedResourceDirectories.in(projectRef, configuration).get(structure.data).get
-      managed.map(DirectoryData(_, managed = true)) ++ unmanaged.map(DirectoryData(_, managed = false))
-    }
-
-    val output = Keys.classDirectory.in(projectRef, configuration).get(structure.data).get
-
-    ConfigurationData(configuration.name, sources, resources, output)
   }
 
   def extractDependencies(state: State, structure: BuildStructure, projectRef: ProjectRef): DependencyData = {
