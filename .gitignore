@@ -1,3 +1,3 @@
 /out
-target
-project/target
+target/
+.idea/

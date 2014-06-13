@@ -1,6 +1,7 @@
 package org.jetbrains.sbt
 
 import java.io.File
+
 import scala.xml.{Text, Elem}
 import FS._
 
@@ -48,7 +49,7 @@ case class StructureData(sbt: String, scala: ScalaData, projects: Seq[ProjectDat
   }
 }
 
-case class ProjectData(id: String, name: String, organization: String, version: String, base: File, target: File, build: BuildData, configurations: Seq[ConfigurationData], java: Option[JavaData], scala: Option[ScalaData], dependencies: DependencyData) {
+case class ProjectData(id: String, name: String, organization: String, version: String, base: File, target: File, build: BuildData, configurations: Seq[ConfigurationData], java: Option[JavaData], scala: Option[ScalaData], android: Option[AndroidData], dependencies: DependencyData) {
   def toXML(implicit fs: FS): Elem = {
     <project>
       <id>{id}</id>
@@ -60,6 +61,7 @@ case class ProjectData(id: String, name: String, organization: String, version: 
       {build.toXML}
       {java.map(_.toXML).toSeq}
       {scala.map(_.toXML).toSeq}
+      {android.map(_.toXML).toSeq}
       {configurations.sortBy(_.id).map(_.toXML)}
       {dependencies.toXML}
     </project>
@@ -103,7 +105,13 @@ case class ConfigurationData(id: String, sources: Seq[DirectoryData], resources:
 
 case class DirectoryData(file: File, managed: Boolean)
 
-case class JavaData(home: Option[File], options: Seq[String]) {
+case class JdkData(name: String, `type`: String) {
+  def toXML: Elem = {
+    <orderEntry type="jdk" jdkName={name} jdkType={`type`} />
+  }
+}
+
+case class JavaData(home: Option[File], options: Seq[String], jdk: Option[JdkData]) {
   def toXML(implicit fs: FS): Elem = {
     <java>
       {home.toSeq.map { file =>
@@ -112,6 +120,7 @@ case class JavaData(home: Option[File], options: Seq[String]) {
       {options.map { option =>
         <option>{option}</option>
       }}
+      {jdk.toSeq.map(_.toXML)}
     </java>
   }
 }
@@ -182,5 +191,39 @@ case class RepositoryData(modules: Seq[ModuleData]) {
     <repository>
       {modules.sortBy(_.id.key).map(_.toXML)}
     </repository>
+  }
+}
+
+/**
+ * @author Nikolay Stanchenko (adapted from https://github.com/mpeltonen/sbt-idea/blob/sbt-0.13/src/main/scala/org/sbtidea/android/AndroidSupport.scala)
+ */
+case class AndroidData(manifest: File, apk: Option[File], res: File, assets: File, libs: File, gen: File, libraryProject: Boolean) {
+  def toXML(implicit fs: FS): Elem = {
+    <android>
+      <option name="GEN_FOLDER_RELATIVE_PATH_APT" value={gen.path} />
+      <option name="GEN_FOLDER_RELATIVE_PATH_AIDL" value={gen.path} />
+      <option name="MANIFEST_FILE_RELATIVE_PATH" value={manifest.path} />
+      <option name="RES_FOLDER_RELATIVE_PATH" value={res.path}/>
+      <option name="ASSETS_FOLDER_RELATIVE_PATH" value={assets.path} />
+      <option name="LIBS_FOLDER_RELATIVE_PATH" value={libs.path} />
+      <option name="USE_CUSTOM_APK_RESOURCE_FOLDER" value="false" />
+      <option name="CUSTOM_APK_RESOURCE_FOLDER" value="" />
+      <option name="USE_CUSTOM_COMPILER_MANIFEST" value="false" />
+      <option name="CUSTOM_COMPILER_MANIFEST" value="" />
+      <option name="APK_PATH" value={apk.fold("")(_.path)} />
+      <option name="LIBRARY_PROJECT" value={libraryProject.toString} />
+      <option name="RUN_PROCESS_RESOURCES_MAVEN_TASK" value="false" />
+      <option name="GENERATE_UNSIGNED_APK" value="false" />
+      <option name="CUSTOM_DEBUG_KEYSTORE_PATH" value="" />
+      <option name="PACK_TEST_CODE" value="false" />
+      <option name="RUN_PROGUARD" value="false" />
+      <option name="PROGUARD_CFG_PATH" value="/proguard-project.cfg" />
+      <resOverlayFolders>
+        <path></path>
+      </resOverlayFolders>
+      <includeSystemProguardFile>false</includeSystemProguardFile>
+      <includeAssetsFromLibraries>false</includeAssetsFromLibraries>
+      <additionalNativeLibs />
+    </android>
   }
 }

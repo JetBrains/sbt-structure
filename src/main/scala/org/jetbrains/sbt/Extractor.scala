@@ -40,6 +40,48 @@ object Extractor {
     ScalaData(provider.version, libraryJar, provider.compilerJar, extraJars.toSeq, Seq.empty)
   }
 
+  /**
+   * @author Nikolay Stanchenko (adapted from https://github.com/mpeltonen/sbt-idea/blob/sbt-0.13/src/main/scala/org/sbtidea/android/AndroidSupport.scala)
+   */
+  def isAndroid(structure: BuildStructure, projectRef: ProjectRef): Boolean = {
+    import android.Keys
+
+    println(Keys.manifestPath.in(projectRef, Keys.Android).get(structure.data))
+
+    Keys.manifestPath.in(projectRef, Keys.Android).get(structure.data) match {
+      case Some(f) if f.exists => true
+      case _ => false
+    }
+  }
+
+  /**
+   * @author Nikolay Stanchenko (adapted from https://github.com/mpeltonen/sbt-idea/blob/sbt-0.13/src/main/scala/org/sbtidea/android/AndroidSupport.scala)
+   */
+  def extractAndroidJdk(structure: BuildStructure, projectRef: ProjectRef): JdkData = {
+    import android.Keys
+
+    def platform(v: Int) = s"Android API $v Platform"
+    val version = Keys.targetSdkVersion.in(projectRef, Keys.Android).get(structure.data).get
+    JdkData(platform(version), "Android SDK")
+  }
+
+  /**
+   * @author Nikolay Stanchenko (adapted from https://github.com/mpeltonen/sbt-idea/blob/sbt-0.13/src/main/scala/org/sbtidea/android/AndroidSupport.scala)
+   */
+  def extractAndroid(structure: BuildStructure, projectRef: ProjectRef): AndroidData = {
+    import android.Keys
+
+    val manifest = Keys.manifestPath.in(projectRef, Keys.Android).get(structure.data).get
+    val apk = Keys.apkFile.in(projectRef, Keys.Android).get(structure.data)
+    val library = Keys.libraryProject.in(projectRef, Keys.Android).get(structure.data).get
+
+    // for some reason projectLayout is not calculated automatically, force it
+    val layout = Keys.projectLayout.in(projectRef, Keys.Android).get(structure.data) getOrElse
+      Keys.ProjectLayout(new File(projectRef.build))
+
+    AndroidData(manifest, apk, layout.res, layout.assets, layout.libs, layout.gen, library)
+  }
+
   def extractProject(state: State, structure: BuildStructure, projectRef: ProjectRef, download: Boolean): ProjectData = {
     val id = projectRef.project
 
@@ -63,7 +105,12 @@ object Extractor {
         case _ => Seq.empty
       }
 
-      if (home.isDefined || options.nonEmpty) Some(JavaData(home, options)) else None
+      // maybe add Android JDK
+      val jdk = if (isAndroid(structure, projectRef)) {
+        Some(extractAndroidJdk(structure, projectRef))
+      } else None
+
+      if (home.isDefined || options.nonEmpty || jdk.nonEmpty) Some(JavaData(home, options, jdk)) else None
     }
 
     val scala: Option[ScalaData] = {
@@ -79,6 +126,11 @@ object Extractor {
       }
     }
 
+    // maybe enable Android facet
+    val android: Option[AndroidData] = if (isAndroid(structure, projectRef)) {
+      Some(extractAndroid(structure, projectRef))
+    } else None
+
     val build = {
       val unit = structure.units(projectRef.build)
       val (docs, sources) = if (download) extractSbtClassifiers(state, projectRef) else (Seq.empty, Seq.empty)
@@ -87,7 +139,7 @@ object Extractor {
 
     val dependencies = extractDependencies(state, structure, projectRef)
 
-    ProjectData(id, name, organization, version, base, target, build, configurations, java, scala, dependencies)
+    ProjectData(id, name, organization, version, base, target, build, configurations, java, scala, android, dependencies)
   }
 
   def extractConfiguration(state: State, structure: BuildStructure, projectRef: ProjectRef, configuration: Configuration): Option[ConfigurationData] = {

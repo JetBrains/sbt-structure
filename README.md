@@ -1,9 +1,9 @@
 SBT plugin to generate xml project structure
 ============================================
 
-It have to commands:
-read-project: Just returns xml of project structure
-read-project-and-repository: Returns xml of project structure, additionally downloads all required dependencies
+It has two commands:
+* `read-project`: Just returns xml of project structure
+* `read-project-and-repository`: Returns xml of project structure, additionally downloads all required dependencies
 
 To publish xml to file, use artifactPath setting.
 
