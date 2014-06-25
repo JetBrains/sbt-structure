@@ -182,13 +182,13 @@ object Extractor {
   }
 
   def extractModules(state: State, projectRef: ProjectRef): Seq[ModuleData] = {
-    def run(task: TaskKey[UpdateReport]): Seq[ModuleReport] = {
-      val updateReport: UpdateReport = Project.runTask(task.in(projectRef), state) collect {
+    def run[T](task: ScopedKey[Task[T]]): T = {
+      Project.runTask(task, state) collect {
         case (_, Value(it)) => it
-      } getOrElse {
-        throw new RuntimeException()
-      }
-
+      } getOrElse sys.error(s"Couldn't run: $task")
+    }
+    def getModuleReports(task: TaskKey[UpdateReport]): Seq[ModuleReport] = {
+      val updateReport: UpdateReport = run(task in projectRef)
       val configurationReports = {
         val relevantConfigurationNames = DependencyConfigurations.map(_.name).toSet
         updateReport.configurations.filter(report => relevantConfigurationNames.contains(report.configuration))
@@ -197,20 +197,21 @@ object Extractor {
       configurationReports.flatMap(_.modules).filter(_.artifacts.nonEmpty)
     }
 
-    val moduleReports = run(update) ++ run(updateClassifiers)
+    val moduleReports = getModuleReports(update) ++ getModuleReports(updateClassifiers)
+    val classpathTypes = Project.extract(state).get(Keys.classpathTypes)
 
-    merge(moduleReports)
+    merge(moduleReports, classpathTypes, Set("doc"), Set("src"))
   }
 
-  private def merge(moduleReports: Seq[ModuleReport]): Seq[ModuleData] = {
+  private def merge(moduleReports: Seq[ModuleReport], classpathTypes: Set[String], docTypes: Set[String], srcTypes: Set[String]): Seq[ModuleData] = {
     moduleReports.groupBy(_.module).toSeq.map { case (module, reports) =>
       val id = ModuleIdentifier(module.organization, module.name, module.revision)
 
       val allArtifacts = reports.flatMap(_.artifacts)
 
-      def artifacts(kind: String) = allArtifacts.filter(_._1.`type` == kind).map(_._2).distinct
+      def artifacts(kinds: Set[String]) = allArtifacts.collect { case (a, f) if kinds contains a.`type` => f }.distinct
 
-      ModuleData(id, artifacts("jar"), artifacts("doc"), artifacts("src"))
+      ModuleData(id, artifacts(classpathTypes), artifacts(docTypes), artifacts(srcTypes))
     }
   }
 
