@@ -185,7 +185,7 @@ object Extractor {
     def run[T](task: ScopedKey[Task[T]]): T = {
       Project.runTask(task, state) collect {
         case (_, Value(it)) => it
-      } getOrElse sys.error(s"Couldn't run: $task")
+      } getOrElse sys.error("Couldn't run: " + task)
     }
     def getModuleReports(task: TaskKey[UpdateReport]): Seq[ModuleReport] = {
       val updateReport: UpdateReport = run(task in projectRef)
