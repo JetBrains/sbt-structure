@@ -25,7 +25,7 @@ object Extractor {
     val projectsData = allProjectRefs.map(extractProject(state, structure, _, download))
 
     val repositoryData = download.option {
-      val modulesData = allProjectRefs.flatMap(extractModules(state, _)).distinctBy(_.id)
+      val modulesData = allProjectRefs.flatMap(extractModules(state, structure, _)).distinctBy(_.id)
       RepositoryData(modulesData)
     }
 
@@ -181,7 +181,7 @@ object Extractor {
     }
   }
 
-  def extractModules(state: State, projectRef: ProjectRef): Seq[ModuleData] = {
+  def extractModules(state: State, structure: BuildStructure, projectRef: ProjectRef): Seq[ModuleData] = {
     def run[T](task: ScopedKey[Task[T]]): T = {
       Project.runTask(task, state) collect {
         case (_, Value(it)) => it
@@ -198,7 +198,7 @@ object Extractor {
     }
 
     val moduleReports = getModuleReports(update) ++ getModuleReports(updateClassifiers)
-    val classpathTypes = Project.extract(state).get(Keys.classpathTypes)
+    val classpathTypes = Keys.classpathTypes.in(projectRef).get(structure.data).get
 
     merge(moduleReports, classpathTypes, Set("doc"), Set("src"))
   }
