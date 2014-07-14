@@ -9,12 +9,18 @@ import Keys._
  * @author Pavel Fatin
  */
 object StructurePlugin extends Plugin {
-  def read(state: State, download: Boolean) {
+  def read(state: State) {
     val log = state.log
 
     log.info("Reading structure from " + System.getProperty("user.dir"))
 
-    val structure = Extractor.extractStructure(state, download)
+    val options = Keys.artifactClassifier.in(Project.current(state))
+      .get(Project.extract(state).structure.data).get.getOrElse("")
+
+    val (download, resolveClassifiers, resolveSbtClassifiers) =
+      (options.contains("download"), options.contains("resolveClassifiers"), options.contains("resolveSbtClassifiers"))
+
+    val structure = Extractor.extractStructure(state, download, resolveClassifiers, resolveSbtClassifiers)
 
     val text = {
       val printer = new PrettyPrinter(180, 2)
@@ -45,17 +51,11 @@ object StructurePlugin extends Plugin {
     }
   }
 
-  override lazy val settings: Seq[Setting[_]] = Seq(commands ++= Seq(readProjectCommand, readProjectAndRepositoryCommand))
+  override lazy val settings: Seq[Setting[_]] = Seq(commands += readProjectCommand)
 
   lazy val readProjectCommand = Command.command("read-project")((s: State) => ReadProject(s))
-
-  lazy val readProjectAndRepositoryCommand = Command.command("read-project-and-repository")((s: State) => ReadProjectAndRepository(s))
 }
 
 object ReadProject extends (State => State) {
-  def apply(state: State) = Function.const(state)(StructurePlugin.read(state, download = false))
-}
-
-object ReadProjectAndRepository extends (State => State) {
-  def apply(state: State) = Function.const(state)(StructurePlugin.read(state, download = true))
+  def apply(state: State) = Function.const(state)(StructurePlugin.read(state))
 }

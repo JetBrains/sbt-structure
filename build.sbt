@@ -4,7 +4,7 @@ name := "sbt-structure"
 
 organization := "org.jetbrains"
 
-version := "2.4.1" // Semantic Versioning
+version := "2.5.1" // Semantic Versioning
 
 licenses += ("Apache-2.0", url("http://www.apache.org/licenses/LICENSE-2.0.html"))
 

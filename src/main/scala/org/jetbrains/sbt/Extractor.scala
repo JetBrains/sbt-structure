@@ -13,7 +13,7 @@ object Extractor {
   private val ExportableConfigurations = Seq(Compile, Test, IntegrationTest)
   private val DependencyConfigurations = Seq(Compile, Test, Runtime, Provided)
 
-  def extractStructure(state: State, download: Boolean): StructureData = {
+  def extractStructure(state: State, download: Boolean, resolveClassifiers: Boolean, resolveSbtClassifiers: Boolean): StructureData = {
     val structure = Project.extract(state).structure
 
     val sbtVersion = Keys.sbtVersion.get(structure.data).get
@@ -22,10 +22,10 @@ object Extractor {
 
     val allProjectRefs = structure.allProjectRefs
 
-    val projectsData = allProjectRefs.map(extractProject(state, structure, _, download))
+    val projectsData = allProjectRefs.map(extractProject(state, structure, _, download && resolveSbtClassifiers))
 
     val repositoryData = download.option {
-      val modulesData = allProjectRefs.flatMap(extractModules(state, structure, _)).distinctBy(_.id)
+      val modulesData = allProjectRefs.flatMap(extractModules(state, structure, _, resolveClassifiers)).distinctBy(_.id)
       RepositoryData(modulesData)
     }
 
@@ -181,7 +181,7 @@ object Extractor {
     }
   }
 
-  def extractModules(state: State, structure: BuildStructure, projectRef: ProjectRef): Seq[ModuleData] = {
+  def extractModules(state: State, structure: BuildStructure, projectRef: ProjectRef, resolveClassifiers: Boolean): Seq[ModuleData] = {
     def run[T](task: ScopedKey[Task[T]]): T = {
       Project.runTask(task, state) collect {
         case (_, Value(it)) => it
@@ -197,7 +197,9 @@ object Extractor {
       configurationReports.flatMap(_.modules).filter(_.artifacts.nonEmpty)
     }
 
-    val moduleReports = getModuleReports(update) ++ getModuleReports(updateClassifiers)
+    val moduleReports = getModuleReports(update) ++ 
+      (if (resolveClassifiers) getModuleReports(updateClassifiers) else Seq.empty)
+    
     val classpathTypes = Keys.classpathTypes.in(projectRef).get(structure.data).get
 
     merge(moduleReports, classpathTypes, Set("doc"), Set("src"))
