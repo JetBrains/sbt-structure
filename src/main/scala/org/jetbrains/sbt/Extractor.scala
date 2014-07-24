@@ -87,7 +87,9 @@ object Extractor {
 
     val dependencies = extractDependencies(state, structure, projectRef)
 
-    ProjectData(id, name, organization, version, base, target, build, configurations, java, scala, dependencies)
+    val resolvers = extractResolvers(state, projectRef)
+
+    ProjectData(id, name, organization, version, base, target, build, configurations, java, scala, dependencies, resolvers)
   }
 
   def extractConfiguration(state: State, structure: BuildStructure, projectRef: ProjectRef, configuration: Configuration): Option[ConfigurationData] = {
@@ -165,13 +167,13 @@ object Extractor {
     val mapped = map(configurations)
     if (mapped.nonEmpty) Some(mapped.mkString(";")) else None
   }
-  
+
   // We have to perform this configurations mapping because we're using externalDependencyClasspath
   // rather than libraryDependencies (to acquire transitive dependencies),  so we detect
   // module presence (in external classpath) instead of explicitly declared configurations.
   def map(configurations: Seq[Configuration]): Seq[Configuration] = {
     val cs = configurations.toSet
-    
+
     if (cs == Set(Compile, Test, Runtime)) {
       Seq.empty
     } else if (cs == Set(Compile, Test)) {
@@ -197,9 +199,9 @@ object Extractor {
       configurationReports.flatMap(_.modules).filter(_.artifacts.nonEmpty)
     }
 
-    val moduleReports = getModuleReports(update) ++ 
+    val moduleReports = getModuleReports(update) ++
       (if (resolveClassifiers) getModuleReports(updateClassifiers) else Seq.empty)
-    
+
     val classpathTypes = Keys.classpathTypes.in(projectRef).get(structure.data).get
 
     merge(moduleReports, classpathTypes, Set("doc"), Set("src"))
@@ -230,4 +232,13 @@ object Extractor {
 
     (artifacts("doc"), artifacts("src"))
   }
+
+  def extractResolvers(state: State, projectRef: ProjectRef): Seq[ResolverData] =
+    Project.runTask(fullResolvers.in(projectRef, configuration), state) match {
+      case Some((_, Value(resolvers))) => resolvers.map(r => r match {
+        case MavenRepository(name, root) => Some(ResolverData(name, root))
+        case _ => None
+      }).flatten.toSet.toSeq
+      case _ => Seq.empty
+    }
 }

@@ -48,7 +48,7 @@ case class StructureData(sbt: String, scala: ScalaData, projects: Seq[ProjectDat
   }
 }
 
-case class ProjectData(id: String, name: String, organization: String, version: String, base: File, target: File, build: BuildData, configurations: Seq[ConfigurationData], java: Option[JavaData], scala: Option[ScalaData], dependencies: DependencyData) {
+case class ProjectData(id: String, name: String, organization: String, version: String, base: File, target: File, build: BuildData, configurations: Seq[ConfigurationData], java: Option[JavaData], scala: Option[ScalaData], dependencies: DependencyData, resolvers: Seq[ResolverData]) {
   def toXML(implicit fs: FS): Elem = {
     <project>
       <id>{id}</id>
@@ -62,6 +62,9 @@ case class ProjectData(id: String, name: String, organization: String, version: 
       {scala.map(_.toXML).toSeq}
       {configurations.sortBy(_.id).map(_.toXML)}
       {dependencies.toXML}
+      <resolvers>
+        {resolvers.map(_.toXML).toSeq}
+      </resolvers>
     </project>
   }
 }
@@ -182,5 +185,11 @@ case class RepositoryData(modules: Seq[ModuleData]) {
     <repository>
       {modules.sortBy(_.id.key).map(_.toXML)}
     </repository>
+  }
+}
+
+case class ResolverData(name: String, root: String) {
+  def toXML(implicit fs: FS): Elem = {
+    <resolver name={name} root={root}/>
   }
 }
