@@ -48,7 +48,7 @@ case class StructureData(sbt: String, scala: ScalaData, projects: Seq[ProjectDat
   }
 }
 
-case class ProjectData(id: String, name: String, organization: String, version: String, base: File, target: File, build: BuildData, configurations: Seq[ConfigurationData], java: Option[JavaData], scala: Option[ScalaData], dependencies: DependencyData, resolvers: Seq[ResolverData]) {
+case class ProjectData(id: String, name: String, organization: String, version: String, base: File, target: File, build: BuildData, configurations: Seq[ConfigurationData], java: Option[JavaData], scala: Option[ScalaData], dependencies: DependencyData, resolvers: Set[ResolverData]) {
   def toXML(implicit fs: FS): Elem = {
     <project>
       <id>{id}</id>

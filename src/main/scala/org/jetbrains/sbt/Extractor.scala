@@ -233,12 +233,12 @@ object Extractor {
     (artifacts("doc"), artifacts("src"))
   }
 
-  def extractResolvers(state: State, projectRef: ProjectRef): Seq[ResolverData] =
+  def extractResolvers(state: State, projectRef: ProjectRef): Set[ResolverData] =
     Project.runTask(fullResolvers.in(projectRef, configuration), state) match {
       case Some((_, Value(resolvers))) => resolvers.map(r => r match {
         case MavenRepository(name, root) => Some(ResolverData(name, root))
         case _ => None
-      }).flatten.toSet.toSeq
-      case _ => Seq.empty
+      }).flatten.toSet
+      case _ => Set.empty
     }
 }
