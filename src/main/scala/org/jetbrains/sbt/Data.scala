@@ -62,9 +62,7 @@ case class ProjectData(id: String, name: String, organization: String, version: 
       {scala.map(_.toXML).toSeq}
       {configurations.sortBy(_.id).map(_.toXML)}
       {dependencies.toXML}
-      <resolvers>
-        {resolvers.map(_.toXML).toSeq}
-      </resolvers>
+      {resolvers.map(_.toXML).toSeq}
     </project>
   }
 }
