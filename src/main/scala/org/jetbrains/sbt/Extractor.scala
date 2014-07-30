@@ -235,7 +235,7 @@ object Extractor {
 
   def extractResolvers(state: State, projectRef: ProjectRef): Set[ResolverData] =
     Project.runTask(fullResolvers.in(projectRef, configuration), state) match {
-      case Some((_, Value(resolvers))) => resolvers.map(r => r match {
+      case Some((_, Value(resolvers))) => resolvers.map({
         case MavenRepository(name, root) => Some(ResolverData(name, root))
         case _ => None
       }).flatten.toSet
