@@ -187,7 +187,5 @@ case class RepositoryData(modules: Seq[ModuleData]) {
 }
 
 case class ResolverData(name: String, root: String) {
-  def toXML(implicit fs: FS): Elem = {
-    <resolver name={name} root={root}/>
-  }
+  def toXML(implicit fs: FS): Elem = <resolver name={name} root={root}/>
 }
