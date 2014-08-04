@@ -26,6 +26,10 @@ class ImportTest extends FunSuite {
     doTest("multiple")
   }
 
+  test("android project") {
+    doTest("android")
+  }
+
   private def doTest(project: String, download: Boolean = true) {
     val base = new File(DataDir, project)
 

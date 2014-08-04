@@ -1,0 +1,25 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.name"
+    android:versionCode="0"
+    android:versionName="1.2.3">
+
+    <uses-sdk
+        android:minSdkVersion="16"
+        android:targetSdkVersion="17"/>
+
+    <application
+        android:label="Some label"
+        android:icon="@drawable/android:star_big_on"
+        android:theme="@android:style/Theme.Holo.Light">
+
+        <activity
+          android:label="Some other Label"
+          android:name=".SomeClass">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+
+    </application>
+</manifest>
