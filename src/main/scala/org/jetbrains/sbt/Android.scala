@@ -7,9 +7,13 @@ object Android {
   def extractAndroid(structure: BuildStructure, projectRef: ProjectRef): Option[AndroidData] = {
     val plugins = Seq(new AndroidSdkPlugin(structure, projectRef))
     for (plugin <- plugins) {
-      val androidData = plugin.extractAndroid
-      if (androidData.isDefined)
-        return androidData
+      try {
+        val androidData = plugin.extractAndroid
+        if (androidData.isDefined)
+          return androidData
+      } catch {
+        case _: java.lang.NoClassDefFoundError => // do nothing
+      }
     }
     None
   }
