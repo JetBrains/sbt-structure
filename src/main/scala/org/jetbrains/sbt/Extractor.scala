@@ -5,6 +5,7 @@ import sbt.Keys._
 import sbt.Value
 import sbt.BuildStructure
 import Utilities._
+import Android._
 
 /**
  * @author Pavel Fatin
@@ -86,10 +87,10 @@ object Extractor {
     }
 
     val dependencies = extractDependencies(state, structure, projectRef)
-
     val resolvers = extractResolvers(state, projectRef)
+    val android = extractAndroid(structure, projectRef)
 
-    ProjectData(id, name, organization, version, base, target, build, configurations, java, scala, dependencies, resolvers)
+    ProjectData(id, name, organization, version, base, target, build, configurations, java, scala, android, dependencies, resolvers)
   }
 
   def extractConfiguration(state: State, structure: BuildStructure, projectRef: ProjectRef, configuration: Configuration): Option[ConfigurationData] = {

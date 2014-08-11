@@ -14,6 +14,10 @@ class ImportTest extends FunSuite {
     doTest("bare", download = false)
   }
 
+  test("android project") {
+    doTest("android", download = false)
+  }
+
   test("simple project") {
     doTest("simple")
   }
@@ -33,7 +37,8 @@ class ImportTest extends FunSuite {
 
     val expected = {
       val text = read(new File(base, "structure.xml")).mkString("\n")
-      text.replace("$BASE", FS.toPath(base))
+      val androidHome = Option(System.getenv.get("ANDROID_HOME")) getOrElse ""
+      text.replace("$BASE", FS.toPath(base)).replace("$ANDROID_HOME", androidHome)
     }
 
     if (actual != expected) {

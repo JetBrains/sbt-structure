@@ -48,7 +48,7 @@ case class StructureData(sbt: String, scala: ScalaData, projects: Seq[ProjectDat
   }
 }
 
-case class ProjectData(id: String, name: String, organization: String, version: String, base: File, target: File, build: BuildData, configurations: Seq[ConfigurationData], java: Option[JavaData], scala: Option[ScalaData], dependencies: DependencyData, resolvers: Set[ResolverData]) {
+case class ProjectData(id: String, name: String, organization: String, version: String, base: File, target: File, build: BuildData, configurations: Seq[ConfigurationData], java: Option[JavaData], scala: Option[ScalaData], android: Option[AndroidData], dependencies: DependencyData, resolvers: Set[ResolverData]) {
   def toXML(implicit fs: FS): Elem = {
     <project>
       <id>{id}</id>
@@ -60,6 +60,7 @@ case class ProjectData(id: String, name: String, organization: String, version: 
       {build.toXML}
       {java.map(_.toXML).toSeq}
       {scala.map(_.toXML).toSeq}
+      {android.map(_.toXML).toSeq}
       {configurations.sortBy(_.id).map(_.toXML)}
       {dependencies.toXML}
       {resolvers.map(_.toXML).toSeq}
@@ -188,4 +189,23 @@ case class RepositoryData(modules: Seq[ModuleData]) {
 
 case class ResolverData(name: String, root: String) {
   def toXML(implicit fs: FS): Elem = <resolver name={name} root={root}/>
+}
+
+case class AndroidData(targetVersion: String, manifestPath: String,
+                       apkPath: String, resPath: String,
+                       assetsPath: String, genPath: String,
+                       libsPath: String, isLibrary: Boolean) {
+
+  def toXML: Elem = {
+    <android>
+      <version>{targetVersion}</version>
+      <manifest>{manifestPath}</manifest>
+      <resources>{resPath}</resources>
+      <assets>{assetsPath}</assets>
+      <generatedFiles>{genPath}</generatedFiles>
+      <nativeLibs>{libsPath}</nativeLibs>
+      <apk>{apkPath}</apk>
+      <isLibrary>{isLibrary}</isLibrary>
+    </android>
+  }
 }
