@@ -19,11 +19,12 @@ object Loader {
     val structureFile = createTempFile("sbt-structure", ".xml")
     val commandsFile = createTempFile("sbt-commands", ".lst")
 
-    val className = if (download) "ReadProjectAndRepository" else "ReadProject"
+    val opts = if (download) Some("\"download resolveClassifiers resolveSbtClassifiers\"") else None
 
     writeLinesTo(commandsFile,
       "set artifactPath := file(\"" + path(structureFile) + "\")",
-      "apply -cp " + Classpath + " org.jetbrains.sbt." + className)
+      "set artifactClassifier := " + opts,
+      "apply -cp " + Classpath + " org.jetbrains.sbt.ReadProject")
 
     val commands = Seq(JavaVM,
 //      "-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=5005",
