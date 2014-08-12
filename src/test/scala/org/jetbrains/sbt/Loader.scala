@@ -10,10 +10,7 @@ object Loader {
   private val JavaVM = path(new File(new File(new File(System.getProperty("java.home")), "bin"), "java"))
   private val SbtLauncher = path(new File("sbt-launch.jar"))
   private val SbtVersion = "0.13.0"
-  private val Classpath = {
-    val urls = getClass.getClassLoader.asInstanceOf[java.net.URLClassLoader].getURLs
-    urls.map(_.getPath).mkString(java.io.File.pathSeparator)
-  }
+  private val SbtPlugin = path(new File("target/scala-2.10/sbt-0.13/classes/"))
 
   def load(project: File, download: Boolean): Seq[String] = {
     val structureFile = createTempFile("sbt-structure", ".xml")
@@ -24,7 +21,7 @@ object Loader {
     writeLinesTo(commandsFile,
       "set artifactPath := file(\"" + path(structureFile) + "\")",
       "set artifactClassifier := " + opts,
-      "apply -cp " + Classpath + " org.jetbrains.sbt.ReadProject")
+      "apply -cp " + SbtPlugin + " org.jetbrains.sbt.ReadProject")
 
     val commands = Seq(JavaVM,
 //      "-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=5005",
