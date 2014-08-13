@@ -27,7 +27,6 @@ class AndroidSdkPlugin(structure: BuildStructure, projectRef: ProjectRef)
 
     val targetSdkVersion = SettingKey[String]("target-sdk-version")
     val manifestPath     = SettingKey[File]("manifest-path")
-    val projectLayout    = SettingKey[ProjectLayout]("project-layout")
     val apkFile          = SettingKey[File]("apk-file")
     val libraryProject   = SettingKey[Boolean]("library-project")
 
@@ -68,7 +67,7 @@ class AndroidSdkPlugin(structure: BuildStructure, projectRef: ProjectRef)
     def extract[T](from: SettingKey[T]): Option[T] =
       from.in(projectRef, Keys.Android).get(structure.data)
 
-    val layout = extract(Keys.projectLayout) getOrElse Keys.ProjectLayout(new File(projectRef.build))
+    val layout = Keys.ProjectLayout(new File(projectRef.build))
 
     for {
       targetVersion <- extract(Keys.targetSdkVersion)
