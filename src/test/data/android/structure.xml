@@ -125,5 +125,8 @@
     <module organization="org.scala-lang" name="scala-library" revision="2.11.1"/>
     <jar configurations="compile">./target/aars/com.android.support-support-v4-20.0.0/com.android.support-support-v4-20.0.0.jar</jar>
     <jar configurations="compile">./target/aars/com.android.support-support-v4-20.0.0/libs/internal_impl-20.0.0.jar</jar>
+    <resolver name="public" root="http://repo1.maven.org/maven2/"/>
+    <resolver name="google libraries" root="file:/home/user/Downloads/android-sdk-linux/extras/google/m2repository/"/>
+    <resolver name="android libraries" root="file:/home/user/Downloads/android-sdk-linux/extras/android/m2repository/"/>
   </project>
 </structure>

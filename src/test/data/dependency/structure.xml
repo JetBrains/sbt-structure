@@ -121,6 +121,7 @@
     <module organization="junit" name="junit" revision="3.8.1" configurations="test"/>
     <module organization="org.scala-lang" name="scala-library" revision="2.10.1"/>
     <jar>./lib/unmanaged.jar</jar>
+    <resolver name="public" root="http://repo1.maven.org/maven2/"/>
   </project>
   <repository>
     <module organization="junit" name="junit" revision="3.8.1">

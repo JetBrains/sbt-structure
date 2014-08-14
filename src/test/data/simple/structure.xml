@@ -126,6 +126,7 @@
       <classes>./target/scala-2.10/test-classes</classes>
     </configuration>
     <module organization="org.scala-lang" name="scala-library" revision="2.10.1"/>
+    <resolver name="public" root="http://repo1.maven.org/maven2/"/>
   </project>
   <repository>
     <module organization="org.scala-lang" name="scala-library" revision="2.10.1">
