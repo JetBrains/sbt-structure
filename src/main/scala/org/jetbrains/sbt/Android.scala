@@ -47,21 +47,25 @@ class AndroidSdkPlugin(structure: BuildStructure, projectRef: ProjectRef,
     def extract[T](from: SettingKey[T]): Option[T] =
       from.in(projectRef, Keys.Android).get(structure.data)
 
-    for {
-      targetVersion <- extract(Keys.targetSdkVersion)
-      manifestPath  <- extractPath(Keys.manifestPath)
-      apkPath       <- extractPath(Keys.apkFile)
-      projectLayout <- Keys.projectLayout
-      optionLayout  <- extract(projectLayout)
-      layout = optionLayout.asInstanceOf[{
-        def res(): File; def assets(): File; def gen(): File; def libs(): File
-      }]
-      resPath    =  layout.res.getPath
-      assetsPath =  layout.assets.getPath
-      genPath    =  layout.gen.getPath
-      libsPath   =  layout.libs.getPath
-      isLibrary  <- extract(Keys.libraryProject)
-    } yield AndroidData(targetVersion, manifestPath, apkPath,
-                          resPath, assetsPath, genPath, libsPath, isLibrary)
+    try {
+      for {
+        targetVersion <- extract(Keys.targetSdkVersion)
+        manifestPath  <- extractPath(Keys.manifestPath)
+        apkPath       <- extractPath(Keys.apkFile)
+        projectLayout <- Keys.projectLayout
+        optionLayout  <- extract(projectLayout)
+        layout = optionLayout.asInstanceOf[{
+          def res(): File; def assets(): File; def gen(): File; def libs(): File
+        }]
+        resPath    =  layout.res.getPath
+        assetsPath =  layout.assets.getPath
+        genPath    =  layout.gen.getPath
+        libsPath   =  layout.libs.getPath
+        isLibrary  <- extract(Keys.libraryProject)
+      } yield AndroidData(targetVersion, manifestPath, apkPath,
+                            resPath, assetsPath, genPath, libsPath, isLibrary)
+    } catch {
+      case _:java.lang.NoSuchMethodException => None
+    }
   }
 }
