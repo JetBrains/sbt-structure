@@ -38,6 +38,8 @@ class AndroidSdkPlugin(structure: BuildStructure, projectRef: ProjectRef,
     val libraryProject   = SettingKey[Boolean]("library-project")
     val projectLayout    = keys.filter { k => k.key.label == "projectLayout" && inAndroidScope(k) }
                                .headOption.map { k => SettingKey(k.key).in(k.scope) }
+
+    type ProjectLayout = { def res(): File; def assets(): File; def gen(): File; def libs(): File }
   }
 
   def extractAndroid: Option[AndroidData] = {
@@ -54,9 +56,7 @@ class AndroidSdkPlugin(structure: BuildStructure, projectRef: ProjectRef,
         apkPath       <- extractPath(Keys.apkFile)
         projectLayout <- Keys.projectLayout
         optionLayout  <- extract(projectLayout)
-        layout = optionLayout.asInstanceOf[{
-          def res(): File; def assets(): File; def gen(): File; def libs(): File
-        }]
+        layout     = optionLayout.asInstanceOf[Keys.ProjectLayout]
         resPath    =  layout.res.getPath
         assetsPath =  layout.assets.getPath
         genPath    =  layout.gen.getPath
@@ -65,7 +65,7 @@ class AndroidSdkPlugin(structure: BuildStructure, projectRef: ProjectRef,
       } yield AndroidData(targetVersion, manifestPath, apkPath,
                             resPath, assetsPath, genPath, libsPath, isLibrary)
     } catch {
-      case _:java.lang.NoSuchMethodException => None
+      case _ : NoSuchMethodException => None
     }
   }
 }

@@ -93,7 +93,7 @@ object Extractor {
       case Some(SessionSettings(_, _, settings, _, _, _)) => Some(settings map { _.key })
       case _ => None
     }
-    val android = keys map { extractAndroid(structure, projectRef, _) } flatten
+    val android = keys flatMap { extractAndroid(structure, projectRef, _) }
 
     ProjectData(id, name, organization, version, base, target, build, configurations, java, scala, android, dependencies, resolvers)
   }
