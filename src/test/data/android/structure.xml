@@ -102,6 +102,9 @@
       <nativeLibs>$BASE/src/main/libs</nativeLibs>
       <apk>$BASE/target/android-bin/.build_integration/android-BUILD-INTEGRATION.apk</apk>
       <isLibrary>false</isLibrary>
+      <proguard>
+        <option>test option</option>
+      </proguard>
     </android>
     <configuration id="compile">
       <sources>./src/main</sources>

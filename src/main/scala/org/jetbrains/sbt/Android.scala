@@ -1,12 +1,13 @@
 package org.jetbrains.sbt
 
 import sbt._
+import sbt.Keys._
 
 
 object Android {
   def extractAndroid(structure: BuildStructure, projectRef: ProjectRef,
-        keys: Seq[Def.ScopedKey[_]]): Option[AndroidData] = {
-    val plugins = Seq(new AndroidSdkPlugin(structure, projectRef, keys))
+      state: State): Option[AndroidData] = {
+    val plugins = Seq(new AndroidSdkPlugin(structure, projectRef, state))
     for (plugin <- plugins) {
       val androidData = plugin.extractAndroid
       if (androidData.isDefined)
@@ -17,12 +18,17 @@ object Android {
 }
 
 abstract class AndroidSupportPlugin(val structure: BuildStructure,
-    val projectRef: ProjectRef, val keys: Seq[Def.ScopedKey[_]]) {
+    val projectRef: ProjectRef, val state: State) {
   def extractAndroid: Option[AndroidData]
 }
 
 class AndroidSdkPlugin(structure: BuildStructure, projectRef: ProjectRef,
-    keys: Seq[Def.ScopedKey[_]]) extends AndroidSupportPlugin(structure, projectRef, keys) {
+    state: State) extends AndroidSupportPlugin(structure, projectRef, state) {
+
+  val keys = state.attributes.get(sessionSettings) match {
+    case Some(SessionSettings(_, _, settings, _, _, _)) => settings map { _.key }
+    case _ => Seq.empty
+  }
 
   object Keys {
     val Android = config("android")
@@ -36,6 +42,8 @@ class AndroidSdkPlugin(structure: BuildStructure, projectRef: ProjectRef,
     val manifestPath     = SettingKey[File]("manifest-path")
     val apkFile          = SettingKey[File]("apk-file")
     val libraryProject   = SettingKey[Boolean]("library-project")
+    val proguardConfig   = TaskKey[Seq[String]]("proguard-config")
+    val proguardOptions  = TaskKey[Seq[String]]("proguard-options")
     val projectLayout    = keys.filter { k => k.key.label == "projectLayout" && inAndroidScope(k) }
                                .headOption.map { k => SettingKey(k.key).in(k.scope) }
 
@@ -48,6 +56,11 @@ class AndroidSdkPlugin(structure: BuildStructure, projectRef: ProjectRef,
 
     def extract[T](from: SettingKey[T]): Option[T] =
       from.in(projectRef, Keys.Android).get(structure.data)
+
+    def extractTask[T](from: TaskKey[T]): Option[T] =
+      Project.runTask(from.in(projectRef, Keys.Android), state).collect {
+        case (_, Value(result)) => result
+      }
 
     try {
       for {
@@ -62,8 +75,11 @@ class AndroidSdkPlugin(structure: BuildStructure, projectRef: ProjectRef,
         genPath    =  layout.gen.getPath
         libsPath   =  layout.libs.getPath
         isLibrary  <- extract(Keys.libraryProject)
+        proguardConfig <- extractTask(Keys.proguardConfig)
+        proguardOptions <- extractTask(Keys.proguardOptions)
       } yield AndroidData(targetVersion, manifestPath, apkPath,
-                            resPath, assetsPath, genPath, libsPath, isLibrary)
+                            resPath, assetsPath, genPath, libsPath, isLibrary,
+                            proguardConfig ++ proguardOptions)
     } catch {
       case _ : NoSuchMethodException => None
     }

@@ -194,7 +194,8 @@ case class ResolverData(name: String, root: String) {
 case class AndroidData(targetVersion: String, manifestPath: String,
                        apkPath: String, resPath: String,
                        assetsPath: String, genPath: String,
-                       libsPath: String, isLibrary: Boolean) {
+                       libsPath: String, isLibrary: Boolean,
+                       proguardConfig: Seq[String]) {
 
   def toXML: Elem = {
     <android>
@@ -206,6 +207,7 @@ case class AndroidData(targetVersion: String, manifestPath: String,
       <nativeLibs>{libsPath}</nativeLibs>
       <apk>{apkPath}</apk>
       <isLibrary>{isLibrary}</isLibrary>
+      <proguard>{proguardConfig.map { opt => <option>{opt}</option> }}</proguard>
     </android>
   }
 }

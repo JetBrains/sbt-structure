@@ -89,11 +89,7 @@ object Extractor {
     val dependencies = extractDependencies(state, structure, projectRef)
     val resolvers = extractResolvers(state, projectRef)
 
-    val keys = state.attributes.get(sessionSettings) match {
-      case Some(SessionSettings(_, _, settings, _, _, _)) => Some(settings map { _.key })
-      case _ => None
-    }
-    val android = keys flatMap { extractAndroid(structure, projectRef, _) }
+    val android = extractAndroid(structure, projectRef, state)
 
     ProjectData(id, name, organization, version, base, target, build, configurations, java, scala, android, dependencies, resolvers)
   }

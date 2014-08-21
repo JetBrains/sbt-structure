@@ -10,3 +10,6 @@ libraryDependencies ++= Seq(
 )
 
 scalaVersion := "2.11.1"
+
+proguardConfig in Android := Seq("test option")
+
