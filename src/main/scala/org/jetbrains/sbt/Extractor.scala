@@ -30,7 +30,9 @@ object Extractor {
       RepositoryData(modulesData)
     }
 
-    StructureData(sbtVersion, scalaData, projectsData, repositoryData)
+    val localCachePath = Option(System.getProperty("sbt.ivy.home", System.getProperty("ivy.home")))
+
+    StructureData(sbtVersion, scalaData, projectsData, repositoryData, localCachePath)
   }
 
   def extractScala(state: State): ScalaData = {
