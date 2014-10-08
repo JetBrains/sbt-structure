@@ -93,7 +93,10 @@ object Extractor {
 
     val android = extractAndroid(structure, projectRef, state)
 
-    ProjectData(id, name, organization, version, base, target, build, configurations, java, scala, android, dependencies, resolvers)
+    val play2 = new Play2Extractor(structure, projectRef, state).extract()
+
+    ProjectData(id, name, organization, version, base, target, build, configurations, java, scala, android,
+      dependencies, resolvers, play2)
   }
 
   def extractConfiguration(state: State, structure: BuildStructure, projectRef: ProjectRef, configuration: Configuration): Option[ConfigurationData] = {

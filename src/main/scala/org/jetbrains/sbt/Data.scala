@@ -49,7 +49,10 @@ case class StructureData(sbt: String, scala: ScalaData, projects: Seq[ProjectDat
   }
 }
 
-case class ProjectData(id: String, name: String, organization: String, version: String, base: File, target: File, build: BuildData, configurations: Seq[ConfigurationData], java: Option[JavaData], scala: Option[ScalaData], android: Option[AndroidData], dependencies: DependencyData, resolvers: Set[ResolverData]) {
+case class ProjectData(id: String, name: String, organization: String, version: String, base: File, target: File,
+                       build: BuildData, configurations: Seq[ConfigurationData], java: Option[JavaData],
+                       scala: Option[ScalaData], android: Option[AndroidData], dependencies: DependencyData,
+                       resolvers: Set[ResolverData], play2: Option[Play2Extractor.Play2Data]) {
   def toXML(implicit fs: FS): Elem = {
     <project>
       <id>{id}</id>
@@ -65,6 +68,7 @@ case class ProjectData(id: String, name: String, organization: String, version: 
       {configurations.sortBy(_.id).map(_.toXML)}
       {dependencies.toXML}
       {resolvers.map(_.toXML).toSeq}
+      {play2.map(_.toXml).toSeq}
     </project>
   }
 }
