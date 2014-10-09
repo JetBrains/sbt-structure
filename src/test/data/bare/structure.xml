@@ -75,7 +75,7 @@
       <resources managed="true">./target/scala-2.10/resource_managed/test</resources>
       <classes>./target/scala-2.10/test-classes</classes>
     </configuration>
-    <module organization="org.scala-lang" name="scala-library" revision="2.10.1"/>
+    <module organization="org.scala-lang" name="scala-library" revision="2.10.1" artifactType="jar" classifier=""/>
     <resolver name="public" root="http://repo1.maven.org/maven2/"/>
     <resolver name="java.net Maven2 Repository" root="http://download.java.net/maven/2"/>
   </project>

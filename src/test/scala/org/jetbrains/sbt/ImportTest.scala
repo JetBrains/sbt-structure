@@ -10,6 +10,10 @@ class ImportTest extends FunSuite {
   val DataDir = new File("src/test/data")
   val Exclusions = Seq("sbt-idea", "SbtIdea")
 
+  test("multiple projects with classified deps") {
+    doTest("classifiers")
+  }
+
   test("bare projects") {
     doTest("bare", download = false)
   }

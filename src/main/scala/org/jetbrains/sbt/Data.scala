@@ -155,7 +155,7 @@ case class ProjectDependencyData(project: String, configuration: Option[String])
 
 case class ModuleDependencyData(id: ModuleIdentifier, configurations: Option[String]) {
   def toXML: Elem = {
-    <module organization={id.organization} name={id.name} revision={id.revision} configurations={configurations.map(Text(_))}/>
+    <module organization={id.organization} name={id.name} revision={id.revision} artifactType={id.artifactType} classifier={id.classifier} configurations={configurations.map(Text(_))}/>
   }
 }
 
@@ -165,22 +165,22 @@ case class JarDependencyData(file: File, configurations: Option[String]) {
   }
 }
 
-case class ModuleIdentifier(organization: String, name: String, revision: String) {
+case class ModuleIdentifier(organization: String, name: String, revision: String, artifactType: String, classifier: String) {
   def toXML: Elem = {
-    <module organization={organization} name={name} revision={revision}/>
+    <module organization={organization} name={name} revision={revision} artifactType={artifactType} classifier={classifier}/>
   }
 
   def key: Iterable[String] = productIterator.toIterable.asInstanceOf[Iterable[String]]
 }
 
-case class ModuleData(id: ModuleIdentifier, binaries: Seq[File], docs: Seq[File], sources: Seq[File]) {
+case class ModuleData(id: ModuleIdentifier, binaries: Set[File], docs: Set[File], sources: Set[File]) {
   def toXML(implicit fs: FS): Elem = {
     val artifacts =
-      binaries.map(it => <jar>{it.path}</jar>) ++
-      docs.map(it => <doc>{it.path}</doc>) ++
-      sources.map(it => <src>{it.path}</src>)
+      binaries.toSeq.sorted.map(it => <jar>{it.path}</jar>) ++
+      docs.toSeq.sorted.map(it => <doc>{it.path}</doc>) ++
+      sources.toSeq.sorted.map(it => <src>{it.path}</src>)
 
-    id.toXML.copy(child = artifacts)
+    id.toXML.copy(child = artifacts.toSeq)
   }
 }
 

@@ -26,7 +26,15 @@ object Extractor {
     val projectsData = allProjectRefs.map(extractProject(state, structure, _, download && resolveSbtClassifiers))
 
     val repositoryData = download.option {
-      val modulesData = allProjectRefs.flatMap(extractModules(state, structure, _, resolveClassifiers)).distinctBy(_.id)
+      val rawModulesData = allProjectRefs.flatMap(extractModules(state, structure, _, resolveClassifiers))//.distinctBy(_.id)
+      val modulesData = rawModulesData.foldLeft(Seq.empty[ModuleData]) { (acc, data) => acc.find(_.id == data.id) match {
+        case Some(module) =>
+          val newModule = ModuleData(module.id, module.binaries ++ data.binaries,
+                                                module.docs ++ data.docs,
+                                                module.sources ++ data.sources)
+          acc.filterNot(_ == module) :+ newModule
+        case None => acc :+ data
+      }}
       RepositoryData(modulesData)
     }
 
@@ -133,7 +141,12 @@ object Extractor {
   def moduleDependenciesIn(state: State, projectRef: ProjectRef): Seq[ModuleDependencyData] = {
     def modulesIn(configuration: Configuration): Seq[ModuleID] = {
       Project.runTask(externalDependencyClasspath.in(projectRef, configuration), state) match {
-        case Some((_, Value(it))) => it.flatMap(_.get(Keys.moduleID.key))
+        case Some((_, Value(attrs))) =>
+          for {
+            attr <- attrs
+            module <- attr.get(Keys.moduleID.key)
+            artifact <- attr.get(Keys.artifact.key)
+          } yield module.artifacts(artifact)
         case _ => Seq.empty
       }
     }
@@ -146,9 +159,17 @@ object Extractor {
 
     moduleToConfigurations.map { case (moduleId, configurations) =>
       ModuleDependencyData(
-        ModuleIdentifier(moduleId.organization, moduleId.name, moduleId.revision),
+        createModuleIdentifier(moduleId, moduleId.explicitArtifacts.headOption),
         scopeFor(configurations))
     }
+  }
+
+  private def createModuleIdentifier(moduleId: ModuleID, artifact: Option[Artifact]): ModuleIdentifier = {
+    val equalTypes = Seq("jar", "src", "doc")
+    val equalClassifiers = Seq("", "sources", "javadoc")
+    val artifactType = artifact.map(_.`type`).filterNot(equalTypes.contains).getOrElse("jar")
+    val classifier = artifact.flatMap(_.classifier).filterNot(equalClassifiers.contains).getOrElse("")
+    ModuleIdentifier(moduleId.organization, moduleId.name, moduleId.revision, artifactType, classifier)
   }
 
   def jarDependenciesIn(state: State, projectRef: ProjectRef): Seq[JarDependencyData] = {
@@ -215,13 +236,12 @@ object Extractor {
   }
 
   private def merge(moduleReports: Seq[ModuleReport], classpathTypes: Set[String], docTypes: Set[String], srcTypes: Set[String]): Seq[ModuleData] = {
-    moduleReports.groupBy(_.module).toSeq.map { case (module, reports) =>
-      val id = ModuleIdentifier(module.organization, module.name, module.revision)
-
+    val moduleReportsGrouped = moduleReports.groupBy{ rep => rep.module.artifacts(rep.artifacts.map(_._1):_*) }.toSeq
+    moduleReportsGrouped.map { case (module, reports) =>
       val allArtifacts = reports.flatMap(_.artifacts)
+      def artifacts(kinds: Set[String]) = allArtifacts.collect { case (a, f) if kinds contains a.`type` => f }.toSet
 
-      def artifacts(kinds: Set[String]) = allArtifacts.collect { case (a, f) if kinds contains a.`type` => f }.distinct
-
+      val id = createModuleIdentifier(module, allArtifacts.headOption.map(_._1))
       ModuleData(id, artifacts(classpathTypes), artifacts(docTypes), artifacts(srcTypes))
     }
   }
