@@ -1,8 +1,11 @@
 package org.jetbrains.sbt
 
 import java.io.File
-import scala.xml.{Text, Elem}
-import FS._
+
+import org.jetbrains.sbt.FS._
+import sbt.Configuration
+
+import scala.xml.{Elem, Text}
 
 /**
  * @author Pavel Fatin
@@ -153,15 +156,15 @@ case class ProjectDependencyData(project: String, configuration: Option[String])
   }
 }
 
-case class ModuleDependencyData(id: ModuleIdentifier, configurations: Option[String]) {
+case class ModuleDependencyData(id: ModuleIdentifier, configurations: Seq[Configuration]) {
   def toXML: Elem = {
-    <module organization={id.organization} name={id.name} revision={id.revision} artifactType={id.artifactType} classifier={id.classifier} configurations={configurations.map(Text(_))}/>
+    <module organization={id.organization} name={id.name} revision={id.revision} artifactType={id.artifactType} classifier={id.classifier} configurations={configurations.mkString(";")}/>
   }
 }
 
-case class JarDependencyData(file: File, configurations: Option[String]) {
+case class JarDependencyData(file: File, configurations: Seq[Configuration]) {
   def toXML(implicit fs: FS): Elem = {
-    <jar configurations={configurations.map(Text(_))}>{file.path}</jar>
+    <jar configurations={configurations.mkString(";")}>{file.path}</jar>
   }
 }
 

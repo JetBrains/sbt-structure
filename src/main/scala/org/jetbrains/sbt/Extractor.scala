@@ -26,15 +26,17 @@ object Extractor {
     val projectsData = allProjectRefs.map(extractProject(state, structure, _, download && resolveSbtClassifiers))
 
     val repositoryData = download.option {
-      val rawModulesData = allProjectRefs.flatMap(extractModules(state, structure, _, resolveClassifiers))//.distinctBy(_.id)
-      val modulesData = rawModulesData.foldLeft(Seq.empty[ModuleData]) { (acc, data) => acc.find(_.id == data.id) match {
-        case Some(module) =>
-          val newModule = ModuleData(module.id, module.binaries ++ data.binaries,
-                                                module.docs ++ data.docs,
-                                                module.sources ++ data.sources)
-          acc.filterNot(_ == module) :+ newModule
-        case None => acc :+ data
-      }}
+      val rawModulesData = allProjectRefs.flatMap(extractModules(state, structure, _, resolveClassifiers))
+      val modulesData = rawModulesData.foldLeft(Seq.empty[ModuleData]) { (acc, data) =>
+        acc.find(_.id == data.id) match {
+          case Some(module) =>
+            val newModule = ModuleData(module.id, module.binaries ++ data.binaries,
+                                                  module.docs ++ data.docs,
+                                                  module.sources ++ data.sources)
+            acc.filterNot(_ == module) :+ newModule
+          case None => acc :+ data
+        }
+      }
       RepositoryData(modulesData)
     }
 
@@ -160,15 +162,32 @@ object Extractor {
     moduleToConfigurations.map { case (moduleId, configurations) =>
       ModuleDependencyData(
         createModuleIdentifier(moduleId, moduleId.explicitArtifacts.headOption),
-        scopeFor(configurations))
+        mapConfigurations(configurations))
+    }.foldLeft(Seq.empty[ModuleDependencyData]) { (acc, moduleData) =>
+      acc.find(_.id == moduleData.id) match {
+        case Some(foundModuleData) =>
+          val newModuleData = ModuleDependencyData(moduleData.id,
+            mapConfigurations(moduleData.configurations ++ foundModuleData.configurations))
+          acc.filterNot(_ == foundModuleData) :+ newModuleData
+        case None => acc :+ moduleData
+      }
     }
   }
 
   private def createModuleIdentifier(moduleId: ModuleID, artifact: Option[Artifact]): ModuleIdentifier = {
-    val equalTypes = Seq("jar", "src", "doc")
-    val equalClassifiers = Seq("", "sources", "javadoc")
-    val artifactType = artifact.map(_.`type`).filterNot(equalTypes.contains).getOrElse("jar")
-    val classifier = artifact.flatMap(_.classifier).filterNot(equalClassifiers.contains).getOrElse("")
+    val fusingTypes = Seq("jar", "bundle", "src", "doc")
+    def fuseArtifactType(artifact: Artifact): String =
+      if (fusingTypes.contains(artifact.`type`)) fusingTypes.head else artifact.`type`
+
+    val fusingClassifiers = Seq("", "sources", "javadoc")
+    def fuseClassifier(artifact: Artifact): String = artifact.classifier match {
+      case Some(classifier) if fusingClassifiers.contains(classifier) => fusingClassifiers.head
+      case Some(classifier) => classifier
+      case None => fusingClassifiers.head
+    }
+
+    val artifactType = artifact map fuseArtifactType getOrElse fusingTypes.head
+    val classifier   = artifact map fuseClassifier getOrElse fusingClassifiers.head
     ModuleIdentifier(moduleId.organization, moduleId.name, moduleId.revision, artifactType, classifier)
   }
 
@@ -187,19 +206,14 @@ object Extractor {
       .toSeq
 
     jarToConfigurations.map { case (file, configurations) =>
-      JarDependencyData(file, scopeFor(configurations))
+      JarDependencyData(file, mapConfigurations(configurations))
     }
-  }
-
-  def scopeFor(configurations: Seq[Configuration]): Option[String] = {
-    val mapped = map(configurations)
-    if (mapped.nonEmpty) Some(mapped.mkString(";")) else None
   }
 
   // We have to perform this configurations mapping because we're using externalDependencyClasspath
   // rather than libraryDependencies (to acquire transitive dependencies),  so we detect
   // module presence (in external classpath) instead of explicitly declared configurations.
-  def map(configurations: Seq[Configuration]): Seq[Configuration] = {
+  def mapConfigurations(configurations: Seq[Configuration]): Seq[Configuration] = {
     val cs = configurations.toSet
 
     if (cs == Set(Compile, Test, Runtime)) {
