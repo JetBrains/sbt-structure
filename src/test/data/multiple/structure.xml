@@ -120,7 +120,7 @@
       <classes>./target/scala-2.10/test-classes</classes>
     </configuration>
     <project>bar</project>
-    <module organization="org.scala-lang" name="scala-library" revision="2.10.1" artifactType="jar" classifier=""/>
+    <module organization="org.scala-lang" name="scala-library" revision="2.10.1" artifactType="jar" classifier="" configurations=""/>
     <resolver name="public" root="http://repo1.maven.org/maven2/"/>
   </project>
   <project>
@@ -243,7 +243,7 @@
       <resources managed="true">./target/scala-2.10/resource_managed/test</resources>
       <classes>./target/scala-2.10/test-classes</classes>
     </configuration>
-    <module organization="org.scala-lang" name="scala-library" revision="2.10.1" artifactType="jar" classifier=""/>
+    <module organization="org.scala-lang" name="scala-library" revision="2.10.1" artifactType="jar" classifier="" configurations=""/>
     <resolver name="public" root="http://repo1.maven.org/maven2/"/>
   </project>
   <project>
@@ -365,7 +365,7 @@
       <resources managed="true">./target/scala-2.9.2/resource_managed/test</resources>
       <classes>./target/scala-2.9.2/test-classes</classes>
     </configuration>
-    <module organization="org.scala-lang" name="scala-library" revision="2.9.2" artifactType="jar" classifier=""/>
+    <module organization="org.scala-lang" name="scala-library" revision="2.9.2" artifactType="jar" classifier="" configurations=""/>
     <resolver name="public" root="http://repo1.maven.org/maven2/"/>
   </project>
   <repository>
