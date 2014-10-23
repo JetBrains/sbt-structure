@@ -34,7 +34,7 @@ class ImportTest extends FunSuite {
     doTest("multiple")
   }
 
-  private def doTest(project: String, download: Boolean = true) {
+  private def doTest(project: String, download: Boolean = true, sbtVersion: String = "0.13.0") {
     val base = new File(DataDir, project)
 
     val actual = Loader.load(base, download).filterNot(s => Exclusions.exists(s.contains)).mkString("\n")

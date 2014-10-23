@@ -9,14 +9,13 @@ import scala.io.Source
 object Loader {
   private val JavaVM = path(new File(new File(new File(System.getProperty("java.home")), "bin"), "java"))
   private val SbtLauncher = path(new File("sbt-launch.jar"))
-  private val SbtVersion = "0.13.0"
   private val SbtPlugin = path(new File("target/scala-2.10/sbt-0.13/classes/"))
 
-  def load(project: File, download: Boolean): Seq[String] = {
+  def load(project: File, download: Boolean, sbtVersion: String): Seq[String] = {
     val structureFile = createTempFile("sbt-structure", ".xml")
     val commandsFile = createTempFile("sbt-commands", ".lst")
 
-    val opts = if (download) Some("\"download resolveClassifiers resolveSbtClassifiers\"") else None
+    val opts = if (download) Some("\"download resolveClassifiers resolveSbtClassifiers prettyPrint\"") else Some("\"prettyPrint\"")
 
     writeLinesTo(commandsFile,
       "set artifactPath := file(\"" + path(structureFile) + "\")",
@@ -25,7 +24,7 @@ object Loader {
 
     val commands = Seq(JavaVM,
 //      "-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=5005",
-      s"-Dsbt.version=$SbtVersion",
+      s"-Dsbt.version=$sbtVersion",
       "-jar", SbtLauncher,
       "< " + path(commandsFile))
 
