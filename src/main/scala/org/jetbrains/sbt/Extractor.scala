@@ -12,7 +12,7 @@ import Android._
  */
 object Extractor {
   private val ExportableConfigurations = Seq(Compile, Test, IntegrationTest)
-  private val DependencyConfigurations = Seq(Compile, Test, Runtime, Provided)
+  private val DependencyConfigurations = Seq(Compile, Test, Runtime, Provided, Optional)
 
   def extractStructure(state: State, download: Boolean, resolveClassifiers: Boolean, resolveSbtClassifiers: Boolean): StructureData = {
     val structure = Project.extract(state).structure
