@@ -24,6 +24,7 @@ object Loader {
 
     val commands = Seq(JavaVM,
 //      "-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=5005",
+      "-Dsbt.log.noformat=true",
       s"-Dsbt.version=$sbtVersion",
       "-jar", SbtLauncher,
       "< " + path(commandsFile))

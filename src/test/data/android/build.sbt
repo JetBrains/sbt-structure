@@ -6,7 +6,7 @@ android.Plugin.androidBuild
 platformTarget in Android := "android-19"
 
 libraryDependencies ++= Seq(
-  aar("com.android.support" % "support-v4" % "20.0.0")
+  "com.android.support" % "support-v4" % "20.0.0"
 )
 
 scalaVersion := "2.11.1"

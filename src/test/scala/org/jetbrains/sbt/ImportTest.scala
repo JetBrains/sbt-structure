@@ -14,7 +14,7 @@ class ImportTest extends FunSuite {
   }
 
   test("android project") {
-    doTest("android", download = false)
+    doTest("android")
   }
 
   test("simple project") {

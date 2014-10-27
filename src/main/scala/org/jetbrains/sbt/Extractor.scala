@@ -175,7 +175,7 @@ object Extractor {
   }
 
   private def createModuleIdentifier(moduleId: ModuleID, artifact: Option[Artifact]): ModuleIdentifier = {
-    val fusingTypes = Seq("jar", "bundle", "src", "doc")
+    val fusingTypes = Seq("jar", "bundle", "aar", "src", "doc")
     def fuseArtifactType(artifact: Artifact): String =
       if (fusingTypes.contains(artifact.`type`)) fusingTypes.head else artifact.`type`
 
