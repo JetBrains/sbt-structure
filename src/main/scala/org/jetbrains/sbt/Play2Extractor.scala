@@ -16,8 +16,8 @@ object Play2Extractor {
   //marker
   private val PLAY_VERSION = "playVersion"
   //default
-  private val TEMPLATES_IMPORT = "playTemplatesImports"
-  private val ROUTES_IMPORT = "routesImport"
+  private val TEMPLATES_IMPORT = "twirlTemplatesImports"
+  private val ROUTES_IMPORT = "playRoutesImports"
   //options
   private val TEST_OPTIONS = "testOptions"
   private val TEMPLATE_FORMATS = "playTemplatesFormats"
