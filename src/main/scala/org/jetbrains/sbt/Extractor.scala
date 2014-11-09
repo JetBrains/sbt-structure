@@ -241,8 +241,17 @@ object Extractor {
       configurationReports.flatMap(_.modules).filter(_.artifacts.nonEmpty)
     }
 
-    val moduleReports = getModuleReports(update) ++
-      (if (resolveClassifiers) getModuleReports(updateClassifiers) else Seq.empty)
+    val moduleReports =
+      if (resolveClassifiers) {
+        val reports = getModuleReports(updateClassifiers)
+        // `updateClassifiers` doesn't resolve dependencies with non-empty
+        // classifiers so we get them from `update`; but only them - otherwise
+        // some jars may be duplicated (e.g. scala-library from .sbt and .ivy)
+        reports ++ getModuleReports(update).filter { r =>
+          reports.forall(_.module != r.module) || r.artifacts.flatMap(_._1.classifier).nonEmpty
+        }
+      } else
+        getModuleReports(update)
 
     val classpathTypes = Keys.classpathTypes.in(projectRef).get(structure.data).get
 

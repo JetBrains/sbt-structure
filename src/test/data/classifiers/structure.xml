@@ -387,13 +387,11 @@
       <src>~/.ivy2/cache/javax.mail/mail/srcs/mail-1.4.4-sources.jar</src>
     </module>
     <module organization="org.apache.james" name="apache-mailet-api" revision="2.5.0" artifactType="jar" classifier="">
-      <jar>~/.ivy2/cache/org.apache.james/apache-mailet-api/bundles/apache-mailet-api-2.5.0.jar</jar>
       <jar>~/.ivy2/cache/org.apache.james/apache-mailet-api/jars/apache-mailet-api-2.5.0.jar</jar>
       <doc>~/.ivy2/cache/org.apache.james/apache-mailet-api/docs/apache-mailet-api-2.5.0-javadoc.jar</doc>
       <src>~/.ivy2/cache/org.apache.james/apache-mailet-api/srcs/apache-mailet-api-2.5.0-sources.jar</src>
     </module>
     <module organization="org.apache.james" name="apache-mailet-base" revision="2.5.0" artifactType="jar" classifier="">
-      <jar>~/.ivy2/cache/org.apache.james/apache-mailet-base/bundles/apache-mailet-base-2.5.0.jar</jar>
       <jar>~/.ivy2/cache/org.apache.james/apache-mailet-base/jars/apache-mailet-base-2.5.0.jar</jar>
       <doc>~/.ivy2/cache/org.apache.james/apache-mailet-base/docs/apache-mailet-base-2.5.0-javadoc.jar</doc>
       <src>~/.ivy2/cache/org.apache.james/apache-mailet-base/srcs/apache-mailet-base-2.5.0-sources.jar</src>
@@ -404,7 +402,6 @@
     </module>
     <module organization="org.scala-lang" name="scala-library" revision="2.10.2" artifactType="jar" classifier="">
       <jar>~/.ivy2/cache/org.scala-lang/scala-library/jars/scala-library-2.10.2.jar</jar>
-      <jar>~/.sbt/boot/scala-2.10.2/lib/scala-library.jar</jar>
       <doc>~/.ivy2/cache/org.scala-lang/scala-library/docs/scala-library-2.10.2-javadoc.jar</doc>
       <src>~/.ivy2/cache/org.scala-lang/scala-library/srcs/scala-library-2.10.2-sources.jar</src>
     </module>

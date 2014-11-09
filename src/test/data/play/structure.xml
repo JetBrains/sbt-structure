@@ -330,8 +330,12 @@
         <root>2.3.5</root>
       </playVersion>
       <testOptions/>
-      <playTemplatesImports/>
-      <routesImport/>
+      <twirlTemplatesImports/>
+      <playRoutesImports>
+        <root>
+          <entry>controllers.Assets.Asset</entry>
+        </root>
+      </playRoutesImports>
       <playConf>
         <root>$BASE/conf</root>
       </playConf>
