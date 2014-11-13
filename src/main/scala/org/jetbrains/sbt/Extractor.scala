@@ -244,11 +244,14 @@ object Extractor {
     val moduleReports =
       if (resolveClassifiers) {
         val reports = getModuleReports(updateClassifiers)
+        def onlySourcesAndDocs(artifacts: Seq[Artifact]): Boolean =
+          artifacts.forall { a => a.`type` == "src" || a.`type` == "doc" }
         // `updateClassifiers` doesn't resolve dependencies with non-empty
         // classifiers so we get them from `update`; but only them - otherwise
         // some jars may be duplicated (e.g. scala-library from .sbt and .ivy)
         reports ++ getModuleReports(update).filter { r =>
-          reports.forall(_.module != r.module) || r.artifacts.flatMap(_._1.classifier).nonEmpty
+          reports.forall { m => m.module != r.module || onlySourcesAndDocs(m.artifacts.map(_._1)) } ||
+            r.artifacts.flatMap(_._1.classifier).nonEmpty
         }
       } else
         getModuleReports(update)
