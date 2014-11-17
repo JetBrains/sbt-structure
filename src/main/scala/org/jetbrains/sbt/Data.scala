@@ -1,8 +1,11 @@
 package org.jetbrains.sbt
 
 import java.io.File
-import scala.xml.{Text, Elem}
-import FS._
+
+import org.jetbrains.sbt.FS._
+import sbt.Configuration
+
+import scala.xml.{Elem, Text}
 
 /**
  * @author Pavel Fatin
@@ -153,34 +156,34 @@ case class ProjectDependencyData(project: String, configuration: Option[String])
   }
 }
 
-case class ModuleDependencyData(id: ModuleIdentifier, configurations: Option[String]) {
+case class ModuleDependencyData(id: ModuleIdentifier, configurations: Seq[Configuration]) {
   def toXML: Elem = {
-    <module organization={id.organization} name={id.name} revision={id.revision} configurations={configurations.map(Text(_))}/>
+    <module organization={id.organization} name={id.name} revision={id.revision} artifactType={id.artifactType} classifier={id.classifier} configurations={configurations.mkString(";")}/>
   }
 }
 
-case class JarDependencyData(file: File, configurations: Option[String]) {
+case class JarDependencyData(file: File, configurations: Seq[Configuration]) {
   def toXML(implicit fs: FS): Elem = {
-    <jar configurations={configurations.map(Text(_))}>{file.path}</jar>
+    <jar configurations={configurations.mkString(";")}>{file.path}</jar>
   }
 }
 
-case class ModuleIdentifier(organization: String, name: String, revision: String) {
+case class ModuleIdentifier(organization: String, name: String, revision: String, artifactType: String, classifier: String) {
   def toXML: Elem = {
-    <module organization={organization} name={name} revision={revision}/>
+    <module organization={organization} name={name} revision={revision} artifactType={artifactType} classifier={classifier}/>
   }
 
   def key: Iterable[String] = productIterator.toIterable.asInstanceOf[Iterable[String]]
 }
 
-case class ModuleData(id: ModuleIdentifier, binaries: Seq[File], docs: Seq[File], sources: Seq[File]) {
+case class ModuleData(id: ModuleIdentifier, binaries: Set[File], docs: Set[File], sources: Set[File]) {
   def toXML(implicit fs: FS): Elem = {
     val artifacts =
-      binaries.map(it => <jar>{it.path}</jar>) ++
-      docs.map(it => <doc>{it.path}</doc>) ++
-      sources.map(it => <src>{it.path}</src>)
+      binaries.toSeq.sorted.map(it => <jar>{it.path}</jar>) ++
+      docs.toSeq.sorted.map(it => <doc>{it.path}</doc>) ++
+      sources.toSeq.sorted.map(it => <src>{it.path}</src>)
 
-    id.toXML.copy(child = artifacts)
+    id.toXML.copy(child = artifacts.toSeq)
   }
 }
 

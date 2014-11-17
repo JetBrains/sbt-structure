@@ -8,14 +8,13 @@ import java.io.File
  */
 class ImportTest extends FunSuite {
   val DataDir = new File("src/test/data")
-  val Exclusions = Seq("sbt-idea", "SbtIdea")
 
   test("bare projects") {
     doTest("bare", download = false)
   }
 
   test("android project") {
-    doTest("android", download = false)
+    doTest("android")
   }
 
   test("simple project") {
@@ -30,10 +29,22 @@ class ImportTest extends FunSuite {
     doTest("multiple")
   }
 
-  private def doTest(project: String, download: Boolean = true) {
+  test("multiple projects with classified deps") {
+    doTest("classifiers")
+  }
+
+  test("project with optional dependency") {
+    doTest("optional")
+  }
+
+  test("play project") {
+    doTest("play", download = false, sbtVersion = "0.13.5")
+  }
+
+  private def doTest(project: String, download: Boolean = true, sbtVersion: String = "0.13.0") {
     val base = new File(DataDir, project)
 
-    val actual = Loader.load(base, download).filterNot(s => Exclusions.exists(s.contains)).mkString("\n")
+    val actual = Loader.load(base, download, sbtVersion).mkString("\n")
 
     val expected = {
       val text = read(new File(base, "structure.xml")).mkString("\n")

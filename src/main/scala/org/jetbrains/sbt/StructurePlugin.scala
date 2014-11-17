@@ -17,15 +17,18 @@ object StructurePlugin extends Plugin {
     val options = Keys.artifactClassifier.in(Project.current(state))
       .get(Project.extract(state).structure.data).get.getOrElse("")
 
-    val (download, resolveClassifiers, resolveSbtClassifiers) =
-      (options.contains("download"), options.contains("resolveClassifiers"), options.contains("resolveSbtClassifiers"))
+    val (download, resolveClassifiers, resolveSbtClassifiers, prettyPrint) =
+      (options.contains("download"), options.contains("resolveClassifiers"),
+        options.contains("resolveSbtClassifiers"), options.contains("prettyPrint"))
 
     val structure = Extractor.extractStructure(state, download, resolveClassifiers, resolveSbtClassifiers)
 
     val text = {
-      val printer = new PrettyPrinter(180, 2)
       val home = new File(System.getProperty("user.home"))
-      printer.format(structure.toXML(home))
+      if (prettyPrint)
+        new PrettyPrinter(180, 2).format(structure.toXML(home))
+      else
+        xml.Utility.trim(structure.toXML(home)).mkString
     }
 
     Keys.artifactPath.in(Project.current(state)).get(Project.extract(state).structure.data).map { file =>

@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <structure sbt="0.13.0">
   <project>
-    <id>root</id>
-    <name>some-name</name>
-    <organization>some-organization</organization>
-    <version>1.2.3</version>
+    <id>classifiers</id>
+    <name>classifiers</name>
+    <organization>default</organization>
+    <version>0.1-SNAPSHOT</version>
     <base>$BASE</base>
     <target>./target</target>
     <build>
       <import>import sbt._, Keys._</import>
-      <import>import RootBuild._</import>
+      <import>import Test._</import>
       <classes>~/.sbt/boot/scala-2.10.2/lib/jansi.jar</classes>
       <classes>~/.sbt/boot/scala-2.10.2/lib/jline.jar</classes>
       <classes>~/.sbt/boot/scala-2.10.2/lib/scala-compiler.jar</classes>
@@ -98,10 +98,10 @@
       <sources>~/.ivy2/cache/org.scala-sbt/precompiled-2_9_3/srcs/precompiled-2_9_3-0.13.0-sources.jar</sources>
     </build>
     <scala>
-      <version>2.10.1</version>
-      <library>~/.ivy2/cache/org.scala-lang/scala-library/jars/scala-library-2.10.1.jar</library>
-      <compiler>~/.ivy2/cache/org.scala-lang/scala-compiler/jars/scala-compiler-2.10.1.jar</compiler>
-      <extra>~/.ivy2/cache/org.scala-lang/scala-reflect/jars/scala-reflect-2.10.1.jar</extra>
+      <version>2.10.2</version>
+      <library>~/.sbt/boot/scala-2.10.2/lib/scala-library.jar</library>
+      <compiler>~/.sbt/boot/scala-2.10.2/lib/scala-compiler.jar</compiler>
+      <extra>~/.sbt/boot/scala-2.10.2/lib/scala-reflect.jar</extra>
     </scala>
     <configuration id="compile">
       <sources>./src/main/java</sources>
@@ -119,8 +119,7 @@
       <resources managed="true">./target/scala-2.10/resource_managed/test</resources>
       <classes>./target/scala-2.10/test-classes</classes>
     </configuration>
-    <project>bar</project>
-    <module organization="org.scala-lang" name="scala-library" revision="2.10.1" artifactType="jar" classifier="" configurations=""/>
+    <module organization="org.scala-lang" name="scala-library" revision="2.10.2" artifactType="jar" classifier="" configurations=""/>
     <resolver name="public" root="http://repo1.maven.org/maven2/"/>
   </project>
   <project>
@@ -132,7 +131,7 @@
     <target>./target</target>
     <build>
       <import>import sbt._, Keys._</import>
-      <import>import RootBuild._</import>
+      <import>import Test._</import>
       <classes>~/.sbt/boot/scala-2.10.2/lib/jansi.jar</classes>
       <classes>~/.sbt/boot/scala-2.10.2/lib/jline.jar</classes>
       <classes>~/.sbt/boot/scala-2.10.2/lib/scala-compiler.jar</classes>
@@ -176,7 +175,7 @@
       <classes>~/.sbt/boot/scala-2.10.2/org.scala-sbt/sbt/0.13.0/testing-0.13.0.jar</classes>
       <classes>~/.sbt/boot/scala-2.10.2/org.scala-sbt/sbt/0.13.0/tracking-0.13.0.jar</classes>
       <classes>~/.sbt/boot/scala-2.10.2/org.scala-sbt/sbt/0.13.0/xsbti/interface-0.13.0.jar</classes>
-      <classes>~/Projects/sbt-structure/src/test/data/multiple/project/target/scala-2.10/sbt-0.13/classes</classes>
+      <classes>~/Projects/sbt-structure/src/test/data/classifiers/project/target/scala-2.10/sbt-0.13/classes</classes>
       <sources>~/.ivy2/cache/org.scala-sbt/sbt/srcs/sbt-0.13.0-sources.jar</sources>
       <sources>~/.ivy2/cache/org.scala-sbt/main/srcs/main-0.13.0-sources.jar</sources>
       <sources>~/.ivy2/cache/org.scala-sbt/actions/srcs/actions-0.13.0-sources.jar</sources>
@@ -222,10 +221,10 @@
       <sources>~/.ivy2/cache/org.scala-sbt/precompiled-2_9_3/srcs/precompiled-2_9_3-0.13.0-sources.jar</sources>
     </build>
     <scala>
-      <version>2.10.1</version>
-      <library>~/.ivy2/cache/org.scala-lang/scala-library/jars/scala-library-2.10.1.jar</library>
-      <compiler>~/.ivy2/cache/org.scala-lang/scala-compiler/jars/scala-compiler-2.10.1.jar</compiler>
-      <extra>~/.ivy2/cache/org.scala-lang/scala-reflect/jars/scala-reflect-2.10.1.jar</extra>
+      <version>2.10.2</version>
+      <library>~/.sbt/boot/scala-2.10.2/lib/scala-library.jar</library>
+      <compiler>~/.sbt/boot/scala-2.10.2/lib/scala-compiler.jar</compiler>
+      <extra>~/.sbt/boot/scala-2.10.2/lib/scala-reflect.jar</extra>
     </scala>
     <configuration id="compile">
       <sources>./src/main/java</sources>
@@ -243,7 +242,11 @@
       <resources managed="true">./target/scala-2.10/resource_managed/test</resources>
       <classes>./target/scala-2.10/test-classes</classes>
     </configuration>
-    <module organization="org.scala-lang" name="scala-library" revision="2.10.1" artifactType="jar" classifier="" configurations=""/>
+    <module organization="javax.activation" name="activation" revision="1.1.1" artifactType="jar" classifier="" configurations=""/>
+    <module organization="javax.mail" name="mail" revision="1.4.4" artifactType="jar" classifier="" configurations=""/>
+    <module organization="org.apache.james" name="apache-mailet-api" revision="2.5.0" artifactType="jar" classifier="" configurations=""/>
+    <module organization="org.apache.james" name="apache-mailet-base" revision="2.5.0" artifactType="jar" classifier="" configurations=""/>
+    <module organization="org.scala-lang" name="scala-library" revision="2.10.2" artifactType="jar" classifier="" configurations=""/>
     <resolver name="public" root="http://repo1.maven.org/maven2/"/>
   </project>
   <project>
@@ -255,7 +258,7 @@
     <target>./target</target>
     <build>
       <import>import sbt._, Keys._</import>
-      <import>import RootBuild._</import>
+      <import>import Test._</import>
       <classes>~/.sbt/boot/scala-2.10.2/lib/jansi.jar</classes>
       <classes>~/.sbt/boot/scala-2.10.2/lib/jline.jar</classes>
       <classes>~/.sbt/boot/scala-2.10.2/lib/scala-compiler.jar</classes>
@@ -299,7 +302,7 @@
       <classes>~/.sbt/boot/scala-2.10.2/org.scala-sbt/sbt/0.13.0/testing-0.13.0.jar</classes>
       <classes>~/.sbt/boot/scala-2.10.2/org.scala-sbt/sbt/0.13.0/tracking-0.13.0.jar</classes>
       <classes>~/.sbt/boot/scala-2.10.2/org.scala-sbt/sbt/0.13.0/xsbti/interface-0.13.0.jar</classes>
-      <classes>~/Projects/sbt-structure/src/test/data/multiple/project/target/scala-2.10/sbt-0.13/classes</classes>
+      <classes>~/Projects/sbt-structure/src/test/data/classifiers/project/target/scala-2.10/sbt-0.13/classes</classes>
       <sources>~/.ivy2/cache/org.scala-sbt/sbt/srcs/sbt-0.13.0-sources.jar</sources>
       <sources>~/.ivy2/cache/org.scala-sbt/main/srcs/main-0.13.0-sources.jar</sources>
       <sources>~/.ivy2/cache/org.scala-sbt/actions/srcs/actions-0.13.0-sources.jar</sources>
@@ -345,39 +348,62 @@
       <sources>~/.ivy2/cache/org.scala-sbt/precompiled-2_9_3/srcs/precompiled-2_9_3-0.13.0-sources.jar</sources>
     </build>
     <scala>
-      <version>2.9.2</version>
-      <library>~/.ivy2/cache/org.scala-lang/scala-library/jars/scala-library-2.9.2.jar</library>
-      <compiler>~/.ivy2/cache/org.scala-lang/scala-compiler/jars/scala-compiler-2.9.2.jar</compiler>
+      <version>2.10.2</version>
+      <library>~/.sbt/boot/scala-2.10.2/lib/scala-library.jar</library>
+      <compiler>~/.sbt/boot/scala-2.10.2/lib/scala-compiler.jar</compiler>
+      <extra>~/.sbt/boot/scala-2.10.2/lib/scala-reflect.jar</extra>
     </scala>
     <configuration id="compile">
       <sources>./src/main/java</sources>
       <sources>./src/main/scala</sources>
-      <sources managed="true">./target/scala-2.9.2/src_managed/main</sources>
+      <sources managed="true">./target/scala-2.10/src_managed/main</sources>
       <resources>./src/main/resources</resources>
-      <resources managed="true">./target/scala-2.9.2/resource_managed/main</resources>
-      <classes>./target/scala-2.9.2/classes</classes>
+      <resources managed="true">./target/scala-2.10/resource_managed/main</resources>
+      <classes>./target/scala-2.10/classes</classes>
     </configuration>
     <configuration id="test">
       <sources>./src/test/java</sources>
       <sources>./src/test/scala</sources>
-      <sources managed="true">./target/scala-2.9.2/src_managed/test</sources>
+      <sources managed="true">./target/scala-2.10/src_managed/test</sources>
       <resources>./src/test/resources</resources>
-      <resources managed="true">./target/scala-2.9.2/resource_managed/test</resources>
-      <classes>./target/scala-2.9.2/test-classes</classes>
+      <resources managed="true">./target/scala-2.10/resource_managed/test</resources>
+      <classes>./target/scala-2.10/test-classes</classes>
     </configuration>
-    <module organization="org.scala-lang" name="scala-library" revision="2.9.2" artifactType="jar" classifier="" configurations=""/>
+    <module organization="javax.activation" name="activation" revision="1.1.1" artifactType="jar" classifier="" configurations=""/>
+    <module organization="javax.mail" name="mail" revision="1.4.4" artifactType="jar" classifier="" configurations=""/>
+    <module organization="org.apache.james" name="apache-mailet-api" revision="2.5.0" artifactType="jar" classifier="" configurations=""/>
+    <module organization="org.apache.james" name="apache-mailet-base" revision="2.5.0" artifactType="jar" classifier="" configurations=""/>
+    <module organization="org.apache.james" name="apache-mailet-base" revision="2.5.0" artifactType="jar" classifier="tests" configurations="test"/>
+    <module organization="org.scala-lang" name="scala-library" revision="2.10.2" artifactType="jar" classifier="" configurations=""/>
     <resolver name="public" root="http://repo1.maven.org/maven2/"/>
   </project>
   <repository>
-    <module organization="org.scala-lang" name="scala-library" revision="2.10.1" artifactType="jar" classifier="">
-      <jar>~/.ivy2/cache/org.scala-lang/scala-library/jars/scala-library-2.10.1.jar</jar>
-      <doc>~/.ivy2/cache/org.scala-lang/scala-library/docs/scala-library-2.10.1-javadoc.jar</doc>
-      <src>~/.ivy2/cache/org.scala-lang/scala-library/srcs/scala-library-2.10.1-sources.jar</src>
+    <module organization="javax.activation" name="activation" revision="1.1.1" artifactType="jar" classifier="">
+      <jar>~/.ivy2/cache/javax.activation/activation/jars/activation-1.1.1.jar</jar>
+      <src>~/.ivy2/cache/javax.activation/activation/srcs/activation-1.1.1-sources.jar</src>
     </module>
-    <module organization="org.scala-lang" name="scala-library" revision="2.9.2" artifactType="jar" classifier="">
-      <jar>~/.ivy2/cache/org.scala-lang/scala-library/jars/scala-library-2.9.2.jar</jar>
-      <doc>~/.ivy2/cache/org.scala-lang/scala-library/docs/scala-library-2.9.2-javadoc.jar</doc>
-      <src>~/.ivy2/cache/org.scala-lang/scala-library/srcs/scala-library-2.9.2-sources.jar</src>
+    <module organization="javax.mail" name="mail" revision="1.4.4" artifactType="jar" classifier="">
+      <jar>~/.ivy2/cache/javax.mail/mail/jars/mail-1.4.4.jar</jar>
+      <src>~/.ivy2/cache/javax.mail/mail/srcs/mail-1.4.4-sources.jar</src>
+    </module>
+    <module organization="org.apache.james" name="apache-mailet-api" revision="2.5.0" artifactType="jar" classifier="">
+      <jar>~/.ivy2/cache/org.apache.james/apache-mailet-api/jars/apache-mailet-api-2.5.0.jar</jar>
+      <doc>~/.ivy2/cache/org.apache.james/apache-mailet-api/docs/apache-mailet-api-2.5.0-javadoc.jar</doc>
+      <src>~/.ivy2/cache/org.apache.james/apache-mailet-api/srcs/apache-mailet-api-2.5.0-sources.jar</src>
+    </module>
+    <module organization="org.apache.james" name="apache-mailet-base" revision="2.5.0" artifactType="jar" classifier="">
+      <jar>~/.ivy2/cache/org.apache.james/apache-mailet-base/jars/apache-mailet-base-2.5.0.jar</jar>
+      <doc>~/.ivy2/cache/org.apache.james/apache-mailet-base/docs/apache-mailet-base-2.5.0-javadoc.jar</doc>
+      <src>~/.ivy2/cache/org.apache.james/apache-mailet-base/srcs/apache-mailet-base-2.5.0-sources.jar</src>
+    </module>
+    <module organization="org.apache.james" name="apache-mailet-base" revision="2.5.0" artifactType="jar" classifier="tests">
+      <jar>~/.ivy2/cache/org.apache.james/apache-mailet-base/jars/apache-mailet-base-2.5.0-tests.jar</jar>
+      <jar>~/.ivy2/cache/org.apache.james/apache-mailet-base/jars/apache-mailet-base-2.5.0.jar</jar>
+    </module>
+    <module organization="org.scala-lang" name="scala-library" revision="2.10.2" artifactType="jar" classifier="">
+      <jar>~/.ivy2/cache/org.scala-lang/scala-library/jars/scala-library-2.10.2.jar</jar>
+      <doc>~/.ivy2/cache/org.scala-lang/scala-library/docs/scala-library-2.10.2-javadoc.jar</doc>
+      <src>~/.ivy2/cache/org.scala-lang/scala-library/srcs/scala-library-2.10.2-sources.jar</src>
     </module>
   </repository>
 </structure>
