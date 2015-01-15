@@ -3,7 +3,7 @@ package org.jetbrains.sbt
 import sbt._
 import sbt.Keys._
 import sbt.Value
-import sbt.BuildStructure
+import sbt.Load.BuildStructure
 import Utilities._
 import Android._
 
@@ -224,7 +224,7 @@ object Extractor {
     def run[T](task: ScopedKey[Task[T]]): T = {
       Project.runTask(task, state) collect {
         case (_, Value(it)) => it
-      } getOrElse sys.error(s"Couldn't run: $task")
+      } getOrElse sys.error("Couldn't run: " + task)
     }
 
     def getModuleReports(task: TaskKey[UpdateReport]): Seq[ModuleReport] = {

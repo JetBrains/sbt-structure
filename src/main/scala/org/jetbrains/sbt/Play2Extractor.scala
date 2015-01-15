@@ -2,6 +2,7 @@ package org.jetbrains.sbt
 
 import sbt.Keys._
 import sbt._
+import sbt.Load.BuildStructure
 
 import scala.collection.mutable
 import scala.xml.XML
@@ -37,11 +38,11 @@ object Play2Extractor {
   case class KeyInfo[Value](myName: String, tagName: String, values: Seq[(String, Value)]) {//todo escape ???
     def toXml =
       XML.loadString(
-        s"<$tagName>${values.map{case (projectName, v) => s"<$projectName>${valToXml(v)}</$projectName>"}.mkString("")}</$tagName>"
+        "<" + tagName + ">" + values.map { case (projectName, v) => "<" + projectName + ">" + valToXml(v) + "</" + projectName + ">"}.mkString("") + "</" + tagName + ">"
       )
 
     private def valToXml(a: Any) = a match {
-      case s: Iterable[_] => s.map(v => s"<entry>$v</entry>").mkString("")
+      case s: Iterable[_] => s.map(v => "<entry>" + v + "</entry>").mkString("")
       case tt: Option[_] => tt.map(_.toString) getOrElse ""
       case other => other.toString
     }
@@ -50,7 +51,7 @@ object Play2Extractor {
   private class KeyChain(val markerKey: KeyWithScope, val keys: Seq[KeyWithScope]) {
     protected val allKeys = markerKey +: keys
 
-    def processKey(key: Def.ScopedKey[_]): Unit = {
+    def processKey(key: ScopedKey[_]): Unit = {
       allKeys.find(_.extract(key))
     }
   }
@@ -60,7 +61,7 @@ object Play2Extractor {
 
     val myValues = mutable.HashMap[String, Value]()
 
-    def extract(key: Def.ScopedKey[_]): Boolean = {
+    def extract(key: ScopedKey[_]): Boolean = {
       val attrKey = key.key
 
       if (attrKey.label != label) false else {
@@ -132,7 +133,7 @@ object Play2Extractor {
       case _ => None
     }
 
-    override def extract(key: Def.ScopedKey[_]): Boolean = {
+    override def extract(key: ScopedKey[_]): Boolean = {
       val attrKey = key.key
 
       if (attrKey.label != label) false else {
