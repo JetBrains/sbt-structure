@@ -1,13 +1,18 @@
 package org.jetbrains.sbt
 
 import org.scalatest.FunSuite
+import org.scalatest._
 import java.io.File
 
 /**
  * @author Pavel Fatin
  */
 class ImportTest extends FunSuite {
-  val DataDir = new File("src/test/data")
+  val DataDir = new File("src/test/data/" + TestCompat.sbtVersion)
+
+  test("version assert") {
+    assert(Set("0.13", "0.12").contains(TestCompat.sbtVersion))
+  }
 
   test("bare projects") {
     doTest("bare", download = false)
@@ -41,7 +46,7 @@ class ImportTest extends FunSuite {
     doTest("play", download = false, sbtVersion = "0.13.5")
   }
 
-  private def doTest(project: String, download: Boolean = true, sbtVersion: String = "0.13.0") {
+  private def doTest(project: String, download: Boolean = true, sbtVersion: String = TestCompat.sbtVersionFull) {
     val base = new File(DataDir, project)
 
     val actual = Loader.load(base, download, sbtVersion).mkString("\n")
