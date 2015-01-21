@@ -175,10 +175,6 @@ object Extractor {
   }
 
   private def createModuleIdentifier(moduleId: ModuleID, artifact: Option[Artifact]): ModuleIdentifier = {
-    val fusingTypes = Seq("jar", "bundle", "aar", "src", "doc")
-    def fuseArtifactType(artifact: Artifact): String =
-      if (fusingTypes.contains(artifact.`type`)) fusingTypes.head else artifact.`type`
-
     val fusingClassifiers = Seq("", "sources", "javadoc")
     def fuseClassifier(artifact: Artifact): String = artifact.classifier match {
       case Some(classifier) if fusingClassifiers.contains(classifier) => fusingClassifiers.head
@@ -186,7 +182,7 @@ object Extractor {
       case None => fusingClassifiers.head
     }
 
-    val artifactType = artifact map fuseArtifactType getOrElse fusingTypes.head
+    val artifactType = "jar"
     val classifier   = artifact map fuseClassifier getOrElse fusingClassifiers.head
     ModuleIdentifier(moduleId.organization, moduleId.name, moduleId.revision, artifactType, classifier)
   }
