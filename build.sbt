@@ -14,6 +14,8 @@ scalaVersion := "2.10.4" // be careful - version changes during cross-building(u
 
 libraryDependencies += "org.scalatest" %% "scalatest" % "1.9.2" % "test"
 
+libraryDependencies += "org.specs2" %% "specs2" % "1.12.3" % "test"
+
 publishMavenStyle := false
 
 bintrayPublishSettings

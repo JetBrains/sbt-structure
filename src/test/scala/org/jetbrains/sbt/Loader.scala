@@ -11,7 +11,7 @@ object Loader {
   private val SbtLauncher = path(new File("sbt-launch.jar"))
   private val SbtPlugin = path(new File("target/scala-" + TestCompat.scalaVersion + "/sbt-"+ TestCompat.sbtVersion +"/classes/"))
 
-  def load(project: File, download: Boolean, sbtVersion: String): Seq[String] = {
+  def load(project: File, download: Boolean, sbtVersion: String, verbose: Boolean = false): Seq[String] = {
     val structureFile = createTempFile("sbt-structure", ".xml")
     val commandsFile = createTempFile("sbt-commands", ".lst")
 
@@ -29,7 +29,7 @@ object Loader {
       "-jar", SbtLauncher,
       "< " + path(commandsFile))
 
-    run(commands, project)
+    run(commands, project, verbose)
 
     assert(structureFile.exists, "File must be created: " + structureFile.getPath)
 
@@ -50,18 +50,18 @@ object Loader {
     writer.close()
   }
 
-  private def run(commands: Seq[String], directory: File) {
+  private def run(commands: Seq[String], directory: File, verbose: Boolean) {
     val process = Runtime.getRuntime.exec(commands.toArray, null, directory)
 
     val stdinThread = inThread {
       Source.fromInputStream(process.getInputStream).getLines().foreach { it =>
-        System.out.println("stdout: " + it)
+        if (verbose) System.out.println("stdout: " + it) else ()
       }
     }
 
     val stderrThread = inThread {
       Source.fromInputStream(process.getErrorStream).getLines().foreach { it =>
-        System.err.println("stderr: " + it)
+        if (verbose) System.err.println("stderr: " + it) else ()
       }
     }
 

@@ -1,10 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <structure sbt="0.12.4">
   <project>
-    <id>bare</id>
+    <id>simple</id>
     <name>some-name</name>
     <organization>some-organization</organization>
     <version>1.2.3</version>
-    <base>$BASE</base>
+    <base>/home/miha/IdeaProjects/sbt-structure/src/test/data/0.12/simple</base>
     <target>./target</target>
     <build>
       <import>import sbt._, Process._, Keys._</import>
@@ -89,11 +90,18 @@
       <sources>~/.ivy2/cache/org.scala-sbt/precompiled-2_9_3/srcs/precompiled-2_9_3-0.12.4-sources.jar</sources>
       <sources>~/.ivy2/cache/org.scala-sbt/precompiled-2_10_1/srcs/precompiled-2_10_1-0.12.4-sources.jar</sources>
     </build>
+    <java>
+      <home>./some/home</home>
+      <option>-j1</option>
+      <option>-j2</option>
+    </java>
     <scala>
       <version>2.10.1</version>
       <library>~/.sbt/boot/scala-2.10.1/lib/scala-library.jar</library>
       <compiler>~/.sbt/boot/scala-2.10.1/lib/scala-compiler.jar</compiler>
       <extra>~/.sbt/boot/scala-2.10.1/lib/scala-reflect.jar</extra>
+      <option>-s1</option>
+      <option>-s2</option>
     </scala>
     <configuration id="compile">
       <sources >./src/main/java</sources>

@@ -9,6 +9,7 @@
     <target>./target</target>
     <build>
       <import>import sbt._, Keys._</import>
+      <classes>~/.sbt/0.13/plugins/target/scala-2.10/sbt-0.13/classes</classes>
       <classes>~/.sbt/boot/scala-2.10.2/lib/jansi.jar</classes>
       <classes>~/.sbt/boot/scala-2.10.2/lib/jline.jar</classes>
       <classes>~/.sbt/boot/scala-2.10.2/lib/scala-compiler.jar</classes>
