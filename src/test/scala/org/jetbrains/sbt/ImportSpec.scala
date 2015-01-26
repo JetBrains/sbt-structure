@@ -14,13 +14,16 @@ class ImportSpec extends Specification with XmlMatchers {
   def testProject(project: String,  download: Boolean = true, sbtVersion: String = TestCompat.sbtVersionFull) = {
 
     val base = new File(testDataRoot, project)
-    val actual = Loader.load(base, download, sbtVersion).mkString("\n")
+    val actual = Loader.load(base, download, sbtVersion, verbose = true).mkString("\n")
 
     val expected = {
       val fs = new FS(new File(System.getProperty("user.home")))
       val text = read(new File(base, "structure.xml")).mkString("\n")
       val androidHome = this.androidHome getOrElse ""
-      text.replace("$BASE", FS.toPath(base)).replace("$ANDROID_HOME", androidHome).replace("$SHORTBASE", FS.toRichFile(base)(fs).path)
+      text
+        .replace("$BASE", FS.toPath(base))
+        .replace("$ANDROID_HOME", androidHome)
+        .replace("$SHORTBASE", FS.toRichFile(base)(fs).path)
     }
 
     val a = XML.loadString(actual)
