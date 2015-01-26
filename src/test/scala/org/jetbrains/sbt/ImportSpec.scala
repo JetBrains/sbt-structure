@@ -1,9 +1,11 @@
 package org.jetbrains.sbt
 
-import java.io.{PrintWriter, File}
+import java.io.File
 
+import difflib._
 import org.specs2.matcher.XmlMatchers
 import org.specs2.mutable._
+
 import scala.xml._
 
 class ImportSpec extends Specification with XmlMatchers {
@@ -14,7 +16,7 @@ class ImportSpec extends Specification with XmlMatchers {
   def testProject(project: String,  download: Boolean = true, sbtVersion: String = TestCompat.sbtVersionFull) = {
 
     val base = new File(testDataRoot, project)
-    val actual = Loader.load(base, download, sbtVersion, verbose = true).mkString("\n")
+    val actual = Loader.load(base, download, sbtVersion, verbose = false).mkString("\n")
 
     val expected = {
       val fs = new FS(new File(System.getProperty("user.home")))
@@ -30,10 +32,12 @@ class ImportSpec extends Specification with XmlMatchers {
     val e = XML.loadString(expected)
 
     def onFail = {
-      val asd = new PrintWriter(new File(base, "actual.xml"))
-      asd.write(actual)
-      asd.close()
-      "Failed for project: " + project + "\nSee actual.xml"
+      import scala.collection.JavaConversions._
+
+      val  diff = DiffUtils.diff(expected.lines.toList, actual.lines.toList)
+      println("DIFF: " + project)
+      diff.getDeltas foreach {d => println(d.getOriginal + "\n" + d.getRevised + "\n") }
+      "Failed for project: " + project
     }
 
     a must beEqualToIgnoringSpace(e).updateMessage(_ => onFail)

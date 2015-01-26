@@ -12,7 +12,7 @@ licenses += ("Apache-2.0", url("http://www.apache.org/licenses/LICENSE-2.0.html"
 
 scalaVersion := "2.10.4" // be careful - version changes during cross-building(use portable code)
 
-libraryDependencies += "org.scalatest" %% "scalatest" % "1.9.2" % "test"
+libraryDependencies += "com.googlecode.java-diff-utils" % "diffutils" % "1.2" withSources()
 
 libraryDependencies += "org.specs2" %% "specs2" % "1.12.3" % "test"
 
