@@ -161,7 +161,7 @@ object Extractor {
 
     moduleToConfigurations.map { case (moduleId, configurations) =>
       ModuleDependencyData(
-        createModuleIdentifier(moduleId, moduleId.explicitArtifacts.headOption),
+        createModuleIdentifier(moduleId, moduleId.explicitArtifacts),
         mapConfigurations(configurations))
     }.foldLeft(Seq.empty[ModuleDependencyData]) { (acc, moduleData) =>
       acc.find(_.id == moduleData.id) match {
@@ -174,7 +174,7 @@ object Extractor {
     }
   }
 
-  private def createModuleIdentifier(moduleId: ModuleID, artifact: Option[Artifact]): ModuleIdentifier = {
+  private def createModuleIdentifier(moduleId: ModuleID, artifacts: Seq[Artifact]): ModuleIdentifier = {
     val fusingClassifiers = Seq("", "sources", "javadoc")
     def fuseClassifier(artifact: Artifact): String = artifact.classifier match {
       case Some(classifier) if fusingClassifiers.contains(classifier) => fusingClassifiers.head
@@ -183,7 +183,7 @@ object Extractor {
     }
 
     val artifactType = "jar"
-    val classifier   = artifact map fuseClassifier getOrElse fusingClassifiers.head
+    val classifier   = artifacts.map(fuseClassifier).find(!_.isEmpty).getOrElse(fusingClassifiers.head)
     ModuleIdentifier(moduleId.organization, moduleId.name, moduleId.revision, artifactType, classifier)
   }
 
@@ -263,7 +263,7 @@ object Extractor {
       val allArtifacts = reports.flatMap(_.artifacts)
       def artifacts(kinds: Set[String]) = allArtifacts.collect { case (a, f) if kinds contains a.`type` => f }.toSet
 
-      val id = createModuleIdentifier(module, allArtifacts.headOption.map(_._1))
+      val id = createModuleIdentifier(module, allArtifacts.map(_._1))
       ModuleData(id, artifacts(classpathTypes), artifacts(docTypes), artifacts(srcTypes))
     }
   }
