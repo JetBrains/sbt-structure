@@ -10,7 +10,7 @@ import scala.xml.{Elem, Text}
 /**
  * @author Pavel Fatin
  */
-case class FS(home: File, base: Option[File] = None) {
+case class FS(home: File, projectBase: File, base: Option[File] = None) {
   def withBase(base: File): FS = copy(base = Some(base))
 }
 
@@ -22,11 +22,19 @@ object FS {
 
   implicit def toRichFile(file: File)(implicit fs: FS) = new {
     def path: String = {
-      val home = toPath(fs.home)
-      val base = fs.base.map(toPath)
+      val filePath = toPath(file)
+      val homePath = toPath(fs.home)
+      val projectBasePath = toPath(fs.projectBase)
+      val basePath = fs.base.map(toPath)
+      val relativeProjectBasePath = fs.base.flatMap(it => relativize(it, fs.projectBase))
 
-      val path = toPath(file)
-      replace(base.map(it => replace(path, it + "/", BasePrefix)).getOrElse(path), home + "/", HomePrefix)
+      val result = for {
+        baseReplaced <- basePath.map(it => replace(filePath, it + "/", BasePrefix)).orElse(Some(filePath))
+        projectBaseReplaced <- relativeProjectBasePath.map(it => replace(baseReplaced, projectBasePath + "/", it)).orElse(Some(baseReplaced))
+      } yield {
+        replace(projectBaseReplaced, homePath + "/", HomePrefix)
+      }
+      result.get
     }
 
     def absolutePath: String = toPath(file)
@@ -37,12 +45,26 @@ object FS {
     if (target.startsWith(prefix)) replacement + path.substring(root.length) else path
   }
 
+  private def relativize(base: File, projectBase: File): Option[String] = {
+    var parent = base.getParentFile
+    var dots = "../"
+    while (parent != null) {
+      if (parent != projectBase) {
+        dots += "../"
+        parent = parent.getParentFile
+      } else {
+        return Some(dots)
+      }
+    }
+    None
+  }
+
   def toPath(file: File) = file.getAbsolutePath.replace('\\', '/')
 }
 
 case class StructureData(sbt: String, scala: ScalaData, projects: Seq[ProjectData], repository: Option[RepositoryData], localCachePath: Option[String]) {
-  def toXML(home: File): Elem = {
-    val fs = new FS(home)
+  def toXML(home: File, projectBase: File): Elem = {
+    val fs = new FS(home, projectBase)
 
     <structure sbt={sbt}>
       {projects.sortBy(_.base).map(project => project.toXML(fs.withBase(project.base)))}
@@ -82,7 +104,7 @@ case class BuildData(imports: Seq[String], classes: Seq[File], docs: Seq[File], 
       {imports.map { it =>
         <import>{it}</import>
       }}
-      {classes.map(_.path).filter(_.startsWith(FS.HomePrefix)).sorted.map { it =>
+      {classes.map(_.path).sorted.map { it =>
         <classes>{it}</classes>
       }}
       {docs.map { it =>

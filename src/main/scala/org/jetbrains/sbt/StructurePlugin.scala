@@ -25,10 +25,11 @@ object StructurePlugin extends Plugin {
 
     val text = {
       val home = new File(System.getProperty("user.home"))
+      val base = new File(System.getProperty("user.dir"))
       if (prettyPrint)
-        new PrettyPrinter(180, 2).format(structure.toXML(home))
+        new PrettyPrinter(180, 2).format(structure.toXML(home, base))
       else
-        xml.Utility.trim(structure.toXML(home)).mkString
+        xml.Utility.trim(structure.toXML(home, base)).mkString
     }
 
     Keys.artifactPath.in(Project.current(state)).get(Project.extract(state).structure.data).map { file =>
