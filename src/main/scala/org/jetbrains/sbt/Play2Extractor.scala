@@ -27,6 +27,8 @@ object Play2Extractor {
 
   private val GLOBAL_TAG = "$global$"
 
+  @inline private def processPath(path: String) = path stripSuffix "/" stripSuffix "\\"
+
   case class Play2Data(keys: Seq[KeyInfo[_]]) {
     def toXml =
       <playimps>
@@ -117,7 +119,7 @@ object Play2Extractor {
 
     override def transform(any: Any): Option[Value] = {
       any match {
-        case file: File => Some(file.getAbsolutePath)
+        case file: File => Some(processPath(file.getAbsolutePath))
         case _ => None
       }
     }
@@ -128,7 +130,9 @@ object Play2Extractor {
     override type Value = String
 
     override def transform(any: Any): Option[Value] = any match {
-      case uri: URI => Some(uri.toString)
+      case uri: URI =>
+        val file = new File(uri)
+        if (file.exists()) Some(processPath(file.getAbsolutePath)) else Some(uri.toString)
       case _ => None
     }
 
