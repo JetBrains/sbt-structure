@@ -175,16 +175,15 @@ object Extractor {
   }
 
   private def createModuleIdentifier(moduleId: ModuleID, artifacts: Seq[Artifact]): ModuleIdentifier = {
-    val fusingClassifiers = Seq("", "sources", "javadoc")
+    val fusingClassifiers = Seq("", Artifact.DocClassifier, Artifact.SourceClassifier)
     def fuseClassifier(artifact: Artifact): String = artifact.classifier match {
-      case Some(classifier) if fusingClassifiers.contains(classifier) => fusingClassifiers.head
-      case Some(classifier) => classifier
+      case Some(c) if fusingClassifiers.contains(c) => fusingClassifiers.head
+      case Some(c) => c
       case None => fusingClassifiers.head
     }
 
-    val artifactType = "jar"
-    val classifier   = artifacts.map(fuseClassifier).find(!_.isEmpty).getOrElse(fusingClassifiers.head)
-    ModuleIdentifier(moduleId.organization, moduleId.name, moduleId.revision, artifactType, classifier)
+    val classifier = artifacts.map(fuseClassifier).find(!_.isEmpty).getOrElse(fusingClassifiers.head)
+    ModuleIdentifier(moduleId.organization, moduleId.name, moduleId.revision, Artifact.DefaultType, classifier)
   }
 
   def jarDependenciesIn(state: State, projectRef: ProjectRef): Seq[JarDependencyData] = {
@@ -227,6 +226,7 @@ object Extractor {
         case (_, Value(it)) => it
       } getOrElse sys.error(s"Couldn't run: $task")
     }
+
     def getModuleReports(task: TaskKey[UpdateReport]): Seq[ModuleReport] = {
       val updateReport: UpdateReport = run(task in projectRef)
       val configurationReports = {
@@ -237,24 +237,22 @@ object Extractor {
       configurationReports.flatMap(_.modules).filter(_.artifacts.nonEmpty)
     }
 
-    val moduleReports =
-      if (resolveClassifiers) {
-        val reports = getModuleReports(updateClassifiers)
-        def onlySourcesAndDocs(artifacts: Seq[Artifact]): Boolean =
-          artifacts.forall { a => a.`type` == "src" || a.`type` == "doc" }
-        // `updateClassifiers` doesn't resolve dependencies with non-empty
-        // classifiers so we get them from `update`; but only them - otherwise
-        // some jars may be duplicated (e.g. scala-library from .sbt and .ivy)
-        reports ++ getModuleReports(update).filter { r =>
-          reports.forall { m => m.module != r.module || onlySourcesAndDocs(m.artifacts.map(_._1)) } ||
-            r.artifacts.flatMap(_._1.classifier).nonEmpty
-        }
-      } else
-        getModuleReports(update)
+    val binaryReports = getModuleReports(update)
+    lazy val reportsWithDocs = {
+      def onlySourcesAndDocs(artifacts: Seq[(Artifact, File)]): Seq[(Artifact, File)] =
+        artifacts.collect { case (a, f) if a.`type` == Artifact.DocType || a.`type` == Artifact.SourceType => (a, f) }
+
+      val docAndSrcReports = getModuleReports(updateClassifiers)
+      binaryReports.map { report =>
+        val matchingDocs = docAndSrcReports.filter(_.module == report.module)
+        val docsArtifacts = matchingDocs.flatMap { r => onlySourcesAndDocs(r.artifacts) }
+        new ModuleReport(report.module, report.artifacts ++ docsArtifacts, Seq.empty)
+      }
+    }
 
     val classpathTypes = Keys.classpathTypes.in(projectRef).get(structure.data).get
-
-    merge(moduleReports, classpathTypes, Set("doc"), Set("src"))
+    merge(if (resolveClassifiers) reportsWithDocs else binaryReports,
+          classpathTypes, Set(Artifact.DocType), Set(Artifact.SourceType))
   }
 
   private def merge(moduleReports: Seq[ModuleReport], classpathTypes: Set[String], docTypes: Set[String], srcTypes: Set[String]): Seq[ModuleData] = {
@@ -279,7 +277,7 @@ object Extractor {
 
     def artifacts(kind: String) = allArtifacts.filter(_._1.`type` == kind).map(_._2).distinct
 
-    (artifacts("doc"), artifacts("src"))
+    (artifacts(Artifact.DocType), artifacts(Artifact.SourceType))
   }
 
   def extractResolvers(state: State, projectRef: ProjectRef): Set[ResolverData] =
