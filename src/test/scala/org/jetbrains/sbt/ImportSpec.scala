@@ -1,6 +1,6 @@
 package org.jetbrains.sbt
 
-import java.io.File
+import java.io.{PrintWriter, File}
 
 import difflib._
 import org.specs2.matcher.XmlMatchers
@@ -19,7 +19,7 @@ class ImportSpec extends Specification with XmlMatchers {
     val actual = Loader.load(base, download, sbtVersion, verbose = false).mkString("\n")
 
     val expected = {
-      val fs = new FS(new File(System.getProperty("user.home")))
+      val fs = new FS(new File(System.getProperty("user.home")), base)
       val text = read(new File(base, "structure.xml")).mkString("\n")
       val androidHome = this.androidHome getOrElse ""
       text
@@ -34,6 +34,9 @@ class ImportSpec extends Specification with XmlMatchers {
     def onFail = {
       import scala.collection.JavaConversions._
 
+      val act = new PrintWriter(new File(base, "actual.xml"))
+      act.write(actual)
+      act.close()
       val  diff = DiffUtils.diff(expected.lines.toList, actual.lines.toList)
       println("DIFF: " + project)
       diff.getDeltas foreach {d => println(d.getOriginal + "\n" + d.getRevised + "\n") }

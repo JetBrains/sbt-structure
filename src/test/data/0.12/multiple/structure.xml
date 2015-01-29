@@ -10,6 +10,7 @@
     <build>
       <import>import sbt._, Process._, Keys._</import>
       <import>import RootBuild._</import>
+      <classes>./project/target/scala-2.9.2/sbt-0.12/classes</classes>
       <classes>~/.sbt/boot/scala-2.9.2/lib/jansi.jar</classes>
       <classes>~/.sbt/boot/scala-2.9.2/lib/jline.jar</classes>
       <classes>~/.sbt/boot/scala-2.9.2/lib/scala-compiler.jar</classes>
@@ -127,6 +128,7 @@
     <build>
       <import>import sbt._, Process._, Keys._</import>
       <import>import RootBuild._</import>
+      <classes>../project/target/scala-2.9.2/sbt-0.12/classes</classes>
       <classes>~/.sbt/boot/scala-2.9.2/lib/jansi.jar</classes>
       <classes>~/.sbt/boot/scala-2.9.2/lib/jline.jar</classes>
       <classes>~/.sbt/boot/scala-2.9.2/lib/scala-compiler.jar</classes>
@@ -167,7 +169,6 @@
       <classes>~/.sbt/boot/scala-2.9.2/org.scala-sbt/sbt/0.12.4/testing-0.12.4.jar</classes>
       <classes>~/.sbt/boot/scala-2.9.2/org.scala-sbt/sbt/0.12.4/tracking-0.12.4.jar</classes>
       <classes>~/.sbt/boot/scala-2.9.2/org.scala-sbt/sbt/0.12.4/xsbti/interface-0.12.4.jar</classes>
-      <classes>~/IdeaProjects/sbt-structure/src/test/data/0.12/multiple/project/target/scala-2.9.2/sbt-0.12/classes</classes>
       <sources>~/.ivy2/cache/org.scala-sbt/sbt/srcs/sbt-0.12.4-sources.jar</sources>
       <sources>~/.ivy2/cache/org.scala-sbt/main/srcs/main-0.12.4-sources.jar</sources>
       <sources>~/.ivy2/cache/org.scala-sbt/actions/srcs/actions-0.12.4-sources.jar</sources>
@@ -244,6 +245,7 @@
     <build>
       <import>import sbt._, Process._, Keys._</import>
       <import>import RootBuild._</import>
+      <classes>../project/target/scala-2.9.2/sbt-0.12/classes</classes>
       <classes>~/.sbt/boot/scala-2.9.2/lib/jansi.jar</classes>
       <classes>~/.sbt/boot/scala-2.9.2/lib/jline.jar</classes>
       <classes>~/.sbt/boot/scala-2.9.2/lib/scala-compiler.jar</classes>
@@ -284,7 +286,6 @@
       <classes>~/.sbt/boot/scala-2.9.2/org.scala-sbt/sbt/0.12.4/testing-0.12.4.jar</classes>
       <classes>~/.sbt/boot/scala-2.9.2/org.scala-sbt/sbt/0.12.4/tracking-0.12.4.jar</classes>
       <classes>~/.sbt/boot/scala-2.9.2/org.scala-sbt/sbt/0.12.4/xsbti/interface-0.12.4.jar</classes>
-      <classes>~/IdeaProjects/sbt-structure/src/test/data/0.12/multiple/project/target/scala-2.9.2/sbt-0.12/classes</classes>
       <sources>~/.ivy2/cache/org.scala-sbt/sbt/srcs/sbt-0.12.4-sources.jar</sources>
       <sources>~/.ivy2/cache/org.scala-sbt/main/srcs/main-0.12.4-sources.jar</sources>
       <sources>~/.ivy2/cache/org.scala-sbt/actions/srcs/actions-0.12.4-sources.jar</sources>
