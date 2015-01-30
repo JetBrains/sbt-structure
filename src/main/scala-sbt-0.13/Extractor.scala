@@ -216,6 +216,12 @@ object Extractor extends ExtractorBase {
     }
   }
 
+  private class MyModuleReport(val module: ModuleID, val artifacts: Seq[(Artifact, File)]) {
+    def this(report: ModuleReport) {
+      this(report.module, report.artifacts)
+    }
+  }
+
   def extractModules(state: State, structure: BuildStructure, projectRef: ProjectRef, resolveClassifiers: Boolean): Seq[ModuleData] = {
     def run[T](task: ScopedKey[Task[T]]): T = {
       Project.runTask(task, state) collect {
@@ -223,14 +229,14 @@ object Extractor extends ExtractorBase {
       } getOrElse sys.error("Couldn't run: " + task)
     }
 
-    def getModuleReports(task: TaskKey[UpdateReport]): Seq[ModuleReport] = {
+    def getModuleReports(task: TaskKey[UpdateReport]): Seq[MyModuleReport] = {
       val updateReport: UpdateReport = run(task in projectRef)
       val configurationReports = {
         val relevantConfigurationNames = DependencyConfigurations.map(_.name).toSet
         updateReport.configurations.filter(report => relevantConfigurationNames.contains(report.configuration))
       }
 
-      configurationReports.flatMap(_.modules).filter(_.artifacts.nonEmpty)
+      configurationReports.flatMap{ r => r.modules.map(new MyModuleReport(_)) }.filter(_.artifacts.nonEmpty)
     }
 
     val binaryReports = getModuleReports(update)
@@ -242,7 +248,7 @@ object Extractor extends ExtractorBase {
       binaryReports.map { report =>
         val matchingDocs = docAndSrcReports.filter(_.module == report.module)
         val docsArtifacts = matchingDocs.flatMap { r => onlySourcesAndDocs(r.artifacts) }
-        new ModuleReport(report.module, report.artifacts ++ docsArtifacts, Seq.empty)
+        new MyModuleReport(report.module, report.artifacts ++ docsArtifacts)
       }
     }
 
@@ -251,7 +257,7 @@ object Extractor extends ExtractorBase {
           classpathTypes, Set(Artifact.DocType), Set(Artifact.SourceType))
   }
 
-  private def merge(moduleReports: Seq[ModuleReport], classpathTypes: Set[String], docTypes: Set[String], srcTypes: Set[String]): Seq[ModuleData] = {
+  private def merge(moduleReports: Seq[MyModuleReport], classpathTypes: Set[String], docTypes: Set[String], srcTypes: Set[String]): Seq[ModuleData] = {
     val moduleReportsGrouped = moduleReports.groupBy{ rep => rep.module.artifacts(rep.artifacts.map(_._1):_*) }.toSeq
     moduleReportsGrouped.map { case (module, reports) =>
       val allArtifacts = reports.flatMap(_.artifacts)
