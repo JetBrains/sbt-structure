@@ -2,7 +2,6 @@ package org.jetbrains.sbt
 
 import sbt.Keys._
 import sbt._
-import sbt.Load.BuildStructure
 
 import scala.collection.mutable
 import scala.xml.XML

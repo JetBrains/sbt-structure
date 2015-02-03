@@ -6,6 +6,7 @@ import difflib._
 import org.specs2.matcher.XmlMatchers
 import org.specs2.mutable._
 
+import scala.language.reflectiveCalls
 import scala.xml._
 
 class ImportSpec extends Specification with XmlMatchers {

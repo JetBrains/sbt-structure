@@ -1,11 +1,13 @@
 package org.jetbrains.sbt
 
+import scala.language.reflectiveCalls
+
 import sbt._
 import sbt.Keys._
 
 
 object Android {
-  def extractAndroid(structure: Load.BuildStructure, projectRef: ProjectRef,
+  def extractAndroid(structure: BuildStructure, projectRef: ProjectRef,
       state: State): Option[AndroidData] = {
     val plugins = Seq(new AndroidSdkPlugin(structure, projectRef, state))
     for (plugin <- plugins) {
@@ -17,12 +19,12 @@ object Android {
   }
 }
 
-abstract class AndroidSupportPlugin(val structure: Load.BuildStructure,
+abstract class AndroidSupportPlugin(val structure: BuildStructure,
     val projectRef: ProjectRef, val state: State) {
   def extractAndroid: Option[AndroidData]
 }
 
-class AndroidSdkPlugin(structure: Load.BuildStructure, projectRef: ProjectRef,
+class AndroidSdkPlugin(structure: BuildStructure, projectRef: ProjectRef,
     state: State) extends AndroidSupportPlugin(structure, projectRef, state) {
 
   val keys = state.attributes.get(sessionSettings) match {
@@ -44,10 +46,10 @@ class AndroidSdkPlugin(structure: Load.BuildStructure, projectRef: ProjectRef,
     val libraryProject   = SettingKey[Boolean]("library-project")
     val proguardConfig   = TaskKey[Seq[String]]("proguard-config")
     val proguardOptions  = TaskKey[Seq[String]]("proguard-options")
-    val projectLayout    = keys.filter { k => k.key.label == "projectLayout" && inAndroidScope(k) }
-                               .headOption.map { k => SettingKey(k.key).in(k.scope) }
+    val projectLayout    = keys.find { k => k.key.label == "projectLayout" && inAndroidScope(k) }
+                               .map { k => SettingKey(k.key).in(k.scope) }
 
-    type ProjectLayout = { def res(): File; def assets(): File; def gen(): File; def libs(): File }
+    type ProjectLayout = { def res: File; def assets: File; def gen: File; def libs: File }
   }
 
   def extractAndroid: Option[AndroidData] = {
