@@ -124,10 +124,10 @@ object Extractor extends ExtractorBase {
   }
 
   def extractDependencies(state: State, structure: BuildStructure, projectRef: ProjectRef): DependencyData = {
-    val projectDependencies = {
-      val project = Project.getProject(projectRef, structure).get
-      project.dependencies.map(it => ProjectDependencyData(it.project.project, it.configuration))
-    }
+    val projectDependencies =
+      Keys.buildDependencies.in(projectRef).get(structure.data).map { dep =>
+        dep.classpath.getOrElse(projectRef, Seq.empty).map(it => ProjectDependencyData(it.project.project, it.configuration))
+      }.getOrElse(Seq.empty)
 
     val moduleDependencies = moduleDependenciesIn(state, projectRef)
 
