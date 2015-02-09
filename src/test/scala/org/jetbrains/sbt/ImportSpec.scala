@@ -3,7 +3,7 @@ package org.jetbrains.sbt
 import java.io.{PrintWriter, File}
 
 import difflib._
-import org.specs2.matcher.XmlMatchers
+import org.specs2.matcher.{MatchResult, XmlMatchers}
 import org.specs2.mutable._
 import Utilities._
 
@@ -17,17 +17,21 @@ class ImportSpec extends Specification with XmlMatchers {
   def testProject(project: String,  download: Boolean = true, sbtVersion: String = TestCompat.sbtVersionFull) = {
 
     val base = new File(testDataRoot, project)
-    val actual = Loader.load(base, download, sbtVersion, verbose = false).mkString("\n")
 
     val expected = {
       val fs = new FS(new File(System.getProperty("user.home")), base)
-      val text = read(new File(base, "structure-" + TestCompat.sbtVersionFull+ ".xml")).mkString("\n")
+      val testDataFile = new File(base, "structure-" + TestCompat.sbtVersionFull + ".xml")
+      if (!testDataFile.exists())
+        failure("No test data for version " + TestCompat.sbtVersionFull + " found!")
+      val text = read(testDataFile).mkString("\n")
       val androidHome = this.androidHome getOrElse ""
       text
         .replace("$BASE", FS.toPath(base))
         .replace("$ANDROID_HOME", androidHome)
         .replace("$SHORTBASE", FS.toRichFile(base)(fs).path)
     }
+
+    val actual = Loader.load(base, download, sbtVersion, verbose = false).mkString("\n")
 
     val a = XML.loadString(actual)
     val e = XML.loadString(expected)
