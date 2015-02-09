@@ -5,8 +5,8 @@ import java.io.{PrintWriter, File}
 import difflib._
 import org.specs2.matcher.XmlMatchers
 import org.specs2.mutable._
+import Utilities._
 
-import scala.language.reflectiveCalls
 import scala.xml._
 
 class ImportSpec extends Specification with XmlMatchers {
@@ -21,7 +21,7 @@ class ImportSpec extends Specification with XmlMatchers {
 
     val expected = {
       val fs = new FS(new File(System.getProperty("user.home")), base)
-      val text = read(new File(base, "structure.xml")).mkString("\n")
+      val text = read(new File(base, "structure-" + TestCompat.sbtVersionFull+ ".xml")).mkString("\n")
       val androidHome = this.androidHome getOrElse ""
       text
         .replace("$BASE", FS.toPath(base))
@@ -51,39 +51,41 @@ class ImportSpec extends Specification with XmlMatchers {
 
   def hasAndroidDefined = androidHome must beSome.orSkip("Android SDK home not defined")
 
+  def t(s: String) = s +  " [" + TestCompat.sbtVersionFull+ "]"
+
   "Imported xml" should {
 
     sequential // running 10 sbt instances at once is a bad idea unless you have >16G of ram
 
-    "be same in bare projects" in {
+    t("be same in bare projects") in {
       testProject("bare")
     }
 
-    "be same in multiple projects" in {
+    t("be same in multiple projects") in {
       testProject("multiple")
     }
 
-    "be same in simple project" in {
+    t("be same in simple project") in {
       testProject("simple")
     }
 
-    "be same in managed dependency" in {
+    t("be same in managed dependency") in {
       testProject("dependency")
     }
 
-    "be same in multiple projects with classified deps" in {
+    t("be same in multiple projects with classified deps") in {
       sbt13only and testProject("classifiers")
     }
 
-    "be same in project with optional dependency" in {
+    t("be same in project with optional dependency in") in {
       sbt13only and testProject("optional")
     }
 
-    "be same in play project" in {
+    t("be same in play project") in {
       sbt13only and testProject("play", download = false, sbtVersion = "0.13.5")
     }
 
-    "be same in android project" in {
+    t("be same in android project") in {
       hasAndroidDefined and testProject("android")
     }
 

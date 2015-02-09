@@ -1,13 +1,13 @@
 package org.jetbrains.sbt
 
-import scala.language.reflectiveCalls
+//import scala.language.reflectiveCalls
 
 import sbt._
 import sbt.Keys._
 
 
 object Android {
-  def extractAndroid(structure: BuildStructure, projectRef: ProjectRef,
+  def extractAndroid(structure: sbt.Load.BuildStructure, projectRef: ProjectRef,
       state: State): Option[AndroidData] = {
     val plugins = Seq(new AndroidSdkPlugin(structure, projectRef, state))
     for (plugin <- plugins) {
@@ -19,12 +19,12 @@ object Android {
   }
 }
 
-abstract class AndroidSupportPlugin(val structure: BuildStructure,
+abstract class AndroidSupportPlugin(val structure: sbt.Load.BuildStructure,
     val projectRef: ProjectRef, val state: State) {
   def extractAndroid: Option[AndroidData]
 }
 
-class AndroidSdkPlugin(structure: BuildStructure, projectRef: ProjectRef,
+class AndroidSdkPlugin(structure: sbt.Load.BuildStructure, projectRef: ProjectRef,
     state: State) extends AndroidSupportPlugin(structure, projectRef, state) {
 
   val keys = state.attributes.get(sessionSettings) match {

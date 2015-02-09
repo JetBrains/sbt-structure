@@ -6,8 +6,8 @@ import java.io.File
 import org.jetbrains.sbt.FS._
 import sbt.Configuration
 
-import scala.language.implicitConversions
-import scala.language.reflectiveCalls
+//import scala.language.implicitConversions
+//import scala.language.reflectiveCalls
 import scala.xml.{Elem, Text}
 
 /**

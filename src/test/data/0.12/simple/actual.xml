@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <structure sbt="0.12.4">
   <project>
-    <id>simple</id>
+    <id>default-816fdb</id>
     <name>some-name</name>
     <organization>some-organization</organization>
     <version>1.2.3</version>

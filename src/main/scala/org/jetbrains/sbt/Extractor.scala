@@ -3,10 +3,10 @@ package org.jetbrains.sbt
 import org.jetbrains.sbt.Android._
 import org.jetbrains.sbt.Utilities._
 import sbt.Keys._
-import sbt.Load._
+import sbt.Load.BuildStructure
 import sbt._
 
-import scala.language.reflectiveCalls
+//import scala.language.reflectiveCalls
 
 object Extractor extends ExtractorBase {
   private val ExportableConfigurations = Seq(Compile, Test, IntegrationTest)

@@ -1,6 +1,6 @@
 package org.jetbrains.sbt
 object TestCompat extends TestCompatible {
-  def sbtVersion = "0.13"
-  def sbtVersionFull = "0.13.0"
-  def scalaVersion = "2.10"
+  lazy val sbtVersion = System.getProperty("structure.sbtversion.short")
+  lazy val sbtVersionFull = System.getProperty("structure.sbtversion.full")
+  lazy val scalaVersion = System.getProperty("structure.scalaversion")
 }

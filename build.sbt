@@ -26,4 +26,18 @@ bintrayOrganization in bintray := Some("jetbrains")
 
 crossBuildingSettings
 
-CrossBuilding.crossSbtVersions := Seq("0.13", "0.12")
+CrossBuilding.crossSbtVersions := Seq("0.13.0", "0.12.4")
+
+lazy val setSbtVersionForTests = taskKey[Unit]("sets sbt and scala version properties for use in cross-testing")
+
+setSbtVersionForTests := {
+  System.setProperty("structure.sbtversion.full", CrossBuilding.pluginSbtVersion.value)
+  System.setProperty("structure.sbtversion.short", CrossBuilding.pluginSbtVersion.value.substring(0, 4))
+  System.setProperty("structure.scalaversion", scalaBinaryVersion.value)
+}
+
+test in Test := {
+  setSbtVersionForTests.value
+  (test in Test).value
+}
+

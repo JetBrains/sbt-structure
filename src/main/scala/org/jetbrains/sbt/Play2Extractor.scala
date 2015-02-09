@@ -156,7 +156,7 @@ object Play2Extractor {
   }
 }
 
-class Play2Extractor(structure: BuildStructure, projectRef: ProjectRef, state: State) {
+class Play2Extractor(structure: sbt.Load.BuildStructure, projectRef: ProjectRef, state: State) {
   import org.jetbrains.sbt.Play2Extractor._
 
   private implicit val data = (projectRef, structure.data)
