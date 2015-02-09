@@ -18,8 +18,8 @@ case class FS(home: File, projectBase: File, base: Option[File] = None) {
 }
 
 object FS {
-  val HomePrefix = "~/"
-  val BasePrefix = "./"
+  val HomePrefix = "~"
+  val BasePrefix = "."
 
   private val Windows = System.getProperty("os.name").startsWith("Win")
 
@@ -32,10 +32,10 @@ object FS {
       val relativeProjectBasePath = fs.base.flatMap(it => relativize(it, fs.projectBase))
 
       val result = for {
-        baseReplaced <- basePath.map(it => replace(filePath, it + "/", BasePrefix)).orElse(Some(filePath))
-        projectBaseReplaced <- relativeProjectBasePath.map(it => replace(baseReplaced, projectBasePath + "/", it)).orElse(Some(baseReplaced))
+        baseReplaced <- basePath.map(it => replace(filePath, it, BasePrefix)).orElse(Some(filePath))
+        projectBaseReplaced <- relativeProjectBasePath.map(it => replace(baseReplaced, projectBasePath, it)).orElse(Some(baseReplaced))
       } yield {
-        replace(projectBaseReplaced, homePath + "/", HomePrefix)
+        replace(projectBaseReplaced, homePath, HomePrefix)
       }
       result.get
     }
@@ -45,7 +45,10 @@ object FS {
 
   private def replace(path: String, root: String, replacement: String) = {
     val (target, prefix) = if (Windows) (path.toLowerCase, root.toLowerCase) else (path, root)
-    if (target.startsWith(prefix)) replacement + path.substring(root.length) else path
+    if (target.startsWith(prefix) && (path.length <= root.length || path.charAt(root.length) == '/'))
+      replacement + path.substring(root.length)
+    else
+      path
   }
 
   private def relativize(base: File, projectBase: File): Option[String] = {
@@ -56,7 +59,7 @@ object FS {
         dots += "../"
         parent = parent.getParentFile
       } else {
-        return Some(dots)
+        return Some(dots.init)
       }
     }
     None

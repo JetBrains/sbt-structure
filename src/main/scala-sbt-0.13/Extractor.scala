@@ -116,7 +116,7 @@ object Extractor extends ExtractorBase {
         val base = Keys.baseDirectory.in(projectRef, configuration).get(structure.data).get
         managed.map(DirectoryData(_, managed = true)) ++
           unmanaged.map(DirectoryData(_, managed = false)) ++
-          (if (sourcesInBase) Seq(DirectoryData(base, managed = true)) else Seq.empty)
+          (if (sourcesInBase) Seq(DirectoryData(base, managed = false)) else Seq.empty)
       }
 
       val resources = {
