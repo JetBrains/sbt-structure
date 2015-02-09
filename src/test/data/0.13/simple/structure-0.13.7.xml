@@ -127,6 +127,7 @@
       <option>-s2</option>
     </scala>
     <configuration id="compile">
+      <sources>.</sources>
       <sources>./src/main/java</sources>
       <sources>./src/main/scala</sources>
       <sources managed="true">./target/scala-2.10/src_managed/main</sources>

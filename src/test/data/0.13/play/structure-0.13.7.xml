@@ -206,6 +206,7 @@
       <option>utf8</option>
     </scala>
     <configuration id="compile">
+      <sources>.</sources>
       <sources>./app</sources>
       <sources>./app</sources>
       <sources managed="true">./target/scala-2.10/src_managed/main</sources>
