@@ -52,7 +52,8 @@ object Extractor extends ExtractorBase {
   }
 
   def extractProject(state: State, structure: BuildStructure, projectRef: ProjectRef, download: Boolean): ProjectData = {
-    val id = projectRef.project
+    val id = if (projectRef.project.startsWith("default-")) projectRef.build.getPath.replaceFirst(".*/([^/?]+).*", "$1")
+    else projectRef.project
 
     val name = Keys.name.in(projectRef, Compile).get(structure.data).get
 
