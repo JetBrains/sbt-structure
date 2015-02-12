@@ -2,7 +2,7 @@ import bintray.Keys._
 
 sbtPlugin := true
 
-name := "sbt-structure"
+name := "sbt-structure-" + CrossBuilding.pluginSbtVersion.value
 
 organization := "org.jetbrains"
 
