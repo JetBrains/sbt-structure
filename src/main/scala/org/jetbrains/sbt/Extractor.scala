@@ -122,7 +122,16 @@ object Extractor extends ExtractorBase {
         managed.map(DirectoryData(_, managed = true)) ++ unmanaged.map(DirectoryData(_, managed = false))
       }
 
-      ConfigurationData(configuration.name, sources, resources, output)
+      val excludes = {
+        try {
+          val ideExcludePaths = SettingKey[Seq[File]]("ide-exclude-paths")
+          ideExcludePaths.in(projectRef, configuration).get(structure.data).get
+        } catch {
+          case _ : NoSuchElementException => Seq.empty
+        }
+      }
+
+      ConfigurationData(configuration.name, sources, resources, excludes, output)
     }
   }
 

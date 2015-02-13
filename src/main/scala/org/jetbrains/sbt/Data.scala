@@ -123,14 +123,17 @@ case class BuildData(imports: Seq[String], classes: Seq[File], docs: Seq[File], 
   }
 }
 
-case class ConfigurationData(id: String, sources: Seq[DirectoryData], resources: Seq[DirectoryData], classes: File) {
+case class ConfigurationData(id: String, sources: Seq[DirectoryData], resources: Seq[DirectoryData], excludes: Seq[File], classes: File) {
   def toXML(implicit fs: FS): Elem = {
     <configuration id={id}>
       {sources.sortBy(it => (it.managed, it.file)).map { directory =>
-          <sources managed={format(directory.managed)}>{directory.file.path}</sources>
+        <sources managed={format(directory.managed)}>{directory.file.path}</sources>
       }}
       {resources.sortBy(it => (it.managed, it.file)).map { directory =>
         <resources managed={format(directory.managed)}>{directory.file.path}</resources>
+      }}
+      {excludes.sorted.map { directory =>
+        <exclude>{directory.path}</exclude>
       }}
       <classes>{classes.path}</classes>
     </configuration>
