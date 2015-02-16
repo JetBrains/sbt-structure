@@ -162,10 +162,10 @@ object Extractor extends ExtractorBase {
       .mapValues(_.unzip._2)
       .toSeq
 
-    moduleToConfigurations.map { case (moduleId, configurations) =>
-      ModuleDependencyData(
-        createModuleIdentifier(moduleId, moduleId.explicitArtifacts),
-        mapConfigurations(configurations))
+    moduleToConfigurations.flatMap { case (moduleId, configurations) =>
+      createModuleIdentifiers(moduleId, moduleId.explicitArtifacts).map { id =>
+        ModuleDependencyData(id, mapConfigurations(configurations))
+      }
     }.foldLeft(Seq.empty[ModuleDependencyData]) { (acc, moduleData) =>
       acc.find(_.id == moduleData.id) match {
         case Some(foundModuleData) =>
@@ -177,17 +177,19 @@ object Extractor extends ExtractorBase {
     }
   }
 
-  private def createModuleIdentifier(moduleId: ModuleID, artifacts: Seq[Artifact]): ModuleIdentifier = {
+  private def fuseClassifier(artifact: Artifact): String = {
     val fusingClassifiers = Seq("", Artifact.DocClassifier, Artifact.SourceClassifier)
-    def fuseClassifier(artifact: Artifact): String = artifact.classifier match {
+    artifact.classifier match {
       case Some(c) if fusingClassifiers.contains(c) => fusingClassifiers.head
       case Some(c) => c
       case None => fusingClassifiers.head
     }
-
-    val classifier = artifacts.map(fuseClassifier).find(!_.isEmpty).getOrElse(fusingClassifiers.head)
-    ModuleIdentifier(moduleId.organization, moduleId.name, moduleId.revision, Artifact.DefaultType, classifier)
   }
+
+  private def createModuleIdentifiers(moduleId: ModuleID, artifacts: Seq[Artifact]): Seq[ModuleIdentifier] =
+    artifacts.map(fuseClassifier).distinct.map { classifier =>
+      ModuleIdentifier(moduleId.organization, moduleId.name, moduleId.revision, Artifact.DefaultType, classifier)
+    }
 
   def jarDependenciesIn(state: State, projectRef: ProjectRef): Seq[JarDependencyData] = {
     def jarsIn(configuration: Configuration): Seq[File] = {
@@ -266,12 +268,18 @@ object Extractor extends ExtractorBase {
 
   private def merge(moduleReports: Seq[MyModuleReport], classpathTypes: Set[String], docTypes: Set[String], srcTypes: Set[String]): Seq[ModuleData] = {
     val moduleReportsGrouped = moduleReports.groupBy{ rep => rep.module.artifacts(rep.artifacts.map(_._1):_*) }.toSeq
-    moduleReportsGrouped.map { case (module, reports) =>
+    moduleReportsGrouped.flatMap { case (module, reports) =>
       val allArtifacts = reports.flatMap(_.artifacts)
-      def artifacts(kinds: Set[String]) = allArtifacts.collect { case (a, f) if kinds contains a.`type` => f }.toSet
 
-      val id = createModuleIdentifier(module, allArtifacts.map(_._1))
-      ModuleData(id, artifacts(classpathTypes), artifacts(docTypes), artifacts(srcTypes))
+      def artifacts(kinds: Set[String], classifier: String) = allArtifacts.collect {
+        case (a, f) if classifier == fuseClassifier(a) && kinds.contains(a.`type`) => f
+      }.toSet
+
+      createModuleIdentifiers(module, allArtifacts.map(_._1)).map { id =>
+        ModuleData(id, artifacts(classpathTypes, id.classifier),
+                       artifacts(docTypes, id.classifier),
+                       artifacts(srcTypes, id.classifier))
+      }
     }
   }
 
