@@ -9,9 +9,9 @@ import scala.io.Source
 object Loader {
   private val JavaVM = path(new File(new File(new File(System.getProperty("java.home")), "bin"), "java"))
   private val SbtLauncher = path(new File("sbt-launch.jar"))
-  private val SbtPlugin = path(new File("target/scala-2.10/sbt-0.13/classes/"))
+  private val SbtPlugin = path(new File("target/scala-" + TestCompat.scalaVersion + "/sbt-"+ TestCompat.sbtVersionFull +"/classes/"))
 
-  def load(project: File, download: Boolean, sbtVersion: String): Seq[String] = {
+  def load(project: File, download: Boolean, sbtVersion: String, verbose: Boolean = false): Seq[String] = {
     val structureFile = createTempFile("sbt-structure", ".xml")
     val commandsFile = createTempFile("sbt-commands", ".lst")
 
@@ -25,11 +25,11 @@ object Loader {
     val commands = Seq(JavaVM,
 //      "-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=5005",
       "-Dsbt.log.noformat=true",
-      s"-Dsbt.version=$sbtVersion",
+      "-Dsbt.version=" + sbtVersion,
       "-jar", SbtLauncher,
       "< " + path(commandsFile))
 
-    run(commands, project)
+    run(commands, project, verbose)
 
     assert(structureFile.exists, "File must be created: " + structureFile.getPath)
 
@@ -50,18 +50,18 @@ object Loader {
     writer.close()
   }
 
-  private def run(commands: Seq[String], directory: File) {
+  private def run(commands: Seq[String], directory: File, verbose: Boolean) {
     val process = Runtime.getRuntime.exec(commands.toArray, null, directory)
 
     val stdinThread = inThread {
       Source.fromInputStream(process.getInputStream).getLines().foreach { it =>
-        System.out.println("stdout: " + it)
+        if (verbose) System.out.println("stdout: " + it) else ()
       }
     }
 
     val stderrThread = inThread {
       Source.fromInputStream(process.getErrorStream).getLines().foreach { it =>
-        System.err.println("stderr: " + it)
+        if (verbose) System.err.println("stderr: " + it) else ()
       }
     }
 

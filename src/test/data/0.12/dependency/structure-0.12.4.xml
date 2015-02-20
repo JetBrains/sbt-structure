@@ -1,0 +1,131 @@
+<structure sbt="0.12.4">
+  <project>
+    <id>dependency</id>
+    <name>some-name</name>
+    <organization>some-organization</organization>
+    <version>1.2.3</version>
+    <base>$BASE</base>
+    <target>./target</target>
+    <build>
+      <import>import sbt._, Process._, Keys._</import>
+      <classes>~/.sbt/boot/scala-2.9.2/lib/jansi.jar</classes>
+      <classes>~/.sbt/boot/scala-2.9.2/lib/jline.jar</classes>
+      <classes>~/.sbt/boot/scala-2.9.2/lib/scala-compiler.jar</classes>
+      <classes>~/.sbt/boot/scala-2.9.2/lib/scala-library.jar</classes>
+      <classes>~/.sbt/boot/scala-2.9.2/org.scala-sbt/sbt/0.12.4/actions-0.12.4.jar</classes>
+      <classes>~/.sbt/boot/scala-2.9.2/org.scala-sbt/sbt/0.12.4/api-0.12.4.jar</classes>
+      <classes>~/.sbt/boot/scala-2.9.2/org.scala-sbt/sbt/0.12.4/cache-0.12.4.jar</classes>
+      <classes>~/.sbt/boot/scala-2.9.2/org.scala-sbt/sbt/0.12.4/classfile-0.12.4.jar</classes>
+      <classes>~/.sbt/boot/scala-2.9.2/org.scala-sbt/sbt/0.12.4/classpath-0.12.4.jar</classes>
+      <classes>~/.sbt/boot/scala-2.9.2/org.scala-sbt/sbt/0.12.4/collections-0.12.4.jar</classes>
+      <classes>~/.sbt/boot/scala-2.9.2/org.scala-sbt/sbt/0.12.4/command-0.12.4.jar</classes>
+      <classes>~/.sbt/boot/scala-2.9.2/org.scala-sbt/sbt/0.12.4/commons-codec-1.2.jar</classes>
+      <classes>~/.sbt/boot/scala-2.9.2/org.scala-sbt/sbt/0.12.4/commons-httpclient-3.1.jar</classes>
+      <classes>~/.sbt/boot/scala-2.9.2/org.scala-sbt/sbt/0.12.4/commons-logging-1.0.4.jar</classes>
+      <classes>~/.sbt/boot/scala-2.9.2/org.scala-sbt/sbt/0.12.4/compile-0.12.4.jar</classes>
+      <classes>~/.sbt/boot/scala-2.9.2/org.scala-sbt/sbt/0.12.4/compiler-integration-0.12.4.jar</classes>
+      <classes>~/.sbt/boot/scala-2.9.2/org.scala-sbt/sbt/0.12.4/compiler-ivy-integration-0.12.4.jar</classes>
+      <classes>~/.sbt/boot/scala-2.9.2/org.scala-sbt/sbt/0.12.4/completion-0.12.4.jar</classes>
+      <classes>~/.sbt/boot/scala-2.9.2/org.scala-sbt/sbt/0.12.4/control-0.12.4.jar</classes>
+      <classes>~/.sbt/boot/scala-2.9.2/org.scala-sbt/sbt/0.12.4/incremental-compiler-0.12.4.jar</classes>
+      <classes>~/.sbt/boot/scala-2.9.2/org.scala-sbt/sbt/0.12.4/io-0.12.4.jar</classes>
+      <classes>~/.sbt/boot/scala-2.9.2/org.scala-sbt/sbt/0.12.4/ivy-0.12.4.jar</classes>
+      <classes>~/.sbt/boot/scala-2.9.2/org.scala-sbt/sbt/0.12.4/ivy-2.3.0-rc1.jar</classes>
+      <classes>~/.sbt/boot/scala-2.9.2/org.scala-sbt/sbt/0.12.4/jline-1.0.jar</classes>
+      <classes>~/.sbt/boot/scala-2.9.2/org.scala-sbt/sbt/0.12.4/jsch-0.1.46.jar</classes>
+      <classes>~/.sbt/boot/scala-2.9.2/org.scala-sbt/sbt/0.12.4/launcher-interface-0.12.4.jar</classes>
+      <classes>~/.sbt/boot/scala-2.9.2/org.scala-sbt/sbt/0.12.4/logging-0.12.4.jar</classes>
+      <classes>~/.sbt/boot/scala-2.9.2/org.scala-sbt/sbt/0.12.4/main-0.12.4.jar</classes>
+      <classes>~/.sbt/boot/scala-2.9.2/org.scala-sbt/sbt/0.12.4/persist-0.12.4.jar</classes>
+      <classes>~/.sbt/boot/scala-2.9.2/org.scala-sbt/sbt/0.12.4/process-0.12.4.jar</classes>
+      <classes>~/.sbt/boot/scala-2.9.2/org.scala-sbt/sbt/0.12.4/run-0.12.4.jar</classes>
+      <classes>~/.sbt/boot/scala-2.9.2/org.scala-sbt/sbt/0.12.4/sbinary_2.9.0-0.4.0.jar</classes>
+      <classes>~/.sbt/boot/scala-2.9.2/org.scala-sbt/sbt/0.12.4/sbt-0.12.4.jar</classes>
+      <classes>~/.sbt/boot/scala-2.9.2/org.scala-sbt/sbt/0.12.4/task-system-0.12.4.jar</classes>
+      <classes>~/.sbt/boot/scala-2.9.2/org.scala-sbt/sbt/0.12.4/tasks-0.12.4.jar</classes>
+      <classes>~/.sbt/boot/scala-2.9.2/org.scala-sbt/sbt/0.12.4/test-agent-0.12.4.jar</classes>
+      <classes>~/.sbt/boot/scala-2.9.2/org.scala-sbt/sbt/0.12.4/test-interface-0.5.jar</classes>
+      <classes>~/.sbt/boot/scala-2.9.2/org.scala-sbt/sbt/0.12.4/testing-0.12.4.jar</classes>
+      <classes>~/.sbt/boot/scala-2.9.2/org.scala-sbt/sbt/0.12.4/tracking-0.12.4.jar</classes>
+      <classes>~/.sbt/boot/scala-2.9.2/org.scala-sbt/sbt/0.12.4/xsbti/interface-0.12.4.jar</classes>
+      <sources>~/.ivy2/cache/org.scala-sbt/sbt/srcs/sbt-0.12.4-sources.jar</sources>
+      <sources>~/.ivy2/cache/org.scala-sbt/main/srcs/main-0.12.4-sources.jar</sources>
+      <sources>~/.ivy2/cache/org.scala-sbt/actions/srcs/actions-0.12.4-sources.jar</sources>
+      <sources>~/.ivy2/cache/org.scala-sbt/classpath/srcs/classpath-0.12.4-sources.jar</sources>
+      <sources>~/.ivy2/cache/org.scala-sbt/launcher-interface/srcs/launcher-interface-0.12.4-sources.jar</sources>
+      <sources>~/.ivy2/cache/org.scala-lang/scala-library/srcs/scala-library-2.10.1-sources.jar</sources>
+      <sources>~/.ivy2/cache/org.scala-sbt/interface/srcs/interface-0.12.4-sources.jar</sources>
+      <sources>~/.ivy2/cache/org.scala-sbt/io/srcs/io-0.12.4-sources.jar</sources>
+      <sources>~/.ivy2/cache/org.scala-sbt/control/srcs/control-0.12.4-sources.jar</sources>
+      <sources>~/.ivy2/cache/org.scala-lang/scala-compiler/srcs/scala-compiler-2.10.1-sources.jar</sources>
+      <sources>~/.ivy2/cache/org.scala-lang/scala-reflect/srcs/scala-reflect-2.10.1-sources.jar</sources>
+      <sources>~/.ivy2/cache/org.scala-sbt/completion/srcs/completion-0.12.4-sources.jar</sources>
+      <sources>~/.ivy2/cache/org.scala-sbt/collections/srcs/collections-0.12.4-sources.jar</sources>
+      <sources>~/.ivy2/cache/jline/jline/srcs/jline-1.0-sources.jar</sources>
+      <sources>~/.ivy2/cache/org.scala-sbt/api/srcs/api-0.12.4-sources.jar</sources>
+      <sources>~/.ivy2/cache/org.scala-sbt/compiler-integration/srcs/compiler-integration-0.12.4-sources.jar</sources>
+      <sources>~/.ivy2/cache/org.scala-sbt/incremental-compiler/srcs/incremental-compiler-0.12.4-sources.jar</sources>
+      <sources>~/.ivy2/cache/org.scala-sbt/logging/srcs/logging-0.12.4-sources.jar</sources>
+      <sources>~/.ivy2/cache/org.scala-sbt/process/srcs/process-0.12.4-sources.jar</sources>
+      <sources>~/.ivy2/cache/org.scala-sbt/compile/srcs/compile-0.12.4-sources.jar</sources>
+      <sources>~/.ivy2/cache/org.scala-sbt/persist/srcs/persist-0.12.4-sources.jar</sources>
+      <sources>~/.ivy2/cache/org.scala-tools.sbinary/sbinary_2.9.0/srcs/sbinary_2.9.0-0.4.0-sources.jar</sources>
+      <sources>~/.ivy2/cache/org.scala-sbt/classfile/srcs/classfile-0.12.4-sources.jar</sources>
+      <sources>~/.ivy2/cache/org.scala-sbt/compiler-ivy-integration/srcs/compiler-ivy-integration-0.12.4-sources.jar</sources>
+      <sources>~/.ivy2/cache/org.scala-sbt/ivy/srcs/ivy-0.12.4-sources.jar</sources>
+      <sources>~/.ivy2/cache/org.apache.ivy/ivy/srcs/ivy-2.3.0-rc1-sources.jar</sources>
+      <sources>~/.ivy2/cache/com.jcraft/jsch/srcs/jsch-0.1.46-sources.jar</sources>
+      <sources>~/.ivy2/cache/commons-httpclient/commons-httpclient/srcs/commons-httpclient-3.1-sources.jar</sources>
+      <sources>~/.ivy2/cache/commons-logging/commons-logging/srcs/commons-logging-1.0.4-sources.jar</sources>
+      <sources>~/.ivy2/cache/org.scala-sbt/run/srcs/run-0.12.4-sources.jar</sources>
+      <sources>~/.ivy2/cache/org.scala-sbt/task-system/srcs/task-system-0.12.4-sources.jar</sources>
+      <sources>~/.ivy2/cache/org.scala-sbt/tasks/srcs/tasks-0.12.4-sources.jar</sources>
+      <sources>~/.ivy2/cache/org.scala-sbt/tracking/srcs/tracking-0.12.4-sources.jar</sources>
+      <sources>~/.ivy2/cache/org.scala-sbt/cache/srcs/cache-0.12.4-sources.jar</sources>
+      <sources>~/.ivy2/cache/org.scala-sbt/testing/srcs/testing-0.12.4-sources.jar</sources>
+      <sources>~/.ivy2/cache/org.scala-sbt/test-agent/srcs/test-agent-0.12.4-sources.jar</sources>
+      <sources>~/.ivy2/cache/org.scala-sbt/command/srcs/command-0.12.4-sources.jar</sources>
+      <sources>~/.ivy2/cache/org.scala-sbt/precompiled-2_8_2/srcs/precompiled-2_8_2-0.12.4-sources.jar</sources>
+      <sources>~/.ivy2/cache/org.scala-sbt/precompiled-2_9_3/srcs/precompiled-2_9_3-0.12.4-sources.jar</sources>
+      <sources>~/.ivy2/cache/org.scala-sbt/precompiled-2_10_1/srcs/precompiled-2_10_1-0.12.4-sources.jar</sources>
+    </build>
+    <scala>
+      <version>2.10.1</version>
+      <library>~/.sbt/boot/scala-2.10.1/lib/scala-library.jar</library>
+      <compiler>~/.sbt/boot/scala-2.10.1/lib/scala-compiler.jar</compiler>
+      <extra>~/.sbt/boot/scala-2.10.1/lib/scala-reflect.jar</extra>
+    </scala>
+    <configuration id="compile">
+      <sources >.</sources>
+      <sources >./src/main/java</sources>
+      <sources >./src/main/scala</sources>
+      <sources managed="true">./target/scala-2.10/src_managed/main</sources>
+      <resources >./src/main/resources</resources>
+      <resources managed="true">./target/scala-2.10/resource_managed/main</resources>
+      <classes>./target/scala-2.10/classes</classes>
+    </configuration>
+    <configuration id="test">
+      <sources >./src/test/java</sources>
+      <sources >./src/test/scala</sources>
+      <sources managed="true">./target/scala-2.10/src_managed/test</sources>
+      <resources >./src/test/resources</resources>
+      <resources managed="true">./target/scala-2.10/resource_managed/test</resources>
+      <classes>./target/scala-2.10/test-classes</classes>
+    </configuration>
+    <module revision="3.8.1" name="junit" artifactType="jar" configurations="test" organization="junit" classifier=""></module>
+    <module revision="2.10.1" name="scala-library" artifactType="jar" configurations="" organization="org.scala-lang" classifier=""></module>
+    <jar configurations="">./lib/unmanaged.jar</jar>
+    <resolver name="public" root="http://repo1.maven.org/maven2/"></resolver>
+  </project>
+  <repository>
+    <module revision="3.8.1" name="junit" artifactType="jar" organization="junit" classifier="">
+      <jar>~/.ivy2/cache/junit/junit/jars/junit-3.8.1.jar</jar>
+      <src>~/.ivy2/cache/junit/junit/srcs/junit-3.8.1-sources.jar</src>
+    </module>
+    <module revision="2.10.1" name="scala-library" artifactType="jar" organization="org.scala-lang" classifier="">
+      <jar>~/.sbt/boot/scala-2.10.1/lib/scala-library.jar</jar>
+      <doc>~/.ivy2/cache/org.scala-lang/scala-library/docs/scala-library-2.10.1-javadoc.jar</doc>
+      <src>~/.ivy2/cache/org.scala-lang/scala-library/srcs/scala-library-2.10.1-sources.jar</src>
+    </module>
+  </repository>
+</structure>

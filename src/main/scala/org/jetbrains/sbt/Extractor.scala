@@ -1,16 +1,14 @@
 package org.jetbrains.sbt
 
-import sbt._
+import org.jetbrains.sbt.Android._
+import org.jetbrains.sbt.Utilities._
 import sbt.Keys._
-import sbt.Value
-import sbt.BuildStructure
-import Utilities._
-import Android._
+import sbt.Load.BuildStructure
+import sbt._
 
-/**
- * @author Pavel Fatin
- */
-object Extractor {
+//import scala.language.reflectiveCalls
+
+object Extractor extends ExtractorBase {
   private val ExportableConfigurations = Seq(Compile, Test, IntegrationTest)
   private val DependencyConfigurations = Seq(Compile, Test, Runtime, Provided, Optional)
 
@@ -31,8 +29,8 @@ object Extractor {
         acc.find(_.id == data.id) match {
           case Some(module) =>
             val newModule = ModuleData(module.id, module.binaries ++ data.binaries,
-                                                  module.docs ++ data.docs,
-                                                  module.sources ++ data.sources)
+              module.docs ++ data.docs,
+              module.sources ++ data.sources)
             acc.filterNot(_ == module) :+ newModule
           case None => acc :+ data
         }
@@ -54,7 +52,8 @@ object Extractor {
   }
 
   def extractProject(state: State, structure: BuildStructure, projectRef: ProjectRef, download: Boolean): ProjectData = {
-    val id = projectRef.project
+    val id = if (projectRef.project.startsWith("default-")) projectRef.build.getPath.replaceFirst(".*/([^/?]+).*", "$1")
+    else projectRef.project
 
     val name = Keys.name.in(projectRef, Compile).get(structure.data).get
 
@@ -114,7 +113,11 @@ object Extractor {
       val sources = {
         val managed = Keys.managedSourceDirectories.in(projectRef, configuration).get(structure.data).get
         val unmanaged = Keys.unmanagedSourceDirectories.in(projectRef, configuration).get(structure.data).get
-        managed.map(DirectoryData(_, managed = true)) ++ unmanaged.map(DirectoryData(_, managed = false))
+        val sourcesInBase = configuration == Compile && Keys.sourcesInBase.in(projectRef, configuration).get(structure.data).get
+        val base = Keys.baseDirectory.in(projectRef, configuration).get(structure.data).get
+        managed.map(DirectoryData(_, managed = true)) ++
+          unmanaged.map(DirectoryData(_, managed = false)) ++
+          (if (sourcesInBase) Seq(DirectoryData(base, managed = false)) else Seq.empty)
       }
 
       val resources = {
@@ -128,10 +131,10 @@ object Extractor {
   }
 
   def extractDependencies(state: State, structure: BuildStructure, projectRef: ProjectRef): DependencyData = {
-    val projectDependencies = {
-      val project = Project.getProject(projectRef, structure).get
-      project.dependencies.map(it => ProjectDependencyData(it.project.project, it.configuration))
-    }
+    val projectDependencies =
+      Keys.buildDependencies.in(projectRef).get(structure.data).map { dep =>
+        dep.classpath.getOrElse(projectRef, Seq.empty).map(it => ProjectDependencyData(it.project.project, it.configuration))
+      }.getOrElse(Seq.empty)
 
     val moduleDependencies = moduleDependenciesIn(state, projectRef)
 
@@ -161,7 +164,7 @@ object Extractor {
 
     moduleToConfigurations.map { case (moduleId, configurations) =>
       ModuleDependencyData(
-        createModuleIdentifier(moduleId, moduleId.explicitArtifacts.headOption),
+        createModuleIdentifier(moduleId, moduleId.explicitArtifacts),
         mapConfigurations(configurations))
     }.foldLeft(Seq.empty[ModuleDependencyData]) { (acc, moduleData) =>
       acc.find(_.id == moduleData.id) match {
@@ -174,17 +177,16 @@ object Extractor {
     }
   }
 
-  private def createModuleIdentifier(moduleId: ModuleID, artifact: Option[Artifact]): ModuleIdentifier = {
-    val fusingClassifiers = Seq("", "sources", "javadoc")
+  private def createModuleIdentifier(moduleId: ModuleID, artifacts: Seq[Artifact]): ModuleIdentifier = {
+    val fusingClassifiers = Seq("", Artifact.DocClassifier, Artifact.SourceClassifier)
     def fuseClassifier(artifact: Artifact): String = artifact.classifier match {
-      case Some(classifier) if fusingClassifiers.contains(classifier) => fusingClassifiers.head
-      case Some(classifier) => classifier
+      case Some(c) if fusingClassifiers.contains(c) => fusingClassifiers.head
+      case Some(c) => c
       case None => fusingClassifiers.head
     }
 
-    val artifactType = "jar"
-    val classifier   = artifact map fuseClassifier getOrElse fusingClassifiers.head
-    ModuleIdentifier(moduleId.organization, moduleId.name, moduleId.revision, artifactType, classifier)
+    val classifier = artifacts.map(fuseClassifier).find(!_.isEmpty).getOrElse(fusingClassifiers.head)
+    ModuleIdentifier(moduleId.organization, moduleId.name, moduleId.revision, Artifact.DefaultType, classifier)
   }
 
   def jarDependenciesIn(state: State, projectRef: ProjectRef): Seq[JarDependencyData] = {
@@ -221,49 +223,54 @@ object Extractor {
     }
   }
 
+  private class MyModuleReport(val module: ModuleID, val artifacts: Seq[(Artifact, File)]) {
+    def this(report: ModuleReport) {
+      this(report.module, report.artifacts)
+    }
+  }
+
   def extractModules(state: State, structure: BuildStructure, projectRef: ProjectRef, resolveClassifiers: Boolean): Seq[ModuleData] = {
     def run[T](task: ScopedKey[Task[T]]): T = {
       Project.runTask(task, state) collect {
         case (_, Value(it)) => it
-      } getOrElse sys.error(s"Couldn't run: $task")
+      } getOrElse sys.error("Couldn't run: " + task)
     }
-    def getModuleReports(task: TaskKey[UpdateReport]): Seq[ModuleReport] = {
+
+    def getModuleReports(task: TaskKey[UpdateReport]): Seq[MyModuleReport] = {
       val updateReport: UpdateReport = run(task in projectRef)
       val configurationReports = {
         val relevantConfigurationNames = DependencyConfigurations.map(_.name).toSet
         updateReport.configurations.filter(report => relevantConfigurationNames.contains(report.configuration))
       }
 
-      configurationReports.flatMap(_.modules).filter(_.artifacts.nonEmpty)
+      configurationReports.flatMap{ r => r.modules.map(new MyModuleReport(_)) }.filter(_.artifacts.nonEmpty)
     }
 
-    val moduleReports =
-      if (resolveClassifiers) {
-        val reports = getModuleReports(updateClassifiers)
-        def onlySourcesAndDocs(artifacts: Seq[Artifact]): Boolean =
-          artifacts.forall { a => a.`type` == "src" || a.`type` == "doc" }
-        // `updateClassifiers` doesn't resolve dependencies with non-empty
-        // classifiers so we get them from `update`; but only them - otherwise
-        // some jars may be duplicated (e.g. scala-library from .sbt and .ivy)
-        reports ++ getModuleReports(update).filter { r =>
-          reports.forall { m => m.module != r.module || onlySourcesAndDocs(m.artifacts.map(_._1)) } ||
-            r.artifacts.flatMap(_._1.classifier).nonEmpty
-        }
-      } else
-        getModuleReports(update)
+    val binaryReports = getModuleReports(update)
+    lazy val reportsWithDocs = {
+      def onlySourcesAndDocs(artifacts: Seq[(Artifact, File)]): Seq[(Artifact, File)] =
+        artifacts.collect { case (a, f) if a.`type` == Artifact.DocType || a.`type` == Artifact.SourceType => (a, f) }
+
+      val docAndSrcReports = getModuleReports(updateClassifiers)
+      binaryReports.map { report =>
+        val matchingDocs = docAndSrcReports.filter(_.module == report.module)
+        val docsArtifacts = matchingDocs.flatMap { r => onlySourcesAndDocs(r.artifacts) }
+        new MyModuleReport(report.module, report.artifacts ++ docsArtifacts)
+      }
+    }
 
     val classpathTypes = Keys.classpathTypes.in(projectRef).get(structure.data).get
-
-    merge(moduleReports, classpathTypes, Set("doc"), Set("src"))
+    merge(if (resolveClassifiers) reportsWithDocs else binaryReports,
+          classpathTypes, Set(Artifact.DocType), Set(Artifact.SourceType))
   }
 
-  private def merge(moduleReports: Seq[ModuleReport], classpathTypes: Set[String], docTypes: Set[String], srcTypes: Set[String]): Seq[ModuleData] = {
+  private def merge(moduleReports: Seq[MyModuleReport], classpathTypes: Set[String], docTypes: Set[String], srcTypes: Set[String]): Seq[ModuleData] = {
     val moduleReportsGrouped = moduleReports.groupBy{ rep => rep.module.artifacts(rep.artifacts.map(_._1):_*) }.toSeq
     moduleReportsGrouped.map { case (module, reports) =>
       val allArtifacts = reports.flatMap(_.artifacts)
       def artifacts(kinds: Set[String]) = allArtifacts.collect { case (a, f) if kinds contains a.`type` => f }.toSet
 
-      val id = createModuleIdentifier(module, allArtifacts.headOption.map(_._1))
+      val id = createModuleIdentifier(module, allArtifacts.map(_._1))
       ModuleData(id, artifacts(classpathTypes), artifacts(docTypes), artifacts(srcTypes))
     }
   }
@@ -279,7 +286,7 @@ object Extractor {
 
     def artifacts(kind: String) = allArtifacts.filter(_._1.`type` == kind).map(_._2).distinct
 
-    (artifacts("doc"), artifacts("src"))
+    (artifacts(Artifact.DocType), artifacts(Artifact.SourceType))
   }
 
   def extractResolvers(state: State, projectRef: ProjectRef): Set[ResolverData] =

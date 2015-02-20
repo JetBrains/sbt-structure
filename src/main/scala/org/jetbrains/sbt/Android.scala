@@ -1,11 +1,13 @@
 package org.jetbrains.sbt
 
+//import scala.language.reflectiveCalls
+
 import sbt._
 import sbt.Keys._
 
 
 object Android {
-  def extractAndroid(structure: BuildStructure, projectRef: ProjectRef,
+  def extractAndroid(structure: sbt.Load.BuildStructure, projectRef: ProjectRef,
       state: State): Option[AndroidData] = {
     val plugins = Seq(new AndroidSdkPlugin(structure, projectRef, state))
     for (plugin <- plugins) {
@@ -17,12 +19,12 @@ object Android {
   }
 }
 
-abstract class AndroidSupportPlugin(val structure: BuildStructure,
+abstract class AndroidSupportPlugin(val structure: sbt.Load.BuildStructure,
     val projectRef: ProjectRef, val state: State) {
   def extractAndroid: Option[AndroidData]
 }
 
-class AndroidSdkPlugin(structure: BuildStructure, projectRef: ProjectRef,
+class AndroidSdkPlugin(structure: sbt.Load.BuildStructure, projectRef: ProjectRef,
     state: State) extends AndroidSupportPlugin(structure, projectRef, state) {
 
   val keys = state.attributes.get(sessionSettings) match {
@@ -33,7 +35,7 @@ class AndroidSdkPlugin(structure: BuildStructure, projectRef: ProjectRef,
   object Keys {
     val Android = config("android")
 
-    def inAndroidScope(key: Def.ScopedKey[_]) = key.scope.config match {
+    def inAndroidScope(key: ScopedKey[_]) = key.scope.config match {
       case Select(k) => k.name == Android.name
       case _ => false
     }
@@ -44,10 +46,10 @@ class AndroidSdkPlugin(structure: BuildStructure, projectRef: ProjectRef,
     val libraryProject   = SettingKey[Boolean]("library-project")
     val proguardConfig   = TaskKey[Seq[String]]("proguard-config")
     val proguardOptions  = TaskKey[Seq[String]]("proguard-options")
-    val projectLayout    = keys.filter { k => k.key.label == "projectLayout" && inAndroidScope(k) }
-                               .headOption.map { k => SettingKey(k.key).in(k.scope) }
+    val projectLayout    = keys.find { k => k.key.label == "projectLayout" && inAndroidScope(k) }
+                               .map { k => SettingKey(k.key).in(k.scope) }
 
-    type ProjectLayout = { def res(): File; def assets(): File; def gen(): File; def libs(): File }
+    type ProjectLayout = { def res: File; def assets: File; def gen: File; def libs: File }
   }
 
   def extractAndroid: Option[AndroidData] = {

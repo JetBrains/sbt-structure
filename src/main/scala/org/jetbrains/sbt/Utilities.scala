@@ -1,5 +1,7 @@
 package org.jetbrains.sbt
 
+//import scala.language.implicitConversions
+
 /**
  * @author Pavel Fatin
  */
