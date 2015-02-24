@@ -397,14 +397,12 @@
     </module>
     <module organization="org.apache.james" name="apache-mailet-base" revision="2.5.0" artifactType="jar" classifier="">
       <jar>~/.ivy2/cache/org.apache.james/apache-mailet-base/bundles/apache-mailet-base-2.5.0.jar</jar>
+      <jar>~/.ivy2/cache/org.apache.james/apache-mailet-base/jars/apache-mailet-base-2.5.0.jar</jar>
       <doc>~/.ivy2/cache/org.apache.james/apache-mailet-base/docs/apache-mailet-base-2.5.0-javadoc.jar</doc>
       <src>~/.ivy2/cache/org.apache.james/apache-mailet-base/srcs/apache-mailet-base-2.5.0-sources.jar</src>
     </module>
     <module organization="org.apache.james" name="apache-mailet-base" revision="2.5.0" artifactType="jar" classifier="tests">
       <jar>~/.ivy2/cache/org.apache.james/apache-mailet-base/jars/apache-mailet-base-2.5.0-tests.jar</jar>
-      <jar>~/.ivy2/cache/org.apache.james/apache-mailet-base/jars/apache-mailet-base-2.5.0.jar</jar>
-      <doc>~/.ivy2/cache/org.apache.james/apache-mailet-base/docs/apache-mailet-base-2.5.0-javadoc.jar</doc>
-      <src>~/.ivy2/cache/org.apache.james/apache-mailet-base/srcs/apache-mailet-base-2.5.0-sources.jar</src>
     </module>
     <module organization="org.scala-lang" name="scala-library" revision="2.10.2" artifactType="jar" classifier="">
       <jar>~/.sbt/boot/scala-2.10.2/lib/scala-library.jar</jar>
