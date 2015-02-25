@@ -175,7 +175,6 @@
       </proguard>
     </android>
     <configuration id="compile">
-      <sources>.</sources>
       <sources>./src/main</sources>
       <sources>./src/main/java</sources>
       <sources>./src/main/scala</sources>

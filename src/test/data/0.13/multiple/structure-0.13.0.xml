@@ -105,7 +105,6 @@
       <extra>~/.ivy2/cache/org.scala-lang/scala-reflect/jars/scala-reflect-2.10.1.jar</extra>
     </scala>
     <configuration id="compile">
-      <sources>.</sources>
       <sources>./src/main/java</sources>
       <sources>./src/main/scala</sources>
       <sources managed="true">./target/scala-2.10/src_managed/main</sources>
@@ -230,7 +229,6 @@
       <extra>~/.ivy2/cache/org.scala-lang/scala-reflect/jars/scala-reflect-2.10.1.jar</extra>
     </scala>
     <configuration id="compile">
-      <sources>.</sources>
       <sources>./src/main/java</sources>
       <sources>./src/main/scala</sources>
       <sources managed="true">./target/scala-2.10/src_managed/main</sources>
@@ -353,7 +351,6 @@
       <compiler>~/.ivy2/cache/org.scala-lang/scala-compiler/jars/scala-compiler-2.9.2.jar</compiler>
     </scala>
     <configuration id="compile">
-      <sources>.</sources>
       <sources>./src/main/java</sources>
       <sources>./src/main/scala</sources>
       <sources managed="true">./target/scala-2.9.2/src_managed/main</sources>
