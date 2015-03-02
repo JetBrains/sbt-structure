@@ -124,8 +124,8 @@ object Extractor extends ExtractorBase {
 
       val excludes = {
         try {
-          val ideExcludePaths = SettingKey[Seq[File]]("ide-exclude-paths")
-          ideExcludePaths.in(projectRef, configuration).get(structure.data).get
+          val ideExcludedDirectories = SettingKey[Seq[File]]("ide-excluded-directories")
+          ideExcludedDirectories.in(projectRef, configuration).get(structure.data).get
         } catch {
           case _ : NoSuchElementException => Seq.empty
         }
