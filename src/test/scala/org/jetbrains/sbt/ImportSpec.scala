@@ -93,5 +93,8 @@ class ImportSpec extends Specification with XmlMatchers {
       hasAndroidDefined and testProject("android")
     }
 
+    t("be same in ide-settings project") in {
+      sbt13only and testProject("ide-settings")
+    }
   }
 }
