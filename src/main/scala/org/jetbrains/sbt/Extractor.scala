@@ -65,8 +65,8 @@ object Extractor extends ExtractorBase {
 
     val basePackages = {
       try {
-        val ideExcludedDirectories = SettingKey[Seq[String]]("ide-base-packages")
-        ideExcludedDirectories.in(projectRef, configuration).get(structure.data).get
+        val ideBasePackages = SettingKey[Seq[String]]("ide-base-packages")
+        ideBasePackages.in(projectRef, configuration).get(structure.data).get
       } catch {
         case _ : NoSuchElementException => Seq.empty
       }
