@@ -6,6 +6,8 @@
     <organization>some-organization</organization>
     <version>1.2.3</version>
     <base>$BASE</base>
+    <basePacakge>org.jetbrains</basePacakge>
+    <basePacakge>org.intellij</basePacakge>
     <target>./target</target>
     <build>
       <import>import sbt._, Keys._, dsl._</import>

@@ -80,8 +80,8 @@ case class StructureData(sbt: String, scala: ScalaData, projects: Seq[ProjectDat
   }
 }
 
-case class ProjectData(id: String, name: String, organization: String, version: String, base: File, target: File,
-                       build: BuildData, configurations: Seq[ConfigurationData], java: Option[JavaData],
+case class ProjectData(id: String, name: String, organization: String, version: String, base: File, basePackages: Seq[String],
+                       target: File, build: BuildData, configurations: Seq[ConfigurationData], java: Option[JavaData],
                        scala: Option[ScalaData], android: Option[AndroidData], dependencies: DependencyData,
                        resolvers: Set[ResolverData], play2: Option[Play2Extractor.Play2Data]) {
   def toXML(implicit fs: FS): Elem = {
@@ -91,6 +91,7 @@ case class ProjectData(id: String, name: String, organization: String, version: 
       <organization>{organization}</organization>
       <version>{version}</version>
       <base>{base.absolutePath}</base>
+      {basePackages.map(name => <basePackage>{name}</basePackage>)}
       <target>{target.path}</target>
       {build.toXML}
       {java.map(_.toXML).toSeq}

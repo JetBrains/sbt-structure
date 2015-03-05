@@ -63,6 +63,15 @@ object Extractor extends ExtractorBase {
 
     val base = Keys.baseDirectory.in(projectRef, Compile).get(structure.data).get
 
+    val basePackages = {
+      try {
+        val ideExcludedDirectories = SettingKey[Seq[String]]("ide-base-packages")
+        ideExcludedDirectories.in(projectRef, configuration).get(structure.data).get
+      } catch {
+        case _ : NoSuchElementException => Seq.empty
+      }
+    }
+
     val target = Keys.target.in(projectRef, Compile).get(structure.data).get
 
     val configurations = ExportableConfigurations.flatMap(extractConfiguration(state, structure, projectRef, _))
@@ -104,8 +113,8 @@ object Extractor extends ExtractorBase {
 
     val play2 = new Play2Extractor(structure, projectRef, state).extract()
 
-    ProjectData(id, name, organization, version, base, target, build, configurations, java, scala, android,
-      dependencies, resolvers, play2)
+    ProjectData(id, name, organization, version, base, basePackages, target, build, configurations,
+      java, scala, android, dependencies, resolvers, play2)
   }
 
   def extractConfiguration(state: State, structure: BuildStructure, projectRef: ProjectRef, configuration: Configuration): Option[ConfigurationData] = {

@@ -15,3 +15,5 @@ scalacOptions := Seq("-s1", "-s2")
 ideDefaultSettings
 
 ideExcludedDirectories := Seq(file(".idea"))
+
+basePackages := Seq("org.jetbrains", "org.intellij")
