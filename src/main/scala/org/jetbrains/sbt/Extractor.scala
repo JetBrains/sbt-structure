@@ -64,12 +64,15 @@ object Extractor extends ExtractorBase {
     val base = Keys.baseDirectory.in(projectRef, Compile).get(structure.data).get
 
     val basePackages = {
-      try {
-        val ideBasePackages = SettingKey[Seq[String]]("ide-base-packages")
-        ideBasePackages.in(projectRef, configuration).get(structure.data).get
-      } catch {
-        case _ : NoSuchElementException => Seq.empty
-      }
+      def extract[T](from: SettingKey[T]): Option[T] =
+        from.in(projectRef, configuration).get(structure.data)
+
+      val ideBasePackages = SettingKey[Seq[String]]("ide-base-packages")
+      val sbtIdeaBasePackage = SettingKey[Option[String]]("idea-base-package")
+
+      extract(ideBasePackages)
+        .orElse(extract(sbtIdeaBasePackage).map(o => o.map(p => Seq(p)).getOrElse(Seq.empty)))
+        .getOrElse(Seq.empty)
     }
 
     val target = Keys.target.in(projectRef, Compile).get(structure.data).get
