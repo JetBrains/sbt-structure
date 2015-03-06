@@ -6,8 +6,8 @@
     <organization>some-organization</organization>
     <version>1.2.3</version>
     <base>$BASE</base>
-    <basePacakge>org.jetbrains</basePacakge>
-    <basePacakge>org.intellij</basePacakge>
+    <basePackage>org.jetbrains</basePackage>
+    <basePackage>org.intellij</basePackage>
     <target>./target</target>
     <build>
       <import>import sbt._, Keys._, dsl._</import>
@@ -16,7 +16,7 @@
         import _root_.sbt.plugins.IvyPlugin, _root_.sbt.plugins.JvmPlugin, _root_.sbt.plugins.CorePlugin, _root_.sbt.plugins.JUnitXmlReportPlugin, _root_.sbtide.ConfigPlugin
       </import>
       <classes>./project/target/scala-2.10/sbt-0.13/classes</classes>
-      <classes>~/.ivy2/cache/scala_2.10/sbt_0.13/org.jetbrains/sbt-ide-settings/jars/sbt-ide-settings-0.0-3427e964f023ac54544616b1102ff9342048b7ff.jar</classes>
+      <classes>~/.ivy2/cache/scala_2.10/sbt_0.13/org.jetbrains/sbt-ide-settings/jars/sbt-ide-settings-0.0-a7b20a44877bd80327684bcbf79dfccc3787574f.jar</classes>
       <classes>~/.sbt/boot/scala-2.10.4/lib/jansi.jar</classes>
       <classes>~/.sbt/boot/scala-2.10.4/lib/jline.jar</classes>
       <classes>~/.sbt/boot/scala-2.10.4/lib/scala-compiler.jar</classes>
@@ -119,7 +119,7 @@
       <sources>~/.ivy2/cache/org.scala-sbt/precompiled-2_8_2/srcs/precompiled-2_8_2-0.13.7-sources.jar</sources>
       <sources>~/.ivy2/cache/org.scala-sbt/precompiled-2_9_2/srcs/precompiled-2_9_2-0.13.7-sources.jar</sources>
       <sources>~/.ivy2/cache/org.scala-sbt/precompiled-2_9_3/srcs/precompiled-2_9_3-0.13.7-sources.jar</sources>
-      <sources>~/.ivy2/cache/scala_2.10/sbt_0.13/org.jetbrains/sbt-ide-settings/srcs/sbt-ide-settings-0.0-3427e964f023ac54544616b1102ff9342048b7ff-sources.jar</sources>
+      <sources>~/.ivy2/cache/scala_2.10/sbt_0.13/org.jetbrains/sbt-ide-settings/srcs/sbt-ide-settings-0.0-a7b20a44877bd80327684bcbf79dfccc3787574f-sources.jar</sources>
     </build>
     <java>
       <home>./some/home</home>
@@ -135,7 +135,6 @@
       <option>-s2</option>
     </scala>
     <configuration id="compile">
-      <sources>.</sources>
       <sources>./src/main/java</sources>
       <sources>./src/main/scala</sources>
       <sources managed="true">./target/scala-2.10/src_managed/main</sources>

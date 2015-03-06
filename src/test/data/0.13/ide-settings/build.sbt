@@ -12,8 +12,6 @@ scalaVersion := "2.10.1"
 
 scalacOptions := Seq("-s1", "-s2")
 
-ideDefaultSettings
-
 ideExcludedDirectories := Seq(file(".idea"))
 
-basePackages := Seq("org.jetbrains", "org.intellij")
+ideBasePackages := Seq("org.jetbrains", "org.intellij")
