@@ -166,6 +166,10 @@ object Extractor extends ExtractorBase {
             module <- attr.get(Keys.moduleID.key)
             artifact <- attr.get(Keys.artifact.key)
           } yield module.artifacts(artifact)
+        case Some((_, Inc(incomplete))) =>
+          val cause = Incomplete.allExceptions(incomplete).headOption
+          cause.foreach(c => throw c)
+          Seq.empty
         case _ => Seq.empty
       }
     }
