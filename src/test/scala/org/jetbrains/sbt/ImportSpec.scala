@@ -31,7 +31,7 @@ class ImportSpec extends Specification with XmlMatchers {
         .replace("$SHORTBASE", FS.toRichFile(base)(fs).path)
     }
 
-    val actual = Loader.load(base, download, sbtVersion, verbose = false).mkString("\n")
+    val actual = Loader.load(base, download, sbtVersion, verbose = true).mkString("\n")
 
     val a = XML.loadString(actual)
     val e = XML.loadString(expected)

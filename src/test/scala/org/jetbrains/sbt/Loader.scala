@@ -46,7 +46,7 @@ object Loader {
 
   private def writeLinesTo(file: File, lines: String*) {
     val writer = new PrintWriter(new FileWriter(file))
-    lines.foreach(writer.println(_))
+    lines.foreach(writer.println)
     writer.close()
   }
 
