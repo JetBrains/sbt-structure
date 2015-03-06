@@ -132,12 +132,13 @@ object Extractor extends ExtractorBase {
       }
 
       val excludes = {
-        try {
+          def extract[T](from: SettingKey[T]): Option[T] =
+            from.in(projectRef, configuration).get(structure.data)
           val ideExcludedDirectories = SettingKey[Seq[File]]("ide-excluded-directories")
-          ideExcludedDirectories.in(projectRef, configuration).get(structure.data).get
-        } catch {
-          case _ : NoSuchElementException => Seq.empty
-        }
+          val sbtIdeaExcludeFolders = SettingKey[Seq[String]]("idea-exclude-folders")
+          extract(ideExcludedDirectories)
+            .orElse(extract(sbtIdeaExcludeFolders).map(_.map(file)))
+            .getOrElse(Seq.empty)
       }
 
       ConfigurationData(configuration.name, sources, resources, excludes, output)
