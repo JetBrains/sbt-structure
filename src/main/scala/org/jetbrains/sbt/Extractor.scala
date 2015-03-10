@@ -12,6 +12,13 @@ object Extractor extends ExtractorBase {
   private val ExportableConfigurations = Seq(Compile, Test, IntegrationTest)
   private val DependencyConfigurations = Seq(Compile, Test, Runtime, Provided, Optional)
 
+  object SettingKeys {
+    val ideBasePackages         = SettingKey[Seq[String]]("ide-base-packages")
+    val sbtIdeaBasePackage      = SettingKey[Option[String]]("idea-base-package")
+    val ideExcludedDirectories  = SettingKey[Seq[File]]("ide-excluded-directories")
+    val sbtIdeaExcludeFolders   = SettingKey[Seq[String]]("idea-exclude-folders")
+  }
+
   def extractStructure(state: State, download: Boolean, resolveClassifiers: Boolean, resolveSbtClassifiers: Boolean): StructureData = {
     val structure = Project.extract(state).structure
 
@@ -67,12 +74,8 @@ object Extractor extends ExtractorBase {
       def extract[T](from: SettingKey[T]): Option[T] =
         from.in(projectRef, configuration).get(structure.data)
 
-      val ideBasePackages = SettingKey[Seq[String]]("ide-base-packages")
-      val sbtIdeaBasePackage = SettingKey[Option[String]]("idea-base-package")
-
-      extract(ideBasePackages)
-        .orElse(extract(sbtIdeaBasePackage).map(o => o.map(p => Seq(p)).getOrElse(Seq.empty)))
-        .getOrElse(Seq.empty)
+      extract(SettingKeys.ideBasePackages).getOrElse(Seq.empty) ++
+        extract(SettingKeys.sbtIdeaBasePackage).map(_.toSeq).getOrElse(Seq.empty)
     }
 
     val target = Keys.target.in(projectRef, Compile).get(structure.data).get
@@ -137,11 +140,8 @@ object Extractor extends ExtractorBase {
       val excludes = {
           def extract[T](from: SettingKey[T]): Option[T] =
             from.in(projectRef, configuration).get(structure.data)
-          val ideExcludedDirectories = SettingKey[Seq[File]]("ide-excluded-directories")
-          val sbtIdeaExcludeFolders = SettingKey[Seq[String]]("idea-exclude-folders")
-          extract(ideExcludedDirectories)
-            .orElse(extract(sbtIdeaExcludeFolders).map(_.map(file)))
-            .getOrElse(Seq.empty)
+          extract(SettingKeys.ideExcludedDirectories).getOrElse(Seq.empty) ++
+            extract(SettingKeys.sbtIdeaExcludeFolders).map(_.map(file)).getOrElse(Seq.empty)
       }
 
       ConfigurationData(configuration.name, sources, resources, excludes, output)
