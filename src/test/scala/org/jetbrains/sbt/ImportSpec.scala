@@ -96,5 +96,9 @@ class ImportSpec extends Specification with XmlMatchers {
     t("be same in ide-settings project") in {
       sbt13only and testProject("ide-settings")
     }
+
+    t("be same in sbt-idea project") in {
+      sbt13only and testProject("sbt-idea")
+    }
   }
 }

@@ -6,7 +6,7 @@ name := "sbt-structure-" + CrossBuilding.pluginSbtVersion.value
 
 organization := "org.jetbrains"
 
-version := "3.2.1" // Semantic Versioning
+version := "3.3.0" // Semantic Versioning
 
 licenses += ("Apache-2.0", url("http://www.apache.org/licenses/LICENSE-2.0.html"))
 
