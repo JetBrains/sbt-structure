@@ -11,7 +11,6 @@
       <import>import sbt._, Keys._, dsl._</import>
       <import>import RootBuild._</import>
       <import>import _root_.sbt.plugins.IvyPlugin, _root_.sbt.plugins.JvmPlugin, _root_.sbt.plugins.CorePlugin, _root_.sbt.plugins.JUnitXmlReportPlugin</import>
-      <classes>./project/target/scala-2.10/sbt-0.13/classes</classes>
       <classes>~/.sbt/boot/scala-2.10.4/lib/jansi.jar</classes>
       <classes>~/.sbt/boot/scala-2.10.4/lib/jline.jar</classes>
       <classes>~/.sbt/boot/scala-2.10.4/lib/scala-compiler.jar</classes>
@@ -152,7 +151,6 @@
       <import>import sbt._, Keys._, dsl._</import>
       <import>import RootBuild._</import>
       <import>import _root_.sbt.plugins.IvyPlugin, _root_.sbt.plugins.JvmPlugin, _root_.sbt.plugins.CorePlugin, _root_.sbt.plugins.JUnitXmlReportPlugin</import>
-      <classes>../project/target/scala-2.10/sbt-0.13/classes</classes>
       <classes>~/.sbt/boot/scala-2.10.4/lib/jansi.jar</classes>
       <classes>~/.sbt/boot/scala-2.10.4/lib/jline.jar</classes>
       <classes>~/.sbt/boot/scala-2.10.4/lib/scala-compiler.jar</classes>
@@ -292,7 +290,6 @@
       <import>import sbt._, Keys._, dsl._</import>
       <import>import RootBuild._</import>
       <import>import _root_.sbt.plugins.IvyPlugin, _root_.sbt.plugins.JvmPlugin, _root_.sbt.plugins.CorePlugin, _root_.sbt.plugins.JUnitXmlReportPlugin</import>
-      <classes>../project/target/scala-2.10/sbt-0.13/classes</classes>
       <classes>~/.sbt/boot/scala-2.10.4/lib/jansi.jar</classes>
       <classes>~/.sbt/boot/scala-2.10.4/lib/jline.jar</classes>
       <classes>~/.sbt/boot/scala-2.10.4/lib/scala-compiler.jar</classes>

@@ -10,7 +10,6 @@
     <build>
       <import>import sbt._, Keys._</import>
       <import>import _root_.android.Plugin._</import>
-      <classes>./project/target/scala-2.10/sbt-0.13/classes</classes>
       <classes>~/.ivy2/cache/asm/asm-all/jars/asm-all-3.3.1.jar</classes>
       <classes>~/.ivy2/cache/com.android.tools.build/builder-model/jars/builder-model-0.12.2.jar</classes>
       <classes>~/.ivy2/cache/com.android.tools.build/builder-test-api/jars/builder-test-api-0.12.2.jar</classes>

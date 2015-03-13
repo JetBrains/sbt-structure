@@ -10,7 +10,6 @@
     <build>
       <import>import sbt._, Keys._</import>
       <import>import Test._</import>
-      <classes>./project/target/scala-2.10/sbt-0.13/classes</classes>
       <classes>~/.sbt/boot/scala-2.10.2/lib/jansi.jar</classes>
       <classes>~/.sbt/boot/scala-2.10.2/lib/jline.jar</classes>
       <classes>~/.sbt/boot/scala-2.10.2/lib/scala-compiler.jar</classes>
@@ -133,7 +132,6 @@
     <build>
       <import>import sbt._, Keys._</import>
       <import>import Test._</import>
-      <classes>../project/target/scala-2.10/sbt-0.13/classes</classes>
       <classes>~/.sbt/boot/scala-2.10.2/lib/jansi.jar</classes>
       <classes>~/.sbt/boot/scala-2.10.2/lib/jline.jar</classes>
       <classes>~/.sbt/boot/scala-2.10.2/lib/scala-compiler.jar</classes>
@@ -260,7 +258,6 @@
     <build>
       <import>import sbt._, Keys._</import>
       <import>import Test._</import>
-      <classes>../project/target/scala-2.10/sbt-0.13/classes</classes>
       <classes>~/.sbt/boot/scala-2.10.2/lib/jansi.jar</classes>
       <classes>~/.sbt/boot/scala-2.10.2/lib/jline.jar</classes>
       <classes>~/.sbt/boot/scala-2.10.2/lib/scala-compiler.jar</classes>

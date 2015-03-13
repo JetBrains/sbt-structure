@@ -109,7 +109,7 @@ object Extractor extends ExtractorBase {
     val build = {
       val unit = structure.units(projectRef.build)
       val (docs, sources) = if (download) extractSbtClassifiers(state, projectRef) else (Seq.empty, Seq.empty)
-      BuildData(unit.imports, unit.classpath, docs, sources)
+      BuildData(unit.imports, unit.unit.plugins.pluginData.dependencyClasspath.map(_.data), docs, sources)
     }
 
     val dependencies = extractDependencies(state, structure, projectRef)

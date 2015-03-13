@@ -15,7 +15,6 @@
       <import>
         import _root_.sbt.plugins.IvyPlugin, _root_.sbt.plugins.JvmPlugin, _root_.sbt.plugins.CorePlugin, _root_.sbt.plugins.JUnitXmlReportPlugin, _root_.play.Play, _root_.play.PlayJava, _root_.play.PlayScala, _root_.play.twirl.sbt.SbtTwirl, _root_.com.typesafe.sbt.jse.SbtJsEngine, _root_.com.typesafe.sbt.jse.SbtJsTask, _root_.com.typesafe.sbt.web.SbtWeb, _root_.com.typesafe.sbt.webdriver.SbtWebDriver
       </import>
-      <classes>./project/target/scala-2.10/sbt-0.13/classes</classes>
       <classes>~/.ivy2/cache/aopalliance/aopalliance/jars/aopalliance-1.0.jar</classes>
       <classes>~/.ivy2/cache/com.fasterxml.jackson.core/jackson-annotations/bundles/jackson-annotations-2.3.0.jar</classes>
       <classes>~/.ivy2/cache/com.fasterxml.jackson.core/jackson-core/bundles/jackson-core-2.3.3.jar</classes>
