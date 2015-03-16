@@ -28,10 +28,31 @@ object Extractor extends ExtractorBase {
 
     val allProjectRefs = structure.allProjectRefs
 
-    val projectsData = allProjectRefs.map(extractProject(state, structure, _, download && resolveSbtClassifiers))
+    val acceptedProjectRefs =
+      // Here is a hackish way to test whether project has JvmPlugin enabled.
+      // Prior to 0.13.8 SBT had this one enabled by default for all projects.
+      // Now there may exist projects with IvyPlugin (and thus JvmPlugin) disabled
+      // lacking all the settings we need to extract in order to import project in IDEA.
+      // These projects are filtered out by checking `autoPlugins` field.
+      // But earlier versions of SBT 0.13.x had no `autoPlugins` field so
+      // structural typing is used to get the data.
+      allProjectRefs.filter { case ProjectRef(_, id) =>
+        structure.allProjects.find(_.id == id).fold(false) { resolvedProject =>
+          try {
+            type ResolvedProject_0_13_7 = {def autoPlugins: Seq[{ def label: String}]}
+            val resolvedProject_0_13_7 = resolvedProject.asInstanceOf[ResolvedProject_0_13_7]
+            val labels = resolvedProject_0_13_7.autoPlugins.map(_.label)
+            labels.contains("sbt.plugins.JvmPlugin")
+          } catch {
+            case _ : NoSuchMethodException => true
+          }
+        }
+      }
+
+    val projectsData = acceptedProjectRefs.map(extractProject(state, structure, _, download && resolveSbtClassifiers))
 
     val repositoryData = download.option {
-      val rawModulesData = allProjectRefs.flatMap(extractModules(state, structure, _, resolveClassifiers))
+      val rawModulesData = acceptedProjectRefs.flatMap(extractModules(state, structure, _, resolveClassifiers))
       val modulesData = rawModulesData.foldLeft(Seq.empty[ModuleData]) { (acc, data) =>
         acc.find(_.id == data.id) match {
           case Some(module) =>
