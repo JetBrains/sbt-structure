@@ -264,7 +264,7 @@ object Extractor extends ExtractorBase {
     } else if (cs == Set(Compile, Test)) {
       Seq(Provided)
     } else {
-      configurations
+      cs.toSeq
     }
   }
 
