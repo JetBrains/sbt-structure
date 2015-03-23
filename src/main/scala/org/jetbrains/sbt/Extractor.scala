@@ -10,7 +10,7 @@ import sbt._
 
 object Extractor extends ExtractorBase {
   private val ExportableConfigurations = Seq(Compile, Test, IntegrationTest)
-  private val DependencyConfigurations = Seq(Compile, Test, Runtime, Provided, Optional)
+  private val DependencyConfigurations = Seq(Compile, Test, Runtime, Provided, Optional, IntegrationTest)
 
   object SettingKeys {
     val ideBasePackages         = SettingKey[Seq[String]]("ide-base-packages")
@@ -257,7 +257,7 @@ object Extractor extends ExtractorBase {
   // rather than libraryDependencies (to acquire transitive dependencies),  so we detect
   // module presence (in external classpath) instead of explicitly declared configurations.
   def mapConfigurations(configurations: Seq[Configuration]): Seq[Configuration] = {
-    val cs = configurations.toSet
+    val cs = configurations.map(c => if (c == IntegrationTest) Test else c).toSet
 
     if (cs == Set(Compile, Test, Runtime)) {
       Seq.empty
