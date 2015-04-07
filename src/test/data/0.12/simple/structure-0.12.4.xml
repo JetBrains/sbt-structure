@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <structure sbt="0.12.4">
   <project>
     <id>simple</id>
@@ -8,7 +9,6 @@
     <target>./target</target>
     <build>
       <import>import sbt._, Process._, Keys._</import>
-      <classes>./project/target/scala-2.9.2/sbt-0.12/classes</classes>
       <classes>~/.sbt/boot/scala-2.9.2/lib/jansi.jar</classes>
       <classes>~/.sbt/boot/scala-2.9.2/lib/jline.jar</classes>
       <classes>~/.sbt/boot/scala-2.9.2/lib/scala-compiler.jar</classes>
@@ -104,7 +104,6 @@
       <option>-s2</option>
     </scala>
     <configuration id="compile">
-      <sources >.</sources>
       <sources >./src/main/java</sources>
       <sources >./src/main/scala</sources>
       <sources managed="true">./target/scala-2.10/src_managed/main</sources>

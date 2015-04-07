@@ -37,7 +37,7 @@ object Extractor {
       // But earlier versions of SBT 0.13.x had no `autoPlugins` field so
       // structural typing is used to get the data.
       allProjectRefs.filter { case ProjectRef(_, id) =>
-        structure.allProjects.find(_.id == id).fold(false) { resolvedProject =>
+        structure.allProjects.find(_.id == id).map { resolvedProject =>
           try {
             type ResolvedProject_0_13_7 = {def autoPlugins: Seq[{ def label: String}]}
             val resolvedProject_0_13_7 = resolvedProject.asInstanceOf[ResolvedProject_0_13_7]
@@ -46,7 +46,7 @@ object Extractor {
           } catch {
             case _ : NoSuchMethodException => true
           }
-        }
+        }.getOrElse(false)
       }
 
     val projectsData = acceptedProjectRefs.map(extractProject(state, structure, _, download && resolveSbtClassifiers))
