@@ -86,10 +86,9 @@ class ImportSpec extends Specification with XmlMatchers {
       sbt13only and testProject("optional")
     }
 
-//    FIXME: this test is broken
-//    t("be same in play project") in {
-//      sbt13only and testProject("play", download = false, sbtVersion = "0.13.5")
-//    }
+    t("be same in play project") in {
+      sbt13only and testProject("play", download = false, sbtVersion = "0.13.5")
+    }
 
     t("be same in android project") in {
       sbt13only and (hasAndroidDefined and testProject("android"))

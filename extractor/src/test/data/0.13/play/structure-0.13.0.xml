@@ -324,13 +324,23 @@
     <resolver name="Typesafe Releases Repository" root="http://repo.typesafe.com/typesafe/releases/"/>
     <playimps>
       <uri>
-        <root>file:$BASE/</root>
+        <root>$BASE</root>
       </uri>
       <playVersion>
         <root>2.3.5</root>
       </playVersion>
       <testOptions/>
-      <twirlTemplatesImports/>
+      <twirlTemplatesImports>
+        <root>
+          <entry>play.api.templates.PlayMagic._</entry>
+          <entry>models._</entry>
+          <entry>controllers._</entry>
+          <entry>play.api.i18n._</entry>
+          <entry>play.api.mvc._</entry>
+          <entry>play.api.data._</entry>
+          <entry>views.xml._</entry>
+        </root>
+      </twirlTemplatesImports>
       <playRoutesImports>
         <root>
           <entry>controllers.Assets.Asset</entry>
