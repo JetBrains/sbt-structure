@@ -4,15 +4,27 @@ package org.jetbrains.sbt
 import java.io.File
 
 import org.jetbrains.sbt.FS._
-import sbt.Configuration
 
 //import scala.language.implicitConversions
 //import scala.language.reflectiveCalls
-import scala.xml.{Elem, Text}
+import scala.xml.{XML, Elem, Text}
 
 /**
  * @author Pavel Fatin
  */
+
+final case class Configuration(name: String) {
+  override def toString = name
+}
+
+object Configuration {
+  val Compile         = Configuration("compile")
+  val Test            = Configuration("test")
+  val IntegrationTest = Configuration("test")
+  val Runtime         = Configuration("runtime")
+  val Provided        = Configuration("provided")
+}
+
 case class FS(home: File, projectBase: File, base: Option[File] = None) {
   def withBase(base: File): FS = copy(base = Some(base))
 }
@@ -53,10 +65,10 @@ object FS {
 
   private def relativize(base: File, projectBase: File): Option[String] = {
     var parent = base.getParentFile
-    var dots = "../"
+    var dots = "src/test"
     while (parent != null) {
       if (parent != projectBase) {
-        dots += "../"
+        dots += "src/test"
         parent = parent.getParentFile
       } else {
         return Some(dots.init)
@@ -83,7 +95,7 @@ case class StructureData(sbt: String, scala: ScalaData, projects: Seq[ProjectDat
 case class ProjectData(id: String, name: String, organization: String, version: String, base: File, basePackages: Seq[String],
                        target: File, build: BuildData, configurations: Seq[ConfigurationData], java: Option[JavaData],
                        scala: Option[ScalaData], android: Option[AndroidData], dependencies: DependencyData,
-                       resolvers: Set[ResolverData], play2: Option[Play2Extractor.Play2Data]) {
+                       resolvers: Set[ResolverData], play2: Option[Play2Data]) {
   def toXML(implicit fs: FS): Elem = {
     <project>
       <id>{id}</id>
@@ -249,5 +261,25 @@ case class AndroidData(targetVersion: String, manifestPath: String,
       <isLibrary>{isLibrary}</isLibrary>
       <proguard>{proguardConfig.map { opt => <option>{opt}</option> }}</proguard>
     </android>
+  }
+}
+
+case class Play2Data(keys: Seq[KeyInfo[_]]) {
+  def toXml =
+    <playimps>
+      {keys.map{k => k.toXml}}
+    </playimps>
+}
+
+case class KeyInfo[Value](myName: String, tagName: String, values: Seq[(String, Value)]) {//todo escape ???
+def toXml =
+  XML.loadString(
+    "<" + tagName + ">" + values.map { case (projectName, v) => "<" + projectName + ">" + valToXml(v) + "</" + projectName + ">"}.mkString("") + "</" + tagName + ">"
+  )
+
+  private def valToXml(a: Any) = a match {
+    case s: Iterable[_] => s.map(v => "<entry>" + v + "</entry>").mkString("")
+    case tt: Option[_] => tt.map(_.toString) getOrElse ""
+    case other => other.toString
   }
 }

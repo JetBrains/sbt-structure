@@ -5,6 +5,7 @@ import org.jetbrains.sbt.Utilities._
 import sbt.Keys._
 import sbt.Load.BuildStructure
 import sbt._
+import sbt.{Configuration => _}
 
 //import scala.language.reflectiveCalls
 
@@ -144,7 +145,7 @@ object Extractor {
       java, scala, android, dependencies, resolvers, play2)
   }
 
-  def extractConfiguration(state: State, structure: BuildStructure, projectRef: ProjectRef, configuration: Configuration): Option[ConfigurationData] = {
+  def extractConfiguration(state: State, structure: BuildStructure, projectRef: ProjectRef, configuration: sbt.Configuration): Option[ConfigurationData] = {
     Keys.classDirectory.in(projectRef, configuration).get(structure.data).map { output =>
       val sources = {
         val managed = Keys.managedSourceDirectories.in(projectRef, configuration).get(structure.data).get
@@ -183,7 +184,7 @@ object Extractor {
   }
 
   def moduleDependenciesIn(state: State, projectRef: ProjectRef): Seq[ModuleDependencyData] = {
-    def modulesIn(configuration: Configuration): Seq[ModuleID] = {
+    def modulesIn(configuration: sbt.Configuration): Seq[ModuleID] = {
       Project.runTask(externalDependencyClasspath.in(projectRef, configuration), state) match {
         case Some((_, Value(attrs))) =>
           for {
@@ -207,7 +208,7 @@ object Extractor {
 
     moduleToConfigurations.flatMap { case (moduleId, configurations) =>
       createModuleIdentifiers(moduleId, moduleId.explicitArtifacts).map { id =>
-        ModuleDependencyData(id, mapConfigurations(configurations))
+        ModuleDependencyData(id, mapConfigurations(configurations.map(c => Configuration(c.name))))
       }
     }.foldLeft(Seq.empty[ModuleDependencyData]) { (acc, moduleData) =>
       acc.find(_.id == moduleData.id) match {
@@ -235,7 +236,7 @@ object Extractor {
     }
 
   def jarDependenciesIn(state: State, projectRef: ProjectRef): Seq[JarDependencyData] = {
-    def jarsIn(configuration: Configuration): Seq[File] = {
+    def jarsIn(configuration: sbt.Configuration): Seq[File] = {
       val classpath: Option[Classpath] = Project.runTask(unmanagedJars.in(projectRef, configuration), state) collect {
         case (_, Value(it)) => it
       }
@@ -249,7 +250,7 @@ object Extractor {
       .toSeq
 
     jarToConfigurations.map { case (file, configurations) =>
-      JarDependencyData(file, mapConfigurations(configurations))
+      JarDependencyData(file, mapConfigurations(configurations.map(c => Configuration(c.name))))
     }
   }
 
@@ -257,6 +258,7 @@ object Extractor {
   // rather than libraryDependencies (to acquire transitive dependencies),  so we detect
   // module presence (in external classpath) instead of explicitly declared configurations.
   def mapConfigurations(configurations: Seq[Configuration]): Seq[Configuration] = {
+    import Configuration._
     val cs = configurations.map(c => if (c == IntegrationTest) Test else c).toSet
 
     if (cs == Set(Compile, Test, Runtime)) {

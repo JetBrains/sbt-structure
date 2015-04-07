@@ -1,43 +1,51 @@
 import bintray.Keys._
 
-sbtPlugin := true
+def newProject(projectName: String) =
+  Project(projectName, file(projectName))
+    .settings(
+      name := "sbt-structure-" + projectName,
+      organization := "org.jetbrains",
+      version := "4.0.0",
+      licenses += ("Apache-2.0", url("http://www.apache.org/licenses/LICENSE-2.0.html")),
+      unmanagedSourceDirectories in Compile += baseDirectory.value.getParentFile / "shared" / "src" / "main" / "scala"
+    )
 
-name := "sbt-structure-" + CrossBuilding.pluginSbtVersion.value
+val testSetup = taskKey[Unit]("Setup tests")
 
-organization := "org.jetbrains"
+val core = newProject("core")
+  .settings(
+    libraryDependencies ++= {
+      if (scalaVersion.value == "2.11.6")
+        Seq("org.scala-lang.modules" % "scala-xml_2.11" % "1.0.3")
+      else
+        Seq.empty
+    },
+    crossScalaVersions := Seq("2.9.2", "2.10.4", "2.11.6")
+  )
 
-version := "3.3.3" // Semantic Versioning
+val extractor = newProject("extractor")
+  .settings(crossBuildingSettings:_*)
+  .settings(
+    name := name.value + "-" + CrossBuilding.pluginSbtVersion.value,
+    sbtPlugin := true,
+    libraryDependencies ++= Seq(
+      "com.googlecode.java-diff-utils" % "diffutils" % "1.2" withSources(),
+      "org.specs2" %% "specs2" % "1.12.3" % "test"),
+    publishMavenStyle := false,
+    CrossBuilding.crossSbtVersions := Seq("0.12.4"),
+    testSetup := {
+      System.setProperty("structure.sbtversion.full", CrossBuilding.pluginSbtVersion.value)
+      System.setProperty("structure.sbtversion.short", CrossBuilding.pluginSbtVersion.value.substring(0, 4))
+      System.setProperty("structure.scalaversion", scalaBinaryVersion.value)
+    },
+    test in Test <<= (test in Test).dependsOn(testSetup)
+  )
 
-licenses += ("Apache-2.0", url("http://www.apache.org/licenses/LICENSE-2.0.html"))
-
-scalaVersion := "2.10.4" // be careful - version changes during cross-building(use portable code)
-
-libraryDependencies += "com.googlecode.java-diff-utils" % "diffutils" % "1.2" withSources()
-
-libraryDependencies += "org.specs2" %% "specs2" % "1.12.3" % "test"
-
-publishMavenStyle := false
-
-bintrayPublishSettings
-
-repository in bintray := "sbt-plugins"
-
-bintrayOrganization in bintray := Some("jetbrains")
-
-crossBuildingSettings
-
-CrossBuilding.crossSbtVersions := Seq("0.13.0", "0.12.4")
-
-lazy val setSbtVersionForTests = taskKey[Unit]("sets sbt and scala version properties for use in cross-testing")
-
-setSbtVersionForTests := {
-  System.setProperty("structure.sbtversion.full", CrossBuilding.pluginSbtVersion.value)
-  System.setProperty("structure.sbtversion.short", CrossBuilding.pluginSbtVersion.value.substring(0, 4))
-  System.setProperty("structure.scalaversion", scalaBinaryVersion.value)
-}
-
-test in Test := {
-  setSbtVersionForTests.value
-  (test in Test).value
-}
+val root = project.in(file("."))
+  .aggregate(core, extractor)
+  .settings(bintrayPublishSettings:_*)
+  .settings(
+    repository in bintray := "sbt-plugins",
+    bintrayOrganization in bintray := Some("jetbrains")
+  )
 

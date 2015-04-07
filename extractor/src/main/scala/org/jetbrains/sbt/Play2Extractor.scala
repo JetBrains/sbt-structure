@@ -30,26 +30,6 @@ object Play2Extractor {
 
   @inline private def processPath(path: String) = path stripSuffix "/" stripSuffix "\\"
 
-  case class Play2Data(keys: Seq[KeyInfo[_]]) {
-    def toXml =
-      <playimps>
-        {keys.map{k => k.toXml}}
-      </playimps>
-  }
-
-  case class KeyInfo[Value](myName: String, tagName: String, values: Seq[(String, Value)]) {//todo escape ???
-    def toXml =
-      XML.loadString(
-        "<" + tagName + ">" + values.map { case (projectName, v) => "<" + projectName + ">" + valToXml(v) + "</" + projectName + ">"}.mkString("") + "</" + tagName + ">"
-      )
-
-    private def valToXml(a: Any) = a match {
-      case s: Iterable[_] => s.map(v => "<entry>" + v + "</entry>").mkString("")
-      case tt: Option[_] => tt.map(_.toString) getOrElse ""
-      case other => other.toString
-    }
-  }
-
   private class KeyChain(val markerKey: KeyWithScope, val keys: Seq[KeyWithScope], val aliasKeys: Seq[AliasKey] = Seq.empty) {
     protected val allKeys = (markerKey +: keys) ++ aliasKeys
 

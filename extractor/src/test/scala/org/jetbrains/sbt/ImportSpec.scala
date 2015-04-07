@@ -10,7 +10,7 @@ import scala.xml._
 
 class ImportSpec extends Specification with XmlMatchers {
 
-  val testDataRoot = new File("src/test/data/" + BuildInfo.sbtVersion)
+  val testDataRoot = new File("extractor/src/test/data/" + BuildInfo.sbtVersion)
   val androidHome = Option(System.getenv.get("ANDROID_HOME"))
 
   def testProject(project: String,  download: Boolean = true, sbtVersion: String = BuildInfo.sbtVersionFull) = {
