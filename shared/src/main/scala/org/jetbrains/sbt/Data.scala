@@ -25,7 +25,7 @@ object Configuration {
   val Provided        = Configuration("provided")
 }
 
-case class FS(home: File, projectBase: File, base: Option[File] = None) {
+case class FS(userHome: File, projectBase: File, base: Option[File] = None) {
   def withBase(base: File): FS = copy(base = Some(base))
 }
 
@@ -38,7 +38,7 @@ object FS {
   implicit def toRichFile(file: File)(implicit fs: FS) = new {
     def path: String = {
       val filePath = toPath(file)
-      val homePath = toPath(fs.home)
+      val homePath = toPath(fs.userHome)
       val projectBasePath = toPath(fs.projectBase)
       val basePath = fs.base.map(toPath)
       val relativeProjectBasePath = fs.base.flatMap(it => relativize(it, fs.projectBase))
@@ -81,8 +81,8 @@ object FS {
 }
 
 case class StructureData(sbt: String, scala: ScalaData, projects: Seq[ProjectData], repository: Option[RepositoryData], localCachePath: Option[String]) {
-  def toXML(home: File, projectBase: File): Elem = {
-    val fs = new FS(home, projectBase)
+  def toXML(userHome: File, projectBase: File): Elem = {
+    val fs = new FS(userHome, projectBase)
 
     <structure sbt={sbt}>
       {projects.sortBy(_.base).map(project => project.toXML(fs.withBase(project.base)))}
