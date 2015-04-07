@@ -8,7 +8,7 @@ import sbt._
 
 //import scala.language.reflectiveCalls
 
-object Extractor extends ExtractorBase {
+object Extractor {
   private val ExportableConfigurations = Seq(Compile, Test, IntegrationTest)
   private val DependencyConfigurations = Seq(Compile, Test, Runtime, Provided, Optional, IntegrationTest)
 
