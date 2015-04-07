@@ -32,7 +32,7 @@ val extractor = newProject("extractor")
       "com.googlecode.java-diff-utils" % "diffutils" % "1.2" withSources(),
       "org.specs2" %% "specs2" % "1.12.3" % "test"),
     publishMavenStyle := false,
-    CrossBuilding.crossSbtVersions := Seq("0.12.4"),
+    CrossBuilding.crossSbtVersions := Seq("0.12.4", "0.13.0", "0.13.7"),
     testSetup := {
       System.setProperty("structure.sbtversion.full", CrossBuilding.pluginSbtVersion.value)
       System.setProperty("structure.sbtversion.short", CrossBuilding.pluginSbtVersion.value.substring(0, 4))
