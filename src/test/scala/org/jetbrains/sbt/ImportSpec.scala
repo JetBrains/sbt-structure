@@ -1,28 +1,27 @@
 package org.jetbrains.sbt
 
-import java.io.{PrintWriter, File}
+import java.io.{File, PrintWriter}
 
 import difflib._
-import org.specs2.matcher.{MatchResult, XmlMatchers}
+import org.specs2.matcher.XmlMatchers
 import org.specs2.mutable._
-import Utilities._
 
 import scala.xml._
 
 class ImportSpec extends Specification with XmlMatchers {
 
-  val testDataRoot = new File("src/test/data/" + TestCompat.sbtVersion)
+  val testDataRoot = new File("src/test/data/" + BuildInfo.sbtVersion)
   val androidHome = Option(System.getenv.get("ANDROID_HOME"))
 
-  def testProject(project: String,  download: Boolean = true, sbtVersion: String = TestCompat.sbtVersionFull) = {
+  def testProject(project: String,  download: Boolean = true, sbtVersion: String = BuildInfo.sbtVersionFull) = {
 
     val base = new File(testDataRoot, project)
 
     val expected = {
       val fs = new FS(new File(System.getProperty("user.home")), base)
-      val testDataFile = new File(base, "structure-" + TestCompat.sbtVersionFull + ".xml")
+      val testDataFile = new File(base, "structure-" + BuildInfo.sbtVersionFull + ".xml")
       if (!testDataFile.exists())
-        failure("No test data for version " + TestCompat.sbtVersionFull + " found!")
+        failure("No test data for version " + BuildInfo.sbtVersionFull + " found!")
       val text = read(testDataFile).mkString("\n")
       val androidHome = this.androidHome getOrElse ""
       text
@@ -51,11 +50,11 @@ class ImportSpec extends Specification with XmlMatchers {
     a must beEqualToIgnoringSpace(e).updateMessage(_ => onFail)
   }
 
-  def sbt13only = TestCompat.sbtVersion must be_==("0.13").orSkip("this test is for 0.13 only")
+  def sbt13only = BuildInfo.sbtVersion must be_==("0.13").orSkip("this test is for 0.13 only")
 
   def hasAndroidDefined = androidHome must beSome.orSkip("Android SDK home not defined")
 
-  def t(s: String) = s +  " [" + TestCompat.sbtVersionFull+ "]"
+  def t(s: String) = s +  " [" + BuildInfo.sbtVersionFull+ "]"
 
   "Imported xml" should {
 
@@ -90,7 +89,7 @@ class ImportSpec extends Specification with XmlMatchers {
     }
 
     t("be same in android project") in {
-      hasAndroidDefined and testProject("android")
+      sbt13only and hasAndroidDefined and testProject("android")
     }
 
     t("be same in ide-settings project") in {

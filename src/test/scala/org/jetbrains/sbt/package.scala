@@ -1,7 +1,8 @@
 package org.jetbrains
 
-import scala.io.Source
 import java.io.File
+
+import scala.io.Source
 
 /**
  * @author Pavel Fatin
