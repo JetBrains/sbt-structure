@@ -6,7 +6,7 @@
     <organization>default</organization>
     <version>0.1-SNAPSHOT</version>
     <base>$BASE</base>
-    <target>./target</target>
+    <target>$BASE/target</target>
     <build>
       <import>import sbt._, Keys._</import>
       <import>import _root_.android.Plugin._</import>
@@ -174,28 +174,28 @@
       </proguard>
     </android>
     <configuration id="compile">
-      <sources>./src/main</sources>
-      <sources>./src/main/java</sources>
-      <sources>./src/main/scala</sources>
-      <sources managed="true">./target/android-gen</sources>
-      <resources>./src/main/res</resources>
-      <resources managed="true">./target/resource_managed/main</resources>
-      <classes>./target/android-bin/classes</classes>
+      <sources>$BASE/src/main</sources>
+      <sources>$BASE/src/main/java</sources>
+      <sources>$BASE/src/main/scala</sources>
+      <sources managed="true">$BASE/target/android-gen</sources>
+      <resources>$BASE/src/main/res</resources>
+      <resources managed="true">$BASE/target/resource_managed/main</resources>
+      <classes>$BASE/target/android-bin/classes</classes>
     </configuration>
     <configuration id="test">
-      <sources>./src/androidTest</sources>
-      <sources>./src/androidTest/java</sources>
-      <sources>./src/androidTest/scala</sources>
-      <sources managed="true">./target/src_managed/test</sources>
-      <resources>./src/androidTest/resources</resources>
-      <resources managed="true">./target/resource_managed/test</resources>
-      <classes>./target/test-classes</classes>
+      <sources>$BASE/src/androidTest</sources>
+      <sources>$BASE/src/androidTest/java</sources>
+      <sources>$BASE/src/androidTest/scala</sources>
+      <sources managed="true">$BASE/target/src_managed/test</sources>
+      <resources>$BASE/src/androidTest/resources</resources>
+      <resources managed="true">$BASE/target/resource_managed/test</resources>
+      <classes>$BASE/target/test-classes</classes>
     </configuration>
     <dependencies>
       <module organization="com.android.support" name="support-annotations" revision="20.0.0" artifactType="jar" classifier="" configurations=""/>
       <module organization="org.scala-lang" name="scala-library" revision="2.11.1" artifactType="jar" classifier="" configurations=""/>
-      <jar configurations="compile">./target/aars/com.android.support-support-v4-20.0.0/com.android.support-support-v4-20.0.0.jar</jar>
-      <jar configurations="compile">./target/aars/com.android.support-support-v4-20.0.0/libs/internal_impl-20.0.0.jar</jar>
+      <jar configurations="compile">$BASE/target/aars/com.android.support-support-v4-20.0.0/com.android.support-support-v4-20.0.0.jar</jar>
+      <jar configurations="compile">$BASE/target/aars/com.android.support-support-v4-20.0.0/libs/internal_impl-20.0.0.jar</jar>
     </dependencies>
     <resolver name="public" root="http://repo1.maven.org/maven2/"/>
     <resolver name="google libraries" root="file:$ANDROID_HOME/extras/google/m2repository/"/>

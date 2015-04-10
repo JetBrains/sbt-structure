@@ -34,13 +34,7 @@ class ImportSpec extends Specification with XmlMatchers {
     val actual = Loader.load(base, download, sbtVersion, verbose = true).mkString("\n")
 
     val a = XML.loadString(actual)
-
-    // FIXME: this is a hack used for properly rewriting of paths
-    //        only works for single project builds and thus should be replaced
-    val pwd = System.getProperty("user.dir")
-    System.setProperty("user.dir", base.getCanonicalPath)
-    val e = XML.loadString(expected).deserialize[StructureData].right.map(_.serialize).right.get
-    System.setProperty("user.dir", pwd)
+    val e = XML.loadString(expected)
 
     def onFail = {
       import scala.collection.JavaConversions._

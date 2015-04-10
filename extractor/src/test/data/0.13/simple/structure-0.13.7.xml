@@ -6,7 +6,7 @@
     <organization>some-organization</organization>
     <version>1.2.3</version>
     <base>$BASE</base>
-    <target>./target</target>
+    <target>$BASE/target</target>
     <build>
       <import>import sbt._, Keys._, dsl._</import>
       <import>import _root_.sbt.plugins.IvyPlugin, _root_.sbt.plugins.JvmPlugin, _root_.sbt.plugins.CorePlugin, _root_.sbt.plugins.JUnitXmlReportPlugin</import>
@@ -114,7 +114,7 @@
       <sources>~/.ivy2/cache/org.scala-sbt/precompiled-2_9_3/srcs/precompiled-2_9_3-0.13.7-sources.jar</sources>
     </build>
     <java>
-      <home>./some/home</home>
+      <home>$BASE/some/home</home>
       <option>-j1</option>
       <option>-j2</option>
     </java>
@@ -127,20 +127,20 @@
       <option>-s2</option>
     </scala>
     <configuration id="compile">
-      <sources>./src/main/java</sources>
-      <sources>./src/main/scala</sources>
-      <sources managed="true">./target/scala-2.10/src_managed/main</sources>
-      <resources>./src/main/resources</resources>
-      <resources managed="true">./target/scala-2.10/resource_managed/main</resources>
-      <classes>./target/scala-2.10/classes</classes>
+      <sources>$BASE/src/main/java</sources>
+      <sources>$BASE/src/main/scala</sources>
+      <sources managed="true">$BASE/target/scala-2.10/src_managed/main</sources>
+      <resources>$BASE/src/main/resources</resources>
+      <resources managed="true">$BASE/target/scala-2.10/resource_managed/main</resources>
+      <classes>$BASE/target/scala-2.10/classes</classes>
     </configuration>
     <configuration id="test">
-      <sources>./src/test/java</sources>
-      <sources>./src/test/scala</sources>
-      <sources managed="true">./target/scala-2.10/src_managed/test</sources>
-      <resources>./src/test/resources</resources>
-      <resources managed="true">./target/scala-2.10/resource_managed/test</resources>
-      <classes>./target/scala-2.10/test-classes</classes>
+      <sources>$BASE/src/test/java</sources>
+      <sources>$BASE/src/test/scala</sources>
+      <sources managed="true">$BASE/target/scala-2.10/src_managed/test</sources>
+      <resources>$BASE/src/test/resources</resources>
+      <resources managed="true">$BASE/target/scala-2.10/resource_managed/test</resources>
+      <classes>$BASE/target/scala-2.10/test-classes</classes>
     </configuration>
     <dependencies>
       <module organization="org.scala-lang" name="scala-library" revision="2.10.1" artifactType="jar" classifier="" configurations=""/>

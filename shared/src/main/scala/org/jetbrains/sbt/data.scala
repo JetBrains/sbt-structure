@@ -286,7 +286,7 @@ object ModuleDependencyData {
   implicit val serializer = new XmlSerializer[ModuleDependencyData] {
     override def serialize(what: ModuleDependencyData): Elem = {
       val elem = what.id.serialize
-      elem % Attribute("configuration", Text(what.configurations.mkString(";")), Null)
+      elem % Attribute("configurations", Text(what.configurations.mkString(";")), Null)
     }
 
     override def deserialize(what: Node): Either[Throwable,ModuleDependencyData] = {

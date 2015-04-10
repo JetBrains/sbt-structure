@@ -6,7 +6,7 @@
     <organization>some-organization</organization>
     <version>1.2.3</version>
     <base>$BASE</base>
-    <target>./target</target>
+    <target>$BASE/target</target>
     <build>
       <import>import sbt._, Keys._, dsl._</import>
       <import>import RootBuild._</import>
@@ -121,23 +121,25 @@
       <extra>~/.ivy2/cache/org.scala-lang/scala-reflect/jars/scala-reflect-2.10.1.jar</extra>
     </scala>
     <configuration id="compile">
-      <sources>./src/main/java</sources>
-      <sources>./src/main/scala</sources>
-      <sources managed="true">./target/scala-2.10/src_managed/main</sources>
-      <resources>./src/main/resources</resources>
-      <resources managed="true">./target/scala-2.10/resource_managed/main</resources>
-      <classes>./target/scala-2.10/classes</classes>
+      <sources>$BASE/src/main/java</sources>
+      <sources>$BASE/src/main/scala</sources>
+      <sources managed="true">$BASE/target/scala-2.10/src_managed/main</sources>
+      <resources>$BASE/src/main/resources</resources>
+      <resources managed="true">$BASE/target/scala-2.10/resource_managed/main</resources>
+      <classes>$BASE/target/scala-2.10/classes</classes>
     </configuration>
     <configuration id="test">
-      <sources>./src/test/java</sources>
-      <sources>./src/test/scala</sources>
-      <sources managed="true">./target/scala-2.10/src_managed/test</sources>
-      <resources>./src/test/resources</resources>
-      <resources managed="true">./target/scala-2.10/resource_managed/test</resources>
-      <classes>./target/scala-2.10/test-classes</classes>
+      <sources>$BASE/src/test/java</sources>
+      <sources>$BASE/src/test/scala</sources>
+      <sources managed="true">$BASE/target/scala-2.10/src_managed/test</sources>
+      <resources>$BASE/src/test/resources</resources>
+      <resources managed="true">$BASE/target/scala-2.10/resource_managed/test</resources>
+      <classes>$BASE/target/scala-2.10/test-classes</classes>
     </configuration>
-    <project>bar</project>
-    <module organization="org.scala-lang" name="scala-library" revision="2.10.1" artifactType="jar" classifier="" configurations=""/>
+    <dependencies>
+      <project configurations="">bar</project>
+      <module organization="org.scala-lang" name="scala-library" revision="2.10.1" artifactType="jar" classifier="" configurations=""/>
+    </dependencies>
     <resolver name="public" root="https://repo1.maven.org/maven2/"/>
   </project>
   <project>
@@ -146,7 +148,7 @@
     <organization>bar</organization>
     <version>0.1-SNAPSHOT</version>
     <base>$BASE/bar</base>
-    <target>./target</target>
+    <target>$BASE/bar/target</target>
     <build>
       <import>import sbt._, Keys._, dsl._</import>
       <import>import RootBuild._</import>
@@ -261,22 +263,24 @@
       <extra>~/.ivy2/cache/org.scala-lang/scala-reflect/jars/scala-reflect-2.10.1.jar</extra>
     </scala>
     <configuration id="compile">
-      <sources>./src/main/java</sources>
-      <sources>./src/main/scala</sources>
-      <sources managed="true">./target/scala-2.10/src_managed/main</sources>
-      <resources>./src/main/resources</resources>
-      <resources managed="true">./target/scala-2.10/resource_managed/main</resources>
-      <classes>./target/scala-2.10/classes</classes>
+      <sources>$BASE/bar/src/main/java</sources>
+      <sources>$BASE/bar/src/main/scala</sources>
+      <sources managed="true">$BASE/bar/target/scala-2.10/src_managed/main</sources>
+      <resources>$BASE/bar/src/main/resources</resources>
+      <resources managed="true">$BASE/bar/target/scala-2.10/resource_managed/main</resources>
+      <classes>$BASE/bar/target/scala-2.10/classes</classes>
     </configuration>
     <configuration id="test">
-      <sources>./src/test/java</sources>
-      <sources>./src/test/scala</sources>
-      <sources managed="true">./target/scala-2.10/src_managed/test</sources>
-      <resources>./src/test/resources</resources>
-      <resources managed="true">./target/scala-2.10/resource_managed/test</resources>
-      <classes>./target/scala-2.10/test-classes</classes>
+      <sources>$BASE/bar/src/test/java</sources>
+      <sources>$BASE/bar/src/test/scala</sources>
+      <sources managed="true">$BASE/bar/target/scala-2.10/src_managed/test</sources>
+      <resources>$BASE/bar/src/test/resources</resources>
+      <resources managed="true">$BASE/bar/target/scala-2.10/resource_managed/test</resources>
+      <classes>$BASE/bar/target/scala-2.10/test-classes</classes>
     </configuration>
-    <module organization="org.scala-lang" name="scala-library" revision="2.10.1" artifactType="jar" classifier="" configurations=""/>
+    <dependencies>
+      <module organization="org.scala-lang" name="scala-library" revision="2.10.1" artifactType="jar" classifier="" configurations=""/>
+    </dependencies>
     <resolver name="public" root="https://repo1.maven.org/maven2/"/>
   </project>
   <project>
@@ -285,7 +289,7 @@
     <organization>foo</organization>
     <version>0.1-SNAPSHOT</version>
     <base>$BASE/foo</base>
-    <target>./target</target>
+    <target>$BASE/foo/target</target>
     <build>
       <import>import sbt._, Keys._, dsl._</import>
       <import>import RootBuild._</import>
@@ -399,22 +403,24 @@
       <compiler>~/.ivy2/cache/org.scala-lang/scala-compiler/jars/scala-compiler-2.9.2.jar</compiler>
     </scala>
     <configuration id="compile">
-      <sources>./src/main/java</sources>
-      <sources>./src/main/scala</sources>
-      <sources managed="true">./target/scala-2.9.2/src_managed/main</sources>
-      <resources>./src/main/resources</resources>
-      <resources managed="true">./target/scala-2.9.2/resource_managed/main</resources>
-      <classes>./target/scala-2.9.2/classes</classes>
+      <sources>$BASE/foo/src/main/java</sources>
+      <sources>$BASE/foo/src/main/scala</sources>
+      <sources managed="true">$BASE/foo/target/scala-2.9.2/src_managed/main</sources>
+      <resources>$BASE/foo/src/main/resources</resources>
+      <resources managed="true">$BASE/foo/target/scala-2.9.2/resource_managed/main</resources>
+      <classes>$BASE/foo/target/scala-2.9.2/classes</classes>
     </configuration>
     <configuration id="test">
-      <sources>./src/test/java</sources>
-      <sources>./src/test/scala</sources>
-      <sources managed="true">./target/scala-2.9.2/src_managed/test</sources>
-      <resources>./src/test/resources</resources>
-      <resources managed="true">./target/scala-2.9.2/resource_managed/test</resources>
-      <classes>./target/scala-2.9.2/test-classes</classes>
+      <sources>$BASE/foo/src/test/java</sources>
+      <sources>$BASE/foo/src/test/scala</sources>
+      <sources managed="true">$BASE/foo/target/scala-2.9.2/src_managed/test</sources>
+      <resources>$BASE/foo/src/test/resources</resources>
+      <resources managed="true">$BASE/foo/target/scala-2.9.2/resource_managed/test</resources>
+      <classes>$BASE/foo/target/scala-2.9.2/test-classes</classes>
     </configuration>
-    <module organization="org.scala-lang" name="scala-library" revision="2.9.2" artifactType="jar" classifier="" configurations=""/>
+    <dependencies>
+      <module organization="org.scala-lang" name="scala-library" revision="2.9.2" artifactType="jar" classifier="" configurations=""/>
+    </dependencies>
     <resolver name="public" root="https://repo1.maven.org/maven2/"/>
   </project>
   <repository>
