@@ -23,7 +23,7 @@ case class Configuration(name: String) {
 object Configuration {
   val Compile = Configuration("compile")
   val Test = Configuration("test")
-  val IntegrationTest = Configuration("test")
+  val IntegrationTest = Configuration("it")
   val Runtime = Configuration("runtime")
   val Provided = Configuration("provided")
 

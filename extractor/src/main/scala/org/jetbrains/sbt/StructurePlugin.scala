@@ -1,5 +1,8 @@
 package org.jetbrains.sbt
 
+import org.jetbrains.sbt.extractors.Extractor.Options
+import org.jetbrains.sbt.extractors.StructureExtractor
+
 import scala.xml.PrettyPrinter
 import java.io.{OutputStreamWriter, BufferedWriter, FileOutputStream}
 import sbt._
@@ -23,7 +26,7 @@ object StructurePlugin extends Plugin {
       (options.contains("download"), options.contains("resolveClassifiers"),
         options.contains("resolveSbtClassifiers"), options.contains("prettyPrint"))
 
-    val structure = Extractor.extractStructure(state, download, resolveClassifiers, resolveSbtClassifiers)
+    val structure = StructureExtractor.extract(state, Options(download, resolveClassifiers, resolveSbtClassifiers)).get
 
     val text = {
       val home = new File(System.getProperty("user.home"))
