@@ -5,6 +5,8 @@ import java.io.{OutputStreamWriter, BufferedWriter, FileOutputStream}
 import sbt._
 import Keys._
 
+import XmlSerializer._
+
 /**
  * @author Pavel Fatin
  */
@@ -27,9 +29,9 @@ object StructurePlugin extends Plugin {
       val home = new File(System.getProperty("user.home"))
       val base = new File(System.getProperty("user.dir"))
       if (prettyPrint)
-        new PrettyPrinter(180, 2).format(structure.toXML(home, base))
+        new PrettyPrinter(180, 2).format(structure.serialize)
       else
-        xml.Utility.trim(structure.toXML(home, base)).mkString
+        xml.Utility.trim(structure.serialize).mkString
     }
 
     Keys.artifactPath.in(Project.current(state)).get(Project.extract(state).structure.data).map { file =>

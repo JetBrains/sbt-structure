@@ -112,7 +112,9 @@
       <resources managed="true">./target/scala-2.10/resource_managed/test</resources>
       <classes>./target/scala-2.10/test-classes</classes>
     </configuration>
-    <module revision="2.10.1" name="scala-library" artifactType="jar" configurations="" organization="org.scala-lang" classifier=""></module>
+    <dependencies>
+      <module revision="2.10.1" name="scala-library" artifactType="jar" configurations="" organization="org.scala-lang" classifier=""></module>
+    </dependencies>
     <resolver name="public" root="http://repo1.maven.org/maven2/"></resolver>
   </project>
   <repository>

@@ -112,9 +112,11 @@
       <resources managed="true">./target/scala-2.10/resource_managed/test</resources>
       <classes>./target/scala-2.10/test-classes</classes>
     </configuration>
-    <module revision="3.8.1" name="junit" artifactType="jar" configurations="test" organization="junit" classifier=""></module>
-    <module revision="2.10.1" name="scala-library" artifactType="jar" configurations="" organization="org.scala-lang" classifier=""></module>
-    <jar configurations="">./lib/unmanaged.jar</jar>
+    <dependencies>
+      <module revision="3.8.1" name="junit" artifactType="jar" configurations="test" organization="junit" classifier=""></module>
+      <module revision="2.10.1" name="scala-library" artifactType="jar" configurations="" organization="org.scala-lang" classifier=""></module>
+      <jar configurations="">./lib/unmanaged.jar</jar>
+    </dependencies>
     <resolver name="public" root="http://repo1.maven.org/maven2/"></resolver>
   </project>
   <repository>

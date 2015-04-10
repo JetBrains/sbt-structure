@@ -25,8 +25,6 @@ object Extractor {
 
     val sbtVersion = Keys.sbtVersion.get(structure.data).get
 
-    val scalaData = extractScala(state)
-
     val allProjectRefs = structure.allProjectRefs
 
     val acceptedProjectRefs =
@@ -69,7 +67,7 @@ object Extractor {
 
     val localCachePath = Option(System.getProperty("sbt.ivy.home", System.getProperty("ivy.home")))
 
-    StructureData(sbtVersion, scalaData, projectsData, repositoryData, localCachePath)
+    StructureData(sbtVersion, projectsData, repositoryData, localCachePath)
   }
 
   def extractScala(state: State): ScalaData = {
@@ -173,7 +171,10 @@ object Extractor {
   def extractDependencies(state: State, structure: BuildStructure, projectRef: ProjectRef): DependencyData = {
     val projectDependencies =
       Keys.buildDependencies.in(projectRef).get(structure.data).map { dep =>
-        dep.classpath.getOrElse(projectRef, Seq.empty).map(it => ProjectDependencyData(it.project.project, it.configuration))
+        dep.classpath.getOrElse(projectRef, Seq.empty).map { it =>
+          val confs = it.configuration.map(Configuration.fromString).getOrElse(Seq.empty)
+          ProjectDependencyData(it.project.project, confs)
+        }
       }.getOrElse(Seq.empty)
 
     val moduleDependencies = moduleDependenciesIn(state, projectRef)

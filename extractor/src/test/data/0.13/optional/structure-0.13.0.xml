@@ -118,8 +118,10 @@
       <resources managed="true">./target/scala-2.10/resource_managed/test</resources>
       <classes>./target/scala-2.10/test-classes</classes>
     </configuration>
-    <module organization="io.netty" name="netty" revision="3.6.6.Final" artifactType="jar" classifier="" configurations=""/>
-    <module organization="org.scala-lang" name="scala-library" revision="2.10.2" artifactType="jar" classifier="" configurations=""/>
+    <dependencies>
+      <module organization="io.netty" name="netty" revision="3.6.6.Final" artifactType="jar" classifier="" configurations=""/>
+      <module organization="org.scala-lang" name="scala-library" revision="2.10.2" artifactType="jar" classifier="" configurations=""/>
+    </dependencies>
     <resolver name="public" root="http://repo1.maven.org/maven2/"/>
   </project>
   <repository>

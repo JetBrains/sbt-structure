@@ -68,9 +68,11 @@ object Play2Extractor {
 
     def saveValues(key: String, vv: Value) = myValues.put(key, vv)
 
-    def toKeyInfo(projectNames: Set[String]) = KeyInfo(label, label, myValues.toSeq.filter{case (p, _) => projectNames.contains(p)})
+    def toKeyInfo(projectNames: Set[String]) =
+      KeyInfo.fromAnyValue(label, label, myValues.toSeq.filter{case (p, _) => projectNames.contains(p)})
 
-    def toKeyInfo: KeyInfo[Value] = KeyInfo(label, label, myValues.toSeq)
+    def toKeyInfo: KeyInfo =
+      KeyInfo.fromAnyValue(label, label, myValues.toSeq)
   }
 
   private class AliasKey(label: String, val delegate: KeyWithScope)(implicit data: (ProjectRef, Settings[Scope]))
@@ -146,9 +148,11 @@ object Play2Extractor {
       }
     }
 
-    override def toKeyInfo(projectNames: Set[String]) = KeyInfo(label, tagName, myValues.toSeq.filter{case (p, _) => projectNames.contains(p)})
+    override def toKeyInfo(projectNames: Set[String]) =
+      KeyInfo.fromAnyValue(label, tagName, myValues.toSeq.filter{case (p, _) => projectNames.contains(p)})
 
-    override def toKeyInfo: KeyInfo[Value] = KeyInfo(label, tagName, myValues.toSeq)
+    override def toKeyInfo: KeyInfo =
+      KeyInfo.fromAnyValue(label, tagName, myValues.toSeq)
   }
 }
 

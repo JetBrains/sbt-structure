@@ -8,6 +8,8 @@ import org.specs2.mutable._
 
 import scala.xml._
 
+import XmlSerializer._
+
 class ImportSpec extends Specification with XmlMatchers {
 
   val testDataRoot = new File("extractor/src/test/data/" + BuildInfo.sbtVersion)
@@ -18,22 +20,27 @@ class ImportSpec extends Specification with XmlMatchers {
     val base = new File(testDataRoot, project)
 
     val expected = {
-      val fs = new FS(new File(System.getProperty("user.home")), base)
       val testDataFile = new File(base, "structure-" + BuildInfo.sbtVersionFull + ".xml")
       if (!testDataFile.exists())
         failure("No test data for version " + BuildInfo.sbtVersionFull + " found!")
       val text = read(testDataFile).mkString("\n")
       val androidHome = this.androidHome getOrElse ""
       text
-        .replace("$BASE", FS.toPath(base))
+        .replace("$BASE", base.getCanonicalPath)
         .replace("$ANDROID_HOME", androidHome)
-        .replace("$SHORTBASE", FS.toRichFile(base)(fs).path)
+        .replace("~/", System.getProperty("user.home") + "/")
     }
 
     val actual = Loader.load(base, download, sbtVersion, verbose = true).mkString("\n")
 
     val a = XML.loadString(actual)
-    val e = XML.loadString(expected)
+
+    // FIXME: this is a hack used for properly rewriting of paths
+    //        only works for single project builds and thus should be replaced
+    val pwd = System.getProperty("user.dir")
+    System.setProperty("user.dir", base.getCanonicalPath)
+    val e = XML.loadString(expected).deserialize[StructureData].right.map(_.serialize).right.get
+    System.setProperty("user.dir", pwd)
 
     def onFail = {
       import scala.collection.JavaConversions._
@@ -41,7 +48,7 @@ class ImportSpec extends Specification with XmlMatchers {
       val act = new PrintWriter(new File(base, "actual.xml"))
       act.write(actual)
       act.close()
-      val  diff = DiffUtils.diff(expected.lines.toList, actual.lines.toList)
+      val diff = DiffUtils.diff(actual.lines.toList, expected.lines.toList)
       println("DIFF: " + project)
       diff.getDeltas foreach {d => println(d.getOriginal + "\n" + d.getRevised + "\n") }
       "Failed for project: " + project
