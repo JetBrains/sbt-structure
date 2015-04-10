@@ -110,10 +110,14 @@ case class AndroidData(targetVersion: String,
                        isLibrary: Boolean,
                        proguardConfig: Seq[String])
 
-case class Play2Data(keys: Seq[KeyInfo])
+case class Play2Data(keys: Seq[Play2Key])
 
 // TODO: maybe escape values?
-case class KeyInfo(myName: String, tagName: String, values: Seq[(String, String)])
+sealed trait PlayValue
+case class PlayString(value: String) extends PlayValue
+case class PlaySeqString(value: Seq[String]) extends PlayValue
+
+case class Play2Key(name: String, values: Map[String, PlayValue])
 
 
 // WARN: order of these objects is important because of implicits resolution
@@ -138,7 +142,7 @@ private object Helper {
     new RichNode(node)
 
   def file(path: String) =
-    new File(path)
+    new File(path.trim)
 }
 
 import org.jetbrains.sbt.Helper._
@@ -409,31 +413,47 @@ object AndroidData {
   }
 }
 
-object KeyInfo {
-  implicit val serializer = new XmlSerializer[KeyInfo] {
-    override def serialize(what: KeyInfo): Elem = XML.loadString {
-      "<" + what.tagName + ">" +
-        what.values.map { case (projectName, v) =>
-          "<" + projectName + ">" + v + "</" + projectName + ">"
-        }.mkString("") +
-      "</" + what.tagName + ">"
+object PlayValue {
+  implicit val serializer = new XmlSerializer[PlayValue] {
+    override def serialize(what: PlayValue): Elem = what match {
+      case PlayString(str) =>
+        <value type="string">{str}</value>
+      case PlaySeqString(strings) =>
+        <value type="stringSeq">{strings.map(s => <entry>{s}</entry>)}</value>
     }
 
-    override def deserialize(what: Node): Either[Throwable,KeyInfo] = {
-      Left(new Error("Not implemented"))
+    override def deserialize(what: Node): Either[Throwable, PlayValue] = (what \ "@type").text match {
+      case "string" =>
+        Right(PlayString(what.text))
+      case "stringSeq" =>
+        Right(PlaySeqString((what \ "entry").map(_.text)))
+      case t =>
+        Left(new Error("Unknown type of value: " + t))
     }
   }
+}
 
-  // TODO: this is workaround, find another solution for this
-  def fromAnyValue(myName: String, tagName: String, values: Seq[(String, Any)]): KeyInfo =
-    KeyInfo(myName, tagName, values.map { case (k,v) =>
-      val newVal = v match {
-        case s: Iterable[_] => s.map(v => "<entry>" + v + "</entry>").mkString("")
-        case tt: Option[_] => tt.map(_.toString) getOrElse ""
-        case other => other.toString
+object Play2Key {
+  implicit val serializer = new XmlSerializer[Play2Key] {
+    override def serialize(what: Play2Key): Elem =
+      <key name={what.name}>
+        {what.values.map { case (projectName, value) =>
+        <in project={projectName}>
+          {value.serialize}
+        </in>
+        }}
+      </key>
+
+    override def deserialize(what: Node): Either[Throwable,Play2Key] = {
+      val name = (what \ "@name").text
+      val values = (what \ "in").flatMap { nodeValue =>
+        val project = (nodeValue \ "@project").text
+        val value = (nodeValue \ "value").deserializeOne[PlayValue].fold(_ => None, x => Some(x))
+        value.map(v => project -> v)
       }
-      (k, newVal)
-    })
+      Right(Play2Key(name, values.toMap))
+    }
+  }
 }
 
 object Play2Data {
@@ -443,9 +463,8 @@ object Play2Data {
         {what.keys.map { k => k.serialize }}
       </playimps>
 
-    override def deserialize(what: Node): Either[Throwable,Play2Data] = {
-      Left(new Error("Not implemented"))
-    }
+    override def deserialize(what: Node): Either[Throwable,Play2Data] =
+      Right(Play2Data((what \ "key").deserialize[Play2Key]))
   }
 }
 

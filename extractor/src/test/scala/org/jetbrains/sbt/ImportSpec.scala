@@ -19,7 +19,7 @@ class ImportSpec extends Specification with XmlMatchers {
 
     val base = new File(testDataRoot, project)
 
-    val expected = {
+    val expectedStr = {
       val testDataFile = new File(base, "structure-" + BuildInfo.sbtVersionFull + ".xml")
       if (!testDataFile.exists())
         failure("No test data for version " + BuildInfo.sbtVersionFull + " found!")
@@ -31,24 +31,57 @@ class ImportSpec extends Specification with XmlMatchers {
         .replace("~/", System.getProperty("user.home") + "/")
     }
 
-    val actual = Loader.load(base, download, sbtVersion, verbose = true).mkString("\n")
+    val actualStr = Loader.load(base, download, sbtVersion, verbose = true).mkString("\n")
 
-    val a = XML.loadString(actual)
-    val e = XML.loadString(expected)
+    val actualXml = XML.loadString(actualStr)
+    val expectedXml = XML.loadString(expectedStr)
+    val actual = actualXml.deserialize[StructureData].right.get
+    val expected = expectedXml.deserialize[StructureData].right.get
 
-    def onFail = {
+    def onXmlFail = {
       import scala.collection.JavaConversions._
 
       val act = new PrintWriter(new File(base, "actual.xml"))
-      act.write(actual)
+      act.write(actualStr)
       act.close()
-      val diff = DiffUtils.diff(actual.lines.toList, expected.lines.toList)
+      val diff = DiffUtils.diff(actualStr.lines.toList, expectedStr.lines.toList)
       println("DIFF: " + project)
       diff.getDeltas foreach {d => println(d.getOriginal + "\n" + d.getRevised + "\n") }
       "Failed for project: " + project
     }
 
-    a must beEqualToIgnoringSpace(e).updateMessage(_ => onFail)
+    def onEqualsFail = {
+      val act = new PrintWriter(new File(base, "actual.txt"))
+      act.write(prettyPrintCaseClass(actual))
+      act.close()
+      val exp = new PrintWriter(new File(base, "expected.txt"))
+      exp.write(prettyPrintCaseClass(expected))
+      exp.close()
+      "Failed for project: " + project
+    }
+
+    actualXml must beEqualToIgnoringSpace(expectedXml).updateMessage(_ => onXmlFail)
+    actual must beEqualTo(expected).updateMessage(_ => onEqualsFail)
+  }
+
+  def prettyPrintCaseClass(toPrint: Product): String = {
+    val step = "  "
+    def print0(what: Any, indent: String): String = what match {
+      case p : Product =>
+        if (p.productArity == 0) {
+          indent + p.productPrefix
+        } else {
+          indent + p.productPrefix + ":\n" +
+            p.productIterator.map {
+              case s : Seq[_] => s.map(x => print0(x, indent + step)).mkString("\n")
+              case pp : Product => print0(pp, indent + step)
+              case other => indent + step + other.toString
+            }.mkString("\n")
+        }
+      case other => indent + other.toString
+    }
+
+    print0(toPrint, step)
   }
 
   def sbt13only = BuildInfo.sbtVersion must be_==("0.13").orSkip("This test is for SBT 0.13 only")

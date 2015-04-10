@@ -6,7 +6,7 @@
     <organization>my-first-app</organization>
     <version>1.0.0-SNAPSHOT</version>
     <base>$BASE</base>
-    <target>./target</target>
+    <target>$BASE/target</target>
     <build>
       <import>import sbt._, Keys._</import>
       <import>
@@ -205,22 +205,22 @@
       <option>utf8</option>
     </scala>
     <configuration id="compile">
-      <sources>./app</sources>
-      <sources>./app</sources>
-      <sources managed="true">./target/scala-2.10/src_managed/main</sources>
-      <sources managed="true">./target/scala-2.10/twirl/main</sources>
-      <resources>./conf</resources>
-      <resources managed="true">./target/scala-2.10/resource_managed/main</resources>
-      <classes>./target/scala-2.10/classes</classes>
+      <sources>$BASE/app</sources>
+      <sources>$BASE/app</sources>
+      <sources managed="true">$BASE/target/scala-2.10/src_managed/main</sources>
+      <sources managed="true">$BASE/target/scala-2.10/twirl/main</sources>
+      <resources>$BASE/conf</resources>
+      <resources managed="true">$BASE/target/scala-2.10/resource_managed/main</resources>
+      <classes>$BASE/target/scala-2.10/classes</classes>
     </configuration>
     <configuration id="test">
-      <sources>./test</sources>
-      <sources>./test</sources>
-      <sources managed="true">./target/scala-2.10/src_managed/test</sources>
-      <sources managed="true">./target/scala-2.10/twirl/test</sources>
-      <resources>./test/resources</resources>
-      <resources managed="true">./target/scala-2.10/resource_managed/test</resources>
-      <classes>./target/scala-2.10/test-classes</classes>
+      <sources>$BASE/test</sources>
+      <sources>$BASE/test</sources>
+      <sources managed="true">$BASE/target/scala-2.10/src_managed/test</sources>
+      <sources managed="true">$BASE/target/scala-2.10/twirl/test</sources>
+      <resources>$BASE/test/resources</resources>
+      <resources managed="true">$BASE/target/scala-2.10/resource_managed/test</resources>
+      <classes>$BASE/target/scala-2.10/test-classes</classes>
     </configuration>
     <dependencies>
       <module organization="cglib" name="cglib-nodep" revision="2.1_3" artifactType="jar" classifier="" configurations="test"/>
@@ -325,35 +325,47 @@
     <resolver name="public" root="http://repo1.maven.org/maven2/"/>
     <resolver name="Typesafe Releases Repository" root="http://repo.typesafe.com/typesafe/releases/"/>
     <playimps>
-      <uri>
-        <root>$BASE</root>
-      </uri>
-      <playVersion>
-        <root>2.3.5</root>
-      </playVersion>
-      <testOptions/>
-      <twirlTemplatesImports>
-        <root>
-          <entry>play.api.templates.PlayMagic._</entry>
-          <entry>models._</entry>
-          <entry>controllers._</entry>
-          <entry>play.api.i18n._</entry>
-          <entry>play.api.mvc._</entry>
-          <entry>play.api.data._</entry>
-          <entry>views.xml._</entry>
-        </root>
-      </twirlTemplatesImports>
-      <playRoutesImports>
-        <root>
-          <entry>controllers.Assets.Asset</entry>
-        </root>
-      </playRoutesImports>
-      <playConf>
-        <root>$BASE/conf</root>
-      </playConf>
-      <sourceDirectory>
-        <root>$BASE/app</root>
-      </sourceDirectory>
+      <key name="uri">
+        <in project="root">
+          <value type="string">$BASE</value>
+        </in>
+      </key>
+      <key name="playVersion">
+        <in project="root">
+          <value type="string">2.3.5</value>
+        </in>
+      </key>
+      <key name="testOptions"/>
+      <key name="twirlTemplatesImports">
+        <in project="root">
+          <value type="stringSeq">
+            <entry>play.api.templates.PlayMagic._</entry>
+            <entry>models._</entry>
+            <entry>controllers._</entry>
+            <entry>play.api.i18n._</entry>
+            <entry>play.api.mvc._</entry>
+            <entry>play.api.data._</entry>
+            <entry>views.xml._</entry>
+          </value>
+        </in>
+      </key>
+      <key name="playRoutesImports">
+        <in project="root">
+          <value type="stringSeq">
+            <entry>controllers.Assets.Asset</entry>
+          </value>
+        </in>
+      </key>
+      <key name="playConf">
+        <in project="root">
+          <value type="string">$BASE/conf</value>
+        </in>
+      </key>
+      <key name="sourceDirectory">
+        <in project="root">
+          <value type="string">$BASE/app</value>
+        </in>
+      </key>
     </playimps>
   </project>
 </structure>

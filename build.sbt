@@ -10,8 +10,6 @@ def newProject(projectName: String) =
       unmanagedSourceDirectories in Compile += baseDirectory.value.getParentFile / "shared" / "src" / "main" / "scala"
     )
 
-val testSetup = taskKey[Unit]("Setup tests")
-
 val core = newProject("core")
   .settings(
     libraryDependencies ++= {
@@ -22,6 +20,8 @@ val core = newProject("core")
     },
     crossScalaVersions := Seq("2.9.2", "2.10.4", "2.11.6")
   )
+
+val testSetup = taskKey[Unit]("Setup tests for extractor")
 
 val extractor = newProject("extractor")
   .settings(crossBuildingSettings:_*)
