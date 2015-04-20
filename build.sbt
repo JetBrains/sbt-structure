@@ -7,7 +7,13 @@ def newProject(projectName: String) =
       organization := "org.jetbrains",
       version := "4.0.0",
       licenses += ("Apache-2.0", url("http://www.apache.org/licenses/LICENSE-2.0.html")),
-      unmanagedSourceDirectories in Compile += baseDirectory.value.getParentFile / "shared" / "src" / "main" / "scala"
+      unmanagedSourceDirectories in Compile += baseDirectory.value.getParentFile / "shared" / "src" / "main" / "scala",
+      publishMavenStyle := false
+    )
+    .settings(bintrayPublishSettings:_*)
+    .settings(
+      repository in bintray := "sbt-plugins",
+      bintrayOrganization in bintray := Some("jetbrains")
     )
 
 val core = newProject("core")
@@ -31,21 +37,14 @@ val extractor = newProject("extractor")
     libraryDependencies ++= Seq(
       "com.googlecode.java-diff-utils" % "diffutils" % "1.2" withSources(),
       "org.specs2" %% "specs2" % "1.12.3" % "test"),
-    publishMavenStyle := false,
     CrossBuilding.crossSbtVersions := Seq("0.12.4", "0.13.0", "0.13.7"),
     testSetup := {
       System.setProperty("structure.sbtversion.full", CrossBuilding.pluginSbtVersion.value)
       System.setProperty("structure.sbtversion.short", CrossBuilding.pluginSbtVersion.value.substring(0, 4))
       System.setProperty("structure.scalaversion", scalaBinaryVersion.value)
     },
-    test in Test <<= (test in Test).dependsOn(testSetup)
+    test in Test <<= (test in Test).dependsOn(testSetup),
+    name in bintray := "sbt-structure-extractor"
   )
 
-val root = project.in(file("."))
-  .aggregate(core, extractor)
-  .settings(bintrayPublishSettings:_*)
-  .settings(
-    repository in bintray := "sbt-plugins",
-    bintrayOrganization in bintray := Some("jetbrains")
-  )
-
+val sbtStructure = project.in(file(".")).aggregate(core, extractor)
