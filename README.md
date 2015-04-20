@@ -1,13 +1,14 @@
-SBT plugin to generate xml project structure
-============================================
+# sbt-structure
 
-It have to commands:
-read-project: Just returns xml of project structure
-read-project-and-repository: Returns xml of project structure, additionally downloads all required dependencies
+This plugin is designed to allow one extract complete structure of SBT build in XML format. It is used in
+Intellij Scala plugin in order to support importing arbitrary SBT projects into IDEA.
 
-To publish xml to file, use artifactPath setting.
+It consists of two parts:
 
-Plugin usage
------
+- `sbt-structure-core` is a set of datatypes and functions for their (de)serialization used as internal representation
+  of SBT build in sbt-structure
+- `sbt-structure-extractor` is SBT plugin that actually extracts information from SBT build
 
-Generally this plugin will be used by IntelliJ IDEA SBT plugin. However it's possible to use it by any IDE.
+## Usage
+
+TBD
