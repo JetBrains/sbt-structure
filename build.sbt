@@ -44,6 +44,7 @@ val extractor = newProject("extractor")
       System.setProperty("structure.scalaversion", scalaBinaryVersion.value)
     },
     test in Test <<= (test in Test).dependsOn(testSetup),
+    testOnly in Test <<= (testOnly in Test).dependsOn(testSetup),
     name in bintray := "sbt-structure-extractor"
   )
 

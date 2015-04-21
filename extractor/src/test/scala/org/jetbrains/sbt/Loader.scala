@@ -57,6 +57,7 @@ object Loader {
     val stdinThread = inThread {
       Source.fromInputStream(process.getInputStream).getLines().foreach { it =>
         if (verbose) System.out.println("stdout: " + it) else ()
+        if (it.startsWith("[error]")) process.destroy()
       }
     }
 
