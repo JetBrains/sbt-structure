@@ -3,9 +3,10 @@ package org.jetbrains.sbt
 import java.io.{File, PrintWriter}
 
 import difflib._
-import org.specs2.matcher.XmlMatchers
+import org.specs2.matcher.{MatchResult, XmlMatchers}
 import org.specs2.mutable._
 
+import scala.collection.JavaConverters._
 import scala.xml._
 
 import XmlSerializer._
@@ -44,10 +45,16 @@ class ImportSpec extends Specification with XmlMatchers {
       val act = new PrintWriter(new File(base, "actual.xml"))
       act.write(actualStr)
       act.close()
-      val diff = DiffUtils.diff(actualStr.lines.toList, expectedStr.lines.toList)
+      val diff = DiffUtils.diff(expectedStr.lines.toList, actualStr.lines.toList)
       println("DIFF: " + project)
-      diff.getDeltas foreach {d => println(d.getOriginal + "\n" + d.getRevised + "\n") }
-      "Failed for project: " + project
+      diff.getDeltas foreach { delta =>
+        println("ORIGINAL:")
+        delta.getOriginal.getLines.asScala.foreach(println)
+        println("ACTUAL:")
+        delta.getRevised.getLines.asScala.foreach(println)
+        println
+      }
+      "xml files are not equal, compare 'actual.xml' and 'structure-" + BuildInfo.sbtVersionFull + ".xml'"
     }
 
     def onEqualsFail = {
@@ -57,11 +64,11 @@ class ImportSpec extends Specification with XmlMatchers {
       val exp = new PrintWriter(new File(base, "expected.txt"))
       exp.write(prettyPrintCaseClass(expected))
       exp.close()
-      "Failed for project: " + project
+      "objects are not equal, compare 'actual.txt' and 'expected.txt'"
     }
 
+    (actual == expected).must(beTrue.updateMessage(_ => onEqualsFail))
     actualXml must beEqualToIgnoringSpace(expectedXml).updateMessage(_ => onXmlFail)
-    actual must beEqualTo(expected).updateMessage(_ => onEqualsFail)
   }
 
   def prettyPrintCaseClass(toPrint: Product): String = {
@@ -90,50 +97,22 @@ class ImportSpec extends Specification with XmlMatchers {
 
   def hasAndroidDefined = androidHome must beSome.orSkip("ANDROID_HOME is not defined")
 
-  def t(s: String) = s +  " [" + BuildInfo.sbtVersionFull+ "]"
+  def equalExpectedOneIn[T](projectName: String)(block: String => MatchResult[T]) =
+    ("equal expected one in '" + projectName + "' project [" + BuildInfo.sbtVersionFull + "]") in block(projectName)
 
-  "Imported xml" should {
+  "Actual structure" should {
 
     sequential // running 10 sbt instances at once is a bad idea unless you have >16G of ram
 
-    t("be same in bare projects") in {
-      testProject("bare")
-    }
-
-    t("be same in multiple projects") in {
-      testProject("multiple")
-    }
-
-    t("be same in simple project") in {
-      testProject("simple")
-    }
-
-    t("be same in managed dependency") in {
-      testProject("dependency")
-    }
-
-    t("be same in multiple projects with classified deps") in {
-      sbt13only and testProject("classifiers")
-    }
-
-    t("be same in project with optional dependency in") in {
-      sbt13only and testProject("optional")
-    }
-
-    t("be same in play project") in {
-      sbt13only and testProject("play", download = false, sbtVersion = "0.13.5")
-    }
-
-    t("be same in android project") in {
-      sbt13only and (hasAndroidDefined and testProject("android"))
-    }
-
-    t("be same in ide-settings project") in {
-      onlyFor("0.13.7") and testProject("ide-settings")
-    }
-
-    t("be same in sbt-idea project") in {
-      sbt13only and testProject("sbt-idea")
-    }
+    equalExpectedOneIn("bare")(testProject(_))
+    equalExpectedOneIn("multiple")(testProject(_))
+    equalExpectedOneIn("simple")(testProject(_))
+    equalExpectedOneIn("dependency")(testProject(_))
+    equalExpectedOneIn("classifiers")(sbt13only and testProject(_))
+    equalExpectedOneIn("optional")(sbt13only and testProject(_))
+    equalExpectedOneIn("play")(sbt13only and testProject(_, download = false, sbtVersion = "0.13.5"))
+    equalExpectedOneIn("android")(p => sbt13only and (hasAndroidDefined and testProject(p)))
+    equalExpectedOneIn("ide-settings")(onlyFor("0.13.7") and testProject(_))
+    equalExpectedOneIn("sbt-idea")(sbt13only and testProject(_))
   }
 }
