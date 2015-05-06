@@ -5,7 +5,7 @@ def newProject(projectName: String) =
     .settings(
       name := "sbt-structure-" + projectName,
       organization := "org.jetbrains",
-      version := "4.0.0",
+      version := "4.1.0",
       licenses += ("Apache-2.0", url("http://www.apache.org/licenses/LICENSE-2.0.html")),
       unmanagedSourceDirectories in Compile += baseDirectory.value.getParentFile / "shared" / "src" / "main" / "scala",
       publishMavenStyle := false
