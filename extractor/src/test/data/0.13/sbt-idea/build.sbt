@@ -15,3 +15,5 @@ scalacOptions := Seq("-s1", "-s2")
 ideaExcludeFolders := Seq(".idea")
 
 ideaBasePackage := Some("org.jetbrains")
+
+lazy val projectToSkip = project.in(file("skip")).settings(ideaIgnoreModule := true)

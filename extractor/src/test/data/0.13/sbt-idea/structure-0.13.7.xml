@@ -12,6 +12,7 @@
       <import>import sbt._, Keys._, dsl._</import>
       <import>import _root_.org.sbtidea.SbtIdeaPlugin._</import>
       <import>import _root_.sbt.plugins.IvyPlugin, _root_.sbt.plugins.JvmPlugin, _root_.sbt.plugins.CorePlugin, _root_.sbt.plugins.JUnitXmlReportPlugin</import>
+      <import>import $98a785cbf481c5db0a73.projectToSkip</import>
       <classes>~/.ivy2/cache/commons-io/commons-io/jars/commons-io-2.0.1.jar</classes>
       <classes>~/.ivy2/cache/scala_2.10/sbt_0.13/com.github.mpeltonen/sbt-idea/jars/sbt-idea-1.6.0.jar</classes>
       <classes>~/.sbt/boot/scala-2.10.4/lib/jansi.jar</classes>
