@@ -67,3 +67,18 @@ Available options to set in `artifactClassifier`:
 - `prettyPrint`
 
   This option will force extractor to prettify XML output. Useful for debug purposes.
+
+## Development notes
+
+- Testing against all supported SBT versions can be done with `^ test` command
+- Testing against specific version of SBT, for example, 0.13.7: `^^ 0.13.7 test`
+- Selected tests can be run with `testOnly` command, e.g. `^ testOnly -- -ex "project name"`
+- To publish artifacts bump version in `build.sbt` and run in SBT REPL:
+
+   ```scala
+   project core
+   + publish
+   project extractor
+   ^^ 0.12 publish
+   ^^ 0.13 publish
+   ```
