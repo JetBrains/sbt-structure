@@ -19,8 +19,8 @@ object StructureExtractor extends Extractor {
       // These projects are filtered out by checking `autoPlugins` field.
       // But earlier versions of SBT 0.13.x had no `autoPlugins` field so
       // structural typing is used to get the data.
-      structure.allProjectRefs.filter { case ProjectRef(_, id) =>
-        structure.allProjects.find(_.id == id).map { resolvedProject =>
+      structure.allProjectRefs.filter { case ref @ ProjectRef(_, id) =>
+        val arePluginsLoaded = structure.allProjects.find(_.id == id).map { resolvedProject =>
           try {
             type ResolvedProject_0_13_7 = {def autoPlugins: Seq[{ def label: String}]}
             val resolvedProject_0_13_7 = resolvedProject.asInstanceOf[ResolvedProject_0_13_7]
@@ -30,6 +30,12 @@ object StructureExtractor extends Extractor {
             case _ : NoSuchMethodException => true
           }
         }.getOrElse(false)
+
+        val shouldSkip =
+          setting(SettingKeys.ideSkipProject.in(ref)).getOrElse(false) ||
+            setting(SettingKeys.sbtIdeaIgnoreModule.in(ref)).getOrElse(false)
+
+        arePluginsLoaded && !shouldSkip
       }
 
     val sbtVersion      = setting(Keys.sbtVersion).get

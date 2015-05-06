@@ -10,9 +10,12 @@ import sbt.SettingKey
  */
 object SettingKeys {
   val ideBasePackages         = SettingKey[Seq[String]]("ide-base-packages")
-  val sbtIdeaBasePackage      = SettingKey[Option[String]]("idea-base-package")
   val ideExcludedDirectories  = SettingKey[Seq[File]]("ide-excluded-directories")
+  val ideSkipProject          = SettingKey[Boolean]("ide-skip-project")
+
+  val sbtIdeaBasePackage      = SettingKey[Option[String]]("idea-base-package")
   val sbtIdeaExcludeFolders   = SettingKey[Seq[String]]("idea-exclude-folders")
+  val sbtIdeaIgnoreModule     = SettingKey[Boolean]("idea-ignore-module")
 }
 
 
