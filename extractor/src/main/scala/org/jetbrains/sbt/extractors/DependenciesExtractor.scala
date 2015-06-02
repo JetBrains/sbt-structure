@@ -60,7 +60,7 @@ class DependenciesExtractor(projectRef: ProjectRef) extends ModulesExtractor {
   }
 
   private def jarsIn(configuration: sbt.Configuration)(implicit state: State): Seq[File] =
-    projectTask(Keys.unmanagedJars.in(configuration)).map(_.map(_.data)).getOrElse(Seq.empty)
+    projectTask(Keys.unmanagedClasspath.in(configuration)).map(_.map(_.data)).getOrElse(Seq.empty).filter(_.isFile)
 
   private def modulesIn(configuration: sbt.Configuration)(implicit state: State): Seq[ModuleID] = {
     Project.runTask(Keys.externalDependencyClasspath.in(projectRef, configuration), state) match {
