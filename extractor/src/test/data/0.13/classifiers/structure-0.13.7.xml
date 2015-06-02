@@ -137,7 +137,7 @@
       <classes>$BASE/target/scala-2.10/test-classes</classes>
     </configuration>
     <dependencies>
-      <module organization="org.scala-lang" name="scala-library" revision="2.10.4" artifactType="jar" classifier="" configurations=""/>
+      <module organization="org.scala-lang" name="scala-library" revision="2.10.4" artifactType="jar" classifier="" configurations="compile"/>
     </dependencies>
     <resolver name="public" root="https://repo1.maven.org/maven2/"/>
   </project>
@@ -278,11 +278,11 @@
       <classes>$BASE/bar/target/scala-2.10/test-classes</classes>
     </configuration>
     <dependencies>
-      <module organization="javax.activation" name="activation" revision="1.1.1" artifactType="jar" classifier="" configurations=""/>
-      <module organization="javax.mail" name="mail" revision="1.4.4" artifactType="jar" classifier="" configurations=""/>
-      <module organization="org.apache.james" name="apache-mailet-api" revision="2.5.0" artifactType="jar" classifier="" configurations=""/>
-      <module organization="org.apache.james" name="apache-mailet-base" revision="2.5.0" artifactType="jar" classifier="" configurations=""/>
-      <module organization="org.scala-lang" name="scala-library" revision="2.10.4" artifactType="jar" classifier="" configurations=""/>
+      <module organization="javax.activation" name="activation" revision="1.1.1" artifactType="jar" classifier="" configurations="compile"/>
+      <module organization="javax.mail" name="mail" revision="1.4.4" artifactType="jar" classifier="" configurations="compile"/>
+      <module organization="org.apache.james" name="apache-mailet-api" revision="2.5.0" artifactType="jar" classifier="" configurations="compile"/>
+      <module organization="org.apache.james" name="apache-mailet-base" revision="2.5.0" artifactType="jar" classifier="" configurations="compile"/>
+      <module organization="org.scala-lang" name="scala-library" revision="2.10.4" artifactType="jar" classifier="" configurations="compile"/>
     </dependencies>
     <resolver name="public" root="https://repo1.maven.org/maven2/"/>
   </project>
@@ -423,12 +423,12 @@
       <classes>$BASE/foo/target/scala-2.10/test-classes</classes>
     </configuration>
     <dependencies>
-      <module organization="javax.activation" name="activation" revision="1.1.1" artifactType="jar" classifier="" configurations=""/>
-      <module organization="javax.mail" name="mail" revision="1.4.4" artifactType="jar" classifier="" configurations=""/>
-      <module organization="org.apache.james" name="apache-mailet-api" revision="2.5.0" artifactType="jar" classifier="" configurations=""/>
-      <module organization="org.apache.james" name="apache-mailet-base" revision="2.5.0" artifactType="jar" classifier="" configurations=""/>
+      <module organization="javax.activation" name="activation" revision="1.1.1" artifactType="jar" classifier="" configurations="compile"/>
+      <module organization="javax.mail" name="mail" revision="1.4.4" artifactType="jar" classifier="" configurations="compile"/>
+      <module organization="org.apache.james" name="apache-mailet-api" revision="2.5.0" artifactType="jar" classifier="" configurations="compile"/>
+      <module organization="org.apache.james" name="apache-mailet-base" revision="2.5.0" artifactType="jar" classifier="" configurations="compile"/>
       <module organization="org.apache.james" name="apache-mailet-base" revision="2.5.0" artifactType="jar" classifier="tests" configurations="test"/>
-      <module organization="org.scala-lang" name="scala-library" revision="2.10.4" artifactType="jar" classifier="" configurations=""/>
+      <module organization="org.scala-lang" name="scala-library" revision="2.10.4" artifactType="jar" classifier="" configurations="compile"/>
     </dependencies>
     <resolver name="public" root="https://repo1.maven.org/maven2/"/>
   </project>

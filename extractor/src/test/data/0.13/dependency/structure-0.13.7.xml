@@ -137,8 +137,8 @@
     </configuration>
     <dependencies>
       <module organization="junit" name="junit" revision="3.8.1" artifactType="jar" classifier="" configurations="test"/>
-      <module organization="org.scala-lang" name="scala-library" revision="2.10.1" artifactType="jar" classifier="" configurations=""/>
-      <jar configurations="">$BASE/lib/unmanaged.jar</jar>
+      <module organization="org.scala-lang" name="scala-library" revision="2.10.1" artifactType="jar" classifier="" configurations="compile"/>
+      <jar configurations="compile">$BASE/lib/unmanaged.jar</jar>
     </dependencies>
     <resolver name="public" root="https://repo1.maven.org/maven2/"/>
   </project>

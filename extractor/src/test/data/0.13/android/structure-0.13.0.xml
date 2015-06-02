@@ -192,8 +192,8 @@
       <classes>$BASE/target/test-classes</classes>
     </configuration>
     <dependencies>
-      <module organization="com.android.support" name="support-annotations" revision="20.0.0" artifactType="jar" classifier="" configurations=""/>
-      <module organization="org.scala-lang" name="scala-library" revision="2.11.1" artifactType="jar" classifier="" configurations=""/>
+      <module organization="com.android.support" name="support-annotations" revision="20.0.0" artifactType="jar" classifier="" configurations="compile"/>
+      <module organization="org.scala-lang" name="scala-library" revision="2.11.1" artifactType="jar" classifier="" configurations="compile"/>
       <jar configurations="compile">$BASE/target/aars/com.android.support-support-v4-20.0.0/com.android.support-support-v4-20.0.0.jar</jar>
       <jar configurations="compile">$BASE/target/aars/com.android.support-support-v4-20.0.0/libs/internal_impl-20.0.0.jar</jar>
     </dependencies>

@@ -85,7 +85,7 @@ class DependenciesExtractor(projectRef: ProjectRef) extends ModulesExtractor {
     val cs = configurations.map(c => if (c == jb.Configuration.IntegrationTest) jb.Configuration.Test else c).toSet
 
     if (cs == Set(jb.Configuration.Compile, jb.Configuration.Test, jb.Configuration.Runtime)) {
-      Seq.empty
+      Seq(jb.Configuration.Compile)
     } else if (cs == Set(jb.Configuration.Compile, jb.Configuration.Test)) {
       Seq(jb.Configuration.Provided)
     } else {

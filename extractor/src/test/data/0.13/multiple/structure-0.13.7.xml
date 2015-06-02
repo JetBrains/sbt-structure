@@ -138,7 +138,7 @@
     </configuration>
     <dependencies>
       <project configurations="">bar</project>
-      <module organization="org.scala-lang" name="scala-library" revision="2.10.1" artifactType="jar" classifier="" configurations=""/>
+      <module organization="org.scala-lang" name="scala-library" revision="2.10.1" artifactType="jar" classifier="" configurations="compile"/>
     </dependencies>
     <resolver name="public" root="https://repo1.maven.org/maven2/"/>
   </project>
@@ -279,7 +279,7 @@
       <classes>$BASE/bar/target/scala-2.10/test-classes</classes>
     </configuration>
     <dependencies>
-      <module organization="org.scala-lang" name="scala-library" revision="2.10.1" artifactType="jar" classifier="" configurations=""/>
+      <module organization="org.scala-lang" name="scala-library" revision="2.10.1" artifactType="jar" classifier="" configurations="compile"/>
     </dependencies>
     <resolver name="public" root="https://repo1.maven.org/maven2/"/>
   </project>
@@ -419,7 +419,7 @@
       <classes>$BASE/foo/target/scala-2.9.2/test-classes</classes>
     </configuration>
     <dependencies>
-      <module organization="org.scala-lang" name="scala-library" revision="2.9.2" artifactType="jar" classifier="" configurations=""/>
+      <module organization="org.scala-lang" name="scala-library" revision="2.9.2" artifactType="jar" classifier="" configurations="compile"/>
     </dependencies>
     <resolver name="public" root="https://repo1.maven.org/maven2/"/>
   </project>
