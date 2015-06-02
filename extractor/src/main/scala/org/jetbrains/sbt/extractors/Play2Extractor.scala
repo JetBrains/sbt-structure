@@ -100,11 +100,16 @@ object Play2Extractor {
       extends KeyWithScope(label, projectRef) {
     override def transform(any: Any): Option[PlayValue] = any match {
       case uri: URI =>
-        val file = new File(uri)
-        if (file.exists())
-          Some(PlayString(processPath(file.getAbsolutePath)))
-        else
-          Some(PlayString(uri.toString))
+        try {
+          val file = new File(uri)
+          if (file.exists())
+            Some(PlayString(processPath(file.getAbsolutePath)))
+          else
+            Some(PlayString(uri.toString))
+        } catch {
+          case exc: IllegalArgumentException =>
+            Some(PlayString(uri.toString))
+        }
       case _ => None
     }
 
