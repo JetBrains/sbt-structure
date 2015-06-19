@@ -21,7 +21,7 @@ Add to your `build.sbt`
 ```scala
 resolvers += Resolver.url("jb-bintray", url("http://dl.bintray.com/jetbrains/sbt-plugins"))(Resolver.ivyStylePatterns)
 
-libraryDependencies += "org.jetbrains" %% "sbt-structure-core" % "4.0.0" // or later version
+libraryDependencies += "org.jetbrains" %% "sbt-structure-core" % "4.1.0" // or later version
 ```
 
 Then run extractor or get XML of the structure any other way and deserialize it:
@@ -46,7 +46,7 @@ In order to run extractor you need to download its jar file, put it somewhere, r
 > apply -cp <path-to-extractor-jar> org.jetbrains.sbt.ReadProject
 ```
 
-`artifactClassifier` contains space-separated list of options and `artifactPath` points to a file where 
+`artifactClassifier` contains space-separated list of options and `artifactPath` points to a file where
 structure will be written. If `artifactPath` is not set structure will be printed to stdout.
 
 Available options to set in `artifactClassifier`:
@@ -59,11 +59,11 @@ Available options to set in `artifactClassifier`:
 - `resolveClassifiers` (requires `download` option to be set as well)
 
   Same as `download` + downloading sources and javadocs for each transitive library dependency
-  
+
 - `resolveSbtClassifiers`
 
   This option tells extractor to download sources and javadocs for SBT itself and plugins.
-  
+
 - `prettyPrint`
 
   This option will force extractor to prettify XML output. Useful for debug purposes.

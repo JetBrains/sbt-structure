@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <structure sbt="0.13.7">
   <project>
-    <id>ide-settings</id>
+    <id>ideSettings</id>
     <name>some-name</name>
     <organization>some-organization</organization>
     <version>1.2.3</version>
@@ -11,11 +11,12 @@
     <target>$BASE/target</target>
     <build>
       <import>import sbt._, Keys._, dsl._</import>
+      <import>import MyBuild._</import>
       <import>import _root_.sbtide.ConfigPlugin.autoImport._</import>
       <import>
         import _root_.sbt.plugins.IvyPlugin, _root_.sbt.plugins.JvmPlugin, _root_.sbt.plugins.CorePlugin, _root_.sbt.plugins.JUnitXmlReportPlugin, _root_.sbtide.ConfigPlugin
       </import>
-      <classes>~/.ivy2/cache/scala_2.10/sbt_0.13/org.jetbrains/sbt-ide-settings/jars/sbt-ide-settings-0.0-a7b20a44877bd80327684bcbf79dfccc3787574f.jar</classes>
+      <classes>~/.ivy2/cache/scala_2.10/sbt_0.13/org.jetbrains/sbt-ide-settings/jars/sbt-ide-settings-0.1.1.jar</classes>
       <classes>~/.sbt/boot/scala-2.10.4/lib/jansi.jar</classes>
       <classes>~/.sbt/boot/scala-2.10.4/lib/jline.jar</classes>
       <classes>~/.sbt/boot/scala-2.10.4/lib/scala-compiler.jar</classes>
@@ -118,7 +119,7 @@
       <sources>~/.ivy2/cache/org.scala-sbt/precompiled-2_8_2/srcs/precompiled-2_8_2-0.13.7-sources.jar</sources>
       <sources>~/.ivy2/cache/org.scala-sbt/precompiled-2_9_2/srcs/precompiled-2_9_2-0.13.7-sources.jar</sources>
       <sources>~/.ivy2/cache/org.scala-sbt/precompiled-2_9_3/srcs/precompiled-2_9_3-0.13.7-sources.jar</sources>
-      <sources>~/.ivy2/cache/scala_2.10/sbt_0.13/org.jetbrains/sbt-ide-settings/srcs/sbt-ide-settings-0.0-a7b20a44877bd80327684bcbf79dfccc3787574f-sources.jar</sources>
+      <sources>~/.ivy2/cache/scala_2.10/sbt_0.13/org.jetbrains/sbt-ide-settings/srcs/sbt-ide-settings-0.1.1-sources.jar</sources>
     </build>
     <java>
       <home>$BASE/some/home</home>
