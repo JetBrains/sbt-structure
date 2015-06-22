@@ -2,7 +2,7 @@ package org.jetbrains.sbt.extractors
 
 //import scala.language.reflectiveCalls
 
-import org.jetbrains.sbt.AndroidData
+import org.jetbrains.sbt.structure.AndroidData
 import org.jetbrains.sbt.extractors.Extractor.Options
 import sbt.Keys._
 import sbt._

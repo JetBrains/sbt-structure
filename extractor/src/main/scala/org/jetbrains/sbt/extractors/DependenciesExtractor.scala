@@ -2,8 +2,9 @@ package org.jetbrains.sbt
 package extractors
 
 import org.jetbrains.sbt.extractors.Extractor.Options
+import org.jetbrains.sbt.structure.{DependencyData, JarDependencyData, ModuleDependencyData, ProjectDependencyData}
+import org.jetbrains.sbt.{structure => jb}
 import sbt._
-import org.jetbrains.{sbt => jb}
 
 /**
  * @author Nikolay Obedin

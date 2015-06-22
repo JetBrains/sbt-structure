@@ -1,4 +1,5 @@
 package org.jetbrains.sbt
+package structure
 
 import scala.xml._
 

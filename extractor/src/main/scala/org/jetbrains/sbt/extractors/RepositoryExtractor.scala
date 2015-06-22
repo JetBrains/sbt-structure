@@ -2,6 +2,7 @@ package org.jetbrains.sbt
 package extractors
 
 import org.jetbrains.sbt.extractors.Extractor.Options
+import org.jetbrains.sbt.structure.{ModuleData, RepositoryData}
 import sbt._
 
 /**

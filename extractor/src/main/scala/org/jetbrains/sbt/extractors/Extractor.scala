@@ -1,6 +1,7 @@
 package org.jetbrains.sbt
 package extractors
 
+import org.jetbrains.sbt.structure.ModuleIdentifier
 import sbt._
 
 /**

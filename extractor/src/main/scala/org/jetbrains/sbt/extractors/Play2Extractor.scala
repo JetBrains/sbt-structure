@@ -3,6 +3,7 @@ package extractors
 
 import org.jetbrains.sbt.extractors.Extractor.Options
 import org.jetbrains.sbt.extractors.Play2Extractor._
+import org.jetbrains.sbt.structure._
 import sbt.Keys._
 import sbt._
 

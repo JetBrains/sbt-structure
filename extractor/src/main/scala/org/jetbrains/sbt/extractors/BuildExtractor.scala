@@ -4,6 +4,7 @@ package extractors
 import java.io.File
 
 import org.jetbrains.sbt.extractors.Extractor.Options
+import org.jetbrains.sbt.structure.BuildData
 import sbt._
 
 /**

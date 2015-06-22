@@ -8,7 +8,7 @@ import java.io.{OutputStreamWriter, BufferedWriter, FileOutputStream}
 import sbt._
 import Keys._
 
-import XmlSerializer._
+import structure.XmlSerializer._
 
 /**
  * @author Pavel Fatin

@@ -1,11 +1,12 @@
 package org.jetbrains.sbt
+package structure
 
 import java.io.File
 
 //import scala.language.implicitConversions
 //import scala.language.reflectiveCalls
 
-import org.jetbrains.sbt.XmlSerializer._
+import org.jetbrains.sbt.structure.XmlSerializer._
 
 import scala.xml._
 
@@ -203,7 +204,7 @@ private object Helper {
     new File(path.trim)
 }
 
-import org.jetbrains.sbt.Helper._
+import Helper._
 
 object BuildData {
   implicit val serializer = new XmlSerializer[BuildData] {

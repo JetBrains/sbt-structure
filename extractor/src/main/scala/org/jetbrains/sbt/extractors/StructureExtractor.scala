@@ -1,7 +1,7 @@
 package org.jetbrains.sbt
 package extractors
 
-import org.jetbrains.sbt.Utilities._
+import org.jetbrains.sbt.structure.StructureData
 import sbt._
 
 //import scala.language.reflectiveCalls
