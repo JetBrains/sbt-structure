@@ -9,7 +9,8 @@ import org.specs2.mutable._
 import scala.collection.JavaConverters._
 import scala.xml._
 
-import XmlSerializer._
+import structure._
+import structure.XmlSerializer._
 
 class ImportSpec extends Specification with XmlMatchers {
 
