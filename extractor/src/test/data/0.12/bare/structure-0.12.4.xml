@@ -9,6 +9,7 @@
     <target>$BASE/target</target>
     <build>
       <import>import sbt._, Process._, Keys._</import>
+      <import>import Build._</import>
       <classes>~/.sbt/boot/scala-2.9.2/lib/jansi.jar</classes>
       <classes>~/.sbt/boot/scala-2.9.2/lib/jline.jar</classes>
       <classes>~/.sbt/boot/scala-2.9.2/lib/scala-compiler.jar</classes>
