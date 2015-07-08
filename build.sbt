@@ -1,7 +1,8 @@
+import bintray._
 import bintray.Keys._
 
-def newProject(projectName: String) =
-  Project(projectName, file(projectName))
+def newProject(projectName: String): Project = {
+  val proj = Project(projectName, file(projectName))
     .settings(
       name := "sbt-structure-" + projectName,
       organization := "org.jetbrains",
@@ -15,6 +16,15 @@ def newProject(projectName: String) =
       repository in bintray := "sbt-plugins",
       bintrayOrganization in bintray := Some("jetbrains")
     )
+  val username = System.getenv("BINTRAY_USERNAME")
+  val apikey = System.getenv("BINTRAY_APIKEY")
+  if (username == null || apikey == null)
+    proj
+  else
+    proj.settings(
+      ensureCredentials := BintrayCredentials(username, apikey)
+    )
+}
 
 val core = newProject("core")
   .settings(
