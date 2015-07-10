@@ -15,7 +15,11 @@ import structure.XmlSerializer._
 class ImportSpec extends Specification with XmlMatchers {
 
   val testDataRoot = new File("extractor/src/test/data/" + BuildInfo.sbtVersion)
-  val androidHome = Option(System.getenv.get("ANDROID_HOME"))
+  val androidHome = Option(System.getenv.get("ANDROID_HOME")).map(normalizePath)
+  val userHome = Option(System.getProperty("user.home")).map(normalizePath)
+
+  def normalizePath(path: String): String =
+    path.replace('\\', '/')
 
   def testProject(project: String,  download: Boolean = true, sbtVersion: String = BuildInfo.sbtVersionFull) = {
 
@@ -25,12 +29,11 @@ class ImportSpec extends Specification with XmlMatchers {
       val testDataFile = new File(base, "structure-" + BuildInfo.sbtVersionFull + ".xml")
       if (!testDataFile.exists())
         failure("No test data for version " + BuildInfo.sbtVersionFull + " found!")
-      val text = read(testDataFile).mkString("\n")
-      val androidHome = this.androidHome getOrElse ""
-      text
-        .replace("$BASE", base.getCanonicalPath)
-        .replace("$ANDROID_HOME", androidHome)
-        .replace("~/", System.getProperty("user.home") + "/")
+      read(testDataFile)
+        .mkString("\n")
+        .replace("$BASE", normalizePath(base.getCanonicalPath))
+        .replace("$ANDROID_HOME", androidHome.getOrElse(""))
+        .replace("~/", userHome.getOrElse("") + "/")
     }
 
     val actualStr = Loader.load(base, download, sbtVersion, verbose = true).mkString("\n")
