@@ -40,22 +40,24 @@ class ImportSpec extends Specification with XmlMatchers {
     val actual = actualXml.deserialize[StructureData].right.get
     val expected = expectedXml.deserialize[StructureData].right.get
 
-    def onXmlFail = {
+    def printDifferences(expected: String, actual: String) = {
       import scala.collection.JavaConversions._
-
-      val act = new PrintWriter(new File(base, "actual.xml"))
-      act.write(actualStr)
-      act.close()
-      val diff = DiffUtils.diff(expectedStr.lines.toList, actualStr.lines.toList)
-      println("DIFF: " + project)
+      val diff = DiffUtils.diff(expected.lines.toList, actual.lines.toList)
       diff.getDeltas foreach { delta =>
-        println("ORIGINAL:")
+        println(project + " :: expected:")
         delta.getOriginal.getLines.asScala.foreach(println)
-        println("ACTUAL:")
+        println(project + " :: actual:")
         delta.getRevised.getLines.asScala.foreach(println)
         println
       }
-      "xml files are not equal, compare 'actual.xml' and 'structure-" + BuildInfo.sbtVersionFull + ".xml'"
+    }
+
+    def onXmlFail = {
+      val act = new PrintWriter(new File(base, "actual.xml"))
+      act.write(actualStr)
+      act.close()
+      printDifferences(expectedStr, actualStr)
+      project + " :: xml files are not equal, compare 'actual.xml' and 'structure-" + BuildInfo.sbtVersionFull + ".xml'"
     }
 
     def onEqualsFail = {
@@ -65,7 +67,8 @@ class ImportSpec extends Specification with XmlMatchers {
       val exp = new PrintWriter(new File(base, "expected.txt"))
       exp.write(prettyPrintCaseClass(expected))
       exp.close()
-      "objects are not equal, compare 'actual.txt' and 'expected.txt'"
+      printDifferences(prettyPrintCaseClass(actual), prettyPrintCaseClass(expected))
+      project + " :: objects are not equal, compare 'actual.txt' and 'expected.txt'"
     }
 
     (actual == expected).must(beTrue.updateMessage(_ => onEqualsFail))
