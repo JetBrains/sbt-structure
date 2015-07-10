@@ -17,7 +17,8 @@ object Play2Extractor {
 
   private val GlobalTag = "$global$"
 
-  @inline private def processPath(path: String) = path stripSuffix "/" stripSuffix "\\"
+  @inline private def processPath(path: String) =
+    path.replace('\\', '/').stripSuffix("/").stripSuffix("\\")
 
   private class KeyChain(val markerKey: KeyWithScope, val keys: Seq[KeyWithScope], val aliasKeys: Seq[AliasKey] = Seq.empty) {
     protected val allKeys = (markerKey +: keys) ++ aliasKeys
