@@ -23,16 +23,14 @@ object Play2Extractor {
   private class KeyChain(val markerKey: KeyWithScope, val keys: Seq[KeyWithScope], val aliasKeys: Seq[AliasKey] = Seq.empty) {
     protected val allKeys = (markerKey +: keys) ++ aliasKeys
 
-    def processKey(key: ScopedKey[_])(implicit state: State): Unit = {
+    def processKey(key: ScopedKey[_])(implicit structureData: Settings[Scope]): Unit =
       allKeys.find(_.extract(key))
-    }
   }
 
   private abstract class KeyWithScope(val label: String, val projectRef: ProjectRef) {
     val myValues = mutable.HashMap[String, PlayValue]()
 
-    def extract(key: ScopedKey[_])(implicit state: State): Boolean = {
-      val structureData = Project.extract(state).structure.data
+    def extract(key: ScopedKey[_])(implicit structureData: Settings[Scope]): Boolean = {
       val attrKey = key.key
 
       if (attrKey.label != label) false else {
@@ -115,7 +113,7 @@ object Play2Extractor {
       case _ => None
     }
 
-    override def extract(key: ScopedKey[_])(implicit state: State): Boolean = {
+    override def extract(key: ScopedKey[_])(implicit structureData: Settings[Scope]): Boolean = {
       val attrKey = key.key
 
       if (attrKey.label != label) false else {
@@ -187,6 +185,7 @@ class Play2Extractor(projectRef: ProjectRef) extends Extractor {
       case _ => Seq.empty
     }
 
+    implicit val structureData = Project.extract(state).structure.data
     keys.foreach(chain.processKey)
 
     val markerKey = chain.markerKey
