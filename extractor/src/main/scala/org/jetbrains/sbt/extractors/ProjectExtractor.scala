@@ -26,12 +26,6 @@ class ProjectExtractor(projectRef: ProjectRef) extends Extractor {
       dependencies <- new DependenciesExtractor(projectRef).extract
       build        <- new BuildExtractor(projectRef).extract
     } yield {
-      val id =
-        if (projectRef.project.startsWith("default-"))
-          projectRef.build.getPath.replaceFirst(".*/([^/?]+).*", "$1")
-        else
-          projectRef.project
-
       val basePackages =
         projectSetting(SettingKeys.ideBasePackages.in(Keys.configuration)).getOrElse(Seq.empty) ++
         projectSetting(SettingKeys.sbtIdeaBasePackage.in(Keys.configuration)).map(_.toSeq).getOrElse(Seq.empty)
@@ -43,7 +37,8 @@ class ProjectExtractor(projectRef: ProjectRef) extends Extractor {
       val android         = new AndroidSdkPluginExtractor(projectRef).extract(state, options)
       val play2           = new Play2Extractor(projectRef).extract
 
-      ProjectData(id, name, organization, version, base, basePackages, target, build, configurations,
+      ProjectData(projectRef.project, name, organization, version, base,
+        basePackages, target, build, configurations,
         extractJava, extractScala, android, dependencies, resolvers, play2)
     }
 
