@@ -20,9 +20,22 @@ object StructureExtractor extends Extractor {
         projectAccepted && !shouldSkipProject
       }
 
-    val sbtVersion      = setting(Keys.sbtVersion).get
-    val projectsData    = acceptedProjectRefs.flatMap(new ProjectExtractor(_).extract)
-    val repositoryData  = if (options.download) new RepositoryExtractor(acceptedProjectRefs).extract else None
+    def dependenciesOf(project: ProjectRef): Seq[ProjectRef] =
+      projectSetting(Keys.buildDependencies)(state, project).get.classpathRefs(project)
+    val sortedProjects = Dag.topologicalSort(structure.allProjectRefs)(dependenciesOf)
+
+    val (newState, _) = sortedProjects.foldLeft((state, Seq.empty[sbt.Setting[_]])) { (acc, projectRef) =>
+        val (intermediateState, previousSettings) = acc
+        val extracted = Project.extract(intermediateState)
+        projectTask(Keys.update)(intermediateState, projectRef)
+        val newSettings = previousSettings :+ (Keys.skip.in(projectRef, Keys.update) := { true })
+        val newState = extracted.append(newSettings, intermediateState)
+        (newState, newSettings)
+    }
+
+    val sbtVersion      = setting(Keys.sbtVersion)(newState).get
+    val projectsData    = acceptedProjectRefs.flatMap(new ProjectExtractor(_).extract(newState, options))
+    val repositoryData  = if (options.download) new RepositoryExtractor(acceptedProjectRefs).extract(newState, options) else None
     val localCachePath  = Option(System.getProperty("sbt.ivy.home", System.getProperty("ivy.home")))
     Some(StructureData(sbtVersion, projectsData, repositoryData, localCachePath))
   }
