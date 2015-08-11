@@ -12,15 +12,8 @@ object StructureExtractor extends Extractor {
 
   def extract(implicit state: State, options: Extractor.Options): Option[Data] = {
     val acceptedProjectRefs =
-      // Here is a hackish way to test whether project has JvmPlugin enabled.
-      // Prior to 0.13.8 SBT had this one enabled by default for all projects.
-      // Now there may exist projects with IvyPlugin (and thus JvmPlugin) disabled
-      // lacking all the settings we need to extract in order to import project in IDEA.
-      // These projects are filtered out by checking `autoPlugins` field.
-      // But earlier versions of SBT 0.13.x had no `autoPlugins` field so
-      // structural typing is used to get the data.
       structure.allProjectRefs.filter { case ref @ ProjectRef(_, id) =>
-        val projectAccepted = structure.allProjects.find(_.id == id).map(areNecessaryPluginsLoaded).getOrElse(false)
+        val projectAccepted = structure.allProjects.find(_.id == id).exists(areNecessaryPluginsLoaded)
         val shouldSkipProject =
           setting(SettingKeys.ideSkipProject.in(ref)).getOrElse(false) ||
             setting(SettingKeys.sbtIdeaIgnoreModule.in(ref)).getOrElse(false)
@@ -35,6 +28,13 @@ object StructureExtractor extends Extractor {
   }
 
   private def areNecessaryPluginsLoaded(project: ResolvedProject): Boolean = {
+    // Here is a hackish way to test whether project has JvmPlugin enabled.
+    // Prior to 0.13.8 SBT had this one enabled by default for all projects.
+    // Now there may exist projects with IvyPlugin (and thus JvmPlugin) disabled
+    // lacking all the settings we need to extract in order to import project in IDEA.
+    // These projects are filtered out by checking `autoPlugins` field.
+    // But earlier versions of SBT 0.13.x had no `autoPlugins` field so
+    // structural typing is used to get the data.
     try {
       type ResolvedProject_0_13_7 = {def autoPlugins: Seq[{ def label: String}]}
       val resolvedProject_0_13_7 = project.asInstanceOf[ResolvedProject_0_13_7]
