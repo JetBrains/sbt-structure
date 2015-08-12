@@ -20,22 +20,14 @@ object StructureExtractor extends Extractor {
         projectAccepted && !shouldSkipProject
       }
 
-    def dependenciesOf(project: ProjectRef): Seq[ProjectRef] =
-      projectSetting(Keys.buildDependencies)(state, project).get.classpathRefs(project)
-    val sortedProjects = Dag.topologicalSort(structure.allProjectRefs)(dependenciesOf)
+    val stateToUse = if (options.download && options.cachedUpdate) cacheUpdateResults(state) else state
+    performExtraction(acceptedProjectRefs)(stateToUse, options)
+  }
 
-    val (newState, _) = sortedProjects.foldLeft((state, Seq.empty[sbt.Setting[_]])) { (acc, projectRef) =>
-        val (intermediateState, previousSettings) = acc
-        val extracted = Project.extract(intermediateState)
-        projectTask(Keys.update)(intermediateState, projectRef)
-        val newSettings = previousSettings :+ (Keys.skip.in(projectRef, Keys.update) := { true })
-        val newState = extracted.append(newSettings, intermediateState)
-        (newState, newSettings)
-    }
-
-    val sbtVersion      = setting(Keys.sbtVersion)(newState).get
-    val projectsData    = acceptedProjectRefs.flatMap(new ProjectExtractor(_).extract(newState, options))
-    val repositoryData  = new RepositoryExtractor(acceptedProjectRefs).extract(newState, options)
+  private def performExtraction(acceptedProjectRefs: Seq[ProjectRef])(implicit state: State, options: Extractor.Options): Option[Data] = {
+    val sbtVersion      = setting(Keys.sbtVersion).get
+    val projectsData    = acceptedProjectRefs.flatMap(new ProjectExtractor(_).extract)
+    val repositoryData  = new RepositoryExtractor(acceptedProjectRefs).extract
     val localCachePath  = Option(System.getProperty("sbt.ivy.home", System.getProperty("ivy.home")))
     Some(StructureData(sbtVersion, projectsData, repositoryData, localCachePath))
   }
@@ -56,5 +48,25 @@ object StructureExtractor extends Extractor {
     } catch {
       case _ : NoSuchMethodException => true
     }
+  }
+
+  private def cacheUpdateResults(implicit state: State): State = {
+    def dependenciesOf(project: ProjectRef): Seq[ProjectRef] =
+      projectSetting(Keys.buildDependencies)(state, project).get.classpathRefs(project)
+
+    val sortedProjects = Dag.topologicalSort(structure.allProjectRefs)(dependenciesOf)
+
+    val (newState, _) = sortedProjects.foldLeft((state, Seq.empty[sbt.Setting[_]])) { (acc, projectRef) =>
+      val (intermediateState, previousSettings) = acc
+      val extracted = Project.extract(intermediateState)
+      projectTask(Keys.update)(intermediateState, projectRef)
+      val newSettings = previousSettings :+ (Keys.skip.in(projectRef, Keys.update) := {
+        true
+      })
+      val newState = extracted.append(newSettings, intermediateState)
+      (newState, newSettings)
+    }
+
+    newState
   }
 }
