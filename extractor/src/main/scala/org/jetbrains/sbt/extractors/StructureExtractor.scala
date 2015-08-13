@@ -35,7 +35,7 @@ object StructureExtractor extends Extractor {
 
     val sbtVersion      = setting(Keys.sbtVersion)(newState).get
     val projectsData    = acceptedProjectRefs.flatMap(new ProjectExtractor(_).extract(newState, options))
-    val repositoryData  = if (options.download) new RepositoryExtractor(acceptedProjectRefs).extract(newState, options) else None
+    val repositoryData  = new RepositoryExtractor(acceptedProjectRefs).extract(newState, options)
     val localCachePath  = Option(System.getProperty("sbt.ivy.home", System.getProperty("ivy.home")))
     Some(StructureData(sbtVersion, projectsData, repositoryData, localCachePath))
   }

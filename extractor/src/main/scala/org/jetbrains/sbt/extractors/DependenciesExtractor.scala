@@ -15,18 +15,21 @@ class DependenciesExtractor(projectRef: ProjectRef) extends ModulesExtractor {
 
   implicit val projectRefImplicit = projectRef
 
-  override def extract(implicit state: State, options: Options): Option[DependencyData] = {
-    val projectDependencies = projectSetting(Keys.buildDependencies).map { dep =>
+  override def extract(implicit state: State, options: Options): Option[DependencyData] =
+    Some(DependencyData(projectDependencies, moduleDependencies, jarDependencies))
+
+  private def projectDependencies(implicit state: State): Seq[ProjectDependencyData] =
+    projectSetting(Keys.buildDependencies).map { dep =>
       dep.classpath.getOrElse(projectRef, Seq.empty).map { it =>
         val configurations = it.configuration.map(jb.Configuration.fromString).getOrElse(Seq.empty)
         ProjectDependencyData(it.project.project, configurations)
       }
     }.getOrElse(Seq.empty)
 
-    Some(DependencyData(projectDependencies, moduleDependencies, jarDependencies))
-  }
+  private def moduleDependencies(implicit state: State, options: Options): Seq[ModuleDependencyData] =
+    if (options.download) getModuleDependencies else Seq.empty
 
-  private def moduleDependencies(implicit state: State): Seq[ModuleDependencyData] = {
+  private def getModuleDependencies(implicit state: State): Seq[ModuleDependencyData] = {
     val moduleToConfigurations = DependencyConfigurations
       .flatMap(configuration => modulesIn(configuration).map(module => (module, configuration)))
       .groupBy(_._1)

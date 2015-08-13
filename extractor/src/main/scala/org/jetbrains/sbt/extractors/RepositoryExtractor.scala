@@ -4,6 +4,7 @@ package extractors
 import org.jetbrains.sbt.extractors.Extractor.Options
 import org.jetbrains.sbt.structure.{ModuleData, RepositoryData}
 import sbt._
+import Utilities._
 
 /**
  * @author Nikolay Obedin
@@ -13,21 +14,22 @@ class RepositoryExtractor(acceptedProjectRefs: Seq[ProjectRef]) extends ModulesE
 
   override type Data = RepositoryData
 
-  override def extract(implicit state: State, options: Options): Option[Data] = {
-    val rawModulesData = acceptedProjectRefs.flatMap(extractModules)
-    val modulesData = rawModulesData.foldLeft(Seq.empty[ModuleData]) { (acc, data) =>
-      acc.find(_.id == data.id) match {
-        case Some(module) =>
-          val newModule = ModuleData(module.id,
-            module.binaries ++ data.binaries,
-            module.docs ++ data.docs,
-            module.sources ++ data.sources)
-          acc.filterNot(_ == module) :+ newModule
-        case None => acc :+ data
+  override def extract(implicit state: State, options: Options): Option[Data] =
+    options.download.option {
+      val rawModulesData = acceptedProjectRefs.flatMap(extractModules)
+      val modulesData = rawModulesData.foldLeft(Seq.empty[ModuleData]) { (acc, data) =>
+        acc.find(_.id == data.id) match {
+          case Some(module) =>
+            val newModule = ModuleData(module.id,
+              module.binaries ++ data.binaries,
+              module.docs ++ data.docs,
+              module.sources ++ data.sources)
+            acc.filterNot(_ == module) :+ newModule
+          case None => acc :+ data
+        }
       }
+      RepositoryData(modulesData)
     }
-    Some(RepositoryData(modulesData))
-  }
 
   private def extractModules(projectRef: ProjectRef)(implicit state: State, options: Options): Seq[ModuleData] = {
     implicit val projectRefImplicit = projectRef

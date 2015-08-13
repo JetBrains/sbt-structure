@@ -4,6 +4,7 @@ package extractors
 import org.jetbrains.sbt.extractors.Extractor.Options
 import org.jetbrains.sbt.structure._
 import sbt._
+import Utilities._
 
 /**
  * @author Nikolay Obedin
@@ -63,16 +64,19 @@ class ProjectExtractor(projectRef: ProjectRef) extends Extractor {
       ConfigurationData(configuration.name, sources, resources, excludes, output)
     }
 
-  private def extractScala(implicit state: State): Option[ScalaData] =
-    projectTask(Keys.scalaInstance.in(Compile)).map { instance =>
-      val options   = projectTask(Keys.scalacOptions.in(Compile)).getOrElse(Seq.empty)
-      val extraJars = instance.extraJars.filter(_.getName.contains("reflect"))
-      ScalaData(instance.version, instance.libraryJar, instance.compilerJar, extraJars, options)
-    }
+  private def extractScala(implicit state: State, options: Options): Option[ScalaData] =
+    options.download.option {
+      projectTask(Keys.scalaInstance.in(Compile)).map { instance =>
+        val options = projectTask(Keys.scalacOptions.in(Compile)).getOrElse(Seq.empty)
+        val extraJars = instance.extraJars.filter(_.getName.contains("reflect"))
+        ScalaData(instance.version, instance.libraryJar, instance.compilerJar, extraJars, options)
+      }
+    }.flatten
 
-  private def extractJava(implicit state: State): Option[JavaData] = {
-    val home    = projectSetting(Keys.javaHome.in(Compile)).collect { case Some(opts) => opts }
-    val options = projectTask(Keys.javacOptions.in(Compile)).getOrElse(Seq.empty)
-    if (home.isDefined || options.nonEmpty) Some(JavaData(home, options)) else None
-  }
+  private def extractJava(implicit state: State, options: Options): Option[JavaData] =
+    options.download.option {
+      val home = projectSetting(Keys.javaHome.in(Compile)).collect { case Some(opts) => opts }
+      val options = projectTask(Keys.javacOptions.in(Compile)).getOrElse(Seq.empty)
+      if (home.isDefined || options.nonEmpty) Some(JavaData(home, options)) else None
+    }.flatten
 }
