@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<structure sbt="0.13.5">
+<structure sbt="0.13.7">
   <project>
     <id>root</id>
     <name>my-first-app</name>
@@ -8,9 +8,10 @@
     <base>$BASE</base>
     <target>$BASE/target</target>
     <build>
-      <import>import sbt._, Keys._</import>
+      <import>import sbt._, Keys._, dsl._</import>
+      <import>import _root_.com.typesafe.sbteclipse.plugin.EclipsePlugin._, _root_.org.sbtidea.SbtIdeaPlugin._, _root_.com.typesafe.sbt.SbtNativePackager._, MyBuild._</import>
       <import>
-        import _root_.com.typesafe.sbteclipse.plugin.EclipsePlugin._, _root_.org.sbtidea.SbtIdeaPlugin._, _root_.com.typesafe.sbt.SbtNativePackager._, _root_.play.Play.autoImport._, _root_.play.twirl.sbt.SbtTwirl.autoImport._, _root_.com.typesafe.sbt.jse.SbtJsEngine.autoImport._, _root_.com.typesafe.sbt.jse.SbtJsTask.autoImport._, _root_.com.typesafe.sbt.web.SbtWeb.autoImport._, _root_.com.typesafe.sbt.webdriver.SbtWebDriver.autoImport._
+        import _root_.play.Play.autoImport._, _root_.play.twirl.sbt.SbtTwirl.autoImport._, _root_.com.typesafe.sbt.jse.SbtJsEngine.autoImport._, _root_.com.typesafe.sbt.jse.SbtJsTask.autoImport._, _root_.com.typesafe.sbt.web.SbtWeb.autoImport._, _root_.com.typesafe.sbt.webdriver.SbtWebDriver.autoImport._
       </import>
       <import>
         import _root_.sbt.plugins.IvyPlugin, _root_.sbt.plugins.JvmPlugin, _root_.sbt.plugins.CorePlugin, _root_.sbt.plugins.JUnitXmlReportPlugin, _root_.play.Play, _root_.play.PlayJava, _root_.play.PlayScala, _root_.play.twirl.sbt.SbtTwirl, _root_.com.typesafe.sbt.jse.SbtJsEngine, _root_.com.typesafe.sbt.jse.SbtJsTask, _root_.com.typesafe.sbt.web.SbtWeb, _root_.com.typesafe.sbt.webdriver.SbtWebDriver
@@ -149,45 +150,52 @@
       <classes>~/.sbt/boot/scala-2.10.4/lib/scala-compiler.jar</classes>
       <classes>~/.sbt/boot/scala-2.10.4/lib/scala-library.jar</classes>
       <classes>~/.sbt/boot/scala-2.10.4/lib/scala-reflect.jar</classes>
-      <classes>~/.sbt/boot/scala-2.10.4/org.scala-sbt/sbt/0.13.5/actions-0.13.5.jar</classes>
-      <classes>~/.sbt/boot/scala-2.10.4/org.scala-sbt/sbt/0.13.5/api-0.13.5.jar</classes>
-      <classes>~/.sbt/boot/scala-2.10.4/org.scala-sbt/sbt/0.13.5/apply-macro-0.13.5.jar</classes>
-      <classes>~/.sbt/boot/scala-2.10.4/org.scala-sbt/sbt/0.13.5/cache-0.13.5.jar</classes>
-      <classes>~/.sbt/boot/scala-2.10.4/org.scala-sbt/sbt/0.13.5/classfile-0.13.5.jar</classes>
-      <classes>~/.sbt/boot/scala-2.10.4/org.scala-sbt/sbt/0.13.5/classpath-0.13.5.jar</classes>
-      <classes>~/.sbt/boot/scala-2.10.4/org.scala-sbt/sbt/0.13.5/collections-0.13.5.jar</classes>
-      <classes>~/.sbt/boot/scala-2.10.4/org.scala-sbt/sbt/0.13.5/command-0.13.5.jar</classes>
-      <classes>~/.sbt/boot/scala-2.10.4/org.scala-sbt/sbt/0.13.5/compile-0.13.5.jar</classes>
-      <classes>~/.sbt/boot/scala-2.10.4/org.scala-sbt/sbt/0.13.5/compiler-integration-0.13.5.jar</classes>
-      <classes>~/.sbt/boot/scala-2.10.4/org.scala-sbt/sbt/0.13.5/compiler-ivy-integration-0.13.5.jar</classes>
-      <classes>~/.sbt/boot/scala-2.10.4/org.scala-sbt/sbt/0.13.5/completion-0.13.5.jar</classes>
-      <classes>~/.sbt/boot/scala-2.10.4/org.scala-sbt/sbt/0.13.5/control-0.13.5.jar</classes>
-      <classes>~/.sbt/boot/scala-2.10.4/org.scala-sbt/sbt/0.13.5/cross-0.13.5.jar</classes>
-      <classes>~/.sbt/boot/scala-2.10.4/org.scala-sbt/sbt/0.13.5/incremental-compiler-0.13.5.jar</classes>
-      <classes>~/.sbt/boot/scala-2.10.4/org.scala-sbt/sbt/0.13.5/io-0.13.5.jar</classes>
-      <classes>~/.sbt/boot/scala-2.10.4/org.scala-sbt/sbt/0.13.5/ivy-0.13.5.jar</classes>
-      <classes>~/.sbt/boot/scala-2.10.4/org.scala-sbt/sbt/0.13.5/ivy-2.3.0.jar</classes>
-      <classes>~/.sbt/boot/scala-2.10.4/org.scala-sbt/sbt/0.13.5/jline-2.11.jar</classes>
-      <classes>~/.sbt/boot/scala-2.10.4/org.scala-sbt/sbt/0.13.5/jsch-0.1.46.jar</classes>
-      <classes>~/.sbt/boot/scala-2.10.4/org.scala-sbt/sbt/0.13.5/launcher-interface-0.13.5.jar</classes>
-      <classes>~/.sbt/boot/scala-2.10.4/org.scala-sbt/sbt/0.13.5/logging-0.13.5.jar</classes>
-      <classes>~/.sbt/boot/scala-2.10.4/org.scala-sbt/sbt/0.13.5/logic-0.13.5.jar</classes>
-      <classes>~/.sbt/boot/scala-2.10.4/org.scala-sbt/sbt/0.13.5/main-0.13.5.jar</classes>
-      <classes>~/.sbt/boot/scala-2.10.4/org.scala-sbt/sbt/0.13.5/main-settings-0.13.5.jar</classes>
-      <classes>~/.sbt/boot/scala-2.10.4/org.scala-sbt/sbt/0.13.5/persist-0.13.5.jar</classes>
-      <classes>~/.sbt/boot/scala-2.10.4/org.scala-sbt/sbt/0.13.5/process-0.13.5.jar</classes>
-      <classes>~/.sbt/boot/scala-2.10.4/org.scala-sbt/sbt/0.13.5/relation-0.13.5.jar</classes>
-      <classes>~/.sbt/boot/scala-2.10.4/org.scala-sbt/sbt/0.13.5/run-0.13.5.jar</classes>
-      <classes>~/.sbt/boot/scala-2.10.4/org.scala-sbt/sbt/0.13.5/sbinary_2.10-0.4.2.jar</classes>
-      <classes>~/.sbt/boot/scala-2.10.4/org.scala-sbt/sbt/0.13.5/sbt-0.13.5.jar</classes>
-      <classes>~/.sbt/boot/scala-2.10.4/org.scala-sbt/sbt/0.13.5/scala-reflect-2.10.4.jar</classes>
-      <classes>~/.sbt/boot/scala-2.10.4/org.scala-sbt/sbt/0.13.5/task-system-0.13.5.jar</classes>
-      <classes>~/.sbt/boot/scala-2.10.4/org.scala-sbt/sbt/0.13.5/tasks-0.13.5.jar</classes>
-      <classes>~/.sbt/boot/scala-2.10.4/org.scala-sbt/sbt/0.13.5/test-agent-0.13.5.jar</classes>
-      <classes>~/.sbt/boot/scala-2.10.4/org.scala-sbt/sbt/0.13.5/test-interface-1.0.jar</classes>
-      <classes>~/.sbt/boot/scala-2.10.4/org.scala-sbt/sbt/0.13.5/testing-0.13.5.jar</classes>
-      <classes>~/.sbt/boot/scala-2.10.4/org.scala-sbt/sbt/0.13.5/tracking-0.13.5.jar</classes>
-      <classes>~/.sbt/boot/scala-2.10.4/org.scala-sbt/sbt/0.13.5/xsbti/interface-0.13.5.jar</classes>
+      <classes>~/.sbt/boot/scala-2.10.4/org.scala-sbt/sbt/0.13.7/actions-0.13.7.jar</classes>
+      <classes>~/.sbt/boot/scala-2.10.4/org.scala-sbt/sbt/0.13.7/api-0.13.7.jar</classes>
+      <classes>~/.sbt/boot/scala-2.10.4/org.scala-sbt/sbt/0.13.7/apply-macro-0.13.7.jar</classes>
+      <classes>~/.sbt/boot/scala-2.10.4/org.scala-sbt/sbt/0.13.7/cache-0.13.7.jar</classes>
+      <classes>~/.sbt/boot/scala-2.10.4/org.scala-sbt/sbt/0.13.7/classfile-0.13.7.jar</classes>
+      <classes>~/.sbt/boot/scala-2.10.4/org.scala-sbt/sbt/0.13.7/classpath-0.13.7.jar</classes>
+      <classes>~/.sbt/boot/scala-2.10.4/org.scala-sbt/sbt/0.13.7/collections-0.13.7.jar</classes>
+      <classes>~/.sbt/boot/scala-2.10.4/org.scala-sbt/sbt/0.13.7/command-0.13.7.jar</classes>
+      <classes>~/.sbt/boot/scala-2.10.4/org.scala-sbt/sbt/0.13.7/compile-0.13.7.jar</classes>
+      <classes>~/.sbt/boot/scala-2.10.4/org.scala-sbt/sbt/0.13.7/compiler-integration-0.13.7.jar</classes>
+      <classes>~/.sbt/boot/scala-2.10.4/org.scala-sbt/sbt/0.13.7/compiler-ivy-integration-0.13.7.jar</classes>
+      <classes>~/.sbt/boot/scala-2.10.4/org.scala-sbt/sbt/0.13.7/completion-0.13.7.jar</classes>
+      <classes>~/.sbt/boot/scala-2.10.4/org.scala-sbt/sbt/0.13.7/control-0.13.7.jar</classes>
+      <classes>~/.sbt/boot/scala-2.10.4/org.scala-sbt/sbt/0.13.7/cross-0.13.7.jar</classes>
+      <classes>~/.sbt/boot/scala-2.10.4/org.scala-sbt/sbt/0.13.7/incremental-compiler-0.13.7.jar</classes>
+      <classes>~/.sbt/boot/scala-2.10.4/org.scala-sbt/sbt/0.13.7/io-0.13.7.jar</classes>
+      <classes>~/.sbt/boot/scala-2.10.4/org.scala-sbt/sbt/0.13.7/ivy-0.13.7.jar</classes>
+      <classes>~/.sbt/boot/scala-2.10.4/org.scala-sbt/sbt/0.13.7/ivy-2.3.0-sbt-fccfbd44c9f64523b61398a0155784dcbaeae28f.jar</classes>
+      <classes>~/.sbt/boot/scala-2.10.4/org.scala-sbt/sbt/0.13.7/jawn-parser_2.10-0.6.0.jar</classes>
+      <classes>~/.sbt/boot/scala-2.10.4/org.scala-sbt/sbt/0.13.7/jline-2.11.jar</classes>
+      <classes>~/.sbt/boot/scala-2.10.4/org.scala-sbt/sbt/0.13.7/jsch-0.1.46.jar</classes>
+      <classes>~/.sbt/boot/scala-2.10.4/org.scala-sbt/sbt/0.13.7/json4s-ast_2.10-3.2.10.jar</classes>
+      <classes>~/.sbt/boot/scala-2.10.4/org.scala-sbt/sbt/0.13.7/json4s-core_2.10-3.2.10.jar</classes>
+      <classes>~/.sbt/boot/scala-2.10.4/org.scala-sbt/sbt/0.13.7/json4s-native_2.10-3.2.10.jar</classes>
+      <classes>~/.sbt/boot/scala-2.10.4/org.scala-sbt/sbt/0.13.7/json4s-support_2.10-0.6.0.jar</classes>
+      <classes>~/.sbt/boot/scala-2.10.4/org.scala-sbt/sbt/0.13.7/launcher-interface-0.13.7.jar</classes>
+      <classes>~/.sbt/boot/scala-2.10.4/org.scala-sbt/sbt/0.13.7/logging-0.13.7.jar</classes>
+      <classes>~/.sbt/boot/scala-2.10.4/org.scala-sbt/sbt/0.13.7/logic-0.13.7.jar</classes>
+      <classes>~/.sbt/boot/scala-2.10.4/org.scala-sbt/sbt/0.13.7/main-0.13.7.jar</classes>
+      <classes>~/.sbt/boot/scala-2.10.4/org.scala-sbt/sbt/0.13.7/main-settings-0.13.7.jar</classes>
+      <classes>~/.sbt/boot/scala-2.10.4/org.scala-sbt/sbt/0.13.7/paranamer-2.6.jar</classes>
+      <classes>~/.sbt/boot/scala-2.10.4/org.scala-sbt/sbt/0.13.7/persist-0.13.7.jar</classes>
+      <classes>~/.sbt/boot/scala-2.10.4/org.scala-sbt/sbt/0.13.7/process-0.13.7.jar</classes>
+      <classes>~/.sbt/boot/scala-2.10.4/org.scala-sbt/sbt/0.13.7/relation-0.13.7.jar</classes>
+      <classes>~/.sbt/boot/scala-2.10.4/org.scala-sbt/sbt/0.13.7/run-0.13.7.jar</classes>
+      <classes>~/.sbt/boot/scala-2.10.4/org.scala-sbt/sbt/0.13.7/sbinary_2.10-0.4.2.jar</classes>
+      <classes>~/.sbt/boot/scala-2.10.4/org.scala-sbt/sbt/0.13.7/sbt-0.13.7.jar</classes>
+      <classes>~/.sbt/boot/scala-2.10.4/org.scala-sbt/sbt/0.13.7/scala-reflect-2.10.4.jar</classes>
+      <classes>~/.sbt/boot/scala-2.10.4/org.scala-sbt/sbt/0.13.7/scalap-2.10.0.jar</classes>
+      <classes>~/.sbt/boot/scala-2.10.4/org.scala-sbt/sbt/0.13.7/task-system-0.13.7.jar</classes>
+      <classes>~/.sbt/boot/scala-2.10.4/org.scala-sbt/sbt/0.13.7/tasks-0.13.7.jar</classes>
+      <classes>~/.sbt/boot/scala-2.10.4/org.scala-sbt/sbt/0.13.7/test-agent-0.13.7.jar</classes>
+      <classes>~/.sbt/boot/scala-2.10.4/org.scala-sbt/sbt/0.13.7/test-interface-1.0.jar</classes>
+      <classes>~/.sbt/boot/scala-2.10.4/org.scala-sbt/sbt/0.13.7/testing-0.13.7.jar</classes>
+      <classes>~/.sbt/boot/scala-2.10.4/org.scala-sbt/sbt/0.13.7/tracking-0.13.7.jar</classes>
+      <classes>~/.sbt/boot/scala-2.10.4/org.scala-sbt/sbt/0.13.7/xsbti/interface-0.13.7.jar</classes>
     </build>
     <java>
       <option>-encoding</option>
@@ -323,7 +331,7 @@
       <module organization="xerces" name="xercesImpl" revision="2.11.0" artifactType="jar" classifier="" configurations="compile"/>
       <module organization="xml-apis" name="xml-apis" revision="1.4.01" artifactType="jar" classifier="" configurations="compile"/>
     </dependencies>
-    <resolver name="public" root="http://repo1.maven.org/maven2/"/>
+    <resolver name="public" root="https://repo1.maven.org/maven2/"/>
     <resolver name="Typesafe Releases Repository" root="https://repo.typesafe.com/typesafe/releases/"/>
     <playimps>
       <key name="uri">
