@@ -167,7 +167,7 @@
     </build>
     <java>
       <option>-bootclasspath</option>
-      <option>$ANDROID_HOME/platforms/android-19/android.jar</option>
+      <option>$ANDROID_HOME/platforms/android-22/android.jar</option>
       <option>-g</option>
     </java>
     <scala>
@@ -176,12 +176,12 @@
       <compiler>~/.ivy2/cache/org.scala-lang/scala-compiler/jars/scala-compiler-2.11.1.jar</compiler>
       <extra>~/.ivy2/cache/org.scala-lang/scala-reflect/jars/scala-reflect-2.11.1.jar</extra>
       <option>-bootclasspath</option>
-      <option>$ANDROID_HOME/platforms/android-19/android.jar</option>
+      <option>$ANDROID_HOME/platforms/android-22/android.jar</option>
       <option>-javabootclasspath</option>
-      <option>$ANDROID_HOME/platforms/android-19/android.jar</option>
+      <option>$ANDROID_HOME/platforms/android-22/android.jar</option>
     </scala>
     <android>
-      <version>19</version>
+      <version>22</version>
       <manifest>$BASE/src/main/AndroidManifest.xml</manifest>
       <resources>$BASE/src/main/res</resources>
       <assets>$BASE/src/main/assets</assets>
@@ -223,13 +223,17 @@
   </project>
   <repository>
     <module organization="com.android.support" name="support-annotations" revision="20.0.0" artifactType="jar" classifier="">
-      <jar>~/.ivy2/cache/com.android.support/support-annotations/jars/support-annotations-20.0.0.jar</jar>
-      <doc>~/.ivy2/cache/com.android.support/support-annotations/docs/support-annotations-20.0.0-javadoc.jar</doc>
-      <src>~/.ivy2/cache/com.android.support/support-annotations/srcs/support-annotations-20.0.0-sources.jar</src>
+      <jar>$ANDROID_HOME/extras/android/m2repository/com/android/support/support-annotations/20.0.0/support-annotations-20.0.0.jar</jar>
+      <doc>
+        $ANDROID_HOME/extras/android/m2repository/com/android/support/support-annotations/20.0.0/support-annotations-20.0.0-javadoc.jar
+      </doc>
+      <src>
+        $ANDROID_HOME/extras/android/m2repository/com/android/support/support-annotations/20.0.0/support-annotations-20.0.0-sources.jar
+      </src>
     </module>
     <module organization="com.android.support" name="support-v4" revision="20.0.0" artifactType="jar" classifier="">
-      <doc>~/.ivy2/cache/com.android.support/support-v4/docs/support-v4-20.0.0-javadoc.jar</doc>
-      <src>~/.ivy2/cache/com.android.support/support-v4/srcs/support-v4-20.0.0-sources.jar</src>
+      <doc>$ANDROID_HOME/extras/android/m2repository/com/android/support/support-v4/20.0.0/support-v4-20.0.0-javadoc.jar</doc>
+      <src>$ANDROID_HOME/extras/android/m2repository/com/android/support/support-v4/20.0.0/support-v4-20.0.0-sources.jar</src>
     </module>
     <module organization="org.scala-lang" name="scala-library" revision="2.11.1" artifactType="jar" classifier="">
       <jar>~/.ivy2/cache/org.scala-lang/scala-library/jars/scala-library-2.11.1.jar</jar>

@@ -3,7 +3,7 @@ import android.Dependencies.aar
 
 android.Plugin.androidBuild
 
-platformTarget in Android := "android-19"
+platformTarget in Android := "android-22"
 
 libraryDependencies ++= Seq(
   "com.android.support" % "support-v4" % "20.0.0"
