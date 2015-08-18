@@ -27,7 +27,7 @@ class AndroidSdkPluginExtractor(projectRef: ProjectRef) extends Extractor {
         case _ => false
       }
 
-      val targetSdkVersion = SettingKey[String]("target-sdk-version").in(Android)
+      val targetSdkVersion = TaskKey[String]("target-sdk-version").in(Android)
       val manifestPath     = SettingKey[File]("manifest-path").in(Android)
       val apkFile          = SettingKey[File]("apk-file").in(Android)
       val libraryProject   = SettingKey[Boolean]("library-project").in(Android)
@@ -43,7 +43,7 @@ class AndroidSdkPluginExtractor(projectRef: ProjectRef) extends Extractor {
 
     try {
       for {
-        targetVersion   <- projectSetting(AndroidKeys.targetSdkVersion)
+        targetVersion   <- projectTask(AndroidKeys.targetSdkVersion)
         manifestPath    <- projectSetting(AndroidKeys.manifestPath).map(_.getPath)
         apkPath         <- projectSetting(AndroidKeys.apkFile).map(_.getPath)
         isLibrary       <- projectSetting(AndroidKeys.libraryProject)
