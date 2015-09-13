@@ -122,5 +122,6 @@ class ImportSpec extends Specification with XmlMatchers {
     equalExpectedOneIn("android-1.4")(p => (onlyFor("0.13.7") or onlyFor("0.13.9")) and (hasAndroidDefined and testProject(p)))
     equalExpectedOneIn("ide-settings")((onlyFor("0.13.7") or onlyFor("0.13.9")) and testProject(_))
     equalExpectedOneIn("sbt-idea")(sbt13only and testProject(_))
+    equalExpectedOneIn("custom-test-config")(sbt13only and testProject(_))
   }
 }
