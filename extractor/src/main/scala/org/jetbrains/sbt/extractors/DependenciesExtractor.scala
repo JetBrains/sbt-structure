@@ -27,7 +27,7 @@ class DependenciesExtractor(projectRef: ProjectRef) extends ModulesExtractor {
   }
 
   private def moduleDependencies(implicit state: State): Seq[ModuleDependencyData] = {
-    val moduleToConfigurations = DependencyConfigurations
+    val moduleToConfigurations = getDependencyConfigurations
       .flatMap(configuration => modulesIn(configuration).map(module => (module, configuration)))
       .groupBy(_._1)
       .mapValues(_.unzip._2)
@@ -49,7 +49,7 @@ class DependenciesExtractor(projectRef: ProjectRef) extends ModulesExtractor {
   }
 
   private def jarDependencies(implicit state: State): Seq[JarDependencyData] = {
-    val jarToConfigurations = DependencyConfigurations
+    val jarToConfigurations = getDependencyConfigurations
       .flatMap(configuration => jarsIn(configuration).map(file => (file, configuration)))
       .groupBy(_._1)
       .mapValues(_.unzip._2)
@@ -82,8 +82,9 @@ class DependenciesExtractor(projectRef: ProjectRef) extends ModulesExtractor {
   // We have to perform this configurations mapping because we're using externalDependencyClasspath
   // rather than libraryDependencies (to acquire transitive dependencies),  so we detect
   // module presence (in external classpath) instead of explicitly declared configurations.
-  private def mapConfigurations(configurations: Seq[jb.Configuration]): Seq[jb.Configuration] = {
-    val cs = configurations.map(c => if (c == jb.Configuration.IntegrationTest) jb.Configuration.Test else c).toSet
+  private def mapConfigurations(configurations: Seq[jb.Configuration])(implicit state: State): Seq[jb.Configuration] = {
+    val jbTestConfigurations = getTestConfigurations.map(c => jb.Configuration(c.name))
+    val cs = configurations.map(c => if (jbTestConfigurations.contains(c)) jb.Configuration.Test else c).toSet
 
     if (cs == Set(jb.Configuration.Compile, jb.Configuration.Test, jb.Configuration.Runtime)) {
       Seq(jb.Configuration.Compile)

@@ -28,9 +28,27 @@ trait Extractor {
     Project.runTask(key.in(projectRef), state).collect { case (_, Value(value)) => value }
 }
 
-trait ModulesExtractor extends Extractor {
+trait ExtractorWithConfigurations extends Extractor {
+  protected val PredefinedTestConfigurations = Set(Test, IntegrationTest)
 
-  protected val DependencyConfigurations = Seq(Compile, Test, Runtime, Provided, Optional, IntegrationTest)
+  protected def getTestConfigurations(implicit state: State, projectRef: ProjectRef): Seq[Configuration] =
+    for {
+      configuration <- projectSetting(Keys.ivyConfigurations).getOrElse(Seq.empty)
+      if !configuration.name.toLowerCase.contains("internal")
+      if PredefinedTestConfigurations(configuration) || PredefinedTestConfigurations.intersect(configuration.extendsConfigs.toSet).nonEmpty
+    } yield configuration
+
+  protected def getDependencyConfigurations(implicit state: State, projectRef: ProjectRef): Seq[Configuration] =
+    Seq(Compile, Runtime, Provided, Optional) ++ getTestConfigurations
+
+  protected def getSourceConfigurations(implicit state: State, projectRef: ProjectRef): Seq[Configuration] =
+    Seq(Compile) ++ getTestConfigurations
+
+  protected def mapConfiguration(configuration: Configuration)(implicit state: State, projectRef: ProjectRef): Configuration =
+    if (getTestConfigurations.contains(configuration)) Test else configuration
+}
+
+trait ModulesExtractor extends ExtractorWithConfigurations {
 
   protected def fuseClassifier(artifact: Artifact): String = {
     val fusingClassifiers = Seq("", Artifact.DocClassifier, Artifact.SourceClassifier)

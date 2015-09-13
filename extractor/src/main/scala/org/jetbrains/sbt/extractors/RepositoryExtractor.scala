@@ -59,7 +59,7 @@ class RepositoryExtractor(acceptedProjectRefs: Seq[ProjectRef]) extends ModulesE
 
   private def getModuleReports(task: TaskKey[UpdateReport])(implicit state: State, projectRef: ProjectRef): Seq[MyModuleReport] = {
     val configurationReports = {
-      val relevantConfigurationNames = DependencyConfigurations.map(_.name).toSet
+      val relevantConfigurationNames = getDependencyConfigurations.map(_.name).toSet
       projectTask(task).get.configurations.filter(report => relevantConfigurationNames.contains(report.configuration))
     }
     configurationReports.flatMap{ r => r.modules.map(new MyModuleReport(_)) }.filter(_.artifacts.nonEmpty)

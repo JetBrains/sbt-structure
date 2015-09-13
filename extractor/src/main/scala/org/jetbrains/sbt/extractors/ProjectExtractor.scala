@@ -9,10 +9,8 @@ import sbt._
  * @author Nikolay Obedin
  * @since 4/10/15.
  */
-class ProjectExtractor(projectRef: ProjectRef) extends Extractor {
+class ProjectExtractor(projectRef: ProjectRef) extends ExtractorWithConfigurations {
   override type Data = ProjectData
-
-  private val ExportableConfigurations = Seq(Compile, Test, IntegrationTest)
 
   implicit val projectRefImplicit = projectRef
 
@@ -33,7 +31,7 @@ class ProjectExtractor(projectRef: ProjectRef) extends Extractor {
       val resolvers = projectTask(Keys.fullResolvers.in(Keys.configuration))
         .map(_.collect { case MavenRepository(name, root) => ResolverData(name, root) }).getOrElse(Seq.empty).toSet
 
-      val configurations  = ExportableConfigurations.flatMap(c => extractConfiguration(c))
+      val configurations  = mergeConfigurations(getSourceConfigurations.flatMap(c => extractConfiguration(c)))
       val android         = new AndroidSdkPluginExtractor(projectRef).extract(state, options)
       val play2           = new Play2Extractor(projectRef).extract
 
@@ -60,7 +58,7 @@ class ProjectExtractor(projectRef: ProjectRef) extends Extractor {
         projectSetting(SettingKeys.ideExcludedDirectories.in(configuration)).getOrElse(Seq.empty) ++
         projectSetting(SettingKeys.sbtIdeaExcludeFolders.in(configuration)).map(_.map(file)).getOrElse(Seq.empty)
 
-      ConfigurationData(configuration.name, sources, resources, excludes, output)
+      ConfigurationData(mapConfiguration(configuration).name, sources, resources, excludes, output)
     }
 
   private def extractScala(implicit state: State): Option[ScalaData] =
@@ -75,4 +73,12 @@ class ProjectExtractor(projectRef: ProjectRef) extends Extractor {
     val options = projectTask(Keys.javacOptions.in(Compile)).getOrElse(Seq.empty)
     if (home.isDefined || options.nonEmpty) Some(JavaData(home, options)) else None
   }
+
+  private def mergeConfigurations(configurations: Seq[ConfigurationData]): Seq[ConfigurationData] =
+    configurations.groupBy(_.id).map { case (id, confs) =>
+      val sources = confs.flatMap(_.sources)
+      val resources = confs.flatMap(_.resources)
+      val excludes = confs.flatMap(_.excludes)
+      ConfigurationData(id, sources, resources, excludes, confs.head.classes)
+    }.toSeq
 }
