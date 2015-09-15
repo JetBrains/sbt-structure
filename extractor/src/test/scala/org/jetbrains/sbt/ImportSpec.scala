@@ -123,5 +123,6 @@ class ImportSpec extends Specification with XmlMatchers {
     equalExpectedOneIn("ide-settings")((onlyFor("0.13.7") or onlyFor("0.13.9")) and testProject(_))
     equalExpectedOneIn("sbt-idea")(sbt13only and testProject(_))
     equalExpectedOneIn("custom-test-config")(sbt13only and testProject(_))
+    equalExpectedOneIn("eviction")(sbt13only and testProject(_))
   }
 }
