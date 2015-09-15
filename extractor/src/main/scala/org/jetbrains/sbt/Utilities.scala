@@ -1,5 +1,7 @@
 package org.jetbrains.sbt
 
+import sbt.ProjectRef
+
 //import scala.language.implicitConversions
 
 /**
@@ -25,5 +27,9 @@ object Utilities {
 
   implicit def fixOptionFlattenOnScala292[T](option: Option[Option[T]]) = new {
     def flatten: Option[T] = option.flatMap(identity)
+  }
+
+  implicit def toRichProjectRef(projectRef: ProjectRef) = new {
+    def id: String = String.format("%s[%s]", projectRef.project, Integer.toHexString(projectRef.build.hashCode()))
   }
 }

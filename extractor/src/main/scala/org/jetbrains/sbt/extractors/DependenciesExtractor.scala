@@ -3,6 +3,7 @@ package extractors
 
 import org.jetbrains.sbt.structure.{DependencyData, JarDependencyData, ModuleDependencyData, ProjectDependencyData}
 import org.jetbrains.sbt.{structure => jb}
+import Utilities._
 import sbt._
 
 /**
@@ -17,7 +18,7 @@ class DependenciesExtractor(implicit projectRef: ProjectRef) extends Extractor w
     projectSetting(Keys.buildDependencies).map { dep =>
       dep.classpath.getOrElse(projectRef, Seq.empty).map { it =>
         val configurations = it.configuration.map(jb.Configuration.fromString).getOrElse(Seq.empty)
-        ProjectDependencyData(it.project.project, configurations)
+        ProjectDependencyData(it.project.id, configurations)
       }
     }.getOrElse(Seq.empty)
 
