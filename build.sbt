@@ -36,6 +36,13 @@ val extractor = newProject("extractor")
   .settings(
     name := name.value + "-" + CrossBuilding.pluginSbtVersion.value,
     sbtPlugin := true,
+    unmanagedSourceDirectories in Compile := {
+      val sds = (unmanagedSourceDirectories in Compile).value
+      val sd = (sourceDirectory in Compile).value
+      val mainVersion = CrossBuilding.pluginSbtVersion.value.split("\\.").take(2).mkString(".")
+      val extra = new java.io.File(sd, "scala_sbt_" + mainVersion)
+      (if (extra.exists) Seq(extra) else Seq()) ++ sds
+    },
     libraryDependencies ++= Seq(
       "com.googlecode.java-diff-utils" % "diffutils" % "1.2" withSources(),
       "org.specs2" %% "specs2" % "1.12.3" % "test"),
