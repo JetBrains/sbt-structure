@@ -30,6 +30,6 @@ object Utilities {
   }
 
   implicit def toRichProjectRef(projectRef: ProjectRef) = new {
-    def id: String = String.format("%s[%s]", projectRef.project, Integer.toHexString(projectRef.build.hashCode()))
+    def id: String = projectRef.project // TODO: append build url when IDEA-145101 is fixed
   }
 }
