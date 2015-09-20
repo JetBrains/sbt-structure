@@ -12,11 +12,11 @@ object Loader {
   private val SbtLauncher = path(new File("sbt-launch.jar"))
   private val SbtPlugin = path(new File("extractor/target/scala-" + BuildInfo.scalaVersion + "/sbt-"+ BuildInfo.sbtVersionFull +"/classes/"))
 
-  def load(project: File, download: Boolean, sbtVersion: String, verbose: Boolean = false): Seq[String] = {
+  def load(project: File, resolveClassifiers: Boolean, sbtVersion: String, verbose: Boolean = false): Seq[String] = {
     val structureFile = createTempFile("sbt-structure", ".xml")
     val commandsFile = createTempFile("sbt-commands", ".lst")
 
-    val opts = if (download) Some("\"download resolveClassifiers resolveSbtClassifiers prettyPrint\"") else Some("\"prettyPrint\"")
+    val opts = if (resolveClassifiers) Some("\"download resolveClassifiers resolveSbtClassifiers prettyPrint\"") else Some("\"download prettyPrint\"")
 
     writeLinesTo(commandsFile,
       "set artifactPath := file(\"" + path(structureFile) + "\")",

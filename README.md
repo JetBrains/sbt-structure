@@ -68,6 +68,10 @@ Available options to set in `artifactClassifier`:
 
   This option will force extractor to prettify XML output. Useful for debug purposes.
 
+- `cachedUpdate`
+
+  (Experimental) Enable caching of `update` task results in order to speed up project resolution.
+
 ## Development notes
 
 - Testing against all supported SBT versions can be done with `^ test` command

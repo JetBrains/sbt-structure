@@ -18,7 +18,7 @@ class BuildExtractor(projectRef: ProjectRef) extends Extractor {
 
   override def extract(implicit state: State, options: Options): Option[Data] = {
     val unit = structure.units(projectRef.build)
-    val (docs, sources) = if (options.resolveSbtClassifiers) extractSbtClassifiers else (Seq.empty, Seq.empty)
+    val (docs, sources) = if (options.download && options.resolveSbtClassifiers) extractSbtClassifiers else (Seq.empty, Seq.empty)
     Some(BuildData(unit.imports, unit.unit.plugins.pluginData.dependencyClasspath.map(_.data), docs, sources))
   }
 

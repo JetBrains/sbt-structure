@@ -21,7 +21,7 @@ class ImportSpec extends Specification with XmlMatchers {
   def normalizePath(path: String): String =
     path.replace('\\', '/')
 
-  def testProject(project: String,  download: Boolean = true, sbtVersion: String = BuildInfo.sbtVersionFull) = {
+  def testProject(project: String, resolveClassifiers: Boolean = true, sbtVersion: String = BuildInfo.sbtVersionFull) = {
 
     val base = new File(testDataRoot, project)
 
@@ -36,7 +36,7 @@ class ImportSpec extends Specification with XmlMatchers {
         .replace("~/", userHome.getOrElse("") + "/")
     }
 
-    val actualStr = Loader.load(base, download, sbtVersion, verbose = true).mkString("\n")
+    val actualStr = Loader.load(base, resolveClassifiers, sbtVersion, verbose = true).mkString("\n")
 
     val actualXml = XML.loadString(actualStr)
     val expectedXml = XML.loadString(expectedStr)
@@ -117,7 +117,7 @@ class ImportSpec extends Specification with XmlMatchers {
     equalExpectedOneIn("dependency")(testProject(_))
     equalExpectedOneIn("classifiers")(sbt13only and testProject(_))
     equalExpectedOneIn("optional")(sbt13only and testProject(_))
-    equalExpectedOneIn("play")((onlyFor("0.13.7") or onlyFor("0.13.9")) and testProject(_, download = false))
+    equalExpectedOneIn("play")((onlyFor("0.13.7") or onlyFor("0.13.9")) and testProject(_, resolveClassifiers = false))
     equalExpectedOneIn("android")(p => sbt13only and (hasAndroidDefined and testProject(p)))
     equalExpectedOneIn("android-1.4")(p => (onlyFor("0.13.7") or onlyFor("0.13.9")) and (hasAndroidDefined and testProject(p)))
     equalExpectedOneIn("ide-settings")((onlyFor("0.13.7") or onlyFor("0.13.9")) and testProject(_))

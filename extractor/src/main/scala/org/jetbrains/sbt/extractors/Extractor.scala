@@ -66,5 +66,5 @@ trait ModulesExtractor extends ExtractorWithConfigurations {
 }
 
 object Extractor {
-  final case class Options(download: Boolean, resolveClassifiers: Boolean, resolveSbtClassifiers: Boolean)
+  final case class Options(download: Boolean, resolveClassifiers: Boolean, resolveSbtClassifiers: Boolean, cachedUpdate: Boolean)
 }

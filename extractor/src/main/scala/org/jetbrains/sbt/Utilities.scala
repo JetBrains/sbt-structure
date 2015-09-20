@@ -22,4 +22,8 @@ object Utilities {
 
     def either[A, B](right: => B)(left: => A): Either[A, B] = if (b) Right(right) else Left(left)
   }
+
+  implicit def fixOptionFlattenOnScala292[T](option: Option[Option[T]]) = new {
+    def flatten: Option[T] = option.flatMap(identity)
+  }
 }

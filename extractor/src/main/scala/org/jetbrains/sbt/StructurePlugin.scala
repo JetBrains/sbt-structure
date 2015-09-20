@@ -22,11 +22,12 @@ object StructurePlugin extends Plugin {
     val options = Keys.artifactClassifier.in(Project.current(state))
       .get(Project.extract(state).structure.data).get.getOrElse("")
 
-    val (download, resolveClassifiers, resolveSbtClassifiers, prettyPrint) =
+    val (download, resolveClassifiers, resolveSbtClassifiers, prettyPrint, cachedUpdate) =
       (options.contains("download"), options.contains("resolveClassifiers"),
-        options.contains("resolveSbtClassifiers"), options.contains("prettyPrint"))
+        options.contains("resolveSbtClassifiers"), options.contains("prettyPrint"),
+        options.contains("cachedUpdate"))
 
-    val structure = StructureExtractor.extract(state, Options(download, resolveClassifiers, resolveSbtClassifiers)).get
+    val structure = StructureExtractor.extract(state, Options(download, resolveClassifiers, resolveSbtClassifiers, cachedUpdate)).get
 
     val text = {
       val home = new File(System.getProperty("user.home"))
