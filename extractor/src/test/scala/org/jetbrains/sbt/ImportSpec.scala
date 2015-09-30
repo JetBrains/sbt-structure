@@ -70,7 +70,7 @@ class ImportSpec extends Specification with XmlMatchers {
       val exp = new PrintWriter(new File(base, "expected.txt"))
       exp.write(prettyPrintCaseClass(expected))
       exp.close()
-      printDifferences(prettyPrintCaseClass(actual), prettyPrintCaseClass(expected))
+      printDifferences(prettyPrintCaseClass(expected), prettyPrintCaseClass(actual))
       project + " :: objects are not equal, compare 'actual.txt' and 'expected.txt'"
     }
 
