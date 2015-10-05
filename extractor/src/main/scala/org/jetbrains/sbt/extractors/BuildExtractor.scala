@@ -10,9 +10,7 @@ import sbt._
  * @author Nikolay Obedin
  * @since 4/10/15.
  */
-class BuildExtractor(projectRef: ProjectRef) extends Extractor {
-  implicit val projectRefImplicit = projectRef
-
+class BuildExtractor(implicit projectRef: ProjectRef) extends Extractor {
   def extract(implicit state: State, options: Options): Option[BuildData] = {
     val unit = structure.units(projectRef.build)
     val (docs, sources) = if (options.download && options.resolveSbtClassifiers) extractSbtClassifiers else (Seq.empty, Seq.empty)
@@ -27,4 +25,9 @@ class BuildExtractor(projectRef: ProjectRef) extends Extractor {
 
     (artifacts(Artifact.DocType), artifacts(Artifact.SourceType))
   }
+}
+
+object BuildExtractor {
+  def apply(implicit state: State, projectRef: ProjectRef, options: Options): Option[BuildData] =
+    new BuildExtractor().extract
 }

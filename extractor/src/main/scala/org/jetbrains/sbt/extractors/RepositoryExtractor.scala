@@ -81,3 +81,8 @@ class RepositoryExtractor(acceptedProjectRefs: Seq[ProjectRef]) extends Extracto
     }
   }
 }
+
+object RepositoryExtractor {
+  def apply(acceptedProjectRefs: Seq[ProjectRef])(implicit state: State, options: Options): Option[RepositoryData] =
+    new RepositoryExtractor(acceptedProjectRefs).extract
+}

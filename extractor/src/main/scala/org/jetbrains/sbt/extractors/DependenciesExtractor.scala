@@ -9,9 +9,7 @@ import sbt._
  * @author Nikolay Obedin
  * @since 4/10/15.
  */
-class DependenciesExtractor(projectRef: ProjectRef) extends Extractor with Modules with Configurations {
-  implicit val projectRefImplicit = projectRef
-
+class DependenciesExtractor(implicit projectRef: ProjectRef) extends Extractor with Modules with Configurations {
   def extract(implicit state: State, options: Options): Option[DependencyData] =
     Some(DependencyData(projectDependencies, moduleDependencies, jarDependencies))
 
@@ -94,4 +92,9 @@ class DependenciesExtractor(projectRef: ProjectRef) extends Extractor with Modul
       cs.toSeq
     }
   }
+}
+
+object DependenciesExtractor {
+  def apply(implicit state: State, projectRef: ProjectRef, options: Options): Option[DependencyData] =
+    new DependenciesExtractor().extract
 }

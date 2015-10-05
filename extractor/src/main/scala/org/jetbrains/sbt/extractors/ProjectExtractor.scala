@@ -9,9 +9,7 @@ import Utilities._
  * @author Nikolay Obedin
  * @since 4/10/15.
  */
-class ProjectExtractor(projectRef: ProjectRef) extends Extractor with Configurations {
-  implicit val projectRefImplicit = projectRef
-
+class ProjectExtractor(implicit projectRef: ProjectRef) extends Extractor with Configurations {
   def extract(implicit state: State, options: Options): Option[ProjectData] =
     for {
       name         <- projectSetting(Keys.name.in(Compile))
@@ -19,8 +17,8 @@ class ProjectExtractor(projectRef: ProjectRef) extends Extractor with Configurat
       version      <- projectSetting(Keys.version.in(Compile))
       base         <- projectSetting(Keys.baseDirectory.in(Compile))
       target       <- projectSetting(Keys.target.in(Compile))
-      dependencies <- new DependenciesExtractor(projectRef).extract
-      build        <- new BuildExtractor(projectRef).extract
+      dependencies <- DependenciesExtractor.apply
+      build        <- BuildExtractor.apply
     } yield {
       val basePackages =
         projectSetting(SettingKeys.ideBasePackages.in(Keys.configuration)).getOrElse(Seq.empty) ++
@@ -30,8 +28,8 @@ class ProjectExtractor(projectRef: ProjectRef) extends Extractor with Configurat
         .map(_.collect { case MavenRepository(name, root) => ResolverData(name, root) }).getOrElse(Seq.empty).toSet
 
       val configurations  = mergeConfigurations(getSourceConfigurations.flatMap(c => extractConfiguration(c)))
-      val android         = new AndroidSdkPluginExtractor(projectRef).extract(state, options)
-      val play2           = new Play2Extractor(projectRef).extract
+      val android         = AndroidSdkPluginExtractor.apply
+      val play2           = Play2Extractor.apply
 
       ProjectData(projectRef.project, name, organization, version, base,
         basePackages, target, build, configurations,
@@ -82,4 +80,9 @@ class ProjectExtractor(projectRef: ProjectRef) extends Extractor with Configurat
       val excludes = confs.flatMap(_.excludes)
       ConfigurationData(id, sources, resources, excludes, confs.head.classes)
     }.toSeq
+}
+
+object ProjectExtractor {
+  def apply(projectRef: ProjectRef)(implicit state: State, options: Options): Option[ProjectData] =
+    new ProjectExtractor()(projectRef).extract
 }

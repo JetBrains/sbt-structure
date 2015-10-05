@@ -8,9 +8,7 @@ import sbt.Keys._
 import sbt._
 
 
-class AndroidSdkPluginExtractor(projectRef: ProjectRef) extends Extractor {
-
-  implicit val projectRefImplicit = projectRef
+class AndroidSdkPluginExtractor(implicit projectRef: ProjectRef) extends Extractor {
 
   def extract(implicit state: State, options: Options): Option[AndroidData] = {
     val keys = state.attributes.get(sessionSettings) match {
@@ -60,4 +58,9 @@ class AndroidSdkPluginExtractor(projectRef: ProjectRef) extends Extractor {
       case _ : NoSuchMethodException => None
     }
   }
+}
+
+object AndroidSdkPluginExtractor {
+  def apply(implicit state: State, projectRef: ProjectRef, options: Options): Option[AndroidData] =
+    new AndroidSdkPluginExtractor().extract
 }

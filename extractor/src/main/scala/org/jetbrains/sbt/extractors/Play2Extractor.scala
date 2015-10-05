@@ -14,6 +14,9 @@ import scala.collection.mutable
  */
 object Play2Extractor {
 
+  def apply(implicit state: State, projectRef: ProjectRef, options: Options): Option[Play2Data] =
+    new Play2Extractor().extract
+
   private val GlobalTag = "$global$"
 
   @inline private def processPath(path: String) =
@@ -138,9 +141,7 @@ object Play2Extractor {
   }
 }
 
-class Play2Extractor(projectRef: ProjectRef) extends Extractor {
-
-  implicit val projectRefImplicit = projectRef
+class Play2Extractor(implicit projectRef: ProjectRef) extends Extractor {
 
   private object Keys {
     //marker key
