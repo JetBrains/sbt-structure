@@ -22,7 +22,7 @@ object StructureExtractor extends Extractor {
     performExtraction(acceptedProjectRefs)(stateToUse, options)
   }
 
-  private def performExtraction(acceptedProjectRefs: Seq[ProjectRef])(implicit state: State, options: Extractor.Options): Option[StructureData] = {
+  private def performExtraction(acceptedProjectRefs: Seq[ProjectRef])(implicit state: State, options: Options): Option[StructureData] = {
     val sbtVersion      = setting(Keys.sbtVersion).get
     val projectsData    = acceptedProjectRefs.flatMap(new ProjectExtractor(_).extract)
     val repositoryData  = new RepositoryExtractor(acceptedProjectRefs).extract

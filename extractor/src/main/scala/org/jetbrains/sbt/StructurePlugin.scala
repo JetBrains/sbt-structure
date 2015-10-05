@@ -1,6 +1,5 @@
 package org.jetbrains.sbt
 
-import Extractor.Options
 import org.jetbrains.sbt.extractors.StructureExtractor
 
 import scala.xml.PrettyPrinter
@@ -22,17 +21,10 @@ object StructurePlugin extends Plugin {
     val options = Keys.artifactClassifier.in(Project.current(state))
       .get(Project.extract(state).structure.data).get.getOrElse("")
 
-    val (download, resolveClassifiers, resolveSbtClassifiers, prettyPrint, cachedUpdate) =
-      (options.contains("download"), options.contains("resolveClassifiers"),
-        options.contains("resolveSbtClassifiers"), options.contains("prettyPrint"),
-        options.contains("cachedUpdate"))
-
-    val structure = StructureExtractor.extract(state, Options(download, resolveClassifiers, resolveSbtClassifiers, cachedUpdate)).get
+    val structure = StructureExtractor.extract(state, Options.readFromString(options)).get
 
     val text = {
-      val home = new File(System.getProperty("user.home"))
-      val base = new File(System.getProperty("user.dir"))
-      if (prettyPrint)
+      if (options.contains("prettyPrint"))
         new PrettyPrinter(180, 2).format(structure.serialize)
       else
         xml.Utility.trim(structure.serialize).mkString
@@ -65,8 +57,6 @@ object StructurePlugin extends Plugin {
 
   lazy val readProjectCommand = Command.command("read-project")((s: State) => ReadProject(s))
 }
-
-final case class Options(download: Boolean, resolveClassifiers: Boolean, resolveSbtClassifiers: Boolean, cachedUpdate: Boolean)
 
 object ReadProject extends (State => State) {
   def apply(state: State) = Function.const(state)(StructurePlugin.read(state))
