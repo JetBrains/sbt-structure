@@ -1,5 +1,4 @@
 package org.jetbrains.sbt
-package extractors
 
 import org.jetbrains.sbt.structure.ModuleIdentifier
 import sbt._
@@ -9,9 +8,6 @@ import sbt._
  * @since 4/10/15.
  */
 trait Extractor {
-  type Data
-  def extract(implicit state: State, options: Extractor.Options): Option[Data]
-
   def structure(implicit state: State): Load.BuildStructure =
     Project.extract(state).structure
 
@@ -28,15 +24,19 @@ trait Extractor {
     Project.runTask(key.in(projectRef), state).collect { case (_, Value(value)) => value }
 }
 
-trait ExtractorWithConfigurations extends Extractor {
+trait Configurations {
   protected val PredefinedTestConfigurations = Set(Test, IntegrationTest)
 
-  protected def getTestConfigurations(implicit state: State, projectRef: ProjectRef): Seq[Configuration] =
+  protected def getTestConfigurations(implicit state: State, projectRef: ProjectRef): Seq[Configuration] = {
+    val configurations = Keys.ivyConfigurations.in(projectRef)
+      .get(Project.extract(state).structure.data)
+      .getOrElse(Seq.empty)
     for {
-      configuration <- projectSetting(Keys.ivyConfigurations).getOrElse(Seq.empty)
+      configuration <- configurations
       if !configuration.name.toLowerCase.contains("internal")
       if PredefinedTestConfigurations(configuration) || PredefinedTestConfigurations.intersect(configuration.extendsConfigs.toSet).nonEmpty
     } yield configuration
+  }
 
   protected def getDependencyConfigurations(implicit state: State, projectRef: ProjectRef): Seq[Configuration] =
     Seq(Compile, Runtime, Provided, Optional) ++ getTestConfigurations
@@ -48,7 +48,7 @@ trait ExtractorWithConfigurations extends Extractor {
     if (getTestConfigurations.contains(configuration)) Test else configuration
 }
 
-trait ModulesExtractor extends ExtractorWithConfigurations {
+trait Modules {
 
   protected def fuseClassifier(artifact: Artifact): String = {
     val fusingClassifiers = Seq("", Artifact.DocClassifier, Artifact.SourceClassifier)
@@ -66,5 +66,4 @@ trait ModulesExtractor extends ExtractorWithConfigurations {
 }
 
 object Extractor {
-  final case class Options(download: Boolean, resolveClassifiers: Boolean, resolveSbtClassifiers: Boolean, cachedUpdate: Boolean)
 }

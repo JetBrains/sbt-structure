@@ -1,7 +1,6 @@
 package org.jetbrains.sbt
 package extractors
 
-import org.jetbrains.sbt.extractors.Extractor.Options
 import org.jetbrains.sbt.extractors.Play2Extractor._
 import org.jetbrains.sbt.structure._
 import sbt.Keys._
@@ -141,8 +140,6 @@ object Play2Extractor {
 
 class Play2Extractor(projectRef: ProjectRef) extends Extractor {
 
-  override type Data = Play2Data
-
   implicit val projectRefImplicit = projectRef
 
   private object Keys {
@@ -177,7 +174,7 @@ class Play2Extractor(projectRef: ProjectRef) extends Extractor {
     val AllAliases = Seq(TemplateImportsAlias)
   }
 
-  override def extract(implicit state: State, options: Options): Option[Data] = {
+  def extract(implicit state: State, options: Options): Option[Play2Data] = {
     val chain = new KeyChain(Keys.PlayPlugin, Keys.AllUsual, Keys.AllAliases)
 
     val keys = state.attributes.get(sessionSettings) match {

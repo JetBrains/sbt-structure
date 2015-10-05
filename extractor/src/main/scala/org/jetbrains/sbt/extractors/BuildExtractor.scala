@@ -3,7 +3,6 @@ package extractors
 
 import java.io.File
 
-import org.jetbrains.sbt.extractors.Extractor.Options
 import org.jetbrains.sbt.structure.BuildData
 import sbt._
 
@@ -12,11 +11,9 @@ import sbt._
  * @since 4/10/15.
  */
 class BuildExtractor(projectRef: ProjectRef) extends Extractor {
-  override type Data = BuildData
-
   implicit val projectRefImplicit = projectRef
 
-  override def extract(implicit state: State, options: Options): Option[Data] = {
+  def extract(implicit state: State, options: Options): Option[BuildData] = {
     val unit = structure.units(projectRef.build)
     val (docs, sources) = if (options.download && options.resolveSbtClassifiers) extractSbtClassifiers else (Seq.empty, Seq.empty)
     Some(BuildData(unit.imports, unit.unit.plugins.pluginData.dependencyClasspath.map(_.data), docs, sources))

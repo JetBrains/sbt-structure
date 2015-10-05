@@ -1,19 +1,18 @@
-package org.jetbrains.sbt.extractors
+package org.jetbrains.sbt
+package extractors
 
 //import scala.language.reflectiveCalls
 
 import org.jetbrains.sbt.structure.AndroidData
-import org.jetbrains.sbt.extractors.Extractor.Options
 import sbt.Keys._
 import sbt._
 
 
 class AndroidSdkPluginExtractor(projectRef: ProjectRef) extends Extractor {
-  override type Data = AndroidData
 
   implicit val projectRefImplicit = projectRef
 
-  override def extract(implicit state: State, options: Options): Option[Data] = {
+  def extract(implicit state: State, options: Options): Option[AndroidData] = {
     val keys = state.attributes.get(sessionSettings) match {
       case Some(SessionSettings(_, _, settings, _, _, _)) => settings map { _.key }
       case _ => Seq.empty

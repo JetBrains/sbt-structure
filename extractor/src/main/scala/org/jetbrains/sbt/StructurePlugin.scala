@@ -1,6 +1,6 @@
 package org.jetbrains.sbt
 
-import org.jetbrains.sbt.extractors.Extractor.Options
+import Extractor.Options
 import org.jetbrains.sbt.extractors.StructureExtractor
 
 import scala.xml.PrettyPrinter
@@ -65,6 +65,8 @@ object StructurePlugin extends Plugin {
 
   lazy val readProjectCommand = Command.command("read-project")((s: State) => ReadProject(s))
 }
+
+final case class Options(download: Boolean, resolveClassifiers: Boolean, resolveSbtClassifiers: Boolean, cachedUpdate: Boolean)
 
 object ReadProject extends (State => State) {
   def apply(state: State) = Function.const(state)(StructurePlugin.read(state))

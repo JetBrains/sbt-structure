@@ -1,7 +1,6 @@
 package org.jetbrains.sbt
 package extractors
 
-import org.jetbrains.sbt.extractors.Extractor.Options
 import org.jetbrains.sbt.structure.{ModuleData, RepositoryData}
 import sbt._
 import Utilities._
@@ -10,11 +9,9 @@ import Utilities._
  * @author Nikolay Obedin
  * @since 4/10/15.
  */
-class RepositoryExtractor(acceptedProjectRefs: Seq[ProjectRef]) extends ModulesExtractor {
+class RepositoryExtractor(acceptedProjectRefs: Seq[ProjectRef]) extends Extractor with Modules with Configurations {
 
-  override type Data = RepositoryData
-
-  override def extract(implicit state: State, options: Options): Option[Data] =
+  def extract(implicit state: State, options: Options): Option[RepositoryData] =
     options.download.option {
       val rawModulesData = acceptedProjectRefs.flatMap(extractModules)
       val modulesData = rawModulesData.foldLeft(Seq.empty[ModuleData]) { (acc, data) =>

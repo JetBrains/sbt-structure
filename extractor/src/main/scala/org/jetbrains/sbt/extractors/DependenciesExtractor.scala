@@ -1,7 +1,6 @@
 package org.jetbrains.sbt
 package extractors
 
-import org.jetbrains.sbt.extractors.Extractor.Options
 import org.jetbrains.sbt.structure.{DependencyData, JarDependencyData, ModuleDependencyData, ProjectDependencyData}
 import org.jetbrains.sbt.{structure => jb}
 import sbt._
@@ -10,12 +9,10 @@ import sbt._
  * @author Nikolay Obedin
  * @since 4/10/15.
  */
-class DependenciesExtractor(projectRef: ProjectRef) extends ModulesExtractor {
-  override type Data = DependencyData
-
+class DependenciesExtractor(projectRef: ProjectRef) extends Extractor with Modules with Configurations {
   implicit val projectRefImplicit = projectRef
 
-  override def extract(implicit state: State, options: Options): Option[DependencyData] =
+  def extract(implicit state: State, options: Options): Option[DependencyData] =
     Some(DependencyData(projectDependencies, moduleDependencies, jarDependencies))
 
   private def projectDependencies(implicit state: State): Seq[ProjectDependencyData] =

@@ -8,9 +8,7 @@ import sbt._
 
 object StructureExtractor extends Extractor {
 
-  override type Data = StructureData
-
-  def extract(implicit state: State, options: Extractor.Options): Option[Data] = {
+  def extract(implicit state: State, options: Options): Option[StructureData] = {
     val acceptedProjectRefs =
       structure.allProjectRefs.filter { case ref @ ProjectRef(_, id) =>
         val projectAccepted = structure.allProjects.find(_.id == id).exists(areNecessaryPluginsLoaded)
@@ -24,7 +22,7 @@ object StructureExtractor extends Extractor {
     performExtraction(acceptedProjectRefs)(stateToUse, options)
   }
 
-  private def performExtraction(acceptedProjectRefs: Seq[ProjectRef])(implicit state: State, options: Extractor.Options): Option[Data] = {
+  private def performExtraction(acceptedProjectRefs: Seq[ProjectRef])(implicit state: State, options: Extractor.Options): Option[StructureData] = {
     val sbtVersion      = setting(Keys.sbtVersion).get
     val projectsData    = acceptedProjectRefs.flatMap(new ProjectExtractor(_).extract)
     val repositoryData  = new RepositoryExtractor(acceptedProjectRefs).extract

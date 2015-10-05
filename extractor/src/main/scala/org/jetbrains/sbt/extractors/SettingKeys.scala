@@ -1,7 +1,6 @@
 package org.jetbrains.sbt.extractors
 
 import java.io.File
-
 import sbt.SettingKey
 
 /**

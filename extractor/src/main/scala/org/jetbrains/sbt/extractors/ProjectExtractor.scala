@@ -1,7 +1,6 @@
 package org.jetbrains.sbt
 package extractors
 
-import org.jetbrains.sbt.extractors.Extractor.Options
 import org.jetbrains.sbt.structure._
 import sbt._
 import Utilities._
@@ -10,12 +9,10 @@ import Utilities._
  * @author Nikolay Obedin
  * @since 4/10/15.
  */
-class ProjectExtractor(projectRef: ProjectRef) extends ExtractorWithConfigurations {
-  override type Data = ProjectData
-
+class ProjectExtractor(projectRef: ProjectRef) extends Extractor with Configurations {
   implicit val projectRefImplicit = projectRef
 
-  override def extract(implicit state: State, options: Options): Option[Data] =
+  def extract(implicit state: State, options: Options): Option[ProjectData] =
     for {
       name         <- projectSetting(Keys.name.in(Compile))
       organization <- projectSetting(Keys.organization.in(Compile))
