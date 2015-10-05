@@ -1,10 +1,10 @@
 package org.jetbrains.sbt
-package extractors
+package processors
 
-import org.jetbrains.sbt.structure.{ModuleDependencyData, ProjectData, ModuleIdentifier}
-import org.jetbrains.sbt.{structure=>jb}
+import org.jetbrains.sbt.Utilities._
+import org.jetbrains.sbt.structure.{ModuleDependencyData, ModuleIdentifier, ProjectData}
+import org.jetbrains.sbt.{structure => jb}
 import sbt._
-import Utilities._
 
 import scala.collection.mutable
 

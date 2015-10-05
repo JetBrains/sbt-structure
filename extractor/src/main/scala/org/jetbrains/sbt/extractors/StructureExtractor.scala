@@ -1,6 +1,7 @@
 package org.jetbrains.sbt
 package extractors
 
+import org.jetbrains.sbt.processors.EvictionsProcessor
 import org.jetbrains.sbt.structure.StructureData
 import sbt._
 
