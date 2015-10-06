@@ -376,11 +376,6 @@
     <resolver name="public" root="http://repo1.maven.org/maven2/"/>
   </project>
   <repository>
-    <module organization="com.google.protobuf" name="protobuf-java" revision="2.3.0" artifactType="jar" classifier="">
-      <jar>~/.ivy2/cache/com.google.protobuf/protobuf-java/jars/protobuf-java-2.3.0.jar</jar>
-      <doc>~/.ivy2/cache/com.google.protobuf/protobuf-java/docs/protobuf-java-2.3.0-javadoc.jar</doc>
-      <src>~/.ivy2/cache/com.google.protobuf/protobuf-java/srcs/protobuf-java-2.3.0-sources.jar</src>
-    </module>
     <module organization="com.google.protobuf" name="protobuf-java" revision="2.5.0" artifactType="jar" classifier="">
       <jar>~/.ivy2/cache/com.google.protobuf/protobuf-java/bundles/protobuf-java-2.5.0.jar</jar>
       <doc>~/.ivy2/cache/com.google.protobuf/protobuf-java/docs/protobuf-java-2.5.0-javadoc.jar</doc>
