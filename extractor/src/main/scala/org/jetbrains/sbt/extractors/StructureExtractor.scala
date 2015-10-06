@@ -8,7 +8,7 @@ import sbt._
 
 object StructureExtractor extends Extractor {
 
-  def extract(implicit state: State, options: Options): Option[StructureData] = {
+  def apply(implicit state: State, options: Options): StructureData = {
     val acceptedProjectRefs =
       structure.allProjectRefs.filter { case ref @ ProjectRef(_, id) =>
         val projectAccepted = structure.allProjects.find(_.id == id).exists(areNecessaryPluginsLoaded)
@@ -19,15 +19,15 @@ object StructureExtractor extends Extractor {
       }
 
     val stateToUse = if (options.download && options.cachedUpdate) cacheUpdateResults(state) else state
-    performExtraction(acceptedProjectRefs)(stateToUse, options)
+    extract(acceptedProjectRefs)(stateToUse, options)
   }
 
-  private def performExtraction(acceptedProjectRefs: Seq[ProjectRef])(implicit state: State, options: Options): Option[StructureData] = {
+  private def extract(acceptedProjectRefs: Seq[ProjectRef])(implicit state: State, options: Options): StructureData = {
     val sbtVersion      = setting(Keys.sbtVersion).get
     val projectsData    = acceptedProjectRefs.flatMap(ProjectExtractor.apply(_))
     val repositoryData  = RepositoryExtractor.apply(acceptedProjectRefs)
     val localCachePath  = Option(System.getProperty("sbt.ivy.home", System.getProperty("ivy.home")))
-    Some(StructureData(sbtVersion, projectsData, repositoryData, localCachePath))
+    StructureData(sbtVersion, projectsData, repositoryData, localCachePath)
   }
 
   private def areNecessaryPluginsLoaded(project: ResolvedProject): Boolean = {

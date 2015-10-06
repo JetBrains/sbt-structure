@@ -21,7 +21,7 @@ object StructurePlugin extends Plugin {
     val options = Keys.artifactClassifier.in(Project.current(state))
       .get(Project.extract(state).structure.data).get.getOrElse("")
 
-    val structure = StructureExtractor.extract(state, Options.readFromString(options)).get
+    val structure = StructureExtractor.apply(state, Options.readFromString(options))
 
     val text = {
       if (options.contains("prettyPrint"))
