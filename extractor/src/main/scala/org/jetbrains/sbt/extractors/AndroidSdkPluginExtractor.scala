@@ -10,46 +10,25 @@ import sbt._
 
 class AndroidSdkPluginExtractor(implicit projectRef: ProjectRef) extends Extractor {
 
+  import AndroidSdkPluginExtractor._
+
   def extract(implicit state: State, options: Options): Option[AndroidData] = {
     val keys = state.attributes.get(sessionSettings) match {
       case Some(SessionSettings(_, _, settings, _, _, _)) => settings map { _.key }
       case _ => Seq.empty
     }
 
-    object AndroidKeys {
-      val Android = config("android")
-
-      def isInAndroidScope(key: ScopedKey[_]) = key.scope.config match {
-        case Select(k) => k.name == Android.name
-        case _ => false
-      }
-
-      val targetSdkVersion     = TaskKey[String]("target-sdk-version").in(Android)
-      val targetSdkVersion_1_3 = SettingKey[String]("target-sdk-version").in(Android)
-      val manifestPath         = SettingKey[File]("manifest-path").in(Android)
-      val apkFile              = SettingKey[File]("apk-file").in(Android)
-      val libraryProject       = SettingKey[Boolean]("library-project").in(Android)
-      val proguardConfig       = TaskKey[Seq[String]]("proguard-config").in(Android)
-      val proguardOptions      = TaskKey[Seq[String]]("proguard-options").in(Android)
-
-      val projectLayout =
-        keys.find(k => k.key.label == "projectLayout" && isInAndroidScope(k))
-            .map(k => SettingKey(k.key).in(k.scope))
-
-      type ProjectLayout = { def res: File; def assets: File; def gen: File; def libs: File }
-    }
-
     try {
       for {
-        targetVersion   <- projectTask(AndroidKeys.targetSdkVersion) orElse projectSetting(AndroidKeys.targetSdkVersion_1_3)
-        manifestPath    <- projectSetting(AndroidKeys.manifestPath).map(_.getPath)
-        apkPath         <- projectSetting(AndroidKeys.apkFile).map(_.getPath)
-        isLibrary       <- projectSetting(AndroidKeys.libraryProject)
-        proguardConfig  <- projectTask(AndroidKeys.proguardConfig)
-        proguardOptions <- projectTask(AndroidKeys.proguardOptions)
-        optionLayout    <- AndroidKeys.projectLayout.flatMap(k => projectSetting(k))
+        targetVersion   <- projectTask(Keys.targetSdkVersion) orElse projectSetting(Keys.targetSdkVersion_1_3)
+        manifestPath    <- projectSetting(Keys.manifestPath).map(_.getPath)
+        apkPath         <- projectSetting(Keys.apkFile).map(_.getPath)
+        isLibrary       <- projectSetting(Keys.libraryProject)
+        proguardConfig  <- projectTask(Keys.proguardConfig)
+        proguardOptions <- projectTask(Keys.proguardOptions)
+        layoutAsAny     <- keys.findSettingKey("projectLayout").flatMap(projectSetting(_))
       } yield {
-        val layout = optionLayout.asInstanceOf[AndroidKeys.ProjectLayout]
+        val layout = layoutAsAny.asInstanceOf[ProjectLayout]
         AndroidData(targetVersion, manifestPath, apkPath,
           layout.res.getPath, layout.assets.getPath, layout.gen.getPath, layout.libs.getPath,
           isLibrary, proguardConfig ++ proguardOptions)
@@ -63,4 +42,33 @@ class AndroidSdkPluginExtractor(implicit projectRef: ProjectRef) extends Extract
 object AndroidSdkPluginExtractor {
   def apply(implicit state: State, projectRef: ProjectRef, options: Options): Option[AndroidData] =
     new AndroidSdkPluginExtractor().extract
+
+  private val Android = config("android")
+
+  private def isInAndroidScope(key: ScopedKey[_]) = key.scope.config match {
+    case Select(k) => k.name == Android.name
+    case _ => false
+  }
+
+  implicit def toRichSeqWithScopedKey(keys: Seq[sbt.ScopedKey[_]]) = new {
+    def findSettingKey(label: String): Option[SettingKey[_]] =
+      keys.find(k => k.key.label == label && isInAndroidScope(k))
+        .map(k => SettingKey(k.key).in(k.scope))
+
+    def findTaskKey(label: String): Option[TaskKey[_]] =
+      keys.find(k => k.key.label == label && isInAndroidScope(k))
+        .map(k => TaskKey(k.key.asInstanceOf[AttributeKey[Task[Any]]]).in(k.scope))
+  }
+
+  private object Keys {
+    val targetSdkVersion = TaskKey[String]("target-sdk-version").in(Android)
+    val targetSdkVersion_1_3 = SettingKey[String]("target-sdk-version").in(Android)
+    val manifestPath = SettingKey[File]("manifest-path").in(Android)
+    val apkFile = SettingKey[File]("apk-file").in(Android)
+    val libraryProject = SettingKey[Boolean]("library-project").in(Android)
+    val proguardConfig = TaskKey[Seq[String]]("proguard-config").in(Android)
+    val proguardOptions = TaskKey[Seq[String]]("proguard-options").in(Android)
+  }
+
+  private type ProjectLayout = { def res: File; def assets: File; def gen: File; def libs: File }
 }
