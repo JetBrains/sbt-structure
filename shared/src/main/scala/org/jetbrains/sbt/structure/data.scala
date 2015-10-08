@@ -163,7 +163,13 @@ case class AndroidData(targetVersion: String,
                        genPath: String,
                        libsPath: String,
                        isLibrary: Boolean,
-                       proguardConfig: Seq[String])
+                       proguardConfig: Seq[String],
+                       apklibs: Seq[ApkLib])
+
+/**
+ * Information about certain apklib used in Android project
+ */
+case class ApkLib(name: String, manifest: File, sources: File, resources: File, libs: File, gen: File)
 
 /**
  * List of parameters specific to Play projects
@@ -438,6 +444,29 @@ object ResolverData {
   }
 }
 
+object ApkLib {
+  implicit val serializer = new XmlSerializer[ApkLib] {
+    override def serialize(what: ApkLib): Elem =
+      <apkLib name={what.name}>
+        <manifest>{what.manifest.path}</manifest>
+        <sources>{what.sources.path}</sources>
+        <resources>{what.resources.path}</resources>
+        <libs>{what.libs.path}</libs>
+        <gen>{what.gen.path}</gen>
+      </apkLib>
+
+    override def deserialize(what: Node): Either[Throwable, ApkLib] = {
+      val name = (what \ "@name").text
+      val manifest = (what \ "manifest").text
+      val sources = (what \ "sources").text
+      val resources = (what \ "resources").text
+      val libs = (what \ "libs").text
+      val gen = (what \ "gen").text
+      Right(ApkLib(name, file(manifest), file(sources), file(resources), file(libs), file(gen)))
+    }
+  }
+}
+
 object AndroidData {
   implicit val serializer = new XmlSerializer[AndroidData] {
     override def serialize(what: AndroidData): Elem =
@@ -454,6 +483,7 @@ object AndroidData {
           <option>{opt}</option>
         }}
         </proguard>
+        {what.apklibs.map(_.serialize)}
       </android>
 
     override def deserialize(what: Node): Either[Throwable,AndroidData] = {
@@ -466,7 +496,8 @@ object AndroidData {
       val libsPath        = (what \ "nativeLibs").text
       val isLibrary       = (what \ "isLibrary").text.toBoolean
       val proguardConfig  = (what \ "proguard" \ "option").map(_.text)
-      Right(AndroidData(version, manifestFile, apkPath, resPath, assetsPath, genPath, libsPath, isLibrary, proguardConfig))
+      val apklibs         = (what \ "apkLib").deserialize[ApkLib]
+      Right(AndroidData(version, manifestFile, apkPath, resPath, assetsPath, genPath, libsPath, isLibrary, proguardConfig, apklibs))
     }
   }
 }

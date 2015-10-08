@@ -3,7 +3,9 @@ package extractors
 
 //import scala.language.reflectiveCalls
 
-import org.jetbrains.sbt.structure.AndroidData
+import java.io.File
+
+import org.jetbrains.sbt.structure.{ApkLib, AndroidData}
 import sbt.Keys._
 import sbt._
 
@@ -27,11 +29,13 @@ class AndroidSdkPluginExtractor(implicit projectRef: ProjectRef) extends Extract
         proguardConfig  <- projectTask(Keys.proguardConfig)
         proguardOptions <- projectTask(Keys.proguardOptions)
         layoutAsAny     <- keys.findSettingKey("projectLayout").flatMap(projectSetting(_))
+        apklibsAsAny    <- keys.findTaskKey("apklibs").flatMap(projectTask(_))
       } yield {
         val layout = layoutAsAny.asInstanceOf[ProjectLayout]
+        val apklibs = apklibsAsAny.asInstanceOf[Seq[LibraryDependency]]
         AndroidData(targetVersion, manifestPath, apkPath,
           layout.res.getPath, layout.assets.getPath, layout.gen.getPath, layout.libs.getPath,
-          isLibrary, proguardConfig ++ proguardOptions)
+          isLibrary, proguardConfig ++ proguardOptions, apklibs.map(libraryDepToApkLib))
       }
     } catch {
       case _ : NoSuchMethodException => None
@@ -70,5 +74,24 @@ object AndroidSdkPluginExtractor {
     val proguardOptions = TaskKey[Seq[String]]("proguard-options").in(Android)
   }
 
-  private type ProjectLayout = { def res: File; def assets: File; def gen: File; def libs: File }
+  private type ProjectLayout = {
+    def res: File
+    def assets: File
+    def gen: File
+    def libs: File
+    def sources: File
+    def manifest: File
+  }
+
+  private type LibraryDependency = {
+    def layout: ProjectLayout
+    def getName: String
+  }
+
+  private def libraryDepToApkLib(lib: LibraryDependency): ApkLib = {
+    // As for version 1.5.0 android-sdk-plugin uses canonical path to library as its name
+    val fixedLibName = lib.getName.split(File.separator).last
+    ApkLib(fixedLibName, lib.layout.manifest, lib.layout.sources, lib.layout.res, lib.layout.libs, lib.layout.gen)
+  }
+
 }
