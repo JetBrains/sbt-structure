@@ -23,8 +23,8 @@ class AndroidSdkPluginExtractor(implicit projectRef: ProjectRef) extends Extract
     try {
       for {
         targetVersion   <- projectTask(Keys.targetSdkVersion) orElse projectSetting(Keys.targetSdkVersion_1_3)
-        manifestPath    <- projectSetting(Keys.manifestPath).map(_.getPath)
-        apkPath         <- projectSetting(Keys.apkFile).map(_.getPath)
+        manifest        <- projectSetting(Keys.manifestPath)
+        apk             <- projectSetting(Keys.apkFile)
         isLibrary       <- projectSetting(Keys.libraryProject)
         proguardConfig  <- projectTask(Keys.proguardConfig)
         proguardOptions <- projectTask(Keys.proguardOptions)
@@ -33,8 +33,8 @@ class AndroidSdkPluginExtractor(implicit projectRef: ProjectRef) extends Extract
       } yield {
         val layout = layoutAsAny.asInstanceOf[ProjectLayout]
         val apklibs = apklibsAsAny.asInstanceOf[Seq[LibraryDependency]]
-        AndroidData(targetVersion, manifestPath, apkPath,
-          layout.res.getPath, layout.assets.getPath, layout.gen.getPath, layout.libs.getPath,
+        AndroidData(targetVersion, manifest, apk,
+          layout.res, layout.assets, layout.gen, layout.libs,
           isLibrary, proguardConfig ++ proguardOptions, apklibs.map(libraryDepToApkLib))
       }
     } catch {

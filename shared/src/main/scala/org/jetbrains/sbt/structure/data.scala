@@ -156,12 +156,12 @@ case class ResolverData(name: String, root: String)
  * Currently only android-sdk-plugin is supported.
  */
 case class AndroidData(targetVersion: String,
-                       manifestPath: String,
-                       apkPath: String,
-                       resPath: String,
-                       assetsPath: String,
-                       genPath: String,
-                       libsPath: String,
+                       manifest: File,
+                       apk: File,
+                       res: File,
+                       assets: File,
+                       gen: File,
+                       libs: File,
                        isLibrary: Boolean,
                        proguardConfig: Seq[String],
                        apklibs: Seq[ApkLib])
@@ -472,12 +472,12 @@ object AndroidData {
     override def serialize(what: AndroidData): Elem =
       <android>
         <version>{what.targetVersion}</version>
-        <manifest>{what.manifestPath}</manifest>
-        <resources>{what.resPath}</resources>
-        <assets>{what.assetsPath}</assets>
-        <generatedFiles>{what.genPath}</generatedFiles>
-        <nativeLibs>{what.libsPath}</nativeLibs>
-        <apk>{what.apkPath}</apk>
+        <manifest>{what.manifest.path}</manifest>
+        <resources>{what.res.path}</resources>
+        <assets>{what.assets.path}</assets>
+        <generatedFiles>{what.gen.path}</generatedFiles>
+        <nativeLibs>{what.libs.path}</nativeLibs>
+        <apk>{what.apk.path}</apk>
         <isLibrary>{what.isLibrary}</isLibrary>
         <proguard>{what.proguardConfig.map { opt =>
           <option>{opt}</option>
@@ -488,7 +488,7 @@ object AndroidData {
 
     override def deserialize(what: Node): Either[Throwable,AndroidData] = {
       val version         = (what \ "version").text
-      val manifestFile    = (what \ "manifest").text
+      val manifestPath    = (what \ "manifest").text
       val apkPath         = (what \ "apk").text
       val resPath         = (what \ "resources").text
       val assetsPath      = (what \ "assets").text
@@ -497,7 +497,9 @@ object AndroidData {
       val isLibrary       = (what \ "isLibrary").text.toBoolean
       val proguardConfig  = (what \ "proguard" \ "option").map(_.text)
       val apklibs         = (what \ "apkLib").deserialize[ApkLib]
-      Right(AndroidData(version, manifestFile, apkPath, resPath, assetsPath, genPath, libsPath, isLibrary, proguardConfig, apklibs))
+      Right(AndroidData(version, file(manifestPath), file(apkPath),
+                        file(resPath), file(assetsPath), file(genPath),
+                        file(libsPath), isLibrary, proguardConfig, apklibs))
     }
   }
 }
