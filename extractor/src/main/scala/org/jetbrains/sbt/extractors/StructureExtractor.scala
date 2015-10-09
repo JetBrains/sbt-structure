@@ -24,14 +24,10 @@ object StructureExtractor extends Extractor {
   }
 
   private def extract(acceptedProjectRefs: Seq[ProjectRef])(implicit state: State, options: Options): StructureData = {
-    val projectsData = {
-      val nonEvicted = acceptedProjectRefs.flatMap(ProjectExtractor.apply(_))
-      if (options.download) EvictionsProcessor.apply(acceptedProjectRefs, nonEvicted) else nonEvicted
-    }
-
+    val projectsData =
+      EvictionsProcessor.apply(acceptedProjectRefs, acceptedProjectRefs.flatMap(ProjectExtractor.apply(_)))
     val repositoryData =
       RepositoryExtractor.apply(acceptedProjectRefs).map(UnusedLibrariesProcessor.apply(projectsData))
-
     val sbtVersion      = setting(Keys.sbtVersion).get
     val localCachePath  = Option(System.getProperty("sbt.ivy.home", System.getProperty("ivy.home")))
     StructureData(sbtVersion, projectsData, repositoryData, localCachePath)

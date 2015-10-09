@@ -13,8 +13,11 @@ import scala.collection.mutable
  * @since 9/15/15.
  */
 object EvictionsProcessor {
-  def apply(acceptedProjectRefs: Seq[ProjectRef], projectsData: Seq[ProjectData])(implicit state: State): Seq[ProjectData] =
-    new EvictionsProcessor(acceptedProjectRefs, projectsData).process()
+  def apply(acceptedProjectRefs: Seq[ProjectRef], projectsData: Seq[ProjectData])(implicit state: State, options: Options): Seq[ProjectData] =
+    if (options.download)
+      new EvictionsProcessor(acceptedProjectRefs, projectsData).process()
+    else
+      projectsData
 }
 
 class EvictionsProcessor(acceptedProjectRefs: Seq[ProjectRef], projectsData: Seq[ProjectData]) extends Extractor with Configurations with Modules {
