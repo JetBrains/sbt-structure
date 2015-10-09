@@ -91,7 +91,7 @@ class EvictionsProcessor(acceptedProjectRefs: Seq[ProjectRef], projectsData: Seq
         toId <- toModuleIdentifiers(to)
         if compareModulesWithoutVersion(fromId, toId)
       } yield {
-        Eviction(jb.Configuration(confReport.configuration), fromId, toId)
+        Eviction(conf, fromId, toId)
       }
     }.getOrElse(Seq.empty)
   }
