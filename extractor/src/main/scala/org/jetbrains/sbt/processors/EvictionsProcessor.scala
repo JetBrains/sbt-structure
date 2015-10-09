@@ -36,8 +36,8 @@ class EvictionsProcessor(acceptedProjectRefs: Seq[ProjectRef], projectsData: Seq
   }
 
   private def processProjectAndDeps(project: ProjectData, currentEvictions: Set[Eviction]): Seq[ProjectData] = {
-    val updatedProject = applyEvictions(project, currentEvictions)
     val updatedEvictions = currentEvictions ++ evictions(project.id)
+    val updatedProject = applyEvictions(project, updatedEvictions)
     val updatedDependencies = dependencies(project.id).flatMap(processProjectAndDeps(_, updatedEvictions))
     updatedProject +: updatedDependencies
   }
