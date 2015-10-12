@@ -2,6 +2,7 @@ package org.jetbrains.sbt
 package extractors
 
 import org.jetbrains.sbt.structure._
+import Utilities._
 import sbt._
 import Utilities._
 
@@ -31,7 +32,7 @@ class ProjectExtractor(implicit projectRef: ProjectRef) extends Extractor with C
       val android         = AndroidSdkPluginExtractor.apply
       val play2           = Play2Extractor.apply
 
-      ProjectData(projectRef.project, name, organization, version, base,
+      ProjectData(projectRef.id, name, organization, version, base,
         basePackages, target, build, configurations,
         extractJava, extractScala, android, dependencies, resolvers, play2)
     }
