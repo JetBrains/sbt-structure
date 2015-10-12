@@ -169,7 +169,7 @@ case class AndroidData(targetVersion: String,
 /**
  * Information about certain apklib used in Android project
  */
-case class ApkLib(name: String, manifest: File, sources: File, resources: File, libs: File, gen: File)
+case class ApkLib(name: String, base: File, manifest: File, sources: File, resources: File, libs: File, gen: File)
 
 /**
  * List of parameters specific to Play projects
@@ -449,6 +449,7 @@ object ApkLib {
     override def serialize(what: ApkLib): Elem =
       <apkLib name={what.name}>
         <manifest>{what.manifest.path}</manifest>
+        <base>{what.base.path}</base>
         <sources>{what.sources.path}</sources>
         <resources>{what.resources.path}</resources>
         <libs>{what.libs.path}</libs>
@@ -457,12 +458,13 @@ object ApkLib {
 
     override def deserialize(what: Node): Either[Throwable, ApkLib] = {
       val name = (what \ "@name").text
+      val base = (what \ "base").text
       val manifest = (what \ "manifest").text
       val sources = (what \ "sources").text
       val resources = (what \ "resources").text
       val libs = (what \ "libs").text
       val gen = (what \ "gen").text
-      Right(ApkLib(name, file(manifest), file(sources), file(resources), file(libs), file(gen)))
+      Right(ApkLib(name, file(base), file(manifest), file(sources), file(resources), file(libs), file(gen)))
     }
   }
 }
