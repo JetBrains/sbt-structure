@@ -156,14 +156,20 @@ case class ResolverData(name: String, root: String)
  * Currently only android-sdk-plugin is supported.
  */
 case class AndroidData(targetVersion: String,
-                       manifestPath: String,
-                       apkPath: String,
-                       resPath: String,
-                       assetsPath: String,
-                       genPath: String,
-                       libsPath: String,
+                       manifest: File,
+                       apk: File,
+                       res: File,
+                       assets: File,
+                       gen: File,
+                       libs: File,
                        isLibrary: Boolean,
-                       proguardConfig: Seq[String])
+                       proguardConfig: Seq[String],
+                       apklibs: Seq[ApkLib])
+
+/**
+ * Information about certain apklib used in Android project
+ */
+case class ApkLib(name: String, base: File, manifest: File, sources: File, resources: File, libs: File, gen: File)
 
 /**
  * List of parameters specific to Play projects
@@ -438,27 +444,53 @@ object ResolverData {
   }
 }
 
+object ApkLib {
+  implicit val serializer = new XmlSerializer[ApkLib] {
+    override def serialize(what: ApkLib): Elem =
+      <apkLib name={what.name}>
+        <manifest>{what.manifest.path}</manifest>
+        <base>{what.base.path}</base>
+        <sources>{what.sources.path}</sources>
+        <resources>{what.resources.path}</resources>
+        <libs>{what.libs.path}</libs>
+        <gen>{what.gen.path}</gen>
+      </apkLib>
+
+    override def deserialize(what: Node): Either[Throwable, ApkLib] = {
+      val name = (what \ "@name").text
+      val base = (what \ "base").text
+      val manifest = (what \ "manifest").text
+      val sources = (what \ "sources").text
+      val resources = (what \ "resources").text
+      val libs = (what \ "libs").text
+      val gen = (what \ "gen").text
+      Right(ApkLib(name, file(base), file(manifest), file(sources), file(resources), file(libs), file(gen)))
+    }
+  }
+}
+
 object AndroidData {
   implicit val serializer = new XmlSerializer[AndroidData] {
     override def serialize(what: AndroidData): Elem =
       <android>
         <version>{what.targetVersion}</version>
-        <manifest>{what.manifestPath}</manifest>
-        <resources>{what.resPath}</resources>
-        <assets>{what.assetsPath}</assets>
-        <generatedFiles>{what.genPath}</generatedFiles>
-        <nativeLibs>{what.libsPath}</nativeLibs>
-        <apk>{what.apkPath}</apk>
+        <manifest>{what.manifest.path}</manifest>
+        <resources>{what.res.path}</resources>
+        <assets>{what.assets.path}</assets>
+        <generatedFiles>{what.gen.path}</generatedFiles>
+        <nativeLibs>{what.libs.path}</nativeLibs>
+        <apk>{what.apk.path}</apk>
         <isLibrary>{what.isLibrary}</isLibrary>
         <proguard>{what.proguardConfig.map { opt =>
           <option>{opt}</option>
         }}
         </proguard>
+        {what.apklibs.map(_.serialize)}
       </android>
 
     override def deserialize(what: Node): Either[Throwable,AndroidData] = {
       val version         = (what \ "version").text
-      val manifestFile    = (what \ "manifest").text
+      val manifestPath    = (what \ "manifest").text
       val apkPath         = (what \ "apk").text
       val resPath         = (what \ "resources").text
       val assetsPath      = (what \ "assets").text
@@ -466,7 +498,10 @@ object AndroidData {
       val libsPath        = (what \ "nativeLibs").text
       val isLibrary       = (what \ "isLibrary").text.toBoolean
       val proguardConfig  = (what \ "proguard" \ "option").map(_.text)
-      Right(AndroidData(version, manifestFile, apkPath, resPath, assetsPath, genPath, libsPath, isLibrary, proguardConfig))
+      val apklibs         = (what \ "apkLib").deserialize[ApkLib]
+      Right(AndroidData(version, file(manifestPath), file(apkPath),
+                        file(resPath), file(assetsPath), file(genPath),
+                        file(libsPath), isLibrary, proguardConfig, apklibs))
     }
   }
 }

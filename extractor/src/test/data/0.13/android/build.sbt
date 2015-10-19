@@ -6,7 +6,8 @@ android.Plugin.androidBuild
 platformTarget in Android := "android-22"
 
 libraryDependencies ++= Seq(
-  "com.android.support" % "support-v4" % "20.0.0"
+  aar("com.android.support" % "support-v4" % "20.0.0"),
+  apklib("com.actionbarsherlock" % "actionbarsherlock" % "4.4.0")
 )
 
 scalaVersion := "2.11.1"
