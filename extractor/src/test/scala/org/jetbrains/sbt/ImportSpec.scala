@@ -3,83 +3,115 @@ package org.jetbrains.sbt
 import java.io.{File, PrintWriter}
 
 import difflib._
+import org.jetbrains.sbt.structure.XmlSerializer._
+import org.jetbrains.sbt.structure._
 import org.specs2.matcher.{MatchResult, XmlMatchers}
+import org.specs2.matcher.Matcher._
 import org.specs2.mutable._
 
 import scala.collection.JavaConverters._
 import scala.xml._
 
-import structure._
-import structure.XmlSerializer._
-
 class ImportSpec extends Specification with XmlMatchers {
 
-  val testDataRoot = new File("extractor/src/test/data/" + BuildInfo.sbtVersion)
-  val androidHome = Option(System.getenv.get("ANDROID_HOME")).map(normalizePath)
-  val userHome = Option(System.getProperty("user.home")).map(normalizePath)
+  "Actual structure" should {
+    sequential // running 10 sbt instances at once is a bad idea unless you have >16G of ram
 
-  def normalizePath(path: String): String =
-    path.replace('\\', '/')
+    equalExpectedOneIn("bare")
+    equalExpectedOneIn("multiple")
+    equalExpectedOneIn("simple")
+    equalExpectedOneIn("dependency")
+    equalExpectedOneIn("classifiers", sbt13only)
+    equalExpectedOneIn("optional", sbt13only)
+    equalExpectedOneIn("play", onlyFor("0.13.7", "0.13.9"), resolveClassifiers = false)
+    equalExpectedOneIn("android", sbt13only and ifAndroidDefined)
+    equalExpectedOneIn("android-1.4", onlyFor("0.13.7", "0.13.9") and ifAndroidDefined)
+    equalExpectedOneIn("ide-settings", onlyFor("0.13.7", "0.13.9"))
+    equalExpectedOneIn("sbt-idea", sbt13only)
+    equalExpectedOneIn("custom-test-config", sbt13only)
+    equalExpectedOneIn("eviction", sbt13only)
+  }
 
-  def testProject(project: String, resolveClassifiers: Boolean = true, sbtVersion: String = BuildInfo.sbtVersionFull) = {
+  val SbtVersion = System.getProperty("structure.sbtversion.short")
+  val SbtVersionFull = System.getProperty("structure.sbtversion.full")
+  val ScalaVersion = System.getProperty("structure.scalaversion")
+  val PluginFile = new File("extractor/target/scala-" + ScalaVersion + "/sbt-" + SbtVersionFull +"/classes/")
+  val TestDataRoot = new File("extractor/src/test/data/" + SbtVersion)
+  val AndroidHome = Option(System.getenv.get("ANDROID_HOME")).map(normalizePath)
+  val UserHome = Option(System.getProperty("user.home")).map(normalizePath)
 
-    val base = new File(testDataRoot, project)
+  private def equalExpectedOneIn[T](projectName: String, conditions: => MatchResult[T] = always, resolveClassifiers: Boolean = true) =
+    ("equal expected one in '" + projectName + "' project [" + SbtVersionFull + "]") in conditions.and(testProject(projectName, resolveClassifiers))
 
-    val expectedStr = {
-      val testDataFile = new File(base, "structure-" + BuildInfo.sbtVersionFull + ".xml")
-      if (!testDataFile.exists())
-        failure("No test data for version " + BuildInfo.sbtVersionFull + " found!")
-      read(testDataFile)
-        .mkString("\n")
-        .replace("$BASE", normalizePath(base.getCanonicalPath))
-        .replace("$ANDROID_HOME", androidHome.getOrElse(""))
-        .replace("~/", userHome.getOrElse("") + "/")
-    }
+  private def testProject(project: String, resolveClassifiers: Boolean) = {
+    val base = new File(TestDataRoot, project)
+    val testDataFile = new File(base, "structure-" + SbtVersionFull + ".xml")
 
-    val actualStr = Loader.load(base, resolveClassifiers, sbtVersion, verbose = true).mkString("\n")
-
+    val expectedStr = getExpectedStr(testDataFile, base)
+    val actualStr = Loader.load(base, resolveClassifiers, SbtVersionFull, PluginFile, verbose = true).mkString("\n")
     val actualXml = XML.loadString(actualStr)
     val expectedXml = XML.loadString(expectedStr)
     val actual = actualXml.deserialize[StructureData].right.get
     val expected = expectedXml.deserialize[StructureData].right.get
 
-    def printDifferences(expected: String, actual: String) = {
-      import scala.collection.JavaConversions._
-      val diff = DiffUtils.diff(expected.lines.toList, actual.lines.toList)
-      diff.getDeltas foreach { delta =>
-        println(project + " :: expected:")
-        delta.getOriginal.getLines.asScala.foreach(println)
-        println(project + " :: actual:")
-        delta.getRevised.getLines.asScala.foreach(println)
-        println
-      }
-    }
-
     def onXmlFail = {
-      val act = new PrintWriter(new File(base, "actual.xml"))
-      act.write(actualStr)
-      act.close()
-      printDifferences(expectedStr, actualStr)
-      project + " :: xml files are not equal, compare 'actual.xml' and 'structure-" + BuildInfo.sbtVersionFull + ".xml'"
+      dumpToFile(new File(base, "actual.xml"), actualStr)
+      val errorMessage = "Xml files are not equal, compare 'actual.xml' and 'structure-" + SbtVersionFull + ".xml'"
+      String.format("%s%n%s", errorMessage, getDiff(expectedStr, actualStr))
     }
 
     def onEqualsFail = {
-      val act = new PrintWriter(new File(base, "actual.txt"))
-      act.write(prettyPrintCaseClass(actual))
-      act.close()
-      val exp = new PrintWriter(new File(base, "expected.txt"))
-      exp.write(prettyPrintCaseClass(expected))
-      exp.close()
-      printDifferences(prettyPrintCaseClass(expected), prettyPrintCaseClass(actual))
-      project + " :: objects are not equal, compare 'actual.txt' and 'expected.txt'"
+      dumpToFile(new File(base, "actual.txt"), prettyPrintCaseClass(actual))
+      dumpToFile(new File(base, "expected.txt"), prettyPrintCaseClass(expected))
+      val errorMessage = "Objects are not equal, compare 'actual.txt' and 'expected.txt'"
+      String.format("%s%n%s", errorMessage, getDiff(prettyPrintCaseClass(expected), prettyPrintCaseClass(actual)))
     }
 
     (actual == expected).must(beTrue.updateMessage(_ => onEqualsFail))
     actualXml must beEqualToIgnoringSpace(expectedXml).updateMessage(_ => onXmlFail)
   }
 
-  def prettyPrintCaseClass(toPrint: Product): String = {
-    val step = "  "
+  private def normalizePath(path: String): String =
+    path.replace('\\', '/')
+
+  private def getExpectedStr(testDataFile: File, base: File): String = {
+    if (!testDataFile.exists())
+      failure("No test data for version " + SbtVersionFull + " found!")
+    else
+      read(testDataFile).mkString("\n")
+        .replace("$BASE", normalizePath(base.getCanonicalPath))
+        .replace("$ANDROID_HOME", AndroidHome.getOrElse(""))
+        .replace("~/", UserHome.getOrElse("") + "/")
+  }
+
+  private def getDiff(expected: String, actual: String): String = {
+    import scala.collection.JavaConversions._
+
+    val result = new StringBuilder
+    def appendToResult(str: Any): Unit =
+      result.append(str + System.lineSeparator)
+
+    val diff = DiffUtils.diff(expected.lines.toList, actual.lines.toList)
+    diff.getDeltas foreach { delta =>
+      appendToResult("Expected:")
+      delta.getOriginal.getLines.asScala.foreach(appendToResult)
+      appendToResult("Actual:")
+      delta.getRevised.getLines.asScala.foreach(appendToResult)
+      appendToResult("")
+    }
+
+    appendToResult("")
+    result.toString
+  }
+
+  private def dumpToFile(file: File, contents: String): Unit = {
+    val writer = new PrintWriter(file)
+    writer.write(contents)
+    writer.close()
+  }
+
+  private def prettyPrintCaseClass(toPrint: Product): String = {
+    val indentStep = "  "
     def print0(what: Any, indent: String): String = what match {
       case p : Product =>
         if (p.productArity == 0) {
@@ -87,42 +119,26 @@ class ImportSpec extends Specification with XmlMatchers {
         } else {
           indent + p.productPrefix + ":\n" +
             p.productIterator.map {
-              case s : Seq[_] => s.map(x => print0(x, indent + step)).mkString("\n")
-              case pp : Product => print0(pp, indent + step)
-              case other => indent + step + other.toString
+              case s : Seq[_] => s.map(x => print0(x, indent + indentStep)).mkString("\n")
+              case pp : Product => print0(pp, indent + indentStep)
+              case other => indent + indentStep + other.toString
             }.mkString("\n")
         }
       case other => indent + other.toString
     }
 
-    print0(toPrint, step)
+    print0(toPrint, indentStep)
   }
 
-  def sbt13only = BuildInfo.sbtVersion must be_==("0.13").orSkip("This test is for SBT 0.13 only")
+  private def sbt13only =
+    SbtVersion must be_==("0.13").orSkip("This test is for SBT 0.13.x only")
 
-  def onlyFor(version: String) = BuildInfo.sbtVersionFull must be_==(version).orSkip("This test if for SBT " + version + " only")
+  private def onlyFor(versions: String*) =
+    versions.contains(SbtVersionFull).must(beTrue.orSkip("This test is for SBT " + versions.mkString(", ") + " only"))
 
-  def hasAndroidDefined = androidHome must beSome.orSkip("ANDROID_HOME is not defined")
+  private def ifAndroidDefined =
+    AndroidHome must beSome.orSkip("ANDROID_HOME is not defined")
 
-  def equalExpectedOneIn[T](projectName: String)(block: String => MatchResult[T]) =
-    ("equal expected one in '" + projectName + "' project [" + BuildInfo.sbtVersionFull + "]") in block(projectName)
-
-  "Actual structure" should {
-
-    sequential // running 10 sbt instances at once is a bad idea unless you have >16G of ram
-
-    equalExpectedOneIn("bare")(testProject(_))
-    equalExpectedOneIn("multiple")(testProject(_))
-    equalExpectedOneIn("simple")(testProject(_))
-    equalExpectedOneIn("dependency")(testProject(_))
-    equalExpectedOneIn("classifiers")(sbt13only and testProject(_))
-    equalExpectedOneIn("optional")(sbt13only and testProject(_))
-    equalExpectedOneIn("play")((onlyFor("0.13.7") or onlyFor("0.13.9")) and testProject(_, resolveClassifiers = false))
-    equalExpectedOneIn("android")(p => sbt13only and (hasAndroidDefined and testProject(p)))
-    equalExpectedOneIn("android-1.4")(p => (onlyFor("0.13.7") or onlyFor("0.13.9")) and (hasAndroidDefined and testProject(p)))
-    equalExpectedOneIn("ide-settings")((onlyFor("0.13.7") or onlyFor("0.13.9")) and testProject(_))
-    equalExpectedOneIn("sbt-idea")(sbt13only and testProject(_))
-    equalExpectedOneIn("custom-test-config")(sbt13only and testProject(_))
-    equalExpectedOneIn("eviction")(sbt13only and testProject(_))
-  }
+  private def always =
+    true must beTrue
 }

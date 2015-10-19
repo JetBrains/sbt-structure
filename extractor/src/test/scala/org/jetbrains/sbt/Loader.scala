@@ -10,9 +10,8 @@ import scala.io.Source
 object Loader {
   private val JavaVM = path(new File(new File(new File(System.getProperty("java.home")), "bin"), "java"))
   private val SbtLauncher = path(new File("sbt-launch.jar"))
-  private val SbtPlugin = path(new File("extractor/target/scala-" + BuildInfo.scalaVersion + "/sbt-"+ BuildInfo.sbtVersionFull +"/classes/"))
 
-  def load(project: File, resolveClassifiers: Boolean, sbtVersion: String, verbose: Boolean = false): Seq[String] = {
+  def load(project: File, resolveClassifiers: Boolean, sbtVersion: String, pluginFile: File, verbose: Boolean = false): Seq[String] = {
     val structureFile = createTempFile("sbt-structure", ".xml")
     val commandsFile = createTempFile("sbt-commands", ".lst")
 
@@ -21,7 +20,7 @@ object Loader {
     writeLinesTo(commandsFile,
       "set artifactPath := file(\"" + path(structureFile) + "\")",
       "set artifactClassifier := " + opts,
-      "apply -cp " + SbtPlugin + " org.jetbrains.sbt.ReadProject")
+      "apply -cp " + path(pluginFile) + " org.jetbrains.sbt.ReadProject")
 
     val commands = Seq(JavaVM,
 //      "-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=5005",
