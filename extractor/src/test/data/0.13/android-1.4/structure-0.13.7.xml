@@ -235,6 +235,16 @@
       <proguard>
         <option>test option</option>
       </proguard>
+      <apkLib name="com.actionbarsherlock-actionbarsherlock-4.4.0">
+        <manifest>
+          $BASE/target/apklibs/com.actionbarsherlock-actionbarsherlock-4.4.0/AndroidManifest.xml
+        </manifest>
+        <base>$BASE/target/apklibs/com.actionbarsherlock-actionbarsherlock-4.4.0</base>
+        <sources>$BASE/target/apklibs/com.actionbarsherlock-actionbarsherlock-4.4.0/src</sources>
+        <resources>$BASE/target/apklibs/com.actionbarsherlock-actionbarsherlock-4.4.0/res</resources>
+        <libs>$BASE/target/apklibs/com.actionbarsherlock-actionbarsherlock-4.4.0/libs</libs>
+        <gen>$BASE/target/apklibs/com.actionbarsherlock-actionbarsherlock-4.4.0/gen</gen>
+      </apkLib>
     </android>
     <configuration id="compile">
       <sources>$BASE/src/main</sources>
@@ -272,10 +282,6 @@
       <src>
         $ANDROID_HOME/extras/android/m2repository/com/android/support/support-annotations/20.0.0/support-annotations-20.0.0-sources.jar
       </src>
-    </module>
-    <module organization="com.android.support" name="support-v4" revision="20.0.0" artifactType="jar" classifier="">
-      <doc>$ANDROID_HOME/extras/android/m2repository/com/android/support/support-v4/20.0.0/support-v4-20.0.0-javadoc.jar</doc>
-      <src>$ANDROID_HOME/extras/android/m2repository/com/android/support/support-v4/20.0.0/support-v4-20.0.0-sources.jar</src>
     </module>
     <module organization="org.scala-lang" name="scala-library" revision="2.11.1" artifactType="jar" classifier="">
       <jar>~/.ivy2/cache/org.scala-lang/scala-library/jars/scala-library-2.11.1.jar</jar>
