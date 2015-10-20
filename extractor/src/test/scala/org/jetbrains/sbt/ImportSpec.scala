@@ -60,21 +60,24 @@ class ImportSpec extends Specification with XmlMatchers {
     val actual = actualXml.deserialize[StructureData].right.get
     val expected = expectedXml.deserialize[StructureData].right.get
 
-    def onXmlFail = {
+    def formatErrorMessage(message: String, expected: String, actual: String): String =
+      String.format("Project: %s %n%s %n%s", project, message, getDiff(expected, actual))
+
+    lazy val onXmlFail = {
       dumpToFile(new File(base, "actual.xml"), actualStr)
       val errorMessage = "Xml files are not equal, compare 'actual.xml' and 'structure-" + SbtVersionFull + ".xml'"
-      String.format("%s%n%s", errorMessage, getDiff(expectedStr, actualStr))
+      formatErrorMessage(errorMessage, expectedStr, actualStr)
     }
 
-    def onEqualsFail = {
+    lazy val onEqualsFail = {
       dumpToFile(new File(base, "actual.txt"), prettyPrintCaseClass(actual))
       dumpToFile(new File(base, "expected.txt"), prettyPrintCaseClass(expected))
       val errorMessage = "Objects are not equal, compare 'actual.txt' and 'expected.txt'"
-      String.format("%s%n%s", errorMessage, getDiff(prettyPrintCaseClass(expected), prettyPrintCaseClass(actual)))
+      formatErrorMessage(errorMessage, prettyPrintCaseClass(expected), prettyPrintCaseClass(actual))
     }
 
-    (actual == expected).must(beTrue.updateMessage(_ => onEqualsFail))
-    actualXml must beEqualToIgnoringSpace(expectedXml).updateMessage(_ => onXmlFail)
+    actual must beTheSameAs(expected).setMessage(onEqualsFail)
+    actualXml must beEqualToIgnoringSpace(expectedXml).setMessage(onXmlFail)
   }
 
   private def normalizePath(path: String): String =
