@@ -5,8 +5,7 @@ import java.io.{File, PrintWriter}
 import difflib._
 import org.jetbrains.sbt.structure.XmlSerializer._
 import org.jetbrains.sbt.structure._
-import org.specs2.matcher.{MatchResult, XmlMatchers}
-import org.specs2.matcher.Matcher._
+import org.specs2.matcher._
 import org.specs2.mutable._
 
 import scala.collection.JavaConverters._
@@ -24,8 +23,8 @@ class ImportSpec extends Specification with XmlMatchers {
     equalExpectedOneIn("classifiers", sbt13only)
     equalExpectedOneIn("optional", sbt13only)
     equalExpectedOneIn("play", onlyFor("0.13.7", "0.13.9"), resolveClassifiers = false)
-    equalExpectedOneIn("android", sbt13only and ifAndroidDefined)
     equalExpectedOneIn("android-1.4", onlyFor("0.13.7", "0.13.9") and ifAndroidDefined)
+    equalExpectedOneIn("android", sbt13only and ifAndroidDefined)
     equalExpectedOneIn("ide-settings", onlyFor("0.13.7", "0.13.9"))
     equalExpectedOneIn("sbt-idea", sbt13only)
     equalExpectedOneIn("custom-test-config", sbt13only)
@@ -40,12 +39,19 @@ class ImportSpec extends Specification with XmlMatchers {
   val AndroidHome = Option(System.getenv.get("ANDROID_HOME")).map(normalizePath)
   val UserHome = Option(System.getProperty("user.home")).map(normalizePath)
 
-  private def equalExpectedOneIn[T](projectName: String, conditions: => MatchResult[T] = always, resolveClassifiers: Boolean = true) =
-    ("equal expected one in '" + projectName + "' project [" + SbtVersionFull + "]") in conditions.and(testProject(projectName, resolveClassifiers))
+  private def equalExpectedOneIn(projectName: String, conditions: => MatchResult[Any] = always, resolveClassifiers: Boolean = true) =
+    ("equal expected one in '" + projectName + "' project [" + SbtVersionFull + "]").in { _: String =>
+      if (conditions.isSuccess)
+        testProject(projectName, resolveClassifiers)
+      else
+        conditions
+    }
 
   private def testProject(project: String, resolveClassifiers: Boolean) = {
     val base = new File(TestDataRoot, project)
     val testDataFile = new File(base, "structure-" + SbtVersionFull + ".xml")
+
+    testDataFile must exist.setMessage("No test data for version " + SbtVersionFull + " found")
 
     val expectedStr = getExpectedStr(testDataFile, base)
     val actualStr = Loader.load(base, resolveClassifiers, SbtVersionFull, PluginFile, verbose = true).mkString("\n")
@@ -74,15 +80,11 @@ class ImportSpec extends Specification with XmlMatchers {
   private def normalizePath(path: String): String =
     path.replace('\\', '/')
 
-  private def getExpectedStr(testDataFile: File, base: File): String = {
-    if (!testDataFile.exists())
-      failure("No test data for version " + SbtVersionFull + " found!")
-    else
-      read(testDataFile).mkString("\n")
-        .replace("$BASE", normalizePath(base.getCanonicalPath))
-        .replace("$ANDROID_HOME", AndroidHome.getOrElse(""))
-        .replace("~/", UserHome.getOrElse("") + "/")
-  }
+  private def getExpectedStr(testDataFile: File, base: File): String =
+    read(testDataFile).mkString("\n")
+      .replace("$BASE", normalizePath(base.getCanonicalPath))
+      .replace("$ANDROID_HOME", AndroidHome.getOrElse(""))
+      .replace("~/", UserHome.getOrElse("") + "/")
 
   private def getDiff(expected: String, actual: String): String = {
     import scala.collection.JavaConversions._
@@ -131,13 +133,13 @@ class ImportSpec extends Specification with XmlMatchers {
   }
 
   private def sbt13only =
-    SbtVersion must be_==("0.13").orSkip("This test is for SBT 0.13.x only")
+    SbtVersion must beEqualTo("0.13").orSkip(_ => "This test is for SBT 0.13.x only")
 
   private def onlyFor(versions: String*) =
-    versions.contains(SbtVersionFull).must(beTrue.orSkip("This test is for SBT " + versions.mkString(", ") + " only"))
+    versions must contain[String](SbtVersionFull).orSkip(_ => "This test is for SBT " + versions.mkString(", ") + " only")
 
   private def ifAndroidDefined =
-    AndroidHome must beSome.orSkip("ANDROID_HOME is not defined")
+    AndroidHome must beSome.orSkip(_ => "ANDROID_HOME is not defined")
 
   private def always =
     true must beTrue
