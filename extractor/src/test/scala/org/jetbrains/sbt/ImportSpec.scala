@@ -77,8 +77,8 @@ class ImportSpec extends Specification with XmlMatchers {
       formatErrorMessage(errorMessage, prettyPrintCaseClass(expected), prettyPrintCaseClass(actual))
     }
 
-    (actual == expected) must beTrue.setMessage(onEqualsFail)
-    actualXml must beEqualToIgnoringSpace(expectedXml).setMessage(onXmlFail)
+    (actual == expected) must beTrue.updateMessage(_ => onEqualsFail)
+    actualXml must beEqualToIgnoringSpace(expectedXml).updateMessage(_ => onXmlFail)
   }
 
   private def normalizePath(path: String): String =

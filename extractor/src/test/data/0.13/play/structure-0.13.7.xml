@@ -57,7 +57,6 @@
       <classes>~/.ivy2/cache/javax.annotation/jsr250-api/jars/jsr250-api-1.0.jar</classes>
       <classes>~/.ivy2/cache/javax.enterprise/cdi-api/jars/cdi-api-1.0.jar</classes>
       <classes>~/.ivy2/cache/javax.inject/javax.inject/jars/javax.inject-1.jar</classes>
-      <classes>~/.ivy2/cache/junit/junit/jars/junit-4.11.jar</classes>
       <classes>~/.ivy2/cache/net.contentobjects.jnotify/jnotify/jars/jnotify-0.94.jar</classes>
       <classes>~/.ivy2/cache/net.sourceforge.cssparser/cssparser/jars/cssparser-0.9.13.jar</classes>
       <classes>~/.ivy2/cache/net.sourceforge.htmlunit/htmlunit-core-js/jars/htmlunit-core-js-2.14.jar</classes>

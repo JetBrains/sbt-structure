@@ -57,7 +57,6 @@
       <classes>~/.ivy2/cache/javax.annotation/jsr250-api/jars/jsr250-api-1.0.jar</classes>
       <classes>~/.ivy2/cache/javax.enterprise/cdi-api/jars/cdi-api-1.0.jar</classes>
       <classes>~/.ivy2/cache/javax.inject/javax.inject/jars/javax.inject-1.jar</classes>
-      <classes>~/.ivy2/cache/junit/junit/jars/junit-4.11.jar</classes>
       <classes>~/.ivy2/cache/net.contentobjects.jnotify/jnotify/jars/jnotify-0.94.jar</classes>
       <classes>~/.ivy2/cache/net.sourceforge.cssparser/cssparser/jars/cssparser-0.9.13.jar</classes>
       <classes>~/.ivy2/cache/net.sourceforge.htmlunit/htmlunit-core-js/jars/htmlunit-core-js-2.14.jar</classes>
@@ -104,7 +103,6 @@
       <classes>~/.ivy2/cache/org.fusesource.leveldbjni/leveldbjni-win32/jars/leveldbjni-win32-1.5.jar</classes>
       <classes>~/.ivy2/cache/org.fusesource.leveldbjni/leveldbjni-win64/jars/leveldbjni-win64-1.5.jar</classes>
       <classes>~/.ivy2/cache/org.fusesource.leveldbjni/leveldbjni/jars/leveldbjni-1.7.jar</classes>
-      <classes>~/.ivy2/cache/org.hamcrest/hamcrest-core/jars/hamcrest-core-1.3.jar</classes>
       <classes>~/.ivy2/cache/org.iq80.leveldb/leveldb-api/jars/leveldb-api-0.5.jar</classes>
       <classes>~/.ivy2/cache/org.iq80.leveldb/leveldb/jars/leveldb-0.5.jar</classes>
       <classes>~/.ivy2/cache/org.javassist/javassist/bundles/javassist-3.18.2-GA.jar</classes>
@@ -115,8 +113,6 @@
       <classes>~/.ivy2/cache/org.parboiled/parboiled-scala_2.10/bundles/parboiled-scala_2.10-1.1.6.jar</classes>
       <classes>~/.ivy2/cache/org.scala-sbt/control/jars/control-0.13.5.jar</classes>
       <classes>~/.ivy2/cache/org.scala-sbt/io/jars/io-0.13.5.jar</classes>
-      <classes>~/.ivy2/cache/org.scala-sbt/test-interface/jars/test-interface-1.0.jar</classes>
-      <classes>~/.ivy2/cache/org.scalacheck/scalacheck_2.10/jars/scalacheck_2.10-1.11.1.jar</classes>
       <classes>~/.ivy2/cache/org.scalaz/scalaz-core_2.10/bundles/scalaz-core_2.10-7.0.2.jar</classes>
       <classes>~/.ivy2/cache/org.scalaz/scalaz-effect_2.10/bundles/scalaz-effect_2.10-7.0.2.jar</classes>
       <classes>~/.ivy2/cache/org.slf4j/slf4j-api/jars/slf4j-api-1.7.7.jar</classes>
@@ -124,8 +120,6 @@
       <classes>~/.ivy2/cache/org.sonatype.plexus/plexus-cipher/jars/plexus-cipher-1.4.jar</classes>
       <classes>~/.ivy2/cache/org.sonatype.plexus/plexus-sec-dispatcher/jars/plexus-sec-dispatcher-1.3.jar</classes>
       <classes>~/.ivy2/cache/org.sonatype.sisu/sisu-guice/jars/sisu-guice-3.1.0-no_aop.jar</classes>
-      <classes>~/.ivy2/cache/org.specs2/specs2-scalaz-core_2.10.0-RC3/jars/specs2-scalaz-core_2.10.0-RC3-6.0.1.jar</classes>
-      <classes>~/.ivy2/cache/org.specs2/specs2_2.10/jars/specs2_2.10-1.12.3.jar</classes>
       <classes>~/.ivy2/cache/org.tukaani/xz/jars/xz-1.4.jar</classes>
       <classes>~/.ivy2/cache/org.uncommons.maths/uncommons-maths/jars/uncommons-maths-1.2.2a.jar</classes>
       <classes>~/.ivy2/cache/org.vafer/jdeb/jars/jdeb-1.3.jar</classes>
@@ -471,8 +465,8 @@
     <module organization="commons-collections" name="commons-collections" revision="3.2.1" artifactType="jar" classifier="">
       <jar>~/.ivy2/cache/commons-collections/commons-collections/jars/commons-collections-3.2.1.jar</jar>
     </module>
-    <module organization="commons-io" name="commons-io" revision="2.2" artifactType="jar" classifier="">
-      <jar>~/.ivy2/cache/commons-io/commons-io/jars/commons-io-2.2.jar</jar>
+    <module organization="commons-io" name="commons-io" revision="2.4" artifactType="jar" classifier="">
+      <jar>~/.ivy2/cache/commons-io/commons-io/jars/commons-io-2.4.jar</jar>
     </module>
     <module organization="commons-logging" name="commons-logging" revision="1.1.3" artifactType="jar" classifier="">
       <jar>~/.ivy2/cache/commons-logging/commons-logging/jars/commons-logging-1.1.3.jar</jar>
@@ -565,13 +559,13 @@
       <jar>~/.ivy2/cache/org.objenesis/objenesis/jars/objenesis-1.0.jar</jar>
     </module>
     <module organization="org.scala-lang" name="scala-compiler" revision="2.10.4" artifactType="jar" classifier="">
-      <jar>~/.sbt/boot/scala-2.10.4/lib/scala-compiler.jar</jar>
+      <jar>~/.ivy2/cache/org.scala-lang/scala-compiler/jars/scala-compiler-2.10.4.jar</jar>
     </module>
-    <module organization="org.scala-lang" name="scala-library" revision="2.10.4" artifactType="jar" classifier="">
-      <jar>~/.sbt/boot/scala-2.10.4/lib/scala-library.jar</jar>
+    <module organization="org.scala-lang" name="scala-library" revision="2.10.5" artifactType="jar" classifier="">
+      <jar>~/.sbt/boot/scala-2.10.5/lib/scala-library.jar</jar>
     </module>
     <module organization="org.scala-lang" name="scala-reflect" revision="2.10.4" artifactType="jar" classifier="">
-      <jar>~/.sbt/boot/scala-2.10.4/lib/scala-reflect.jar</jar>
+      <jar>~/.ivy2/cache/org.scala-lang/scala-reflect/jars/scala-reflect-2.10.4.jar</jar>
     </module>
     <module organization="org.scala-sbt" name="test-interface" revision="1.0" artifactType="jar" classifier="">
       <jar>~/.ivy2/cache/org.scala-sbt/test-interface/jars/test-interface-1.0.jar</jar>
