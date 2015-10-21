@@ -34,6 +34,7 @@ class ImportSpec extends Specification with XmlMatchers {
   val SbtVersion = System.getProperty("structure.sbtversion.short")
   val SbtVersionFull = System.getProperty("structure.sbtversion.full")
   val ScalaVersion = System.getProperty("structure.scalaversion")
+
   val PluginFile = new File("extractor/target/scala-" + ScalaVersion + "/sbt-" + SbtVersionFull +"/classes/")
   val TestDataRoot = new File("extractor/src/test/data/" + SbtVersion)
   val AndroidHome = Option(System.getenv.get("ANDROID_HOME")).map(normalizePath)
@@ -76,7 +77,7 @@ class ImportSpec extends Specification with XmlMatchers {
       formatErrorMessage(errorMessage, prettyPrintCaseClass(expected), prettyPrintCaseClass(actual))
     }
 
-    actual must beTheSameAs(expected).setMessage(onEqualsFail)
+    (actual == expected) must beTrue.setMessage(onEqualsFail)
     actualXml must beEqualToIgnoringSpace(expectedXml).setMessage(onXmlFail)
   }
 
