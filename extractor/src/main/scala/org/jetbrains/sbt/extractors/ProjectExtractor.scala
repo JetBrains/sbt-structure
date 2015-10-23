@@ -38,7 +38,7 @@ class ProjectExtractor(implicit projectRef: ProjectRef) extends Extractor with C
     }
 
   private def extractConfiguration(configuration: sbt.Configuration)(implicit state: State): Option[ConfigurationData] =
-    projectSetting(Keys.classDirectory.in(configuration)).map { output =>
+    projectSetting(Keys.classDirectory.in(configuration)).map { sbtOutput =>
       val sources = {
         val managed   = projectSetting(Keys.managedSourceDirectories.in(configuration)).getOrElse(Seq.empty)
         val unmanaged = projectSetting(Keys.unmanagedSourceDirectories.in(configuration)).getOrElse(Seq.empty)
@@ -54,6 +54,9 @@ class ProjectExtractor(implicit projectRef: ProjectRef) extends Extractor with C
       val excludes =
         projectSetting(SettingKeys.ideExcludedDirectories.in(configuration)).getOrElse(Seq.empty) ++
         projectSetting(SettingKeys.sbtIdeaExcludeFolders.in(configuration)).map(_.map(file)).getOrElse(Seq.empty)
+
+      val output =
+        projectSetting(SettingKeys.ideOutputDirectory.in(configuration)).flatten.getOrElse(sbtOutput)
 
       ConfigurationData(mapConfiguration(configuration).name, sources, resources, excludes, output)
     }

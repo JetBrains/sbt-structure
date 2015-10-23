@@ -18,4 +18,9 @@ object MyBuild extends Build {
   )
 
   lazy val projectToSkip = project.in(file("skip")).settings(ideSkipProject := true)
+
+  lazy val projectToRedirectOutput = project.in(file("redirectOutput")).settings(
+    ideOutputDirectory := Some(target.value / "idea-classes"),
+    ideOutputDirectory in Test := Some(target.value / "idea-test-classes")
+  )
 }
