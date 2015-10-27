@@ -28,7 +28,6 @@ class ImportSpec extends Specification with XmlMatchers {
     equalExpectedOneIn("ide-settings", onlyFor("0.13.7", "0.13.9"))
     equalExpectedOneIn("sbt-idea", sbt13only)
     equalExpectedOneIn("custom-test-config", sbt13only)
-    equalExpectedOneIn("eviction", sbt13only)
   }
 
   val SbtVersion = System.getProperty("structure.sbtversion.short")

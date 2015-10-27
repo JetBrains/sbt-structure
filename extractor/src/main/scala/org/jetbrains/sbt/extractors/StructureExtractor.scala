@@ -1,7 +1,6 @@
 package org.jetbrains.sbt
 package extractors
 
-import org.jetbrains.sbt.processors.{UnusedLibrariesProcessor, EvictionsProcessor}
 import org.jetbrains.sbt.structure.StructureData
 import sbt._
 
@@ -24,10 +23,8 @@ object StructureExtractor extends Extractor {
   }
 
   private def extract(acceptedProjectRefs: Seq[ProjectRef])(implicit state: State, options: Options): StructureData = {
-    val projectsData =
-      EvictionsProcessor.apply(acceptedProjectRefs, acceptedProjectRefs.flatMap(ProjectExtractor.apply(_)))
-    val repositoryData =
-      RepositoryExtractor.apply(acceptedProjectRefs).map(UnusedLibrariesProcessor.apply(projectsData))
+    val projectsData    = acceptedProjectRefs.flatMap(ProjectExtractor.apply(_))
+    val repositoryData  = RepositoryExtractor.apply(acceptedProjectRefs)
     val sbtVersion      = setting(Keys.sbtVersion).get
     val localCachePath  = Option(System.getProperty("sbt.ivy.home", System.getProperty("ivy.home")))
     StructureData(sbtVersion, projectsData, repositoryData, localCachePath)
