@@ -9,35 +9,37 @@ import Utilities._
  * @author Nikolay Obedin
  * @since 4/10/15.
  */
-class RepositoryExtractor(acceptedProjectRefs: Seq[ProjectRef]) extends Extractor with Modules with Configurations {
+class RepositoryExtractor(acceptedProjectRefs: Seq[ProjectRef],
+                          updateReports: ProjectRef => UpdateReport,
+                          updateClassifiersReports: Option[ProjectRef => UpdateReport],
+                          classpathTypes: ProjectRef => Set[String],
+                          dependencyConfigurations: ProjectRef => Seq[sbt.Configuration])
+  extends Modules {
 
-  def extract(implicit state: State, options: Options): Option[RepositoryData] =
-    options.download.option {
-      val rawModulesData = acceptedProjectRefs.flatMap(extractModules)
-      val modulesData = rawModulesData.foldLeft(Seq.empty[ModuleData]) { (acc, data) =>
-        acc.find(_.id == data.id) match {
-          case Some(module) =>
-            val newModule = ModuleData(module.id,
-              module.binaries ++ data.binaries,
-              module.docs ++ data.docs,
-              module.sources ++ data.sources)
-            acc.filterNot(_ == module) :+ newModule
-          case None => acc :+ data
-        }
+  private def extract: RepositoryData = {
+    val rawModulesData = acceptedProjectRefs.flatMap(extractModules)
+    val modulesData = rawModulesData.foldLeft(Seq.empty[ModuleData]) { (acc, data) =>
+      acc.find(_.id == data.id) match {
+        case Some(module) =>
+          val newModule = ModuleData(module.id,
+            module.binaries ++ data.binaries,
+            module.docs ++ data.docs,
+            module.sources ++ data.sources)
+          acc.filterNot(_ == module) :+ newModule
+        case None => acc :+ data
       }
-      RepositoryData(modulesData)
     }
+    RepositoryData(modulesData)
+  }
 
-  private def extractModules(projectRef: ProjectRef)(implicit state: State, options: Options): Seq[ModuleData] = {
-    implicit val projectRefImplicit = projectRef
+  private def extractModules(projectRef: ProjectRef): Seq[ModuleData] = {
+    val binaryReports = getModuleReports(projectRef, updateReports)
 
-    val binaryReports = getModuleReports(Keys.update)
-
-    lazy val reportsWithDocs = {
+    val reportsWithDocs = updateClassifiersReports.map { updateClassifiersReportsFn =>
       def onlySourcesAndDocs(artifacts: Seq[(Artifact, File)]): Seq[(Artifact, File)] =
         artifacts.collect { case (a, f) if a.`type` == Artifact.DocType || a.`type` == Artifact.SourceType => (a, f) }
 
-      val docAndSrcReports = getModuleReports(Keys.updateClassifiers)
+      val docAndSrcReports = getModuleReports(projectRef, updateClassifiersReportsFn)
       binaryReports.map { report =>
         val matchingDocs = docAndSrcReports.filter(_.module == report.module)
         val docsArtifacts = matchingDocs.flatMap { r => onlySourcesAndDocs(r.artifacts) }
@@ -45,9 +47,7 @@ class RepositoryExtractor(acceptedProjectRefs: Seq[ProjectRef]) extends Extracto
       }
     }
 
-    val classpathTypes = projectSetting(Keys.classpathTypes).get
-    val modulesToMerge = if (options.resolveClassifiers) reportsWithDocs else binaryReports
-    merge(modulesToMerge, classpathTypes, Set(Artifact.DocType), Set(Artifact.SourceType))
+    merge(reportsWithDocs.getOrElse(binaryReports), classpathTypes(projectRef), Set(Artifact.DocType), Set(Artifact.SourceType))
   }
 
   private class MyModuleReport(val module: ModuleID, val artifacts: Seq[(Artifact, File)]) {
@@ -56,10 +56,10 @@ class RepositoryExtractor(acceptedProjectRefs: Seq[ProjectRef]) extends Extracto
     }
   }
 
-  private def getModuleReports(task: TaskKey[UpdateReport])(implicit state: State, projectRef: ProjectRef): Seq[MyModuleReport] = {
+  private def getModuleReports(projectRef: ProjectRef, updateReportFn: ProjectRef => UpdateReport): Seq[MyModuleReport] = {
     val configurationReports = {
-      val relevantConfigurationNames = getDependencyConfigurations.map(_.name).toSet
-      projectTask(task).get.configurations.filter(report => relevantConfigurationNames.contains(report.configuration))
+      val relevantConfigurationNames = dependencyConfigurations(projectRef).map(_.name).toSet
+      updateReportFn(projectRef).configurations.filter(report => relevantConfigurationNames.contains(report.configuration))
     }
     configurationReports.flatMap{ r => r.modules.map(new MyModuleReport(_)) }.filter(_.artifacts.nonEmpty)
   }
@@ -82,7 +82,21 @@ class RepositoryExtractor(acceptedProjectRefs: Seq[ProjectRef]) extends Extracto
   }
 }
 
-object RepositoryExtractor {
+object RepositoryExtractor extends Extractor with Configurations {
   def apply(acceptedProjectRefs: Seq[ProjectRef])(implicit state: State, options: Options): Option[RepositoryData] =
-    new RepositoryExtractor(acceptedProjectRefs).extract
+    options.download.option {
+      def updateReports(projectRef: ProjectRef) =
+        task(Keys.update.in(projectRef)).get
+      def updateClassifiersReports(projectRef: ProjectRef) =
+        task(Keys.updateClassifiers.in(projectRef)).get
+      def classpathTypes(projectRef: ProjectRef) =
+        setting(Keys.classpathTypes.in(projectRef)).getOrElse(Set.empty)
+      def dependencyConfigurations(projectRef: ProjectRef) =
+        getDependencyConfigurations(state, projectRef)
+
+      if (options.resolveSbtClassifiers)
+        new RepositoryExtractor(acceptedProjectRefs, updateReports, Some(updateClassifiersReports), classpathTypes, dependencyConfigurations).extract
+      else
+        new RepositoryExtractor(acceptedProjectRefs, updateReports, None, classpathTypes, dependencyConfigurations).extract
+    }
 }

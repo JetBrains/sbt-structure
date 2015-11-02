@@ -43,9 +43,6 @@ trait Configurations {
 
   protected def getSourceConfigurations(implicit state: State, projectRef: ProjectRef): Seq[Configuration] =
     Seq(Compile) ++ getTestConfigurations
-
-  protected def mapConfiguration(configuration: Configuration)(implicit state: State, projectRef: ProjectRef): Configuration =
-    if (getTestConfigurations.contains(configuration)) Test else configuration
 }
 
 trait Modules {
@@ -65,5 +62,3 @@ trait Modules {
     }
 }
 
-object Extractor {
-}
