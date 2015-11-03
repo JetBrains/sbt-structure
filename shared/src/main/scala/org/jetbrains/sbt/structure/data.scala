@@ -174,21 +174,17 @@ case class ApkLib(name: String, base: File, manifest: File, sources: File, resou
 /**
  * List of parameters specific to Play projects
  */
-case class Play2Data(keys: Seq[Play2Key])
-
-// TODO: maybe escape values?
-sealed trait PlayValue
-case class PlayString(value: String) extends PlayValue
-case class PlaySeqString(value: Seq[String]) extends PlayValue
-
-case class Play2Key(name: String, values: Map[String, PlayValue])
-
+case class Play2Data(playVersion: Option[String],
+                     templatesImports: Seq[String],
+                     routesImports: Seq[String],
+                     confDirectory: Option[File],
+                     sourceDirectory: File)
 
 // WARN: order of these objects is important because of implicits resolution
 
 private object Helper {
   class RichFile(file: File) {
-    def path = file.getCanonicalPath.replace('\\', '/')
+    def path = file.getCanonicalPath.replace('\\', '/').stripSuffix("/").stripSuffix("\\")
   }
 
   class RichNode(node: Node) {
@@ -506,58 +502,29 @@ object AndroidData {
   }
 }
 
-object PlayValue {
-  implicit val serializer = new XmlSerializer[PlayValue] {
-    override def serialize(what: PlayValue): Elem = what match {
-      case PlayString(str) =>
-        <value type="string">{str}</value>
-      case PlaySeqString(strings) =>
-        <value type="stringSeq">{strings.map(s => <entry>{s}</entry>)}</value>
-    }
-
-    override def deserialize(what: Node): Either[Throwable, PlayValue] = (what \ "@type").text match {
-      case "string" =>
-        Right(PlayString(what.text))
-      case "stringSeq" =>
-        Right(PlaySeqString((what \ "entry").map(_.text)))
-      case t =>
-        Left(new Error("Unknown type of value: " + t))
-    }
-  }
-}
-
-object Play2Key {
-  implicit val serializer = new XmlSerializer[Play2Key] {
-    override def serialize(what: Play2Key): Elem =
-      <key name={what.name}>
-        {what.values.map { case (projectName, value) =>
-        <in project={projectName}>
-          {value.serialize}
-        </in>
-        }}
-      </key>
-
-    override def deserialize(what: Node): Either[Throwable,Play2Key] = {
-      val name = (what \ "@name").text
-      val values = (what \ "in").flatMap { nodeValue =>
-        val project = (nodeValue \ "@project").text
-        val value = (nodeValue \ "value").deserializeOne[PlayValue].fold(_ => None, x => Some(x))
-        value.map(v => project -> v)
-      }
-      Right(Play2Key(name, values.toMap))
-    }
-  }
-}
-
 object Play2Data {
   implicit val serializer = new XmlSerializer[Play2Data] {
     override def serialize(what: Play2Data): Elem =
-      <playimps>
-        {what.keys.map { k => k.serialize }}
-      </playimps>
+      <play2>
+        {what.playVersion.toSeq.map(ver => <version>{ver}</version> )}
+        <templatesImports>
+          {what.templatesImports.map(imp => <import>{imp}</import>)}
+        </templatesImports>
+        <routesImports>
+          {what.routesImports.map(imp => <import>{imp}</import>)}
+        </routesImports>
+        {what.confDirectory.toSeq.map(dir => <confDirectory>{dir.path}</confDirectory>)}
+        <sourceDirectory>{what.sourceDirectory.path}</sourceDirectory>
+      </play2>
 
-    override def deserialize(what: Node): Either[Throwable,Play2Data] =
-      Right(Play2Data((what \ "key").deserialize[Play2Key]))
+    override def deserialize(what: Node): Either[Throwable,Play2Data] = {
+      val playVersion       = (what \ "version").map(_.text).headOption
+      val templatesImports  = (what \ "templatesImports" \ "import").map(_.text)
+      val routesImports     = (what \ "routesImports" \ "import").map(_.text)
+      val confDirectory     = (what \ "confDirectory").map(_.text).headOption
+      val sourceDirectory   = (what ! "sourceDirectory").text
+      Right(Play2Data(playVersion, templatesImports, routesImports, confDirectory.map(file), file(sourceDirectory)))
+    }
   }
 }
 
@@ -596,7 +563,7 @@ object ProjectData {
       val scala = (what \ "scala").deserialize[ScalaData].headOption
       val android = (what \ "android").deserialize[AndroidData].headOption
       val resolvers = (what \ "resolver").deserialize[ResolverData].toSet
-      val play2 = (what \ "playimps").deserialize[Play2Data].headOption
+      val play2 = (what \ "play2").deserialize[Play2Data].headOption
 
       val tryBuildAndDeps = {
         val build = (what \ "build").deserializeOne[BuildData]

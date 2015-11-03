@@ -327,49 +327,23 @@
     </dependencies>
     <resolver name="public" root="https://repo1.maven.org/maven2/"/>
     <resolver name="Typesafe Releases Repository" root="https://repo.typesafe.com/typesafe/releases/"/>
-    <playimps>
-      <key name="uri">
-        <in project="root">
-          <value type="string">$BASE</value>
-        </in>
-      </key>
-      <key name="playVersion">
-        <in project="root">
-          <value type="string">2.3.7</value>
-        </in>
-      </key>
-      <key name="testOptions"/>
-      <key name="twirlTemplatesImports">
-        <in project="root">
-          <value type="stringSeq">
-            <entry>play.api.templates.PlayMagic._</entry>
-            <entry>models._</entry>
-            <entry>controllers._</entry>
-            <entry>play.api.i18n._</entry>
-            <entry>play.api.mvc._</entry>
-            <entry>play.api.data._</entry>
-            <entry>views.xml._</entry>
-          </value>
-        </in>
-      </key>
-      <key name="playRoutesImports">
-        <in project="root">
-          <value type="stringSeq">
-            <entry>controllers.Assets.Asset</entry>
-          </value>
-        </in>
-      </key>
-      <key name="playConf">
-        <in project="root">
-          <value type="string">$BASE/conf</value>
-        </in>
-      </key>
-      <key name="sourceDirectory">
-        <in project="root">
-          <value type="string">$BASE/app</value>
-        </in>
-      </key>
-    </playimps>
+    <play2>
+      <version>2.3.7</version>
+      <templatesImports>
+        <import>play.api.templates.PlayMagic._</import>
+        <import>models._</import>
+        <import>controllers._</import>
+        <import>play.api.i18n._</import>
+        <import>play.api.mvc._</import>
+        <import>play.api.data._</import>
+        <import>views.xml._</import>
+      </templatesImports>
+      <routesImports>
+        <import>controllers.Assets.Asset</import>
+      </routesImports>
+      <confDirectory>$BASE/conf</confDirectory>
+      <sourceDirectory>$BASE/app</sourceDirectory>
+    </play2>
   </project>
   <repository>
     <module organization="cglib" name="cglib-nodep" revision="2.1_3" artifactType="jar" classifier="">
