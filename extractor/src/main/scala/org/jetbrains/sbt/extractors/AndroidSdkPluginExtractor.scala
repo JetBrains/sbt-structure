@@ -28,8 +28,8 @@ class AndroidSdkPluginExtractor(implicit projectRef: ProjectRef) extends Extract
         isLibrary       <- projectSetting(Keys.libraryProject)
         proguardConfig  <- projectTask(Keys.proguardConfig)
         proguardOptions <- projectTask(Keys.proguardOptions)
-        layoutAsAny     <- keys.findSettingKey("projectLayout").flatMap(projectSetting(_))
-        apklibsAsAny    <- keys.findTaskKey("apklibs").flatMap(projectTask(_))
+        layoutAsAny     <- findSettingKey(keys, "projectLayout").flatMap(projectSetting(_))
+        apklibsAsAny    <- findTaskKey(keys, "apklibs").flatMap(projectTask(_))
       } yield {
         val layout = layoutAsAny.asInstanceOf[ProjectLayout]
         val apklibs = apklibsAsAny.asInstanceOf[Seq[LibraryDependency]]
@@ -41,6 +41,25 @@ class AndroidSdkPluginExtractor(implicit projectRef: ProjectRef) extends Extract
       case _ : NoSuchMethodException => None
     }
   }
+
+  private def findSettingKey(keys: Seq[sbt.ScopedKey[_]], label: String): Option[SettingKey[_]] =
+    keys.find(k => k.key.label == label && isInAndroidScope(k))
+      .map(k => SettingKey(k.key).in(k.scope))
+
+  private def findTaskKey(keys: Seq[sbt.ScopedKey[_]], label: String): Option[TaskKey[_]] =
+    keys.find(k => k.key.label == label && isInAndroidScope(k))
+      .map(k => TaskKey(k.key.asInstanceOf[AttributeKey[Task[Any]]]).in(k.scope))
+
+  private def libraryDepToApkLib(lib: LibraryDependency): ApkLib = {
+    // As for version 1.5.0 android-sdk-plugin uses canonical path to library as its name
+    val fixedLibName = lib.getName.split(File.separator).last
+    ApkLib(fixedLibName, lib.layout.base, lib.layout.manifest, lib.layout.sources, lib.layout.res, lib.layout.libs, lib.layout.gen)
+  }
+
+  private def isInAndroidScope(key: ScopedKey[_]) = key.scope.config match {
+    case Select(k) => k.name == Android.name
+    case _ => false
+  }
 }
 
 object AndroidSdkPluginExtractor {
@@ -48,21 +67,6 @@ object AndroidSdkPluginExtractor {
     new AndroidSdkPluginExtractor().extract
 
   private val Android = config("android")
-
-  private def isInAndroidScope(key: ScopedKey[_]) = key.scope.config match {
-    case Select(k) => k.name == Android.name
-    case _ => false
-  }
-
-  implicit def toRichSeqWithScopedKey(keys: Seq[sbt.ScopedKey[_]]) = new {
-    def findSettingKey(label: String): Option[SettingKey[_]] =
-      keys.find(k => k.key.label == label && isInAndroidScope(k))
-        .map(k => SettingKey(k.key).in(k.scope))
-
-    def findTaskKey(label: String): Option[TaskKey[_]] =
-      keys.find(k => k.key.label == label && isInAndroidScope(k))
-        .map(k => TaskKey(k.key.asInstanceOf[AttributeKey[Task[Any]]]).in(k.scope))
-  }
 
   private object Keys {
     val targetSdkVersion = TaskKey[String]("target-sdk-version").in(Android)
@@ -88,11 +92,4 @@ object AndroidSdkPluginExtractor {
     def layout: ProjectLayout
     def getName: String
   }
-
-  private def libraryDepToApkLib(lib: LibraryDependency): ApkLib = {
-    // As for version 1.5.0 android-sdk-plugin uses canonical path to library as its name
-    val fixedLibName = lib.getName.split(File.separator).last
-    ApkLib(fixedLibName, lib.layout.base, lib.layout.manifest, lib.layout.sources, lib.layout.res, lib.layout.libs, lib.layout.gen)
-  }
-
 }
