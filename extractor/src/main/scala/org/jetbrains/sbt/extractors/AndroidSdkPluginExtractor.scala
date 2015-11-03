@@ -14,7 +14,7 @@ class AndroidSdkPluginExtractor(implicit projectRef: ProjectRef) extends Extract
 
   import AndroidSdkPluginExtractor._
 
-  def extract(implicit state: State, options: Options): Option[AndroidData] = {
+  def extract(implicit state: State): Option[AndroidData] = {
     val keys = state.attributes.get(sessionSettings) match {
       case Some(SessionSettings(_, _, settings, _, _, _)) => settings map { _.key }
       case _ => Seq.empty
@@ -44,7 +44,7 @@ class AndroidSdkPluginExtractor(implicit projectRef: ProjectRef) extends Extract
 }
 
 object AndroidSdkPluginExtractor {
-  def apply(implicit state: State, projectRef: ProjectRef, options: Options): Option[AndroidData] =
+  def apply(implicit state: State, projectRef: ProjectRef): Option[AndroidData] =
     new AndroidSdkPluginExtractor().extract
 
   private val Android = config("android")
