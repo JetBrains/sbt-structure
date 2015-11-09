@@ -19,7 +19,7 @@ class DependenciesExtractor(projectRef: ProjectRef,
                             testConfigurations: Seq[sbt.Configuration])
   extends Modules {
 
-  private def extract: DependencyData =
+  private[extractors] def extract: DependencyData =
     DependencyData(projectDependencies, moduleDependencies, jarDependencies)
 
   private def projectDependencies: Seq[ProjectDependencyData] =
