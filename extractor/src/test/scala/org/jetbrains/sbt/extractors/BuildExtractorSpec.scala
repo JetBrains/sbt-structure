@@ -7,6 +7,18 @@ import sbt._
 
 class BuildExtractorSpec extends Specification {
 
+  "BuildExtractor" should {
+    "always extract imports and plugins' files" in {
+      val actual = new BuildExtractor(stubLoadedBuildUnitAdapter, None).extract
+      actual must beEqualTo(BuildData(stubImports, stubPlugins, Nil, Nil))
+    }
+
+    "extract plugins sources and docs when supplied" in {
+      val actual = new BuildExtractor(stubLoadedBuildUnitAdapter, Some(stubUpdateClassifiersReport)).extract
+      actual must beEqualTo(BuildData(stubImports, stubPlugins, stubDocs, stubSources))
+    }
+  }
+
   val stubImports = Seq("import foo.bar", "import bar.baz")
   val stubPlugins = Seq("foo.jar").map(file)
 
@@ -30,16 +42,4 @@ class BuildExtractorSpec extends Specification {
       stubDocs.map(toModuleReportAdapter(Artifact.DocType)) ++
       stubSources.map(toModuleReportAdapter(Artifact.SourceType))
     )))
-
-  "BuildExtractor" should {
-    "always extract imports and plugins' files" in {
-      val actual = new BuildExtractor(stubLoadedBuildUnitAdapter, None).extract
-      actual must beEqualTo(BuildData(stubImports, stubPlugins, Nil, Nil))
-    }
-
-    "extract plugins sources and docs when supplied" in {
-      val actual = new BuildExtractor(stubLoadedBuildUnitAdapter, Some(stubUpdateClassifiersReport)).extract
-      actual must beEqualTo(BuildData(stubImports, stubPlugins, stubDocs, stubSources))
-    }
-  }
 }

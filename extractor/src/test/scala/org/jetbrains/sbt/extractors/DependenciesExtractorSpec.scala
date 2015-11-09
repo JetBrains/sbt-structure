@@ -1,11 +1,10 @@
 package org.jetbrains.sbt
 package extractors
 
-import org.specs2.matcher.{Expectable, Matcher}
-import org.specs2.mutable._
-import structure._
+import org.jetbrains.sbt.Utilities._
+import org.jetbrains.sbt.structure._
 import org.jetbrains.sbt.{structure => jb}
-import Utilities._
+import org.specs2.mutable._
 import sbt._
 
 class DependenciesExtractorSpec extends Specification {
@@ -16,7 +15,7 @@ class DependenciesExtractorSpec extends Specification {
         stubProject1, Some(toBuildDependencies(projectDependencies)), emptyClasspath, emptyClasspath, Nil, Nil
       ).extract
       val expected = DependencyData(toProjectDependencyData(projectDependencies), Nil, Nil)
-      actual must beIdenticalTo(expected)
+      actual must beEqualTo(expected)
     }
 
     "always extract unmanaged dependencies" in {
@@ -24,7 +23,7 @@ class DependenciesExtractorSpec extends Specification {
         stubProject1, None, toUnmanagedClasspath(unmanagedDependencies), emptyClasspath, Seq(sbt.Compile, sbt.Test), Seq(sbt.Test)
       ).extract
       val expected = DependencyData(Nil, Nil, toJarDependencyData(unmanagedDependencies))
-      actual must beIdenticalTo(expected)
+      actual must beEqualTo(expected)
     }
 
     "extract managed dependencies when supplied" in {
@@ -85,15 +84,6 @@ class DependenciesExtractorSpec extends Specification {
 
   val moduleDependenciesWithClassifier =
     moduleDependencies :+ (ModuleIdentifier("com.example", "bar-tests", "SNAPSHOT", Artifact.DefaultType, "tests") -> sbt.Test)
-
-  class BeEqualMatcher[T](t: => T) extends Matcher[T] {
-    def apply[S <: T](s: Expectable[S]) = {
-      def print(b: String, msg: String, a: String): String = Seq(b, msg, a).mkString("\n")
-      result(s.value == t, print(s.value.toString, " is equal to ", t.toString), print(s.value.toString, " is not equal to ", t.toString), s)
-    }
-  }
-
-  def beIdenticalTo[T](t: =>T): Matcher[T] = new BeEqualMatcher(t)
 
   private def existingFile(path: String): File = new File(path) {
     override def isFile: Boolean = true
