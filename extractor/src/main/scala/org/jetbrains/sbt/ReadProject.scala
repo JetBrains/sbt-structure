@@ -12,8 +12,11 @@ import structure.XmlSerializer._
 /**
  * @author Pavel Fatin
  */
-object StructurePlugin extends Plugin {
-  def read(state: State) {
+
+object ReadProject extends (State => State) {
+  def apply(state: State) = Function.const(state)(read(state))
+
+  private def read(state: State) {
     val log = state.log
 
     log.info("Reading structure from " + System.getProperty("user.dir"))
@@ -54,12 +57,4 @@ object StructurePlugin extends Plugin {
       writer.close()
     }
   }
-
-  override lazy val settings: Seq[Setting[_]] = Seq(commands += readProjectCommand)
-
-  lazy val readProjectCommand = Command.command("read-project")((s: State) => ReadProject(s))
-}
-
-object ReadProject extends (State => State) {
-  def apply(state: State) = Function.const(state)(StructurePlugin.read(state))
 }
