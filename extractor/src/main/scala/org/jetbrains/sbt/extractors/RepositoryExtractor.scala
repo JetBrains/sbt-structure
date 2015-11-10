@@ -14,7 +14,7 @@ class RepositoryExtractor(acceptedProjectRefs: Seq[ProjectRef],
                           updateClassifiersReports: Option[ProjectRef => UpdateReportAdapter],
                           classpathTypes: ProjectRef => Set[String],
                           dependencyConfigurations: ProjectRef => Seq[sbt.Configuration])
-  extends Modules {
+  extends ModulesOps {
 
   private[extractors] def extract: RepositoryData = {
     val rawModulesData = acceptedProjectRefs.flatMap(extractModules)
@@ -72,7 +72,7 @@ class RepositoryExtractor(acceptedProjectRefs: Seq[ProjectRef],
   }
 }
 
-object RepositoryExtractor extends Extractor with Configurations {
+object RepositoryExtractor extends SbtStateOps with ConfigurationOps {
   def apply(acceptedProjectRefs: Seq[ProjectRef])(implicit state: State, options: Options): Option[RepositoryData] =
     options.download.option {
       def updateReports(projectRef: ProjectRef) =

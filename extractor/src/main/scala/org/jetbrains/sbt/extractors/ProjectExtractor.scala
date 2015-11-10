@@ -89,7 +89,7 @@ class ProjectExtractor(projectRef: ProjectRef,
     }.toSeq
 }
 
-object ProjectExtractor extends Extractor with Configurations {
+object ProjectExtractor extends SbtStateOps with ConfigurationOps {
   def apply(projectRef: ProjectRef)(implicit state: State, options: Options): Option[ProjectData] = {
     implicit val implicitProjectRef = projectRef
     for {

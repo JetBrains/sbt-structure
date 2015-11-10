@@ -8,7 +8,7 @@ import sbt._
   * @author Dmitry Naydanov
   * @author Nikolay Obedin
   */
-class Play2Extractor(implicit projectRef: ProjectRef) extends Extractor {
+class Play2Extractor(implicit projectRef: ProjectRef) extends SbtStateOps {
 
   import Play2Extractor._
 

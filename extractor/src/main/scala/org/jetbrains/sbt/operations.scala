@@ -7,7 +7,7 @@ import sbt._
  * @author Nikolay Obedin
  * @since 4/10/15.
  */
-trait Extractor {
+trait SbtStateOps {
   def structure(implicit state: State): Load.BuildStructure =
     Project.extract(state).structure
 
@@ -24,7 +24,7 @@ trait Extractor {
     Project.runTask(key.in(projectRef), state).collect { case (_, Value(value)) => value }
 }
 
-trait Configurations {
+trait ConfigurationOps {
   protected val PredefinedTestConfigurations = Set(Test, IntegrationTest)
 
   protected def getTestConfigurations(implicit state: State, projectRef: ProjectRef): Seq[Configuration] = {
@@ -45,7 +45,7 @@ trait Configurations {
     Seq(Compile) ++ getTestConfigurations
 }
 
-trait Modules {
+trait ModulesOps {
 
   protected def fuseClassifier(artifact: Artifact): String = {
     val fusingClassifiers = Seq("", Artifact.DocClassifier, Artifact.SourceClassifier)

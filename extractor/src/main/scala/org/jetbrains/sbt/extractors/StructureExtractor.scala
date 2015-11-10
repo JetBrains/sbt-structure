@@ -6,7 +6,7 @@ import sbt._
 
 //import scala.language.reflectiveCalls
 
-object StructureExtractor extends Extractor {
+object StructureExtractor extends SbtStateOps {
 
   def apply(implicit state: State, options: Options): StructureData = {
     val acceptedProjectRefs =

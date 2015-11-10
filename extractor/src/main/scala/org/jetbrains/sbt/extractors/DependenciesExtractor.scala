@@ -17,7 +17,7 @@ class DependenciesExtractor(projectRef: ProjectRef,
                             externalDependencyClasspath: sbt.Configuration => Keys.Classpath,
                             dependencyConfigurations: Seq[sbt.Configuration],
                             testConfigurations: Seq[sbt.Configuration])
-  extends Modules {
+  extends ModulesOps {
 
   private[extractors] def extract: DependencyData =
     DependencyData(projectDependencies, moduleDependencies, jarDependencies)
@@ -91,7 +91,7 @@ class DependenciesExtractor(projectRef: ProjectRef,
   }
 }
 
-object DependenciesExtractor extends Extractor with Configurations {
+object DependenciesExtractor extends SbtStateOps with ConfigurationOps {
   def apply(implicit state: State, projectRef: ProjectRef, options: Options): DependencyData = {
     val buildDependencies = projectSetting(Keys.buildDependencies)
 

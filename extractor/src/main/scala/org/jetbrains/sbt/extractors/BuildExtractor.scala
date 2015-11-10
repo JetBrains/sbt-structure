@@ -24,7 +24,7 @@ class BuildExtractor(unit: LoadedBuildUnitAdapter, updateSbtClassifiers: Option[
     }.getOrElse((Seq.empty, Seq.empty))
 }
 
-object BuildExtractor extends Extractor {
+object BuildExtractor extends SbtStateOps {
   def apply(implicit state: State, projectRef: ProjectRef, options: Options): BuildData = {
     val unit = LoadedBuildUnitAdapter(structure.units(projectRef.build))
     val updateSbtClassifiers =

@@ -10,7 +10,7 @@ import sbt.Keys._
 import sbt._
 
 
-class AndroidSdkPluginExtractor(implicit projectRef: ProjectRef) extends Extractor {
+class AndroidSdkPluginExtractor(implicit projectRef: ProjectRef) extends SbtStateOps {
 
   import AndroidSdkPluginExtractor._
 
