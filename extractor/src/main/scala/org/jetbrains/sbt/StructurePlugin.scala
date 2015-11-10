@@ -18,13 +18,15 @@ object StructurePlugin extends Plugin {
 
     log.info("Reading structure from " + System.getProperty("user.dir"))
 
-    val options = Keys.artifactClassifier.in(Project.current(state))
-      .get(Project.extract(state).structure.data).get.getOrElse("")
+    val options = Options.readFromString(
+      Keys.artifactClassifier.in(Project.current(state))
+        .get(Project.extract(state).structure.data).get.getOrElse("")
+    )
 
-    val structure = StructureExtractor.apply(state, Options.readFromString(options))
+    val structure = StructureExtractor.apply(state, options)
 
     val text = {
-      if (options.contains("prettyPrint"))
+      if (options.prettyPrint)
         new PrettyPrinter(180, 2).format(structure.serialize)
       else
         xml.Utility.trim(structure.serialize).mkString
