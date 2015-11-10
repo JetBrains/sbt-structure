@@ -48,13 +48,19 @@ class DependenciesExtractorSpec extends Specification {
     }
 
     "correctly extract managed dependencies with classifiers" in {
-      val actual = new DependenciesExtractor(
-        stubProject1, None, emptyClasspath,
-        toExternalDepenedncyClasspath(moduleDependenciesWithClassifier),
-        Seq(sbt.Test, sbt.Compile), Seq(sbt.Test)
-      ).extract
-      val expected = DependencyData(Nil, toModuleDependencyData(moduleDependenciesWithClassifier), Nil)
-      actual.modules must containTheSameElementsAs(expected.modules)
+      val moduleId = ModuleID("com.example", "foo", "SNAPSHOT")
+      val externalDependencyClasspath = Map(
+        sbt.Compile -> Seq(
+          Attributed(file("foo.jar"))(AttributeMap.empty.put(sbt.Keys.moduleID.key, moduleId).put(sbt.Keys.artifact.key, Artifact("foo"))),
+          Attributed(file("foo-tests.jar"))(AttributeMap.empty.put(sbt.Keys.moduleID.key, moduleId).put(sbt.Keys.artifact.key, Artifact("foo", "tests")))
+        )
+      )
+      val actual = new DependenciesExtractor(stubProject1, None, emptyClasspath, externalDependencyClasspath.apply, Seq(sbt.Compile), Seq.empty).extract
+      val expectedModules = Seq(
+        ModuleDependencyData(ModuleIdentifier(moduleId.organization, moduleId.name, moduleId.revision, Artifact.DefaultType, ""), Seq(jb.Configuration.Compile)),
+        ModuleDependencyData(ModuleIdentifier(moduleId.organization, moduleId.name, moduleId.revision, Artifact.DefaultType, "tests"), Seq(jb.Configuration.Compile))
+      )
+      actual.modules must containTheSameElementsAs(expectedModules)
     }
   }
 
@@ -81,9 +87,6 @@ class DependenciesExtractorSpec extends Specification {
 
   val moduleDependenciesWithCustomConf =
     moduleDependencies :+ (ModuleIdentifier("com.example", "baz", "SNAPSHOT", Artifact.DefaultType, "") -> CustomConf)
-
-  val moduleDependenciesWithClassifier =
-    moduleDependencies :+ (ModuleIdentifier("com.example", "bar-tests", "SNAPSHOT", Artifact.DefaultType, "tests") -> sbt.Test)
 
   private def existingFile(path: String): File = new File(path) {
     override def isFile: Boolean = true
