@@ -4,6 +4,7 @@ package extractors
 import org.jetbrains.sbt.Utilities._
 import org.jetbrains.sbt.structure._
 import org.jetbrains.sbt.{structure => jb}
+import org.specs2.matcher.Matcher
 import org.specs2.mutable._
 import sbt._
 
@@ -15,7 +16,7 @@ class DependenciesExtractorSpec extends Specification {
         stubProject1, Some(toBuildDependencies(projectDependencies)), emptyClasspath, emptyClasspath, Nil, Nil
       ).extract
       val expected = DependencyData(toProjectDependencyData(projectDependencies), Nil, Nil)
-      actual must beEqualTo(expected)
+      actual must beIdenticalTo(expected)
     }
 
     "always extract unmanaged dependencies" in {
@@ -23,7 +24,7 @@ class DependenciesExtractorSpec extends Specification {
         stubProject1, None, toUnmanagedClasspath(unmanagedDependencies), emptyClasspath, Seq(sbt.Compile, sbt.Test), Seq(sbt.Test)
       ).extract
       val expected = DependencyData(Nil, Nil, toJarDependencyData(unmanagedDependencies))
-      actual must beEqualTo(expected)
+      actual must beIdenticalTo(expected)
     }
 
     "extract managed dependencies when supplied" in {
@@ -31,7 +32,7 @@ class DependenciesExtractorSpec extends Specification {
         stubProject1, None, emptyClasspath, toExternalDepenedncyClasspath(moduleDependencies), Seq(sbt.Compile, sbt.Test), Seq(sbt.Test)
       ).extract
       val expected = DependencyData(Nil, toModuleDependencyData(moduleDependencies), Nil)
-      actual.modules must containTheSameElementsAs(expected.modules) // TODO: investigate why actual data have different order from time to time
+      actual must beIdenticalTo(expected)
     }
 
     "merge configurations in unmanaged and managed dependencies when necessary" in {
@@ -43,8 +44,7 @@ class DependenciesExtractorSpec extends Specification {
       ).extract
       val expected = DependencyData(Nil, toModuleDependencyData(moduleDependenciesWithCustomConf),
         toJarDependencyData(unmanagedDependenciesWithCustomConf))
-      actual.jars must containTheSameElementsAs(expected.jars)
-      actual.modules must containTheSameElementsAs(expected.modules)
+      actual must beIdenticalTo(expected)
     }
 
     "correctly extract managed dependencies with classifiers" in {
@@ -60,8 +60,15 @@ class DependenciesExtractorSpec extends Specification {
         ModuleDependencyData(ModuleIdentifier(moduleId.organization, moduleId.name, moduleId.revision, Artifact.DefaultType, ""), Seq(jb.Configuration.Compile)),
         ModuleDependencyData(ModuleIdentifier(moduleId.organization, moduleId.name, moduleId.revision, Artifact.DefaultType, "tests"), Seq(jb.Configuration.Compile))
       )
-      actual.modules must containTheSameElementsAs(expectedModules)
+      val expected = DependencyData(Nil, expectedModules, Nil)
+      actual must beIdenticalTo(expected)
     }
+  }
+
+  def beIdenticalTo(expected: DependencyData): Matcher[DependencyData] = { actual: DependencyData =>
+    (actual.projects must containTheSameElementsAs(expected.projects)) and
+      (actual.jars must containTheSameElementsAs(expected.jars)) and
+      (actual.modules must containTheSameElementsAs(expected.modules))
   }
 
   val stubProject1 = ProjectRef(file("/tmp/test-project"), "project-1")

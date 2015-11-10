@@ -13,15 +13,15 @@ class RepositoryExtractorSpec extends Specification {
     "extract modules for all accepted projects when supplied" in {
       val actual = new RepositoryExtractor(projects, updateReports.apply, None,
         const(Set(Artifact.DefaultType)), const(Seq(sbt.Compile, sbt.Test))).extract
-      val expected = RepositoryData(toModuleData(modules).map(_.copy(docs = Set.empty, sources = Set.empty)))
-      actual.modules must containTheSameElementsAs(expected.modules)
+      val expected = toModuleData(modules).map(_.copy(docs = Set.empty, sources = Set.empty))
+      actual.modules must containTheSameElementsAs(expected)
     }
 
     "extract modules with docs and sources for all accepted projects when supplied" in {
       val actual = new RepositoryExtractor(projects, updateReports.apply, Some(updateClassifiersReports.apply),
         const(Set(Artifact.DefaultType)), const(Seq(sbt.Compile, sbt.Test))).extract
-      val expected = RepositoryData(toModuleData(modules))
-      actual.modules must containTheSameElementsAs(expected.modules)
+      val expected = toModuleData(modules)
+      actual.modules must containTheSameElementsAs(expected)
     }
 
     "extract module that have artifacts with classifiers as different modules" in {
@@ -35,12 +35,12 @@ class RepositoryExtractorSpec extends Specification {
 
       val actual = new RepositoryExtractor(projects.init, updateReport.apply, None,
         const(Set(Artifact.DefaultType)), const(Seq(sbt.Compile))).extract
-      val expected = RepositoryData(Seq(
+      val expected = Seq(
         ModuleData(ModuleIdentifier("com.example", "foo", "SNAPSHOT", Artifact.DefaultType, ""), Set(file("foo.jar")), Set.empty, Set.empty),
         ModuleData(ModuleIdentifier("com.example", "foo", "SNAPSHOT", Artifact.DefaultType, "tests"), Set(file("foo-tests.jar")), Set.empty, Set.empty)
-      ))
+      )
 
-      actual.modules must containTheSameElementsAs(expected.modules)
+      actual.modules must containTheSameElementsAs(expected)
     }
   }
 
