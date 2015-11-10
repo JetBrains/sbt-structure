@@ -10,13 +10,13 @@ import Utilities._
  * @since 4/10/15.
  */
 class RepositoryExtractor(acceptedProjectRefs: Seq[ProjectRef],
-                          updateReports: ProjectRef => UpdateReport,
-                          updateClassifiersReports: Option[ProjectRef => UpdateReport],
+                          updateReports: ProjectRef => UpdateReportAdapter,
+                          updateClassifiersReports: Option[ProjectRef => UpdateReportAdapter],
                           classpathTypes: ProjectRef => Set[String],
                           dependencyConfigurations: ProjectRef => Seq[sbt.Configuration])
   extends Modules {
 
-  private def extract: RepositoryData = {
+  private[extractors] def extract: RepositoryData = {
     val rawModulesData = acceptedProjectRefs.flatMap(extractModules)
     val modulesData = rawModulesData.foldLeft(Seq.empty[ModuleData]) { (acc, data) =>
       acc.find(_.id == data.id) match {
@@ -41,31 +41,21 @@ class RepositoryExtractor(acceptedProjectRefs: Seq[ProjectRef],
 
       val docAndSrcReports = getModuleReports(projectRef, updateClassifiersReportsFn)
       binaryReports.map { report =>
-        val matchingDocs = docAndSrcReports.filter(_.module == report.module)
-        val docsArtifacts = matchingDocs.flatMap { r => onlySourcesAndDocs(r.artifacts) }
-        new MyModuleReport(report.module, report.artifacts ++ docsArtifacts)
+        val matchingDocs = docAndSrcReports.filter(_.moduleId == report.moduleId)
+        val docsArtifacts = matchingDocs.flatMap(r => onlySourcesAndDocs(r.artifacts))
+        new ModuleReportAdapter(report.moduleId, report.artifacts ++ docsArtifacts)
       }
     }
 
     merge(reportsWithDocs.getOrElse(binaryReports), classpathTypes(projectRef), Set(Artifact.DocType), Set(Artifact.SourceType))
   }
 
-  private class MyModuleReport(val module: ModuleID, val artifacts: Seq[(Artifact, File)]) {
-    def this(report: ModuleReport) {
-      this(report.module, report.artifacts)
-    }
+  private def getModuleReports(projectRef: ProjectRef, updateReportFn: ProjectRef => UpdateReportAdapter): Seq[ModuleReportAdapter] = {
+    dependencyConfigurations(projectRef).flatMap(updateReportFn(projectRef).modulesFrom).filter(_.artifacts.nonEmpty)
   }
 
-  private def getModuleReports(projectRef: ProjectRef, updateReportFn: ProjectRef => UpdateReport): Seq[MyModuleReport] = {
-    val configurationReports = {
-      val relevantConfigurationNames = dependencyConfigurations(projectRef).map(_.name).toSet
-      updateReportFn(projectRef).configurations.filter(report => relevantConfigurationNames.contains(report.configuration))
-    }
-    configurationReports.flatMap{ r => r.modules.map(new MyModuleReport(_)) }.filter(_.artifacts.nonEmpty)
-  }
-
-  private def merge(moduleReports: Seq[MyModuleReport], classpathTypes: Set[String], docTypes: Set[String], srcTypes: Set[String]): Seq[ModuleData] = {
-    val moduleReportsGrouped = moduleReports.groupBy{ rep => rep.module.artifacts(rep.artifacts.map(_._1):_*) }.toSeq
+  private def merge(moduleReports: Seq[ModuleReportAdapter], classpathTypes: Set[String], docTypes: Set[String], srcTypes: Set[String]): Seq[ModuleData] = {
+    val moduleReportsGrouped = moduleReports.groupBy{ rep => rep.moduleId.artifacts(rep.artifacts.map(_._1):_*) }.toSeq
     moduleReportsGrouped.flatMap { case (module, reports) =>
       val allArtifacts = reports.flatMap(_.artifacts)
 
@@ -86,9 +76,9 @@ object RepositoryExtractor extends Extractor with Configurations {
   def apply(acceptedProjectRefs: Seq[ProjectRef])(implicit state: State, options: Options): Option[RepositoryData] =
     options.download.option {
       def updateReports(projectRef: ProjectRef) =
-        task(Keys.update.in(projectRef)).get
+        task(Keys.update.in(projectRef)).map(new UpdateReportAdapter(_)).get
       def updateClassifiersReports(projectRef: ProjectRef) =
-        task(Keys.updateClassifiers.in(projectRef)).get
+        task(Keys.updateClassifiers.in(projectRef)).map(new UpdateReportAdapter(_)).get
       def classpathTypes(projectRef: ProjectRef) =
         setting(Keys.classpathTypes.in(projectRef)).getOrElse(Set.empty)
       def dependencyConfigurations(projectRef: ProjectRef) =
