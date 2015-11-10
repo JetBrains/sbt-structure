@@ -14,7 +14,7 @@ import sbt._
 class DependenciesExtractor(projectRef: ProjectRef,
                             buildDependencies: Option[BuildDependencies],
                             unmanagedClasspath: sbt.Configuration => Keys.Classpath,
-                            externalDependecyClasspath: sbt.Configuration => Keys.Classpath,
+                            externalDependencyClasspath: sbt.Configuration => Keys.Classpath,
                             dependencyConfigurations: Seq[sbt.Configuration],
                             testConfigurations: Seq[sbt.Configuration])
   extends Modules {
@@ -69,7 +69,7 @@ class DependenciesExtractor(projectRef: ProjectRef,
 
   private def modulesIn(configuration: sbt.Configuration): Seq[ModuleID] =
       for {
-        attr <- externalDependecyClasspath(configuration)
+        attr <- externalDependencyClasspath(configuration)
         module <- attr.get(Keys.moduleID.key)
         artifact <- attr.get(Keys.artifact.key)
       } yield module.artifacts(artifact)
