@@ -51,7 +51,7 @@ class RepositoryExtractor(acceptedProjectRefs: Seq[ProjectRef],
   }
 
   private def getModuleReports(projectRef: ProjectRef, updateReportFn: ProjectRef => UpdateReportAdapter): Seq[ModuleReportAdapter] = {
-    dependencyConfigurations(projectRef).flatMap(updateReportFn(projectRef).modulesFrom).filter(_.artifacts.nonEmpty)
+    dependencyConfigurations(projectRef).map(_.name).flatMap(updateReportFn(projectRef).modulesFrom).filter(_.artifacts.nonEmpty)
   }
 
   private def merge(moduleReports: Seq[ModuleReportAdapter], classpathTypes: Set[String], docTypes: Set[String], srcTypes: Set[String]): Seq[ModuleData] = {

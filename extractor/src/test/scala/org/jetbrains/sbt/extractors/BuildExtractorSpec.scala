@@ -38,7 +38,7 @@ class BuildExtractorSpec extends Specification {
   }
 
   val stubUpdateClassifiersReport = UpdateReportAdapter(Map(
-    Compile ->(
+    Compile.name ->(
       stubDocs.map(toModuleReportAdapter(Artifact.DocType)) ++
       stubSources.map(toModuleReportAdapter(Artifact.SourceType))
     )))

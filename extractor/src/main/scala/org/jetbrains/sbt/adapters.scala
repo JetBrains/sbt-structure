@@ -10,17 +10,17 @@ case class LoadedBuildUnitAdapter(delegate: Load.LoadedBuildUnit) {
     delegate.unit.plugins.pluginData.dependencyClasspath
 }
 
-case class UpdateReportAdapter(configurationToModule: Map[Configuration, Seq[ModuleReportAdapter]]) {
+case class UpdateReportAdapter(configurationToModule: Map[String, Seq[ModuleReportAdapter]]) {
   def this(delegate: UpdateReport) {
     this(delegate.configurations.map { report =>
-      (config(report.configuration), report.modules.map(new ModuleReportAdapter(_)))
+      (report.configuration, report.modules.map(new ModuleReportAdapter(_)))
     }.toMap)
   }
 
   def allModules: Seq[ModuleReportAdapter] =
     configurationToModule.values.toSeq.flatten
 
-  def modulesFrom(configuration: Configuration): Seq[ModuleReportAdapter] =
+  def modulesFrom(configuration: String): Seq[ModuleReportAdapter] =
     configurationToModule.getOrElse(configuration, Seq.empty)
 }
 

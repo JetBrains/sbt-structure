@@ -26,7 +26,7 @@ class RepositoryExtractorSpec extends Specification {
 
     "extract module that have artifacts with classifiers as different modules" in {
       val updateReport = Map(projects(0) -> UpdateReportAdapter(Map(
-        sbt.Compile -> Seq(ModuleReportAdapter(
+        sbt.Compile.name -> Seq(ModuleReportAdapter(
           ModuleID("com.example", "foo", "SNAPSHOT"), Seq(
             Artifact("foo") -> file("foo.jar"),
             Artifact("foo", "tests") -> file("foo-tests.jar")
@@ -79,13 +79,13 @@ class RepositoryExtractorSpec extends Specification {
     modules.map { case (id, (bin, doc, src)) => ModuleData(id, bin, doc, src) }
 
   val updateReport = Map(
-    sbt.Compile -> toModuleReportWithoutDocs(modules),
-    sbt.Test    -> toModuleReportWithoutDocs(modules)
+    sbt.Compile.name -> toModuleReportWithoutDocs(modules),
+    sbt.Test.name    -> toModuleReportWithoutDocs(modules)
   )
 
   val updateClassifiersReport = Map(
-    sbt.Compile -> toModuleReportDocsOnly(modules),
-    sbt.Test    -> toModuleReportDocsOnly(modules)
+    sbt.Compile.name -> toModuleReportDocsOnly(modules),
+    sbt.Test.name    -> toModuleReportDocsOnly(modules)
   )
 
   val updateReports = Map(
