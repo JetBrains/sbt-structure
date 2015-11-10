@@ -35,7 +35,7 @@ class DependenciesExtractorSpec extends Specification {
       actual must beIdenticalTo(expected)
     }
 
-    "merge configurations in unmanaged and managed dependencies when necessary" in {
+    "merge custom test configurations in unmanaged and managed dependencies" in {
       val actual = new DependenciesExtractor(
         stubProject1, None,
         toUnmanagedClasspath(unmanagedDependenciesWithCustomConf),
@@ -47,20 +47,59 @@ class DependenciesExtractorSpec extends Specification {
       actual must beIdenticalTo(expected)
     }
 
-    "correctly extract managed dependencies with classifiers" in {
-      val moduleId = ModuleID("com.example", "foo", "SNAPSHOT")
+    "extract managed dependency with classifier as different dependencies" in {
+      val moduleId = "com.example" % "foo" % "SNAPSHOT"
       val externalDependencyClasspath = Map(
         sbt.Compile -> Seq(
-          Attributed(file("foo.jar"))(AttributeMap.empty.put(sbt.Keys.moduleID.key, moduleId).put(sbt.Keys.artifact.key, Artifact("foo"))),
-          Attributed(file("foo-tests.jar"))(AttributeMap.empty.put(sbt.Keys.moduleID.key, moduleId).put(sbt.Keys.artifact.key, Artifact("foo", "tests")))
+          attributedWith(file("foo.jar"))(moduleId, Artifact("foo")),
+          attributedWith(file("foo-tests.jar"))(moduleId, Artifact("foo", "tests"))
         )
       )
       val actual = new DependenciesExtractor(stubProject1, None, emptyClasspath, externalDependencyClasspath.apply, Seq(sbt.Compile), Seq.empty).extract
-      val expectedModules = Seq(
-        ModuleDependencyData(ModuleIdentifier(moduleId.organization, moduleId.name, moduleId.revision, Artifact.DefaultType, ""), Seq(jb.Configuration.Compile)),
-        ModuleDependencyData(ModuleIdentifier(moduleId.organization, moduleId.name, moduleId.revision, Artifact.DefaultType, "tests"), Seq(jb.Configuration.Compile))
+      val expectedModules = Seq(toIdentifier(moduleId), toIdentifier(moduleId).copy(classifier = "tests"))
+      val expected = DependencyData(Nil, expectedModules.map(it => ModuleDependencyData(it, Seq(jb.Configuration.Compile))), Nil)
+      actual must beIdenticalTo(expected)
+    }
+
+    "merge (compile, test, runtime) -> compile in unmanaged and managed dependencies to match IDEA scopes" in {
+      val moduleId = "com.example" % "foo" % "SNAPSHOT"
+      val externalDependencyClasspath = Map(
+        sbt.Compile -> Seq(attributedWith(file("foo.jar"))(moduleId, Artifact("foo"))),
+        sbt.Test    -> Seq(attributedWith(file("foo.jar"))(moduleId, Artifact("foo"))),
+        sbt.Runtime -> Seq(attributedWith(file("foo.jar"))(moduleId, Artifact("foo")))
       )
-      val expected = DependencyData(Nil, expectedModules, Nil)
+      val unmanagedClasspath = Map(
+        sbt.Compile -> Seq(attributedWithNothing(existingFile("bar.jar"))),
+        sbt.Test    -> Seq(attributedWithNothing(existingFile("bar.jar"))),
+        sbt.Runtime -> Seq(attributedWithNothing(existingFile("bar.jar")))
+      )
+      val actual = new DependenciesExtractor(
+        stubProject1, None, unmanagedClasspath.apply, externalDependencyClasspath.apply,
+        Seq(sbt.Compile, sbt.Test, sbt.Runtime), Seq.empty).extract
+      val expected = DependencyData(Nil,
+        Seq(ModuleDependencyData(toIdentifier(moduleId), Seq(jb.Configuration.Compile))),
+        Seq(JarDependencyData(file("bar.jar"), Seq(jb.Configuration.Compile)))
+      )
+      actual must beIdenticalTo(expected)
+    }
+
+    "merge (compile, test) -> provided in unmanaged and managed dependencies to match IDEA scopes" in {
+      val moduleId = "com.example" % "foo" % "SNAPSHOT"
+      val externalDependencyClasspath = Map(
+        sbt.Compile -> Seq(attributedWith(file("foo.jar"))(moduleId, Artifact("foo"))),
+        sbt.Test    -> Seq(attributedWith(file("foo.jar"))(moduleId, Artifact("foo")))
+      )
+      val unmanagedClasspath = Map(
+        sbt.Compile -> Seq(attributedWithNothing(existingFile("bar.jar"))),
+        sbt.Test    -> Seq(attributedWithNothing(existingFile("bar.jar")))
+      )
+      val actual = new DependenciesExtractor(
+        stubProject1, None, unmanagedClasspath.apply, externalDependencyClasspath.apply,
+        Seq(sbt.Compile, sbt.Test), Seq.empty).extract
+      val expected = DependencyData(Nil,
+        Seq(ModuleDependencyData(toIdentifier(moduleId), Seq(jb.Configuration.Provided))),
+        Seq(JarDependencyData(file("bar.jar"), Seq(jb.Configuration.Provided)))
+      )
       actual must beIdenticalTo(expected)
     }
   }
@@ -70,6 +109,15 @@ class DependenciesExtractorSpec extends Specification {
       (actual.jars must containTheSameElementsAs(expected.jars)) and
       (actual.modules must containTheSameElementsAs(expected.modules))
   }
+
+  def attributedWith(file: File)(moduleId: ModuleID, artifact: Artifact): Attributed[File] =
+    Attributed(file)(AttributeMap.empty.put(sbt.Keys.moduleID.key, moduleId).put(sbt.Keys.artifact.key, artifact))
+
+  def attributedWithNothing(file: File): Attributed[File] =
+    Attributed(file)(AttributeMap.empty)
+
+  def toIdentifier(moduleId: ModuleID): ModuleIdentifier =
+    ModuleIdentifier(moduleId.organization, moduleId.name, moduleId.revision, Artifact.DefaultType, "")
 
   val stubProject1 = ProjectRef(file("/tmp/test-project"), "project-1")
   val stubProject2 = ProjectRef(file("/tmp/test-project"), "project-2")
