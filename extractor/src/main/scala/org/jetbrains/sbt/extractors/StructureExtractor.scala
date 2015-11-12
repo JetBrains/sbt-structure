@@ -9,7 +9,7 @@ import Project.Initialize
 
 object StructureExtractor {
 
-  def task: Initialize[Task[StructureData]] =
+  def taskDef: Initialize[Task[StructureData]] =
     ( StructureKeys.extractProjects
     , StructureKeys.extractRepository
     , Keys.sbtVersion) map {

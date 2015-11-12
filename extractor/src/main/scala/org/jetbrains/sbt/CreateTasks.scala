@@ -26,7 +26,7 @@ object CreateTasks extends (State => State) {
       StructureKeys.extractRepository <<=
         RepositoryExtractor.taskDef,
       StructureKeys.extractStructure <<=
-        StructureExtractor.task
+        StructureExtractor.taskDef
     )
 
     val projectSettings = Seq[Setting[_]](
