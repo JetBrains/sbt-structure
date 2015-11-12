@@ -33,10 +33,10 @@ class DependenciesExtractorSpec extends Specification {
         buildDependencies = None,
         unmanagedClasspath = Map(
           sbt.Compile -> Seq(
-            attributed(existingFile("foo.jar")),
-            attributed(existingFile("bar.jar"))
+            attributed(file("foo.jar")),
+            attributed(file("bar.jar"))
           ),
-          sbt.Test -> Seq(attributed(existingFile("baz.jar")))
+          sbt.Test -> Seq(attributed(file("baz.jar")))
         ).apply,
         externalDependencyClasspath = emptyClasspath,
         dependencyConfigurations = Seq(sbt.Compile, sbt.Test),
@@ -85,8 +85,8 @@ class DependenciesExtractorSpec extends Specification {
       val actual = new DependenciesExtractor(projects(0),
         buildDependencies = None,
         unmanagedClasspath = Map(
-          sbt.Test    -> Seq(attributed(existingFile("foo.jar"))),
-          CustomConf  -> Seq(attributed(existingFile("bar.jar")))
+          sbt.Test    -> Seq(attributed(file("foo.jar"))),
+          CustomConf  -> Seq(attributed(file("bar.jar")))
         ).apply,
         externalDependencyClasspath = Map(
           sbt.Test    -> Seq(attributedWith(file("baz.jar"))(moduleId("baz"), Artifact("baz"))),
@@ -142,9 +142,9 @@ class DependenciesExtractorSpec extends Specification {
           sbt.Runtime -> Seq(attributedWith(file("foo.jar"))(moduleId, Artifact("foo")))
         ).apply,
         unmanagedClasspath = Map(
-          sbt.Compile -> Seq(attributed(existingFile("bar.jar"))),
-          sbt.Test    -> Seq(attributed(existingFile("bar.jar"))),
-          sbt.Runtime -> Seq(attributed(existingFile("bar.jar")))
+          sbt.Compile -> Seq(attributed(file("bar.jar"))),
+          sbt.Test    -> Seq(attributed(file("bar.jar"))),
+          sbt.Runtime -> Seq(attributed(file("bar.jar")))
         ).apply,
         dependencyConfigurations = Seq(sbt.Compile, sbt.Test, sbt.Runtime),
         testConfigurations = Seq.empty
@@ -163,8 +163,8 @@ class DependenciesExtractorSpec extends Specification {
       val actual = new DependenciesExtractor(projects(0),
         buildDependencies = None,
         unmanagedClasspath = Map(
-          sbt.Compile -> Seq(attributed(existingFile("bar.jar"))),
-          sbt.Test    -> Seq(attributed(existingFile("bar.jar")))
+          sbt.Compile -> Seq(attributed(file("bar.jar"))),
+          sbt.Test    -> Seq(attributed(file("bar.jar")))
         ).apply,
         externalDependencyClasspath = Map(
           sbt.Compile -> Seq(attributedWith(file("foo.jar"))(moduleId, Artifact("foo"))),
@@ -196,10 +196,6 @@ class DependenciesExtractorSpec extends Specification {
 
   def toIdentifier(moduleId: ModuleID): ModuleIdentifier =
     ModuleIdentifier(moduleId.organization, moduleId.name, moduleId.revision, Artifact.DefaultType, "")
-
-  def existingFile(path: String) = new File(path) {
-    override def isFile: Boolean = true
-  }
 
   val projects = Seq("project-1", "project-2").map(ProjectRef(file("/tmp/test-project"), _))
   val emptyClasspath: sbt.Configuration => Keys.Classpath = _ => Nil

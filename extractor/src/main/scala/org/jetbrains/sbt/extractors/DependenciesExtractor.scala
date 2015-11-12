@@ -65,7 +65,7 @@ class DependenciesExtractor(projectRef: ProjectRef,
   }
 
   private def jarsIn(configuration: sbt.Configuration): Seq[File] =
-    unmanagedClasspath(configuration).map(_.data).filter(_.isFile)
+    unmanagedClasspath(configuration).map(_.data)
 
   private def modulesIn(configuration: sbt.Configuration): Seq[ModuleID] =
       for {
