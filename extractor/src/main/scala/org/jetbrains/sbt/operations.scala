@@ -32,8 +32,10 @@ trait SbtStateOps {
     def getOrElse(state: State, default: => Task[T]): Task[T] =
       find(state).getOrElse(default)
 
-    def forAllProjects(state: State, projects: Seq[ProjectRef]): Task[Map[ProjectRef, T]] =
-      projects.map(p => key.in(p).get(structure(state).data).get.map(it => (p, it))).join.map(_.toMap)
+    def forAllProjects(state: State, projects: Seq[ProjectRef]): Task[Map[ProjectRef, T]] = {
+      val tasks = projects.flatMap(p => key.in(p).get(structure(state).data).map(_.map(it => (p, it))))
+      std.TaskExtra.joinTasks(tasks).join.map(_.toMap)
+    }
   }
 
   def projectSetting[T](key: SettingKey[T])(implicit state: State, projectRef: ProjectRef): Option[T] =
