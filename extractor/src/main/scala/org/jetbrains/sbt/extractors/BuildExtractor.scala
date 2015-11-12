@@ -26,7 +26,7 @@ class BuildExtractor(unit: LoadedBuildUnitAdapter, updateSbtClassifiers: Option[
 
 object BuildExtractor extends SbtStateOps {
   def apply(implicit state: State, projectRef: ProjectRef, options: Options): BuildData = {
-    val unit = LoadedBuildUnitAdapter(structure.units(projectRef.build))
+    val unit = LoadedBuildUnitAdapter(structure(state).units(projectRef.build))
     val updateSbtClassifiers =
       if (options.download && options.resolveSbtClassifiers)
         projectTask(Keys.updateSbtClassifiers).map(new UpdateReportAdapter(_))

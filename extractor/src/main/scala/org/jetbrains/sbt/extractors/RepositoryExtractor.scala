@@ -79,7 +79,7 @@ object RepositoryExtractor extends SbtStateOps with ConfigurationOps {
       def updateClassifiersReports(projectRef: ProjectRef) =
         task(Keys.updateClassifiers.in(projectRef)).map(new UpdateReportAdapter(_)).get
       def classpathTypes(projectRef: ProjectRef) =
-        setting(Keys.classpathTypes.in(projectRef)).getOrElse(Set.empty)
+        setting(Keys.classpathTypes.in(projectRef), state).getOrElse(Set.empty)
       def dependencyConfigurations(projectRef: ProjectRef) =
         getDependencyConfigurations(state, projectRef)
 

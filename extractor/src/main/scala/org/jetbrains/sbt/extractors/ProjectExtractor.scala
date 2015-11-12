@@ -2,6 +2,7 @@ package org.jetbrains.sbt
 package extractors
 
 import org.jetbrains.sbt.structure._
+import sbt.Project.Initialize
 import sbt._
 
 /**

@@ -8,14 +8,14 @@ import sbt._
  * @since 4/10/15.
  */
 trait SbtStateOps {
-  def structure(implicit state: State): Load.BuildStructure =
-    Project.extract(state).structure
+  def structure(state: State): Load.BuildStructure =
+    sbt.Project.structure(state)
 
-  def setting[T](key: SettingKey[T])(implicit state: State): Option[T] =
-    key.get(structure.data)
+  def setting[T](key: SettingKey[T], state: State): Option[T] =
+    key.get(structure(state).data)
 
   def projectSetting[T](key: SettingKey[T])(implicit state: State, projectRef: ProjectRef): Option[T] =
-    key.in(projectRef).get(structure.data)
+    key.in(projectRef).get(structure(state).data)
 
   def task[T](key: TaskKey[T])(implicit state: State): Option[T] =
     Project.runTask(key, state).collect { case (_, Value(value)) => value }
