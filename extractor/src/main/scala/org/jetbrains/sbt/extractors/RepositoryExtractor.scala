@@ -2,6 +2,7 @@ package org.jetbrains.sbt
 package extractors
 
 import org.jetbrains.sbt.structure.{ModuleData, RepositoryData}
+import sbt.Project.Initialize
 import sbt._
 
 /**
@@ -71,21 +72,29 @@ class RepositoryExtractor(acceptedProjectRefs: Seq[ProjectRef],
   }
 }
 
-object RepositoryExtractor extends SbtStateOps {
-  def apply(acceptedProjectRefs: Seq[ProjectRef])(implicit state: State, options: Options): Option[RepositoryData] =
-    options.download.option {
-      def updateReports(projectRef: ProjectRef) =
-        task(Keys.update.in(projectRef)).map(new UpdateReportAdapter(_)).get
-      def updateClassifiersReports(projectRef: ProjectRef) =
-        task(Keys.updateClassifiers.in(projectRef)).map(new UpdateReportAdapter(_)).get
-      def classpathTypes(projectRef: ProjectRef) =
-        setting(Keys.classpathTypes.in(projectRef), state).getOrElse(Set.empty)
-      def dependencyConfigurations(projectRef: ProjectRef) =
-        setting(StructureKeys.dependencyConfigurations.in(projectRef), state).get
+object RepositoryExtractor extends SbtStateOps with TaskOps {
 
-      if (options.resolveSbtClassifiers)
-        new RepositoryExtractor(acceptedProjectRefs, updateReports, Some(updateClassifiersReports), classpathTypes, dependencyConfigurations).extract
-      else
-        new RepositoryExtractor(acceptedProjectRefs, updateReports, None, classpathTypes, dependencyConfigurations).extract
+  def taskDef: Initialize[Task[Option[RepositoryData]]] =
+    (Keys.state, StructureKeys.sbtStructureOpts, StructureKeys.acceptedProjects).flatMap {
+      (state, options, acceptedProjects) =>
+        extractRepositoryData(state, options, acceptedProjects).onlyIf(options.download)
     }
+
+  private def extractRepositoryData(state: State, options: Options, acceptedProjects: Seq[ProjectRef]): Task[RepositoryData] = {
+    def classpathTypes(projectRef: ProjectRef) =
+      Keys.classpathTypes.in(projectRef).getOrElse(state, Set.empty)
+    def dependencyConfigurations(projectRef: ProjectRef) =
+      StructureKeys.dependencyConfigurations.in(projectRef).get(state)
+    val updateAllTask =
+      Keys.update.forAllProjects(state, acceptedProjects).map(_.mapValues(new UpdateReportAdapter(_)))
+    val updateAllClassifiersTask =
+      Keys.updateClassifiers.forAllProjects(state, acceptedProjects).map(_.mapValues(new UpdateReportAdapter(_)))
+
+    updateAllTask.flatMap { updateReports =>
+      updateAllClassifiersTask.onlyIf(options.resolveClassifiers).map { updateClassifiersReports =>
+        new RepositoryExtractor(acceptedProjects, updateReports.apply,
+          updateClassifiersReports.map(_.apply), classpathTypes, dependencyConfigurations).extract
+      }
+    }
+  }
 }

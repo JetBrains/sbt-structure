@@ -24,10 +24,7 @@ object CreateTasks extends (State => State) {
             acceptedProjects.flatMap(ref => ProjectExtractor(ref)(state, options))
         },
       StructureKeys.extractRepository <<=
-        (Keys.state, StructureKeys.sbtStructureOpts, StructureKeys.acceptedProjects).map {
-          (state, options, acceptedProjects) =>
-            RepositoryExtractor(acceptedProjects)(state, options)
-        },
+        RepositoryExtractor.taskDef,
       StructureKeys.extractStructure <<=
         StructureExtractor.task
     )

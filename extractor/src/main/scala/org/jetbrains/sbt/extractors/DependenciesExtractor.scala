@@ -107,8 +107,8 @@ object DependenciesExtractor extends SbtStateOps {
         case _ => Seq.empty
       }
 
-    val dependencyConfigurations = setting(StructureKeys.dependencyConfigurations.in(projectRef), state).get
-    val testConfigurations = setting(StructureKeys.testConfigurations.in(projectRef), state).get
+    val dependencyConfigurations = StructureKeys.dependencyConfigurations.in(projectRef).get(state)
+    val testConfigurations = StructureKeys.testConfigurations.in(projectRef).get(state)
 
     new DependenciesExtractor(projectRef,
       buildDependencies, unmanagedClasspath, externalDependecyClasspath,

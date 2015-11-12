@@ -42,8 +42,8 @@ object UtilityTasks extends SbtStateOps {
     structure(state).allProjectRefs.filter { case ref@ProjectRef(_, id) =>
       val isProjectAccepted = structure(state).allProjects.find(_.id == id).exists(areNecessaryPluginsLoaded)
       val shouldSkipProject =
-        setting(SettingKeys.ideSkipProject.in(ref), state).getOrElse(false) ||
-          setting(SettingKeys.sbtIdeaIgnoreModule.in(ref), state).getOrElse(false)
+        SettingKeys.ideSkipProject.in(ref).getOrElse(state, false) ||
+          SettingKeys.sbtIdeaIgnoreModule.in(ref).getOrElse(state, false)
       isProjectAccepted && !shouldSkipProject
     }
   }
@@ -62,6 +62,8 @@ object UtilityTasks extends SbtStateOps {
 
   def dependencyConfigurations =
     StructureKeys.sourceConfigurations.apply(_ ++ Seq(Runtime, Provided, Optional))
+
+  def noneTask[T]: Task[Option[T]] = std.TaskExtra.task(None)
 
   private def areNecessaryPluginsLoaded(project: ResolvedProject): Boolean = {
     // Here is a hackish way to test whether project has JvmPlugin enabled.

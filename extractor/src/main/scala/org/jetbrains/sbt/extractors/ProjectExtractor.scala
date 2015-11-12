@@ -120,8 +120,8 @@ object ProjectExtractor extends SbtStateOps {
       val android = AndroidSdkPluginExtractor.apply
       val play2 = Play2Extractor.apply
 
-      val sourceConfigurations = setting(StructureKeys.sourceConfigurations.in(projectRef), state).get
-      val testConfigurations = setting(StructureKeys.testConfigurations.in(projectRef), state).get
+      val sourceConfigurations = StructureKeys.sourceConfigurations.in(projectRef).get(state)
+      val testConfigurations = StructureKeys.testConfigurations.in(projectRef).get(state)
 
       new ProjectExtractor(
         projectRef, name, organization, version, base, target,
