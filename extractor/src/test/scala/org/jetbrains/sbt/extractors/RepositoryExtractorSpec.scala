@@ -14,7 +14,7 @@ class RepositoryExtractorSpec extends Specification {
       val moduleId = (name: String) => ModuleID("com.example", name, "SNAPSHOT")
 
       val actual = new RepositoryExtractor(
-        acceptedProjectRefs = projects,
+        projects = projects,
         updateReports = Map(
           projects(0) -> UpdateReportAdapter(Map(
             sbt.Compile.name -> Seq(
@@ -46,7 +46,7 @@ class RepositoryExtractorSpec extends Specification {
       val moduleId = (name: String) => ModuleID("com.example", name, "SNAPSHOT")
 
       val actual = new RepositoryExtractor(
-        acceptedProjectRefs = projects,
+        projects = projects,
         updateReports = Map(
           projects(0) -> UpdateReportAdapter(Map(
             sbt.Compile.name -> Seq(
@@ -91,7 +91,7 @@ class RepositoryExtractorSpec extends Specification {
       val moduleId = "com.example" % "foo" % "SNAPSHOT"
 
       val actual = new RepositoryExtractor(
-        acceptedProjectRefs = projects.init,
+        projects = projects.init,
         updateReports = Map(
           projects(0) -> UpdateReportAdapter(Map(
             sbt.Compile.name -> Seq(
