@@ -30,9 +30,18 @@ object CreateTasks extends (State => State) {
         },
       StructureKeys.extractStructure <<=
         StructureExtractor.task
-
     )
-    applySettings(state, globalSettings, Nil)
+
+    val projectSettings = Seq[Setting[_]](
+      StructureKeys.testConfigurations <<=
+        UtilityTasks.testConfigurations,
+      StructureKeys.sourceConfigurations <<=
+        UtilityTasks.sourceConfigurations,
+      StructureKeys.dependencyConfigurations <<=
+        UtilityTasks.dependencyConfigurations
+    )
+
+    applySettings(state, globalSettings, projectSettings)
   }
 
   private def applySettings(state: State, globalSettings: Seq[Setting[_]], projectSettings: Seq[Setting[_]]): State = {

@@ -90,7 +90,7 @@ class DependenciesExtractor(projectRef: ProjectRef,
   }
 }
 
-object DependenciesExtractor extends SbtStateOps with ConfigurationOps {
+object DependenciesExtractor extends SbtStateOps {
   def apply(implicit state: State, projectRef: ProjectRef, options: Options): DependencyData = {
     val buildDependencies = projectSetting(Keys.buildDependencies)
 
@@ -107,8 +107,11 @@ object DependenciesExtractor extends SbtStateOps with ConfigurationOps {
         case _ => Seq.empty
       }
 
+    val dependencyConfigurations = setting(StructureKeys.dependencyConfigurations.in(projectRef), state).get
+    val testConfigurations = setting(StructureKeys.testConfigurations.in(projectRef), state).get
+
     new DependenciesExtractor(projectRef,
       buildDependencies, unmanagedClasspath, externalDependecyClasspath,
-      getDependencyConfigurations, getTestConfigurations).extract
+      dependencyConfigurations, testConfigurations).extract
   }
 }

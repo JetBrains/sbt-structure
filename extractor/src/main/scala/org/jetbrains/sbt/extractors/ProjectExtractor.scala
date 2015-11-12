@@ -89,7 +89,7 @@ class ProjectExtractor(projectRef: ProjectRef,
     }.toSeq
 }
 
-object ProjectExtractor extends SbtStateOps with ConfigurationOps {
+object ProjectExtractor extends SbtStateOps {
   def apply(projectRef: ProjectRef)(implicit state: State, options: Options): Option[ProjectData] = {
     implicit val implicitProjectRef = projectRef
     for {
@@ -120,6 +120,9 @@ object ProjectExtractor extends SbtStateOps with ConfigurationOps {
       val android = AndroidSdkPluginExtractor.apply
       val play2 = Play2Extractor.apply
 
+      val sourceConfigurations = setting(StructureKeys.sourceConfigurations.in(projectRef), state).get
+      val testConfigurations = setting(StructureKeys.testConfigurations.in(projectRef), state).get
+
       new ProjectExtractor(
         projectRef, name, organization, version, base, target,
         ideBasePackages, sbtIdeaBasePackage,
@@ -135,8 +138,8 @@ object ProjectExtractor extends SbtStateOps with ConfigurationOps {
         scalacOptions,
         javaHome,
         javacOptions,
-        getSourceConfigurations,
-        getTestConfigurations,
+        sourceConfigurations,
+        testConfigurations,
         dependencies,
         build,
         android,

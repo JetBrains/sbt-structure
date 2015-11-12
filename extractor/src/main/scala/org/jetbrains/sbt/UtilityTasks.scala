@@ -48,6 +48,21 @@ object UtilityTasks extends SbtStateOps {
     }
   }
 
+  def testConfigurations: Initialize[Seq[sbt.Configuration]] = Keys.ivyConfigurations.apply { ivyConfigurations =>
+    val predefined = Set(Test, IntegrationTest)
+    for {
+      configuration <- ivyConfigurations
+      if !configuration.name.toLowerCase.contains("internal")
+      if predefined(configuration) || predefined.intersect(configuration.extendsConfigs.toSet).nonEmpty
+    } yield configuration
+  }
+
+  def sourceConfigurations =
+    StructureKeys.testConfigurations.apply(_ ++ Seq(Compile))
+
+  def dependencyConfigurations =
+    StructureKeys.sourceConfigurations.apply(_ ++ Seq(Runtime, Provided, Optional))
+
   private def areNecessaryPluginsLoaded(project: ResolvedProject): Boolean = {
     // Here is a hackish way to test whether project has JvmPlugin enabled.
     // Prior to 0.13.8 SBT had this one enabled by default for all projects.

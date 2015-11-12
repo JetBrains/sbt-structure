@@ -24,27 +24,6 @@ trait SbtStateOps {
     Project.runTask(key.in(projectRef), state).collect { case (_, Value(value)) => value }
 }
 
-trait ConfigurationOps {
-  protected val PredefinedTestConfigurations = Set(Test, IntegrationTest)
-
-  protected def getTestConfigurations(implicit state: State, projectRef: ProjectRef): Seq[Configuration] = {
-    val configurations = Keys.ivyConfigurations.in(projectRef)
-      .get(Project.extract(state).structure.data)
-      .getOrElse(Seq.empty)
-    for {
-      configuration <- configurations
-      if !configuration.name.toLowerCase.contains("internal")
-      if PredefinedTestConfigurations(configuration) || PredefinedTestConfigurations.intersect(configuration.extendsConfigs.toSet).nonEmpty
-    } yield configuration
-  }
-
-  protected def getDependencyConfigurations(implicit state: State, projectRef: ProjectRef): Seq[Configuration] =
-    Seq(Compile, Runtime, Provided, Optional) ++ getTestConfigurations
-
-  protected def getSourceConfigurations(implicit state: State, projectRef: ProjectRef): Seq[Configuration] =
-    Seq(Compile) ++ getTestConfigurations
-}
-
 trait ModulesOps {
 
   protected def fuseClassifier(artifact: Artifact): String = {

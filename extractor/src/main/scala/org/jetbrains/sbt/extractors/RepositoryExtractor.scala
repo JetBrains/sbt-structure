@@ -71,7 +71,7 @@ class RepositoryExtractor(acceptedProjectRefs: Seq[ProjectRef],
   }
 }
 
-object RepositoryExtractor extends SbtStateOps with ConfigurationOps {
+object RepositoryExtractor extends SbtStateOps {
   def apply(acceptedProjectRefs: Seq[ProjectRef])(implicit state: State, options: Options): Option[RepositoryData] =
     options.download.option {
       def updateReports(projectRef: ProjectRef) =
@@ -81,7 +81,7 @@ object RepositoryExtractor extends SbtStateOps with ConfigurationOps {
       def classpathTypes(projectRef: ProjectRef) =
         setting(Keys.classpathTypes.in(projectRef), state).getOrElse(Set.empty)
       def dependencyConfigurations(projectRef: ProjectRef) =
-        getDependencyConfigurations(state, projectRef)
+        setting(StructureKeys.dependencyConfigurations.in(projectRef), state).get
 
       if (options.resolveSbtClassifiers)
         new RepositoryExtractor(acceptedProjectRefs, updateReports, Some(updateClassifiersReports), classpathTypes, dependencyConfigurations).extract
