@@ -1,13 +1,14 @@
-package org.jetbrains.sbt
+package org.jetbrains
 
-import sbt.ProjectRef
+import _root_.sbt.ProjectRef
 
 //import scala.language.implicitConversions
 
 /**
  * @author Pavel Fatin
+ * @author Nikolay Obedin
  */
-object Utilities {
+package object sbt {
   implicit def seqToDistinct[T](xs: Seq[T]) = new {
     def distinctBy[A](f: T => A): Seq[T] = {
       val (_, ys) = xs.foldLeft((Set.empty[A], Vector.empty[T])) {

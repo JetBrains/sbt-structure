@@ -3,7 +3,6 @@ package extractors
 
 import org.jetbrains.sbt.structure.{ModuleData, RepositoryData}
 import sbt._
-import Utilities._
 
 /**
  * @author Nikolay Obedin

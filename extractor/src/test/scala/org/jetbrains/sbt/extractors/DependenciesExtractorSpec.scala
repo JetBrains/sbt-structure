@@ -1,7 +1,7 @@
 package org.jetbrains.sbt
 package extractors
 
-import org.jetbrains.sbt.Utilities._
+import org.jetbrains.sbt._
 import org.jetbrains.sbt.structure._
 import org.jetbrains.sbt.{structure => jb}
 import org.specs2.matcher.Matcher

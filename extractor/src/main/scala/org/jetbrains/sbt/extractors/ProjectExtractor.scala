@@ -3,7 +3,6 @@ package extractors
 
 import org.jetbrains.sbt.structure._
 import sbt._
-import Utilities._
 
 /**
  * @author Nikolay Obedin

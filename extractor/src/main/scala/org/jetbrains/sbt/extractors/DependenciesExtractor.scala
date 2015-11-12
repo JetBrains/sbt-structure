@@ -3,7 +3,6 @@ package extractors
 
 import org.jetbrains.sbt.structure.{DependencyData, JarDependencyData, ModuleDependencyData, ProjectDependencyData}
 import org.jetbrains.sbt.{structure => jb}
-import Utilities._
 import sbt._
 
 /**

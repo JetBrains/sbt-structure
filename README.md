@@ -36,20 +36,27 @@ val structure: Either[Throwable, StructureData] = structureXml.deserialize[Struc
 
 ### Extractor
 
-Extractor is run via `apply` command of SBT REPL and configured via `artifactClassifier` and `artifactPath` SBT keys.
-In order to run extractor you need to download its jar file, put it somewhere, run SBT REPL and execute in it:
+Extractor is run in several steps:
+
+- Configure it by defining `sbt-structure-output-file` and
+  `sbt-structure-options` settings in `Global` scope.
+- Create necessary tasks by applying extractor's jar to your project
+- Run `dump-structure` task in `Global` scope
+
+Here is an example of how to run extractor from SBT REPL:
 
 ```scala
-> set artifactPath := file("structure.xml")
-> set artifactClassifier := Some("prettyPrint download")
-// Lines above are optional, will be covered later
-> apply -cp <path-to-extractor-jar> org.jetbrains.sbt.ReadProject
+> set SettingKey[Option[File]]("sbt-structure-output-file") := Some(file("structure.xml"))
+> set SettingKey[String]("sbt-structure-options") := "prettyPrint download"
+> apply -cp <path-to-extractor-jar> org.jetbrains.sbt.CreateTasks
+> */*:dump-structure
 ```
 
-`artifactClassifier` contains space-separated list of options and `artifactPath` points to a file where
-structure will be written. If `artifactPath` is not set structure will be printed to stdout.
+`sbt-structure-options` contains space-separated list of options.
+`sbt-structure-output-file` points to a file where structure will be written; if
+it is set to `None` then structure will be dump into stdout.
 
-Available options to set in `artifactClassifier`:
+Available options to set in `sbt-structure-options`:
 
 - `download`
 

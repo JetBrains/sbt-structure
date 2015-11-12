@@ -6,6 +6,7 @@ import scala.io.Source
 
 /**
  * @author Pavel Fatin
+ * @author Nikolay Obedin
  */
 object Loader {
   private val JavaVM = path(new File(new File(new File(System.getProperty("java.home")), "bin"), "java"))
@@ -15,12 +16,17 @@ object Loader {
     val structureFile = createTempFile("sbt-structure", ".xml")
     val commandsFile = createTempFile("sbt-commands", ".lst")
 
-    val opts = if (resolveClassifiers) Some("\"download resolveClassifiers resolveSbtClassifiers prettyPrint\"") else Some("\"download prettyPrint\"")
+    val opts =
+      if (resolveClassifiers)
+        "download resolveClassifiers resolveSbtClassifiers prettyPrint"
+      else
+        "download prettyPrint"
 
     writeLinesTo(commandsFile,
-      "set artifactPath := file(\"" + path(structureFile) + "\")",
-      "set artifactClassifier := " + opts,
-      "apply -cp " + path(pluginFile) + " org.jetbrains.sbt.ReadProject")
+      "set SettingKey[Option[File]](\"sbt-structure-output-file\") in Global := Some(file(\"" + path(structureFile) + "\"))",
+      "set SettingKey[String](\"sbt-structure-options\") in Global := \"" + opts + "\"",
+      "apply -cp " + path(pluginFile) + " org.jetbrains.sbt.CreateTasks",
+      "*/*:dump-structure")
 
     val commands = Seq(JavaVM,
 //      "-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=5005",
@@ -33,7 +39,7 @@ object Loader {
 
     assert(structureFile.exists, "File must be created: " + structureFile.getPath)
 
-    read(structureFile)
+    TestUtil.read(structureFile)
   }
 
   private def path(file: File): String = file.getAbsolutePath.replace('\\', '/')

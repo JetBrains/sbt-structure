@@ -18,5 +18,13 @@ object Options {
     cachedUpdate = options.contains("cachedUpdate"),
     prettyPrint = options.contains("prettyPrint")
   )
+
+  def default: Options = Options(
+    download = false,
+    resolveClassifiers = false,
+    resolveSbtClassifiers = false,
+    cachedUpdate = false,
+    prettyPrint = false
+  )
 }
 
