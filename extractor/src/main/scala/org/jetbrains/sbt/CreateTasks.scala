@@ -36,7 +36,9 @@ object CreateTasks extends (State => State) {
         UtilityTasks.dependencyConfigurations,
 
       StructureKeys.extractAndroid <<=
-        AndroidSdkPluginExtractor.taskDef
+        AndroidSdkPluginExtractor.taskDef,
+      StructureKeys.extractPlay2 <<=
+        Play2Extractor.taskDef
     )
 
     applySettings(state, globalSettings, projectSettings)

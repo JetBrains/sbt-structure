@@ -117,7 +117,7 @@ object ProjectExtractor extends SbtStateOps {
 
       val dependencies = DependenciesExtractor.apply
       val build = BuildExtractor.apply
-      val play2 = Play2Extractor.apply
+      val play2 = projectTask(StructureKeys.extractPlay2).flatten
       val android = projectTask(StructureKeys.extractAndroid).flatten
 
       val sourceConfigurations = StructureKeys.sourceConfigurations.in(projectRef).get(state)
