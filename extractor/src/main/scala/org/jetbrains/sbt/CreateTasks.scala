@@ -40,7 +40,9 @@ object CreateTasks extends (State => State) {
       StructureKeys.extractPlay2 <<=
         Play2Extractor.taskDef,
       StructureKeys.extractBuild <<=
-        BuildExtractor.taskDef
+        BuildExtractor.taskDef,
+      StructureKeys.extractDependencies <<=
+        DependenciesExtractor.taskDef
     )
 
     applySettings(state, globalSettings, projectSettings)
