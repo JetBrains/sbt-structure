@@ -48,7 +48,11 @@ trait SbtStateOps {
 trait TaskOps {
   implicit def `enrich Task`[T](task: Task[T]) = new {
     def onlyIf(condition: => Boolean): Task[Option[T]] =
-      if (condition) task.map(Some(_)) else UtilityTasks.noneTask
+      if (condition) task.map(Some(_)) else std.TaskExtra.task(None)
+  }
+
+  implicit def `any to Task`[T](value: T) = new {
+    def toTask: Task[T] = std.TaskExtra.task(value)
   }
 }
 

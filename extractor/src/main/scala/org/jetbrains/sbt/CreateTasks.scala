@@ -14,10 +14,8 @@ object CreateTasks extends (State => State) {
         StructureKeys.sbtStructureOptions.apply(Options.readFromString),
       StructureKeys.dumpStructure <<=
         UtilityTasks.dumpStructure,
-
       StructureKeys.acceptedProjects <<=
         UtilityTasks.acceptedProjects,
-
       StructureKeys.extractProjects <<=
         (Keys.state, StructureKeys.sbtStructureOpts, StructureKeys.acceptedProjects).map {
           (state, options, acceptedProjects) =>
@@ -35,7 +33,10 @@ object CreateTasks extends (State => State) {
       StructureKeys.sourceConfigurations <<=
         UtilityTasks.sourceConfigurations,
       StructureKeys.dependencyConfigurations <<=
-        UtilityTasks.dependencyConfigurations
+        UtilityTasks.dependencyConfigurations,
+
+      StructureKeys.extractAndroid <<=
+        AndroidSdkPluginExtractor.taskDef
     )
 
     applySettings(state, globalSettings, projectSettings)

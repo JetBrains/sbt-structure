@@ -63,8 +63,6 @@ object UtilityTasks extends SbtStateOps {
   def dependencyConfigurations =
     StructureKeys.sourceConfigurations.apply(_ ++ Seq(Runtime, Provided, Optional))
 
-  def noneTask[T]: Task[Option[T]] = std.TaskExtra.task(None)
-
   private def areNecessaryPluginsLoaded(project: ResolvedProject): Boolean = {
     // Here is a hackish way to test whether project has JvmPlugin enabled.
     // Prior to 0.13.8 SBT had this one enabled by default for all projects.

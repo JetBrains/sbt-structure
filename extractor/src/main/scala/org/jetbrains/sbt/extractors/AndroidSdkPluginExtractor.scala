@@ -6,65 +6,57 @@ package extractors
 import java.io.File
 
 import org.jetbrains.sbt.structure.{ApkLib, AndroidData}
-import sbt.Keys._
 import sbt._
+import sbt.Project.Initialize
 
 
-class AndroidSdkPluginExtractor(implicit projectRef: ProjectRef) extends SbtStateOps {
+object AndroidSdkPluginExtractor extends SbtStateOps with TaskOps {
 
-  import AndroidSdkPluginExtractor._
-
-  def extract(implicit state: State): Option[AndroidData] = {
-    val keys = state.attributes.get(sessionSettings) match {
-      case Some(SessionSettings(_, _, settings, _, _, _)) => settings map { _.key }
-      case _ => Seq.empty
-    }
-
-    try {
-      for {
-        targetVersion   <- projectTask(Keys.targetSdkVersion) orElse projectSetting(Keys.targetSdkVersion_1_3)
-        manifest        <- projectSetting(Keys.manifestPath)
-        apk             <- projectSetting(Keys.apkFile)
-        isLibrary       <- projectSetting(Keys.libraryProject)
-        proguardConfig  <- projectTask(Keys.proguardConfig)
-        proguardOptions <- projectTask(Keys.proguardOptions)
-        layoutAsAny     <- findSettingKey(keys, "projectLayout").flatMap(projectSetting(_))
-        apklibsAsAny    <- findTaskKey(keys, "apklibs").flatMap(projectTask(_))
-      } yield {
-        val layout = layoutAsAny.asInstanceOf[ProjectLayout]
-        val apklibs = apklibsAsAny.asInstanceOf[Seq[LibraryDependency]]
-        AndroidData(targetVersion, manifest, apk,
-          layout.res, layout.assets, layout.gen, layout.libs,
-          isLibrary, proguardConfig ++ proguardOptions, apklibs.map(libraryDepToApkLib))
+  def taskDef: Initialize[Task[Option[AndroidData]]] =
+    (sbt.Keys.state, sbt.Keys.thisProjectRef) flatMap { (state, projectRef) =>
+      val keys = state.attributes.get(sbt.Keys.sessionSettings) match {
+        case Some(SessionSettings(_, _, settings, _, _, _)) => settings map { _.key }
+        case _ => Seq.empty
       }
-    } catch {
-      case _ : NoSuchMethodException => None
+
+      val targetVersionTaskOpt = Keys.targetSdkVersion.in(projectRef).find(state)
+        .orElse(Keys.targetSdkVersion_1_3.in(projectRef).find(state).map(_.toTask))
+      val layoutAsAnyOpt = findSettingKeyIn(keys, "projectLayout")
+        .flatMap(_.in(projectRef).find(state))
+      val apklibsAsAnyTaskOpt = findTaskKeyIn(keys, "apklibs")
+        .flatMap(_.in(projectRef).find(state))
+
+      val androidTaskOpt = for {
+        manifest    <- Keys.manifestPath.in(projectRef).find(state)
+        apk         <- Keys.apkFile.in(projectRef).find(state)
+        isLibrary   <- Keys.libraryProject.in(projectRef).find(state)
+        layoutAsAny <- layoutAsAnyOpt
+        apklibsAsAnyTask    <- apklibsAsAnyTaskOpt
+        targetVersionTask   <- targetVersionTaskOpt
+        proguardConfigTask  <- Keys.proguardConfig.in(projectRef).find(state)
+        proguardOptionsTask <- Keys.proguardOptions.in(projectRef).find(state)
+      } yield {
+        for {
+          targetVersion   <- targetVersionTask
+          proguardConfig  <- proguardConfigTask
+          proguardOptions <- proguardOptionsTask
+          apklibsAsAny    <- apklibsAsAnyTask
+        } yield {
+          try {
+            val layout = layoutAsAny.asInstanceOf[ProjectLayout]
+            val apklibs = apklibsAsAny.asInstanceOf[Seq[LibraryDependency]]
+            Some(AndroidData(targetVersion, manifest, apk,
+              layout.res, layout.assets, layout.gen, layout.libs,
+              isLibrary, proguardConfig ++ proguardOptions,
+              apklibs.map(libraryDepToApkLib)))
+          } catch {
+            case _ : NoSuchMethodException => None
+          }
+        }
+      }
+
+      androidTaskOpt.getOrElse(None.toTask)
     }
-  }
-
-  private def findSettingKey(keys: Seq[sbt.ScopedKey[_]], label: String): Option[SettingKey[_]] =
-    keys.find(k => k.key.label == label && isInAndroidScope(k))
-      .map(k => SettingKey(k.key).in(k.scope))
-
-  private def findTaskKey(keys: Seq[sbt.ScopedKey[_]], label: String): Option[TaskKey[_]] =
-    keys.find(k => k.key.label == label && isInAndroidScope(k))
-      .map(k => TaskKey(k.key.asInstanceOf[AttributeKey[Task[Any]]]).in(k.scope))
-
-  private def libraryDepToApkLib(lib: LibraryDependency): ApkLib = {
-    // As for version 1.5.0 android-sdk-plugin uses canonical path to library as its name
-    val fixedLibName = lib.getName.split(File.separator).last
-    ApkLib(fixedLibName, lib.layout.base, lib.layout.manifest, lib.layout.sources, lib.layout.res, lib.layout.libs, lib.layout.gen)
-  }
-
-  private def isInAndroidScope(key: ScopedKey[_]) = key.scope.config match {
-    case Select(k) => k.name == Android.name
-    case _ => false
-  }
-}
-
-object AndroidSdkPluginExtractor {
-  def apply(implicit state: State, projectRef: ProjectRef): Option[AndroidData] =
-    new AndroidSdkPluginExtractor().extract
 
   private val Android = config("android")
 
@@ -91,5 +83,24 @@ object AndroidSdkPluginExtractor {
   private type LibraryDependency = {
     def layout: ProjectLayout
     def getName: String
+  }
+
+  private def findSettingKeyIn(keys: Seq[sbt.ScopedKey[_]], label: String): Option[SettingKey[Any]] =
+    keys.find(k => k.key.label == label && isInAndroidScope(k))
+      .map(k => SettingKey(k.key.asInstanceOf[AttributeKey[Any]]).in(k.scope))
+
+  private def findTaskKeyIn(keys: Seq[sbt.ScopedKey[_]], label: String): Option[TaskKey[Any]] =
+    keys.find(k => k.key.label == label && isInAndroidScope(k))
+      .map(k => TaskKey(k.key.asInstanceOf[AttributeKey[Task[Any]]]).in(k.scope))
+
+  private def libraryDepToApkLib(lib: LibraryDependency): ApkLib = {
+    // As for version 1.5.0 android-sdk-plugin uses canonical path to library as its name
+    val fixedLibName = lib.getName.split(File.separator).last
+    ApkLib(fixedLibName, lib.layout.base, lib.layout.manifest, lib.layout.sources, lib.layout.res, lib.layout.libs, lib.layout.gen)
+  }
+
+  private def isInAndroidScope(key: ScopedKey[_]) = key.scope.config match {
+    case Select(k) => k.name == Android.name
+    case _ => false
   }
 }
