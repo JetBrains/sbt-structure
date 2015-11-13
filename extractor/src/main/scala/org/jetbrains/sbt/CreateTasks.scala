@@ -38,7 +38,9 @@ object CreateTasks extends (State => State) {
       StructureKeys.extractAndroid <<=
         AndroidSdkPluginExtractor.taskDef,
       StructureKeys.extractPlay2 <<=
-        Play2Extractor.taskDef
+        Play2Extractor.taskDef,
+      StructureKeys.extractBuild <<=
+        BuildExtractor.taskDef
     )
 
     applySettings(state, globalSettings, projectSettings)

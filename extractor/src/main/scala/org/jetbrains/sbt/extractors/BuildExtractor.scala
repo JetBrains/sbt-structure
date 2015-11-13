@@ -5,6 +5,7 @@ import java.io.File
 
 import org.jetbrains.sbt.structure.BuildData
 import sbt._
+import sbt.Project.Initialize
 
 /**
  * @author Nikolay Obedin
@@ -24,14 +25,15 @@ class BuildExtractor(unit: LoadedBuildUnitAdapter, updateSbtClassifiers: Option[
     }.getOrElse((Seq.empty, Seq.empty))
 }
 
-object BuildExtractor extends SbtStateOps {
-  def apply(implicit state: State, projectRef: ProjectRef, options: Options): BuildData = {
-    val unit = LoadedBuildUnitAdapter(structure(state).units(projectRef.build))
-    val updateSbtClassifiers =
-      if (options.download && options.resolveSbtClassifiers)
-        projectTask(Keys.updateSbtClassifiers).map(new UpdateReportAdapter(_))
-      else
-        None
-    new BuildExtractor(unit, updateSbtClassifiers).extract
-  }
+object BuildExtractor extends SbtStateOps with TaskOps {
+  def taskDef: Initialize[Task[BuildData]] =
+    (sbt.Keys.state, sbt.Keys.thisProjectRef, StructureKeys.sbtStructureOpts) flatMap {
+      (state, projectRef, options) =>
+        val unit = LoadedBuildUnitAdapter(structure(state).units(projectRef.build))
+        Keys.updateSbtClassifiers.in(projectRef).get(state)
+          .onlyIf(options.download && options.resolveSbtClassifiers)
+          .map { updateClassifiersOpt =>
+            new BuildExtractor(unit, updateClassifiersOpt.map(new UpdateReportAdapter(_))).extract
+          }
+      }
 }
