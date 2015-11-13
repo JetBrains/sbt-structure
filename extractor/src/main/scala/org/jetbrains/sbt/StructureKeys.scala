@@ -18,7 +18,7 @@ object StructureKeys {
   lazy val extractAndroid         = TaskKey[Option[AndroidData]]("ss-extract-android")
   lazy val extractBuild           = TaskKey[BuildData]("ss-extract-build")
   lazy val extractDependencies    = TaskKey[DependencyData]("ss-extract-dependencies")
-  lazy val extractProject         = TaskKey[Option[ProjectData]]("ss-extract-project")
+  lazy val extractProject         = TaskKey[ProjectData]("ss-extract-project")
   lazy val extractProjects        = TaskKey[Seq[ProjectData]]("ss-extract-projects")
   lazy val extractRepository      = TaskKey[Option[RepositoryData]]("ss-extract-repository")
 

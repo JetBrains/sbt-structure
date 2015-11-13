@@ -7,7 +7,7 @@ import sbt._
  * @author Nikolay Obedin
  */
 
-object CreateTasks extends (State => State) {
+object CreateTasks extends (State => State) with SbtStateOps {
   def apply(state: State) = {
     val globalSettings = Seq[Setting[_]](
       StructureKeys.sbtStructureOpts <<=
@@ -17,9 +17,8 @@ object CreateTasks extends (State => State) {
       StructureKeys.acceptedProjects <<=
         UtilityTasks.acceptedProjects,
       StructureKeys.extractProjects <<=
-        (Keys.state, StructureKeys.sbtStructureOpts, StructureKeys.acceptedProjects).map {
-          (state, options, acceptedProjects) =>
-            acceptedProjects.flatMap(ref => ProjectExtractor(ref)(state, options))
+        (Keys.state, StructureKeys.acceptedProjects) flatMap { (state, acceptedProjects) =>
+          StructureKeys.extractProject.forAllProjects(state, acceptedProjects).map(_.values.toSeq)
         },
       StructureKeys.extractRepository <<=
         RepositoryExtractor.taskDef,
@@ -42,7 +41,9 @@ object CreateTasks extends (State => State) {
       StructureKeys.extractBuild <<=
         BuildExtractor.taskDef,
       StructureKeys.extractDependencies <<=
-        DependenciesExtractor.taskDef
+        DependenciesExtractor.taskDef,
+      StructureKeys.extractProject <<=
+        ProjectExtractor.taskDef
     )
 
     applySettings(state, globalSettings, projectSettings)
