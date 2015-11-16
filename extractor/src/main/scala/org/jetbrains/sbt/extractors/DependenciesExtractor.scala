@@ -1,10 +1,10 @@
 package org.jetbrains.sbt
 package extractors
 
-import org.jetbrains.sbt.structure.{DependencyData, JarDependencyData, ModuleDependencyData, ProjectDependencyData}
+import org.jetbrains.sbt.structure._
 import org.jetbrains.sbt.{structure => jb}
-import Utilities._
 import sbt._
+import sbt.Project.Initialize
 
 /**
  * @author Nikolay Obedin
@@ -12,9 +12,9 @@ import sbt._
  */
 
 class DependenciesExtractor(projectRef: ProjectRef,
-                            buildDependencies: Option[BuildDependencies],
+                            buildDependencies: BuildDependencies,
                             unmanagedClasspath: sbt.Configuration => Keys.Classpath,
-                            externalDependencyClasspath: sbt.Configuration => Keys.Classpath,
+                            externalDependencyClasspath: Option[sbt.Configuration => Keys.Classpath],
                             dependencyConfigurations: Seq[sbt.Configuration],
                             testConfigurations: Seq[sbt.Configuration])
   extends ModulesOps {
@@ -23,56 +23,40 @@ class DependenciesExtractor(projectRef: ProjectRef,
     DependencyData(projectDependencies, moduleDependencies, jarDependencies)
 
   private def projectDependencies: Seq[ProjectDependencyData] =
-    buildDependencies.map { dep =>
-      dep.classpath.getOrElse(projectRef, Seq.empty).map { it =>
-        val configurations = it.configuration.map(jb.Configuration.fromString).getOrElse(Seq.empty)
-        ProjectDependencyData(it.project.id, configurations)
-      }
-    }.getOrElse(Seq.empty)
-
-  private def moduleDependencies: Seq[ModuleDependencyData] = {
-    val moduleToConfigurations = dependencyConfigurations
-      .flatMap(configuration => modulesIn(configuration).map(module => (module, configuration)))
-      .groupBy(_._1)
-      .mapValues(_.unzip._2)
-      .toSeq
-
-    moduleToConfigurations.flatMap { case (moduleId, configurations) =>
-      createModuleIdentifiers(moduleId, moduleId.explicitArtifacts).map { id =>
-        ModuleDependencyData(id, mapConfigurations(configurations.map(c => jb.Configuration(c.name))))
-      }
-    }.foldLeft(Seq.empty[ModuleDependencyData]) { (acc, moduleData) =>
-      acc.find(_.id == moduleData.id) match {
-        case Some(foundModuleData) =>
-          val newModuleData = ModuleDependencyData(moduleData.id,
-            mapConfigurations(moduleData.configurations ++ foundModuleData.configurations))
-          acc.filterNot(_ == foundModuleData) :+ newModuleData
-        case None => acc :+ moduleData
-      }
+    buildDependencies.classpath.getOrElse(projectRef, Seq.empty).map { it =>
+      val configurations = it.configuration.map(jb.Configuration.fromString).getOrElse(Seq.empty)
+      ProjectDependencyData(it.project.id, configurations)
     }
-  }
 
-  private def jarDependencies: Seq[JarDependencyData] = {
-    val jarToConfigurations = dependencyConfigurations
-      .flatMap(configuration => jarsIn(configuration).map(file => (file, configuration)))
-      .groupBy(_._1)
-      .mapValues(_.unzip._2)
-      .toSeq
-
-    jarToConfigurations.map { case (file, configurations) =>
-      JarDependencyData(file, mapConfigurations(configurations.map(c => jb.Configuration(c.name))))
+  private def moduleDependencies: Seq[ModuleDependencyData] =
+    forAllConfigurations(modulesIn).map { case (moduleId, configurations) =>
+      ModuleDependencyData(moduleId, toSbtStructureConfigurations(configurations))
     }
-  }
+
+  private def jarDependencies: Seq[JarDependencyData] =
+    forAllConfigurations(jarsIn).map { case (file, configurations) =>
+      JarDependencyData(file, toSbtStructureConfigurations(configurations))
+    }
 
   private def jarsIn(configuration: sbt.Configuration): Seq[File] =
     unmanagedClasspath(configuration).map(_.data)
 
-  private def modulesIn(configuration: sbt.Configuration): Seq[ModuleID] =
-      for {
-        attr <- externalDependencyClasspath(configuration)
-        module <- attr.get(Keys.moduleID.key)
-        artifact <- attr.get(Keys.artifact.key)
-      } yield module.artifacts(artifact)
+  private def modulesIn(configuration: sbt.Configuration): Seq[ModuleIdentifier] =
+    for {
+      classpathFn <- externalDependencyClasspath.toSeq
+      entry       <- classpathFn(configuration)
+      moduleId    <- entry.get(Keys.moduleID.key).toSeq
+      artifact    <- entry.get(Keys.artifact.key).toSeq
+      identifier  <- createModuleIdentifiers(moduleId, Seq(artifact))
+    } yield {
+      identifier
+    }
+
+  private def forAllConfigurations[T](fn: sbt.Configuration => Seq[T]): Seq[(T, Seq[sbt.Configuration])] =
+    dependencyConfigurations.flatMap(conf => fn(conf).map(it => (it, conf))).groupBy(_._1).mapValues(_.unzip._2).toSeq
+
+  private def toSbtStructureConfigurations(confs: Seq[sbt.Configuration]): Seq[jb.Configuration] =
+    mapConfigurations(confs.map(c => jb.Configuration(c.name)))
 
   // We have to perform this configurations mapping because we're using externalDependencyClasspath
   // rather than libraryDependencies (to acquire transitive dependencies),  so we detect
@@ -91,25 +75,45 @@ class DependenciesExtractor(projectRef: ProjectRef,
   }
 }
 
-object DependenciesExtractor extends SbtStateOps with ConfigurationOps {
-  def apply(implicit state: State, projectRef: ProjectRef, options: Options): DependencyData = {
-    val buildDependencies = projectSetting(Keys.buildDependencies)
+object DependenciesExtractor extends SbtStateOps with TaskOps {
+  def taskDef: Initialize[Task[DependencyData]] =
+    ( sbt.Keys.state
+    , sbt.Keys.thisProjectRef
+    , sbt.Keys.buildDependencies
+    , StructureKeys.sbtStructureOpts
+    , StructureKeys.dependencyConfigurations
+    , StructureKeys.testConfigurations
+    ) flatMap {
+      (state, projectRef, buildDependencies, options,
+        dependencyConfigurations, testConfigurations) =>
 
-    def unmanagedClasspath(conf: sbt.Configuration) =
-      projectTask(Keys.unmanagedClasspath.in(conf)).getOrElse(Seq.empty)
+      val unmanagedClasspathTask =
+        sbt.Keys.unmanagedClasspath.in(projectRef)
+          .forAllConfigurations(state, dependencyConfigurations)
+      val externalDependencyClasspathTask =
+        sbt.Keys.externalDependencyClasspath.in(projectRef)
+          .forAllConfigurations(state, dependencyConfigurations)
+          .mapR(throwExceptionIfUpdateFailed)
+          .onlyIf(options.download)
 
-    def externalDependecyClasspath(conf: sbt.Configuration) =
-      Project.runTask(Keys.externalDependencyClasspath.in(projectRef, conf), state) match {
-        case Some((_, Value(attrs))) => attrs
-        case Some((_, Inc(incomplete))) =>
-          val cause = Incomplete.allExceptions(incomplete).headOption
-          cause.foreach(c => throw c)
-          Seq.empty
-        case _ => Seq.empty
+      for {
+        unmanagedClasspath <- unmanagedClasspathTask
+        externalDependencyClasspathOpt <- externalDependencyClasspathTask
+      } yield {
+        new DependenciesExtractor(projectRef,
+          buildDependencies, unmanagedClasspath.getOrElse(_, Nil),
+          externalDependencyClasspathOpt.map(it => it.getOrElse(_, Nil)),
+          dependencyConfigurations, testConfigurations).extract
       }
-
-    new DependenciesExtractor(projectRef,
-      buildDependencies, unmanagedClasspath, externalDependecyClasspath,
-      getDependencyConfigurations, getTestConfigurations).extract
   }
+
+  private def throwExceptionIfUpdateFailed(result: Result[Map[sbt.Configuration,Keys.Classpath]]): Map[sbt.Configuration, Keys.Classpath] =
+    result match {
+      case Value(classpath) =>
+        classpath
+      case Inc(incomplete) =>
+        val cause = Incomplete.allExceptions(incomplete).headOption
+        cause.foreach(c => throw c)
+        Map.empty
+    }
 }

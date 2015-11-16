@@ -3,39 +3,41 @@ package extractors
 
 import org.jetbrains.sbt.structure._
 import sbt._
+import sbt.Project.Initialize
 
 /**
   * @author Dmitry Naydanov
   * @author Nikolay Obedin
   */
-class Play2Extractor(implicit projectRef: ProjectRef) extends SbtStateOps {
+object Play2Extractor extends SbtStateOps with TaskOps {
 
-  import Play2Extractor._
+  def taskDef: Initialize[Task[Option[Play2Data]]] =
+    (sbt.Keys.state, sbt.Keys.thisProjectRef) map { (state, projectRef) =>
+      for {
+        _ <- Keys.playPlugin.in(projectRef).find(state)
+               .orElse(Keys.playPlugin_prior_to_2_4_0.in(projectRef).find(state))
+        sourceDirectory <- sbt.Keys.sourceDirectory.in(projectRef, Compile).find(state)
+      } yield {
+        val playVersion =
+          Keys.playVersion.in(projectRef).find(state)
+        val templateImports =
+          Keys.templateImports.in(projectRef).getOrElse(state, Seq.empty)
+        val routesImports =
+          Keys.routesImports.in(projectRef).find(state)
+          .orElse(Keys.routesImports_prior_to_2_4_0.in(projectRef).find(state))
+          .getOrElse(Seq.empty)
+        val confDirectory =
+          Keys.confDirectory.in(projectRef).find(state)
 
-  private def extract(implicit state: State): Option[Play2Data] = {
-    for {
-      _ <- projectSetting(Keys.playPlugin).orElse(projectSetting(Keys.playPlugin_prior_to_2_4_0))
-      sourceDirectory <- projectSetting(sbt.Keys.sourceDirectory.in(Compile))
-    } yield {
-      val playVersion = projectSetting(Keys.playVersion)
-      val templateImports = projectSetting(Keys.templateImports).getOrElse(Seq.empty)
-      val routesImports = projectSetting(Keys.routesImports)
-        .orElse(projectSetting(Keys.routesImports_prior_to_2_4_0))
-        .getOrElse(Seq.empty)
-      val confDirectory = projectSetting(Keys.confDirectory)
-      Play2Data(playVersion, fixTemplateImports(templateImports), routesImports, confDirectory, sourceDirectory)
+        Play2Data(playVersion, fixTemplateImports(templateImports),
+          routesImports, confDirectory, sourceDirectory)
+      }
     }
-  }
 
   private def fixTemplateImports(imports: Seq[String]): Seq[String] = imports.map {
     case "views.%format%._" => "views.xml._"
     case value => value
   }
-}
-
-object Play2Extractor {
-  def apply(implicit state: State, projectRef: ProjectRef): Option[Play2Data] =
-    new Play2Extractor().extract
 
   private object Keys {
     val playPlugin_prior_to_2_4_0 = SettingKey[Boolean]("play-plugin")

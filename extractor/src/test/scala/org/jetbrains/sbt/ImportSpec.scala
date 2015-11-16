@@ -84,7 +84,7 @@ class ImportSpec extends Specification with XmlMatchers {
     path.replace('\\', '/')
 
   private def getExpectedStr(testDataFile: File, base: File): String =
-    read(testDataFile).mkString("\n")
+    TestUtil.read(testDataFile).mkString("\n")
       .replace("$BASE", normalizePath(base.getCanonicalPath))
       .replace("$ANDROID_HOME", AndroidHome.getOrElse(""))
       .replace("~/", UserHome.getOrElse("") + "/")

@@ -1,15 +1,15 @@
 package org.jetbrains.sbt
 package extractors
 
-import org.jetbrains.sbt.structure.{ModuleData, RepositoryData}
+import org.jetbrains.sbt.structure.{ModuleIdentifier, ModuleData, RepositoryData}
+import sbt.Project.Initialize
 import sbt._
-import Utilities._
 
 /**
  * @author Nikolay Obedin
  * @since 4/10/15.
  */
-class RepositoryExtractor(acceptedProjectRefs: Seq[ProjectRef],
+class RepositoryExtractor(projects: Seq[ProjectRef],
                           updateReports: ProjectRef => UpdateReportAdapter,
                           updateClassifiersReports: Option[ProjectRef => UpdateReportAdapter],
                           classpathTypes: ProjectRef => Set[String],
@@ -17,76 +17,83 @@ class RepositoryExtractor(acceptedProjectRefs: Seq[ProjectRef],
   extends ModulesOps {
 
   private[extractors] def extract: RepositoryData = {
-    val rawModulesData = acceptedProjectRefs.flatMap(extractModules)
-    val modulesData = rawModulesData.foldLeft(Seq.empty[ModuleData]) { (acc, data) =>
-      acc.find(_.id == data.id) match {
-        case Some(module) =>
-          val newModule = ModuleData(module.id,
-            module.binaries ++ data.binaries,
-            module.docs ++ data.docs,
-            module.sources ++ data.sources)
-          acc.filterNot(_ == module) :+ newModule
-        case None => acc :+ data
-      }
-    }
-    RepositoryData(modulesData)
+    val modules = fixModulesIdsToSupportClassifiers(allModulesWithDocs)
+    RepositoryData(groupByModuleIdentifiers(modules).toSeq.map((createModuleData _).tupled))
   }
 
-  private def extractModules(projectRef: ProjectRef): Seq[ModuleData] = {
-    val binaryReports = getModuleReports(projectRef, updateReports)
+  private def allModulesWithDocs: Seq[ModuleReportAdapter] = projects.flatMap { projectRef =>
+    val modulesWithoutDocs = getModulesForProject(projectRef, updateReports)
 
-    val reportsWithDocs = updateClassifiersReports.map { updateClassifiersReportsFn =>
+    val modulesWithDocs = updateClassifiersReports.map { updateClassifiersReportsFn =>
       def onlySourcesAndDocs(artifacts: Seq[(Artifact, File)]): Seq[(Artifact, File)] =
         artifacts.collect { case (a, f) if a.`type` == Artifact.DocType || a.`type` == Artifact.SourceType => (a, f) }
 
-      val docAndSrcReports = getModuleReports(projectRef, updateClassifiersReportsFn)
-      binaryReports.map { report =>
-        val matchingDocs = docAndSrcReports.filter(_.moduleId == report.moduleId)
-        val docsArtifacts = matchingDocs.flatMap(r => onlySourcesAndDocs(r.artifacts))
-        new ModuleReportAdapter(report.moduleId, report.artifacts ++ docsArtifacts)
+      val docModules = getModulesForProject(projectRef, updateClassifiersReportsFn)
+      modulesWithoutDocs.map { report =>
+        val matchingDocs = docModules.filter(_.moduleId == report.moduleId).flatMap(r => onlySourcesAndDocs(r.artifacts))
+        new ModuleReportAdapter(report.moduleId, report.artifacts ++ matchingDocs)
       }
     }
 
-    merge(reportsWithDocs.getOrElse(binaryReports), classpathTypes(projectRef), Set(Artifact.DocType), Set(Artifact.SourceType))
+    modulesWithDocs.getOrElse(modulesWithoutDocs)
   }
 
-  private def getModuleReports(projectRef: ProjectRef, updateReportFn: ProjectRef => UpdateReportAdapter): Seq[ModuleReportAdapter] = {
+  private def allClasspathTypes: Set[String] = projects.map(classpathTypes).reduce((a, b) => a.union(b))
+
+  private def fixModulesIdsToSupportClassifiers(modules: Seq[ModuleReportAdapter]): Seq[ModuleReportAdapter] =
+    modules.map(r => r.copy(moduleId = r.moduleId.artifacts(r.artifacts.map(_._1):_*)))
+
+  private def groupByModuleIdentifiers(modules: Seq[ModuleReportAdapter]): Map[ModuleIdentifier, Seq[ModuleReportAdapter]] = {
+    val modulesWithIds = modules.flatMap { module =>
+      createModuleIdentifiers(module.moduleId, module.artifacts.map(_._1)).map(id => (module, id))
+    }
+    modulesWithIds.groupBy(_._2).mapValues(_.unzip._1)
+  }
+
+  private def getModulesForProject(projectRef: ProjectRef, updateReportFn: ProjectRef => UpdateReportAdapter): Seq[ModuleReportAdapter] =
     dependencyConfigurations(projectRef).map(_.name).flatMap(updateReportFn(projectRef).modulesFrom).filter(_.artifacts.nonEmpty)
-  }
 
-  private def merge(moduleReports: Seq[ModuleReportAdapter], classpathTypes: Set[String], docTypes: Set[String], srcTypes: Set[String]): Seq[ModuleData] = {
-    val moduleReportsGrouped = moduleReports.groupBy{ rep => rep.moduleId.artifacts(rep.artifacts.map(_._1):_*) }.toSeq
-    moduleReportsGrouped.flatMap { case (module, reports) =>
-      val allArtifacts = reports.flatMap(_.artifacts)
+  private def createModuleData(moduleId: ModuleIdentifier, moduleReports: Seq[ModuleReportAdapter]): ModuleData = {
+    val allArtifacts = moduleReports.flatMap(_.artifacts)
 
-      def artifacts(kinds: Set[String], classifier: String) = allArtifacts.collect {
-        case (a, f) if classifier == fuseClassifier(a) && kinds.contains(a.`type`) => f
-      }.toSet
+    def artifacts(kinds: Set[String]) = allArtifacts.collect {
+      case (a, f) if moduleId.classifier == fuseClassifier(a) && kinds.contains(a.`type`) => f
+    }.toSet
 
-      createModuleIdentifiers(module, allArtifacts.map(_._1)).map { id =>
-        ModuleData(id, artifacts(classpathTypes, id.classifier),
-          artifacts(docTypes, id.classifier),
-          artifacts(srcTypes, id.classifier))
-      }
-    }
+    ModuleData(moduleId, artifacts(allClasspathTypes), artifacts(Set(Artifact.DocType)), artifacts(Set(Artifact.SourceType)))
   }
 }
 
-object RepositoryExtractor extends SbtStateOps with ConfigurationOps {
-  def apply(acceptedProjectRefs: Seq[ProjectRef])(implicit state: State, options: Options): Option[RepositoryData] =
-    options.download.option {
-      def updateReports(projectRef: ProjectRef) =
-        task(Keys.update.in(projectRef)).map(new UpdateReportAdapter(_)).get
-      def updateClassifiersReports(projectRef: ProjectRef) =
-        task(Keys.updateClassifiers.in(projectRef)).map(new UpdateReportAdapter(_)).get
-      def classpathTypes(projectRef: ProjectRef) =
-        setting(Keys.classpathTypes.in(projectRef)).getOrElse(Set.empty)
-      def dependencyConfigurations(projectRef: ProjectRef) =
-        getDependencyConfigurations(state, projectRef)
+object RepositoryExtractor extends SbtStateOps with TaskOps {
 
-      if (options.resolveSbtClassifiers)
-        new RepositoryExtractor(acceptedProjectRefs, updateReports, Some(updateClassifiersReports), classpathTypes, dependencyConfigurations).extract
-      else
-        new RepositoryExtractor(acceptedProjectRefs, updateReports, None, classpathTypes, dependencyConfigurations).extract
+  def taskDef: Initialize[Task[Option[RepositoryData]]] =
+    (Keys.state, StructureKeys.sbtStructureOpts, StructureKeys.acceptedProjects).flatMap {
+      (state, options, acceptedProjects) =>
+        extractRepositoryData(state, options, acceptedProjects).onlyIf(options.download)
     }
+
+  private def extractRepositoryData(state: State, options: Options, acceptedProjects: Seq[ProjectRef]): Task[RepositoryData] = {
+    def classpathTypes(projectRef: ProjectRef) =
+      Keys.classpathTypes.in(projectRef).getOrElse(state, Set.empty)
+    def dependencyConfigurations(projectRef: ProjectRef) =
+      StructureKeys.dependencyConfigurations.in(projectRef).get(state)
+
+    val updateAllTask =
+      Keys.update
+        .forAllProjects(state, acceptedProjects)
+        .map(_.mapValues(new UpdateReportAdapter(_)))
+    val updateAllClassifiersTask =
+      Keys.updateClassifiers
+        .forAllProjects(state, acceptedProjects)
+        .map(_.mapValues(new UpdateReportAdapter(_)))
+        .onlyIf(options.resolveClassifiers)
+
+    for {
+      updateReports <- updateAllTask
+      updateClassifiersReports <- updateAllClassifiersTask
+    } yield {
+      new RepositoryExtractor(acceptedProjects, updateReports.apply,
+        updateClassifiersReports.map(_.apply), classpathTypes, dependencyConfigurations).extract
+    }
+  }
 }
