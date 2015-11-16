@@ -36,7 +36,7 @@ class ProjectExtractor(projectRef: ProjectRef,
                        play2: Option[Play2Data]) {
 
 
-  def extract: ProjectData = {
+  private[extractors] def extract: ProjectData = {
     val resolvers = fullResolvers.collect {
       case MavenRepository(name, root) => ResolverData(name, root)
     }.toSet
@@ -139,32 +139,31 @@ object ProjectExtractor extends SbtStateOps with TaskOps {
         val javacOptionsTask =
           Keys.javacOptions.in(projectRef, Compile).get(state).onlyIf(options.download)
 
-        scalaInstanceTask.flatMap { scalaInstance =>
-          scalacOptionsTask.flatMap { scalacOptions =>
-            javacOptionsTask.map { javacOptions =>
-              new ProjectExtractor(
-                projectRef, name, organization, version, base, target,
-                basePackages,
-                fullResolvers, classDirectory,
-                inConfiguration(Keys.managedSourceDirectories),
-                inConfiguration(Keys.unmanagedSourceDirectories),
-                inConfiguration(Keys.managedResourceDirectories),
-                inConfiguration(Keys.unmanagedResourceDirectories),
-                excludedDirectories,
-                ideOutputDirectory,
-                scalaInstance,
-                scalacOptions.getOrElse(Seq.empty),
-                javaHome,
-                javacOptions.getOrElse(Seq.empty),
-                sourceConfigurations,
-                testConfigurations,
-                dependencies,
-                build,
-                android,
-                play2
-              ).extract
-            }
-          }
+        for {
+          scalaInstance <- scalaInstanceTask
+          scalacOptions <- scalacOptionsTask
+          javacOptions  <- javacOptionsTask
+        } yield {
+          new ProjectExtractor(
+            projectRef, name, organization, version, base, target,
+            basePackages,
+            fullResolvers,
+            classDirectory,
+            inConfiguration(Keys.managedSourceDirectories),
+            inConfiguration(Keys.unmanagedSourceDirectories),
+            inConfiguration(Keys.managedResourceDirectories),
+            inConfiguration(Keys.unmanagedResourceDirectories),
+            excludedDirectories,
+            ideOutputDirectory,
+            scalaInstance, scalacOptions.getOrElse(Seq.empty),
+            javaHome, javacOptions.getOrElse(Seq.empty),
+            sourceConfigurations,
+            testConfigurations,
+            dependencies,
+            build,
+            android,
+            play2
+          ).extract
         }
     }
 }

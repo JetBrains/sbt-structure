@@ -12,7 +12,7 @@ import sbt.Project.Initialize
  * @since 4/10/15.
  */
 class BuildExtractor(unit: LoadedBuildUnitAdapter, updateSbtClassifiers: Option[UpdateReportAdapter]) {
-  def extract: BuildData = {
+  private[extractors] def extract: BuildData = {
     val (docs, sources) = extractSbtClassifiers
     BuildData(unit.imports, unit.pluginsClasspath.map(_.data), docs, sources)
   }

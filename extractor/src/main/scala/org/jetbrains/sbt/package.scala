@@ -9,28 +9,15 @@ import _root_.sbt.ProjectRef
  * @author Nikolay Obedin
  */
 package object sbt {
-  implicit def seqToDistinct[T](xs: Seq[T]) = new {
-    def distinctBy[A](f: T => A): Seq[T] = {
-      val (_, ys) = xs.foldLeft((Set.empty[A], Vector.empty[T])) {
-        case ((set, acc), x) =>
-          val v = f(x)
-          if (set.contains(v)) (set, acc) else (set + v, acc :+ x)
-      }
-      ys
-    }
-  }
-
-  implicit def toRichBoolean(b: Boolean) = new {
+  implicit def `enrich Boolean`(b: Boolean) = new {
     def option[A](a: => A): Option[A] = if(b) Some(a) else None
-
-    def either[A, B](right: => B)(left: => A): Either[A, B] = if (b) Right(right) else Left(left)
   }
 
-  implicit def fixOptionFlattenOnScala292[T](option: Option[Option[T]]) = new {
+  implicit def `Fix Option.flatten on Scala 2.9.2`[T](option: Option[Option[T]]) = new {
     def flatten: Option[T] = option.flatMap(identity)
   }
 
-  implicit def toRichProjectRef(projectRef: ProjectRef) = new {
+  implicit def `enrich ProjectRef`(projectRef: ProjectRef) = new {
     def id: String = projectRef.project // TODO: append build url when IDEA-145101 is fixed
   }
 }

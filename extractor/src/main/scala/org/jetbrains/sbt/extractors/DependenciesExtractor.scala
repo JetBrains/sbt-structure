@@ -93,17 +93,17 @@ object DependenciesExtractor extends SbtStateOps with TaskOps {
       val externalDependencyClasspathTask =
         sbt.Keys.externalDependencyClasspath.in(projectRef)
           .forAllConfigurations(state, dependencyConfigurations)
-
-      unmanagedClasspathTask.flatMap { unmanagedClasspath =>
-        externalDependencyClasspathTask
           .mapR(throwExceptionIfUpdateFailed)
           .onlyIf(options.download)
-          .map { externalDependencyClasspathOpt =>
-            new DependenciesExtractor(projectRef,
-              buildDependencies, unmanagedClasspath.getOrElse(_, Nil),
-              externalDependencyClasspathOpt.map(it => it.getOrElse(_, Nil)),
-              dependencyConfigurations, testConfigurations).extract
-          }
+
+      for {
+        unmanagedClasspath <- unmanagedClasspathTask
+        externalDependencyClasspathOpt <- externalDependencyClasspathTask
+      } yield {
+        new DependenciesExtractor(projectRef,
+          buildDependencies, unmanagedClasspath.getOrElse(_, Nil),
+          externalDependencyClasspathOpt.map(it => it.getOrElse(_, Nil)),
+          dependencyConfigurations, testConfigurations).extract
       }
   }
 

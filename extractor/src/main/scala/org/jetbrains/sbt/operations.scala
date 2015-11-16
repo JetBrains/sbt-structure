@@ -42,12 +42,6 @@ trait SbtStateOps {
       std.TaskExtra.joinTasks(tasks).join.map(_.toMap)
     }
   }
-
-  def projectSetting[T](key: SettingKey[T])(implicit state: State, projectRef: ProjectRef): Option[T] =
-    key.in(projectRef).get(structure(state).data)
-
-  def projectTask[T](key: TaskKey[T])(implicit state: State, projectRef: ProjectRef): Option[T] =
-    Project.runTask(key.in(projectRef), state).collect { case (_, Value(value)) => value }
 }
 
 trait TaskOps {
@@ -62,8 +56,7 @@ trait TaskOps {
 }
 
 trait ModulesOps {
-
-  protected def fuseClassifier(artifact: Artifact): String = {
+  def fuseClassifier(artifact: Artifact): String = {
     val fusingClassifiers = Seq("", Artifact.DocClassifier, Artifact.SourceClassifier)
     artifact.classifier match {
       case Some(c) if fusingClassifiers.contains(c) => fusingClassifiers.head
@@ -72,7 +65,7 @@ trait ModulesOps {
     }
   }
 
-  protected def createModuleIdentifiers(moduleId: ModuleID, artifacts: Seq[Artifact]): Seq[ModuleIdentifier] =
+  def createModuleIdentifiers(moduleId: ModuleID, artifacts: Seq[Artifact]): Seq[ModuleIdentifier] =
     artifacts.map(fuseClassifier).distinct.map { classifier =>
       ModuleIdentifier(moduleId.organization, moduleId.name, moduleId.revision, Artifact.DefaultType, classifier)
     }

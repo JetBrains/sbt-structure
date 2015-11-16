@@ -77,16 +77,23 @@ object RepositoryExtractor extends SbtStateOps with TaskOps {
       Keys.classpathTypes.in(projectRef).getOrElse(state, Set.empty)
     def dependencyConfigurations(projectRef: ProjectRef) =
       StructureKeys.dependencyConfigurations.in(projectRef).get(state)
-    val updateAllTask =
-      Keys.update.forAllProjects(state, acceptedProjects).map(_.mapValues(new UpdateReportAdapter(_)))
-    val updateAllClassifiersTask =
-      Keys.updateClassifiers.forAllProjects(state, acceptedProjects).map(_.mapValues(new UpdateReportAdapter(_)))
 
-    updateAllTask.flatMap { updateReports =>
-      updateAllClassifiersTask.onlyIf(options.resolveClassifiers).map { updateClassifiersReports =>
-        new RepositoryExtractor(acceptedProjects, updateReports.apply,
-          updateClassifiersReports.map(_.apply), classpathTypes, dependencyConfigurations).extract
-      }
+    val updateAllTask =
+      Keys.update
+        .forAllProjects(state, acceptedProjects)
+        .map(_.mapValues(new UpdateReportAdapter(_)))
+    val updateAllClassifiersTask =
+      Keys.updateClassifiers
+        .forAllProjects(state, acceptedProjects)
+        .map(_.mapValues(new UpdateReportAdapter(_)))
+        .onlyIf(options.resolveClassifiers)
+
+    for {
+      updateReports <- updateAllTask
+      updateClassifiersReports <- updateAllClassifiersTask
+    } yield {
+      new RepositoryExtractor(acceptedProjects, updateReports.apply,
+        updateClassifiersReports.map(_.apply), classpathTypes, dependencyConfigurations).extract
     }
   }
 }
