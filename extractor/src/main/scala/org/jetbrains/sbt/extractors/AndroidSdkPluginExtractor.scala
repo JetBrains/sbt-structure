@@ -95,7 +95,7 @@ object AndroidSdkPluginExtractor extends SbtStateOps with TaskOps {
 
   private def libraryDepToApkLib(lib: LibraryDependency): ApkLib = {
     // As for version 1.5.0 android-sdk-plugin uses canonical path to library as its name
-    val fixedLibName = lib.getName.split(File.separator).last
+    val fixedLibName = lib.getName.split(File.separatorChar).last
     ApkLib(fixedLibName, lib.layout.base, lib.layout.manifest, lib.layout.sources, lib.layout.res, lib.layout.libs, lib.layout.gen)
   }
 
