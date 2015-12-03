@@ -63,6 +63,17 @@ object UtilityTasks extends SbtStateOps {
   def dependencyConfigurations =
     StructureKeys.sourceConfigurations.apply(_ ++ Seq(Runtime, Provided, Optional))
 
+  def classifiersModuleRespectingStructureOpts: Initialize[Task[GetClassifiersModule]] =
+    (Keys.classifiersModule.in(Keys.updateClassifiers), StructureKeys.sbtStructureOpts) map {
+      (module, options) =>
+        if (options.resolveJavadocs) {
+          module
+        } else {
+          val classifiersWithoutJavadocs = module.classifiers.filterNot(_ == Artifact.DocClassifier)
+          module.copy(classifiers = classifiersWithoutJavadocs)
+        }
+    }
+
   private def areNecessaryPluginsLoaded(project: ResolvedProject): Boolean = {
     // Here is a hackish way to test whether project has JvmPlugin enabled.
     // Prior to 0.13.8 SBT had this one enabled by default for all projects.

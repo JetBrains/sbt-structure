@@ -33,7 +33,6 @@ object CreateTasks extends (State => State) with SbtStateOps {
         UtilityTasks.sourceConfigurations,
       StructureKeys.dependencyConfigurations <<=
         UtilityTasks.dependencyConfigurations,
-
       StructureKeys.extractAndroid <<=
         AndroidSdkPluginExtractor.taskDef,
       StructureKeys.extractPlay2 <<=
@@ -43,7 +42,9 @@ object CreateTasks extends (State => State) with SbtStateOps {
       StructureKeys.extractDependencies <<=
         DependenciesExtractor.taskDef,
       StructureKeys.extractProject <<=
-        ProjectExtractor.taskDef
+        ProjectExtractor.taskDef,
+      Keys.classifiersModule.in(Keys.updateClassifiers) <<=
+        UtilityTasks.classifiersModuleRespectingStructureOpts
     )
 
     applySettings(state, globalSettings, projectSettings)

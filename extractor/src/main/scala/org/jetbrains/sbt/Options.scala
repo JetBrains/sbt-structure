@@ -6,25 +6,17 @@ package org.jetbrains.sbt
  */
 final case class Options(download: Boolean,
                          resolveClassifiers: Boolean,
+                         resolveJavadocs: Boolean,
                          resolveSbtClassifiers: Boolean,
-                         cachedUpdate: Boolean,
                          prettyPrint: Boolean)
 
 object Options {
   def readFromString(options: String): Options = Options(
     download = options.contains("download"),
     resolveClassifiers = options.contains("resolveClassifiers"),
+    resolveJavadocs = options.contains("resolveJavadocs"),
     resolveSbtClassifiers = options.contains("resolveSbtClassifiers"),
-    cachedUpdate = options.contains("cachedUpdate"),
     prettyPrint = options.contains("prettyPrint")
-  )
-
-  def default: Options = Options(
-    download = false,
-    resolveClassifiers = false,
-    resolveSbtClassifiers = false,
-    cachedUpdate = false,
-    prettyPrint = false
   )
 }
 

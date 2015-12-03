@@ -18,7 +18,7 @@ object Loader {
 
     val opts =
       if (resolveClassifiers)
-        "download resolveClassifiers resolveSbtClassifiers prettyPrint"
+        "download prettyPrint resolveClassifiers resolveSbtClassifiers resolveJavadocs"
       else
         "download prettyPrint"
 
