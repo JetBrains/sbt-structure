@@ -16,13 +16,13 @@ class ImportSpec extends Specification with XmlMatchers {
   "Actual structure" should {
     sequential // running 10 sbt instances at once is a bad idea unless you have >16G of ram
 
-    equalExpectedOneIn("bare")
+    equalExpectedOneIn("bare", options="resolveClassifiers resolveSbtClassifiers")
+    equalExpectedOneIn("simple", options="resolveClassifiers resolveSbtClassifiers")
     equalExpectedOneIn("multiple")
-    equalExpectedOneIn("simple")
     equalExpectedOneIn("dependency")
     equalExpectedOneIn("classifiers", sbt13only)
     equalExpectedOneIn("optional", sbt13only)
-    equalExpectedOneIn("play", onlyFor("0.13.7", "0.13.9"), resolveClassifiers = false)
+    equalExpectedOneIn("play", onlyFor("0.13.7", "0.13.9"), options = "")
     equalExpectedOneIn("android-1.4", onlyFor("0.13.7", "0.13.9") and ifAndroidDefined)
     equalExpectedOneIn("android", sbt13only and ifAndroidDefined)
     equalExpectedOneIn("ide-settings", onlyFor("0.13.7", "0.13.9"))
@@ -39,22 +39,23 @@ class ImportSpec extends Specification with XmlMatchers {
   val AndroidHome = Option(System.getenv.get("ANDROID_HOME")).map(normalizePath)
   val UserHome = Option(System.getProperty("user.home")).map(normalizePath)
 
-  private def equalExpectedOneIn(projectName: String, conditions: => MatchResult[Any] = always, resolveClassifiers: Boolean = true) =
+  private def equalExpectedOneIn(projectName: String, conditions: => MatchResult[Any] = always,
+                                 options: String = "resolveClassifiers resolveSbtClassifiers resolveJavadocs") =
     ("equal expected one in '" + projectName + "' project [" + SbtVersionFull + "]").in { _: String =>
       if (conditions.isSuccess)
-        testProject(projectName, resolveClassifiers)
+        testProject(projectName, options)
       else
         conditions
     }
 
-  private def testProject(project: String, resolveClassifiers: Boolean) = {
+  private def testProject(project: String, options: String) = {
     val base = new File(TestDataRoot, project)
     val testDataFile = new File(base, "structure-" + SbtVersionFull + ".xml")
 
     testDataFile must exist.setMessage("No test data for version " + SbtVersionFull + " found")
 
     val expectedStr = getExpectedStr(testDataFile, base)
-    val actualStr = Loader.load(base, resolveClassifiers, SbtVersionFull, PluginFile, verbose = true).mkString("\n")
+    val actualStr = Loader.load(base, options, SbtVersionFull, PluginFile, verbose = true).mkString("\n")
     val actualXml = XML.loadString(actualStr)
     val expectedXml = XML.loadString(expectedStr)
     val actual = actualXml.deserialize[StructureData].right.get

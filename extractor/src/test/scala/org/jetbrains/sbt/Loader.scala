@@ -12,15 +12,11 @@ object Loader {
   private val JavaVM = path(new File(new File(new File(System.getProperty("java.home")), "bin"), "java"))
   private val SbtLauncher = path(new File("sbt-launch.jar"))
 
-  def load(project: File, resolveClassifiers: Boolean, sbtVersion: String, pluginFile: File, verbose: Boolean = false): Seq[String] = {
+  def load(project: File, options: String, sbtVersion: String, pluginFile: File, verbose: Boolean = false): Seq[String] = {
     val structureFile = createTempFile("sbt-structure", ".xml")
     val commandsFile = createTempFile("sbt-commands", ".lst")
 
-    val opts =
-      if (resolveClassifiers)
-        "download prettyPrint resolveClassifiers resolveSbtClassifiers resolveJavadocs"
-      else
-        "download prettyPrint"
+    val opts = "download prettyPrint " + options
 
     writeLinesTo(commandsFile,
       "set SettingKey[Option[File]](\"sbt-structure-output-file\") in Global := Some(file(\"" + path(structureFile) + "\"))",

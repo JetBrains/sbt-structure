@@ -121,7 +121,6 @@
   <repository>
     <module revision="2.10.1" name="scala-library" artifactType="jar" organization="org.scala-lang" classifier="">
       <jar>~/.sbt/boot/scala-2.10.1/lib/scala-library.jar</jar>
-      <doc>~/.ivy2/cache/org.scala-lang/scala-library/docs/scala-library-2.10.1-javadoc.jar</doc>
       <src>~/.ivy2/cache/org.scala-lang/scala-library/srcs/scala-library-2.10.1-sources.jar</src>
     </module>
   </repository>
