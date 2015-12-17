@@ -1,14 +1,15 @@
 import bintray._
 import bintray.Keys._
 
+
 def newProject(projectName: String): Project =
   Project(projectName, file(projectName))
     .settings(
       name := "sbt-structure-" + projectName,
       organization := "org.jetbrains",
-      version := "5.1.0",
       licenses += ("Apache-2.0", url("http://www.apache.org/licenses/LICENSE-2.0.html")),
-      unmanagedSourceDirectories in Compile += baseDirectory.value.getParentFile / "shared" / "src" / "main" / "scala",
+      unmanagedSourceDirectories in Compile +=
+        baseDirectory.value.getParentFile / "shared" / "src" / "main" / "scala",
       publishMavenStyle := false
     )
     .settings(bintrayPublishSettings:_*)
@@ -18,7 +19,12 @@ def newProject(projectName: String): Project =
       credentialsFile in bintray := file(".credentials")
     )
 
-val core = newProject("core")
+enablePlugins(GitVersioning)
+
+git.useGitDescribe in ThisBuild := true
+
+
+lazy val core = newProject("core")
   .settings(
     libraryDependencies ++= {
       if (scalaVersion.value == "2.11.6")
@@ -29,9 +35,7 @@ val core = newProject("core")
     crossScalaVersions := Seq("2.9.2", "2.10.4", "2.11.6")
   )
 
-val testSetup = taskKey[Unit]("Setup tests for extractor")
-
-val extractor = newProject("extractor")
+lazy val extractor = newProject("extractor")
   .settings(crossBuildingSettings:_*)
   .settings(
     name := name.value + "-" + CrossBuilding.pluginSbtVersion.value,
@@ -50,4 +54,6 @@ val extractor = newProject("extractor")
     name in bintray := "sbt-structure-extractor"
   )
 
-val sbtStructure = project.in(file(".")).aggregate(core, extractor)
+lazy val sbtStructure = project.in(file(".")).aggregate(core, extractor)
+
+lazy val testSetup = taskKey[Unit]("Setup tests for extractor")
