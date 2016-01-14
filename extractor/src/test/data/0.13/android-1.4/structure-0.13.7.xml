@@ -225,35 +225,35 @@
     </scala>
     <android>
       <version>22</version>
-      <manifest>$BASE/src/main/AndroidManifest.xml</manifest>
+      <manifest>$BASE/target/android/intermediates/manifest/AndroidManifest.xml</manifest>
       <resources>$BASE/src/main/res</resources>
       <assets>$BASE/src/main/assets</assets>
-      <generatedFiles>$BASE/target/android-gen</generatedFiles>
+      <generatedFiles>$BASE/target/android/generated/source</generatedFiles>
       <nativeLibs>$BASE/src/main/libs</nativeLibs>
-      <apk>$BASE/target/android-bin/.build_integration/android-1-4-BUILD-INTEGRATION.apk</apk>
+      <apk>$BASE/target/android/intermediates/build_integration/android-1-4-BUILD-INTEGRATION.apk</apk>
       <isLibrary>false</isLibrary>
       <proguard>
         <option>test option</option>
       </proguard>
       <apkLib name="com.actionbarsherlock-actionbarsherlock-4.4.0">
         <manifest>
-          $BASE/target/apklibs/com.actionbarsherlock-actionbarsherlock-4.4.0/AndroidManifest.xml
+          $BASE/target/android/intermediates/apklibs/com.actionbarsherlock-actionbarsherlock-4.4.0/AndroidManifest.xml
         </manifest>
-        <base>$BASE/target/apklibs/com.actionbarsherlock-actionbarsherlock-4.4.0</base>
-        <sources>$BASE/target/apklibs/com.actionbarsherlock-actionbarsherlock-4.4.0/src</sources>
-        <resources>$BASE/target/apklibs/com.actionbarsherlock-actionbarsherlock-4.4.0/res</resources>
-        <libs>$BASE/target/apklibs/com.actionbarsherlock-actionbarsherlock-4.4.0/libs</libs>
-        <gen>$BASE/target/apklibs/com.actionbarsherlock-actionbarsherlock-4.4.0/gen</gen>
+        <base>$BASE/target/android/intermediates/apklibs/com.actionbarsherlock-actionbarsherlock-4.4.0</base>
+        <sources>$BASE/target/android/intermediates/apklibs/com.actionbarsherlock-actionbarsherlock-4.4.0/src</sources>
+        <resources>$BASE/target/android/intermediates/apklibs/com.actionbarsherlock-actionbarsherlock-4.4.0/res</resources>
+        <libs>$BASE/target/android/intermediates/apklibs/com.actionbarsherlock-actionbarsherlock-4.4.0/libs</libs>
+        <gen>$BASE/target/android/intermediates/apklibs/com.actionbarsherlock-actionbarsherlock-4.4.0/bin/generated/source</gen>
       </apkLib>
     </android>
     <configuration id="compile">
       <sources>$BASE/src/main</sources>
       <sources>$BASE/src/main/java</sources>
       <sources>$BASE/src/main/scala</sources>
-      <sources managed="true">$BASE/target/android-gen</sources>
+      <sources managed="true">$BASE/target/android/generated/source</sources>
       <resources>$BASE/src/main/resources</resources>
       <resources managed="true">$BASE/target/resource_managed/main</resources>
-      <classes>$BASE/target/android-bin/classes</classes>
+      <classes>$BASE/target/android/intermediates/classes</classes>
     </configuration>
     <configuration id="test">
       <sources>$BASE/src/test/java</sources>
@@ -266,8 +266,8 @@
     <dependencies>
       <module organization="com.android.support" name="support-annotations" revision="20.0.0" artifactType="jar" classifier="" configurations="compile"/>
       <module organization="org.scala-lang" name="scala-library" revision="2.11.1" artifactType="jar" classifier="" configurations="compile"/>
-      <jar configurations="compile">$BASE/target/aars/com.android.support-support-v4-20.0.0/com.android.support-support-v4-20.0.0.jar</jar>
-      <jar configurations="compile">$BASE/target/aars/com.android.support-support-v4-20.0.0/libs/internal_impl-20.0.0.jar</jar>
+      <jar configurations="compile">$BASE/target/android/intermediates/aars/com.android.support-support-v4-20.0.0/com.android.support-support-v4-20.0.0.jar</jar>
+      <jar configurations="compile">$BASE/target/android/intermediates/aars/com.android.support-support-v4-20.0.0/libs/internal_impl-20.0.0.jar</jar>
     </dependencies>
     <resolver name="public" root="https://repo1.maven.org/maven2/"/>
     <resolver name="google libraries" root="file:$ANDROID_HOME/extras/google/m2repository/"/>
