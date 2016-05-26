@@ -29,10 +29,12 @@ lazy val core = newProject("core")
     libraryDependencies ++= {
       if (scalaVersion.value == "2.11.6")
         Seq("org.scala-lang.modules" % "scala-xml_2.11" % "1.0.3")
+      else if (scalaVersion.value == "2.12.0-M4")
+        Seq("org.scala-lang.modules" %% "scala-xml" % "1.0.5")
       else
         Seq.empty
     },
-    crossScalaVersions := Seq("2.9.2", "2.10.4", "2.11.6")
+    crossScalaVersions := Seq("2.9.2", "2.10.4", "2.11.6", "2.12.0-M4")
   )
 
 lazy val extractor = newProject("extractor")
