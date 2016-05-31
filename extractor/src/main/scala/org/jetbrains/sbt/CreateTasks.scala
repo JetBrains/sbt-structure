@@ -57,7 +57,6 @@ object CreateTasks extends (State => State) with SbtStateOps {
     val transformedProjectSettings = extractedStructure.allProjectRefs.flatMap { projectRef =>
       Load.transformSettings(Load.projectScope(projectRef), projectRef.build, rootProject, projectSettings)
     }
-    val newStructure = Load.reapply(session.mergeSettings ++ transformedGlobalSettings ++ transformedProjectSettings, extractedStructure)
-    Project.setProject(session, newStructure, state)
+    SessionSettings.reapply(extracted.session.appendRaw(transformedGlobalSettings ++ transformedProjectSettings), state)
   }
 }
