@@ -34,7 +34,7 @@ lazy val core = newProject("core")
       else
         Seq.empty
     },
-    crossScalaVersions := Seq("2.9.2", "2.10.4", "2.11.6", "2.12.0-M4")
+    crossScalaVersions := Seq("2.9.2", "2.10.4", "2.11.6")
   )
 
 lazy val extractor = newProject("extractor")
