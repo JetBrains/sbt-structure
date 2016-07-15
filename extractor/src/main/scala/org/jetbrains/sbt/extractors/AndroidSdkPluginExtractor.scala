@@ -21,8 +21,6 @@ object AndroidSdkPluginExtractor extends SbtStateOps with TaskOps {
 
       val manifestFileTaskOpt = Keys.processManifest.in(projectRef).find(state)
         .orElse(Keys.manifestPath.in(projectRef).find(state).map(_.toTask))
-      val targetVersionTaskOpt = Keys.targetSdkVersion.in(projectRef).find(state)
-        .orElse(Keys.targetSdkVersion_1_3.in(projectRef).find(state).map(_.toTask))
       val layoutAsAnyOpt = findSettingKeyIn(keys, "projectLayout")
         .flatMap(_.in(projectRef).find(state))
       val apklibsAsAnyTaskOpt = findTaskKeyIn(keys, "apklibs")
@@ -34,9 +32,9 @@ object AndroidSdkPluginExtractor extends SbtStateOps with TaskOps {
         isLibrary           <- Keys.libraryProject.in(projectRef).find(state)
         layoutAsAny         <- layoutAsAnyOpt
         apklibsAsAnyTask    <- apklibsAsAnyTaskOpt
-        targetVersionTask   <- targetVersionTaskOpt
+        targetVersionTask   <- Keys.settingOrTask[String](Keys.targetSdkVersionKey, projectRef, state)
         proguardConfigTask  <- Keys.proguardConfig.in(projectRef).find(state)
-        proguardOptionsTask <- Keys.proguardOptions.in(projectRef).find(state)
+        proguardOptionsTask <- Keys.settingOrTask[Seq[String]](Keys.proguardOptionsKey, projectRef, state)
       } yield {
         for {
           manifest        <- manifestTask
@@ -64,14 +62,18 @@ object AndroidSdkPluginExtractor extends SbtStateOps with TaskOps {
   private val Android = config("android")
 
   private object Keys {
-    val targetSdkVersion = TaskKey[String]("target-sdk-version").in(Android)
-    val targetSdkVersion_1_3 = SettingKey[String]("target-sdk-version").in(Android)
+    val targetSdkVersionKey = "target-sdk-version"
     val manifestPath = SettingKey[File]("manifest-path").in(Android)
     val processManifest = TaskKey[File]("process-manifest").in(Android)
     val apkFile = SettingKey[File]("apk-file").in(Android)
     val libraryProject = SettingKey[Boolean]("library-project").in(Android)
     val proguardConfig = TaskKey[Seq[String]]("proguard-config").in(Android)
-    val proguardOptions = TaskKey[Seq[String]]("proguard-options").in(Android)
+    val proguardOptionsKey = "proguard-options"
+
+    def settingOrTask[A : Manifest](key: String, projectRef: ProjectRef, state: State) = {
+      TaskKey[A](key).in(Android).in(projectRef).find(state)
+        .orElse(SettingKey[A](key).in(Android).in(projectRef).find(state).map(_.toTask))
+    }
   }
 
   private type ProjectLayout = {
