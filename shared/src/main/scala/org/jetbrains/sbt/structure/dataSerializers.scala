@@ -298,7 +298,7 @@ trait DataSerializers {
       val apklibs         = (what \ "apkLib").deserialize[ApkLib]
       Right(AndroidData(version, file(manifestPath), file(apkPath),
         file(resPath), file(assetsPath), file(genPath),
-        file(libsPath), isLibrary, proguardConfig, apklibs))
+        file(libsPath), isLibrary, proguardConfig, apklibs, Nil))
     }
   }
 
