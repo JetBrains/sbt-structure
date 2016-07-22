@@ -3,3 +3,5 @@
 target
 project/target
 .credentials
+actual.txt
+expected.txt
