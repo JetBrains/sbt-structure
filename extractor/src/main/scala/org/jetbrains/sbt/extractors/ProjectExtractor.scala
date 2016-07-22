@@ -82,9 +82,9 @@ class ProjectExtractor(projectRef: ProjectRef,
 
   private def mergeConfigurations(configurations: Seq[ConfigurationData]): Seq[ConfigurationData] =
     configurations.groupBy(_.id).map { case (id, confs) =>
-      val sources   = confs.flatMap(_.sources)
-      val resources = confs.flatMap(_.resources)
-      val excludes  = confs.flatMap(_.excludes)
+      val sources   = confs.flatMap(_.sources).distinct
+      val resources = confs.flatMap(_.resources).distinct
+      val excludes  = confs.flatMap(_.excludes).distinct
       ConfigurationData(id, sources, resources, excludes, confs.head.classes)
     }.toSeq
 }
