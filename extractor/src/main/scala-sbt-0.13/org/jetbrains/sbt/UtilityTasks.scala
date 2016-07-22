@@ -1,11 +1,13 @@
 package org.jetbrains.sbt
 
-import java.io.{FileOutputStream, BufferedWriter, OutputStreamWriter}
+import java.io.{BufferedWriter, FileOutputStream, OutputStreamWriter}
 
 import sbt._
 import extractors.SettingKeys
-import sbt.Project.Initialize
+import Def.Initialize
 import structure.XmlSerializer._
+
+import scala.language.reflectiveCalls
 import scala.xml._
 
 /**
@@ -48,17 +50,33 @@ object UtilityTasks extends SbtStateOps {
     }
   }
 
-  def testConfigurations: Initialize[Seq[sbt.Configuration]] = Keys.ivyConfigurations.apply { ivyConfigurations =>
-    val predefined = Set(Test, IntegrationTest)
-    for {
-      configuration <- ivyConfigurations
-      if !configuration.name.toLowerCase.contains("internal")
-      if predefined(configuration) || predefined.intersect(configuration.extendsConfigs.toSet).nonEmpty
-    } yield configuration
+  def allConfigurationsWithSource = Def.settingDyn {
+    val cs = for {
+      c <- Keys.ivyConfigurations.value
+    } yield (Keys.sourceDirectories in c).?.apply { filesOpt => filesOpt.flatMap(f => f.nonEmpty.option(c))}
+
+    cs.foldLeft(Def.setting(Seq.empty[Configuration])) { (accDef, initOptConf) =>
+      accDef.zipWith(initOptConf) {(acc, optConf) => acc ++ optConf.toSeq }
+    }
   }
 
-  def sourceConfigurations =
-    StructureKeys.testConfigurations.apply(_ ++ Seq(Compile))
+  def testConfigurations = allConfigurationsWithSource.apply { cs =>
+    val predefinedTest = Set(Test, IntegrationTest)
+    cs.filter(c => transitiveExtends(c.extendsConfigs).toSet.intersect(predefinedTest).nonEmpty)
+  }
+
+  // TODO remove deuplication with ProjectExtractor
+  /** Transitive hull of configs that a config extends. */
+  @scala.annotation.tailrec
+  private def transitiveExtends(configs: List[sbt.Configuration]): List[sbt.Configuration] = {
+    val extended = (configs.flatMap(_.extendsConfigs) ++ configs).distinct
+    if (extended.map(_.name) == configs.map(_.name)) extended
+    else transitiveExtends(extended)
+  }
+
+  def sourceConfigurations = Def.setting {
+    allConfigurationsWithSource.value.diff(testConfigurations.value) ++ Seq(Compile)
+  }
 
   def dependencyConfigurations =
     StructureKeys.sourceConfigurations.apply(_ ++ Seq(Runtime, Provided, Optional))
