@@ -2,13 +2,7 @@ package org.jetbrains.sbt
 package structure
 
 import java.io.File
-
-//import scala.language.implicitConversions
-//import scala.language.reflectiveCalls
-
 import org.jetbrains.sbt.structure.XmlSerializer._
-
-import scala.xml._
 
 
 /**

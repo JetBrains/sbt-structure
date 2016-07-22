@@ -267,7 +267,7 @@ trait DataSerializers {
     }
   }
 
-  implicit val andoirdDataSerializer = new XmlSerializer[AndroidData] {
+  implicit val androidDataSerializer = new XmlSerializer[AndroidData] {
     override def serialize(what: AndroidData): Elem =
       <android>
         <version>{what.targetVersion}</version>

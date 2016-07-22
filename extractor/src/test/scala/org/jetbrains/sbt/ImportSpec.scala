@@ -52,7 +52,7 @@ class ImportSpec extends Specification with XmlMatchers {
     val base = new File(TestDataRoot, project)
     val testDataFile = new File(base, "structure-" + SbtVersionFull + ".xml")
 
-    testDataFile must exist.setMessage("No test data for version " + SbtVersionFull + " found")
+    testDataFile must exist.setMessage("No test data for version " + SbtVersionFull + " found at " + testDataFile.getPath)
 
     val expectedStr = getExpectedStr(testDataFile, base)
     val actualStr = Loader.load(base, options, SbtVersionFull, PluginFile, verbose = true).mkString("\n")
