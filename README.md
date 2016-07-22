@@ -3,13 +3,9 @@
 [![Download](https://api.bintray.com/packages/jetbrains/sbt-plugins/sbt-structure-core/images/download.svg) ](https://bintray.com/jetbrains/sbt-plugins/sbt-structure-core/_latestVersion)
 [![Build Status](https://travis-ci.org/JetBrains/sbt-structure.svg)](https://travis-ci.org/JetBrains/sbt-structure)
 
-This plugin is designed to allow one extract complete structure of SBT build in XML format. It is used in
-Intellij Scala plugin in order to support importing arbitrary SBT projects into IDEA.
+This plugin extracts the structure of an SBT build in XML format. It is used in
+Intellij Scala plugin in order to import arbitrary SBT projects into IDEA.
 
-It consists of two parts:
-
-- `sbt-structure-core` is a set of datatypes and functions for their (de)serialization used as internal representation
-  of SBT build in sbt-structure
 - `sbt-structure-extractor` is SBT plugin that actually extracts information from SBT build
 
 ## Usage
@@ -19,9 +15,10 @@ It consists of two parts:
 Add to your `build.sbt`
 
 ```scala
+
 resolvers += Resolver.url("jb-bintray", url("http://dl.bintray.com/jetbrains/sbt-plugins"))(Resolver.ivyStylePatterns)
 
-libraryDependencies += "org.jetbrains" %% "sbt-structure-core" % "4.1.0" // or later version
+libraryDependencies += "org.jetbrains" %% "sbt-structure-core" % "5.1.2" // or later version
 ```
 
 Then run extractor or get XML of the structure any other way and deserialize it:
@@ -80,12 +77,15 @@ Available options to set in `sbt-structure-options`:
 - Testing against all supported SBT versions can be done with `^ test` command
 - Testing against specific version of SBT, for example, 0.13.7: `^^ 0.13.7 test`
 - Selected tests can be run with `testOnly` command, e.g. `^ testOnly -- -ex "project name"`
-- To publish artifacts bump version in `build.sbt` and run in SBT REPL:
 
-   ```scala
-   project core
-   + publish
-   project extractor
-   ^^ 0.12 publish
-   ^^ 0.13 publish
-   ```
+To publish artifacts bump version in `build.sbt` and run in SBT REPL:
+
+```scala
+project extractor
+^^ 0.12 publish
+^^ 0.13 publish
+```
+   
+## Compatibility
+
+Sbt 0.12 is built against Scala 2.9 and will not run on JVM 8. To test for 0.12, you need to run sbt with Java 7
