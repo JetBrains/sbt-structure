@@ -27,12 +27,13 @@ git.useGitDescribe in ThisBuild := true
 lazy val core = newProject("core")
   .settings(
     libraryDependencies ++= {
-      if (scalaVersion.value == "2.11.6")
-        Seq("org.scala-lang.modules" % "scala-xml_2.11" % "1.0.3")
-      else if (scalaVersion.value == "2.12.0-M4")
-        Seq("org.scala-lang.modules" %% "scala-xml" % "1.0.5")
-      else
-        Seq.empty
+      CrossVersion.partialVersion(scalaVersion.value) match {
+        // if scala 2.11+ is used, add dependency on scala-xml module
+        case Some((2, scalaMajor)) if scalaMajor >= 11 =>
+          Seq("org.scala-lang.modules" %% "scala-xml" % "1.0.5")
+        case _ =>
+          Seq.empty
+      }
     },
     crossScalaVersions := Seq("2.9.2", "2.10.4", "2.11.6")
   )
