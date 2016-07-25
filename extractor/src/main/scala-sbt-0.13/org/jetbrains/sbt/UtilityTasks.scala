@@ -72,11 +72,11 @@ object UtilityTasks extends SbtStateOps {
   }
 
   def sourceConfigurations = Def.setting {
-    allConfigurationsWithSource.value.diff(testConfigurations.value) ++ Seq(Compile)
+    (allConfigurationsWithSource.value.diff(testConfigurations.value) ++ Seq(Compile)).distinct
   }
 
   def dependencyConfigurations =
-    StructureKeys.sourceConfigurations.apply(_ ++ Seq(Runtime, Provided, Optional))
+    allConfigurationsWithSource.apply(cs => (cs ++ Seq(Runtime, Provided, Optional)).distinct)
 
   def classifiersModuleRespectingStructureOpts: Initialize[Task[GetClassifiersModule]] =
     (Keys.classifiersModule.in(Keys.updateClassifiers), StructureKeys.sbtStructureOpts) map {
