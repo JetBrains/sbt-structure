@@ -1,7 +1,7 @@
-package org.jetbrains.sbt
-package extractors
+package org.jetbrains.sbt.extractors
 
-import org.jetbrains.sbt.structure.{ModuleIdentifier, ModuleData, RepositoryData}
+import org.jetbrains.sbt.structure.{ModuleData, ModuleIdentifier, RepositoryData}
+import org.jetbrains.sbt.{ModuleReportAdapter, ModulesOps, Options, SbtStateOps, StructureKeys, TaskOps, UpdateReportAdapter}
 import sbt.Project.Initialize
 import sbt._
 

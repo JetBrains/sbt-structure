@@ -38,20 +38,16 @@ class ProjectExtractor(projectRef: ProjectRef,
 
   private[extractors] def extract: ProjectData = {
     val resolvers = fullResolvers.collect {
-      case MavenRepository(repoName, root) => ResolverData(repoName, root)
+      case MavenRepository(name, root) => ResolverData(name, root)
     }.toSet
     val configurations  =
-      mergeConfigurations(
-        sourceConfigurations.flatMap(extractConfiguration(Compile.name) _) ++
-        testConfigurations.flatMap(extractConfiguration(Test.name) _)
-      )
-
+      mergeConfigurations(sourceConfigurations.flatMap(extractConfiguration))
     ProjectData(projectRef.id, name, organization, version, base,
       basePackages, target, build, configurations,
       extractJava, extractScala, android, dependencies, resolvers, play2)
   }
 
-  private def extractConfiguration(ideConfig: String)(configuration: sbt.Configuration): Option[ConfigurationData] =
+  private def extractConfiguration(configuration: sbt.Configuration): Option[ConfigurationData] =
     classDirectory(configuration).map { sbtOutput =>
       val sources = {
         val managed   = managedSourceDirectories(configuration)
@@ -69,15 +65,12 @@ class ProjectExtractor(projectRef: ProjectRef,
 
       val output = ideOutputDirectory(configuration).getOrElse(sbtOutput)
 
-      /*
-        * IntelliJ has a more limited model of configuration than sbt/ivy, so we need to map them to one of the types
-        * we can handle: Test or Compile. This is the `ideConfig`
-        * This mapping is not perfect because we depend on the configuration extension mechanism to detect what is a test
-        * config, and IntelliJ can not model config dependencies fully. The aim is to reduce amount of "red code" that
-        * hampers productivity.
-        */
-      ConfigurationData(ideConfig, sources, resources, excludedDirectories, output)
+      ConfigurationData(mapConfiguration(configuration).name,
+        sources, resources, excludedDirectories, output)
     }
+
+  private def mapConfiguration(configuration: sbt.Configuration): sbt.Configuration =
+    if (testConfigurations.contains(configuration)) Test else configuration
 
   private def extractScala: Option[ScalaData] = scalaInstance.map { instance =>
     val extraJars = instance.extraJars.filter(_.getName.contains("reflect"))
@@ -89,9 +82,9 @@ class ProjectExtractor(projectRef: ProjectRef,
 
   private def mergeConfigurations(configurations: Seq[ConfigurationData]): Seq[ConfigurationData] =
     configurations.groupBy(_.id).map { case (id, confs) =>
-      val sources   = confs.flatMap(_.sources).distinct
-      val resources = confs.flatMap(_.resources).distinct
-      val excludes  = confs.flatMap(_.excludes).distinct
+      val sources   = confs.flatMap(_.sources)
+      val resources = confs.flatMap(_.resources)
+      val excludes  = confs.flatMap(_.excludes)
       ConfigurationData(id, sources, resources, excludes, confs.head.classes)
     }.toSeq
 }
@@ -174,3 +167,4 @@ object ProjectExtractor extends SbtStateOps with TaskOps {
         }
     }
 }
+
