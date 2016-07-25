@@ -32,6 +32,7 @@ object UtilityTasks extends SbtStateOps {
 
       outputFile.map { file =>
         log.info("Writing structure to " + file.getPath + "...")
+        //noinspection UnitInMap
         writeToFile(file, outputText)
       } getOrElse {
         log.info("Writing structure to console:")
@@ -63,15 +64,6 @@ object UtilityTasks extends SbtStateOps {
   def testConfigurations = allConfigurationsWithSource.apply { cs =>
     val predefinedTest = Set(Test, IntegrationTest)
     cs.filter(c => transitiveExtends(c.extendsConfigs).toSet.intersect(predefinedTest).nonEmpty)
-  }
-
-  // TODO remove deuplication with ProjectExtractor
-  /** Transitive hull of configs that a config extends. */
-  @scala.annotation.tailrec
-  private def transitiveExtends(configs: List[sbt.Configuration]): List[sbt.Configuration] = {
-    val extended = (configs.flatMap(_.extendsConfigs) ++ configs).distinct
-    if (extended.map(_.name) == configs.map(_.name)) extended
-    else transitiveExtends(extended)
   }
 
   def sourceConfigurations = Def.setting {

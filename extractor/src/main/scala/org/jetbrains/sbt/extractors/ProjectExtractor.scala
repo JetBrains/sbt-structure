@@ -38,7 +38,7 @@ class ProjectExtractor(projectRef: ProjectRef,
 
   private[extractors] def extract: ProjectData = {
     val resolvers = fullResolvers.collect {
-      case MavenRepository(name, root) => ResolverData(name, root)
+      case MavenRepository(repoName, root) => ResolverData(repoName, root)
     }.toSet
     val configurations  =
       mergeConfigurations(sourceConfigurations.flatMap(extractConfiguration))
@@ -69,8 +69,23 @@ class ProjectExtractor(projectRef: ProjectRef,
         sources, resources, excludedDirectories, output)
     }
 
-  private def mapConfiguration(configuration: sbt.Configuration): sbt.Configuration =
-    if (testConfigurations.contains(configuration)) Test else configuration
+  private val predefinedTest = Set(Test, IntegrationTest)
+  /**
+    * IntelliJ has a more limited model of configuration than sbt/ivy, so we need to map them to one of the types
+    * we can handle: Test or Compile
+    * This mapping is not perfect because we depend on the configuration extension mechanism to detect what is a test
+    * config, and IntelliJ can not model config dependencies fully. The aim is to reduce amount of "red code" that
+    * hampers productivity.
+    */
+  private def mapConfiguration(configuration: sbt.Configuration): sbt.Configuration = {
+    val hull = transitiveExtends(configuration.extendsConfigs).toSet
+
+    if (predefinedTest(configuration) || predefinedTest.intersect(hull).nonEmpty)
+      Test
+    else
+      Compile // anything custom that doesn't extend a predef is just Compile
+  }
+
 
   private def extractScala: Option[ScalaData] = scalaInstance.map { instance =>
     val extraJars = instance.extraJars.filter(_.getName.contains("reflect"))
@@ -167,4 +182,3 @@ object ProjectExtractor extends SbtStateOps with TaskOps {
         }
     }
 }
-

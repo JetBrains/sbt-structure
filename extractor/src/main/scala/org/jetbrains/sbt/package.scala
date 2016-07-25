@@ -1,6 +1,7 @@
 package org.jetbrains
 
 import _root_.sbt.ProjectRef
+import _root_.sbt.Configuration
 
 //import scala.language.implicitConversions
 
@@ -19,5 +20,13 @@ package object sbt {
 
   implicit def `enrich ProjectRef`(projectRef: ProjectRef) = new {
     def id: String = projectRef.project // TODO: append build url when IDEA-145101 is fixed
+  }
+
+  /** Transitive hull of configs that a config extends. */
+  @scala.annotation.tailrec
+  def transitiveExtends(configs: List[Configuration]): List[Configuration] = {
+    val extended = (configs.flatMap(_.extendsConfigs) ++ configs).distinct
+    if (extended.map(_.name) == configs.map(_.name)) extended
+    else transitiveExtends(extended)
   }
 }
