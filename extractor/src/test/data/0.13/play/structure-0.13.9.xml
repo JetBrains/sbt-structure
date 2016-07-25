@@ -209,7 +209,6 @@
     </scala>
     <configuration id="compile">
       <sources>$BASE/app</sources>
-      <sources>$BASE/app</sources>
       <sources>$BASE/app-2.10</sources>
       <sources managed="true">$BASE/target/scala-2.10/src_managed/main</sources>
       <sources managed="true">$BASE/target/scala-2.10/twirl/main</sources>
@@ -218,7 +217,6 @@
       <classes>$BASE/target/scala-2.10/classes</classes>
     </configuration>
     <configuration id="test">
-      <sources>$BASE/test</sources>
       <sources>$BASE/test</sources>
       <sources>$BASE/test-2.10</sources>
       <sources managed="true">$BASE/target/scala-2.10/src_managed/test</sources>
