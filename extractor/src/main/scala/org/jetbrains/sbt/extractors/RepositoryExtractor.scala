@@ -31,7 +31,7 @@ class RepositoryExtractor(projects: Seq[ProjectRef],
       val docModules = getModulesForProject(projectRef, updateClassifiersReportsFn)
       modulesWithoutDocs.map { report =>
         val matchingDocs = docModules.filter(_.moduleId == report.moduleId).flatMap(r => onlySourcesAndDocs(r.artifacts))
-        new ModuleReportAdapter(report.moduleId, report.artifacts ++ matchingDocs)
+        ModuleReportAdapter(report.moduleId, report.artifacts ++ matchingDocs)
       }
     }
 
