@@ -41,13 +41,17 @@ class ProjectExtractor(projectRef: ProjectRef,
       case MavenRepository(repoName, root) => ResolverData(repoName, root)
     }.toSet
     val configurations  =
-      mergeConfigurations(sourceConfigurations.flatMap(extractConfiguration))
+      mergeConfigurations(
+        sourceConfigurations.flatMap(extractConfiguration(Compile.name) _) ++
+        testConfigurations.flatMap(extractConfiguration(Test.name) _)
+      )
+
     ProjectData(projectRef.id, name, organization, version, base,
       basePackages, target, build, configurations,
       extractJava, extractScala, android, dependencies, resolvers, play2)
   }
 
-  private def extractConfiguration(configuration: sbt.Configuration): Option[ConfigurationData] =
+  private def extractConfiguration(ideConfig: String)(configuration: sbt.Configuration): Option[ConfigurationData] =
     classDirectory(configuration).map { sbtOutput =>
       val sources = {
         val managed   = managedSourceDirectories(configuration)
@@ -65,27 +69,15 @@ class ProjectExtractor(projectRef: ProjectRef,
 
       val output = ideOutputDirectory(configuration).getOrElse(sbtOutput)
 
-      ConfigurationData(mapConfiguration(configuration).name,
-        sources, resources, excludedDirectories, output)
+      /*
+        * IntelliJ has a more limited model of configuration than sbt/ivy, so we need to map them to one of the types
+        * we can handle: Test or Compile. This is the `ideConfig`
+        * This mapping is not perfect because we depend on the configuration extension mechanism to detect what is a test
+        * config, and IntelliJ can not model config dependencies fully. The aim is to reduce amount of "red code" that
+        * hampers productivity.
+        */
+      ConfigurationData(ideConfig, sources, resources, excludedDirectories, output)
     }
-
-  private val predefinedTest = Set(Test, IntegrationTest)
-  /**
-    * IntelliJ has a more limited model of configuration than sbt/ivy, so we need to map them to one of the types
-    * we can handle: Test or Compile
-    * This mapping is not perfect because we depend on the configuration extension mechanism to detect what is a test
-    * config, and IntelliJ can not model config dependencies fully. The aim is to reduce amount of "red code" that
-    * hampers productivity.
-    */
-  private def mapConfiguration(configuration: sbt.Configuration): sbt.Configuration = {
-    val hull = transitiveExtends(configuration.extendsConfigs).toSet
-
-    if (predefinedTest(configuration) || predefinedTest.intersect(hull).nonEmpty)
-      Test
-    else
-      Compile // anything custom that doesn't extend a predef is just Compile
-  }
-
 
   private def extractScala: Option[ScalaData] = scalaInstance.map { instance =>
     val extraJars = instance.extraJars.filter(_.getName.contains("reflect"))
