@@ -2,8 +2,7 @@ package org.jetbrains.sbt
 package extractors
 
 import org.jetbrains.sbt.structure._
-import org.jetbrains.sbt.{SbtStateOps, StructureKeys, TaskOps}
-import sbt.Project.Initialize
+import sbt.Def.Initialize
 import sbt._
 
 /**
