@@ -63,7 +63,12 @@ object UtilityTasks extends SbtStateOps {
 
   def testConfigurations = allConfigurationsWithSource.apply { cs =>
     val predefinedTest = Set(Test, IntegrationTest)
-    cs.filter(c => transitiveExtends(c.extendsConfigs).toSet.intersect(predefinedTest).nonEmpty)
+    val transitiveTest = cs.filter(c =>
+      transitiveExtends(c.extendsConfigs)
+        .toSet
+        .intersect(predefinedTest).nonEmpty) ++
+    predefinedTest
+    transitiveTest.distinct
   }
 
   def sourceConfigurations = Def.setting {
