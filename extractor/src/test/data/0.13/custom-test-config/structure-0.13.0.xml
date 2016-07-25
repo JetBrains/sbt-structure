@@ -122,7 +122,7 @@
       <resources>$BASE/src/test/resources</resources>
       <resources managed="true">$BASE/target/scala-2.10/resource_managed/fun</resources>
       <resources managed="true">$BASE/target/scala-2.10/resource_managed/test</resources>
-      <classes>$BASE/target/scala-2.10/test-classes</classes>
+      <classes>$BASE/target/scala-2.10/fun-classes</classes>
     </configuration>
     <dependencies>
       <module configurations="compile" organization="org.scala-lang" name="scala-library" revision="2.10.1" artifactType="jar" classifier=""/>
