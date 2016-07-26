@@ -34,7 +34,13 @@ class ImportSpec extends Specification with XmlMatchers {
   val SbtVersionFull = System.getProperty("structure.sbtversion.full")
   val ScalaVersion = System.getProperty("structure.scalaversion")
 
-  val PluginFile = new File("extractor/target/scala-" + ScalaVersion + "/sbt-" + SbtVersionFull +"/classes/")
+  val PluginFile = new File("extractor/target/scala-" + ScalaVersion + "/sbt-" + SbtVersionFull +"/classes/").getAbsoluteFile
+
+  val sbtGlobalRoot = new File("sbt-global/").getAbsoluteFile
+  val sbtGlobalBase = new File(sbtGlobalRoot, SbtVersion).getAbsoluteFile
+  val sbtBootDir = new File(sbtGlobalRoot, "boot/").getAbsoluteFile
+  val sbtIvyHome = new File(sbtGlobalRoot, "ivy2/").getAbsoluteFile
+
   val TestDataRoot = new File("extractor/src/test/data/" + SbtVersion)
   val AndroidHome = Option(System.getenv.get("ANDROID_HOME")).map(normalizePath)
   val UserHome = Option(System.getProperty("user.home")).map(normalizePath)
@@ -55,7 +61,10 @@ class ImportSpec extends Specification with XmlMatchers {
     testDataFile must exist.setMessage("No test data for version " + SbtVersionFull + " found at " + testDataFile.getPath)
 
     val expectedStr = getExpectedStr(testDataFile, base)
-    val actualStr = Loader.load(base, options, SbtVersionFull, PluginFile, verbose = true).mkString("\n")
+    val actualStr = Loader.load(
+      base, options, SbtVersionFull, pluginFile = PluginFile,
+      sbtGlobalBase = sbtGlobalBase, sbtBootDir = sbtBootDir, sbtIvyHome = sbtIvyHome,
+      verbose = true).mkString("\n")
     val actualXml = XML.loadString(actualStr)
     val expectedXml = XML.loadString(expectedStr)
     val actual = actualXml.deserialize[StructureData].right.get
@@ -88,7 +97,8 @@ class ImportSpec extends Specification with XmlMatchers {
     TestUtil.read(testDataFile).mkString("\n")
       .replace("$BASE", normalizePath(base.getCanonicalPath))
       .replace("$ANDROID_HOME", AndroidHome.getOrElse(""))
-      .replace("~/", UserHome.getOrElse("") + "/")
+      .replace("$IVY2", normalizePath(sbtIvyHome.getCanonicalPath))
+      .replace("$SBT_BOOT", normalizePath(sbtBootDir.getCanonicalPath))
 
   private def getDiff(expected: String, actual: String): String = {
     import scala.collection.JavaConversions._

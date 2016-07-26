@@ -14,7 +14,7 @@ private object Helpers {
   }
 
   class RichNode(node: Node) {
-    def !(name: String): Node = (node \ name) match {
+    def !(name: String): Node = node \ name match {
       case Seq() => throw new RuntimeException("None of " + name + " nodes is found in " + node)
       case Seq(child) => child
       case _ => throw new RuntimeException("Multiple " + name + " nodes are found in " + node)

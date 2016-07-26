@@ -5,3 +5,4 @@ project/target
 .credentials
 actual.txt
 expected.txt
+sbt-global

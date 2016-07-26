@@ -2,7 +2,6 @@ package org.jetbrains.sbt
 package structure
 
 import java.io.File
-import org.jetbrains.sbt.structure.XmlSerializer._
 
 
 /**
@@ -59,10 +58,25 @@ case class ProjectData(id: String,
 /**
  * Information about build dependencies and implicit imports for proper editing of .sbt files
  */
-case class BuildData(imports: Seq[String],
-                     classes: Seq[File],
-                     docs: Seq[File],
-                     sources: Seq[File])
+sealed abstract class BuildData extends Product {
+  val imports: Seq[String]
+  val classes: Seq[File]
+  val docs: Seq[File]
+  val sources: Seq[File]
+}
+// hack a case class with private constructor to ensure some invariants in constructions
+object BuildData {
+  private case class BuildDataImpl (imports: Seq[String], classes: Seq[File], docs: Seq[File], sources: Seq[File]) extends BuildData
+  private def sort(files: Seq[File]): Seq[File] = files.sortBy(_.getCanonicalPath)
+
+  def apply(imports: Seq[String], classes: Seq[File], docs: Seq[File], sources: Seq[File]): BuildData =
+    BuildDataImpl(
+      imports.sorted,
+      sort(classes),
+      sort(docs),
+      sort(sources)
+    )
+}
 
 /**
  * Lists of directories in specified configuration

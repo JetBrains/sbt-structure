@@ -12,7 +12,9 @@ object Loader {
   private val JavaVM = path(new File(new File(new File(System.getProperty("java.home")), "bin"), "java"))
   private val SbtLauncher = path(new File("sbt-launch.jar"))
 
-  def load(project: File, options: String, sbtVersion: String, pluginFile: File, verbose: Boolean = false): Seq[String] = {
+  def load(project: File, options: String, sbtVersion: String, pluginFile: File,
+           sbtGlobalBase: File, sbtBootDir: File, sbtIvyHome: File,
+           verbose: Boolean = false): Seq[String] = {
     val structureFile = createTempFile("sbt-structure", ".xml")
     val commandsFile = createTempFile("sbt-commands", ".lst")
 
@@ -28,6 +30,11 @@ object Loader {
 //      "-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=5005",
       "-Dsbt.log.noformat=true",
       "-Dsbt.version=" + sbtVersion,
+      // to make the builds exactly reproducible and independent of user configuration,
+      // use custom clean sbt setting dirs
+      "-Dsbt.global.base=" + sbtGlobalBase,
+      "-Dsbt.boot.directory=" + sbtBootDir,
+      "-Dsbt.ivy.home=" + sbtIvyHome,
       "-jar", SbtLauncher,
       "< " + path(commandsFile))
 
