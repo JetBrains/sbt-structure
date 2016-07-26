@@ -1,7 +1,20 @@
 language: scala
 
+jdk:
+  - oraclejdk7
+
 sudo: false
 
 script:
     - sbt 'project extractor' '^ test'
 
+before_cache:
+  # Tricks to avoid unnecessary cache updates
+  - find $HOME/.ivy2 -name "ivydata-*.properties" -delete
+  - find $HOME/sbt-structure-global/ivy2 -name "ivydata-*.properties" -delete
+  - find $HOME/sbt-structure-global -name "*.lock" -delete
+
+cache:
+  directories:
+    - $HOME/.ivy2/cache
+    - $HOME/sbt-structure-global/ivy2

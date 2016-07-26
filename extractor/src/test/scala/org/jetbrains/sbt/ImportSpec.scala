@@ -36,7 +36,7 @@ class ImportSpec extends Specification with XmlMatchers {
 
   val PluginFile = new File("extractor/target/scala-" + ScalaVersion + "/sbt-" + SbtVersionFull +"/classes/").getAbsoluteFile
 
-  val sbtGlobalRoot = new File("sbt-global/").getAbsoluteFile
+  val sbtGlobalRoot = new File(System.getenv("user.home"), "sbt-structure-global/").getAbsoluteFile
   val sbtGlobalBase = new File(sbtGlobalRoot, SbtVersion).getAbsoluteFile
   val sbtBootDir = new File(sbtGlobalRoot, "boot/").getAbsoluteFile
   val sbtIvyHome = new File(sbtGlobalRoot, "ivy2/").getAbsoluteFile
