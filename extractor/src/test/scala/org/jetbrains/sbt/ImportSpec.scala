@@ -54,40 +54,41 @@ class ImportSpec extends Specification with XmlMatchers {
         conditions
     }
 
-  private def testProject(project: String, options: String) = {
+  private def testProject(project: String, options: String): MatchResult[Elem] = {
     val base = new File(TestDataRoot, project)
     val testDataFile = new File(base, "structure-" + SbtVersionFull + ".xml")
 
     testDataFile must exist.setMessage("No test data for version " + SbtVersionFull + " found at " + testDataFile.getPath)
 
-    val expectedStr = getExpectedStr(testDataFile, base)
-    val actualStr = Loader.load(
-      base, options, SbtVersionFull, pluginFile = PluginFile,
-      sbtGlobalBase = sbtGlobalBase, sbtBootDir = sbtBootDir, sbtIvyHome = sbtIvyHome,
-      verbose = true).mkString("\n")
-    val actualXml = XML.loadString(actualStr)
-    val expectedXml = XML.loadString(expectedStr)
-    val actual = actualXml.deserialize[StructureData].right.get
-    val expected = expectedXml.deserialize[StructureData].right.get
-
     def formatErrorMessage(message: String, expected: String, actual: String): String =
       String.format("Project: %s %n%s %n%s", project, message, getDiff(expected, actual))
 
-    lazy val onXmlFail = {
+    def onXmlFail(actualStr: String, expectedStr: String) = {
       dumpToFile(new File(base, "actual.xml"), actualStr)
       val errorMessage = "Xml files are not equal, compare 'actual.xml' and 'structure-" + SbtVersionFull + ".xml'"
       formatErrorMessage(errorMessage, expectedStr, actualStr)
     }
 
-    lazy val onEqualsFail = {
+    def onEqualsFail(actual: Product, expected: Product) = {
       dumpToFile(new File(base, "actual.txt"), prettyPrintCaseClass(actual))
       dumpToFile(new File(base, "expected.txt"), prettyPrintCaseClass(expected))
       val errorMessage = "Objects are not equal, compare 'actual.txt' and 'expected.txt'"
       formatErrorMessage(errorMessage, prettyPrintCaseClass(expected), prettyPrintCaseClass(actual))
     }
 
-    (actual == expected) must beTrue.updateMessage(_ => onEqualsFail)
-    actualXml must beEqualToIgnoringSpace(expectedXml).updateMessage(_ => onXmlFail)
+    val expectedStr = getExpectedStr(testDataFile, base)
+    val actualStr = Loader.load(
+      base, options, SbtVersionFull, pluginFile = PluginFile,
+      sbtGlobalBase = sbtGlobalBase, sbtBootDir = sbtBootDir, sbtIvyHome = sbtIvyHome,
+      verbose = true).mkString("\n")
+
+    val actualXml = XML.loadString(actualStr)
+    val expectedXml = XML.loadString(expectedStr)
+    val actual = actualXml.deserialize[StructureData].right.get
+    val expected = expectedXml.deserialize[StructureData].right.get
+
+    (actual == expected) must beTrue.updateMessage(_ => onEqualsFail(actual, expected))
+    actualXml must beEqualToIgnoringSpace(expectedXml).updateMessage(_ => onXmlFail(actualStr, expectedStr))
   }
 
   private def normalizePath(path: String): String =
