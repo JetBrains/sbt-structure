@@ -24,6 +24,7 @@ class ImportSpec extends Specification with XmlMatchers {
     equalExpectedOneIn("optional", sbt13only)
     equalExpectedOneIn("play", onlyFor("0.13.7", "0.13.9"), options = "")
     equalExpectedOneIn("android-1.4", onlyFor("0.13.7", "0.13.9") and ifAndroidDefined)
+    equalExpectedOneIn("android-1.6", onlyFor("0.13.9", "0.13.12") and ifAndroidDefined)
     equalExpectedOneIn("android", sbt13only and ifAndroidDefined)
     equalExpectedOneIn("ide-settings", onlyFor("0.13.7", "0.13.9"))
     equalExpectedOneIn("sbt-idea", sbt13only)
@@ -100,6 +101,7 @@ class ImportSpec extends Specification with XmlMatchers {
       .replace("$ANDROID_HOME", AndroidHome.getOrElse(""))
       .replace("$IVY2", normalizePath(sbtIvyHome.getCanonicalPath))
       .replace("$SBT_BOOT", normalizePath(sbtBootDir.getCanonicalPath))
+      .replace("$HOME", normalizePath(UserHome.getOrElse("~/")))
 
   private def getDiff(expected: String, actual: String): String = {
     import scala.collection.JavaConversions._
