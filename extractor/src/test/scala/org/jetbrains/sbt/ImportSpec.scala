@@ -18,17 +18,17 @@ class ImportSpec extends Specification with XmlMatchers {
 
     equalExpectedOneIn("bare", options="resolveClassifiers resolveSbtClassifiers")
     equalExpectedOneIn("simple", options="resolveClassifiers resolveSbtClassifiers")
-    equalExpectedOneIn("multiple")
+    equalExpectedOneIn("multiple", onlyFor("0.12.4", "0.13.0", "0.13.7", "0.13.9"))
     equalExpectedOneIn("dependency")
-    equalExpectedOneIn("classifiers", sbt13only)
-    equalExpectedOneIn("optional", sbt13only)
+    equalExpectedOneIn("classifiers", onlyFor("0.13.0", "0.13.7", "0.13.9"))
+    equalExpectedOneIn("optional", onlyFor("0.13.0", "0.13.7", "0.13.9"))
     equalExpectedOneIn("play", onlyFor("0.13.7", "0.13.9"), options = "")
     equalExpectedOneIn("android-1.4", onlyFor("0.13.7", "0.13.9") and ifAndroidDefined)
     equalExpectedOneIn("android-1.6", onlyFor("0.13.9", "0.13.12") and ifAndroidDefined)
-    equalExpectedOneIn("android", sbt13only and ifAndroidDefined)
+    equalExpectedOneIn("android", onlyFor("0.13.0", "0.13.7", "0.13.9") and ifAndroidDefined)
     equalExpectedOneIn("ide-settings", onlyFor("0.13.7", "0.13.9"))
-    equalExpectedOneIn("sbt-idea", sbt13only)
-    equalExpectedOneIn("custom-test-config", sbt13only)
+    equalExpectedOneIn("sbt-idea", onlyFor("0.13.0", "0.13.7", "0.13.9"))
+    equalExpectedOneIn("custom-test-config", onlyFor("0.13.0", "0.13.7", "0.13.9"))
   }
 
   val SbtVersion = System.getProperty("structure.sbtversion.short")
