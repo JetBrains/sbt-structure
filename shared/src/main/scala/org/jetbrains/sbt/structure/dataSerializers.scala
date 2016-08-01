@@ -8,6 +8,7 @@ import XmlSerializer._
   * @author Nikolay Obedin
   * @since 12/15/15.
   */
+//noinspection LanguageFeature
 private object Helpers {
   class RichFile(file: File) {
     def path = file.getCanonicalPath.replace('\\', '/').stripSuffix("/").stripSuffix("\\")
@@ -28,7 +29,7 @@ private object Helpers {
     new RichNode(node)
 
   def file(path: String) =
-    new File(path.trim)
+    new File(path.trim).getCanonicalFile
 }
 
 trait DataSerializers {
