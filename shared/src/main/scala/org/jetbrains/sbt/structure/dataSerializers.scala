@@ -24,19 +24,24 @@ private object Helpers {
     }
   }
 
+  class RicherString(string: String) {
+    def canonIfFile = {
+      val f = string.file
+      if (f.exists()) f.path else string
+    }
+
+    def file =
+      new File(string.trim).getCanonicalFile
+  }
+
   implicit def file2richFile(file: File): RichFile =
     new RichFile(file)
 
   implicit def node2richNode(node: Node): RichNode =
     new RichNode(node)
 
-  def file(path: String) =
-    new File(path.trim).getCanonicalFile
-
-  def canonIfFile(str: String) = {
-    val f = file(str)
-    if (f.exists()) f.path else str
-  }
+  implicit def string2RicherString(string: String): RicherString =
+    new RicherString(string)
 
   def canonUri(uri: URI) =
     (if (uri.getScheme == "file")
@@ -64,9 +69,9 @@ trait DataSerializers {
 
     override def deserialize(what: Node): Either[Throwable,BuildData] = {
       val imports = (what \ "import").map(_.text)
-      val classes = (what \ "classes").map(e => file(e.text))
-      val docs    = (what \ "docs").map(e => file(e.text))
-      val sources = (what \ "sources").map(e => file(e.text))
+      val classes = (what \ "classes").map(e => e.text.file)
+      val docs    = (what \ "docs").map(e => e.text.file)
+      val sources = (what \ "sources").map(e => e.text.file)
       Right(BuildData(imports, classes, docs, sources))
     }
   }
@@ -90,15 +95,15 @@ trait DataSerializers {
       val id        = (what \ "@id").text
       val sources   = (what \ "sources").map(parseDirectory)
       val resources = (what \ "resources").map(parseDirectory)
-      val excludes  = (what \ "exclude").map(e => file(e.text))
-      val classes   = file((what ! "classes").text)
+      val excludes  = (what \ "exclude").map(e => e.text.file)
+      val classes   = (what ! "classes").text.file
 
       Right(ConfigurationData(id, sources, resources, excludes, classes))
     }
 
     private def parseDirectory(node: Node): DirectoryData = {
       val managed = (node \ "@managed").headOption.exists(_.text.toBoolean)
-      DirectoryData(file(node.text), managed)
+      DirectoryData(node.text.file, managed)
     }
 
     private def format(b: Boolean) = if (b) Some(Text("true")) else None
@@ -111,13 +116,13 @@ trait DataSerializers {
         <home>{file.path}</home>
       }}
         {what.options.map { option =>
-        <option>{canonIfFile(option)}</option>
+        <option>{option.canonIfFile}</option>
       }}
       </java>
 
     override def deserialize(what: Node): Either[Throwable,JavaData] = {
-      val home    = (what \ "home").headOption.map(e => file(e.text))
-      val options = (what \ "option").map(o => canonIfFile(o.text))
+      val home    = (what \ "home").headOption.map(e => e.text.file)
+      val options = (what \ "option").map(o => o.text.canonIfFile)
       Right(JavaData(home, options))
     }
   }
@@ -132,16 +137,16 @@ trait DataSerializers {
         <extra>{jar.path}</extra>
       }}
         {what.options.map { option =>
-        <option>{canonIfFile(option)}</option>
+        <option>{option.canonIfFile}</option>
       }}
       </scala>
 
     override def deserialize(what: Node): Either[Throwable,ScalaData] = {
       val version  = (what \ "version").text
-      val library  = file((what \ "library").text)
-      val compiler = file((what \ "compiler").text)
-      val extra    = (what \ "extra").map(e => file(e.text))
-      val options  = (what \ "option").map(o => canonIfFile(o.text))
+      val library  = (what \ "library").text.file
+      val compiler = (what \ "compiler").text.file
+      val extra    = (what \ "extra").map(e => e.text.file)
+      val options  = (what \ "option").map(o => o.text.canonIfFile)
       Right(ScalaData(version, library, compiler, extra, options))
     }
   }
@@ -194,7 +199,7 @@ trait DataSerializers {
       <jar configurations={what.configurations.mkString(";")}>{what.file.path}</jar>
 
     override def deserialize(what: Node): Either[Throwable,JarDependencyData] = {
-      val jar = file(what.text)
+      val jar = what.text.file
       val configurations = (what \ "@configurations").headOption.map(n => Configuration.fromString(n.text))
       Right(JarDependencyData(jar, configurations.getOrElse(Seq.empty)))
     }
@@ -227,9 +232,9 @@ trait DataSerializers {
 
     override def deserialize(what: Node): Either[Throwable,ModuleData] =
       what.deserialize[ModuleIdentifier].fold(exc => Left(exc), { id =>
-        val binaries  = (what \ "jar").map(n => file(n.text)).toSet
-        val docs      = (what \ "doc").map(n => file(n.text)).toSet
-        val sources   = (what \ "src").map(n => file(n.text)).toSet
+        val binaries  = (what \ "jar").map(n => n.text.file).toSet
+        val docs      = (what \ "doc").map(n => n.text.file).toSet
+        val sources   = (what \ "src").map(n => n.text.file).toSet
         Right(ModuleData(id, binaries, docs, sources))
       })
   }
@@ -279,7 +284,7 @@ trait DataSerializers {
       val resources = (what \ "resources").text
       val libs = (what \ "libs").text
       val gen = (what \ "gen").text
-      Right(ApkLib(name, file(base), file(manifest), file(sources), file(resources), file(libs), file(gen)))
+      Right(ApkLib(name, base.file, manifest.file, sources.file, resources.file, libs.file, gen.file))
     }
   }
 
@@ -312,9 +317,9 @@ trait DataSerializers {
       val isLibrary       = (what \ "isLibrary").text.toBoolean
       val proguardConfig  = (what \ "proguard" \ "option").map(_.text)
       val apklibs         = (what \ "apkLib").deserialize[ApkLib]
-      Right(AndroidData(version, file(manifestPath), file(apkPath),
-        file(resPath), file(assetsPath), file(genPath),
-        file(libsPath), isLibrary, proguardConfig, apklibs))
+      Right(AndroidData(version, manifestPath.file, apkPath.file,
+        resPath.file, assetsPath.file, genPath.file,
+        libsPath.file, isLibrary, proguardConfig, apklibs))
     }
   }
 
@@ -338,7 +343,7 @@ trait DataSerializers {
       val routesImports     = (what \ "routesImports" \ "import").map(_.text)
       val confDirectory     = (what \ "confDirectory").map(_.text).headOption
       val sourceDirectory   = (what ! "sourceDirectory").text
-      Right(Play2Data(playVersion, templatesImports, routesImports, confDirectory.map(file), file(sourceDirectory)))
+      Right(Play2Data(playVersion, templatesImports, routesImports, confDirectory.map(_.file), sourceDirectory.file))
     }
   }
 
@@ -367,9 +372,9 @@ trait DataSerializers {
       val name = (what \ "name").text
       val organization = (what \ "organization").text
       val version = (what \ "version").text
-      val base = file((what \ "base").text)
+      val base = (what \ "base").text.file
       val basePackages = (what \ "basePackage").map(_.text)
-      val target = file((what \ "target").text)
+      val target = (what \ "target").text.file
 
       val configurations = (what \ "configuration").deserialize[ConfigurationData]
       val java = (what \ "java").deserialize[JavaData].headOption
@@ -397,14 +402,14 @@ trait DataSerializers {
       <structure sbt={what.sbtVersion}>
         {what.projects.sortBy(_.base).map(project => project.serialize)}
         {what.repository.map(_.serialize).toSeq}
-        {what.localCachePath.map(path => <localCachePath>{new File(path).path}</localCachePath>).toSeq}
+        {what.localCachePath.map(path => <localCachePath>{path.file.path}</localCachePath>).toSeq}
       </structure>
 
     override def deserialize(what: Node): Either[Throwable,StructureData] = {
       val sbtVersion = (what \ "@sbt").text
       val projects = (what \ "project").deserialize[ProjectData]
       val repository = (what \ "repository").deserialize[RepositoryData].headOption
-      val localCachePath = (what \ "localCachePath").headOption.map(_.text)
+      val localCachePath = (what \ "localCachePath").headOption.map(_.text.file.path)
 
       if (sbtVersion.isEmpty)
         Left(new Error("<structure> property 'sbt' is empty"))

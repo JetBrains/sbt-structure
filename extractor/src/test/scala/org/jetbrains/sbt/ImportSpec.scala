@@ -87,7 +87,7 @@ class ImportSpec extends Specification with XmlMatchers {
     val actualXml = XML.loadString(actualStr)
     val expectedXml = XML.loadString(expectedStr)
     val actual = actualXml.deserialize[StructureData].right.get
-    val expected = expectedXml.deserialize[StructureData].right.get
+    val expected = expectedXml.deserialize[StructureData].right.get.serialize.deserialize[StructureData].right.get
 
     (actual == expected) must beTrue.updateMessage(_ => onEqualsFail(actual, expected))
     actualXml must beEqualToIgnoringSpace(expectedXml).updateMessage(_ => onXmlFail(actualStr, expectedStr))
@@ -95,14 +95,17 @@ class ImportSpec extends Specification with XmlMatchers {
 
   private def canon(path: String): String = path.stripSuffix("/").stripSuffix("\\")
 
-  private def getExpectedStr(testDataFile: File, base: File): String =
-    TestUtil.read(testDataFile).mkString("\n")
+  private def getExpectedStr(testDataFile: File, base: File): String = {
+    val raw = TestUtil.read(testDataFile).mkString("\n")
       .replace("$BASE", base.getCanonicalPath)
       .replace("$URI_ANDROID_HOME", AndroidHome.map(p => canon(p.toURI.toString)).getOrElse(""))
       .replace("$ANDROID_HOME", AndroidHome.map(p => canon(p.toString)).getOrElse(""))
       .replace("$IVY2", sbtIvyHome.getCanonicalPath)
       .replace("$SBT_BOOT", sbtBootDir.getCanonicalPath)
       .replace("$HOME", UserHome.getCanonicalPath)
+    // re-serialize and deserialize again to normalize all system-dependent paths
+    XML.loadString(raw).deserialize[StructureData].right.get.serialize.mkString
+  }
 
   private def getDiff(expected: String, actual: String): String = {
     import scala.collection.JavaConversions._
