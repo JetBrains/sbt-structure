@@ -35,16 +35,17 @@ class ImportSpec extends Specification with XmlMatchers {
   val SbtVersionFull = System.getProperty("structure.sbtversion.full")
   val ScalaVersion = System.getProperty("structure.scalaversion")
 
-  val PluginFile = new File("extractor/target/scala-" + ScalaVersion + "/sbt-" + SbtVersionFull +"/classes/").getAbsoluteFile
+  val PluginFile = new File("extractor/target/scala-" + ScalaVersion + "/sbt-" + SbtVersionFull +"/classes/").getCanonicalFile
 
-  val sbtGlobalRoot = new File(System.getProperty("user.home"), "sbt-structure-global/").getAbsoluteFile
-  val sbtGlobalBase = new File(sbtGlobalRoot, SbtVersion).getAbsoluteFile
-  val sbtBootDir = new File(sbtGlobalRoot, "boot/").getAbsoluteFile
-  val sbtIvyHome = new File(sbtGlobalRoot, "ivy2/").getAbsoluteFile
+  val sbtGlobalRoot = new File(System.getProperty("user.home"), "sbt-structure-global/").getCanonicalFile
+  val sbtGlobalBase = new File(sbtGlobalRoot, SbtVersion).getCanonicalFile
+  val sbtBootDir = new File(sbtGlobalRoot, "boot/").getCanonicalFile
+  val sbtIvyHome = new File(sbtGlobalRoot, "ivy2/").getCanonicalFile
 
-  val TestDataRoot = new File("extractor/src/test/data/" + SbtVersion)
-  val AndroidHome = Option(System.getenv.get("ANDROID_HOME")).map(normalizePath)
-  val UserHome = Option(System.getProperty("user.home")).map(normalizePath)
+  val TestDataRoot = new File("extractor/src/test/data/" + SbtVersion).getCanonicalFile
+  val AndroidHome = Option(System.getenv.get("ANDROID_HOME")).map(new File(_).getCanonicalFile)
+  // assuming user.home is always defined
+  val UserHome = new File(System.getProperty("user.home")).getCanonicalFile
 
   private def equalExpectedOneIn(projectName: String, conditions: => MatchResult[Any] = always,
                                  options: String = "resolveClassifiers resolveSbtClassifiers resolveJavadocs") =
@@ -92,16 +93,16 @@ class ImportSpec extends Specification with XmlMatchers {
     actualXml must beEqualToIgnoringSpace(expectedXml).updateMessage(_ => onXmlFail(actualStr, expectedStr))
   }
 
-  private def normalizePath(path: String): String =
-    path.replace('\\', '/')
+  private def canon(path: String): String = path.stripSuffix("/").stripSuffix("\\")
 
   private def getExpectedStr(testDataFile: File, base: File): String =
     TestUtil.read(testDataFile).mkString("\n")
-      .replace("$BASE", normalizePath(base.getCanonicalPath))
-      .replace("$ANDROID_HOME", AndroidHome.getOrElse(""))
-      .replace("$IVY2", normalizePath(sbtIvyHome.getCanonicalPath))
-      .replace("$SBT_BOOT", normalizePath(sbtBootDir.getCanonicalPath))
-      .replace("$HOME", normalizePath(UserHome.getOrElse("~/")))
+      .replace("$BASE", base.getCanonicalPath)
+      .replace("$URI_ANDROID_HOME", AndroidHome.map(p => canon(p.toURI.toString)).getOrElse(""))
+      .replace("$ANDROID_HOME", AndroidHome.map(p => canon(p.toString)).getOrElse(""))
+      .replace("$IVY2", sbtIvyHome.getCanonicalPath)
+      .replace("$SBT_BOOT", sbtBootDir.getCanonicalPath)
+      .replace("$HOME", UserHome.getCanonicalPath)
 
   private def getDiff(expected: String, actual: String): String = {
     import scala.collection.JavaConversions._
