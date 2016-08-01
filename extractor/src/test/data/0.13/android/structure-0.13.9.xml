@@ -233,8 +233,8 @@
       <jar configurations="compile">$BASE/target/android-bin/classes</jar>
     </dependencies>
     <resolver name="public" root="https://repo1.maven.org/maven2/"/>
-    <resolver name="google libraries" root="file:$ANDROID_HOME/extras/google/m2repository"/>
-    <resolver name="android libraries" root="file:$ANDROID_HOME/extras/android/m2repository/"/>
+    <resolver name="google libraries" root="$URI_ANDROID_HOME/extras/google/m2repository"/>
+    <resolver name="android libraries" root="$URI_ANDROID_HOME/extras/android/m2repository/"/>
   </project>
   <repository>
     <module organization="com.actionbarsherlock" name="actionbarsherlock" revision="4.4.0" artifactType="jar" classifier="">
