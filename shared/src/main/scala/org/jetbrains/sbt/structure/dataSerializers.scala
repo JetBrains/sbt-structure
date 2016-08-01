@@ -1,8 +1,10 @@
 package org.jetbrains.sbt.structure
 
 import java.io.File
+
 import scala.xml._
 import XmlSerializer._
+import sbt.URI
 
 /**
   * @author Nikolay Obedin
@@ -11,7 +13,7 @@ import XmlSerializer._
 //noinspection LanguageFeature
 private object Helpers {
   class RichFile(file: File) {
-    def path = file.getCanonicalPath.replace('\\', '/').stripSuffix("/").stripSuffix("\\")
+    def path = file.getCanonicalPath.stripSuffix("/").stripSuffix("\\")
   }
 
   class RichNode(node: Node) {
@@ -30,6 +32,16 @@ private object Helpers {
 
   def file(path: String) =
     new File(path.trim).getCanonicalFile
+
+  def canonIfFile(str: String) = {
+    val f = file(str)
+    if (f.exists()) f.path else str
+  }
+
+  def canonUri(uri: URI) =
+    (if (uri.getScheme == "file")
+      new File(uri).getCanonicalFile.toURI
+    else uri).normalize()
 }
 
 trait DataSerializers {
@@ -99,13 +111,13 @@ trait DataSerializers {
         <home>{file.path}</home>
       }}
         {what.options.map { option =>
-        <option>{option}</option>
+        <option>{canonIfFile(option)}</option>
       }}
       </java>
 
     override def deserialize(what: Node): Either[Throwable,JavaData] = {
       val home    = (what \ "home").headOption.map(e => file(e.text))
-      val options = (what \ "option").map(_.text)
+      val options = (what \ "option").map(o => canonIfFile(o.text))
       Right(JavaData(home, options))
     }
   }
@@ -120,7 +132,7 @@ trait DataSerializers {
         <extra>{jar.path}</extra>
       }}
         {what.options.map { option =>
-        <option>{option}</option>
+        <option>{canonIfFile(option)}</option>
       }}
       </scala>
 
@@ -129,7 +141,7 @@ trait DataSerializers {
       val library  = file((what \ "library").text)
       val compiler = file((what \ "compiler").text)
       val extra    = (what \ "extra").map(e => file(e.text))
-      val options  = (what \ "option").map(_.text)
+      val options  = (what \ "option").map(o => canonIfFile(o.text))
       Right(ScalaData(version, library, compiler, extra, options))
     }
   }
@@ -210,7 +222,7 @@ trait DataSerializers {
         what.binaries.toSeq.sorted.map(it => <jar>{it.path}</jar>) ++
           what.docs.toSeq.sorted.map(it => <doc>{it.path}</doc>) ++
           what.sources.toSeq.sorted.map(it => <src>{it.path}</src>)
-      what.id.serialize.copy(child = artifacts.toSeq)
+      what.id.serialize.copy(child = artifacts)
     }
 
     override def deserialize(what: Node): Either[Throwable,ModuleData] =
@@ -235,13 +247,16 @@ trait DataSerializers {
   }
 
   implicit val resolverDataSerializer = new XmlSerializer[ResolverData] {
-    override def serialize(what: ResolverData): Elem =
-        <resolver name={what.name} root={what.root}/>
+    override def serialize(what: ResolverData): Elem = {
+      val uri = new URI(what.root)
+      <resolver name={what.name} root={canonUri(uri).toString}/>
+    }
 
     override def deserialize(what: Node): Either[Throwable,ResolverData] = {
       val name = (what \ "@name").text
       val root = (what \ "@root").text
-      Right(ResolverData(name, root))
+      val canonRoot = canonUri(new URI(root)).toString
+      Right(ResolverData(name, canonRoot))
     }
   }
 
