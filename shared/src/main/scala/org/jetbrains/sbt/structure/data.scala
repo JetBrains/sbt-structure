@@ -172,7 +172,10 @@ case class AndroidData(targetVersion: String,
                        libs: File,
                        isLibrary: Boolean,
                        proguardConfig: Seq[String],
-                       apklibs: Seq[ApkLib])
+                       apklibs: Seq[ApkLib],
+                       aars: Seq[Aar])
+
+case class Aar(name: String, project: ProjectData)
 
 /**
  * Information about certain apklib used in Android project

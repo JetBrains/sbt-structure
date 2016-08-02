@@ -18,7 +18,7 @@ object CreateTasks extends (State => State) with SbtStateOps {
         UtilityTasks.acceptedProjects,
       StructureKeys.extractProjects <<=
         (Keys.state, StructureKeys.acceptedProjects) flatMap { (state, acceptedProjects) =>
-          StructureKeys.extractProject.forAllProjects(state, acceptedProjects).map(_.values.toSeq)
+          StructureKeys.extractProject.forAllProjects(state, acceptedProjects).map(_.values.toSeq.flatten)
         },
       StructureKeys.extractRepository <<=
         RepositoryExtractor.taskDef,

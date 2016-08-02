@@ -3,7 +3,7 @@ package extractors
 
 import org.jetbrains.sbt.structure._
 import sbt.Project.Initialize
-import sbt._
+import sbt.{Configuration => _, _}
 
 /**
  * @author Nikolay Obedin
@@ -36,15 +36,27 @@ class ProjectExtractor(projectRef: ProjectRef,
                        play2: Option[Play2Data]) {
 
 
-  private[extractors] def extract: ProjectData = {
+  private[extractors] def extract: Seq[ProjectData] = {
     val resolvers = fullResolvers.collect {
       case MavenRepository(name, root) => ResolverData(name, root)
     }.toSet
     val configurations  =
       mergeConfigurations(sourceConfigurations.flatMap(extractConfiguration))
-    ProjectData(projectRef.id, name, organization, version, base,
+    val projectData = ProjectData(projectRef.id, name, organization, version, base,
       basePackages, target, build, configurations,
       extractJava, extractScala, android, dependencies, resolvers, play2)
+    android.fold(Seq(projectData)) { a =>
+      val deps = a.aars.map(aar => ProjectDependencyData(aar.name, Configuration.Compile :: Nil))
+      // add aar module dependencies
+      val updatedProject = projectData.copy(dependencies = dependencies.copy(projects = projectData.dependencies.projects ++ deps))
+      updatedProject +: a.aars.map(_.project.copy(
+        java         = projectData.java,
+        scala        = projectData.scala,
+        build        = projectData.build,
+        resolvers    = projectData.resolvers,
+        dependencies = projectData.dependencies
+      ))
+    }
   }
 
   private def extractConfiguration(configuration: sbt.Configuration): Option[ConfigurationData] =
@@ -91,7 +103,7 @@ class ProjectExtractor(projectRef: ProjectRef,
 
 object ProjectExtractor extends SbtStateOps with TaskOps {
 
-  def taskDef: Initialize[Task[ProjectData]] =
+  def taskDef: Initialize[Task[Seq[ProjectData]]] =
     ( sbt.Keys.state
     , sbt.Keys.thisProjectRef
     , StructureKeys.sbtStructureOpts
