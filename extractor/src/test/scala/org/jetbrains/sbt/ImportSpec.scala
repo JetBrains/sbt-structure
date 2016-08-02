@@ -87,7 +87,7 @@ class ImportSpec extends Specification with XmlMatchers {
     val actualXml = XML.loadString(actualStr)
     val expectedXml = XML.loadString(expectedStr)
     val actual = actualXml.deserialize[StructureData].right.get
-    val expected = expectedXml.deserialize[StructureData].right.get.serialize.deserialize[StructureData].right.get
+    val expected = expectedXml.deserialize[StructureData].right.get
 
     (actual == expected) must beTrue.updateMessage(_ => onEqualsFail(actual, expected))
     actualXml must beEqualToIgnoringSpace(expectedXml).updateMessage(_ => onXmlFail(actualStr, expectedStr))
