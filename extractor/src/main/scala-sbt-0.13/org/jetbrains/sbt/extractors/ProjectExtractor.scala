@@ -3,7 +3,7 @@ package extractors
 
 import org.jetbrains.sbt.structure._
 import sbt.Def.Initialize
-import sbt._
+import sbt.{Configuration => _, _}
 
 /**
  * @author Nikolay Obedin
@@ -36,7 +36,7 @@ class ProjectExtractor(projectRef: ProjectRef,
                        play2: Option[Play2Data]) {
 
 
-  private[extractors] def extract: ProjectData = {
+  private[extractors] def extract: Seq[ProjectData] = {
     val resolvers = fullResolvers.collect {
       case MavenRepository(repoName, root) => ResolverData(repoName, root)
     }.toSet
@@ -45,10 +45,24 @@ class ProjectExtractor(projectRef: ProjectRef,
         sourceConfigurations.flatMap(extractConfiguration(Compile.name) _) ++
         testConfigurations.flatMap(extractConfiguration(Test.name) _)
       )
-
-    ProjectData(projectRef.id, name, organization, version, base,
+    val projectData = ProjectData(projectRef.id, name, organization, version, base,
       basePackages, target, build, configurations,
       extractJava, extractScala, android, dependencies, resolvers, play2)
+
+    android match {
+      case None => Seq(projectData)
+      case Some(a) =>
+        val deps = a.aars.map(aar => ProjectDependencyData(aar.name, Configuration.Compile :: Nil))
+        // add aar module dependencies
+        val updatedProject = projectData.copy(dependencies = dependencies.copy(projects = projectData.dependencies.projects ++ deps))
+        updatedProject +: a.aars.map(_.project.copy(
+          java         = projectData.java,
+          scala        = projectData.scala,
+          build        = projectData.build,
+          resolvers    = projectData.resolvers,
+          dependencies = projectData.dependencies
+        ))
+    }
   }
 
   private def extractConfiguration(ideConfig: String)(configuration: sbt.Configuration): Option[ConfigurationData] =
@@ -98,7 +112,7 @@ class ProjectExtractor(projectRef: ProjectRef,
 
 object ProjectExtractor extends SbtStateOps with TaskOps {
 
-  def taskDef: Initialize[Task[ProjectData]] =
+  def taskDef: Initialize[Task[Seq[ProjectData]]] =
     ( sbt.Keys.state
     , sbt.Keys.thisProjectRef
     , StructureKeys.sbtStructureOpts

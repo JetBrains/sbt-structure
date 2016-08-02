@@ -45,17 +45,20 @@ class ProjectExtractor(projectRef: ProjectRef,
     val projectData = ProjectData(projectRef.id, name, organization, version, base,
       basePackages, target, build, configurations,
       extractJava, extractScala, android, dependencies, resolvers, play2)
-    android.fold(Seq(projectData)) { a =>
-      val deps = a.aars.map(aar => ProjectDependencyData(aar.name, Configuration.Compile :: Nil))
-      // add aar module dependencies
-      val updatedProject = projectData.copy(dependencies = dependencies.copy(projects = projectData.dependencies.projects ++ deps))
-      updatedProject +: a.aars.map(_.project.copy(
-        java         = projectData.java,
-        scala        = projectData.scala,
-        build        = projectData.build,
-        resolvers    = projectData.resolvers,
-        dependencies = projectData.dependencies
-      ))
+
+    android match {
+      case None => Seq(projectData)
+      case Some(a) =>
+        val deps = a.aars.map(aar => ProjectDependencyData(aar.name, Configuration.Compile :: Nil))
+        // add aar module dependencies
+        val updatedProject = projectData.copy(dependencies = dependencies.copy(projects = projectData.dependencies.projects ++ deps))
+        updatedProject +: a.aars.map(_.project.copy(
+          java         = projectData.java,
+          scala        = projectData.scala,
+          build        = projectData.build,
+          resolvers    = projectData.resolvers,
+          dependencies = projectData.dependencies
+        ))
     }
   }
 
