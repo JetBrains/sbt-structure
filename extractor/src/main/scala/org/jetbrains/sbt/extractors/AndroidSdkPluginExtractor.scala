@@ -50,7 +50,7 @@ object AndroidSdkPluginExtractor extends SbtStateOps with TaskOps {
           try {
             val layout  = layoutAsAny.asInstanceOf[ProjectLayout]
             val apklibs = apklibsAsAny.asInstanceOf[Seq[LibraryDependency]]
-            val aars    = aarsAsAny.asInstanceOf[Seq[LibraryDependency]].map(libraryDepToAar(targetVersion) _)
+            val aars    = aarsAsAny.asInstanceOf[Seq[LibraryDependency]].map(libraryDepToAar(targetVersion))
             Some(AndroidData(targetVersion, manifest, apk,
               layout.res, layout.assets, layout.gen, layout.libs,
               isLibrary, proguardConfig ++ proguardOptions,
