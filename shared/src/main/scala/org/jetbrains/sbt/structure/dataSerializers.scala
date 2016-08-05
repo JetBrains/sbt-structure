@@ -1,10 +1,10 @@
 package org.jetbrains.sbt.structure
 
 import java.io.File
+import java.net.URI
 
 import scala.xml._
 import XmlSerializer._
-import sbt.URI
 
 /**
   * @author Nikolay Obedin
