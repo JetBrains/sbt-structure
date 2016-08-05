@@ -6,7 +6,7 @@ jdk:
 sudo: false
 
 script:
-    - sbt 'project extractor' '^ test'
+    - sbt compile 'project extractor' '^ test'
 
 before_cache:
   # Tricks to avoid unnecessary cache updates
