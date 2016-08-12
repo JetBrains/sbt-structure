@@ -3,10 +3,9 @@ package org.jetbrains.sbt.structure
 import java.io.File
 import java.net.URI
 
-import scala.xml._
-import XmlSerializer._
+import org.jetbrains.sbt.structure.XmlSerializer._
 
-import scala.util.Try
+import scala.xml._
 
 /**
   * @author Nikolay Obedin
@@ -28,7 +27,8 @@ private object Helpers {
 
   class RicherString(string: String) {
     def canonIfFile: String =
-      Try(string.file)
+      (try { Option(string.file) }
+      catch { case x: java.io.IOException => None })
         .filter(_.exists)
         .map(_.path )
         .getOrElse(string)
