@@ -6,6 +6,8 @@ import java.net.URI
 import scala.xml._
 import XmlSerializer._
 
+import scala.util.Try
+
 /**
   * @author Nikolay Obedin
   * @since 12/15/15.
@@ -25,12 +27,14 @@ private object Helpers {
   }
 
   class RicherString(string: String) {
-    def canonIfFile = {
-      val f = string.file
-      if (f.exists()) f.path else string
-    }
+    def canonIfFile: String =
+      Try(string.file)
+        .filter(_.exists)
+        .map(_.path )
+        .getOrElse(string)
 
-    def file =
+    // converting a string to a file like this can be unsafe for characters that are illegal in some environments
+    def file: File =
       new File(string.trim).getCanonicalFile
   }
 
