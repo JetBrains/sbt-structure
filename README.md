@@ -1,5 +1,7 @@
 # sbt-structure
 
+[![Join the chat at https://gitter.im/JetBrains/sbt-structure](https://badges.gitter.im/JetBrains/sbt-structure.svg)](https://gitter.im/JetBrains/sbt-structure?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 [![Download](https://api.bintray.com/packages/jetbrains/sbt-plugins/sbt-structure-core/images/download.svg) ](https://bintray.com/jetbrains/sbt-plugins/sbt-structure-core/_latestVersion)
 [![Build Status](https://travis-ci.org/JetBrains/sbt-structure.svg)](https://travis-ci.org/JetBrains/sbt-structure)
 
