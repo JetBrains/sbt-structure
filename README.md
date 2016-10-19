@@ -45,8 +45,8 @@ Extractor is run in several steps:
 Here is an example of how to run extractor from SBT REPL:
 
 ```scala
-> set SettingKey[Option[File]]("sbt-structure-output-file") := Some(file("structure.xml"))
-> set SettingKey[String]("sbt-structure-options") := "prettyPrint download"
+> set SettingKey[Option[File]]("sbt-structure-output-file") in Global := Some(file("structure.xml"))
+> set SettingKey[String]("sbt-structure-options") in Global := "prettyPrint download"
 > apply -cp <path-to-extractor-jar> org.jetbrains.sbt.CreateTasks
 > */*:dump-structure
 ```
