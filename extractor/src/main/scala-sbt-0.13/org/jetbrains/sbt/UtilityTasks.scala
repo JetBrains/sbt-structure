@@ -51,7 +51,7 @@ object UtilityTasks extends SbtStateOps {
     }
   }
 
-  def allConfigurationsWithSource = Def.settingDyn {
+  def allConfigurationsWithSource: Def.Initialize[Seq[Configuration]] = Def.settingDyn {
     val cs = for {
       c <- Keys.ivyConfigurations.value
     } yield (Keys.sourceDirectories in c).?.apply { filesOpt => filesOpt.flatMap(f => f.nonEmpty.option(c))}
@@ -61,7 +61,7 @@ object UtilityTasks extends SbtStateOps {
     }
   }
 
-  def testConfigurations = allConfigurationsWithSource.apply { cs =>
+  def testConfigurations: Def.Initialize[Seq[Configuration]] = allConfigurationsWithSource.apply { cs =>
     val predefinedTest = Set(Test, IntegrationTest)
     val transitiveTest = cs.filter(c =>
       transitiveExtends(c.extendsConfigs)
@@ -71,11 +71,11 @@ object UtilityTasks extends SbtStateOps {
     transitiveTest.distinct
   }
 
-  def sourceConfigurations = Def.setting {
+  def sourceConfigurations: Def.Initialize[Seq[Configuration]] = Def.setting {
     (allConfigurationsWithSource.value.diff(testConfigurations.value) ++ Seq(Compile)).distinct
   }
 
-  def dependencyConfigurations =
+  def dependencyConfigurations: Def.Initialize[Seq[Configuration]] =
     allConfigurationsWithSource.apply(cs => (cs ++ Seq(Runtime, Provided, Optional)).distinct)
 
   def classifiersModuleRespectingStructureOpts: Initialize[Task[GetClassifiersModule]] =

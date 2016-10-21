@@ -6,9 +6,9 @@ import sbt.Def.Initialize
 import sbt.{Configuration => _, _}
 
 /**
- * @author Nikolay Obedin
- * @since 4/10/15.
- */
+  * @author Nikolay Obedin
+  * @since 4/10/15.
+  */
 class ProjectExtractor(projectRef: ProjectRef,
                        name: String,
                        organization: String,
@@ -16,7 +16,7 @@ class ProjectExtractor(projectRef: ProjectRef,
                        base: File,
                        target: File,
                        basePackages: Seq[String],
-                       fullResolvers: Seq[Resolver],
+                       allResolvers: Seq[Resolver],
                        classDirectory: sbt.Configuration => Option[File],
                        managedSourceDirectories: sbt.Configuration => Seq[File],
                        unmanagedSourceDirectories: sbt.Configuration => Seq[File],
@@ -37,13 +37,13 @@ class ProjectExtractor(projectRef: ProjectRef,
 
 
   private[extractors] def extract: Seq[ProjectData] = {
-    val resolvers = fullResolvers.collect {
+    val resolvers = allResolvers.collect {
       case MavenRepository(repoName, root) => ResolverData(repoName, root)
     }.toSet
     val configurations  =
       mergeConfigurations(
         sourceConfigurations.flatMap(extractConfiguration(Compile.name) _) ++
-        testConfigurations.flatMap(extractConfiguration(Test.name) _)
+          testConfigurations.flatMap(extractConfiguration(Test.name) _)
       )
     val projectData = ProjectData(projectRef.id, name, organization, version, base,
       basePackages, target, build, configurations,
@@ -112,79 +112,80 @@ class ProjectExtractor(projectRef: ProjectRef,
 
 object ProjectExtractor extends SbtStateOps with TaskOps {
 
-  def taskDef: Initialize[Task[Seq[ProjectData]]] =
-    ( sbt.Keys.state
-    , sbt.Keys.thisProjectRef
-    , StructureKeys.sbtStructureOpts
-    , sbt.Keys.fullResolvers
-    , StructureKeys.extractDependencies
-    , StructureKeys.extractBuild
-    , StructureKeys.extractAndroid
-    , StructureKeys.extractPlay2
-    , StructureKeys.sourceConfigurations
-    , StructureKeys.testConfigurations
-    ) flatMap {
-      (state, projectRef, options, fullResolvers, dependencies,
-        build, android, play2, sourceConfigurations, testConfigurations) =>
+  private def settingInConfiguration[T](key: SettingKey[Seq[T]])(implicit projectRef: ProjectRef, state: State) =
+    (conf: sbt.Configuration) => key.in(projectRef, conf).getOrElse(state, Seq.empty)
 
-        val name         = Keys.name.in(projectRef, Compile).get(state)
-        val organization = Keys.organization.in(projectRef, Compile).get(state)
-        val version      = Keys.version.in(projectRef, Compile).get(state)
-        val base         = Keys.baseDirectory.in(projectRef, Compile).get(state)
-        val target       = Keys.target.in(projectRef, Compile).get(state)
-        val javaHome     = Keys.javaHome.in(projectRef, Compile).find(state).flatten
+  private def taskInCompile[T](key: TaskKey[T])(implicit projectRef: ProjectRef, state: State) =
+    key.in(projectRef, Compile).get(state)
 
-        val basePackages =
-          SettingKeys.ideBasePackages.in(projectRef).find(state)
-            .orElse(SettingKeys.sbtIdeaBasePackage.in(projectRef).find(state).map(_.toSeq))
-            .getOrElse(Seq.empty)
+  def taskDef: Initialize[Task[Seq[ProjectData]]] = Def.taskDyn {
 
-        def classDirectory(conf: sbt.Configuration) =
-          Keys.classDirectory.in(projectRef, conf).find(state)
+    implicit val state = Keys.state.value
+    implicit val projectRef = sbt.Keys.thisProjectRef.value
 
-        def inConfiguration[T](key: SettingKey[Seq[T]])(conf: sbt.Configuration) =
-          key.in(projectRef, conf).getOrElse(state, Seq.empty)
+    val basePackages =
+      SettingKeys.ideBasePackages.in(projectRef).find(state)
+        .orElse(SettingKeys.sbtIdeaBasePackage.in(projectRef).find(state).map(_.toSeq))
+        .getOrElse(Seq.empty)
 
-        val excludedDirectories =
-          SettingKeys.ideExcludedDirectories.in(projectRef).find(state)
-            .orElse(SettingKeys.sbtIdeaExcludeFolders.in(projectRef).find(state).map(_.map(file)))
-            .getOrElse(Seq.empty)
+    def classDirectory(conf: sbt.Configuration) =
+      Keys.classDirectory.in(projectRef, conf).find(state)
 
-        def ideOutputDirectory(conf: sbt.Configuration) =
-          SettingKeys.ideOutputDirectory.in(projectRef, conf).find(state).flatten
+    val excludedDirectories =
+      SettingKeys.ideExcludedDirectories.in(projectRef).find(state)
+        .orElse(SettingKeys.sbtIdeaExcludeFolders.in(projectRef).find(state).map(_.map(file)))
+        .getOrElse(Seq.empty)
 
-        val scalaInstanceTask =
-          Keys.scalaInstance.in(projectRef, Compile).get(state).onlyIf(options.download)
-        val scalacOptionsTask =
-          Keys.scalacOptions.in(projectRef, Compile).get(state).onlyIf(options.download)
-        val javacOptionsTask =
-          Keys.javacOptions.in(projectRef, Compile).get(state).onlyIf(options.download)
+    def ideOutputDirectory(conf: sbt.Configuration) =
+      SettingKeys.ideOutputDirectory.in(projectRef, conf).find(state).flatten
 
-        for {
-          scalaInstance <- scalaInstanceTask
-          scalacOptions <- scalacOptionsTask
-          javacOptions  <- javacOptionsTask
-        } yield {
-          new ProjectExtractor(
-            projectRef, name, organization, version, base, target,
-            basePackages,
-            fullResolvers,
-            classDirectory,
-            inConfiguration(Keys.managedSourceDirectories),
-            inConfiguration(Keys.unmanagedSourceDirectories),
-            inConfiguration(Keys.managedResourceDirectories),
-            inConfiguration(Keys.unmanagedResourceDirectories),
-            excludedDirectories,
-            ideOutputDirectory,
-            scalaInstance, scalacOptions.getOrElse(Seq.empty),
-            javaHome, javacOptions.getOrElse(Seq.empty),
-            sourceConfigurations,
-            testConfigurations,
-            dependencies,
-            build,
-            android,
-            play2
-          ).extract
-        }
+    // sbt filters out the default plugin repos from fullResolvers if project is not a plugin
+    // but we still want to index the default plugin repo if we're not overriding build repos
+    val pluginRepo = MavenRepository("sbt-plugin-releases", Resolver.SbtPluginRepositoryRoot + "/sbt-plugin-releases/")
+    val defaultResolversOpt = if (Keys.overrideBuildResolvers.value) None else Some(Seq(pluginRepo))
+    val allResolvers: Seq[Resolver] = Keys.fullResolvers.value ++ defaultResolversOpt.getOrElse(Seq.empty)
+
+    val options = StructureKeys.sbtStructureOpts.value
+
+    val managedSourceDirsInConfig = settingInConfiguration(Keys.managedSourceDirectories)
+    val unmanagedSourceDirsInConfig = settingInConfiguration(Keys.unmanagedSourceDirectories)
+    val managedResourceDirsInConfig = settingInConfiguration(Keys.managedResourceDirectories)
+    val unmanagedResourceDirsInConfig = settingInConfiguration(Keys.unmanagedResourceDirectories)
+
+    Def.task {
+
+      val scalaInstance = taskInCompile(Keys.scalaInstance).onlyIf(options.download).value
+      val scalacOptions = taskInCompile(Keys.scalacOptions).onlyIf(options.download).value
+      val javacOptions = taskInCompile(Keys.javacOptions).onlyIf(options.download).value
+
+      val name = Keys.name.in(projectRef, Compile).value
+      val organization = Keys.organization.in(projectRef, Compile).value
+      val version = Keys.version.in(projectRef, Compile).value
+      val base = Keys.baseDirectory.in(projectRef, Compile).value
+      val target = Keys.target.in(projectRef, Compile).value
+      val javaHome = Keys.javaHome.in(projectRef, Compile).value
+
+      new ProjectExtractor(
+        projectRef, name, organization, version, base, target,
+        basePackages,
+        allResolvers,
+        classDirectory,
+        managedSourceDirsInConfig,
+        unmanagedSourceDirsInConfig,
+        managedResourceDirsInConfig,
+        unmanagedResourceDirsInConfig,
+        excludedDirectories,
+        ideOutputDirectory,
+        scalaInstance, scalacOptions.getOrElse(Seq.empty),
+        javaHome, javacOptions.getOrElse(Seq.empty),
+        StructureKeys.sourceConfigurations.value,
+        StructureKeys.testConfigurations.value,
+        StructureKeys.extractDependencies.value,
+        StructureKeys.extractBuild.value,
+        StructureKeys.extractAndroid.value,
+        StructureKeys.extractPlay2.value
+      ).extract
     }
+  }
+
 }
