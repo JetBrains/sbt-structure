@@ -325,6 +325,7 @@
     </dependencies>
     <resolver name="public" root="https://repo1.maven.org/maven2/"/>
     <resolver name="Typesafe Releases Repository" root="https://repo.typesafe.com/typesafe/releases/"/>
+    <resolver name="sbt-plugin-releases" root="https://repo.scala-sbt.org/scalasbt/sbt-plugin-releases/"/>
     <play2>
       <version>2.3.7</version>
       <templatesImports>

@@ -137,6 +137,7 @@
       <module organization="org.scala-lang" name="scala-library" revision="2.10.1" artifactType="jar" classifier="" configurations="compile"/>
     </dependencies>
     <resolver name="public" root="http://repo1.maven.org/maven2/"/>
+    <resolver name="sbt-plugin-releases" root="https://repo.scala-sbt.org/scalasbt/sbt-plugin-releases/"/>
   </project>
   <repository>
     <module organization="org.scala-lang" name="scala-library" revision="2.10.1" artifactType="jar" classifier="">

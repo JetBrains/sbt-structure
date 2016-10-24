@@ -144,7 +144,8 @@
       <module configurations="compile" organization="org.scala-lang" name="scala-library" revision="2.10.5" artifactType="jar" classifier=""/>
     </dependencies>
     <resolver name="public" root="https://repo1.maven.org/maven2/"/>
-  </project>
+  	<resolver name="sbt-plugin-releases" root="https://repo.scala-sbt.org/scalasbt/sbt-plugin-releases/"/>
+	</project>
   <repository>
     <module organization="io.netty" name="netty" revision="3.6.6.Final" artifactType="jar" classifier="">
       <jar>$IVY2/cache/io.netty/netty/bundles/netty-3.6.6.Final.jar</jar>
