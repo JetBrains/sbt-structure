@@ -1,4 +1,3 @@
-import bintray._
 import bintray.Keys._
 
 

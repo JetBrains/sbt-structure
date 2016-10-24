@@ -58,25 +58,12 @@ class ImportSpec extends Specification with XmlMatchers {
 
   private def testProject(project: String, options: String): MatchResult[Elem] = {
     val base = new File(TestDataRoot, project)
-    val testDataFile = new File(base, "structure-" + SbtVersionFull + ".xml")
+
+    def structureFileName(suffix: String) = "structure-" + SbtVersionFull + suffix + ".xml"
+    val testDataFile = new File(base, structureFileName(""))
 
     testDataFile must exist.setMessage("No test data for version " + SbtVersionFull + " found at " + testDataFile.getPath)
 
-    def formatErrorMessage(message: String, expected: String, actual: String): String =
-      String.format("Project: %s %n%s %n%s", project, message, getDiff(expected, actual))
-
-    def onXmlFail(actualStr: String, expectedStr: String) = {
-      dumpToFile(new File(base, "actual.xml"), actualStr)
-      val errorMessage = "Xml files are not equal, compare 'actual.xml' and 'structure-" + SbtVersionFull + ".xml'"
-      formatErrorMessage(errorMessage, expectedStr, actualStr)
-    }
-
-    def onEqualsFail(actual: Product, expected: Product) = {
-      dumpToFile(new File(base, "actual.txt"), prettyPrintCaseClass(actual))
-      dumpToFile(new File(base, "expected.txt"), prettyPrintCaseClass(expected))
-      val errorMessage = "Objects are not equal, compare 'actual.txt' and 'expected.txt'"
-      formatErrorMessage(errorMessage, prettyPrintCaseClass(expected), prettyPrintCaseClass(actual))
-    }
 
     val expectedStr = getExpectedStr(testDataFile, base)
     val actualStr = Loader.load(
@@ -89,8 +76,29 @@ class ImportSpec extends Specification with XmlMatchers {
     val actual = actualXml.deserialize[StructureData].right.get
     val expected = expectedXml.deserialize[StructureData].right.get
 
-    (actual == expected) must beTrue.updateMessage(_ => onEqualsFail(actual, expected))
-    actualXml must beEqualToIgnoringSpace(expectedXml).updateMessage(_ => onXmlFail(actualStr, expectedStr))
+    def formatErrorMessage(message: String, expected: String, actual: String): String =
+      String.format("Project: %s %n%s %n%s", project, message, getDiff(expected, actual))
+
+    def onFail() = {
+      dumpToFile(new File(base, structureFileName("-actual")), actualStr)
+    }
+
+    def onXmlFail: String = {
+      onFail()
+      val errorMessage = "Xml files are not equal, compare 'actual.xml' and 'structure-" + SbtVersionFull + ".xml'"
+      formatErrorMessage(errorMessage, expectedStr, actualStr)
+    }
+
+    def onEqualsFail: String = {
+      onFail()
+      dumpToFile(new File(base, "actual.txt"), prettyPrintCaseClass(actual))
+      dumpToFile(new File(base, "expected.txt"), prettyPrintCaseClass(expected))
+      val errorMessage = "Objects are not equal, compare 'actual.txt' and 'expected.txt'"
+      formatErrorMessage(errorMessage, prettyPrintCaseClass(expected), prettyPrintCaseClass(actual))
+    }
+
+    (actual == expected) must beTrue.updateMessage(_ => onEqualsFail)
+    actualXml must beEqualToIgnoringSpace(expectedXml).updateMessage(_ => onXmlFail)
   }
 
   private def canon(path: String): String = path.stripSuffix("/").stripSuffix("\\")
