@@ -31,21 +31,21 @@ class ImportSpec extends Specification with XmlMatchers {
     equalExpectedOneIn("custom-test-config", onlyFor("0.13.0", "0.13.7", "0.13.9"))
   }
 
-  val SbtVersion = System.getProperty("structure.sbtversion.short")
-  val SbtVersionFull = System.getProperty("structure.sbtversion.full")
-  val ScalaVersion = System.getProperty("structure.scalaversion")
+  private val SbtVersion = System.getProperty("structure.sbtversion.short")
+  private val SbtVersionFull = System.getProperty("structure.sbtversion.full")
+  private val ScalaVersion = System.getProperty("structure.scalaversion")
 
-  val PluginFile = new File("extractor/target/scala-" + ScalaVersion + "/sbt-" + SbtVersionFull +"/classes/").getCanonicalFile
+  private val PluginFile = new File("extractor/target/scala-" + ScalaVersion + "/sbt-" + SbtVersionFull +"/classes/").getCanonicalFile
 
-  val sbtGlobalRoot = new File(System.getProperty("user.home"), "sbt-structure-global/").getCanonicalFile
-  val sbtGlobalBase = new File(sbtGlobalRoot, SbtVersion).getCanonicalFile
-  val sbtBootDir = new File(sbtGlobalRoot, "boot/").getCanonicalFile
-  val sbtIvyHome = new File(sbtGlobalRoot, "ivy2/").getCanonicalFile
+  private val sbtGlobalRoot = new File(System.getProperty("user.home"), "sbt-structure-global/").getCanonicalFile
+  private val sbtGlobalBase = new File(sbtGlobalRoot, SbtVersion).getCanonicalFile
+  private val sbtBootDir = new File(sbtGlobalRoot, "boot/").getCanonicalFile
+  private val sbtIvyHome = new File(sbtGlobalRoot, "ivy2/").getCanonicalFile
 
-  val TestDataRoot = new File("extractor/src/test/data/" + SbtVersion).getCanonicalFile
-  val AndroidHome = Option(System.getenv.get("ANDROID_HOME")).map(new File(_).getCanonicalFile)
+  private val TestDataRoot = new File("extractor/src/test/data/" + SbtVersion).getCanonicalFile
+  private val AndroidHome = Option(System.getenv.get("ANDROID_HOME")).map(new File(_).getCanonicalFile)
   // assuming user.home is always defined
-  val UserHome = new File(System.getProperty("user.home")).getCanonicalFile
+  private val UserHome = new File(System.getProperty("user.home")).getCanonicalFile
 
   private def equalExpectedOneIn(projectName: String, conditions: => MatchResult[Any] = always,
                                  options: String = "resolveClassifiers resolveSbtClassifiers resolveJavadocs") =
@@ -152,9 +152,6 @@ class ImportSpec extends Specification with XmlMatchers {
 
     print0(toPrint, indentStep)
   }
-
-  private def sbt13only =
-    SbtVersion must beEqualTo("0.13").orSkip(_ => "This test is for SBT 0.13.x only")
 
   private def onlyFor(versions: String*) =
     versions must contain[String](SbtVersionFull).orSkip(_ => "This test is for SBT " + versions.mkString(", ") + " only")
