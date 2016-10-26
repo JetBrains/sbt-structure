@@ -139,12 +139,6 @@ object ProjectExtractor extends SbtStateOps with TaskOps {
     def ideOutputDirectory(conf: sbt.Configuration) =
       SettingKeys.ideOutputDirectory.in(projectRef, conf).find(state).flatten
 
-    // sbt filters out the default plugin repos from fullResolvers if project is not a plugin
-    // but we still want to index the default plugin repo if we're not overriding build repos
-    val pluginRepo = MavenRepository("sbt-plugin-releases", Resolver.SbtPluginRepositoryRoot + "/sbt-plugin-releases/")
-    val defaultResolversOpt = if (Keys.overrideBuildResolvers.value) None else Some(Seq(pluginRepo))
-    val allResolvers: Seq[Resolver] = Keys.fullResolvers.value ++ defaultResolversOpt.getOrElse(Seq.empty)
-
     val options = StructureKeys.sbtStructureOpts.value
 
     val managedSourceDirsInConfig = settingInConfiguration(Keys.managedSourceDirectories)
@@ -168,7 +162,7 @@ object ProjectExtractor extends SbtStateOps with TaskOps {
       new ProjectExtractor(
         projectRef, name, organization, version, base, target,
         basePackages,
-        allResolvers,
+        Keys.fullResolvers.value,
         classDirectory,
         managedSourceDirsInConfig,
         unmanagedSourceDirsInConfig,
