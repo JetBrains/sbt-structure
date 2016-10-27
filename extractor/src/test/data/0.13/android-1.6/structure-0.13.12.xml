@@ -293,7 +293,6 @@
     <resolver name="public" root="https://repo1.maven.org/maven2/"/>
     <resolver name="google libraries" root="$URI_ANDROID_HOME/extras/google/m2repository"/>
     <resolver name="android libraries" root="$URI_ANDROID_HOME/extras/android/m2repository/"/>
-    <resolver name="sbt-plugin-releases" root="https://repo.scala-sbt.org/scalasbt/sbt-plugin-releases/"/>
   </project>
   <project>
     <id>com.android.support-support-v4-23.1.1</id>
@@ -588,7 +587,6 @@
     <resolver name="public" root="https://repo1.maven.org/maven2/"/>
     <resolver name="google libraries" root="$URI_ANDROID_HOME/extras/google/m2repository"/>
     <resolver name="android libraries" root="$URI_ANDROID_HOME/extras/android/m2repository/"/>
-    <resolver name="sbt-plugin-releases" root="https://repo.scala-sbt.org/scalasbt/sbt-plugin-releases/"/>
   </project>
   <project>
     <id>android-1-6</id>
@@ -899,7 +897,6 @@
     <resolver name="public" root="https://repo1.maven.org/maven2/"/>
     <resolver name="google libraries" root="$URI_ANDROID_HOME/extras/google/m2repository"/>
     <resolver name="android libraries" root="$URI_ANDROID_HOME/extras/android/m2repository/"/>
-    <resolver name="sbt-plugin-releases" root="https://repo.scala-sbt.org/scalasbt/sbt-plugin-releases/"/>
   </project>
   <repository>
     <module organization="ch.acra" name="acra" revision="4.8.2" artifactType="jar" classifier="">

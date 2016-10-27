@@ -160,7 +160,6 @@
       <module configurations="compile" organization="org.scala-lang" name="scala-library" revision="2.10.1" artifactType="jar" classifier=""/>
     </dependencies>
     <resolver name="public" root="https://repo1.maven.org/maven2/"/>
-    <resolver name="sbt-plugin-releases" root="https://repo.scala-sbt.org/scalasbt/sbt-plugin-releases/"/>
   </project>
   <project>
     <id>projectToRedirectOutput</id>
@@ -311,7 +310,6 @@
       <module configurations="compile" organization="org.scala-lang" name="scala-library" revision="2.10.5" artifactType="jar" classifier=""/>
     </dependencies>
     <resolver name="public" root="https://repo1.maven.org/maven2/"/>
-    <resolver name="sbt-plugin-releases" root="https://repo.scala-sbt.org/scalasbt/sbt-plugin-releases/"/>
   </project>
   <repository>
     <module organization="org.scala-lang" name="scala-library" revision="2.10.1" artifactType="jar" classifier="">

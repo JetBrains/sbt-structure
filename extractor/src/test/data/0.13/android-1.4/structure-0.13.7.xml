@@ -314,7 +314,6 @@
     <resolver name="public" root="https://repo1.maven.org/maven2/"/>
     <resolver name="google libraries" root="$URI_ANDROID_HOME/extras/google/m2repository"/>
     <resolver name="android libraries" root="$URI_ANDROID_HOME/extras/android/m2repository/"/>
-    <resolver name="sbt-plugin-releases" root="https://repo.scala-sbt.org/scalasbt/sbt-plugin-releases/"/>
   </project>
   <project>
     <id>com.android.support-support-v4-20.0.0</id>
@@ -609,7 +608,6 @@
     <resolver name="public" root="https://repo1.maven.org/maven2/"/>
     <resolver name="google libraries" root="$URI_ANDROID_HOME/extras/google/m2repository"/>
     <resolver name="android libraries" root="$URI_ANDROID_HOME/extras/android/m2repository/"/>
-    <resolver name="sbt-plugin-releases" root="https://repo.scala-sbt.org/scalasbt/sbt-plugin-releases/"/>
   </project>
   <repository>
     <module organization="com.actionbarsherlock" name="actionbarsherlock" revision="4.4.0" artifactType="jar" classifier="">
