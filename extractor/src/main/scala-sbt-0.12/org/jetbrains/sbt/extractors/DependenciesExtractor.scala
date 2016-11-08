@@ -2,9 +2,9 @@ package org.jetbrains.sbt
 package extractors
 
 import org.jetbrains.sbt.structure._
-import org.jetbrains.sbt.{structure => jb}
-import sbt._
+import org.jetbrains.sbt.{ModulesOps, SbtStateOps, StructureKeys, TaskOps, structure => jb}
 import sbt.Project.Initialize
+import sbt._
 
 /**
  * @author Nikolay Obedin

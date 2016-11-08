@@ -6,3 +6,4 @@ project/target
 actual.txt
 expected.txt
 sbt-global
+structure-*-actual.xml

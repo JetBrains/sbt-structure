@@ -97,9 +97,7 @@ case class DirectoryData(file: File, managed: Boolean)
 case class JavaData(home: Option[File], options: Seq[String])
 
 case class ScalaData(version: String,
-                     libraryJar: File,
-                     compilerJar: File,
-                     extraJars: Seq[File],
+                     jars: Seq[File],
                      options: Seq[String])
 
 case class DependencyData(projects: Seq[ProjectDependencyData],

@@ -94,8 +94,7 @@ class ProjectExtractor(projectRef: ProjectRef,
     }
 
   private def extractScala: Option[ScalaData] = scalaInstance.map { instance =>
-    val extraJars = instance.extraJars.filter(_.getName.contains("reflect"))
-    ScalaData(instance.version, instance.libraryJar, instance.compilerJar, extraJars, scalacOptions)
+    ScalaData(instance.version, instance.jars, scalacOptions)
   }
 
   private def extractJava: Option[JavaData] =

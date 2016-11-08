@@ -1,0 +1,492 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<structure sbt="0.13.13">
+  <project>
+    <id>classifiers</id>
+    <name>classifiers</name>
+    <organization>default</organization>
+    <version>0.1-SNAPSHOT</version>
+    <base>/Users/jast/workspace/sbt-structure/extractor/src/test/data/0.13/classifiers</base>
+    <target>/Users/jast/workspace/sbt-structure/extractor/src/test/data/0.13/classifiers/target</target>
+    <build>
+      <import>import Test._</import>
+      <import>
+        import _root_.sbt.plugins.IvyPlugin, _root_.sbt.plugins.JvmPlugin, _root_.sbt.plugins.CorePlugin, _root_.sbt.plugins.JUnitXmlReportPlugin, _root_.sbt.plugins.Giter8TemplatePlugin
+      </import>
+      <import>import sbt._, Keys._, dsl._</import>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/lib/jansi.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/lib/jline.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/lib/scala-compiler.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/lib/scala-library.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/lib/scala-reflect.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/actions-0.13.13.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/api-0.13.13.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/apply-macro-0.13.13.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/cache-0.13.13.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/classfile-0.13.13.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/classpath-0.13.13.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/collections-0.13.13.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/command-0.13.13.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/compile-0.13.13.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/compiler-integration-0.13.13.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/compiler-interface-0.13.13.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/compiler-ivy-integration-0.13.13.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/completion-0.13.13.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/control-0.13.13.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/cross-0.13.13.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/incremental-compiler-0.13.13.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/io-0.13.13.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/ivy-0.13.13.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/ivy-2.3.0-sbt-2cf13e211b2cb31f0d3b317289dca70eca3362f6.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/jansi-1.11.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/jawn-parser_2.10-0.6.0.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/jline-2.13.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/jsch-0.1.50.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/json4s-ast_2.10-3.2.10.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/json4s-core_2.10-3.2.10.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/json4s-support_2.10-0.6.0.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/launcher-interface-1.0.0-M1.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/logging-0.13.13.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/logic-0.13.13.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/main-0.13.13.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/main-settings-0.13.13.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/paranamer-2.6.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/persist-0.13.13.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/process-0.13.13.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/quasiquotes_2.10-2.0.1.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/relation-0.13.13.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/run-0.13.13.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/sbinary_2.10-0.4.2.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/sbt-0.13.13.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/scala-pickling_2.10-0.10.1.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/scala-reflect-2.10.6.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/serialization_2.10-0.1.2.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/task-system-0.13.13.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/tasks-0.13.13.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/template-resolver-0.1.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/test-agent-0.13.13.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/test-interface-1.0.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/testing-0.13.13.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/tracking-0.13.13.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/xsbti/interface-0.13.13.jar</classes>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/com.jcraft/jsch/srcs/jsch-0.1.50-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/com.thoughtworks.paranamer/paranamer/srcs/paranamer-2.6-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/jline/jline/srcs/jline-2.13-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.fusesource.jansi/jansi/srcs/jansi-1.11-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.json4s/json4s-ast_2.10/srcs/json4s-ast_2.10-3.2.10-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.json4s/json4s-core_2.10/srcs/json4s-core_2.10-3.2.10-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-lang.modules/scala-pickling_2.10/srcs/scala-pickling_2.10-0.10.1-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-lang/scala-compiler/srcs/scala-compiler-2.10.6-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-lang/scala-library/srcs/scala-library-2.10.6-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-lang/scala-reflect/srcs/scala-reflect-2.10.6-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt.ivy/ivy/srcs/ivy-2.3.0-sbt-2cf13e211b2cb31f0d3b317289dca70eca3362f6-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/actions/srcs/actions-0.13.13-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/api/srcs/api-0.13.13-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/apply-macro/srcs/apply-macro-0.13.13-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/cache/srcs/cache-0.13.13-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/classfile/srcs/classfile-0.13.13-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/classpath/srcs/classpath-0.13.13-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/collections/srcs/collections-0.13.13-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/command/srcs/command-0.13.13-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/compile/srcs/compile-0.13.13-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/compiler-integration/srcs/compiler-integration-0.13.13-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/compiler-interface/srcs/compiler-interface-0.13.13-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/compiler-ivy-integration/srcs/compiler-ivy-integration-0.13.13-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/completion/srcs/completion-0.13.13-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/control/srcs/control-0.13.13-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/cross/srcs/cross-0.13.13-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/incremental-compiler/srcs/incremental-compiler-0.13.13-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/interface/srcs/interface-0.13.13-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/io/srcs/io-0.13.13-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/ivy/srcs/ivy-0.13.13-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/launcher-interface/srcs/launcher-interface-1.0.0-M1-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/logging/srcs/logging-0.13.13-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/logic/srcs/logic-0.13.13-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/main-settings/srcs/main-settings-0.13.13-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/main/srcs/main-0.13.13-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/persist/srcs/persist-0.13.13-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/process/srcs/process-0.13.13-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/relation/srcs/relation-0.13.13-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/run/srcs/run-0.13.13-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/sbt/srcs/sbt-0.13.13-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/serialization_2.10/srcs/serialization_2.10-0.1.2-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/task-system/srcs/task-system-0.13.13-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/tasks/srcs/tasks-0.13.13-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/template-resolver/srcs/template-resolver-0.1-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/test-agent/srcs/test-agent-0.13.13-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/test-interface/srcs/test-interface-1.0-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/testing/srcs/testing-0.13.13-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/tracking/srcs/tracking-0.13.13-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-tools.sbinary/sbinary_2.10/srcs/sbinary_2.10-0.4.2-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scalamacros/quasiquotes_2.10/srcs/quasiquotes_2.10-2.0.1-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.spire-math/jawn-parser_2.10/srcs/jawn-parser_2.10-0.6.0-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.spire-math/json4s-support_2.10/srcs/json4s-support_2.10-0.6.0-sources.jar</sources>
+    </build>
+    <scala>
+      <version>2.10.6</version>
+      <library>/Users/jast/sbt-structure-global/boot/scala-2.10.6/lib/scala-library.jar</library>
+      <compiler>/Users/jast/sbt-structure-global/boot/scala-2.10.6/lib/scala-compiler.jar</compiler>
+      <extra>/Users/jast/sbt-structure-global/boot/scala-2.10.6/lib/scala-reflect.jar</extra>
+    </scala>
+    <configuration id="compile">
+      <sources>/Users/jast/workspace/sbt-structure/extractor/src/test/data/0.13/classifiers/src/main/java</sources>
+      <sources>/Users/jast/workspace/sbt-structure/extractor/src/test/data/0.13/classifiers/src/main/scala</sources>
+      <sources>/Users/jast/workspace/sbt-structure/extractor/src/test/data/0.13/classifiers/src/main/scala-2.10</sources>
+      <sources managed="true">/Users/jast/workspace/sbt-structure/extractor/src/test/data/0.13/classifiers/target/scala-2.10/src_managed/main</sources>
+      <resources>/Users/jast/workspace/sbt-structure/extractor/src/test/data/0.13/classifiers/src/main/resources</resources>
+      <resources managed="true">/Users/jast/workspace/sbt-structure/extractor/src/test/data/0.13/classifiers/target/scala-2.10/resource_managed/main</resources>
+      <classes>/Users/jast/workspace/sbt-structure/extractor/src/test/data/0.13/classifiers/target/scala-2.10/classes</classes>
+    </configuration>
+    <configuration id="test">
+      <sources>/Users/jast/workspace/sbt-structure/extractor/src/test/data/0.13/classifiers/src/test/java</sources>
+      <sources>/Users/jast/workspace/sbt-structure/extractor/src/test/data/0.13/classifiers/src/test/scala</sources>
+      <sources>/Users/jast/workspace/sbt-structure/extractor/src/test/data/0.13/classifiers/src/test/scala-2.10</sources>
+      <sources managed="true">/Users/jast/workspace/sbt-structure/extractor/src/test/data/0.13/classifiers/target/scala-2.10/src_managed/test</sources>
+      <resources>/Users/jast/workspace/sbt-structure/extractor/src/test/data/0.13/classifiers/src/test/resources</resources>
+      <resources managed="true">/Users/jast/workspace/sbt-structure/extractor/src/test/data/0.13/classifiers/target/scala-2.10/resource_managed/test</resources>
+      <classes>/Users/jast/workspace/sbt-structure/extractor/src/test/data/0.13/classifiers/target/scala-2.10/test-classes</classes>
+    </configuration>
+    <dependencies>
+      <module configurations="compile" organization="org.scala-lang" name="scala-library" revision="2.10.6" artifactType="jar" classifier=""/>
+    </dependencies>
+    <resolver name="public" root="https://repo1.maven.org/maven2/"/>
+  </project>
+  <project>
+    <id>bar</id>
+    <name>bar</name>
+    <organization>bar</organization>
+    <version>0.1-SNAPSHOT</version>
+    <base>/Users/jast/workspace/sbt-structure/extractor/src/test/data/0.13/classifiers/bar</base>
+    <target>/Users/jast/workspace/sbt-structure/extractor/src/test/data/0.13/classifiers/bar/target</target>
+    <build>
+      <import>import Test._</import>
+      <import>
+        import _root_.sbt.plugins.IvyPlugin, _root_.sbt.plugins.JvmPlugin, _root_.sbt.plugins.CorePlugin, _root_.sbt.plugins.JUnitXmlReportPlugin, _root_.sbt.plugins.Giter8TemplatePlugin
+      </import>
+      <import>import sbt._, Keys._, dsl._</import>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/lib/jansi.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/lib/jline.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/lib/scala-compiler.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/lib/scala-library.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/lib/scala-reflect.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/actions-0.13.13.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/api-0.13.13.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/apply-macro-0.13.13.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/cache-0.13.13.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/classfile-0.13.13.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/classpath-0.13.13.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/collections-0.13.13.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/command-0.13.13.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/compile-0.13.13.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/compiler-integration-0.13.13.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/compiler-interface-0.13.13.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/compiler-ivy-integration-0.13.13.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/completion-0.13.13.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/control-0.13.13.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/cross-0.13.13.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/incremental-compiler-0.13.13.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/io-0.13.13.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/ivy-0.13.13.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/ivy-2.3.0-sbt-2cf13e211b2cb31f0d3b317289dca70eca3362f6.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/jansi-1.11.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/jawn-parser_2.10-0.6.0.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/jline-2.13.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/jsch-0.1.50.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/json4s-ast_2.10-3.2.10.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/json4s-core_2.10-3.2.10.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/json4s-support_2.10-0.6.0.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/launcher-interface-1.0.0-M1.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/logging-0.13.13.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/logic-0.13.13.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/main-0.13.13.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/main-settings-0.13.13.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/paranamer-2.6.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/persist-0.13.13.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/process-0.13.13.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/quasiquotes_2.10-2.0.1.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/relation-0.13.13.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/run-0.13.13.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/sbinary_2.10-0.4.2.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/sbt-0.13.13.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/scala-pickling_2.10-0.10.1.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/scala-reflect-2.10.6.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/serialization_2.10-0.1.2.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/task-system-0.13.13.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/tasks-0.13.13.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/template-resolver-0.1.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/test-agent-0.13.13.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/test-interface-1.0.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/testing-0.13.13.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/tracking-0.13.13.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/xsbti/interface-0.13.13.jar</classes>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/com.jcraft/jsch/srcs/jsch-0.1.50-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/com.thoughtworks.paranamer/paranamer/srcs/paranamer-2.6-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/jline/jline/srcs/jline-2.13-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.fusesource.jansi/jansi/srcs/jansi-1.11-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.json4s/json4s-ast_2.10/srcs/json4s-ast_2.10-3.2.10-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.json4s/json4s-core_2.10/srcs/json4s-core_2.10-3.2.10-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-lang.modules/scala-pickling_2.10/srcs/scala-pickling_2.10-0.10.1-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-lang/scala-compiler/srcs/scala-compiler-2.10.6-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-lang/scala-library/srcs/scala-library-2.10.6-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-lang/scala-reflect/srcs/scala-reflect-2.10.6-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt.ivy/ivy/srcs/ivy-2.3.0-sbt-2cf13e211b2cb31f0d3b317289dca70eca3362f6-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/actions/srcs/actions-0.13.13-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/api/srcs/api-0.13.13-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/apply-macro/srcs/apply-macro-0.13.13-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/cache/srcs/cache-0.13.13-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/classfile/srcs/classfile-0.13.13-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/classpath/srcs/classpath-0.13.13-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/collections/srcs/collections-0.13.13-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/command/srcs/command-0.13.13-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/compile/srcs/compile-0.13.13-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/compiler-integration/srcs/compiler-integration-0.13.13-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/compiler-interface/srcs/compiler-interface-0.13.13-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/compiler-ivy-integration/srcs/compiler-ivy-integration-0.13.13-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/completion/srcs/completion-0.13.13-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/control/srcs/control-0.13.13-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/cross/srcs/cross-0.13.13-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/incremental-compiler/srcs/incremental-compiler-0.13.13-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/interface/srcs/interface-0.13.13-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/io/srcs/io-0.13.13-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/ivy/srcs/ivy-0.13.13-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/launcher-interface/srcs/launcher-interface-1.0.0-M1-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/logging/srcs/logging-0.13.13-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/logic/srcs/logic-0.13.13-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/main-settings/srcs/main-settings-0.13.13-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/main/srcs/main-0.13.13-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/persist/srcs/persist-0.13.13-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/process/srcs/process-0.13.13-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/relation/srcs/relation-0.13.13-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/run/srcs/run-0.13.13-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/sbt/srcs/sbt-0.13.13-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/serialization_2.10/srcs/serialization_2.10-0.1.2-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/task-system/srcs/task-system-0.13.13-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/tasks/srcs/tasks-0.13.13-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/template-resolver/srcs/template-resolver-0.1-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/test-agent/srcs/test-agent-0.13.13-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/test-interface/srcs/test-interface-1.0-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/testing/srcs/testing-0.13.13-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/tracking/srcs/tracking-0.13.13-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-tools.sbinary/sbinary_2.10/srcs/sbinary_2.10-0.4.2-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scalamacros/quasiquotes_2.10/srcs/quasiquotes_2.10-2.0.1-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.spire-math/jawn-parser_2.10/srcs/jawn-parser_2.10-0.6.0-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.spire-math/json4s-support_2.10/srcs/json4s-support_2.10-0.6.0-sources.jar</sources>
+    </build>
+    <scala>
+      <version>2.10.6</version>
+      <library>/Users/jast/sbt-structure-global/boot/scala-2.10.6/lib/scala-library.jar</library>
+      <compiler>/Users/jast/sbt-structure-global/boot/scala-2.10.6/lib/scala-compiler.jar</compiler>
+      <extra>/Users/jast/sbt-structure-global/boot/scala-2.10.6/lib/scala-reflect.jar</extra>
+    </scala>
+    <configuration id="compile">
+      <sources>/Users/jast/workspace/sbt-structure/extractor/src/test/data/0.13/classifiers/bar/src/main/java</sources>
+      <sources>/Users/jast/workspace/sbt-structure/extractor/src/test/data/0.13/classifiers/bar/src/main/scala</sources>
+      <sources>/Users/jast/workspace/sbt-structure/extractor/src/test/data/0.13/classifiers/bar/src/main/scala-2.10</sources>
+      <sources managed="true">/Users/jast/workspace/sbt-structure/extractor/src/test/data/0.13/classifiers/bar/target/scala-2.10/src_managed/main</sources>
+      <resources>/Users/jast/workspace/sbt-structure/extractor/src/test/data/0.13/classifiers/bar/src/main/resources</resources>
+      <resources managed="true">/Users/jast/workspace/sbt-structure/extractor/src/test/data/0.13/classifiers/bar/target/scala-2.10/resource_managed/main</resources>
+      <classes>/Users/jast/workspace/sbt-structure/extractor/src/test/data/0.13/classifiers/bar/target/scala-2.10/classes</classes>
+    </configuration>
+    <configuration id="test">
+      <sources>/Users/jast/workspace/sbt-structure/extractor/src/test/data/0.13/classifiers/bar/src/test/java</sources>
+      <sources>/Users/jast/workspace/sbt-structure/extractor/src/test/data/0.13/classifiers/bar/src/test/scala</sources>
+      <sources>/Users/jast/workspace/sbt-structure/extractor/src/test/data/0.13/classifiers/bar/src/test/scala-2.10</sources>
+      <sources managed="true">/Users/jast/workspace/sbt-structure/extractor/src/test/data/0.13/classifiers/bar/target/scala-2.10/src_managed/test</sources>
+      <resources>/Users/jast/workspace/sbt-structure/extractor/src/test/data/0.13/classifiers/bar/src/test/resources</resources>
+      <resources managed="true">/Users/jast/workspace/sbt-structure/extractor/src/test/data/0.13/classifiers/bar/target/scala-2.10/resource_managed/test</resources>
+      <classes>/Users/jast/workspace/sbt-structure/extractor/src/test/data/0.13/classifiers/bar/target/scala-2.10/test-classes</classes>
+    </configuration>
+    <dependencies>
+      <module configurations="compile" organization="javax.activation" name="activation" revision="1.1.1" artifactType="jar" classifier=""/>
+      <module configurations="compile" organization="javax.mail" name="mail" revision="1.4.4" artifactType="jar" classifier=""/>
+      <module configurations="compile" organization="org.apache.james" name="apache-mailet-api" revision="2.5.0" artifactType="jar" classifier=""/>
+      <module configurations="compile" organization="org.apache.james" name="apache-mailet-base" revision="2.5.0" artifactType="jar" classifier=""/>
+      <module configurations="compile" organization="org.scala-lang" name="scala-library" revision="2.10.6" artifactType="jar" classifier=""/>
+    </dependencies>
+    <resolver name="public" root="https://repo1.maven.org/maven2/"/>
+  </project>
+  <project>
+    <id>foo</id>
+    <name>foo</name>
+    <organization>foo</organization>
+    <version>0.1-SNAPSHOT</version>
+    <base>/Users/jast/workspace/sbt-structure/extractor/src/test/data/0.13/classifiers/foo</base>
+    <target>/Users/jast/workspace/sbt-structure/extractor/src/test/data/0.13/classifiers/foo/target</target>
+    <build>
+      <import>import Test._</import>
+      <import>
+        import _root_.sbt.plugins.IvyPlugin, _root_.sbt.plugins.JvmPlugin, _root_.sbt.plugins.CorePlugin, _root_.sbt.plugins.JUnitXmlReportPlugin, _root_.sbt.plugins.Giter8TemplatePlugin
+      </import>
+      <import>import sbt._, Keys._, dsl._</import>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/lib/jansi.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/lib/jline.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/lib/scala-compiler.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/lib/scala-library.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/lib/scala-reflect.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/actions-0.13.13.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/api-0.13.13.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/apply-macro-0.13.13.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/cache-0.13.13.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/classfile-0.13.13.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/classpath-0.13.13.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/collections-0.13.13.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/command-0.13.13.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/compile-0.13.13.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/compiler-integration-0.13.13.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/compiler-interface-0.13.13.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/compiler-ivy-integration-0.13.13.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/completion-0.13.13.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/control-0.13.13.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/cross-0.13.13.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/incremental-compiler-0.13.13.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/io-0.13.13.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/ivy-0.13.13.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/ivy-2.3.0-sbt-2cf13e211b2cb31f0d3b317289dca70eca3362f6.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/jansi-1.11.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/jawn-parser_2.10-0.6.0.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/jline-2.13.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/jsch-0.1.50.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/json4s-ast_2.10-3.2.10.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/json4s-core_2.10-3.2.10.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/json4s-support_2.10-0.6.0.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/launcher-interface-1.0.0-M1.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/logging-0.13.13.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/logic-0.13.13.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/main-0.13.13.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/main-settings-0.13.13.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/paranamer-2.6.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/persist-0.13.13.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/process-0.13.13.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/quasiquotes_2.10-2.0.1.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/relation-0.13.13.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/run-0.13.13.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/sbinary_2.10-0.4.2.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/sbt-0.13.13.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/scala-pickling_2.10-0.10.1.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/scala-reflect-2.10.6.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/serialization_2.10-0.1.2.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/task-system-0.13.13.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/tasks-0.13.13.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/template-resolver-0.1.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/test-agent-0.13.13.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/test-interface-1.0.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/testing-0.13.13.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/tracking-0.13.13.jar</classes>
+      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/xsbti/interface-0.13.13.jar</classes>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/com.jcraft/jsch/srcs/jsch-0.1.50-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/com.thoughtworks.paranamer/paranamer/srcs/paranamer-2.6-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/jline/jline/srcs/jline-2.13-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.fusesource.jansi/jansi/srcs/jansi-1.11-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.json4s/json4s-ast_2.10/srcs/json4s-ast_2.10-3.2.10-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.json4s/json4s-core_2.10/srcs/json4s-core_2.10-3.2.10-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-lang.modules/scala-pickling_2.10/srcs/scala-pickling_2.10-0.10.1-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-lang/scala-compiler/srcs/scala-compiler-2.10.6-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-lang/scala-library/srcs/scala-library-2.10.6-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-lang/scala-reflect/srcs/scala-reflect-2.10.6-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt.ivy/ivy/srcs/ivy-2.3.0-sbt-2cf13e211b2cb31f0d3b317289dca70eca3362f6-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/actions/srcs/actions-0.13.13-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/api/srcs/api-0.13.13-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/apply-macro/srcs/apply-macro-0.13.13-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/cache/srcs/cache-0.13.13-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/classfile/srcs/classfile-0.13.13-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/classpath/srcs/classpath-0.13.13-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/collections/srcs/collections-0.13.13-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/command/srcs/command-0.13.13-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/compile/srcs/compile-0.13.13-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/compiler-integration/srcs/compiler-integration-0.13.13-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/compiler-interface/srcs/compiler-interface-0.13.13-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/compiler-ivy-integration/srcs/compiler-ivy-integration-0.13.13-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/completion/srcs/completion-0.13.13-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/control/srcs/control-0.13.13-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/cross/srcs/cross-0.13.13-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/incremental-compiler/srcs/incremental-compiler-0.13.13-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/interface/srcs/interface-0.13.13-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/io/srcs/io-0.13.13-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/ivy/srcs/ivy-0.13.13-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/launcher-interface/srcs/launcher-interface-1.0.0-M1-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/logging/srcs/logging-0.13.13-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/logic/srcs/logic-0.13.13-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/main-settings/srcs/main-settings-0.13.13-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/main/srcs/main-0.13.13-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/persist/srcs/persist-0.13.13-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/process/srcs/process-0.13.13-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/relation/srcs/relation-0.13.13-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/run/srcs/run-0.13.13-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/sbt/srcs/sbt-0.13.13-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/serialization_2.10/srcs/serialization_2.10-0.1.2-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/task-system/srcs/task-system-0.13.13-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/tasks/srcs/tasks-0.13.13-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/template-resolver/srcs/template-resolver-0.1-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/test-agent/srcs/test-agent-0.13.13-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/test-interface/srcs/test-interface-1.0-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/testing/srcs/testing-0.13.13-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/tracking/srcs/tracking-0.13.13-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-tools.sbinary/sbinary_2.10/srcs/sbinary_2.10-0.4.2-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scalamacros/quasiquotes_2.10/srcs/quasiquotes_2.10-2.0.1-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.spire-math/jawn-parser_2.10/srcs/jawn-parser_2.10-0.6.0-sources.jar</sources>
+      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.spire-math/json4s-support_2.10/srcs/json4s-support_2.10-0.6.0-sources.jar</sources>
+    </build>
+    <scala>
+      <version>2.10.6</version>
+      <library>/Users/jast/sbt-structure-global/boot/scala-2.10.6/lib/scala-library.jar</library>
+      <compiler>/Users/jast/sbt-structure-global/boot/scala-2.10.6/lib/scala-compiler.jar</compiler>
+      <extra>/Users/jast/sbt-structure-global/boot/scala-2.10.6/lib/scala-reflect.jar</extra>
+    </scala>
+    <configuration id="compile">
+      <sources>/Users/jast/workspace/sbt-structure/extractor/src/test/data/0.13/classifiers/foo/src/main/java</sources>
+      <sources>/Users/jast/workspace/sbt-structure/extractor/src/test/data/0.13/classifiers/foo/src/main/scala</sources>
+      <sources>/Users/jast/workspace/sbt-structure/extractor/src/test/data/0.13/classifiers/foo/src/main/scala-2.10</sources>
+      <sources managed="true">/Users/jast/workspace/sbt-structure/extractor/src/test/data/0.13/classifiers/foo/target/scala-2.10/src_managed/main</sources>
+      <resources>/Users/jast/workspace/sbt-structure/extractor/src/test/data/0.13/classifiers/foo/src/main/resources</resources>
+      <resources managed="true">/Users/jast/workspace/sbt-structure/extractor/src/test/data/0.13/classifiers/foo/target/scala-2.10/resource_managed/main</resources>
+      <classes>/Users/jast/workspace/sbt-structure/extractor/src/test/data/0.13/classifiers/foo/target/scala-2.10/classes</classes>
+    </configuration>
+    <configuration id="test">
+      <sources>/Users/jast/workspace/sbt-structure/extractor/src/test/data/0.13/classifiers/foo/src/test/java</sources>
+      <sources>/Users/jast/workspace/sbt-structure/extractor/src/test/data/0.13/classifiers/foo/src/test/scala</sources>
+      <sources>/Users/jast/workspace/sbt-structure/extractor/src/test/data/0.13/classifiers/foo/src/test/scala-2.10</sources>
+      <sources managed="true">/Users/jast/workspace/sbt-structure/extractor/src/test/data/0.13/classifiers/foo/target/scala-2.10/src_managed/test</sources>
+      <resources>/Users/jast/workspace/sbt-structure/extractor/src/test/data/0.13/classifiers/foo/src/test/resources</resources>
+      <resources managed="true">/Users/jast/workspace/sbt-structure/extractor/src/test/data/0.13/classifiers/foo/target/scala-2.10/resource_managed/test</resources>
+      <classes>/Users/jast/workspace/sbt-structure/extractor/src/test/data/0.13/classifiers/foo/target/scala-2.10/test-classes</classes>
+    </configuration>
+    <dependencies>
+      <module configurations="compile" organization="javax.activation" name="activation" revision="1.1.1" artifactType="jar" classifier=""/>
+      <module configurations="compile" organization="javax.mail" name="mail" revision="1.4.4" artifactType="jar" classifier=""/>
+      <module configurations="compile" organization="org.apache.james" name="apache-mailet-api" revision="2.5.0" artifactType="jar" classifier=""/>
+      <module configurations="compile" organization="org.apache.james" name="apache-mailet-base" revision="2.5.0" artifactType="jar" classifier=""/>
+      <module configurations="test" organization="org.apache.james" name="apache-mailet-base" revision="2.5.0" artifactType="jar" classifier="tests"/>
+      <module configurations="compile" organization="org.scala-lang" name="scala-library" revision="2.10.6" artifactType="jar" classifier=""/>
+    </dependencies>
+    <resolver name="public" root="https://repo1.maven.org/maven2/"/>
+  </project>
+  <repository>
+    <module organization="javax.activation" name="activation" revision="1.1.1" artifactType="jar" classifier="">
+      <jar>/Users/jast/sbt-structure-global/ivy2/cache/javax.activation/activation/jars/activation-1.1.1.jar</jar>
+      <src>/Users/jast/sbt-structure-global/ivy2/cache/javax.activation/activation/srcs/activation-1.1.1-sources.jar</src>
+    </module>
+    <module organization="javax.mail" name="mail" revision="1.4.4" artifactType="jar" classifier="">
+      <jar>/Users/jast/sbt-structure-global/ivy2/cache/javax.mail/mail/jars/mail-1.4.4.jar</jar>
+      <src>/Users/jast/sbt-structure-global/ivy2/cache/javax.mail/mail/srcs/mail-1.4.4-sources.jar</src>
+    </module>
+    <module organization="org.apache.james" name="apache-mailet-api" revision="2.5.0" artifactType="jar" classifier="">
+      <jar>/Users/jast/sbt-structure-global/ivy2/cache/org.apache.james/apache-mailet-api/bundles/apache-mailet-api-2.5.0.jar</jar>
+      <doc>/Users/jast/sbt-structure-global/ivy2/cache/org.apache.james/apache-mailet-api/docs/apache-mailet-api-2.5.0-javadoc.jar</doc>
+      <src>/Users/jast/sbt-structure-global/ivy2/cache/org.apache.james/apache-mailet-api/srcs/apache-mailet-api-2.5.0-sources.jar</src>
+    </module>
+    <module organization="org.apache.james" name="apache-mailet-base" revision="2.5.0" artifactType="jar" classifier="">
+      <jar>/Users/jast/sbt-structure-global/ivy2/cache/org.apache.james/apache-mailet-base/bundles/apache-mailet-base-2.5.0.jar</jar>
+      <jar>/Users/jast/sbt-structure-global/ivy2/cache/org.apache.james/apache-mailet-base/jars/apache-mailet-base-2.5.0.jar</jar>
+      <doc>/Users/jast/sbt-structure-global/ivy2/cache/org.apache.james/apache-mailet-base/docs/apache-mailet-base-2.5.0-javadoc.jar</doc>
+      <src>/Users/jast/sbt-structure-global/ivy2/cache/org.apache.james/apache-mailet-base/srcs/apache-mailet-base-2.5.0-sources.jar</src>
+    </module>
+    <module organization="org.apache.james" name="apache-mailet-base" revision="2.5.0" artifactType="jar" classifier="tests">
+      <jar>/Users/jast/sbt-structure-global/ivy2/cache/org.apache.james/apache-mailet-base/jars/apache-mailet-base-2.5.0-tests.jar</jar>
+    </module>
+    <module organization="org.scala-lang" name="scala-library" revision="2.10.6" artifactType="jar" classifier="">
+      <jar>/Users/jast/sbt-structure-global/boot/scala-2.10.6/lib/scala-library.jar</jar>
+      <doc>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-lang/scala-library/docs/scala-library-2.10.6-javadoc.jar</doc>
+      <src>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-lang/scala-library/srcs/scala-library-2.10.6-sources.jar</src>
+    </module>
+  </repository>
+  <localCachePath>/Users/jast/sbt-structure-global/ivy2</localCachePath>
+</structure>

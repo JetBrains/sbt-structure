@@ -1,6 +1,5 @@
 import bintray.Keys._
 
-
 def newProject(projectName: String): Project =
   Project(projectName, file(projectName))
     .settings(
@@ -34,7 +33,7 @@ lazy val core = newProject("core")
           Seq.empty
       }
     },
-    crossScalaVersions := Seq("2.9.2", "2.10.4", "2.11.6")
+    crossScalaVersions := Seq("2.9.3", "2.10.6", "2.11.8", "2.12.0")
   )
 
 lazy val extractor = newProject("extractor")
@@ -51,9 +50,10 @@ lazy val extractor = newProject("extractor")
       System.setProperty("structure.sbtversion.short", CrossBuilding.pluginSbtVersion.value.substring(0, 4))
       System.setProperty("structure.scalaversion", scalaBinaryVersion.value)
     },
-    test in Test <<= (test in Test).dependsOn(testSetup),
-    testOnly in Test <<= (testOnly in Test).dependsOn(testSetup),
-    name in bintray := "sbt-structure-extractor"
+    test in Test := (test in Test).dependsOn(testSetup).value,
+    testOnly in Test := (testOnly in Test).dependsOn(testSetup).evaluated,
+    name in bintray := "sbt-structure-extractor",
+    scalacOptions ++= Seq("-deprecation")
   )
 
 lazy val sbtStructure = project.in(file(".")).aggregate(core, extractor)

@@ -88,8 +88,11 @@ class ProjectExtractor(projectRef: ProjectRef,
     if (testConfigurations.contains(configuration)) Test else configuration
 
   private def extractScala: Option[ScalaData] = scalaInstance.map { instance =>
-    val extraJars = instance.extraJars.filter(_.getName.contains("reflect"))
-    ScalaData(instance.version, instance.libraryJar, instance.compilerJar, extraJars, scalacOptions)
+    val jars =
+      instance.libraryJar +:
+      instance.compilerJar +:
+      instance.extraJars.filter(_.getName.contains("reflect"))
+    ScalaData(instance.version, jars, scalacOptions)
   }
 
   private def extractJava: Option[JavaData] =

@@ -1,15 +1,14 @@
-package org.jetbrains.sbt
-package extractors
+package org.jetbrains.sbt.extractors
 
+import org.jetbrains.sbt.StructureKeys
 import org.jetbrains.sbt.structure.StructureData
 import sbt._
-import Project.Initialize
 
-//import scala.language.reflectiveCalls
+import scala.language.reflectiveCalls
 
 object StructureExtractor {
 
-  def taskDef: Initialize[Task[StructureData]] =
+  def taskDef: Def.Initialize[Task[StructureData]] =
     ( StructureKeys.extractProjects
     , StructureKeys.extractRepository
     , Keys.sbtVersion) map {

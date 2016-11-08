@@ -1,11 +1,10 @@
-package org.jetbrains.sbt
-package extractors
+package org.jetbrains.sbt.extractors
 
 import java.io.File
 
+import org.jetbrains.sbt.{LoadedBuildUnitAdapter, SbtStateOps, StructureKeys, TaskOps, UpdateReportAdapter}
 import org.jetbrains.sbt.structure.BuildData
 import sbt._
-import sbt.Project.Initialize
 
 /**
  * @author Nikolay Obedin
@@ -26,7 +25,7 @@ class BuildExtractor(unit: LoadedBuildUnitAdapter, updateSbtClassifiers: Option[
 }
 
 object BuildExtractor extends SbtStateOps with TaskOps {
-  def taskDef: Initialize[Task[BuildData]] =
+  def taskDef: Def.Initialize[Task[BuildData]] =
     (sbt.Keys.state, sbt.Keys.thisProjectRef, StructureKeys.sbtStructureOpts) flatMap {
       (state, projectRef, options) =>
         val unit = LoadedBuildUnitAdapter(structure(state).units(projectRef.build))

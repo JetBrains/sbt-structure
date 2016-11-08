@@ -14,7 +14,7 @@ import scala.xml._
 //noinspection LanguageFeature
 private object Helpers {
   class RichFile(file: File) {
-    def path = file.getCanonicalPath.stripSuffix("/").stripSuffix("\\")
+    def path: String = file.getCanonicalPath.stripSuffix("/").stripSuffix("\\")
   }
 
   class RichNode(node: Node) {
@@ -47,7 +47,7 @@ private object Helpers {
   implicit def string2RicherString(string: String): RicherString =
     new RicherString(string)
 
-  def canonUri(uri: URI) =
+  def canonUri(uri: URI): URI =
     (if (uri.getScheme == "file")
       new File(uri).getCanonicalFile.toURI
     else uri).normalize()
@@ -135,10 +135,8 @@ trait DataSerializers {
     override def serialize(what: ScalaData): Elem =
       <scala>
         <version>{what.version}</version>
-        <library>{what.libraryJar.path}</library>
-        <compiler>{what.compilerJar.path}</compiler>
-        {what.extraJars.map { jar =>
-        <extra>{jar.path}</extra>
+        {what.jars.map { jar =>
+        <jar>{jar.path}</jar>
       }}
         {what.options.map { option =>
         <option>{option.canonIfFile}</option>
@@ -146,12 +144,10 @@ trait DataSerializers {
       </scala>
 
     override def deserialize(what: Node): Either[Throwable,ScalaData] = {
-      val version  = (what \ "version").text
-      val library  = (what \ "library").text.file
-      val compiler = (what \ "compiler").text.file
-      val extra    = (what \ "extra").map(e => e.text.file)
-      val options  = (what \ "option").map(o => o.text.canonIfFile)
-      Right(ScalaData(version, library, compiler, extra, options))
+      val version = (what \ "version").text
+      val jars = (what \ "jar").map(e => e.text.file)
+      val options = (what \ "option").map(o => o.text.canonIfFile)
+      Right(ScalaData(version, jars, options))
     }
   }
 

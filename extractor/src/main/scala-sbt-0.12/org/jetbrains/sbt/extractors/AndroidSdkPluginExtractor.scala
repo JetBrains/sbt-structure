@@ -5,9 +5,9 @@ package extractors
 
 import java.io.File
 
-import org.jetbrains.sbt.structure.{Aar, ApkLib, AndroidData, BuildData, ConfigurationData, DependencyData, DirectoryData, ProjectData}
-import sbt._
+import org.jetbrains.sbt.structure.{Aar, AndroidData, ApkLib, BuildData, ConfigurationData, DependencyData, DirectoryData, ProjectData}
 import sbt.Project.Initialize
+import sbt._
 
 
 object AndroidSdkPluginExtractor extends SbtStateOps with TaskOps {
