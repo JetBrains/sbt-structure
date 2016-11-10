@@ -18,7 +18,7 @@ class ImportSpec extends Specification with XmlMatchers {
 
     equalExpectedOneIn("bare", options="resolveClassifiers resolveSbtClassifiers")
     equalExpectedOneIn("simple", options="resolveClassifiers resolveSbtClassifiers")
-    equalExpectedOneIn("multiple")
+    equalExpectedOneIn("multiple", notFor("0.13.12"))
     equalExpectedOneIn("dependency")
     equalExpectedOneIn("classifiers", onlyFor("0.13.0", "0.13.7", "0.13.9", "0.13.13"))
     equalExpectedOneIn("optional", onlyFor("0.13.0", "0.13.7", "0.13.9", "0.13.13"))

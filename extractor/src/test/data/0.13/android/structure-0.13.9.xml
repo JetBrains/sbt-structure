@@ -174,9 +174,12 @@
     </java>
     <scala>
       <version>2.11.1</version>
-      <library>$IVY2/cache/org.scala-lang/scala-library/jars/scala-library-2.11.1.jar</library>
-      <compiler>$IVY2/cache/org.scala-lang/scala-compiler/jars/scala-compiler-2.11.1.jar</compiler>
-      <extra>$IVY2/cache/org.scala-lang/scala-reflect/jars/scala-reflect-2.11.1.jar</extra>
+      <jar>$IVY2/cache/org.scala-lang/scala-library/jars/scala-library-2.11.1.jar</jar>
+      <jar>$IVY2/cache/org.scala-lang/scala-compiler/jars/scala-compiler-2.11.1.jar</jar>
+      <jar>$IVY2/cache/org.scala-lang/scala-reflect/jars/scala-reflect-2.11.1.jar</jar>
+      <jar>$IVY2/cache/org.scala-lang.modules/scala-xml_2.11/bundles/scala-xml_2.11-1.0.2.jar</jar>
+      <jar>$IVY2/cache/org.scala-lang.modules/scala-parser-combinators_2.11/bundles/scala-parser-combinators_2.11-1.0.1.jar</jar>
+      <jar>$IVY2/cache/jline/jline/jars/jline-2.11.jar</jar>
       <option>-bootclasspath</option>
       <option>$ANDROID_HOME/platforms/android-22/android.jar</option>
       <option>-javabootclasspath</option>
@@ -234,8 +237,8 @@
       <jar configurations="compile">$BASE/target/android-bin/classes</jar>
     </dependencies>
     <resolver name="public" root="https://repo1.maven.org/maven2/"/>
-    <resolver name="google libraries" root="$URI_ANDROID_HOME/extras/google/m2repository"/>
-    <resolver name="android libraries" root="$URI_ANDROID_HOME/extras/android/m2repository/"/>
+    <resolver name="google libraries" root="file:$ANDROID_HOME/extras/google/m2repository"/>
+    <resolver name="android libraries" root="file:$ANDROID_HOME/extras/android/m2repository/"/>
   </project>
   <project>
     <id>com.android.support-support-v4-20.0.0</id>
@@ -411,9 +414,12 @@
     </java>
     <scala>
       <version>2.11.1</version>
-      <library>$IVY2/cache/org.scala-lang/scala-library/jars/scala-library-2.11.1.jar</library>
-      <compiler>$IVY2/cache/org.scala-lang/scala-compiler/jars/scala-compiler-2.11.1.jar</compiler>
-      <extra>$IVY2/cache/org.scala-lang/scala-reflect/jars/scala-reflect-2.11.1.jar</extra>
+      <jar>$IVY2/cache/org.scala-lang/scala-library/jars/scala-library-2.11.1.jar</jar>
+      <jar>$IVY2/cache/org.scala-lang/scala-compiler/jars/scala-compiler-2.11.1.jar</jar>
+      <jar>$IVY2/cache/org.scala-lang/scala-reflect/jars/scala-reflect-2.11.1.jar</jar>
+      <jar>$IVY2/cache/org.scala-lang.modules/scala-xml_2.11/bundles/scala-xml_2.11-1.0.2.jar</jar>
+      <jar>$IVY2/cache/org.scala-lang.modules/scala-parser-combinators_2.11/bundles/scala-parser-combinators_2.11-1.0.1.jar</jar>
+      <jar>$IVY2/cache/jline/jline/jars/jline-2.11.jar</jar>
       <option>-bootclasspath</option>
       <option>$ANDROID_HOME/platforms/android-22/android.jar</option>
       <option>-javabootclasspath</option>
@@ -449,8 +455,8 @@
       <jar configurations="compile">$BASE/target/android-bin/classes</jar>
     </dependencies>
     <resolver name="public" root="https://repo1.maven.org/maven2/"/>
-    <resolver name="google libraries" root="$URI_ANDROID_HOME/extras/google/m2repository"/>
-    <resolver name="android libraries" root="$URI_ANDROID_HOME/extras/android/m2repository/"/>
+    <resolver name="google libraries" root="file:$ANDROID_HOME/extras/google/m2repository"/>
+    <resolver name="android libraries" root="file:$ANDROID_HOME/extras/android/m2repository/"/>
   </project>
   <repository>
     <module organization="com.actionbarsherlock" name="actionbarsherlock" revision="4.4.0" artifactType="jar" classifier="">
@@ -471,5 +477,5 @@
       <src>$IVY2/cache/org.scala-lang/scala-library/srcs/scala-library-2.11.1-sources.jar</src>
     </module>
   </repository>
-  <localCachePath>$IVY2</localCachePath>
+  <localCachePath>$HOME/sbt-structure-global/ivy2</localCachePath>
 </structure>

@@ -93,9 +93,9 @@
     </build>
     <scala>
       <version>2.10.1</version>
-      <library>$SBT_BOOT/scala-2.10.1/lib/scala-library.jar</library>
-      <compiler>$SBT_BOOT/scala-2.10.1/lib/scala-compiler.jar</compiler>
-      <extra>$SBT_BOOT/scala-2.10.1/lib/scala-reflect.jar</extra>
+      <jar>$SBT_BOOT/scala-2.10.1/lib/scala-library.jar</jar>
+      <jar>$SBT_BOOT/scala-2.10.1/lib/scala-compiler.jar</jar>
+      <jar>$SBT_BOOT/scala-2.10.1/lib/scala-reflect.jar</jar>
     </scala>
     <configuration id="compile">
       <sources>$BASE/src/main/java</sources>
@@ -212,9 +212,9 @@
     </build>
     <scala>
       <version>2.10.1</version>
-      <library>$SBT_BOOT/scala-2.10.1/lib/scala-library.jar</library>
-      <compiler>$SBT_BOOT/scala-2.10.1/lib/scala-compiler.jar</compiler>
-      <extra>$SBT_BOOT/scala-2.10.1/lib/scala-reflect.jar</extra>
+      <jar>$SBT_BOOT/scala-2.10.1/lib/scala-library.jar</jar>
+      <jar>$SBT_BOOT/scala-2.10.1/lib/scala-compiler.jar</jar>
+      <jar>$SBT_BOOT/scala-2.10.1/lib/scala-reflect.jar</jar>
     </scala>
     <configuration id="compile">
       <sources>$BASE/bar/src/main/java</sources>
@@ -329,8 +329,8 @@
     </build>
     <scala>
       <version>2.9.2</version>
-      <library>$SBT_BOOT/scala-2.9.2/lib/scala-library.jar</library>
-      <compiler>$SBT_BOOT/scala-2.9.2/lib/scala-compiler.jar</compiler>
+      <jar>$SBT_BOOT/scala-2.9.2/lib/scala-library.jar</jar>
+      <jar>$SBT_BOOT/scala-2.9.2/lib/scala-compiler.jar</jar>
     </scala>
     <configuration id="compile">
       <sources>$BASE/foo/src/main/java</sources>

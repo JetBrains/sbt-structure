@@ -197,9 +197,7 @@
       <sources>$IVY2/cache/org.ow2.asm/asm-debug-all/srcs/asm-debug-all-5.0.1-sources.jar</sources>
       <sources>$IVY2/cache/org.ow2.asm/asm-tree/srcs/asm-tree-5.0.3-sources.jar</sources>
       <sources>$IVY2/cache/org.ow2.asm/asm/srcs/asm-5.0.3-sources.jar</sources>
-      <sources>
-        $IVY2/cache/org.scala-lang.modules/scala-parser-combinators_2.11/srcs/scala-parser-combinators_2.11-1.0.4-sources.jar
-      </sources>
+      <sources>$IVY2/cache/org.scala-lang.modules/scala-parser-combinators_2.11/srcs/scala-parser-combinators_2.11-1.0.4-sources.jar</sources>
       <sources>$IVY2/cache/org.scala-lang.modules/scala-pickling_2.10/srcs/scala-pickling_2.10-0.10.1-sources.jar</sources>
       <sources>$IVY2/cache/org.scala-lang.modules/scala-xml_2.11/srcs/scala-xml_2.11-1.0.4-sources.jar</sources>
       <sources>$IVY2/cache/org.scala-lang/scala-compiler/srcs/scala-compiler-2.11.8-sources.jar</sources>
@@ -256,9 +254,12 @@
     </java>
     <scala>
       <version>2.11.8</version>
-      <library>$IVY2/cache/org.scala-lang/scala-library/jars/scala-library-2.11.8.jar</library>
-      <compiler>$IVY2/cache/org.scala-lang/scala-compiler/jars/scala-compiler-2.11.8.jar</compiler>
-      <extra>$IVY2/cache/org.scala-lang/scala-reflect/jars/scala-reflect-2.11.8.jar</extra>
+      <jar>$IVY2/cache/org.scala-lang/scala-library/jars/scala-library-2.11.8.jar</jar>
+      <jar>$IVY2/cache/org.scala-lang/scala-compiler/jars/scala-compiler-2.11.8.jar</jar>
+      <jar>$IVY2/cache/org.scala-lang/scala-reflect/jars/scala-reflect-2.11.8.jar</jar>
+      <jar>$IVY2/cache/org.scala-lang.modules/scala-xml_2.11/bundles/scala-xml_2.11-1.0.4.jar</jar>
+      <jar>$IVY2/cache/org.scala-lang.modules/scala-parser-combinators_2.11/bundles/scala-parser-combinators_2.11-1.0.4.jar</jar>
+      <jar>$IVY2/cache/jline/jline/jars/jline-2.12.1.jar</jar>
       <option>-bootclasspath</option>
       <option>$ANDROID_HOME/platforms/android-22/android.jar</option>
       <option>-javabootclasspath</option>
@@ -291,8 +292,8 @@
       <jar configurations="compile">$HOME/.android/sbt/exploded-aars/com.android.support-support-v4-23.1.1/libs/internal_impl-23.1.1.jar</jar>
     </dependencies>
     <resolver name="public" root="https://repo1.maven.org/maven2/"/>
-    <resolver name="google libraries" root="$URI_ANDROID_HOME/extras/google/m2repository"/>
-    <resolver name="android libraries" root="$URI_ANDROID_HOME/extras/android/m2repository/"/>
+    <resolver name="google libraries" root="file:$ANDROID_HOME/extras/google/m2repository"/>
+    <resolver name="android libraries" root="file:$ANDROID_HOME/extras/android/m2repository/"/>
   </project>
   <project>
     <id>com.android.support-support-v4-23.1.1</id>
@@ -491,9 +492,7 @@
       <sources>$IVY2/cache/org.ow2.asm/asm-debug-all/srcs/asm-debug-all-5.0.1-sources.jar</sources>
       <sources>$IVY2/cache/org.ow2.asm/asm-tree/srcs/asm-tree-5.0.3-sources.jar</sources>
       <sources>$IVY2/cache/org.ow2.asm/asm/srcs/asm-5.0.3-sources.jar</sources>
-      <sources>
-        $IVY2/cache/org.scala-lang.modules/scala-parser-combinators_2.11/srcs/scala-parser-combinators_2.11-1.0.4-sources.jar
-      </sources>
+      <sources>$IVY2/cache/org.scala-lang.modules/scala-parser-combinators_2.11/srcs/scala-parser-combinators_2.11-1.0.4-sources.jar</sources>
       <sources>$IVY2/cache/org.scala-lang.modules/scala-pickling_2.10/srcs/scala-pickling_2.10-0.10.1-sources.jar</sources>
       <sources>$IVY2/cache/org.scala-lang.modules/scala-xml_2.11/srcs/scala-xml_2.11-1.0.4-sources.jar</sources>
       <sources>$IVY2/cache/org.scala-lang/scala-compiler/srcs/scala-compiler-2.11.8-sources.jar</sources>
@@ -550,9 +549,12 @@
     </java>
     <scala>
       <version>2.11.8</version>
-      <library>$IVY2/cache/org.scala-lang/scala-library/jars/scala-library-2.11.8.jar</library>
-      <compiler>$IVY2/cache/org.scala-lang/scala-compiler/jars/scala-compiler-2.11.8.jar</compiler>
-      <extra>$IVY2/cache/org.scala-lang/scala-reflect/jars/scala-reflect-2.11.8.jar</extra>
+      <jar>$IVY2/cache/org.scala-lang/scala-library/jars/scala-library-2.11.8.jar</jar>
+      <jar>$IVY2/cache/org.scala-lang/scala-compiler/jars/scala-compiler-2.11.8.jar</jar>
+      <jar>$IVY2/cache/org.scala-lang/scala-reflect/jars/scala-reflect-2.11.8.jar</jar>
+      <jar>$IVY2/cache/org.scala-lang.modules/scala-xml_2.11/bundles/scala-xml_2.11-1.0.4.jar</jar>
+      <jar>$IVY2/cache/org.scala-lang.modules/scala-parser-combinators_2.11/bundles/scala-parser-combinators_2.11-1.0.4.jar</jar>
+      <jar>$IVY2/cache/jline/jline/jars/jline-2.12.1.jar</jar>
       <option>-bootclasspath</option>
       <option>$ANDROID_HOME/platforms/android-22/android.jar</option>
       <option>-javabootclasspath</option>
@@ -585,8 +587,8 @@
       <jar configurations="compile">$HOME/.android/sbt/exploded-aars/com.android.support-support-v4-23.1.1/libs/internal_impl-23.1.1.jar</jar>
     </dependencies>
     <resolver name="public" root="https://repo1.maven.org/maven2/"/>
-    <resolver name="google libraries" root="$URI_ANDROID_HOME/extras/google/m2repository"/>
-    <resolver name="android libraries" root="$URI_ANDROID_HOME/extras/android/m2repository/"/>
+    <resolver name="google libraries" root="file:$ANDROID_HOME/extras/google/m2repository"/>
+    <resolver name="android libraries" root="file:$ANDROID_HOME/extras/android/m2repository/"/>
   </project>
   <project>
     <id>android-1-6</id>
@@ -785,9 +787,7 @@
       <sources>$IVY2/cache/org.ow2.asm/asm-debug-all/srcs/asm-debug-all-5.0.1-sources.jar</sources>
       <sources>$IVY2/cache/org.ow2.asm/asm-tree/srcs/asm-tree-5.0.3-sources.jar</sources>
       <sources>$IVY2/cache/org.ow2.asm/asm/srcs/asm-5.0.3-sources.jar</sources>
-      <sources>
-        $IVY2/cache/org.scala-lang.modules/scala-parser-combinators_2.11/srcs/scala-parser-combinators_2.11-1.0.4-sources.jar
-      </sources>
+      <sources>$IVY2/cache/org.scala-lang.modules/scala-parser-combinators_2.11/srcs/scala-parser-combinators_2.11-1.0.4-sources.jar</sources>
       <sources>$IVY2/cache/org.scala-lang.modules/scala-pickling_2.10/srcs/scala-pickling_2.10-0.10.1-sources.jar</sources>
       <sources>$IVY2/cache/org.scala-lang.modules/scala-xml_2.11/srcs/scala-xml_2.11-1.0.4-sources.jar</sources>
       <sources>$IVY2/cache/org.scala-lang/scala-compiler/srcs/scala-compiler-2.11.8-sources.jar</sources>
@@ -844,9 +844,12 @@
     </java>
     <scala>
       <version>2.11.8</version>
-      <library>$IVY2/cache/org.scala-lang/scala-library/jars/scala-library-2.11.8.jar</library>
-      <compiler>$IVY2/cache/org.scala-lang/scala-compiler/jars/scala-compiler-2.11.8.jar</compiler>
-      <extra>$IVY2/cache/org.scala-lang/scala-reflect/jars/scala-reflect-2.11.8.jar</extra>
+      <jar>$IVY2/cache/org.scala-lang/scala-library/jars/scala-library-2.11.8.jar</jar>
+      <jar>$IVY2/cache/org.scala-lang/scala-compiler/jars/scala-compiler-2.11.8.jar</jar>
+      <jar>$IVY2/cache/org.scala-lang/scala-reflect/jars/scala-reflect-2.11.8.jar</jar>
+      <jar>$IVY2/cache/org.scala-lang.modules/scala-xml_2.11/bundles/scala-xml_2.11-1.0.4.jar</jar>
+      <jar>$IVY2/cache/org.scala-lang.modules/scala-parser-combinators_2.11/bundles/scala-parser-combinators_2.11-1.0.4.jar</jar>
+      <jar>$IVY2/cache/jline/jline/jars/jline-2.12.1.jar</jar>
       <option>-bootclasspath</option>
       <option>$ANDROID_HOME/platforms/android-22/android.jar</option>
       <option>-javabootclasspath</option>
@@ -895,8 +898,8 @@
       <jar configurations="compile">$HOME/.android/sbt/exploded-aars/com.android.support-support-v4-23.1.1/libs/internal_impl-23.1.1.jar</jar>
     </dependencies>
     <resolver name="public" root="https://repo1.maven.org/maven2/"/>
-    <resolver name="google libraries" root="$URI_ANDROID_HOME/extras/google/m2repository"/>
-    <resolver name="android libraries" root="$URI_ANDROID_HOME/extras/android/m2repository/"/>
+    <resolver name="google libraries" root="file:$ANDROID_HOME/extras/google/m2repository"/>
+    <resolver name="android libraries" root="file:$ANDROID_HOME/extras/android/m2repository/"/>
   </project>
   <repository>
     <module organization="ch.acra" name="acra" revision="4.8.2" artifactType="jar" classifier="">
@@ -933,5 +936,5 @@
       <src>$IVY2/cache/org.scala-lang/scala-library/srcs/scala-library-2.11.8-sources.jar</src>
     </module>
   </repository>
-  <localCachePath>$IVY2</localCachePath>
+  <localCachePath>$HOME/sbt-structure-global/ivy2</localCachePath>
 </structure>

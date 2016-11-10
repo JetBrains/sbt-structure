@@ -123,9 +123,11 @@
     </java>
     <scala>
       <version>2.10.1</version>
-      <library>$IVY2/cache/org.scala-lang/scala-library/jars/scala-library-2.10.1.jar</library>
-      <compiler>$IVY2/cache/org.scala-lang/scala-compiler/jars/scala-compiler-2.10.1.jar</compiler>
-      <extra>$IVY2/cache/org.scala-lang/scala-reflect/jars/scala-reflect-2.10.1.jar</extra>
+      <jar>$IVY2/cache/org.scala-lang/scala-library/jars/scala-library-2.10.1.jar</jar>
+      <jar>$IVY2/cache/org.scala-lang/scala-compiler/jars/scala-compiler-2.10.1.jar</jar>
+      <jar>$IVY2/cache/org.scala-lang/scala-reflect/jars/scala-reflect-2.10.1.jar</jar>
+      <jar>$IVY2/cache/org.scala-lang/jline/jars/jline-2.10.1.jar</jar>
+      <jar>$IVY2/cache/org.fusesource.jansi/jansi/jars/jansi-1.4.jar</jar>
       <option>-s1</option>
       <option>-s2</option>
     </scala>
@@ -158,5 +160,5 @@
       <src>$IVY2/cache/org.scala-lang/scala-library/srcs/scala-library-2.10.1-sources.jar</src>
     </module>
   </repository>
-  <localCachePath>$IVY2</localCachePath>
+  <localCachePath>$HOME/sbt-structure-global/ivy2</localCachePath>
 </structure>

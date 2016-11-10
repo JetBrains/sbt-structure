@@ -5,8 +5,8 @@
     <name>my-first-app</name>
     <organization>my-first-app</organization>
     <version>1.0.0-SNAPSHOT</version>
-    <base>/Users/jast/workspace/sbt-structure/extractor/src/test/data/0.13/play</base>
-    <target>/Users/jast/workspace/sbt-structure/extractor/src/test/data/0.13/play/target</target>
+    <base>$BASE</base>
+    <target>$BASE/target</target>
     <build>
       <import>import _root_.com.typesafe.sbteclipse.plugin.EclipsePlugin._, _root_.org.sbtidea.SbtIdeaPlugin._, _root_.com.typesafe.sbt.SbtNativePackager._, MyBuild._</import>
       <import>
@@ -16,355 +16,184 @@
         import _root_.sbt.plugins.IvyPlugin, _root_.sbt.plugins.JvmPlugin, _root_.sbt.plugins.CorePlugin, _root_.sbt.plugins.JUnitXmlReportPlugin, _root_.sbt.plugins.Giter8TemplatePlugin, _root_.play.Play, _root_.play.PlayJava, _root_.play.PlayScala, _root_.play.twirl.sbt.SbtTwirl, _root_.com.typesafe.sbt.jse.SbtJsEngine, _root_.com.typesafe.sbt.jse.SbtJsTask, _root_.com.typesafe.sbt.web.SbtWeb, _root_.com.typesafe.sbt.webdriver.SbtWebDriver
       </import>
       <import>import sbt._, Keys._, dsl._</import>
-      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/lib/jansi.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/lib/jline.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/lib/scala-compiler.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/lib/scala-library.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/lib/scala-reflect.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/actions-0.13.13.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/api-0.13.13.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/apply-macro-0.13.13.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/cache-0.13.13.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/classfile-0.13.13.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/classpath-0.13.13.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/collections-0.13.13.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/command-0.13.13.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/compile-0.13.13.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/compiler-integration-0.13.13.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/compiler-interface-0.13.13.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/compiler-ivy-integration-0.13.13.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/completion-0.13.13.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/control-0.13.13.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/cross-0.13.13.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/incremental-compiler-0.13.13.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/io-0.13.13.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/ivy-0.13.13.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/ivy-2.3.0-sbt-2cf13e211b2cb31f0d3b317289dca70eca3362f6.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/jansi-1.11.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/jawn-parser_2.10-0.6.0.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/jline-2.13.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/jsch-0.1.50.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/json4s-ast_2.10-3.2.10.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/json4s-core_2.10-3.2.10.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/json4s-support_2.10-0.6.0.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/launcher-interface-1.0.0-M1.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/logging-0.13.13.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/logic-0.13.13.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/main-0.13.13.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/main-settings-0.13.13.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/paranamer-2.6.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/persist-0.13.13.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/process-0.13.13.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/quasiquotes_2.10-2.0.1.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/relation-0.13.13.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/run-0.13.13.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/sbinary_2.10-0.4.2.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/sbt-0.13.13.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/scala-pickling_2.10-0.10.1.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/scala-reflect-2.10.6.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/serialization_2.10-0.1.2.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/task-system-0.13.13.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/tasks-0.13.13.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/template-resolver-0.1.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/test-agent-0.13.13.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/test-interface-1.0.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/testing-0.13.13.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/tracking-0.13.13.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/boot/scala-2.10.6/org.scala-sbt/sbt/0.13.13/xsbti/interface-0.13.13.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/ivy2/cache/aopalliance/aopalliance/jars/aopalliance-1.0.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/ivy2/cache/com.fasterxml.jackson.core/jackson-annotations/bundles/jackson-annotations-2.3.0.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/ivy2/cache/com.fasterxml.jackson.core/jackson-core/bundles/jackson-core-2.3.3.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/ivy2/cache/com.fasterxml.jackson.core/jackson-databind/bundles/jackson-databind-2.3.3.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/ivy2/cache/com.google.guava/guava/bundles/guava-16.0.1.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/ivy2/cache/com.google.javascript/closure-compiler/jars/closure-compiler-v20130603.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/ivy2/cache/com.google.protobuf/protobuf-java/bundles/protobuf-java-2.5.0.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/ivy2/cache/com.h2database/h2/jars/h2-1.3.175.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/ivy2/cache/com.typesafe.akka/akka-actor_2.10/jars/akka-actor_2.10-2.3.2.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/ivy2/cache/com.typesafe.akka/akka-cluster_2.10/jars/akka-cluster_2.10-2.3.2.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/ivy2/cache/com.typesafe.akka/akka-contrib_2.10/jars/akka-contrib_2.10-2.3.2.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/ivy2/cache/com.typesafe.akka/akka-persistence-experimental_2.10/jars/akka-persistence-experimental_2.10-2.3.2.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/ivy2/cache/com.typesafe.akka/akka-remote_2.10/jars/akka-remote_2.10-2.3.2.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/ivy2/cache/com.typesafe.play/build-link/jars/build-link-2.3.7.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/ivy2/cache/com.typesafe.play/play-exceptions/jars/play-exceptions-2.3.7.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/ivy2/cache/com.typesafe.play/routes-compiler_2.10/jars/routes-compiler_2.10-2.3.7.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/ivy2/cache/com.typesafe.play/sbt-run-support_2.10/jars/sbt-run-support_2.10-2.3.7.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/ivy2/cache/com.typesafe.play/twirl-api_2.10/jars/twirl-api_2.10-1.0.2.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/ivy2/cache/com.typesafe.play/twirl-compiler_2.10/jars/twirl-compiler_2.10-1.0.2.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/ivy2/cache/com.typesafe.play/twirl-parser_2.10/jars/twirl-parser_2.10-1.0.2.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/ivy2/cache/com.typesafe/config/bundles/config-1.2.1.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/ivy2/cache/com.typesafe/jse_2.10/jars/jse_2.10-1.0.0.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/ivy2/cache/com.typesafe/npm_2.10/jars/npm_2.10-1.0.0.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/ivy2/cache/com.typesafe/webdriver_2.10/jars/webdriver_2.10-1.0.0.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/ivy2/cache/commons-codec/commons-codec/jars/commons-codec-1.9.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/ivy2/cache/commons-collections/commons-collections/jars/commons-collections-3.2.1.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/ivy2/cache/commons-io/commons-io/jars/commons-io-2.4.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/ivy2/cache/commons-logging/commons-logging/jars/commons-logging-1.1.3.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/ivy2/cache/io.apigee.trireme/trireme-core/jars/trireme-core-0.7.5.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/ivy2/cache/io.apigee.trireme/trireme-node10src/jars/trireme-node10src-0.7.5.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/ivy2/cache/io.netty/netty/bundles/netty-3.8.0.Final.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/ivy2/cache/io.spray/spray-can/bundles/spray-can-1.3.1.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/ivy2/cache/io.spray/spray-client/bundles/spray-client-1.3.1.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/ivy2/cache/io.spray/spray-http/bundles/spray-http-1.3.1.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/ivy2/cache/io.spray/spray-httpx/bundles/spray-httpx-1.3.1.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/ivy2/cache/io.spray/spray-io/bundles/spray-io-1.3.1.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/ivy2/cache/io.spray/spray-json_2.10/bundles/spray-json_2.10-1.2.6.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/ivy2/cache/io.spray/spray-util/bundles/spray-util-1.3.1.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/ivy2/cache/javax.annotation/jsr250-api/jars/jsr250-api-1.0.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/ivy2/cache/javax.enterprise/cdi-api/jars/cdi-api-1.0.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/ivy2/cache/javax.inject/javax.inject/jars/javax.inject-1.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/ivy2/cache/net.contentobjects.jnotify/jnotify/jars/jnotify-0.94.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/ivy2/cache/net.sourceforge.cssparser/cssparser/jars/cssparser-0.9.13.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/ivy2/cache/net.sourceforge.htmlunit/htmlunit-core-js/jars/htmlunit-core-js-2.14.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/ivy2/cache/net.sourceforge.htmlunit/htmlunit/jars/htmlunit-2.14.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/ivy2/cache/net.sourceforge.nekohtml/nekohtml/jars/nekohtml-1.9.20.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/ivy2/cache/org.apache.ant/ant-launcher/jars/ant-launcher-1.9.3.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/ivy2/cache/org.apache.ant/ant/jars/ant-1.9.3.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/ivy2/cache/org.apache.commons/commons-compress/jars/commons-compress-1.7.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/ivy2/cache/org.apache.commons/commons-lang3/jars/commons-lang3-3.2.1.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/ivy2/cache/org.apache.httpcomponents/httpclient/jars/httpclient-4.3.2.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/ivy2/cache/org.apache.httpcomponents/httpcore/jars/httpcore-4.3.1.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/ivy2/cache/org.apache.httpcomponents/httpmime/jars/httpmime-4.3.2.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/ivy2/cache/org.apache.maven/maven-aether-provider/jars/maven-aether-provider-3.2.2.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/ivy2/cache/org.apache.maven/maven-artifact/jars/maven-artifact-3.2.2.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/ivy2/cache/org.apache.maven/maven-core/jars/maven-core-3.2.2.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/ivy2/cache/org.apache.maven/maven-model-builder/jars/maven-model-builder-3.2.2.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/ivy2/cache/org.apache.maven/maven-model/jars/maven-model-3.2.2.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/ivy2/cache/org.apache.maven/maven-plugin-api/jars/maven-plugin-api-3.2.2.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/ivy2/cache/org.apache.maven/maven-repository-metadata/jars/maven-repository-metadata-3.2.2.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/ivy2/cache/org.apache.maven/maven-settings-builder/jars/maven-settings-builder-3.2.2.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/ivy2/cache/org.apache.maven/maven-settings/jars/maven-settings-3.2.2.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/ivy2/cache/org.avaje.ebeanorm/avaje-ebeanorm-agent/jars/avaje-ebeanorm-agent-3.2.2.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/ivy2/cache/org.bouncycastle/bcpg-jdk15on/jars/bcpg-jdk15on-1.51.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/ivy2/cache/org.bouncycastle/bcprov-jdk15on/jars/bcprov-jdk15on-1.51.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/ivy2/cache/org.codehaus.plexus/plexus-classworlds/bundles/plexus-classworlds-2.5.1.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/ivy2/cache/org.codehaus.plexus/plexus-component-annotations/jars/plexus-component-annotations-1.5.5.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/ivy2/cache/org.codehaus.plexus/plexus-interpolation/jars/plexus-interpolation-1.19.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/ivy2/cache/org.codehaus.plexus/plexus-utils/jars/plexus-utils-3.0.17.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/ivy2/cache/org.eclipse.aether/aether-api/jars/aether-api-0.9.0.M2.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/ivy2/cache/org.eclipse.aether/aether-impl/jars/aether-impl-0.9.0.M2.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/ivy2/cache/org.eclipse.aether/aether-spi/jars/aether-spi-0.9.0.M2.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/ivy2/cache/org.eclipse.aether/aether-util/jars/aether-util-0.9.0.M2.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/ivy2/cache/org.eclipse.jetty/jetty-http/jars/jetty-http-8.1.14.v20131031.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/ivy2/cache/org.eclipse.jetty/jetty-io/jars/jetty-io-8.1.14.v20131031.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/ivy2/cache/org.eclipse.jetty/jetty-util/jars/jetty-util-8.1.14.v20131031.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/ivy2/cache/org.eclipse.jetty/jetty-websocket/jars/jetty-websocket-8.1.14.v20131031.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/ivy2/cache/org.eclipse.sisu/org.eclipse.sisu.inject/eclipse-plugins/org.eclipse.sisu.inject-0.0.0.M5.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/ivy2/cache/org.eclipse.sisu/org.eclipse.sisu.plexus/eclipse-plugins/org.eclipse.sisu.plexus-0.0.0.M5.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/ivy2/cache/org.fusesource.hawtjni/hawtjni-runtime/jars/hawtjni-runtime-1.8.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/ivy2/cache/org.fusesource.leveldbjni/leveldbjni-all/bundles/leveldbjni-all-1.7.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/ivy2/cache/org.fusesource.leveldbjni/leveldbjni-linux32/jars/leveldbjni-linux32-1.5.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/ivy2/cache/org.fusesource.leveldbjni/leveldbjni-linux64/jars/leveldbjni-linux64-1.5.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/ivy2/cache/org.fusesource.leveldbjni/leveldbjni-osx/jars/leveldbjni-osx-1.5.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/ivy2/cache/org.fusesource.leveldbjni/leveldbjni-win32/jars/leveldbjni-win32-1.5.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/ivy2/cache/org.fusesource.leveldbjni/leveldbjni-win64/jars/leveldbjni-win64-1.5.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/ivy2/cache/org.fusesource.leveldbjni/leveldbjni/jars/leveldbjni-1.7.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/ivy2/cache/org.iq80.leveldb/leveldb-api/jars/leveldb-api-0.5.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/ivy2/cache/org.iq80.leveldb/leveldb/jars/leveldb-0.5.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/ivy2/cache/org.javassist/javassist/bundles/javassist-3.18.2-GA.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/ivy2/cache/org.json/json/jars/json-20090211.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/ivy2/cache/org.jvnet.mimepull/mimepull/jars/mimepull-1.9.4.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/ivy2/cache/org.mozilla/rhino/jars/rhino-1.7R4.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/ivy2/cache/org.parboiled/parboiled-core/bundles/parboiled-core-1.1.6.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/ivy2/cache/org.parboiled/parboiled-scala_2.10/bundles/parboiled-scala_2.10-1.1.6.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/control/jars/control-0.13.5.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/io/jars/io-0.13.5.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/ivy2/cache/org.scalaz/scalaz-core_2.10/bundles/scalaz-core_2.10-7.0.2.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/ivy2/cache/org.scalaz/scalaz-effect_2.10/bundles/scalaz-effect_2.10-7.0.2.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/ivy2/cache/org.slf4j/slf4j-api/jars/slf4j-api-1.7.7.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/ivy2/cache/org.slf4j/slf4j-simple/jars/slf4j-simple-1.7.7.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/ivy2/cache/org.sonatype.plexus/plexus-cipher/jars/plexus-cipher-1.4.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/ivy2/cache/org.sonatype.plexus/plexus-sec-dispatcher/jars/plexus-sec-dispatcher-1.3.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/ivy2/cache/org.sonatype.sisu/sisu-guice/jars/sisu-guice-3.1.0-no_aop.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/ivy2/cache/org.tukaani/xz/jars/xz-1.4.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/ivy2/cache/org.uncommons.maths/uncommons-maths/jars/uncommons-maths-1.2.2a.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/ivy2/cache/org.vafer/jdeb/jars/jdeb-1.3.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/ivy2/cache/org.w3c.css/sac/jars/sac-1.3.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/ivy2/cache/org.webjars/npm/jars/npm-1.3.26.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/ivy2/cache/org.webjars/webjars-locator/jars/webjars-locator-0.14.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/ivy2/cache/scala_2.10/sbt_0.13/com.github.mpeltonen/sbt-idea/jars/sbt-idea-1.5.1.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/ivy2/cache/scala_2.10/sbt_0.13/com.typesafe.play/sbt-plugin/jars/sbt-plugin-2.3.7.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/ivy2/cache/scala_2.10/sbt_0.13/com.typesafe.sbt/sbt-js-engine/jars/sbt-js-engine-1.0.1.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/ivy2/cache/scala_2.10/sbt_0.13/com.typesafe.sbt/sbt-native-packager/jars/sbt-native-packager-0.7.4.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/ivy2/cache/scala_2.10/sbt_0.13/com.typesafe.sbt/sbt-twirl/jars/sbt-twirl-1.0.2.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/ivy2/cache/scala_2.10/sbt_0.13/com.typesafe.sbt/sbt-web/jars/sbt-web-1.0.2.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/ivy2/cache/scala_2.10/sbt_0.13/com.typesafe.sbt/sbt-webdriver/jars/sbt-webdriver-1.0.0.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/ivy2/cache/scala_2.10/sbt_0.13/com.typesafe.sbteclipse/sbteclipse-core/jars/sbteclipse-core-2.4.0.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/ivy2/cache/scala_2.10/sbt_0.13/com.typesafe.sbteclipse/sbteclipse-plugin/jars/sbteclipse-plugin-2.4.0.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/ivy2/cache/xalan/serializer/jars/serializer-2.7.1.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/ivy2/cache/xalan/xalan/jars/xalan-2.7.1.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/ivy2/cache/xerces/xercesImpl/jars/xercesImpl-2.11.0.jar</classes>
-      <classes>/Users/jast/sbt-structure-global/ivy2/cache/xml-apis/xml-apis/jars/xml-apis-1.4.01.jar</classes>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/aopalliance/aopalliance/srcs/aopalliance-1.0-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/args4j/args4j/srcs/args4j-2.0.16-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/asm/asm/srcs/asm-3.1-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/com.fasterxml.jackson.core/jackson-annotations/srcs/jackson-annotations-2.3.0-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/com.fasterxml.jackson.core/jackson-core/srcs/jackson-core-2.3.3-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/com.fasterxml.jackson.core/jackson-databind/srcs/jackson-databind-2.3.3-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/com.google.guava/guava/srcs/guava-16.0.1-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/com.google.inject/guice/srcs/guice-3.0-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/com.google.javascript/closure-compiler/srcs/closure-compiler-v20130603-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/com.google.protobuf/protobuf-java/srcs/protobuf-java-2.5.0-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/com.h2database/h2/srcs/h2-1.3.175-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/com.jcraft/jsch/srcs/jsch-0.1.50-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/com.thoughtworks.paranamer/paranamer/srcs/paranamer-2.6-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/com.typesafe.akka/akka-actor_2.10/srcs/akka-actor_2.10-2.3.2-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/com.typesafe.akka/akka-cluster_2.10/srcs/akka-cluster_2.10-2.3.2-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/com.typesafe.akka/akka-contrib_2.10/srcs/akka-contrib_2.10-2.3.2-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/com.typesafe.akka/akka-persistence-experimental_2.10/srcs/akka-persistence-experimental_2.10-2.3.2-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/com.typesafe.akka/akka-remote_2.10/srcs/akka-remote_2.10-2.3.2-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/com.typesafe.play/build-link/srcs/build-link-2.3.7-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/com.typesafe.play/play-exceptions/srcs/play-exceptions-2.3.7-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/com.typesafe.play/routes-compiler_2.10/srcs/routes-compiler_2.10-2.3.7-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/com.typesafe.play/sbt-run-support_2.10/srcs/sbt-run-support_2.10-2.3.7-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/com.typesafe.play/twirl-api_2.10/srcs/twirl-api_2.10-1.0.2-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/com.typesafe.play/twirl-compiler_2.10/srcs/twirl-compiler_2.10-1.0.2-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/com.typesafe.play/twirl-parser_2.10/srcs/twirl-parser_2.10-1.0.2-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/com.typesafe/config/srcs/config-1.2.1-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/com.typesafe/jse_2.10/srcs/jse_2.10-1.0.0-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/com.typesafe/npm_2.10/srcs/npm_2.10-1.0.0-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/com.typesafe/webdriver_2.10/srcs/webdriver_2.10-1.0.0-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/commons-codec/commons-codec/srcs/commons-codec-1.9-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/commons-collections/commons-collections/srcs/commons-collections-3.2.1-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/commons-io/commons-io/srcs/commons-io-2.4-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/commons-logging/commons-logging/srcs/commons-logging-1.1.3-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/io.apigee.trireme/trireme-core/srcs/trireme-core-0.7.5-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/io.apigee.trireme/trireme-node10src/srcs/trireme-node10src-0.7.5-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/io.netty/netty/srcs/netty-3.8.0.Final-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/io.spray/spray-can/srcs/spray-can-1.3.1-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/io.spray/spray-client/srcs/spray-client-1.3.1-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/io.spray/spray-http/srcs/spray-http-1.3.1-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/io.spray/spray-httpx/srcs/spray-httpx-1.3.1-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/io.spray/spray-io/srcs/spray-io-1.3.1-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/io.spray/spray-json_2.10/srcs/spray-json_2.10-1.2.6-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/io.spray/spray-util/srcs/spray-util-1.3.1-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/javax.annotation/jsr250-api/srcs/jsr250-api-1.0-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/javax.enterprise/cdi-api/srcs/cdi-api-1.0-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/javax.inject/javax.inject/srcs/javax.inject-1-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/jfree/jcommon/srcs/jcommon-1.0.12-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/jfree/jfreechart/srcs/jfreechart-1.0.8a-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/jline/jline/srcs/jline-2.13-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/net.contentobjects.jnotify/jnotify/srcs/jnotify-0.94-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/net.sourceforge.cssparser/cssparser/srcs/cssparser-0.9.13-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/net.sourceforge.htmlunit/htmlunit-core-js/srcs/htmlunit-core-js-2.14-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/net.sourceforge.htmlunit/htmlunit/srcs/htmlunit-2.14-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/net.sourceforge.nekohtml/nekohtml/srcs/nekohtml-1.9.20-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.apache.ant/ant-launcher/srcs/ant-launcher-1.9.3-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.apache.ant/ant/srcs/ant-1.9.3-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.apache.commons/commons-compress/srcs/commons-compress-1.7-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.apache.commons/commons-lang3/srcs/commons-lang3-3.2.1-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.apache.httpcomponents/httpclient/srcs/httpclient-4.3.2-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.apache.httpcomponents/httpcore/srcs/httpcore-4.3.1-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.apache.httpcomponents/httpmime/srcs/httpmime-4.3.2-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.apache.maven/maven-aether-provider/srcs/maven-aether-provider-3.2.2-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.apache.maven/maven-artifact/srcs/maven-artifact-3.2.2-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.apache.maven/maven-core/srcs/maven-core-3.2.2-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.apache.maven/maven-model-builder/srcs/maven-model-builder-3.2.2-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.apache.maven/maven-model/srcs/maven-model-3.2.2-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.apache.maven/maven-plugin-api/srcs/maven-plugin-api-3.2.2-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.apache.maven/maven-repository-metadata/srcs/maven-repository-metadata-3.2.2-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.apache.maven/maven-settings-builder/srcs/maven-settings-builder-3.2.2-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.apache.maven/maven-settings/srcs/maven-settings-3.2.2-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.avaje.ebeanorm/avaje-ebeanorm-agent/srcs/avaje-ebeanorm-agent-3.2.2-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.bouncycastle/bcpg-jdk15on/srcs/bcpg-jdk15on-1.51-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.bouncycastle/bcprov-jdk15on/srcs/bcprov-jdk15on-1.51-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.codehaus.plexus/plexus-classworlds/srcs/plexus-classworlds-2.5.1-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.codehaus.plexus/plexus-component-annotations/srcs/plexus-component-annotations-1.5.5-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.codehaus.plexus/plexus-interpolation/srcs/plexus-interpolation-1.19-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.codehaus.plexus/plexus-utils/srcs/plexus-utils-3.0.17-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.eclipse.aether/aether-api/srcs/aether-api-0.9.0.M2-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.eclipse.aether/aether-impl/srcs/aether-impl-0.9.0.M2-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.eclipse.aether/aether-spi/srcs/aether-spi-0.9.0.M2-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.eclipse.aether/aether-util/srcs/aether-util-0.9.0.M2-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.eclipse.jetty/jetty-http/srcs/jetty-http-8.1.14.v20131031-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.eclipse.jetty/jetty-io/srcs/jetty-io-8.1.14.v20131031-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.eclipse.jetty/jetty-util/srcs/jetty-util-8.1.14.v20131031-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.eclipse.jetty/jetty-websocket/srcs/jetty-websocket-8.1.14.v20131031-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.eclipse.sisu/org.eclipse.sisu.inject/srcs/org.eclipse.sisu.inject-0.0.0.M5-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.eclipse.sisu/org.eclipse.sisu.plexus/srcs/org.eclipse.sisu.plexus-0.0.0.M5-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.fusesource.hawtjni/hawtjni-runtime/srcs/hawtjni-runtime-1.8-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.fusesource.jansi/jansi/srcs/jansi-1.11-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.fusesource.leveldbjni/leveldbjni-all/srcs/leveldbjni-all-1.7-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.fusesource.leveldbjni/leveldbjni/srcs/leveldbjni-1.7-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.iq80.leveldb/leveldb-api/srcs/leveldb-api-0.5-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.iq80.leveldb/leveldb/srcs/leveldb-0.5-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.javassist/javassist/srcs/javassist-3.18.2-GA-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.jboss.interceptor/jboss-interceptor-api/srcs/jboss-interceptor-api-1.1-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.json4s/json4s-ast_2.10/srcs/json4s-ast_2.10-3.2.10-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.json4s/json4s-core_2.10/srcs/json4s-core_2.10-3.2.10-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.jvnet.mimepull/mimepull/srcs/mimepull-1.9.4-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.mozilla/rhino/srcs/rhino-1.7R4-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.parboiled/parboiled-core/srcs/parboiled-core-1.1.6-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.parboiled/parboiled-scala_2.10/srcs/parboiled-scala_2.10-1.1.6-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-lang.modules/scala-pickling_2.10/srcs/scala-pickling_2.10-0.10.1-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-lang/scala-compiler/srcs/scala-compiler-2.10.6-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-lang/scala-library/srcs/scala-library-2.10.6-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-lang/scala-reflect/srcs/scala-reflect-2.10.6-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt.ivy/ivy/srcs/ivy-2.3.0-sbt-2cf13e211b2cb31f0d3b317289dca70eca3362f6-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/actions/srcs/actions-0.13.13-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/api/srcs/api-0.13.13-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/apply-macro/srcs/apply-macro-0.13.13-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/cache/srcs/cache-0.13.13-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/classfile/srcs/classfile-0.13.13-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/classpath/srcs/classpath-0.13.13-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/collections/srcs/collections-0.13.13-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/command/srcs/command-0.13.13-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/compile/srcs/compile-0.13.13-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/compiler-integration/srcs/compiler-integration-0.13.13-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/compiler-interface/srcs/compiler-interface-0.13.13-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/compiler-ivy-integration/srcs/compiler-ivy-integration-0.13.13-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/completion/srcs/completion-0.13.13-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/control/srcs/control-0.13.13-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/cross/srcs/cross-0.13.13-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/incremental-compiler/srcs/incremental-compiler-0.13.13-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/interface/srcs/interface-0.13.13-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/io/srcs/io-0.13.13-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/ivy/srcs/ivy-0.13.13-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/launcher-interface/srcs/launcher-interface-1.0.0-M1-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/logging/srcs/logging-0.13.13-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/logic/srcs/logic-0.13.13-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/main-settings/srcs/main-settings-0.13.13-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/main/srcs/main-0.13.13-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/persist/srcs/persist-0.13.13-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/process/srcs/process-0.13.13-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/relation/srcs/relation-0.13.13-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/run/srcs/run-0.13.13-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/sbt/srcs/sbt-0.13.13-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/serialization_2.10/srcs/serialization_2.10-0.1.2-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/task-system/srcs/task-system-0.13.13-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/tasks/srcs/tasks-0.13.13-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/template-resolver/srcs/template-resolver-0.1-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/test-agent/srcs/test-agent-0.13.13-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/test-interface/srcs/test-interface-1.0-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/testing/srcs/testing-0.13.13-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/tracking/srcs/tracking-0.13.13-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-tools.sbinary/sbinary_2.10/srcs/sbinary_2.10-0.4.2-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scalamacros/quasiquotes_2.10/srcs/quasiquotes_2.10-2.0.1-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scalaz/scalaz-core_2.10/srcs/scalaz-core_2.10-7.0.2-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.scalaz/scalaz-effect_2.10/srcs/scalaz-effect_2.10-7.0.2-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.slf4j/slf4j-api/srcs/slf4j-api-1.7.7-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.slf4j/slf4j-simple/srcs/slf4j-simple-1.7.7-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.sonatype.plexus/plexus-cipher/srcs/plexus-cipher-1.4-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.sonatype.plexus/plexus-sec-dispatcher/srcs/plexus-sec-dispatcher-1.3-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.sonatype.sisu.inject/cglib/srcs/cglib-2.2.1-v20090111-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.sonatype.sisu/sisu-guava/srcs/sisu-guava-0.9.9-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.sonatype.sisu/sisu-guice/srcs/sisu-guice-3.1.0-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.spire-math/jawn-parser_2.10/srcs/jawn-parser_2.10-0.6.0-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.spire-math/json4s-support_2.10/srcs/json4s-support_2.10-0.6.0-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.tukaani/xz/srcs/xz-1.4-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.uncommons.maths/uncommons-maths/srcs/uncommons-maths-1.2.2a-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.vafer/jdeb/srcs/jdeb-1.3-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.w3c.css/sac/srcs/sac-1.3-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/org.webjars/webjars-locator/srcs/webjars-locator-0.14-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/scala_2.10/sbt_0.13/com.github.mpeltonen/sbt-idea/srcs/sbt-idea-1.5.1-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/scala_2.10/sbt_0.13/com.typesafe.play/sbt-plugin/srcs/sbt-plugin-2.3.7-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/scala_2.10/sbt_0.13/com.typesafe.sbt/sbt-js-engine/srcs/sbt-js-engine-1.0.1-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/scala_2.10/sbt_0.13/com.typesafe.sbt/sbt-native-packager/srcs/sbt-native-packager-0.7.4-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/scala_2.10/sbt_0.13/com.typesafe.sbt/sbt-twirl/srcs/sbt-twirl-1.0.2-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/scala_2.10/sbt_0.13/com.typesafe.sbt/sbt-web/srcs/sbt-web-1.0.2-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/scala_2.10/sbt_0.13/com.typesafe.sbt/sbt-webdriver/srcs/sbt-webdriver-1.0.0-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/xalan/xalan/srcs/xalan-2.7.1-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/xerces/xercesImpl/srcs/xercesImpl-2.11.0-sources.jar</sources>
-      <sources>/Users/jast/sbt-structure-global/ivy2/cache/xml-apis/xml-apis/srcs/xml-apis-1.4.01-sources.jar</sources>
+      <classes>$SBT_BOOT/scala-2.10.6/lib/jansi.jar</classes>
+      <classes>$SBT_BOOT/scala-2.10.6/lib/jline.jar</classes>
+      <classes>$SBT_BOOT/scala-2.10.6/lib/scala-compiler.jar</classes>
+      <classes>$SBT_BOOT/scala-2.10.6/lib/scala-library.jar</classes>
+      <classes>$SBT_BOOT/scala-2.10.6/lib/scala-reflect.jar</classes>
+      <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/actions-0.13.13.jar</classes>
+      <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/api-0.13.13.jar</classes>
+      <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/apply-macro-0.13.13.jar</classes>
+      <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/cache-0.13.13.jar</classes>
+      <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/classfile-0.13.13.jar</classes>
+      <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/classpath-0.13.13.jar</classes>
+      <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/collections-0.13.13.jar</classes>
+      <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/command-0.13.13.jar</classes>
+      <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/compile-0.13.13.jar</classes>
+      <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/compiler-integration-0.13.13.jar</classes>
+      <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/compiler-interface-0.13.13.jar</classes>
+      <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/compiler-ivy-integration-0.13.13.jar</classes>
+      <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/completion-0.13.13.jar</classes>
+      <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/control-0.13.13.jar</classes>
+      <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/cross-0.13.13.jar</classes>
+      <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/incremental-compiler-0.13.13.jar</classes>
+      <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/io-0.13.13.jar</classes>
+      <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/ivy-0.13.13.jar</classes>
+      <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/ivy-2.3.0-sbt-2cf13e211b2cb31f0d3b317289dca70eca3362f6.jar</classes>
+      <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/jansi-1.11.jar</classes>
+      <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/jawn-parser_2.10-0.6.0.jar</classes>
+      <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/jline-2.13.jar</classes>
+      <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/jsch-0.1.50.jar</classes>
+      <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/json4s-ast_2.10-3.2.10.jar</classes>
+      <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/json4s-core_2.10-3.2.10.jar</classes>
+      <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/json4s-support_2.10-0.6.0.jar</classes>
+      <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/launcher-interface-1.0.0-M1.jar</classes>
+      <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/logging-0.13.13.jar</classes>
+      <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/logic-0.13.13.jar</classes>
+      <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/main-0.13.13.jar</classes>
+      <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/main-settings-0.13.13.jar</classes>
+      <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/paranamer-2.6.jar</classes>
+      <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/persist-0.13.13.jar</classes>
+      <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/process-0.13.13.jar</classes>
+      <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/quasiquotes_2.10-2.0.1.jar</classes>
+      <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/relation-0.13.13.jar</classes>
+      <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/run-0.13.13.jar</classes>
+      <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/sbinary_2.10-0.4.2.jar</classes>
+      <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/sbt-0.13.13.jar</classes>
+      <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/scala-pickling_2.10-0.10.1.jar</classes>
+      <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/scala-reflect-2.10.6.jar</classes>
+      <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/serialization_2.10-0.1.2.jar</classes>
+      <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/task-system-0.13.13.jar</classes>
+      <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/tasks-0.13.13.jar</classes>
+      <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/template-resolver-0.1.jar</classes>
+      <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/test-agent-0.13.13.jar</classes>
+      <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/test-interface-1.0.jar</classes>
+      <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/testing-0.13.13.jar</classes>
+      <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/tracking-0.13.13.jar</classes>
+      <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/xsbti/interface-0.13.13.jar</classes>
+      <classes>$IVY2/cache/aopalliance/aopalliance/jars/aopalliance-1.0.jar</classes>
+      <classes>$IVY2/cache/com.fasterxml.jackson.core/jackson-annotations/bundles/jackson-annotations-2.3.0.jar</classes>
+      <classes>$IVY2/cache/com.fasterxml.jackson.core/jackson-core/bundles/jackson-core-2.3.3.jar</classes>
+      <classes>$IVY2/cache/com.fasterxml.jackson.core/jackson-databind/bundles/jackson-databind-2.3.3.jar</classes>
+      <classes>$IVY2/cache/com.google.guava/guava/bundles/guava-16.0.1.jar</classes>
+      <classes>$IVY2/cache/com.google.javascript/closure-compiler/jars/closure-compiler-v20130603.jar</classes>
+      <classes>$IVY2/cache/com.google.protobuf/protobuf-java/bundles/protobuf-java-2.5.0.jar</classes>
+      <classes>$IVY2/cache/com.h2database/h2/jars/h2-1.3.175.jar</classes>
+      <classes>$IVY2/cache/com.typesafe.akka/akka-actor_2.10/jars/akka-actor_2.10-2.3.2.jar</classes>
+      <classes>$IVY2/cache/com.typesafe.akka/akka-cluster_2.10/jars/akka-cluster_2.10-2.3.2.jar</classes>
+      <classes>$IVY2/cache/com.typesafe.akka/akka-contrib_2.10/jars/akka-contrib_2.10-2.3.2.jar</classes>
+      <classes>$IVY2/cache/com.typesafe.akka/akka-persistence-experimental_2.10/jars/akka-persistence-experimental_2.10-2.3.2.jar</classes>
+      <classes>$IVY2/cache/com.typesafe.akka/akka-remote_2.10/jars/akka-remote_2.10-2.3.2.jar</classes>
+      <classes>$IVY2/cache/com.typesafe.play/build-link/jars/build-link-2.3.7.jar</classes>
+      <classes>$IVY2/cache/com.typesafe.play/play-exceptions/jars/play-exceptions-2.3.7.jar</classes>
+      <classes>$IVY2/cache/com.typesafe.play/routes-compiler_2.10/jars/routes-compiler_2.10-2.3.7.jar</classes>
+      <classes>$IVY2/cache/com.typesafe.play/sbt-run-support_2.10/jars/sbt-run-support_2.10-2.3.7.jar</classes>
+      <classes>$IVY2/cache/com.typesafe.play/twirl-api_2.10/jars/twirl-api_2.10-1.0.2.jar</classes>
+      <classes>$IVY2/cache/com.typesafe.play/twirl-compiler_2.10/jars/twirl-compiler_2.10-1.0.2.jar</classes>
+      <classes>$IVY2/cache/com.typesafe.play/twirl-parser_2.10/jars/twirl-parser_2.10-1.0.2.jar</classes>
+      <classes>$IVY2/cache/com.typesafe/config/bundles/config-1.2.1.jar</classes>
+      <classes>$IVY2/cache/com.typesafe/jse_2.10/jars/jse_2.10-1.0.0.jar</classes>
+      <classes>$IVY2/cache/com.typesafe/npm_2.10/jars/npm_2.10-1.0.0.jar</classes>
+      <classes>$IVY2/cache/com.typesafe/webdriver_2.10/jars/webdriver_2.10-1.0.0.jar</classes>
+      <classes>$IVY2/cache/commons-codec/commons-codec/jars/commons-codec-1.9.jar</classes>
+      <classes>$IVY2/cache/commons-collections/commons-collections/jars/commons-collections-3.2.1.jar</classes>
+      <classes>$IVY2/cache/commons-io/commons-io/jars/commons-io-2.4.jar</classes>
+      <classes>$IVY2/cache/commons-logging/commons-logging/jars/commons-logging-1.1.3.jar</classes>
+      <classes>$IVY2/cache/io.apigee.trireme/trireme-core/jars/trireme-core-0.7.5.jar</classes>
+      <classes>$IVY2/cache/io.apigee.trireme/trireme-node10src/jars/trireme-node10src-0.7.5.jar</classes>
+      <classes>$IVY2/cache/io.netty/netty/bundles/netty-3.8.0.Final.jar</classes>
+      <classes>$IVY2/cache/io.spray/spray-can/bundles/spray-can-1.3.1.jar</classes>
+      <classes>$IVY2/cache/io.spray/spray-client/bundles/spray-client-1.3.1.jar</classes>
+      <classes>$IVY2/cache/io.spray/spray-http/bundles/spray-http-1.3.1.jar</classes>
+      <classes>$IVY2/cache/io.spray/spray-httpx/bundles/spray-httpx-1.3.1.jar</classes>
+      <classes>$IVY2/cache/io.spray/spray-io/bundles/spray-io-1.3.1.jar</classes>
+      <classes>$IVY2/cache/io.spray/spray-json_2.10/bundles/spray-json_2.10-1.2.6.jar</classes>
+      <classes>$IVY2/cache/io.spray/spray-util/bundles/spray-util-1.3.1.jar</classes>
+      <classes>$IVY2/cache/javax.annotation/jsr250-api/jars/jsr250-api-1.0.jar</classes>
+      <classes>$IVY2/cache/javax.enterprise/cdi-api/jars/cdi-api-1.0.jar</classes>
+      <classes>$IVY2/cache/javax.inject/javax.inject/jars/javax.inject-1.jar</classes>
+      <classes>$IVY2/cache/net.contentobjects.jnotify/jnotify/jars/jnotify-0.94.jar</classes>
+      <classes>$IVY2/cache/net.sourceforge.cssparser/cssparser/jars/cssparser-0.9.13.jar</classes>
+      <classes>$IVY2/cache/net.sourceforge.htmlunit/htmlunit-core-js/jars/htmlunit-core-js-2.14.jar</classes>
+      <classes>$IVY2/cache/net.sourceforge.htmlunit/htmlunit/jars/htmlunit-2.14.jar</classes>
+      <classes>$IVY2/cache/net.sourceforge.nekohtml/nekohtml/jars/nekohtml-1.9.20.jar</classes>
+      <classes>$IVY2/cache/org.apache.ant/ant-launcher/jars/ant-launcher-1.9.3.jar</classes>
+      <classes>$IVY2/cache/org.apache.ant/ant/jars/ant-1.9.3.jar</classes>
+      <classes>$IVY2/cache/org.apache.commons/commons-compress/jars/commons-compress-1.7.jar</classes>
+      <classes>$IVY2/cache/org.apache.commons/commons-lang3/jars/commons-lang3-3.2.1.jar</classes>
+      <classes>$IVY2/cache/org.apache.httpcomponents/httpclient/jars/httpclient-4.3.2.jar</classes>
+      <classes>$IVY2/cache/org.apache.httpcomponents/httpcore/jars/httpcore-4.3.1.jar</classes>
+      <classes>$IVY2/cache/org.apache.httpcomponents/httpmime/jars/httpmime-4.3.2.jar</classes>
+      <classes>$IVY2/cache/org.apache.maven/maven-aether-provider/jars/maven-aether-provider-3.2.2.jar</classes>
+      <classes>$IVY2/cache/org.apache.maven/maven-artifact/jars/maven-artifact-3.2.2.jar</classes>
+      <classes>$IVY2/cache/org.apache.maven/maven-core/jars/maven-core-3.2.2.jar</classes>
+      <classes>$IVY2/cache/org.apache.maven/maven-model-builder/jars/maven-model-builder-3.2.2.jar</classes>
+      <classes>$IVY2/cache/org.apache.maven/maven-model/jars/maven-model-3.2.2.jar</classes>
+      <classes>$IVY2/cache/org.apache.maven/maven-plugin-api/jars/maven-plugin-api-3.2.2.jar</classes>
+      <classes>$IVY2/cache/org.apache.maven/maven-repository-metadata/jars/maven-repository-metadata-3.2.2.jar</classes>
+      <classes>$IVY2/cache/org.apache.maven/maven-settings-builder/jars/maven-settings-builder-3.2.2.jar</classes>
+      <classes>$IVY2/cache/org.apache.maven/maven-settings/jars/maven-settings-3.2.2.jar</classes>
+      <classes>$IVY2/cache/org.avaje.ebeanorm/avaje-ebeanorm-agent/jars/avaje-ebeanorm-agent-3.2.2.jar</classes>
+      <classes>$IVY2/cache/org.bouncycastle/bcpg-jdk15on/jars/bcpg-jdk15on-1.51.jar</classes>
+      <classes>$IVY2/cache/org.bouncycastle/bcprov-jdk15on/jars/bcprov-jdk15on-1.51.jar</classes>
+      <classes>$IVY2/cache/org.codehaus.plexus/plexus-classworlds/bundles/plexus-classworlds-2.5.1.jar</classes>
+      <classes>$IVY2/cache/org.codehaus.plexus/plexus-component-annotations/jars/plexus-component-annotations-1.5.5.jar</classes>
+      <classes>$IVY2/cache/org.codehaus.plexus/plexus-interpolation/jars/plexus-interpolation-1.19.jar</classes>
+      <classes>$IVY2/cache/org.codehaus.plexus/plexus-utils/jars/plexus-utils-3.0.17.jar</classes>
+      <classes>$IVY2/cache/org.eclipse.aether/aether-api/jars/aether-api-0.9.0.M2.jar</classes>
+      <classes>$IVY2/cache/org.eclipse.aether/aether-impl/jars/aether-impl-0.9.0.M2.jar</classes>
+      <classes>$IVY2/cache/org.eclipse.aether/aether-spi/jars/aether-spi-0.9.0.M2.jar</classes>
+      <classes>$IVY2/cache/org.eclipse.aether/aether-util/jars/aether-util-0.9.0.M2.jar</classes>
+      <classes>$IVY2/cache/org.eclipse.jetty/jetty-http/jars/jetty-http-8.1.14.v20131031.jar</classes>
+      <classes>$IVY2/cache/org.eclipse.jetty/jetty-io/jars/jetty-io-8.1.14.v20131031.jar</classes>
+      <classes>$IVY2/cache/org.eclipse.jetty/jetty-util/jars/jetty-util-8.1.14.v20131031.jar</classes>
+      <classes>$IVY2/cache/org.eclipse.jetty/jetty-websocket/jars/jetty-websocket-8.1.14.v20131031.jar</classes>
+      <classes>$IVY2/cache/org.eclipse.sisu/org.eclipse.sisu.inject/eclipse-plugins/org.eclipse.sisu.inject-0.0.0.M5.jar</classes>
+      <classes>$IVY2/cache/org.eclipse.sisu/org.eclipse.sisu.plexus/eclipse-plugins/org.eclipse.sisu.plexus-0.0.0.M5.jar</classes>
+      <classes>$IVY2/cache/org.fusesource.hawtjni/hawtjni-runtime/jars/hawtjni-runtime-1.8.jar</classes>
+      <classes>$IVY2/cache/org.fusesource.leveldbjni/leveldbjni-all/bundles/leveldbjni-all-1.7.jar</classes>
+      <classes>$IVY2/cache/org.fusesource.leveldbjni/leveldbjni-linux32/jars/leveldbjni-linux32-1.5.jar</classes>
+      <classes>$IVY2/cache/org.fusesource.leveldbjni/leveldbjni-linux64/jars/leveldbjni-linux64-1.5.jar</classes>
+      <classes>$IVY2/cache/org.fusesource.leveldbjni/leveldbjni-osx/jars/leveldbjni-osx-1.5.jar</classes>
+      <classes>$IVY2/cache/org.fusesource.leveldbjni/leveldbjni-win32/jars/leveldbjni-win32-1.5.jar</classes>
+      <classes>$IVY2/cache/org.fusesource.leveldbjni/leveldbjni-win64/jars/leveldbjni-win64-1.5.jar</classes>
+      <classes>$IVY2/cache/org.fusesource.leveldbjni/leveldbjni/jars/leveldbjni-1.7.jar</classes>
+      <classes>$IVY2/cache/org.iq80.leveldb/leveldb-api/jars/leveldb-api-0.5.jar</classes>
+      <classes>$IVY2/cache/org.iq80.leveldb/leveldb/jars/leveldb-0.5.jar</classes>
+      <classes>$IVY2/cache/org.javassist/javassist/bundles/javassist-3.18.2-GA.jar</classes>
+      <classes>$IVY2/cache/org.json/json/jars/json-20090211.jar</classes>
+      <classes>$IVY2/cache/org.jvnet.mimepull/mimepull/jars/mimepull-1.9.4.jar</classes>
+      <classes>$IVY2/cache/org.mozilla/rhino/jars/rhino-1.7R4.jar</classes>
+      <classes>$IVY2/cache/org.parboiled/parboiled-core/bundles/parboiled-core-1.1.6.jar</classes>
+      <classes>$IVY2/cache/org.parboiled/parboiled-scala_2.10/bundles/parboiled-scala_2.10-1.1.6.jar</classes>
+      <classes>$IVY2/cache/org.scala-sbt/control/jars/control-0.13.5.jar</classes>
+      <classes>$IVY2/cache/org.scala-sbt/io/jars/io-0.13.5.jar</classes>
+      <classes>$IVY2/cache/org.scalaz/scalaz-core_2.10/bundles/scalaz-core_2.10-7.0.2.jar</classes>
+      <classes>$IVY2/cache/org.scalaz/scalaz-effect_2.10/bundles/scalaz-effect_2.10-7.0.2.jar</classes>
+      <classes>$IVY2/cache/org.slf4j/slf4j-api/jars/slf4j-api-1.7.7.jar</classes>
+      <classes>$IVY2/cache/org.slf4j/slf4j-simple/jars/slf4j-simple-1.7.7.jar</classes>
+      <classes>$IVY2/cache/org.sonatype.plexus/plexus-cipher/jars/plexus-cipher-1.4.jar</classes>
+      <classes>$IVY2/cache/org.sonatype.plexus/plexus-sec-dispatcher/jars/plexus-sec-dispatcher-1.3.jar</classes>
+      <classes>$IVY2/cache/org.sonatype.sisu/sisu-guice/jars/sisu-guice-3.1.0-no_aop.jar</classes>
+      <classes>$IVY2/cache/org.tukaani/xz/jars/xz-1.4.jar</classes>
+      <classes>$IVY2/cache/org.uncommons.maths/uncommons-maths/jars/uncommons-maths-1.2.2a.jar</classes>
+      <classes>$IVY2/cache/org.vafer/jdeb/jars/jdeb-1.3.jar</classes>
+      <classes>$IVY2/cache/org.w3c.css/sac/jars/sac-1.3.jar</classes>
+      <classes>$IVY2/cache/org.webjars/npm/jars/npm-1.3.26.jar</classes>
+      <classes>$IVY2/cache/org.webjars/webjars-locator/jars/webjars-locator-0.14.jar</classes>
+      <classes>$IVY2/cache/scala_2.10/sbt_0.13/com.github.mpeltonen/sbt-idea/jars/sbt-idea-1.5.1.jar</classes>
+      <classes>$IVY2/cache/scala_2.10/sbt_0.13/com.typesafe.play/sbt-plugin/jars/sbt-plugin-2.3.7.jar</classes>
+      <classes>$IVY2/cache/scala_2.10/sbt_0.13/com.typesafe.sbt/sbt-js-engine/jars/sbt-js-engine-1.0.1.jar</classes>
+      <classes>$IVY2/cache/scala_2.10/sbt_0.13/com.typesafe.sbt/sbt-native-packager/jars/sbt-native-packager-0.7.4.jar</classes>
+      <classes>$IVY2/cache/scala_2.10/sbt_0.13/com.typesafe.sbt/sbt-twirl/jars/sbt-twirl-1.0.2.jar</classes>
+      <classes>$IVY2/cache/scala_2.10/sbt_0.13/com.typesafe.sbt/sbt-web/jars/sbt-web-1.0.2.jar</classes>
+      <classes>$IVY2/cache/scala_2.10/sbt_0.13/com.typesafe.sbt/sbt-webdriver/jars/sbt-webdriver-1.0.0.jar</classes>
+      <classes>$IVY2/cache/scala_2.10/sbt_0.13/com.typesafe.sbteclipse/sbteclipse-core/jars/sbteclipse-core-2.4.0.jar</classes>
+      <classes>$IVY2/cache/scala_2.10/sbt_0.13/com.typesafe.sbteclipse/sbteclipse-plugin/jars/sbteclipse-plugin-2.4.0.jar</classes>
+      <classes>$IVY2/cache/xalan/serializer/jars/serializer-2.7.1.jar</classes>
+      <classes>$IVY2/cache/xalan/xalan/jars/xalan-2.7.1.jar</classes>
+      <classes>$IVY2/cache/xerces/xercesImpl/jars/xercesImpl-2.11.0.jar</classes>
+      <classes>$IVY2/cache/xml-apis/xml-apis/jars/xml-apis-1.4.01.jar</classes>
     </build>
     <java>
       <option>-encoding</option>
@@ -373,31 +202,33 @@
     </java>
     <scala>
       <version>2.10.6</version>
-      <library>/Users/jast/sbt-structure-global/boot/scala-2.10.6/lib/scala-library.jar</library>
-      <compiler>/Users/jast/sbt-structure-global/boot/scala-2.10.6/lib/scala-compiler.jar</compiler>
-      <extra>/Users/jast/sbt-structure-global/boot/scala-2.10.6/lib/scala-reflect.jar</extra>
+      <jar>$SBT_BOOT/scala-2.10.6/lib/scala-library.jar</jar>
+      <jar>$SBT_BOOT/scala-2.10.6/lib/scala-compiler.jar</jar>
+      <jar>$SBT_BOOT/scala-2.10.6/lib/scala-reflect.jar</jar>
+      <jar>$SBT_BOOT/scala-2.10.6/lib/jline.jar</jar>
+      <jar>$SBT_BOOT/scala-2.10.6/lib/jansi.jar</jar>
       <option>-deprecation</option>
       <option>-unchecked</option>
       <option>-encoding</option>
       <option>utf8</option>
     </scala>
     <configuration id="compile">
-      <sources>/Users/jast/workspace/sbt-structure/extractor/src/test/data/0.13/play/app</sources>
-      <sources>/Users/jast/workspace/sbt-structure/extractor/src/test/data/0.13/play/app-2.10</sources>
-      <sources managed="true">/Users/jast/workspace/sbt-structure/extractor/src/test/data/0.13/play/target/scala-2.10/src_managed/main</sources>
-      <sources managed="true">/Users/jast/workspace/sbt-structure/extractor/src/test/data/0.13/play/target/scala-2.10/twirl/main</sources>
-      <resources>/Users/jast/workspace/sbt-structure/extractor/src/test/data/0.13/play/conf</resources>
-      <resources managed="true">/Users/jast/workspace/sbt-structure/extractor/src/test/data/0.13/play/target/scala-2.10/resource_managed/main</resources>
-      <classes>/Users/jast/workspace/sbt-structure/extractor/src/test/data/0.13/play/target/scala-2.10/classes</classes>
+      <sources>$BASE/app</sources>
+      <sources>$BASE/app-2.10</sources>
+      <sources managed="true">$BASE/target/scala-2.10/src_managed/main</sources>
+      <sources managed="true">$BASE/target/scala-2.10/twirl/main</sources>
+      <resources>$BASE/conf</resources>
+      <resources managed="true">$BASE/target/scala-2.10/resource_managed/main</resources>
+      <classes>$BASE/target/scala-2.10/classes</classes>
     </configuration>
     <configuration id="test">
-      <sources>/Users/jast/workspace/sbt-structure/extractor/src/test/data/0.13/play/test</sources>
-      <sources>/Users/jast/workspace/sbt-structure/extractor/src/test/data/0.13/play/test-2.10</sources>
-      <sources managed="true">/Users/jast/workspace/sbt-structure/extractor/src/test/data/0.13/play/target/scala-2.10/src_managed/test</sources>
-      <sources managed="true">/Users/jast/workspace/sbt-structure/extractor/src/test/data/0.13/play/target/scala-2.10/twirl/test</sources>
-      <resources>/Users/jast/workspace/sbt-structure/extractor/src/test/data/0.13/play/test/resources</resources>
-      <resources managed="true">/Users/jast/workspace/sbt-structure/extractor/src/test/data/0.13/play/target/scala-2.10/resource_managed/test</resources>
-      <classes>/Users/jast/workspace/sbt-structure/extractor/src/test/data/0.13/play/target/scala-2.10/test-classes</classes>
+      <sources>$BASE/test</sources>
+      <sources>$BASE/test-2.10</sources>
+      <sources managed="true">$BASE/target/scala-2.10/src_managed/test</sources>
+      <sources managed="true">$BASE/target/scala-2.10/twirl/test</sources>
+      <resources>$BASE/test/resources</resources>
+      <resources managed="true">$BASE/target/scala-2.10/resource_managed/test</resources>
+      <classes>$BASE/target/scala-2.10/test-classes</classes>
     </configuration>
     <dependencies>
       <module configurations="test" organization="cglib" name="cglib-nodep" revision="2.1_3" artifactType="jar" classifier=""/>
@@ -516,488 +347,308 @@
       <routesImports>
         <import>controllers.Assets.Asset</import>
       </routesImports>
-      <confDirectory>/Users/jast/workspace/sbt-structure/extractor/src/test/data/0.13/play/conf</confDirectory>
-      <sourceDirectory>/Users/jast/workspace/sbt-structure/extractor/src/test/data/0.13/play/app</sourceDirectory>
+      <confDirectory>$BASE/conf</confDirectory>
+      <sourceDirectory>$BASE/app</sourceDirectory>
     </play2>
   </project>
   <repository>
     <module organization="cglib" name="cglib-nodep" revision="2.1_3" artifactType="jar" classifier="">
-      <jar>/Users/jast/sbt-structure-global/ivy2/cache/cglib/cglib-nodep/jars/cglib-nodep-2.1_3.jar</jar>
-      <src>/Users/jast/sbt-structure-global/ivy2/cache/cglib/cglib-nodep/srcs/cglib-nodep-2.1_3-sources.jar</src>
+      <jar>$IVY2/cache/cglib/cglib-nodep/jars/cglib-nodep-2.1_3.jar</jar>
     </module>
     <module organization="ch.qos.logback" name="logback-classic" revision="1.1.1" artifactType="jar" classifier="">
-      <jar>/Users/jast/sbt-structure-global/ivy2/cache/ch.qos.logback/logback-classic/jars/logback-classic-1.1.1.jar</jar>
-      <doc>/Users/jast/sbt-structure-global/ivy2/cache/ch.qos.logback/logback-classic/docs/logback-classic-1.1.1-javadoc.jar</doc>
-      <src>/Users/jast/sbt-structure-global/ivy2/cache/ch.qos.logback/logback-classic/srcs/logback-classic-1.1.1-sources.jar</src>
+      <jar>$IVY2/cache/ch.qos.logback/logback-classic/jars/logback-classic-1.1.1.jar</jar>
     </module>
     <module organization="ch.qos.logback" name="logback-core" revision="1.1.1" artifactType="jar" classifier="">
-      <jar>/Users/jast/sbt-structure-global/ivy2/cache/ch.qos.logback/logback-core/jars/logback-core-1.1.1.jar</jar>
-      <doc>/Users/jast/sbt-structure-global/ivy2/cache/ch.qos.logback/logback-core/docs/logback-core-1.1.1-javadoc.jar</doc>
-      <src>/Users/jast/sbt-structure-global/ivy2/cache/ch.qos.logback/logback-core/srcs/logback-core-1.1.1-sources.jar</src>
+      <jar>$IVY2/cache/ch.qos.logback/logback-core/jars/logback-core-1.1.1.jar</jar>
     </module>
     <module organization="com.fasterxml.jackson.core" name="jackson-annotations" revision="2.3.2" artifactType="jar" classifier="">
-      <jar>/Users/jast/sbt-structure-global/ivy2/cache/com.fasterxml.jackson.core/jackson-annotations/bundles/jackson-annotations-2.3.2.jar</jar>
-      <doc>/Users/jast/sbt-structure-global/ivy2/cache/com.fasterxml.jackson.core/jackson-annotations/docs/jackson-annotations-2.3.2-javadoc.jar</doc>
-      <src>/Users/jast/sbt-structure-global/ivy2/cache/com.fasterxml.jackson.core/jackson-annotations/srcs/jackson-annotations-2.3.2-sources.jar</src>
+      <jar>$IVY2/cache/com.fasterxml.jackson.core/jackson-annotations/bundles/jackson-annotations-2.3.2.jar</jar>
     </module>
     <module organization="com.fasterxml.jackson.core" name="jackson-core" revision="2.3.2" artifactType="jar" classifier="">
-      <jar>/Users/jast/sbt-structure-global/ivy2/cache/com.fasterxml.jackson.core/jackson-core/bundles/jackson-core-2.3.2.jar</jar>
-      <doc>/Users/jast/sbt-structure-global/ivy2/cache/com.fasterxml.jackson.core/jackson-core/docs/jackson-core-2.3.2-javadoc.jar</doc>
-      <src>/Users/jast/sbt-structure-global/ivy2/cache/com.fasterxml.jackson.core/jackson-core/srcs/jackson-core-2.3.2-sources.jar</src>
+      <jar>$IVY2/cache/com.fasterxml.jackson.core/jackson-core/bundles/jackson-core-2.3.2.jar</jar>
     </module>
     <module organization="com.fasterxml.jackson.core" name="jackson-databind" revision="2.3.2" artifactType="jar" classifier="">
-      <jar>/Users/jast/sbt-structure-global/ivy2/cache/com.fasterxml.jackson.core/jackson-databind/bundles/jackson-databind-2.3.2.jar</jar>
-      <doc>/Users/jast/sbt-structure-global/ivy2/cache/com.fasterxml.jackson.core/jackson-databind/docs/jackson-databind-2.3.2-javadoc.jar</doc>
-      <src>/Users/jast/sbt-structure-global/ivy2/cache/com.fasterxml.jackson.core/jackson-databind/srcs/jackson-databind-2.3.2-sources.jar</src>
+      <jar>$IVY2/cache/com.fasterxml.jackson.core/jackson-databind/bundles/jackson-databind-2.3.2.jar</jar>
     </module>
     <module organization="com.google.code.findbugs" name="jsr305" revision="2.0.3" artifactType="jar" classifier="">
-      <jar>/Users/jast/sbt-structure-global/ivy2/cache/com.google.code.findbugs/jsr305/jars/jsr305-2.0.3.jar</jar>
-      <doc>/Users/jast/sbt-structure-global/ivy2/cache/com.google.code.findbugs/jsr305/docs/jsr305-2.0.3-javadoc.jar</doc>
-      <src>/Users/jast/sbt-structure-global/ivy2/cache/com.google.code.findbugs/jsr305/srcs/jsr305-2.0.3-sources.jar</src>
+      <jar>$IVY2/cache/com.google.code.findbugs/jsr305/jars/jsr305-2.0.3.jar</jar>
     </module>
     <module organization="com.google.guava" name="guava" revision="15.0" artifactType="jar" classifier="">
-      <jar>/Users/jast/sbt-structure-global/ivy2/cache/com.google.guava/guava/bundles/guava-15.0.jar</jar>
-      <doc>/Users/jast/sbt-structure-global/ivy2/cache/com.google.guava/guava/docs/guava-15.0-javadoc.jar</doc>
-      <src>/Users/jast/sbt-structure-global/ivy2/cache/com.google.guava/guava/srcs/guava-15.0-sources.jar</src>
+      <jar>$IVY2/cache/com.google.guava/guava/bundles/guava-15.0.jar</jar>
     </module>
     <module organization="com.google.guava" name="guava" revision="16.0.1" artifactType="jar" classifier="">
-      <jar>/Users/jast/sbt-structure-global/ivy2/cache/com.google.guava/guava/bundles/guava-16.0.1.jar</jar>
-      <doc>/Users/jast/sbt-structure-global/ivy2/cache/com.google.guava/guava/docs/guava-16.0.1-javadoc.jar</doc>
-      <src>/Users/jast/sbt-structure-global/ivy2/cache/com.google.guava/guava/srcs/guava-16.0.1-sources.jar</src>
+      <jar>$IVY2/cache/com.google.guava/guava/bundles/guava-16.0.1.jar</jar>
     </module>
     <module organization="com.h2database" name="h2" revision="1.3.175" artifactType="jar" classifier="">
-      <jar>/Users/jast/sbt-structure-global/ivy2/cache/com.h2database/h2/jars/h2-1.3.175.jar</jar>
-      <doc>/Users/jast/sbt-structure-global/ivy2/cache/com.h2database/h2/docs/h2-1.3.175-javadoc.jar</doc>
-      <src>/Users/jast/sbt-structure-global/ivy2/cache/com.h2database/h2/srcs/h2-1.3.175-sources.jar</src>
+      <jar>$IVY2/cache/com.h2database/h2/jars/h2-1.3.175.jar</jar>
     </module>
     <module organization="com.jolbox" name="bonecp" revision="0.8.0.RELEASE" artifactType="jar" classifier="">
-      <jar>/Users/jast/sbt-structure-global/ivy2/cache/com.jolbox/bonecp/bundles/bonecp-0.8.0.RELEASE.jar</jar>
-      <doc>/Users/jast/sbt-structure-global/ivy2/cache/com.jolbox/bonecp/docs/bonecp-0.8.0.RELEASE-javadoc.jar</doc>
-      <src>/Users/jast/sbt-structure-global/ivy2/cache/com.jolbox/bonecp/srcs/bonecp-0.8.0.RELEASE-sources.jar</src>
+      <jar>$IVY2/cache/com.jolbox/bonecp/bundles/bonecp-0.8.0.RELEASE.jar</jar>
     </module>
     <module organization="com.jsuereth" name="scala-arm_2.10" revision="1.4" artifactType="jar" classifier="">
-      <jar>/Users/jast/sbt-structure-global/ivy2/cache/com.jsuereth/scala-arm_2.10/jars/scala-arm_2.10-1.4.jar</jar>
-      <doc>/Users/jast/sbt-structure-global/ivy2/cache/com.jsuereth/scala-arm_2.10/docs/scala-arm_2.10-1.4-javadoc.jar</doc>
-      <src>/Users/jast/sbt-structure-global/ivy2/cache/com.jsuereth/scala-arm_2.10/srcs/scala-arm_2.10-1.4-sources.jar</src>
+      <jar>$IVY2/cache/com.jsuereth/scala-arm_2.10/jars/scala-arm_2.10-1.4.jar</jar>
     </module>
     <module organization="com.novocode" name="junit-interface" revision="0.11-RC1" artifactType="jar" classifier="">
-      <jar>/Users/jast/sbt-structure-global/ivy2/cache/com.novocode/junit-interface/jars/junit-interface-0.11-RC1.jar</jar>
-      <doc>/Users/jast/sbt-structure-global/ivy2/cache/com.novocode/junit-interface/docs/junit-interface-0.11-RC1-javadoc.jar</doc>
-      <src>/Users/jast/sbt-structure-global/ivy2/cache/com.novocode/junit-interface/srcs/junit-interface-0.11-RC1-sources.jar</src>
+      <jar>$IVY2/cache/com.novocode/junit-interface/jars/junit-interface-0.11-RC1.jar</jar>
     </module>
     <module organization="com.typesafe" name="config" revision="1.2.1" artifactType="jar" classifier="">
-      <jar>/Users/jast/sbt-structure-global/ivy2/cache/com.typesafe/config/bundles/config-1.2.1.jar</jar>
-      <doc>/Users/jast/sbt-structure-global/ivy2/cache/com.typesafe/config/docs/config-1.2.1-javadoc.jar</doc>
-      <src>/Users/jast/sbt-structure-global/ivy2/cache/com.typesafe/config/srcs/config-1.2.1-sources.jar</src>
+      <jar>$IVY2/cache/com.typesafe/config/bundles/config-1.2.1.jar</jar>
     </module>
     <module organization="com.typesafe.akka" name="akka-actor_2.10" revision="2.3.4" artifactType="jar" classifier="">
-      <jar>/Users/jast/sbt-structure-global/ivy2/cache/com.typesafe.akka/akka-actor_2.10/jars/akka-actor_2.10-2.3.4.jar</jar>
-      <doc>/Users/jast/sbt-structure-global/ivy2/cache/com.typesafe.akka/akka-actor_2.10/docs/akka-actor_2.10-2.3.4-javadoc.jar</doc>
-      <src>/Users/jast/sbt-structure-global/ivy2/cache/com.typesafe.akka/akka-actor_2.10/srcs/akka-actor_2.10-2.3.4-sources.jar</src>
+      <jar>$IVY2/cache/com.typesafe.akka/akka-actor_2.10/jars/akka-actor_2.10-2.3.4.jar</jar>
     </module>
     <module organization="com.typesafe.akka" name="akka-slf4j_2.10" revision="2.3.4" artifactType="jar" classifier="">
-      <jar>/Users/jast/sbt-structure-global/ivy2/cache/com.typesafe.akka/akka-slf4j_2.10/jars/akka-slf4j_2.10-2.3.4.jar</jar>
-      <doc>/Users/jast/sbt-structure-global/ivy2/cache/com.typesafe.akka/akka-slf4j_2.10/docs/akka-slf4j_2.10-2.3.4-javadoc.jar</doc>
-      <src>/Users/jast/sbt-structure-global/ivy2/cache/com.typesafe.akka/akka-slf4j_2.10/srcs/akka-slf4j_2.10-2.3.4-sources.jar</src>
+      <jar>$IVY2/cache/com.typesafe.akka/akka-slf4j_2.10/jars/akka-slf4j_2.10-2.3.4.jar</jar>
     </module>
     <module organization="com.typesafe.netty" name="netty-http-pipelining" revision="1.1.2" artifactType="jar" classifier="">
-      <jar>/Users/jast/sbt-structure-global/ivy2/cache/com.typesafe.netty/netty-http-pipelining/jars/netty-http-pipelining-1.1.2.jar</jar>
-      <doc>/Users/jast/sbt-structure-global/ivy2/cache/com.typesafe.netty/netty-http-pipelining/docs/netty-http-pipelining-1.1.2-javadoc.jar</doc>
-      <src>/Users/jast/sbt-structure-global/ivy2/cache/com.typesafe.netty/netty-http-pipelining/srcs/netty-http-pipelining-1.1.2-sources.jar</src>
+      <jar>$IVY2/cache/com.typesafe.netty/netty-http-pipelining/jars/netty-http-pipelining-1.1.2.jar</jar>
     </module>
     <module organization="com.typesafe.play" name="anorm_2.10" revision="2.3.7" artifactType="jar" classifier="">
-      <jar>/Users/jast/sbt-structure-global/ivy2/cache/com.typesafe.play/anorm_2.10/jars/anorm_2.10-2.3.7.jar</jar>
-      <src>/Users/jast/sbt-structure-global/ivy2/cache/com.typesafe.play/anorm_2.10/srcs/anorm_2.10-2.3.7-sources.jar</src>
+      <jar>$IVY2/cache/com.typesafe.play/anorm_2.10/jars/anorm_2.10-2.3.7.jar</jar>
     </module>
     <module organization="com.typesafe.play" name="build-link" revision="2.3.7" artifactType="jar" classifier="">
-      <jar>/Users/jast/sbt-structure-global/ivy2/cache/com.typesafe.play/build-link/jars/build-link-2.3.7.jar</jar>
-      <src>/Users/jast/sbt-structure-global/ivy2/cache/com.typesafe.play/build-link/srcs/build-link-2.3.7-sources.jar</src>
+      <jar>$IVY2/cache/com.typesafe.play/build-link/jars/build-link-2.3.7.jar</jar>
     </module>
     <module organization="com.typesafe.play" name="play-datacommons_2.10" revision="2.3.7" artifactType="jar" classifier="">
-      <jar>/Users/jast/sbt-structure-global/ivy2/cache/com.typesafe.play/play-datacommons_2.10/jars/play-datacommons_2.10-2.3.7.jar</jar>
-      <src>/Users/jast/sbt-structure-global/ivy2/cache/com.typesafe.play/play-datacommons_2.10/srcs/play-datacommons_2.10-2.3.7-sources.jar</src>
+      <jar>$IVY2/cache/com.typesafe.play/play-datacommons_2.10/jars/play-datacommons_2.10-2.3.7.jar</jar>
     </module>
     <module organization="com.typesafe.play" name="play-exceptions" revision="2.3.7" artifactType="jar" classifier="">
-      <jar>/Users/jast/sbt-structure-global/ivy2/cache/com.typesafe.play/play-exceptions/jars/play-exceptions-2.3.7.jar</jar>
-      <src>/Users/jast/sbt-structure-global/ivy2/cache/com.typesafe.play/play-exceptions/srcs/play-exceptions-2.3.7-sources.jar</src>
+      <jar>$IVY2/cache/com.typesafe.play/play-exceptions/jars/play-exceptions-2.3.7.jar</jar>
     </module>
     <module organization="com.typesafe.play" name="play-functional_2.10" revision="2.3.7" artifactType="jar" classifier="">
-      <jar>/Users/jast/sbt-structure-global/ivy2/cache/com.typesafe.play/play-functional_2.10/jars/play-functional_2.10-2.3.7.jar</jar>
-      <src>/Users/jast/sbt-structure-global/ivy2/cache/com.typesafe.play/play-functional_2.10/srcs/play-functional_2.10-2.3.7-sources.jar</src>
+      <jar>$IVY2/cache/com.typesafe.play/play-functional_2.10/jars/play-functional_2.10-2.3.7.jar</jar>
     </module>
     <module organization="com.typesafe.play" name="play-iteratees_2.10" revision="2.3.7" artifactType="jar" classifier="">
-      <jar>/Users/jast/sbt-structure-global/ivy2/cache/com.typesafe.play/play-iteratees_2.10/jars/play-iteratees_2.10-2.3.7.jar</jar>
-      <src>/Users/jast/sbt-structure-global/ivy2/cache/com.typesafe.play/play-iteratees_2.10/srcs/play-iteratees_2.10-2.3.7-sources.jar</src>
+      <jar>$IVY2/cache/com.typesafe.play/play-iteratees_2.10/jars/play-iteratees_2.10-2.3.7.jar</jar>
     </module>
     <module organization="com.typesafe.play" name="play-jdbc_2.10" revision="2.3.7" artifactType="jar" classifier="">
-      <jar>/Users/jast/sbt-structure-global/ivy2/cache/com.typesafe.play/play-jdbc_2.10/jars/play-jdbc_2.10-2.3.7.jar</jar>
-      <src>/Users/jast/sbt-structure-global/ivy2/cache/com.typesafe.play/play-jdbc_2.10/srcs/play-jdbc_2.10-2.3.7-sources.jar</src>
+      <jar>$IVY2/cache/com.typesafe.play/play-jdbc_2.10/jars/play-jdbc_2.10-2.3.7.jar</jar>
     </module>
     <module organization="com.typesafe.play" name="play-json_2.10" revision="2.3.7" artifactType="jar" classifier="">
-      <jar>/Users/jast/sbt-structure-global/ivy2/cache/com.typesafe.play/play-json_2.10/jars/play-json_2.10-2.3.7.jar</jar>
-      <src>/Users/jast/sbt-structure-global/ivy2/cache/com.typesafe.play/play-json_2.10/srcs/play-json_2.10-2.3.7-sources.jar</src>
+      <jar>$IVY2/cache/com.typesafe.play/play-json_2.10/jars/play-json_2.10-2.3.7.jar</jar>
     </module>
     <module organization="com.typesafe.play" name="play-test_2.10" revision="2.3.7" artifactType="jar" classifier="">
-      <jar>/Users/jast/sbt-structure-global/ivy2/cache/com.typesafe.play/play-test_2.10/jars/play-test_2.10-2.3.7.jar</jar>
-      <src>/Users/jast/sbt-structure-global/ivy2/cache/com.typesafe.play/play-test_2.10/srcs/play-test_2.10-2.3.7-sources.jar</src>
+      <jar>$IVY2/cache/com.typesafe.play/play-test_2.10/jars/play-test_2.10-2.3.7.jar</jar>
     </module>
     <module organization="com.typesafe.play" name="play_2.10" revision="2.3.7" artifactType="jar" classifier="">
-      <jar>/Users/jast/sbt-structure-global/ivy2/cache/com.typesafe.play/play_2.10/jars/play_2.10-2.3.7.jar</jar>
-      <src>/Users/jast/sbt-structure-global/ivy2/cache/com.typesafe.play/play_2.10/srcs/play_2.10-2.3.7-sources.jar</src>
+      <jar>$IVY2/cache/com.typesafe.play/play_2.10/jars/play_2.10-2.3.7.jar</jar>
     </module>
     <module organization="com.typesafe.play" name="twirl-api_2.10" revision="1.0.2" artifactType="jar" classifier="">
-      <jar>/Users/jast/sbt-structure-global/ivy2/cache/com.typesafe.play/twirl-api_2.10/jars/twirl-api_2.10-1.0.2.jar</jar>
-      <doc>/Users/jast/sbt-structure-global/ivy2/cache/com.typesafe.play/twirl-api_2.10/docs/twirl-api_2.10-1.0.2-javadoc.jar</doc>
-      <src>/Users/jast/sbt-structure-global/ivy2/cache/com.typesafe.play/twirl-api_2.10/srcs/twirl-api_2.10-1.0.2-sources.jar</src>
+      <jar>$IVY2/cache/com.typesafe.play/twirl-api_2.10/jars/twirl-api_2.10-1.0.2.jar</jar>
     </module>
     <module organization="commons-codec" name="commons-codec" revision="1.9" artifactType="jar" classifier="">
-      <jar>/Users/jast/sbt-structure-global/ivy2/cache/commons-codec/commons-codec/jars/commons-codec-1.9.jar</jar>
-      <doc>/Users/jast/sbt-structure-global/ivy2/cache/commons-codec/commons-codec/docs/commons-codec-1.9-javadoc.jar</doc>
-      <src>/Users/jast/sbt-structure-global/ivy2/cache/commons-codec/commons-codec/srcs/commons-codec-1.9-sources.jar</src>
+      <jar>$IVY2/cache/commons-codec/commons-codec/jars/commons-codec-1.9.jar</jar>
     </module>
     <module organization="commons-collections" name="commons-collections" revision="3.2.1" artifactType="jar" classifier="">
-      <jar>/Users/jast/sbt-structure-global/ivy2/cache/commons-collections/commons-collections/jars/commons-collections-3.2.1.jar</jar>
-      <doc>/Users/jast/sbt-structure-global/ivy2/cache/commons-collections/commons-collections/docs/commons-collections-3.2.1-javadoc.jar</doc>
-      <src>/Users/jast/sbt-structure-global/ivy2/cache/commons-collections/commons-collections/srcs/commons-collections-3.2.1-sources.jar</src>
+      <jar>$IVY2/cache/commons-collections/commons-collections/jars/commons-collections-3.2.1.jar</jar>
     </module>
     <module organization="commons-io" name="commons-io" revision="2.4" artifactType="jar" classifier="">
-      <jar>/Users/jast/sbt-structure-global/ivy2/cache/commons-io/commons-io/jars/commons-io-2.4.jar</jar>
-      <doc>/Users/jast/sbt-structure-global/ivy2/cache/commons-io/commons-io/docs/commons-io-2.4-javadoc.jar</doc>
-      <src>/Users/jast/sbt-structure-global/ivy2/cache/commons-io/commons-io/srcs/commons-io-2.4-sources.jar</src>
+      <jar>$IVY2/cache/commons-io/commons-io/jars/commons-io-2.4.jar</jar>
     </module>
     <module organization="commons-logging" name="commons-logging" revision="1.1.3" artifactType="jar" classifier="">
-      <jar>/Users/jast/sbt-structure-global/ivy2/cache/commons-logging/commons-logging/jars/commons-logging-1.1.3.jar</jar>
-      <doc>/Users/jast/sbt-structure-global/ivy2/cache/commons-logging/commons-logging/docs/commons-logging-1.1.3-javadoc.jar</doc>
-      <src>/Users/jast/sbt-structure-global/ivy2/cache/commons-logging/commons-logging/srcs/commons-logging-1.1.3-sources.jar</src>
+      <jar>$IVY2/cache/commons-logging/commons-logging/jars/commons-logging-1.1.3.jar</jar>
     </module>
     <module organization="io.netty" name="netty" revision="3.9.3.Final" artifactType="jar" classifier="">
-      <jar>/Users/jast/sbt-structure-global/ivy2/cache/io.netty/netty/bundles/netty-3.9.3.Final.jar</jar>
-      <doc>/Users/jast/sbt-structure-global/ivy2/cache/io.netty/netty/docs/netty-3.9.3.Final-javadoc.jar</doc>
-      <src>/Users/jast/sbt-structure-global/ivy2/cache/io.netty/netty/srcs/netty-3.9.3.Final-sources.jar</src>
+      <jar>$IVY2/cache/io.netty/netty/bundles/netty-3.9.3.Final.jar</jar>
     </module>
     <module organization="javax.transaction" name="jta" revision="1.1" artifactType="jar" classifier="">
-      <jar>/Users/jast/sbt-structure-global/ivy2/cache/javax.transaction/jta/jars/jta-1.1.jar</jar>
-      <src>/Users/jast/sbt-structure-global/ivy2/cache/javax.transaction/jta/srcs/jta-1.1-sources.jar</src>
+      <jar>$IVY2/cache/javax.transaction/jta/jars/jta-1.1.jar</jar>
     </module>
     <module organization="joda-time" name="joda-time" revision="2.3" artifactType="jar" classifier="">
-      <jar>/Users/jast/sbt-structure-global/ivy2/cache/joda-time/joda-time/jars/joda-time-2.3.jar</jar>
-      <doc>/Users/jast/sbt-structure-global/ivy2/cache/joda-time/joda-time/docs/joda-time-2.3-javadoc.jar</doc>
-      <src>/Users/jast/sbt-structure-global/ivy2/cache/joda-time/joda-time/srcs/joda-time-2.3-sources.jar</src>
+      <jar>$IVY2/cache/joda-time/joda-time/jars/joda-time-2.3.jar</jar>
     </module>
     <module organization="junit" name="junit" revision="4.11" artifactType="jar" classifier="">
-      <jar>/Users/jast/sbt-structure-global/ivy2/cache/junit/junit/jars/junit-4.11.jar</jar>
-      <doc>/Users/jast/sbt-structure-global/ivy2/cache/junit/junit/docs/junit-4.11-javadoc.jar</doc>
-      <src>/Users/jast/sbt-structure-global/ivy2/cache/junit/junit/srcs/junit-4.11-sources.jar</src>
+      <jar>$IVY2/cache/junit/junit/jars/junit-4.11.jar</jar>
     </module>
     <module organization="net.java.dev.jna" name="jna" revision="3.4.0" artifactType="jar" classifier="">
-      <jar>/Users/jast/sbt-structure-global/ivy2/cache/net.java.dev.jna/jna/jars/jna-3.4.0.jar</jar>
-      <doc>/Users/jast/sbt-structure-global/ivy2/cache/net.java.dev.jna/jna/docs/jna-3.4.0-javadoc.jar</doc>
-      <src>/Users/jast/sbt-structure-global/ivy2/cache/net.java.dev.jna/jna/srcs/jna-3.4.0-sources.jar</src>
+      <jar>$IVY2/cache/net.java.dev.jna/jna/jars/jna-3.4.0.jar</jar>
     </module>
     <module organization="net.java.dev.jna" name="platform" revision="3.4.0" artifactType="jar" classifier="">
-      <jar>/Users/jast/sbt-structure-global/ivy2/cache/net.java.dev.jna/platform/jars/platform-3.4.0.jar</jar>
-      <doc>/Users/jast/sbt-structure-global/ivy2/cache/net.java.dev.jna/platform/docs/platform-3.4.0-javadoc.jar</doc>
-      <src>/Users/jast/sbt-structure-global/ivy2/cache/net.java.dev.jna/platform/srcs/platform-3.4.0-sources.jar</src>
+      <jar>$IVY2/cache/net.java.dev.jna/platform/jars/platform-3.4.0.jar</jar>
     </module>
     <module organization="net.sourceforge.cssparser" name="cssparser" revision="0.9.11" artifactType="jar" classifier="">
-      <jar>/Users/jast/sbt-structure-global/ivy2/cache/net.sourceforge.cssparser/cssparser/jars/cssparser-0.9.11.jar</jar>
-      <doc>/Users/jast/sbt-structure-global/ivy2/cache/net.sourceforge.cssparser/cssparser/docs/cssparser-0.9.11-javadoc.jar</doc>
-      <src>/Users/jast/sbt-structure-global/ivy2/cache/net.sourceforge.cssparser/cssparser/srcs/cssparser-0.9.11-sources.jar</src>
+      <jar>$IVY2/cache/net.sourceforge.cssparser/cssparser/jars/cssparser-0.9.11.jar</jar>
     </module>
     <module organization="net.sourceforge.htmlunit" name="htmlunit" revision="2.13" artifactType="jar" classifier="">
-      <jar>/Users/jast/sbt-structure-global/ivy2/cache/net.sourceforge.htmlunit/htmlunit/jars/htmlunit-2.13.jar</jar>
-      <doc>/Users/jast/sbt-structure-global/ivy2/cache/net.sourceforge.htmlunit/htmlunit/docs/htmlunit-2.13-javadoc.jar</doc>
-      <src>/Users/jast/sbt-structure-global/ivy2/cache/net.sourceforge.htmlunit/htmlunit/srcs/htmlunit-2.13-sources.jar</src>
+      <jar>$IVY2/cache/net.sourceforge.htmlunit/htmlunit/jars/htmlunit-2.13.jar</jar>
     </module>
     <module organization="net.sourceforge.htmlunit" name="htmlunit-core-js" revision="2.13" artifactType="jar" classifier="">
-      <jar>/Users/jast/sbt-structure-global/ivy2/cache/net.sourceforge.htmlunit/htmlunit-core-js/jars/htmlunit-core-js-2.13.jar</jar>
-      <doc>/Users/jast/sbt-structure-global/ivy2/cache/net.sourceforge.htmlunit/htmlunit-core-js/docs/htmlunit-core-js-2.13-javadoc.jar</doc>
-      <src>/Users/jast/sbt-structure-global/ivy2/cache/net.sourceforge.htmlunit/htmlunit-core-js/srcs/htmlunit-core-js-2.13-sources.jar</src>
+      <jar>$IVY2/cache/net.sourceforge.htmlunit/htmlunit-core-js/jars/htmlunit-core-js-2.13.jar</jar>
     </module>
     <module organization="net.sourceforge.nekohtml" name="nekohtml" revision="1.9.19" artifactType="jar" classifier="">
-      <jar>/Users/jast/sbt-structure-global/ivy2/cache/net.sourceforge.nekohtml/nekohtml/jars/nekohtml-1.9.19.jar</jar>
-      <doc>/Users/jast/sbt-structure-global/ivy2/cache/net.sourceforge.nekohtml/nekohtml/docs/nekohtml-1.9.19-javadoc.jar</doc>
-      <src>/Users/jast/sbt-structure-global/ivy2/cache/net.sourceforge.nekohtml/nekohtml/srcs/nekohtml-1.9.19-sources.jar</src>
+      <jar>$IVY2/cache/net.sourceforge.nekohtml/nekohtml/jars/nekohtml-1.9.19.jar</jar>
     </module>
     <module organization="org.apache.commons" name="commons-exec" revision="1.1" artifactType="jar" classifier="">
-      <jar>/Users/jast/sbt-structure-global/ivy2/cache/org.apache.commons/commons-exec/jars/commons-exec-1.1.jar</jar>
-      <doc>/Users/jast/sbt-structure-global/ivy2/cache/org.apache.commons/commons-exec/docs/commons-exec-1.1-javadoc.jar</doc>
-      <src>/Users/jast/sbt-structure-global/ivy2/cache/org.apache.commons/commons-exec/srcs/commons-exec-1.1-sources.jar</src>
+      <jar>$IVY2/cache/org.apache.commons/commons-exec/jars/commons-exec-1.1.jar</jar>
     </module>
     <module organization="org.apache.commons" name="commons-lang3" revision="3.1" artifactType="jar" classifier="">
-      <jar>/Users/jast/sbt-structure-global/ivy2/cache/org.apache.commons/commons-lang3/jars/commons-lang3-3.1.jar</jar>
-      <doc>/Users/jast/sbt-structure-global/ivy2/cache/org.apache.commons/commons-lang3/docs/commons-lang3-3.1-javadoc.jar</doc>
-      <src>/Users/jast/sbt-structure-global/ivy2/cache/org.apache.commons/commons-lang3/srcs/commons-lang3-3.1-sources.jar</src>
+      <jar>$IVY2/cache/org.apache.commons/commons-lang3/jars/commons-lang3-3.1.jar</jar>
     </module>
     <module organization="org.apache.httpcomponents" name="httpclient" revision="4.3.1" artifactType="jar" classifier="">
-      <jar>/Users/jast/sbt-structure-global/ivy2/cache/org.apache.httpcomponents/httpclient/jars/httpclient-4.3.1.jar</jar>
-      <doc>/Users/jast/sbt-structure-global/ivy2/cache/org.apache.httpcomponents/httpclient/docs/httpclient-4.3.1-javadoc.jar</doc>
-      <src>/Users/jast/sbt-structure-global/ivy2/cache/org.apache.httpcomponents/httpclient/srcs/httpclient-4.3.1-sources.jar</src>
+      <jar>$IVY2/cache/org.apache.httpcomponents/httpclient/jars/httpclient-4.3.1.jar</jar>
     </module>
     <module organization="org.apache.httpcomponents" name="httpcore" revision="4.3" artifactType="jar" classifier="">
-      <jar>/Users/jast/sbt-structure-global/ivy2/cache/org.apache.httpcomponents/httpcore/jars/httpcore-4.3.jar</jar>
-      <doc>/Users/jast/sbt-structure-global/ivy2/cache/org.apache.httpcomponents/httpcore/docs/httpcore-4.3-javadoc.jar</doc>
-      <src>/Users/jast/sbt-structure-global/ivy2/cache/org.apache.httpcomponents/httpcore/srcs/httpcore-4.3-sources.jar</src>
+      <jar>$IVY2/cache/org.apache.httpcomponents/httpcore/jars/httpcore-4.3.jar</jar>
     </module>
     <module organization="org.apache.httpcomponents" name="httpmime" revision="4.3.1" artifactType="jar" classifier="">
-      <jar>/Users/jast/sbt-structure-global/ivy2/cache/org.apache.httpcomponents/httpmime/jars/httpmime-4.3.1.jar</jar>
-      <doc>/Users/jast/sbt-structure-global/ivy2/cache/org.apache.httpcomponents/httpmime/docs/httpmime-4.3.1-javadoc.jar</doc>
-      <src>/Users/jast/sbt-structure-global/ivy2/cache/org.apache.httpcomponents/httpmime/srcs/httpmime-4.3.1-sources.jar</src>
+      <jar>$IVY2/cache/org.apache.httpcomponents/httpmime/jars/httpmime-4.3.1.jar</jar>
     </module>
     <module organization="org.easytesting" name="fest-assert" revision="1.4" artifactType="jar" classifier="">
-      <jar>/Users/jast/sbt-structure-global/ivy2/cache/org.easytesting/fest-assert/jars/fest-assert-1.4.jar</jar>
-      <doc>/Users/jast/sbt-structure-global/ivy2/cache/org.easytesting/fest-assert/docs/fest-assert-1.4-javadoc.jar</doc>
-      <src>/Users/jast/sbt-structure-global/ivy2/cache/org.easytesting/fest-assert/srcs/fest-assert-1.4-sources.jar</src>
+      <jar>$IVY2/cache/org.easytesting/fest-assert/jars/fest-assert-1.4.jar</jar>
     </module>
     <module organization="org.easytesting" name="fest-util" revision="1.1.6" artifactType="jar" classifier="">
-      <jar>/Users/jast/sbt-structure-global/ivy2/cache/org.easytesting/fest-util/jars/fest-util-1.1.6.jar</jar>
-      <doc>/Users/jast/sbt-structure-global/ivy2/cache/org.easytesting/fest-util/docs/fest-util-1.1.6-javadoc.jar</doc>
-      <src>/Users/jast/sbt-structure-global/ivy2/cache/org.easytesting/fest-util/srcs/fest-util-1.1.6-sources.jar</src>
+      <jar>$IVY2/cache/org.easytesting/fest-util/jars/fest-util-1.1.6.jar</jar>
     </module>
     <module organization="org.eclipse.jetty" name="jetty-http" revision="8.1.12.v20130726" artifactType="jar" classifier="">
-      <jar>/Users/jast/sbt-structure-global/ivy2/cache/org.eclipse.jetty/jetty-http/jars/jetty-http-8.1.12.v20130726.jar</jar>
-      <doc>/Users/jast/sbt-structure-global/ivy2/cache/org.eclipse.jetty/jetty-http/docs/jetty-http-8.1.12.v20130726-javadoc.jar</doc>
-      <src>/Users/jast/sbt-structure-global/ivy2/cache/org.eclipse.jetty/jetty-http/srcs/jetty-http-8.1.12.v20130726-sources.jar</src>
+      <jar>$IVY2/cache/org.eclipse.jetty/jetty-http/jars/jetty-http-8.1.12.v20130726.jar</jar>
     </module>
     <module organization="org.eclipse.jetty" name="jetty-io" revision="8.1.12.v20130726" artifactType="jar" classifier="">
-      <jar>/Users/jast/sbt-structure-global/ivy2/cache/org.eclipse.jetty/jetty-io/jars/jetty-io-8.1.12.v20130726.jar</jar>
-      <doc>/Users/jast/sbt-structure-global/ivy2/cache/org.eclipse.jetty/jetty-io/docs/jetty-io-8.1.12.v20130726-javadoc.jar</doc>
-      <src>/Users/jast/sbt-structure-global/ivy2/cache/org.eclipse.jetty/jetty-io/srcs/jetty-io-8.1.12.v20130726-sources.jar</src>
+      <jar>$IVY2/cache/org.eclipse.jetty/jetty-io/jars/jetty-io-8.1.12.v20130726.jar</jar>
     </module>
     <module organization="org.eclipse.jetty" name="jetty-util" revision="8.1.12.v20130726" artifactType="jar" classifier="">
-      <jar>/Users/jast/sbt-structure-global/ivy2/cache/org.eclipse.jetty/jetty-util/jars/jetty-util-8.1.12.v20130726.jar</jar>
-      <doc>/Users/jast/sbt-structure-global/ivy2/cache/org.eclipse.jetty/jetty-util/docs/jetty-util-8.1.12.v20130726-javadoc.jar</doc>
-      <src>/Users/jast/sbt-structure-global/ivy2/cache/org.eclipse.jetty/jetty-util/srcs/jetty-util-8.1.12.v20130726-sources.jar</src>
+      <jar>$IVY2/cache/org.eclipse.jetty/jetty-util/jars/jetty-util-8.1.12.v20130726.jar</jar>
     </module>
     <module organization="org.eclipse.jetty" name="jetty-websocket" revision="8.1.12.v20130726" artifactType="jar" classifier="">
-      <jar>/Users/jast/sbt-structure-global/ivy2/cache/org.eclipse.jetty/jetty-websocket/jars/jetty-websocket-8.1.12.v20130726.jar</jar>
-      <doc>/Users/jast/sbt-structure-global/ivy2/cache/org.eclipse.jetty/jetty-websocket/docs/jetty-websocket-8.1.12.v20130726-javadoc.jar</doc>
-      <src>/Users/jast/sbt-structure-global/ivy2/cache/org.eclipse.jetty/jetty-websocket/srcs/jetty-websocket-8.1.12.v20130726-sources.jar</src>
+      <jar>$IVY2/cache/org.eclipse.jetty/jetty-websocket/jars/jetty-websocket-8.1.12.v20130726.jar</jar>
     </module>
     <module organization="org.fluentlenium" name="fluentlenium-core" revision="0.9.2" artifactType="jar" classifier="">
-      <jar>/Users/jast/sbt-structure-global/ivy2/cache/org.fluentlenium/fluentlenium-core/jars/fluentlenium-core-0.9.2.jar</jar>
-      <doc>/Users/jast/sbt-structure-global/ivy2/cache/org.fluentlenium/fluentlenium-core/docs/fluentlenium-core-0.9.2-javadoc.jar</doc>
-      <src>/Users/jast/sbt-structure-global/ivy2/cache/org.fluentlenium/fluentlenium-core/srcs/fluentlenium-core-0.9.2-sources.jar</src>
+      <jar>$IVY2/cache/org.fluentlenium/fluentlenium-core/jars/fluentlenium-core-0.9.2.jar</jar>
     </module>
     <module organization="org.fluentlenium" name="fluentlenium-festassert" revision="0.9.2" artifactType="jar" classifier="">
-      <jar>/Users/jast/sbt-structure-global/ivy2/cache/org.fluentlenium/fluentlenium-festassert/jars/fluentlenium-festassert-0.9.2.jar</jar>
-      <doc>/Users/jast/sbt-structure-global/ivy2/cache/org.fluentlenium/fluentlenium-festassert/docs/fluentlenium-festassert-0.9.2-javadoc.jar</doc>
-      <src>/Users/jast/sbt-structure-global/ivy2/cache/org.fluentlenium/fluentlenium-festassert/srcs/fluentlenium-festassert-0.9.2-sources.jar</src>
+      <jar>$IVY2/cache/org.fluentlenium/fluentlenium-festassert/jars/fluentlenium-festassert-0.9.2.jar</jar>
     </module>
     <module organization="org.hamcrest" name="hamcrest-core" revision="1.3" artifactType="jar" classifier="">
-      <jar>/Users/jast/sbt-structure-global/ivy2/cache/org.hamcrest/hamcrest-core/jars/hamcrest-core-1.3.jar</jar>
-      <doc>/Users/jast/sbt-structure-global/ivy2/cache/org.hamcrest/hamcrest-core/docs/hamcrest-core-1.3-javadoc.jar</doc>
-      <src>/Users/jast/sbt-structure-global/ivy2/cache/org.hamcrest/hamcrest-core/srcs/hamcrest-core-1.3-sources.jar</src>
+      <jar>$IVY2/cache/org.hamcrest/hamcrest-core/jars/hamcrest-core-1.3.jar</jar>
     </module>
     <module organization="org.javassist" name="javassist" revision="3.18.2-GA" artifactType="jar" classifier="">
-      <jar>/Users/jast/sbt-structure-global/ivy2/cache/org.javassist/javassist/bundles/javassist-3.18.2-GA.jar</jar>
-      <doc>/Users/jast/sbt-structure-global/ivy2/cache/org.javassist/javassist/docs/javassist-3.18.2-GA-javadoc.jar</doc>
-      <src>/Users/jast/sbt-structure-global/ivy2/cache/org.javassist/javassist/srcs/javassist-3.18.2-GA-sources.jar</src>
+      <jar>$IVY2/cache/org.javassist/javassist/bundles/javassist-3.18.2-GA.jar</jar>
     </module>
     <module organization="org.joda" name="joda-convert" revision="1.6" artifactType="jar" classifier="">
-      <jar>/Users/jast/sbt-structure-global/ivy2/cache/org.joda/joda-convert/jars/joda-convert-1.6.jar</jar>
-      <doc>/Users/jast/sbt-structure-global/ivy2/cache/org.joda/joda-convert/docs/joda-convert-1.6-javadoc.jar</doc>
-      <src>/Users/jast/sbt-structure-global/ivy2/cache/org.joda/joda-convert/srcs/joda-convert-1.6-sources.jar</src>
+      <jar>$IVY2/cache/org.joda/joda-convert/jars/joda-convert-1.6.jar</jar>
     </module>
     <module organization="org.json" name="json" revision="20080701" artifactType="jar" classifier="">
-      <jar>/Users/jast/sbt-structure-global/ivy2/cache/org.json/json/jars/json-20080701.jar</jar>
-      <doc>/Users/jast/sbt-structure-global/ivy2/cache/org.json/json/docs/json-20080701-javadoc.jar</doc>
-      <src>/Users/jast/sbt-structure-global/ivy2/cache/org.json/json/srcs/json-20080701-sources.jar</src>
+      <jar>$IVY2/cache/org.json/json/jars/json-20080701.jar</jar>
     </module>
     <module organization="org.mockito" name="mockito-core" revision="1.9.5" artifactType="jar" classifier="">
-      <jar>/Users/jast/sbt-structure-global/ivy2/cache/org.mockito/mockito-core/jars/mockito-core-1.9.5.jar</jar>
-      <doc>/Users/jast/sbt-structure-global/ivy2/cache/org.mockito/mockito-core/docs/mockito-core-1.9.5-javadoc.jar</doc>
-      <src>/Users/jast/sbt-structure-global/ivy2/cache/org.mockito/mockito-core/srcs/mockito-core-1.9.5-sources.jar</src>
+      <jar>$IVY2/cache/org.mockito/mockito-core/jars/mockito-core-1.9.5.jar</jar>
     </module>
     <module organization="org.objenesis" name="objenesis" revision="1.0" artifactType="jar" classifier="">
-      <jar>/Users/jast/sbt-structure-global/ivy2/cache/org.objenesis/objenesis/jars/objenesis-1.0.jar</jar>
-      <doc>/Users/jast/sbt-structure-global/ivy2/cache/org.objenesis/objenesis/docs/objenesis-1.0-javadoc.jar</doc>
-      <src>/Users/jast/sbt-structure-global/ivy2/cache/org.objenesis/objenesis/srcs/objenesis-1.0-sources.jar</src>
+      <jar>$IVY2/cache/org.objenesis/objenesis/jars/objenesis-1.0.jar</jar>
     </module>
     <module organization="org.scala-lang" name="scala-compiler" revision="2.10.6" artifactType="jar" classifier="">
-      <jar>/Users/jast/sbt-structure-global/boot/scala-2.10.6/lib/scala-compiler.jar</jar>
-      <doc>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-lang/scala-compiler/docs/scala-compiler-2.10.6-javadoc.jar</doc>
-      <src>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-lang/scala-compiler/srcs/scala-compiler-2.10.6-sources.jar</src>
+      <jar>$SBT_BOOT/scala-2.10.6/lib/scala-compiler.jar</jar>
     </module>
     <module organization="org.scala-lang" name="scala-library" revision="2.10.6" artifactType="jar" classifier="">
-      <jar>/Users/jast/sbt-structure-global/boot/scala-2.10.6/lib/scala-library.jar</jar>
-      <doc>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-lang/scala-library/docs/scala-library-2.10.6-javadoc.jar</doc>
-      <src>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-lang/scala-library/srcs/scala-library-2.10.6-sources.jar</src>
+      <jar>$SBT_BOOT/scala-2.10.6/lib/scala-library.jar</jar>
     </module>
     <module organization="org.scala-lang" name="scala-reflect" revision="2.10.6" artifactType="jar" classifier="">
-      <jar>/Users/jast/sbt-structure-global/boot/scala-2.10.6/lib/scala-reflect.jar</jar>
-      <doc>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-lang/scala-reflect/docs/scala-reflect-2.10.6-javadoc.jar</doc>
-      <src>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-lang/scala-reflect/srcs/scala-reflect-2.10.6-sources.jar</src>
+      <jar>$SBT_BOOT/scala-2.10.6/lib/scala-reflect.jar</jar>
     </module>
     <module organization="org.scala-sbt" name="test-interface" revision="1.0" artifactType="jar" classifier="">
-      <jar>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/test-interface/jars/test-interface-1.0.jar</jar>
-      <doc>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/test-interface/docs/test-interface-1.0-javadoc.jar</doc>
-      <src>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-sbt/test-interface/srcs/test-interface-1.0-sources.jar</src>
+      <jar>$IVY2/cache/org.scala-sbt/test-interface/jars/test-interface-1.0.jar</jar>
     </module>
     <module organization="org.scala-stm" name="scala-stm_2.10" revision="0.7" artifactType="jar" classifier="">
-      <jar>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-stm/scala-stm_2.10/jars/scala-stm_2.10-0.7.jar</jar>
-      <doc>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-stm/scala-stm_2.10/docs/scala-stm_2.10-0.7-javadoc.jar</doc>
-      <src>/Users/jast/sbt-structure-global/ivy2/cache/org.scala-stm/scala-stm_2.10/srcs/scala-stm_2.10-0.7-sources.jar</src>
+      <jar>$IVY2/cache/org.scala-stm/scala-stm_2.10/jars/scala-stm_2.10-0.7.jar</jar>
     </module>
     <module organization="org.scalamacros" name="quasiquotes_2.10" revision="2.0.0-M7" artifactType="jar" classifier="">
-      <jar>/Users/jast/sbt-structure-global/ivy2/cache/org.scalamacros/quasiquotes_2.10/jars/quasiquotes_2.10-2.0.0-M7.jar</jar>
-      <doc>/Users/jast/sbt-structure-global/ivy2/cache/org.scalamacros/quasiquotes_2.10/docs/quasiquotes_2.10-2.0.0-M7-javadoc.jar</doc>
-      <src>/Users/jast/sbt-structure-global/ivy2/cache/org.scalamacros/quasiquotes_2.10/srcs/quasiquotes_2.10-2.0.0-M7-sources.jar</src>
+      <jar>$IVY2/cache/org.scalamacros/quasiquotes_2.10/jars/quasiquotes_2.10-2.0.0-M7.jar</jar>
     </module>
     <module organization="org.scalaz" name="scalaz-concurrent_2.10" revision="7.0.6" artifactType="jar" classifier="">
-      <jar>/Users/jast/sbt-structure-global/ivy2/cache/org.scalaz/scalaz-concurrent_2.10/bundles/scalaz-concurrent_2.10-7.0.6.jar</jar>
-      <doc>/Users/jast/sbt-structure-global/ivy2/cache/org.scalaz/scalaz-concurrent_2.10/docs/scalaz-concurrent_2.10-7.0.6-javadoc.jar</doc>
-      <src>/Users/jast/sbt-structure-global/ivy2/cache/org.scalaz/scalaz-concurrent_2.10/srcs/scalaz-concurrent_2.10-7.0.6-sources.jar</src>
+      <jar>$IVY2/cache/org.scalaz/scalaz-concurrent_2.10/bundles/scalaz-concurrent_2.10-7.0.6.jar</jar>
     </module>
     <module organization="org.scalaz" name="scalaz-core_2.10" revision="7.0.6" artifactType="jar" classifier="">
-      <jar>/Users/jast/sbt-structure-global/ivy2/cache/org.scalaz/scalaz-core_2.10/bundles/scalaz-core_2.10-7.0.6.jar</jar>
-      <doc>/Users/jast/sbt-structure-global/ivy2/cache/org.scalaz/scalaz-core_2.10/docs/scalaz-core_2.10-7.0.6-javadoc.jar</doc>
-      <src>/Users/jast/sbt-structure-global/ivy2/cache/org.scalaz/scalaz-core_2.10/srcs/scalaz-core_2.10-7.0.6-sources.jar</src>
+      <jar>$IVY2/cache/org.scalaz/scalaz-core_2.10/bundles/scalaz-core_2.10-7.0.6.jar</jar>
     </module>
     <module organization="org.scalaz" name="scalaz-effect_2.10" revision="7.0.6" artifactType="jar" classifier="">
-      <jar>/Users/jast/sbt-structure-global/ivy2/cache/org.scalaz/scalaz-effect_2.10/bundles/scalaz-effect_2.10-7.0.6.jar</jar>
-      <doc>/Users/jast/sbt-structure-global/ivy2/cache/org.scalaz/scalaz-effect_2.10/docs/scalaz-effect_2.10-7.0.6-javadoc.jar</doc>
-      <src>/Users/jast/sbt-structure-global/ivy2/cache/org.scalaz/scalaz-effect_2.10/srcs/scalaz-effect_2.10-7.0.6-sources.jar</src>
+      <jar>$IVY2/cache/org.scalaz/scalaz-effect_2.10/bundles/scalaz-effect_2.10-7.0.6.jar</jar>
     </module>
     <module organization="org.seleniumhq.selenium" name="selenium-android-driver" revision="2.39.0" artifactType="jar" classifier="">
-      <jar>/Users/jast/sbt-structure-global/ivy2/cache/org.seleniumhq.selenium/selenium-android-driver/jars/selenium-android-driver-2.39.0.jar</jar>
-      <doc>/Users/jast/sbt-structure-global/ivy2/cache/org.seleniumhq.selenium/selenium-android-driver/docs/selenium-android-driver-2.39.0-javadoc.jar</doc>
-      <src>/Users/jast/sbt-structure-global/ivy2/cache/org.seleniumhq.selenium/selenium-android-driver/srcs/selenium-android-driver-2.39.0-sources.jar</src>
+      <jar>$IVY2/cache/org.seleniumhq.selenium/selenium-android-driver/jars/selenium-android-driver-2.39.0.jar</jar>
     </module>
     <module organization="org.seleniumhq.selenium" name="selenium-api" revision="2.39.0" artifactType="jar" classifier="">
-      <jar>/Users/jast/sbt-structure-global/ivy2/cache/org.seleniumhq.selenium/selenium-api/jars/selenium-api-2.39.0.jar</jar>
-      <doc>/Users/jast/sbt-structure-global/ivy2/cache/org.seleniumhq.selenium/selenium-api/docs/selenium-api-2.39.0-javadoc.jar</doc>
-      <src>/Users/jast/sbt-structure-global/ivy2/cache/org.seleniumhq.selenium/selenium-api/srcs/selenium-api-2.39.0-sources.jar</src>
+      <jar>$IVY2/cache/org.seleniumhq.selenium/selenium-api/jars/selenium-api-2.39.0.jar</jar>
     </module>
     <module organization="org.seleniumhq.selenium" name="selenium-chrome-driver" revision="2.39.0" artifactType="jar" classifier="">
-      <jar>/Users/jast/sbt-structure-global/ivy2/cache/org.seleniumhq.selenium/selenium-chrome-driver/jars/selenium-chrome-driver-2.39.0.jar</jar>
-      <doc>/Users/jast/sbt-structure-global/ivy2/cache/org.seleniumhq.selenium/selenium-chrome-driver/docs/selenium-chrome-driver-2.39.0-javadoc.jar</doc>
-      <src>/Users/jast/sbt-structure-global/ivy2/cache/org.seleniumhq.selenium/selenium-chrome-driver/srcs/selenium-chrome-driver-2.39.0-sources.jar</src>
+      <jar>$IVY2/cache/org.seleniumhq.selenium/selenium-chrome-driver/jars/selenium-chrome-driver-2.39.0.jar</jar>
     </module>
     <module organization="org.seleniumhq.selenium" name="selenium-firefox-driver" revision="2.39.0" artifactType="jar" classifier="">
-      <jar>/Users/jast/sbt-structure-global/ivy2/cache/org.seleniumhq.selenium/selenium-firefox-driver/jars/selenium-firefox-driver-2.39.0.jar</jar>
-      <doc>/Users/jast/sbt-structure-global/ivy2/cache/org.seleniumhq.selenium/selenium-firefox-driver/docs/selenium-firefox-driver-2.39.0-javadoc.jar</doc>
-      <src>/Users/jast/sbt-structure-global/ivy2/cache/org.seleniumhq.selenium/selenium-firefox-driver/srcs/selenium-firefox-driver-2.39.0-sources.jar</src>
+      <jar>$IVY2/cache/org.seleniumhq.selenium/selenium-firefox-driver/jars/selenium-firefox-driver-2.39.0.jar</jar>
     </module>
     <module organization="org.seleniumhq.selenium" name="selenium-htmlunit-driver" revision="2.39.0" artifactType="jar" classifier="">
-      <jar>/Users/jast/sbt-structure-global/ivy2/cache/org.seleniumhq.selenium/selenium-htmlunit-driver/jars/selenium-htmlunit-driver-2.39.0.jar</jar>
-      <doc>/Users/jast/sbt-structure-global/ivy2/cache/org.seleniumhq.selenium/selenium-htmlunit-driver/docs/selenium-htmlunit-driver-2.39.0-javadoc.jar</doc>
-      <src>/Users/jast/sbt-structure-global/ivy2/cache/org.seleniumhq.selenium/selenium-htmlunit-driver/srcs/selenium-htmlunit-driver-2.39.0-sources.jar</src>
+      <jar>$IVY2/cache/org.seleniumhq.selenium/selenium-htmlunit-driver/jars/selenium-htmlunit-driver-2.39.0.jar</jar>
     </module>
     <module organization="org.seleniumhq.selenium" name="selenium-ie-driver" revision="2.39.0" artifactType="jar" classifier="">
-      <jar>/Users/jast/sbt-structure-global/ivy2/cache/org.seleniumhq.selenium/selenium-ie-driver/jars/selenium-ie-driver-2.39.0.jar</jar>
-      <doc>/Users/jast/sbt-structure-global/ivy2/cache/org.seleniumhq.selenium/selenium-ie-driver/docs/selenium-ie-driver-2.39.0-javadoc.jar</doc>
-      <src>/Users/jast/sbt-structure-global/ivy2/cache/org.seleniumhq.selenium/selenium-ie-driver/srcs/selenium-ie-driver-2.39.0-sources.jar</src>
+      <jar>$IVY2/cache/org.seleniumhq.selenium/selenium-ie-driver/jars/selenium-ie-driver-2.39.0.jar</jar>
     </module>
     <module organization="org.seleniumhq.selenium" name="selenium-iphone-driver" revision="2.39.0" artifactType="jar" classifier="">
-      <jar>/Users/jast/sbt-structure-global/ivy2/cache/org.seleniumhq.selenium/selenium-iphone-driver/jars/selenium-iphone-driver-2.39.0.jar</jar>
-      <doc>/Users/jast/sbt-structure-global/ivy2/cache/org.seleniumhq.selenium/selenium-iphone-driver/docs/selenium-iphone-driver-2.39.0-javadoc.jar</doc>
-      <src>/Users/jast/sbt-structure-global/ivy2/cache/org.seleniumhq.selenium/selenium-iphone-driver/srcs/selenium-iphone-driver-2.39.0-sources.jar</src>
+      <jar>$IVY2/cache/org.seleniumhq.selenium/selenium-iphone-driver/jars/selenium-iphone-driver-2.39.0.jar</jar>
     </module>
     <module organization="org.seleniumhq.selenium" name="selenium-java" revision="2.39.0" artifactType="jar" classifier="">
-      <jar>/Users/jast/sbt-structure-global/ivy2/cache/org.seleniumhq.selenium/selenium-java/jars/selenium-java-2.39.0.jar</jar>
-      <doc>/Users/jast/sbt-structure-global/ivy2/cache/org.seleniumhq.selenium/selenium-java/docs/selenium-java-2.39.0-javadoc.jar</doc>
-      <src>/Users/jast/sbt-structure-global/ivy2/cache/org.seleniumhq.selenium/selenium-java/srcs/selenium-java-2.39.0-sources.jar</src>
+      <jar>$IVY2/cache/org.seleniumhq.selenium/selenium-java/jars/selenium-java-2.39.0.jar</jar>
     </module>
     <module organization="org.seleniumhq.selenium" name="selenium-remote-driver" revision="2.39.0" artifactType="jar" classifier="">
-      <jar>/Users/jast/sbt-structure-global/ivy2/cache/org.seleniumhq.selenium/selenium-remote-driver/jars/selenium-remote-driver-2.39.0.jar</jar>
-      <doc>/Users/jast/sbt-structure-global/ivy2/cache/org.seleniumhq.selenium/selenium-remote-driver/docs/selenium-remote-driver-2.39.0-javadoc.jar</doc>
-      <src>/Users/jast/sbt-structure-global/ivy2/cache/org.seleniumhq.selenium/selenium-remote-driver/srcs/selenium-remote-driver-2.39.0-sources.jar</src>
+      <jar>$IVY2/cache/org.seleniumhq.selenium/selenium-remote-driver/jars/selenium-remote-driver-2.39.0.jar</jar>
     </module>
     <module organization="org.seleniumhq.selenium" name="selenium-safari-driver" revision="2.39.0" artifactType="jar" classifier="">
-      <jar>/Users/jast/sbt-structure-global/ivy2/cache/org.seleniumhq.selenium/selenium-safari-driver/jars/selenium-safari-driver-2.39.0.jar</jar>
-      <doc>/Users/jast/sbt-structure-global/ivy2/cache/org.seleniumhq.selenium/selenium-safari-driver/docs/selenium-safari-driver-2.39.0-javadoc.jar</doc>
-      <src>/Users/jast/sbt-structure-global/ivy2/cache/org.seleniumhq.selenium/selenium-safari-driver/srcs/selenium-safari-driver-2.39.0-sources.jar</src>
+      <jar>$IVY2/cache/org.seleniumhq.selenium/selenium-safari-driver/jars/selenium-safari-driver-2.39.0.jar</jar>
     </module>
     <module organization="org.seleniumhq.selenium" name="selenium-support" revision="2.39.0" artifactType="jar" classifier="">
-      <jar>/Users/jast/sbt-structure-global/ivy2/cache/org.seleniumhq.selenium/selenium-support/jars/selenium-support-2.39.0.jar</jar>
-      <doc>/Users/jast/sbt-structure-global/ivy2/cache/org.seleniumhq.selenium/selenium-support/docs/selenium-support-2.39.0-javadoc.jar</doc>
-      <src>/Users/jast/sbt-structure-global/ivy2/cache/org.seleniumhq.selenium/selenium-support/srcs/selenium-support-2.39.0-sources.jar</src>
+      <jar>$IVY2/cache/org.seleniumhq.selenium/selenium-support/jars/selenium-support-2.39.0.jar</jar>
     </module>
     <module organization="org.slf4j" name="jcl-over-slf4j" revision="1.7.6" artifactType="jar" classifier="">
-      <jar>/Users/jast/sbt-structure-global/ivy2/cache/org.slf4j/jcl-over-slf4j/jars/jcl-over-slf4j-1.7.6.jar</jar>
-      <doc>/Users/jast/sbt-structure-global/ivy2/cache/org.slf4j/jcl-over-slf4j/docs/jcl-over-slf4j-1.7.6-javadoc.jar</doc>
-      <src>/Users/jast/sbt-structure-global/ivy2/cache/org.slf4j/jcl-over-slf4j/srcs/jcl-over-slf4j-1.7.6-sources.jar</src>
+      <jar>$IVY2/cache/org.slf4j/jcl-over-slf4j/jars/jcl-over-slf4j-1.7.6.jar</jar>
     </module>
     <module organization="org.slf4j" name="jul-to-slf4j" revision="1.7.6" artifactType="jar" classifier="">
-      <jar>/Users/jast/sbt-structure-global/ivy2/cache/org.slf4j/jul-to-slf4j/jars/jul-to-slf4j-1.7.6.jar</jar>
-      <doc>/Users/jast/sbt-structure-global/ivy2/cache/org.slf4j/jul-to-slf4j/docs/jul-to-slf4j-1.7.6-javadoc.jar</doc>
-      <src>/Users/jast/sbt-structure-global/ivy2/cache/org.slf4j/jul-to-slf4j/srcs/jul-to-slf4j-1.7.6-sources.jar</src>
+      <jar>$IVY2/cache/org.slf4j/jul-to-slf4j/jars/jul-to-slf4j-1.7.6.jar</jar>
     </module>
     <module organization="org.slf4j" name="slf4j-api" revision="1.7.6" artifactType="jar" classifier="">
-      <jar>/Users/jast/sbt-structure-global/ivy2/cache/org.slf4j/slf4j-api/jars/slf4j-api-1.7.6.jar</jar>
-      <doc>/Users/jast/sbt-structure-global/ivy2/cache/org.slf4j/slf4j-api/docs/slf4j-api-1.7.6-javadoc.jar</doc>
-      <src>/Users/jast/sbt-structure-global/ivy2/cache/org.slf4j/slf4j-api/srcs/slf4j-api-1.7.6-sources.jar</src>
+      <jar>$IVY2/cache/org.slf4j/slf4j-api/jars/slf4j-api-1.7.6.jar</jar>
     </module>
     <module organization="org.specs2" name="classycle" revision="1.4.3" artifactType="jar" classifier="">
-      <jar>/Users/jast/sbt-structure-global/ivy2/cache/org.specs2/classycle/jars/classycle-1.4.3.jar</jar>
-      <doc>/Users/jast/sbt-structure-global/ivy2/cache/org.specs2/classycle/docs/classycle-1.4.3-javadoc.jar</doc>
-      <src>/Users/jast/sbt-structure-global/ivy2/cache/org.specs2/classycle/srcs/classycle-1.4.3-sources.jar</src>
+      <jar>$IVY2/cache/org.specs2/classycle/jars/classycle-1.4.3.jar</jar>
     </module>
     <module organization="org.specs2" name="specs2-analysis_2.10" revision="2.3.12" artifactType="jar" classifier="">
-      <jar>/Users/jast/sbt-structure-global/ivy2/cache/org.specs2/specs2-analysis_2.10/jars/specs2-analysis_2.10-2.3.12.jar</jar>
-      <doc>/Users/jast/sbt-structure-global/ivy2/cache/org.specs2/specs2-analysis_2.10/docs/specs2-analysis_2.10-2.3.12-javadoc.jar</doc>
-      <src>/Users/jast/sbt-structure-global/ivy2/cache/org.specs2/specs2-analysis_2.10/srcs/specs2-analysis_2.10-2.3.12-sources.jar</src>
+      <jar>$IVY2/cache/org.specs2/specs2-analysis_2.10/jars/specs2-analysis_2.10-2.3.12.jar</jar>
     </module>
     <module organization="org.specs2" name="specs2-common_2.10" revision="2.3.12" artifactType="jar" classifier="">
-      <jar>/Users/jast/sbt-structure-global/ivy2/cache/org.specs2/specs2-common_2.10/jars/specs2-common_2.10-2.3.12.jar</jar>
-      <doc>/Users/jast/sbt-structure-global/ivy2/cache/org.specs2/specs2-common_2.10/docs/specs2-common_2.10-2.3.12-javadoc.jar</doc>
-      <src>/Users/jast/sbt-structure-global/ivy2/cache/org.specs2/specs2-common_2.10/srcs/specs2-common_2.10-2.3.12-sources.jar</src>
+      <jar>$IVY2/cache/org.specs2/specs2-common_2.10/jars/specs2-common_2.10-2.3.12.jar</jar>
     </module>
     <module organization="org.specs2" name="specs2-core_2.10" revision="2.3.12" artifactType="jar" classifier="">
-      <jar>/Users/jast/sbt-structure-global/ivy2/cache/org.specs2/specs2-core_2.10/jars/specs2-core_2.10-2.3.12.jar</jar>
-      <doc>/Users/jast/sbt-structure-global/ivy2/cache/org.specs2/specs2-core_2.10/docs/specs2-core_2.10-2.3.12-javadoc.jar</doc>
-      <src>/Users/jast/sbt-structure-global/ivy2/cache/org.specs2/specs2-core_2.10/srcs/specs2-core_2.10-2.3.12-sources.jar</src>
+      <jar>$IVY2/cache/org.specs2/specs2-core_2.10/jars/specs2-core_2.10-2.3.12.jar</jar>
     </module>
     <module organization="org.specs2" name="specs2-junit_2.10" revision="2.3.12" artifactType="jar" classifier="">
-      <jar>/Users/jast/sbt-structure-global/ivy2/cache/org.specs2/specs2-junit_2.10/jars/specs2-junit_2.10-2.3.12.jar</jar>
-      <doc>/Users/jast/sbt-structure-global/ivy2/cache/org.specs2/specs2-junit_2.10/docs/specs2-junit_2.10-2.3.12-javadoc.jar</doc>
-      <src>/Users/jast/sbt-structure-global/ivy2/cache/org.specs2/specs2-junit_2.10/srcs/specs2-junit_2.10-2.3.12-sources.jar</src>
+      <jar>$IVY2/cache/org.specs2/specs2-junit_2.10/jars/specs2-junit_2.10-2.3.12.jar</jar>
     </module>
     <module organization="org.specs2" name="specs2-matcher-extra_2.10" revision="2.3.12" artifactType="jar" classifier="">
-      <jar>/Users/jast/sbt-structure-global/ivy2/cache/org.specs2/specs2-matcher-extra_2.10/jars/specs2-matcher-extra_2.10-2.3.12.jar</jar>
-      <doc>/Users/jast/sbt-structure-global/ivy2/cache/org.specs2/specs2-matcher-extra_2.10/docs/specs2-matcher-extra_2.10-2.3.12-javadoc.jar</doc>
-      <src>/Users/jast/sbt-structure-global/ivy2/cache/org.specs2/specs2-matcher-extra_2.10/srcs/specs2-matcher-extra_2.10-2.3.12-sources.jar</src>
+      <jar>$IVY2/cache/org.specs2/specs2-matcher-extra_2.10/jars/specs2-matcher-extra_2.10-2.3.12.jar</jar>
     </module>
     <module organization="org.specs2" name="specs2-matcher_2.10" revision="2.3.12" artifactType="jar" classifier="">
-      <jar>/Users/jast/sbt-structure-global/ivy2/cache/org.specs2/specs2-matcher_2.10/jars/specs2-matcher_2.10-2.3.12.jar</jar>
-      <doc>/Users/jast/sbt-structure-global/ivy2/cache/org.specs2/specs2-matcher_2.10/docs/specs2-matcher_2.10-2.3.12-javadoc.jar</doc>
-      <src>/Users/jast/sbt-structure-global/ivy2/cache/org.specs2/specs2-matcher_2.10/srcs/specs2-matcher_2.10-2.3.12-sources.jar</src>
+      <jar>$IVY2/cache/org.specs2/specs2-matcher_2.10/jars/specs2-matcher_2.10-2.3.12.jar</jar>
     </module>
     <module organization="org.specs2" name="specs2-mock_2.10" revision="2.3.12" artifactType="jar" classifier="">
-      <jar>/Users/jast/sbt-structure-global/ivy2/cache/org.specs2/specs2-mock_2.10/jars/specs2-mock_2.10-2.3.12.jar</jar>
-      <doc>/Users/jast/sbt-structure-global/ivy2/cache/org.specs2/specs2-mock_2.10/docs/specs2-mock_2.10-2.3.12-javadoc.jar</doc>
-      <src>/Users/jast/sbt-structure-global/ivy2/cache/org.specs2/specs2-mock_2.10/srcs/specs2-mock_2.10-2.3.12-sources.jar</src>
+      <jar>$IVY2/cache/org.specs2/specs2-mock_2.10/jars/specs2-mock_2.10-2.3.12.jar</jar>
     </module>
     <module organization="org.w3c.css" name="sac" revision="1.3" artifactType="jar" classifier="">
-      <jar>/Users/jast/sbt-structure-global/ivy2/cache/org.w3c.css/sac/jars/sac-1.3.jar</jar>
-      <src>/Users/jast/sbt-structure-global/ivy2/cache/org.w3c.css/sac/srcs/sac-1.3-sources.jar</src>
+      <jar>$IVY2/cache/org.w3c.css/sac/jars/sac-1.3.jar</jar>
     </module>
     <module organization="org.webbitserver" name="webbit" revision="0.4.14" artifactType="jar" classifier="">
-      <jar>/Users/jast/sbt-structure-global/ivy2/cache/org.webbitserver/webbit/jars/webbit-0.4.14.jar</jar>
-      <doc>/Users/jast/sbt-structure-global/ivy2/cache/org.webbitserver/webbit/docs/webbit-0.4.14-javadoc.jar</doc>
-      <src>/Users/jast/sbt-structure-global/ivy2/cache/org.webbitserver/webbit/srcs/webbit-0.4.14-sources.jar</src>
+      <jar>$IVY2/cache/org.webbitserver/webbit/jars/webbit-0.4.14.jar</jar>
     </module>
     <module organization="tyrex" name="tyrex" revision="1.0.1" artifactType="jar" classifier="">
-      <jar>/Users/jast/sbt-structure-global/ivy2/cache/tyrex/tyrex/jars/tyrex-1.0.1.jar</jar>
+      <jar>$IVY2/cache/tyrex/tyrex/jars/tyrex-1.0.1.jar</jar>
     </module>
     <module organization="xalan" name="serializer" revision="2.7.1" artifactType="jar" classifier="">
-      <jar>/Users/jast/sbt-structure-global/ivy2/cache/xalan/serializer/jars/serializer-2.7.1.jar</jar>
+      <jar>$IVY2/cache/xalan/serializer/jars/serializer-2.7.1.jar</jar>
     </module>
     <module organization="xalan" name="xalan" revision="2.7.1" artifactType="jar" classifier="">
-      <jar>/Users/jast/sbt-structure-global/ivy2/cache/xalan/xalan/jars/xalan-2.7.1.jar</jar>
-      <src>/Users/jast/sbt-structure-global/ivy2/cache/xalan/xalan/srcs/xalan-2.7.1-sources.jar</src>
+      <jar>$IVY2/cache/xalan/xalan/jars/xalan-2.7.1.jar</jar>
     </module>
     <module organization="xerces" name="xercesImpl" revision="2.11.0" artifactType="jar" classifier="">
-      <jar>/Users/jast/sbt-structure-global/ivy2/cache/xerces/xercesImpl/jars/xercesImpl-2.11.0.jar</jar>
-      <doc>/Users/jast/sbt-structure-global/ivy2/cache/xerces/xercesImpl/docs/xercesImpl-2.11.0-javadoc.jar</doc>
-      <src>/Users/jast/sbt-structure-global/ivy2/cache/xerces/xercesImpl/srcs/xercesImpl-2.11.0-sources.jar</src>
+      <jar>$IVY2/cache/xerces/xercesImpl/jars/xercesImpl-2.11.0.jar</jar>
     </module>
     <module organization="xml-apis" name="xml-apis" revision="1.4.01" artifactType="jar" classifier="">
-      <jar>/Users/jast/sbt-structure-global/ivy2/cache/xml-apis/xml-apis/jars/xml-apis-1.4.01.jar</jar>
-      <doc>/Users/jast/sbt-structure-global/ivy2/cache/xml-apis/xml-apis/docs/xml-apis-1.4.01-javadoc.jar</doc>
-      <src>/Users/jast/sbt-structure-global/ivy2/cache/xml-apis/xml-apis/srcs/xml-apis-1.4.01-sources.jar</src>
+      <jar>$IVY2/cache/xml-apis/xml-apis/jars/xml-apis-1.4.01.jar</jar>
     </module>
   </repository>
-  <localCachePath>/Users/jast/sbt-structure-global/ivy2</localCachePath>
+  <localCachePath>$HOME/sbt-structure-global/ivy2</localCachePath>
 </structure>

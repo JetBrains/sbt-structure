@@ -98,9 +98,9 @@
     </java>
     <scala>
       <version>2.10.1</version>
-      <library>$SBT_BOOT/scala-2.10.1/lib/scala-library.jar</library>
-      <compiler>$SBT_BOOT/scala-2.10.1/lib/scala-compiler.jar</compiler>
-      <extra>$SBT_BOOT/scala-2.10.1/lib/scala-reflect.jar</extra>
+      <jar>$SBT_BOOT/scala-2.10.1/lib/scala-library.jar</jar>
+      <jar>$SBT_BOOT/scala-2.10.1/lib/scala-compiler.jar</jar>
+      <jar>$SBT_BOOT/scala-2.10.1/lib/scala-reflect.jar</jar>
       <option>-s1</option>
       <option>-s2</option>
     </scala>
