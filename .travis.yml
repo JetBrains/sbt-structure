@@ -11,10 +11,11 @@ script:
 before_cache:
   # Tricks to avoid unnecessary cache updates
   - find $HOME/.ivy2 -name "ivydata-*.properties" -delete
+  - find $HOME/sbt-structure-global \( -name "*.log" -o -name "*.lock" \) -delete
   - find $HOME/sbt-structure-global/ivy2 -name "ivydata-*.properties" -delete
-  - find $HOME/sbt-structure-global -name "*.lock" -delete
 
 cache:
   directories:
     - $HOME/.ivy2/cache
     - $HOME/sbt-structure-global/ivy2
+    - $HOME/sbt-structure-global/boot
