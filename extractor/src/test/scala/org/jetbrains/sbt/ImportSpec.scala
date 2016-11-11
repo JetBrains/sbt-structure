@@ -153,7 +153,7 @@ class ImportSpec extends Specification with XmlMatchers {
               case s : Seq[_] => s.map(x => print0(x, indent + indentStep)).mkString("\n")
               case pp : Product => print0(pp, indent + indentStep)
               case other => indent + indentStep + other.toString
-            }.mkString("\n")
+            }.filter(_.trim.nonEmpty).mkString("\n")
         }
       case other => indent + other.toString
     }
