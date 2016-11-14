@@ -10,28 +10,30 @@ import sbt._
   */
 object Play2Extractor extends SbtStateOps with TaskOps {
 
-  def taskDef: Def.Initialize[Task[Option[Play2Data]]] =
-    (sbt.Keys.state, sbt.Keys.thisProjectRef) map { (state, projectRef) =>
-      for {
-        _ <- Keys.playPlugin.in(projectRef).find(state)
-          .orElse(Keys.playPlugin_prior_to_2_4_0.in(projectRef).find(state))
-        sourceDirectory <- sbt.Keys.sourceDirectory.in(projectRef, Compile).find(state)
-      } yield {
-        val playVersion =
-          Keys.playVersion.in(projectRef).find(state)
-        val templateImports =
-          Keys.templateImports.in(projectRef).getOrElse(state, Seq.empty)
-        val routesImports =
-          Keys.routesImports.in(projectRef).find(state)
-            .orElse(Keys.routesImports_prior_to_2_4_0.in(projectRef).find(state))
-            .getOrElse(Seq.empty)
-        val confDirectory =
-          Keys.confDirectory.in(projectRef).find(state)
+  def taskDef: Def.Initialize[Task[Option[Play2Data]]] = Def.task {
+    val state = sbt.Keys.state.value
+    val projectRef = sbt.Keys.thisProjectRef.value
 
-        Play2Data(playVersion, fixTemplateImports(templateImports),
-          routesImports, confDirectory, sourceDirectory)
-      }
+    for {
+      _ <- Keys.playPlugin.in(projectRef).find(state)
+        .orElse(Keys.playPlugin_prior_to_2_4_0.in(projectRef).find(state))
+      sourceDirectory <- sbt.Keys.sourceDirectory.in(projectRef, Compile).find(state)
+    } yield {
+      val playVersion =
+        Keys.playVersion.in(projectRef).find(state)
+      val templateImports =
+        Keys.templateImports.in(projectRef).getOrElse(state, Seq.empty)
+      val routesImports =
+        Keys.routesImports.in(projectRef).find(state)
+          .orElse(Keys.routesImports_prior_to_2_4_0.in(projectRef).find(state))
+          .getOrElse(Seq.empty)
+      val confDirectory =
+        Keys.confDirectory.in(projectRef).find(state)
+
+      Play2Data(playVersion, fixTemplateImports(templateImports),
+        routesImports, confDirectory, sourceDirectory)
     }
+  }
 
   private def fixTemplateImports(imports: Seq[String]): Seq[String] = imports.map {
     case "views.%format%._" => "views.xml._"

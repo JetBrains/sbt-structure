@@ -25,14 +25,18 @@ class BuildExtractor(unit: LoadedBuildUnitAdapter, updateSbtClassifiers: Option[
 }
 
 object BuildExtractor extends SbtStateOps with TaskOps {
-  def taskDef: Def.Initialize[Task[BuildData]] =
-    (sbt.Keys.state, sbt.Keys.thisProjectRef, StructureKeys.sbtStructureOpts) flatMap {
-      (state, projectRef, options) =>
-        val unit = LoadedBuildUnitAdapter(structure(state).units(projectRef.build))
-        Keys.updateSbtClassifiers.in(projectRef).get(state)
-          .onlyIf(options.download && options.resolveSbtClassifiers)
-          .map { updateClassifiersOpt =>
-            new BuildExtractor(unit, updateClassifiersOpt.map(new UpdateReportAdapter(_))).extract
-          }
-      }
+  def taskDef: Def.Initialize[Task[BuildData]] = Def.taskDyn {
+    val state = Keys.state.value
+    val projectRef = Keys.thisProjectRef.value
+    val options = StructureKeys.sbtStructureOpts.value
+    val unit = LoadedBuildUnitAdapter(structure(state).units(projectRef.build))
+
+    Def.task {
+      Keys.updateSbtClassifiers.in(projectRef).get(state)
+        .onlyIf(options.download && options.resolveSbtClassifiers)
+        .map { updateClassifiersOpt =>
+          new BuildExtractor(unit, updateClassifiersOpt.map(new UpdateReportAdapter(_))).extract
+        }.value
+    }
+  }
 }

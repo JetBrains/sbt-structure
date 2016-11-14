@@ -15,31 +15,29 @@ import scala.xml._
  */
 object UtilityTasks extends SbtStateOps {
 
-  def dumpStructure: Initialize[Task[Unit]] =
-    ( Keys.streams
-    , StructureKeys.extractStructure
-    , StructureKeys.sbtStructureOpts
-    , StructureKeys.sbtStructureOutputFile
-    ).map { (streams, structure, options, outputFile) =>
-      val log = streams.log
+  def dumpStructure: Initialize[Task[Unit]] = Def.task {
+    val structure = StructureKeys.extractStructure.value
+    val options = StructureKeys.sbtStructureOpts.value
+    val outputFile = StructureKeys.sbtStructureOutputFile.value
+    val log = Keys.streams.value.log
 
-      val outputText = {
-        if (options.prettyPrint)
-          new PrettyPrinter(180, 2).format(structure.serialize)
-        else
-          xml.Utility.trim(structure.serialize).mkString
-      }
-
-      outputFile.map { file =>
-        log.info("Writing structure to " + file.getPath + "...")
-        //noinspection UnitInMap
-        writeToFile(file, outputText)
-      } getOrElse {
-        log.info("Writing structure to console:")
-        println(outputText)
-      }
-      log.info("Done.")
+    val outputText = {
+      if (options.prettyPrint)
+        new PrettyPrinter(180, 2).format(structure.serialize)
+      else
+        xml.Utility.trim(structure.serialize).mkString
     }
+
+    outputFile.map { file =>
+      log.info("Writing structure to " + file.getPath + "...")
+      // noinspection UnitInMap
+      writeToFile(file, outputText)
+    } getOrElse {
+      log.info("Writing structure to console:")
+      println(outputText)
+    }
+    log.info("Done.")
+  }
 
   def acceptedProjects: Initialize[Task[Seq[ProjectRef]]] = Keys.state.map { state =>
     structure(state).allProjectRefs.filter { case ref@ProjectRef(_, id) =>
@@ -78,16 +76,16 @@ object UtilityTasks extends SbtStateOps {
   def dependencyConfigurations: Def.Initialize[Seq[Configuration]] =
     allConfigurationsWithSource.apply(cs => (cs ++ Seq(Runtime, Provided, Optional)).distinct)
 
-  def classifiersModuleRespectingStructureOpts: Initialize[Task[GetClassifiersModule]] =
-    (Keys.classifiersModule.in(Keys.updateClassifiers), StructureKeys.sbtStructureOpts) map {
-      (module, options) =>
-        if (options.resolveJavadocs) {
-          module
-        } else {
-          val classifiersWithoutJavadocs = module.classifiers.filterNot(_ == Artifact.DocClassifier)
-          module.copy(classifiers = classifiersWithoutJavadocs)
-        }
+  def classifiersModuleRespectingStructureOpts: Initialize[Task[GetClassifiersModule]] = Def.task {
+    val module = (Keys.classifiersModule in Keys.updateClassifiers).value
+    val options = StructureKeys.sbtStructureOpts.value
+    if (options.resolveJavadocs) {
+      module
+    } else {
+      val classifiersWithoutJavadocs = module.classifiers.filterNot(_ == Artifact.DocClassifier)
+      module.copy(classifiers = classifiersWithoutJavadocs)
     }
+  }
 
   private def areNecessaryPluginsLoaded(project: ResolvedProject): Boolean = {
     // Here is a hackish way to test whether project has JvmPlugin enabled.

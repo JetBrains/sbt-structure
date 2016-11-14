@@ -75,28 +75,27 @@ class DependenciesExtractor(projectRef: ProjectRef,
 }
 
 object DependenciesExtractor extends SbtStateOps with TaskOps {
-  def taskDef: Def.Initialize[Task[DependencyData]] =
-    ( sbt.Keys.state
-    , sbt.Keys.thisProjectRef
-    , sbt.Keys.buildDependencies
-    , StructureKeys.sbtStructureOpts
-    , StructureKeys.dependencyConfigurations
-    , StructureKeys.testConfigurations
-    ) flatMap {
-      (state, projectRef, buildDependencies, options,
-        dependencyConfigurations, testConfigurations) =>
+  def taskDef: Def.Initialize[Task[DependencyData]] = Def.taskDyn {
 
-      val unmanagedClasspathTask =
-        sbt.Keys.unmanagedClasspath.in(projectRef)
-          .forAllConfigurations(state, dependencyConfigurations)
-      val externalDependencyClasspathTask =
-        sbt.Keys.externalDependencyClasspath.in(projectRef)
-          .forAllConfigurations(state, dependencyConfigurations)
-          .result
-          .map(throwExceptionIfUpdateFailed)
-          .onlyIf(options.download)
+    val state = Keys.state.value
+    val projectRef = Keys.thisProjectRef.value
+    val buildDependencies = Keys.buildDependencies.value
+    val options = StructureKeys.sbtStructureOpts.value
+    val dependencyConfigurations = StructureKeys.dependencyConfigurations.value
+    val testConfigurations = StructureKeys.testConfigurations.value
 
-      for {
+    val unmanagedClasspathTask =
+      sbt.Keys.unmanagedClasspath.in(projectRef)
+        .forAllConfigurations(state, dependencyConfigurations)
+    val externalDependencyClasspathTask =
+      sbt.Keys.externalDependencyClasspath.in(projectRef)
+        .forAllConfigurations(state, dependencyConfigurations)
+        .result
+        .map(throwExceptionIfUpdateFailed)
+        .onlyIf(options.download)
+
+    Def.task {
+      (for {
         unmanagedClasspath <- unmanagedClasspathTask
         externalDependencyClasspathOpt <- externalDependencyClasspathTask
       } yield {
@@ -104,7 +103,8 @@ object DependenciesExtractor extends SbtStateOps with TaskOps {
           buildDependencies, unmanagedClasspath.getOrElse(_, Nil),
           externalDependencyClasspathOpt.map(it => it.getOrElse(_, Nil)),
           dependencyConfigurations, testConfigurations).extract
-      }
+      }).value
+    }
   }
 
   private def throwExceptionIfUpdateFailed(result: Result[Map[sbt.Configuration,Keys.Classpath]]): Map[sbt.Configuration, Keys.Classpath] =

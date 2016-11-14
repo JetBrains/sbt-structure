@@ -66,11 +66,16 @@ class RepositoryExtractor(projects: Seq[ProjectRef],
 
 object RepositoryExtractor extends SbtStateOps with TaskOps {
 
-  def taskDef: Initialize[Task[Option[RepositoryData]]] =
-    (Keys.state, StructureKeys.sbtStructureOpts, StructureKeys.acceptedProjects).flatMap {
-      (state, options, acceptedProjects) =>
-        extractRepositoryData(state, options, acceptedProjects).onlyIf(options.download)
+  def taskDef: Initialize[Task[Option[RepositoryData]]] = Def.taskDyn {
+    val state = Keys.state.value
+    val options = StructureKeys.sbtStructureOpts.value
+    val acceptedProjects = StructureKeys.acceptedProjects.value
+
+    Def.task {
+      extractRepositoryData(state, options, acceptedProjects)
+        .onlyIf(options.download).value
     }
+  }
 
   private def extractRepositoryData(state: State, options: Options, acceptedProjects: Seq[ProjectRef]): Task[RepositoryData] = {
     def classpathTypes(projectRef: ProjectRef) =

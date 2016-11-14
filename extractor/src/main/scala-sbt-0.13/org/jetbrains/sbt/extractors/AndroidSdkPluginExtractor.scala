@@ -11,57 +11,62 @@ import scala.language.reflectiveCalls
 
 object AndroidSdkPluginExtractor extends SbtStateOps with TaskOps {
 
-  def taskDef: Def.Initialize[Task[Option[AndroidData]]] =
-    (sbt.Keys.state, sbt.Keys.thisProjectRef) flatMap { (state, projectRef) =>
-      val keys = state.attributes.get(sbt.Keys.sessionSettings) match {
-        case Some(SessionSettings(_, _, settings, _, _, _)) => settings map { _.key }
-        case _ => Seq.empty
-      }
+  def taskDef: Def.Initialize[Task[Option[AndroidData]]] = Def.taskDyn {
 
-      val manifestFileTaskOpt = Keys.processManifest.in(projectRef).find(state)
-        .orElse(Keys.manifestPath.in(projectRef).find(state).map(_.toTask))
-      val layoutAsAnyOpt = findSettingKeyIn(keys, "projectLayout")
-        .flatMap(_.in(projectRef).find(state))
-      val apklibsAsAnyTaskOpt = findTaskKeyIn(keys, "apklibs")
-        .flatMap(_.in(projectRef).find(state))
-      val aarsAsAnyTaskOpt = findTaskKeyIn(keys, "aars")
-        .flatMap(_.in(projectRef).find(state))
+    val state = sbt.Keys.state.value
+    val projectRef = sbt.Keys.thisProjectRef.value
 
-      val androidTaskOpt = for {
-        manifestTask        <- manifestFileTaskOpt
-        apk                 <- Keys.apkFile.in(projectRef).find(state)
-        isLibrary           <- Keys.libraryProject.in(projectRef).find(state)
-        layoutAsAny         <- layoutAsAnyOpt
-        apklibsAsAnyTask    <- apklibsAsAnyTaskOpt
-        targetVersionTask   <- Keys.settingOrTask[String](Keys.targetSdkVersionKey, projectRef, state)
-        aarsAsAnyTask       <- aarsAsAnyTaskOpt
-        proguardConfigTask  <- Keys.proguardConfig.in(projectRef).find(state)
-        proguardOptionsTask <- Keys.settingOrTask[Seq[String]](Keys.proguardOptionsKey, projectRef, state)
+    val keys = state.attributes.get(sbt.Keys.sessionSettings) match {
+      case Some(SessionSettings(_, _, settings, _, _, _)) => settings map { _.key }
+      case _ => Seq.empty
+    }
+
+    val manifestFileTaskOpt = Keys.processManifest.in(projectRef).find(state)
+      .orElse(Keys.manifestPath.in(projectRef).find(state).map(_.toTask))
+    val layoutAsAnyOpt = findSettingKeyIn(keys, "projectLayout")
+      .flatMap(_.in(projectRef).find(state))
+    val apklibsAsAnyTaskOpt = findTaskKeyIn(keys, "apklibs")
+      .flatMap(_.in(projectRef).find(state))
+    val aarsAsAnyTaskOpt = findTaskKeyIn(keys, "aars")
+      .flatMap(_.in(projectRef).find(state))
+
+    val androidTaskOpt = for {
+      manifestTask        <- manifestFileTaskOpt
+      apk                 <- Keys.apkFile.in(projectRef).find(state)
+      isLibrary           <- Keys.libraryProject.in(projectRef).find(state)
+      layoutAsAny         <- layoutAsAnyOpt
+      apklibsAsAnyTask    <- apklibsAsAnyTaskOpt
+      targetVersionTask   <- Keys.settingOrTask[String](Keys.targetSdkVersionKey, projectRef, state)
+      aarsAsAnyTask       <- aarsAsAnyTaskOpt
+      proguardConfigTask  <- Keys.proguardConfig.in(projectRef).find(state)
+      proguardOptionsTask <- Keys.settingOrTask[Seq[String]](Keys.proguardOptionsKey, projectRef, state)
+    } yield {
+      for {
+        manifest        <- manifestTask
+        targetVersion   <- targetVersionTask
+        proguardConfig  <- proguardConfigTask
+        proguardOptions <- proguardOptionsTask
+        apklibsAsAny    <- apklibsAsAnyTask
+        aarsAsAny       <- aarsAsAnyTask
       } yield {
-        for {
-          manifest        <- manifestTask
-          targetVersion   <- targetVersionTask
-          proguardConfig  <- proguardConfigTask
-          proguardOptions <- proguardOptionsTask
-          apklibsAsAny    <- apklibsAsAnyTask
-          aarsAsAny       <- aarsAsAnyTask
-        } yield {
-          try {
-            val layout  = layoutAsAny.asInstanceOf[ProjectLayout]
-            val apklibs = apklibsAsAny.asInstanceOf[Seq[LibraryDependency]]
-            val aars    = aarsAsAny.asInstanceOf[Seq[LibraryDependency]].map(libraryDepToAar(targetVersion))
-            Some(AndroidData(targetVersion, manifest, apk,
-              layout.res, layout.assets, layout.gen, layout.libs,
-              isLibrary, proguardConfig ++ proguardOptions,
-              apklibs.map(libraryDepToApkLib), aars))
-          } catch {
-            case _ : NoSuchMethodException => None
-          }
+        try {
+          val layout  = layoutAsAny.asInstanceOf[ProjectLayout]
+          val apklibs = apklibsAsAny.asInstanceOf[Seq[LibraryDependency]]
+          val aars    = aarsAsAny.asInstanceOf[Seq[LibraryDependency]].map(libraryDepToAar(targetVersion))
+          Some(AndroidData(targetVersion, manifest, apk,
+            layout.res, layout.assets, layout.gen, layout.libs,
+            isLibrary, proguardConfig ++ proguardOptions,
+            apklibs.map(libraryDepToApkLib), aars))
+        } catch {
+          case _ : NoSuchMethodException => None
         }
       }
-
-      androidTaskOpt.getOrElse(None.toTask)
     }
+
+    Def.task {
+      androidTaskOpt.getOrElse(Option.empty[AndroidData].toTask).value
+    }
+  }
 
   private val Android = config("android")
 
