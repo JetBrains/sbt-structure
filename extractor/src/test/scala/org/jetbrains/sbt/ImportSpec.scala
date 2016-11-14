@@ -91,10 +91,13 @@ class ImportSpec extends Specification with XmlMatchers {
 
     def onEqualsFail: String = {
       onFail()
-      dumpToFile(new File(base, "actual.txt"), prettyPrintCaseClass(actual))
-      dumpToFile(new File(base, "expected.txt"), prettyPrintCaseClass(expected))
+      val actualPretty = prettyPrintCaseClass(actual)
+      val expectedPretty = prettyPrintCaseClass(expected)
+      dumpToFile(new File(base, "actual.txt"), actualPretty)
+      dumpToFile(new File(base, "expected.txt"), expectedPretty)
       val errorMessage = "Objects are not equal, compare 'actual.txt' and 'expected.txt'"
-      formatErrorMessage(errorMessage, prettyPrintCaseClass(expected), prettyPrintCaseClass(actual))
+
+      formatErrorMessage(errorMessage, actualPretty, expectedPretty)
     }
 
     (actual == expected) must beTrue.updateMessage(_ => onEqualsFail)
@@ -153,7 +156,7 @@ class ImportSpec extends Specification with XmlMatchers {
               case s : Seq[_] => s.map(x => print0(x, indent + indentStep)).mkString("\n")
               case pp : Product => print0(pp, indent + indentStep)
               case other => indent + indentStep + other.toString
-            }.filter(_.trim.nonEmpty).mkString("\n")
+            }.mkString("\n")
         }
       case other => indent + other.toString
     }

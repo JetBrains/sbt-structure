@@ -133,11 +133,11 @@
     </java>
     <scala>
       <version>2.10.1</version>
-      <jar>$IVY2/cache/org.scala-lang/scala-library/jars/scala-library-2.10.1.jar</jar>
-      <jar>$IVY2/cache/org.scala-lang/scala-compiler/jars/scala-compiler-2.10.1.jar</jar>
-      <jar>$IVY2/cache/org.scala-lang/scala-reflect/jars/scala-reflect-2.10.1.jar</jar>
-      <jar>$IVY2/cache/org.scala-lang/jline/jars/jline-2.10.1.jar</jar>
       <jar>$IVY2/cache/org.fusesource.jansi/jansi/jars/jansi-1.4.jar</jar>
+      <jar>$IVY2/cache/org.scala-lang/jline/jars/jline-2.10.1.jar</jar>
+      <jar>$IVY2/cache/org.scala-lang/scala-compiler/jars/scala-compiler-2.10.1.jar</jar>
+      <jar>$IVY2/cache/org.scala-lang/scala-library/jars/scala-library-2.10.1.jar</jar>
+      <jar>$IVY2/cache/org.scala-lang/scala-reflect/jars/scala-reflect-2.10.1.jar</jar>
       <option>-s1</option>
       <option>-s2</option>
     </scala>
@@ -292,11 +292,11 @@
     </build>
     <scala>
       <version>2.10.6</version>
-      <jar>$SBT_BOOT/scala-2.10.6/lib/scala-library.jar</jar>
-      <jar>$SBT_BOOT/scala-2.10.6/lib/scala-compiler.jar</jar>
-      <jar>$SBT_BOOT/scala-2.10.6/lib/scala-reflect.jar</jar>
-      <jar>$SBT_BOOT/scala-2.10.6/lib/jline.jar</jar>
       <jar>$SBT_BOOT/scala-2.10.6/lib/jansi.jar</jar>
+      <jar>$SBT_BOOT/scala-2.10.6/lib/jline.jar</jar>
+      <jar>$SBT_BOOT/scala-2.10.6/lib/scala-compiler.jar</jar>
+      <jar>$SBT_BOOT/scala-2.10.6/lib/scala-library.jar</jar>
+      <jar>$SBT_BOOT/scala-2.10.6/lib/scala-reflect.jar</jar>
     </scala>
     <configuration id="compile">
       <sources>$BASE/redirectOutput/src/main/java</sources>

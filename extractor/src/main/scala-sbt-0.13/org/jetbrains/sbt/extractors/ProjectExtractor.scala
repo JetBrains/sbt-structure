@@ -94,7 +94,7 @@ class ProjectExtractor(projectRef: ProjectRef,
     }
 
   private def extractScala: Option[ScalaData] = scalaInstance.map { instance =>
-    ScalaData(instance.version, instance.jars, scalacOptions)
+    ScalaData(instance.version, instance.jars.filter(_.exists).sorted, scalacOptions)
   }
 
   private def extractJava: Option[JavaData] =

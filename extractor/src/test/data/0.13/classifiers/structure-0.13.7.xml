@@ -116,10 +116,10 @@
     </build>
     <scala>
       <version>2.10.4</version>
-      <jar>$SBT_BOOT/scala-2.10.4/lib/scala-library.jar</jar>
-      <jar>$SBT_BOOT/scala-2.10.4/lib/scala-compiler.jar</jar>
-      <jar>$SBT_BOOT/scala-2.10.4/lib/jline.jar</jar>
       <jar>$SBT_BOOT/scala-2.10.4/lib/jansi.jar</jar>
+      <jar>$SBT_BOOT/scala-2.10.4/lib/jline.jar</jar>
+      <jar>$SBT_BOOT/scala-2.10.4/lib/scala-compiler.jar</jar>
+      <jar>$SBT_BOOT/scala-2.10.4/lib/scala-library.jar</jar>
       <jar>$SBT_BOOT/scala-2.10.4/lib/scala-reflect.jar</jar>
     </scala>
     <configuration id="compile">
@@ -259,10 +259,10 @@
     </build>
     <scala>
       <version>2.10.4</version>
-      <jar>$SBT_BOOT/scala-2.10.4/lib/scala-library.jar</jar>
-      <jar>$SBT_BOOT/scala-2.10.4/lib/scala-compiler.jar</jar>
-      <jar>$SBT_BOOT/scala-2.10.4/lib/jline.jar</jar>
       <jar>$SBT_BOOT/scala-2.10.4/lib/jansi.jar</jar>
+      <jar>$SBT_BOOT/scala-2.10.4/lib/jline.jar</jar>
+      <jar>$SBT_BOOT/scala-2.10.4/lib/scala-compiler.jar</jar>
+      <jar>$SBT_BOOT/scala-2.10.4/lib/scala-library.jar</jar>
       <jar>$SBT_BOOT/scala-2.10.4/lib/scala-reflect.jar</jar>
     </scala>
     <configuration id="compile">
@@ -406,10 +406,10 @@
     </build>
     <scala>
       <version>2.10.4</version>
-      <jar>$SBT_BOOT/scala-2.10.4/lib/scala-library.jar</jar>
-      <jar>$SBT_BOOT/scala-2.10.4/lib/scala-compiler.jar</jar>
-      <jar>$SBT_BOOT/scala-2.10.4/lib/jline.jar</jar>
       <jar>$SBT_BOOT/scala-2.10.4/lib/jansi.jar</jar>
+      <jar>$SBT_BOOT/scala-2.10.4/lib/jline.jar</jar>
+      <jar>$SBT_BOOT/scala-2.10.4/lib/scala-compiler.jar</jar>
+      <jar>$SBT_BOOT/scala-2.10.4/lib/scala-library.jar</jar>
       <jar>$SBT_BOOT/scala-2.10.4/lib/scala-reflect.jar</jar>
     </scala>
     <configuration id="compile">

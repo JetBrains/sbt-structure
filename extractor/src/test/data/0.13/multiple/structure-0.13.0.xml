@@ -99,11 +99,11 @@
     </build>
     <scala>
       <version>2.10.1</version>
-      <jar>$IVY2/cache/org.scala-lang/scala-library/jars/scala-library-2.10.1.jar</jar>
-      <jar>$IVY2/cache/org.scala-lang/scala-compiler/jars/scala-compiler-2.10.1.jar</jar>
-      <jar>$IVY2/cache/org.scala-lang/scala-reflect/jars/scala-reflect-2.10.1.jar</jar>
-      <jar>$IVY2/cache/org.scala-lang/jline/jars/jline-2.10.1.jar</jar>
       <jar>$IVY2/cache/org.fusesource.jansi/jansi/jars/jansi-1.4.jar</jar>
+      <jar>$IVY2/cache/org.scala-lang/jline/jars/jline-2.10.1.jar</jar>
+      <jar>$IVY2/cache/org.scala-lang/scala-compiler/jars/scala-compiler-2.10.1.jar</jar>
+      <jar>$IVY2/cache/org.scala-lang/scala-library/jars/scala-library-2.10.1.jar</jar>
+      <jar>$IVY2/cache/org.scala-lang/scala-reflect/jars/scala-reflect-2.10.1.jar</jar>
     </scala>
     <configuration id="compile">
       <sources>$BASE/src/main/java</sources>
@@ -226,11 +226,11 @@
     </build>
     <scala>
       <version>2.10.1</version>
-      <jar>$IVY2/cache/org.scala-lang/scala-library/jars/scala-library-2.10.1.jar</jar>
-      <jar>$IVY2/cache/org.scala-lang/scala-compiler/jars/scala-compiler-2.10.1.jar</jar>
-      <jar>$IVY2/cache/org.scala-lang/scala-reflect/jars/scala-reflect-2.10.1.jar</jar>
-      <jar>$IVY2/cache/org.scala-lang/jline/jars/jline-2.10.1.jar</jar>
       <jar>$IVY2/cache/org.fusesource.jansi/jansi/jars/jansi-1.4.jar</jar>
+      <jar>$IVY2/cache/org.scala-lang/jline/jars/jline-2.10.1.jar</jar>
+      <jar>$IVY2/cache/org.scala-lang/scala-compiler/jars/scala-compiler-2.10.1.jar</jar>
+      <jar>$IVY2/cache/org.scala-lang/scala-library/jars/scala-library-2.10.1.jar</jar>
+      <jar>$IVY2/cache/org.scala-lang/scala-reflect/jars/scala-reflect-2.10.1.jar</jar>
     </scala>
     <configuration id="compile">
       <sources>$BASE/bar/src/main/java</sources>
@@ -352,10 +352,10 @@
     </build>
     <scala>
       <version>2.9.2</version>
-      <jar>$IVY2/cache/org.scala-lang/scala-library/jars/scala-library-2.9.2.jar</jar>
-      <jar>$IVY2/cache/org.scala-lang/scala-compiler/jars/scala-compiler-2.9.2.jar</jar>
-      <jar>$IVY2/cache/org.scala-lang/jline/jars/jline-2.9.2.jar</jar>
       <jar>$IVY2/cache/org.fusesource.jansi/jansi/jars/jansi-1.4.jar</jar>
+      <jar>$IVY2/cache/org.scala-lang/jline/jars/jline-2.9.2.jar</jar>
+      <jar>$IVY2/cache/org.scala-lang/scala-compiler/jars/scala-compiler-2.9.2.jar</jar>
+      <jar>$IVY2/cache/org.scala-lang/scala-library/jars/scala-library-2.9.2.jar</jar>
     </scala>
     <configuration id="compile">
       <sources>$BASE/foo/src/main/java</sources>

@@ -254,12 +254,12 @@
     </java>
     <scala>
       <version>2.11.8</version>
-      <jar>$IVY2/cache/org.scala-lang/scala-library/jars/scala-library-2.11.8.jar</jar>
-      <jar>$IVY2/cache/org.scala-lang/scala-compiler/jars/scala-compiler-2.11.8.jar</jar>
-      <jar>$IVY2/cache/org.scala-lang/scala-reflect/jars/scala-reflect-2.11.8.jar</jar>
-      <jar>$IVY2/cache/org.scala-lang.modules/scala-xml_2.11/bundles/scala-xml_2.11-1.0.4.jar</jar>
-      <jar>$IVY2/cache/org.scala-lang.modules/scala-parser-combinators_2.11/bundles/scala-parser-combinators_2.11-1.0.4.jar</jar>
       <jar>$IVY2/cache/jline/jline/jars/jline-2.12.1.jar</jar>
+      <jar>$IVY2/cache/org.scala-lang.modules/scala-parser-combinators_2.11/bundles/scala-parser-combinators_2.11-1.0.4.jar</jar>
+      <jar>$IVY2/cache/org.scala-lang.modules/scala-xml_2.11/bundles/scala-xml_2.11-1.0.4.jar</jar>
+      <jar>$IVY2/cache/org.scala-lang/scala-compiler/jars/scala-compiler-2.11.8.jar</jar>
+      <jar>$IVY2/cache/org.scala-lang/scala-library/jars/scala-library-2.11.8.jar</jar>
+      <jar>$IVY2/cache/org.scala-lang/scala-reflect/jars/scala-reflect-2.11.8.jar</jar>
       <option>-bootclasspath</option>
       <option>$ANDROID_HOME/platforms/android-22/android.jar</option>
       <option>-javabootclasspath</option>
@@ -549,12 +549,12 @@
     </java>
     <scala>
       <version>2.11.8</version>
-      <jar>$IVY2/cache/org.scala-lang/scala-library/jars/scala-library-2.11.8.jar</jar>
-      <jar>$IVY2/cache/org.scala-lang/scala-compiler/jars/scala-compiler-2.11.8.jar</jar>
-      <jar>$IVY2/cache/org.scala-lang/scala-reflect/jars/scala-reflect-2.11.8.jar</jar>
-      <jar>$IVY2/cache/org.scala-lang.modules/scala-xml_2.11/bundles/scala-xml_2.11-1.0.4.jar</jar>
-      <jar>$IVY2/cache/org.scala-lang.modules/scala-parser-combinators_2.11/bundles/scala-parser-combinators_2.11-1.0.4.jar</jar>
       <jar>$IVY2/cache/jline/jline/jars/jline-2.12.1.jar</jar>
+      <jar>$IVY2/cache/org.scala-lang.modules/scala-parser-combinators_2.11/bundles/scala-parser-combinators_2.11-1.0.4.jar</jar>
+      <jar>$IVY2/cache/org.scala-lang.modules/scala-xml_2.11/bundles/scala-xml_2.11-1.0.4.jar</jar>
+      <jar>$IVY2/cache/org.scala-lang/scala-compiler/jars/scala-compiler-2.11.8.jar</jar>
+      <jar>$IVY2/cache/org.scala-lang/scala-library/jars/scala-library-2.11.8.jar</jar>
+      <jar>$IVY2/cache/org.scala-lang/scala-reflect/jars/scala-reflect-2.11.8.jar</jar>
       <option>-bootclasspath</option>
       <option>$ANDROID_HOME/platforms/android-22/android.jar</option>
       <option>-javabootclasspath</option>
@@ -844,12 +844,12 @@
     </java>
     <scala>
       <version>2.11.8</version>
-      <jar>$IVY2/cache/org.scala-lang/scala-library/jars/scala-library-2.11.8.jar</jar>
-      <jar>$IVY2/cache/org.scala-lang/scala-compiler/jars/scala-compiler-2.11.8.jar</jar>
-      <jar>$IVY2/cache/org.scala-lang/scala-reflect/jars/scala-reflect-2.11.8.jar</jar>
-      <jar>$IVY2/cache/org.scala-lang.modules/scala-xml_2.11/bundles/scala-xml_2.11-1.0.4.jar</jar>
-      <jar>$IVY2/cache/org.scala-lang.modules/scala-parser-combinators_2.11/bundles/scala-parser-combinators_2.11-1.0.4.jar</jar>
       <jar>$IVY2/cache/jline/jline/jars/jline-2.12.1.jar</jar>
+      <jar>$IVY2/cache/org.scala-lang.modules/scala-parser-combinators_2.11/bundles/scala-parser-combinators_2.11-1.0.4.jar</jar>
+      <jar>$IVY2/cache/org.scala-lang.modules/scala-xml_2.11/bundles/scala-xml_2.11-1.0.4.jar</jar>
+      <jar>$IVY2/cache/org.scala-lang/scala-compiler/jars/scala-compiler-2.11.8.jar</jar>
+      <jar>$IVY2/cache/org.scala-lang/scala-library/jars/scala-library-2.11.8.jar</jar>
+      <jar>$IVY2/cache/org.scala-lang/scala-reflect/jars/scala-reflect-2.11.8.jar</jar>
       <option>-bootclasspath</option>
       <option>$ANDROID_HOME/platforms/android-22/android.jar</option>
       <option>-javabootclasspath</option>
