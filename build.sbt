@@ -1,4 +1,3 @@
-import bintray.Keys._
 
 def newProject(projectName: String): Project =
   Project(projectName, file(projectName))
@@ -10,13 +9,14 @@ def newProject(projectName: String): Project =
         baseDirectory.value.getParentFile / "shared" / "src" / "main" / "scala",
       publishMavenStyle := false
     )
-    .settings(bintrayPublishSettings:_*)
     .settings(
-      repository in bintray := "sbt-plugins",
+      bintrayRepository in bintray := "sbt-plugins",
       bintrayOrganization in bintray := Some("jetbrains"),
-      credentialsFile in bintray := file(".credentials")
+      bintrayCredentialsFile in bintray := file(".credentials")
     )
 
+// can't add this in the `newProject` method because sbt-cross-building plugin is somehow causing sbt 0.13.2 to be
+// added to the sbt classpath, which causes errors loading the build. wow.
 enablePlugins(GitVersioning)
 
 git.useGitDescribe in ThisBuild := true
@@ -33,7 +33,7 @@ lazy val core = newProject("core")
           Seq.empty
       }
     },
-    crossScalaVersions := Seq("2.9.3", "2.10.6", "2.11.8", "2.12.0")
+    crossScalaVersions := Seq("2.9.3", "2.10.6", "2.11.8", "2.12.1")
   )
 
 lazy val extractor = newProject("extractor")
