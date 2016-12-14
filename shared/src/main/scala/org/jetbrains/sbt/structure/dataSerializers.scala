@@ -36,6 +36,9 @@ private object Helpers {
     // converting a string to a file like this can be unsafe for characters that are illegal in some environments
     def file: File =
       new File(string.trim).getCanonicalFile
+
+    def uri: URI =
+      canonUri(new URI(string))
   }
 
   implicit def file2richFile(file: File): RichFile =
@@ -351,6 +354,7 @@ trait DataSerializers {
     override def serialize(what: ProjectData): Elem =
       <project>
         <id>{what.id}</id>
+        <buildURI>{what.buildURI}</buildURI>
         <name>{what.name}</name>
         <organization>{what.organization}</organization>
         <version>{what.version}</version>
@@ -369,6 +373,7 @@ trait DataSerializers {
 
     override def deserialize(what: Node): Either[Throwable,ProjectData] = {
       val id = (what \ "id").text
+      val buildURI = (what \ "buildURI").text.uri
       val name = (what \ "name").text
       val organization = (what \ "organization").text
       val version = (what \ "version").text
@@ -390,7 +395,7 @@ trait DataSerializers {
       }
 
       tryBuildAndDeps.fold(exc => Left(exc), { case(build, dependencies) =>
-        Right(ProjectData(id, name, organization, version, base, basePackages,
+        Right(ProjectData(id, buildURI, name, organization, version, base, basePackages,
           target, build, configurations, java, scala, android,
           dependencies, resolvers, play2))
       })

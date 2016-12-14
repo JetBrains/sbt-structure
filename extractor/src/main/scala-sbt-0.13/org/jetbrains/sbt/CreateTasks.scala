@@ -41,7 +41,7 @@ object CreateTasks extends (State => State) with SbtStateOps {
       StructureKeys.dependencyConfigurations :=
         UtilityTasks.dependencyConfigurations.value,
       StructureKeys.extractAndroid :=
-        AndroidSdkPluginExtractor.taskDef.value,
+        tasks.extractAndroidSdkPlugin.value,
       StructureKeys.extractPlay2 :=
         Play2Extractor.taskDef.value,
       StructureKeys.extractBuild :=

@@ -3,6 +3,8 @@ package structure
 
 import java.io.File
 
+import java.net.URI
+
 
 /**
  * @author Pavel Fatin
@@ -10,7 +12,7 @@ import java.io.File
  */
 
 case class Configuration(name: String) {
-  override def toString = name
+  override def toString: String = name
 }
 
 object Configuration {
@@ -40,6 +42,7 @@ case class StructureData(sbtVersion: String,
  * @param target Compiler output directory (value of `target` key)
  */
 case class ProjectData(id: String,
+                       buildURI: URI,
                        name: String,
                        organization: String,
                        version: String,
