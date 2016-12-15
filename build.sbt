@@ -44,7 +44,7 @@ lazy val extractor = newProject("extractor")
     libraryDependencies ++= Seq(
       "com.googlecode.java-diff-utils" % "diffutils" % "1.2" withSources(),
       "org.specs2" %% "specs2" % "1.12.3" % "test"),
-    CrossBuilding.crossSbtVersions := Seq("0.12.4", "0.13.0", "0.13.7", "0.13.9", "0.13.12", "0.13.13"),
+    CrossBuilding.crossSbtVersions := Seq("0.12.4", "0.13.0", "0.13.9", "0.13.13"),
     testSetup := {
       System.setProperty("structure.sbtversion.full", CrossBuilding.pluginSbtVersion.value)
       System.setProperty("structure.sbtversion.short", CrossBuilding.pluginSbtVersion.value.substring(0, 4))

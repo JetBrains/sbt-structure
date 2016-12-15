@@ -18,17 +18,17 @@ class ImportSpec extends Specification with XmlMatchers {
 
     equalExpectedOneIn("bare", options="resolveClassifiers resolveSbtClassifiers")
     equalExpectedOneIn("simple", options="resolveClassifiers resolveSbtClassifiers")
-    equalExpectedOneIn("multiple", notFor("0.13.12"))
+    equalExpectedOneIn("multiple")
     equalExpectedOneIn("dependency")
-    equalExpectedOneIn("classifiers", onlyFor("0.13.0", "0.13.7", "0.13.9", "0.13.13"))
-    equalExpectedOneIn("optional", onlyFor("0.13.0", "0.13.7", "0.13.9", "0.13.13"))
-    equalExpectedOneIn("play", onlyFor("0.13.7", "0.13.9", "0.13.13"), options = "")
-    equalExpectedOneIn("android-1.4", onlyFor("0.13.7", "0.13.9") and ifAndroidDefined)
-    equalExpectedOneIn("android-1.6", onlyFor("0.13.9", "0.13.12", "0.13.13") and ifAndroidDefined)
-    equalExpectedOneIn("android", onlyFor("0.13.0", "0.13.7", "0.13.9") and ifAndroidDefined)
-    equalExpectedOneIn("ide-settings", onlyFor("0.13.7", "0.13.9", "0.13.13"))
-    equalExpectedOneIn("sbt-idea", onlyFor("0.13.0", "0.13.7", "0.13.9", "0.13.13"))
-    equalExpectedOneIn("custom-test-config", onlyFor("0.13.0", "0.13.7", "0.13.9", "0.13.13"))
+    equalExpectedOneIn("classifiers")
+    equalExpectedOneIn("optional")
+    equalExpectedOneIn("play", onlyFor("0.13.9", "0.13.13"), options = "")
+    equalExpectedOneIn("android-1.4", onlyFor("0.13.9") and ifAndroidDefined)
+    equalExpectedOneIn("android-1.6", onlyFor("0.13.9", "0.13.13") and ifAndroidDefined)
+    equalExpectedOneIn("android", onlyFor("0.13.0", "0.13.9") and ifAndroidDefined)
+    equalExpectedOneIn("ide-settings", onlyFor("0.13.9", "0.13.13"))
+    equalExpectedOneIn("sbt-idea")
+    equalExpectedOneIn("custom-test-config")
   }
 
   private val SbtVersion = System.getProperty("structure.sbtversion.short")
@@ -108,6 +108,7 @@ class ImportSpec extends Specification with XmlMatchers {
 
   private def getExpectedStr(testDataFile: File, base: File): String = {
     val raw = TestUtil.read(testDataFile).mkString("\n")
+      .replace("$URI_BASE", base.getCanonicalFile.toURI.toString)
       .replace("$BASE", base.getCanonicalPath)
       .replace("$URI_ANDROID_HOME", AndroidHome.map(p => canon(p.toURI.toString)).getOrElse(""))
       .replace("$ANDROID_HOME", AndroidHome.map(p => canon(p.toString)).getOrElse(""))
