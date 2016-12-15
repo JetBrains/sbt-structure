@@ -10,9 +10,9 @@ def newProject(projectName: String): Project =
       publishMavenStyle := false
     )
     .settings(
-      bintrayRepository in bintray := "sbt-plugins",
-      bintrayOrganization in bintray := Some("jetbrains"),
-      bintrayCredentialsFile in bintray := file(".credentials")
+      bintrayRepository := "sbt-plugins",
+      bintrayOrganization := Some("jetbrains"),
+      bintrayCredentialsFile := file(".credentials")
     )
 
 // can't add this in the `newProject` method because sbt-cross-building plugin is somehow causing sbt 0.13.2 to be
