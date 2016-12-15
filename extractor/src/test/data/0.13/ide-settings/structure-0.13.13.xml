@@ -2,6 +2,7 @@
 <structure sbt="0.13.13">
   <project>
     <id>ideSettings</id>
+    <buildURI>$URI_BASE</buildURI>
     <name>some-name</name>
     <organization>some-organization</organization>
     <version>1.2.3</version>
@@ -168,6 +169,7 @@
   </project>
   <project>
     <id>projectToRedirectOutput</id>
+    <buildURI>$URI_BASE</buildURI>
     <name>projectToRedirectOutput</name>
     <organization>projecttoredirectoutput</organization>
     <version>0.1-SNAPSHOT</version>

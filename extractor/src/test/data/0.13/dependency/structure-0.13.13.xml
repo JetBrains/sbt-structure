@@ -2,6 +2,7 @@
 <structure sbt="0.13.13">
   <project>
     <id>dependency</id>
+    <buildURI>$URI_BASE</buildURI>
     <name>some-name</name>
     <organization>some-organization</organization>
     <version>1.2.3</version>

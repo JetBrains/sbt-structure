@@ -2,6 +2,7 @@
 <structure sbt="0.13.9">
   <project>
     <id>android</id>
+    <buildURI>$URI_BASE</buildURI>
     <name>android</name>
     <organization>default</organization>
     <version>0.1-SNAPSHOT</version>
@@ -242,6 +243,7 @@
   </project>
   <project>
     <id>com.android.support-support-v4-20.0.0</id>
+    <buildURI></buildURI>
     <name>com.android.support-support-v4-20.0.0</name>
     <organization>sbt-android-synthetic-organization</organization>
     <version>0.1-SNAPSHOT-sbt-android</version>

@@ -17,18 +17,18 @@ class ImportSpec extends Specification with XmlMatchers {
     sequential // running 10 sbt instances at once is a bad idea unless you have >16G of ram
 
     equalExpectedOneIn("bare", options="resolveClassifiers resolveSbtClassifiers")
-    equalExpectedOneIn("simple", options="resolveClassifiers resolveSbtClassifiers")
-    equalExpectedOneIn("multiple")
     equalExpectedOneIn("dependency")
-    equalExpectedOneIn("classifiers")
-    equalExpectedOneIn("optional")
+    equalExpectedOneIn("multiple")
+    equalExpectedOneIn("simple", options="resolveClassifiers resolveSbtClassifiers")
+    equalExpectedOneIn("classifiers", onlyFor013)
+    equalExpectedOneIn("optional", onlyFor013)
     equalExpectedOneIn("play", onlyFor("0.13.9", "0.13.13"), options = "")
     equalExpectedOneIn("android-1.4", onlyFor("0.13.9") and ifAndroidDefined)
     equalExpectedOneIn("android-1.6", onlyFor("0.13.9", "0.13.13") and ifAndroidDefined)
     equalExpectedOneIn("android", onlyFor("0.13.0", "0.13.9") and ifAndroidDefined)
     equalExpectedOneIn("ide-settings", onlyFor("0.13.9", "0.13.13"))
-    equalExpectedOneIn("sbt-idea")
-    equalExpectedOneIn("custom-test-config")
+    equalExpectedOneIn("sbt-idea", onlyFor013)
+    equalExpectedOneIn("custom-test-config", onlyFor013)
   }
 
   private val SbtVersion = System.getProperty("structure.sbtversion.short")
@@ -164,6 +164,10 @@ class ImportSpec extends Specification with XmlMatchers {
 
     print0(toPrint, indentStep)
   }
+
+  private def onlyFor013 =
+    SbtVersionFull must startWith ("0.13")
+        .orSkip(_ => "This test is only for SBT version 0.13.x")
 
   private def onlyFor(versions: String*): MatchResult[Seq[String]] =
     versions must contain[String](SbtVersionFull)

@@ -2,14 +2,15 @@
 <structure sbt="0.12.4">
   <project>
     <id>bare</id>
+    <buildURI>$URI_BASE</buildURI>
     <name>some-name</name>
     <organization>some-organization</organization>
     <version>1.2.3</version>
     <base>$BASE</base>
     <target>$BASE/target</target>
     <build>
-      <import>import sbt._, Process._, Keys._</import>
       <import>import Build._</import>
+      <import>import sbt._, Process._, Keys._</import>
       <classes>$SBT_BOOT/scala-2.9.2/lib/jansi.jar</classes>
       <classes>$SBT_BOOT/scala-2.9.2/lib/jline.jar</classes>
       <classes>$SBT_BOOT/scala-2.9.2/lib/scala-compiler.jar</classes>
@@ -50,46 +51,46 @@
       <classes>$SBT_BOOT/scala-2.9.2/org.scala-sbt/sbt/0.12.4/testing-0.12.4.jar</classes>
       <classes>$SBT_BOOT/scala-2.9.2/org.scala-sbt/sbt/0.12.4/tracking-0.12.4.jar</classes>
       <classes>$SBT_BOOT/scala-2.9.2/org.scala-sbt/sbt/0.12.4/xsbti/interface-0.12.4.jar</classes>
-      <sources>$IVY2/cache/org.scala-sbt/sbt/srcs/sbt-0.12.4-sources.jar</sources>
-      <sources>$IVY2/cache/org.scala-sbt/main/srcs/main-0.12.4-sources.jar</sources>
-      <sources>$IVY2/cache/org.scala-sbt/actions/srcs/actions-0.12.4-sources.jar</sources>
-      <sources>$IVY2/cache/org.scala-sbt/classpath/srcs/classpath-0.12.4-sources.jar</sources>
-      <sources>$IVY2/cache/org.scala-sbt/launcher-interface/srcs/launcher-interface-0.12.4-sources.jar</sources>
-      <sources>$IVY2/cache/org.scala-lang/scala-library/srcs/scala-library-2.10.1-sources.jar</sources>
-      <sources>$IVY2/cache/org.scala-sbt/interface/srcs/interface-0.12.4-sources.jar</sources>
-      <sources>$IVY2/cache/org.scala-sbt/io/srcs/io-0.12.4-sources.jar</sources>
-      <sources>$IVY2/cache/org.scala-sbt/control/srcs/control-0.12.4-sources.jar</sources>
-      <sources>$IVY2/cache/org.scala-lang/scala-compiler/srcs/scala-compiler-2.10.1-sources.jar</sources>
-      <sources>$IVY2/cache/org.scala-lang/scala-reflect/srcs/scala-reflect-2.10.1-sources.jar</sources>
-      <sources>$IVY2/cache/org.scala-sbt/completion/srcs/completion-0.12.4-sources.jar</sources>
-      <sources>$IVY2/cache/org.scala-sbt/collections/srcs/collections-0.12.4-sources.jar</sources>
-      <sources>$IVY2/cache/jline/jline/srcs/jline-1.0-sources.jar</sources>
-      <sources>$IVY2/cache/org.scala-sbt/api/srcs/api-0.12.4-sources.jar</sources>
-      <sources>$IVY2/cache/org.scala-sbt/compiler-integration/srcs/compiler-integration-0.12.4-sources.jar</sources>
-      <sources>$IVY2/cache/org.scala-sbt/incremental-compiler/srcs/incremental-compiler-0.12.4-sources.jar</sources>
-      <sources>$IVY2/cache/org.scala-sbt/logging/srcs/logging-0.12.4-sources.jar</sources>
-      <sources>$IVY2/cache/org.scala-sbt/process/srcs/process-0.12.4-sources.jar</sources>
-      <sources>$IVY2/cache/org.scala-sbt/compile/srcs/compile-0.12.4-sources.jar</sources>
-      <sources>$IVY2/cache/org.scala-sbt/persist/srcs/persist-0.12.4-sources.jar</sources>
-      <sources>$IVY2/cache/org.scala-tools.sbinary/sbinary_2.9.0/srcs/sbinary_2.9.0-0.4.0-sources.jar</sources>
-      <sources>$IVY2/cache/org.scala-sbt/classfile/srcs/classfile-0.12.4-sources.jar</sources>
-      <sources>$IVY2/cache/org.scala-sbt/compiler-ivy-integration/srcs/compiler-ivy-integration-0.12.4-sources.jar</sources>
-      <sources>$IVY2/cache/org.scala-sbt/ivy/srcs/ivy-0.12.4-sources.jar</sources>
-      <sources>$IVY2/cache/org.apache.ivy/ivy/srcs/ivy-2.3.0-rc1-sources.jar</sources>
       <sources>$IVY2/cache/com.jcraft/jsch/srcs/jsch-0.1.46-sources.jar</sources>
       <sources>$IVY2/cache/commons-httpclient/commons-httpclient/srcs/commons-httpclient-3.1-sources.jar</sources>
       <sources>$IVY2/cache/commons-logging/commons-logging/srcs/commons-logging-1.0.4-sources.jar</sources>
-      <sources>$IVY2/cache/org.scala-sbt/run/srcs/run-0.12.4-sources.jar</sources>
-      <sources>$IVY2/cache/org.scala-sbt/task-system/srcs/task-system-0.12.4-sources.jar</sources>
-      <sources>$IVY2/cache/org.scala-sbt/tasks/srcs/tasks-0.12.4-sources.jar</sources>
-      <sources>$IVY2/cache/org.scala-sbt/tracking/srcs/tracking-0.12.4-sources.jar</sources>
+      <sources>$IVY2/cache/jline/jline/srcs/jline-1.0-sources.jar</sources>
+      <sources>$IVY2/cache/org.apache.ivy/ivy/srcs/ivy-2.3.0-rc1-sources.jar</sources>
+      <sources>$IVY2/cache/org.scala-lang/scala-compiler/srcs/scala-compiler-2.10.1-sources.jar</sources>
+      <sources>$IVY2/cache/org.scala-lang/scala-library/srcs/scala-library-2.10.1-sources.jar</sources>
+      <sources>$IVY2/cache/org.scala-lang/scala-reflect/srcs/scala-reflect-2.10.1-sources.jar</sources>
+      <sources>$IVY2/cache/org.scala-sbt/actions/srcs/actions-0.12.4-sources.jar</sources>
+      <sources>$IVY2/cache/org.scala-sbt/api/srcs/api-0.12.4-sources.jar</sources>
       <sources>$IVY2/cache/org.scala-sbt/cache/srcs/cache-0.12.4-sources.jar</sources>
-      <sources>$IVY2/cache/org.scala-sbt/testing/srcs/testing-0.12.4-sources.jar</sources>
-      <sources>$IVY2/cache/org.scala-sbt/test-agent/srcs/test-agent-0.12.4-sources.jar</sources>
+      <sources>$IVY2/cache/org.scala-sbt/classfile/srcs/classfile-0.12.4-sources.jar</sources>
+      <sources>$IVY2/cache/org.scala-sbt/classpath/srcs/classpath-0.12.4-sources.jar</sources>
+      <sources>$IVY2/cache/org.scala-sbt/collections/srcs/collections-0.12.4-sources.jar</sources>
       <sources>$IVY2/cache/org.scala-sbt/command/srcs/command-0.12.4-sources.jar</sources>
+      <sources>$IVY2/cache/org.scala-sbt/compile/srcs/compile-0.12.4-sources.jar</sources>
+      <sources>$IVY2/cache/org.scala-sbt/compiler-integration/srcs/compiler-integration-0.12.4-sources.jar</sources>
+      <sources>$IVY2/cache/org.scala-sbt/compiler-ivy-integration/srcs/compiler-ivy-integration-0.12.4-sources.jar</sources>
+      <sources>$IVY2/cache/org.scala-sbt/completion/srcs/completion-0.12.4-sources.jar</sources>
+      <sources>$IVY2/cache/org.scala-sbt/control/srcs/control-0.12.4-sources.jar</sources>
+      <sources>$IVY2/cache/org.scala-sbt/incremental-compiler/srcs/incremental-compiler-0.12.4-sources.jar</sources>
+      <sources>$IVY2/cache/org.scala-sbt/interface/srcs/interface-0.12.4-sources.jar</sources>
+      <sources>$IVY2/cache/org.scala-sbt/io/srcs/io-0.12.4-sources.jar</sources>
+      <sources>$IVY2/cache/org.scala-sbt/ivy/srcs/ivy-0.12.4-sources.jar</sources>
+      <sources>$IVY2/cache/org.scala-sbt/launcher-interface/srcs/launcher-interface-0.12.4-sources.jar</sources>
+      <sources>$IVY2/cache/org.scala-sbt/logging/srcs/logging-0.12.4-sources.jar</sources>
+      <sources>$IVY2/cache/org.scala-sbt/main/srcs/main-0.12.4-sources.jar</sources>
+      <sources>$IVY2/cache/org.scala-sbt/persist/srcs/persist-0.12.4-sources.jar</sources>
+      <sources>$IVY2/cache/org.scala-sbt/precompiled-2_10_1/srcs/precompiled-2_10_1-0.12.4-sources.jar</sources>
       <sources>$IVY2/cache/org.scala-sbt/precompiled-2_8_2/srcs/precompiled-2_8_2-0.12.4-sources.jar</sources>
       <sources>$IVY2/cache/org.scala-sbt/precompiled-2_9_3/srcs/precompiled-2_9_3-0.12.4-sources.jar</sources>
-      <sources>$IVY2/cache/org.scala-sbt/precompiled-2_10_1/srcs/precompiled-2_10_1-0.12.4-sources.jar</sources>
+      <sources>$IVY2/cache/org.scala-sbt/process/srcs/process-0.12.4-sources.jar</sources>
+      <sources>$IVY2/cache/org.scala-sbt/run/srcs/run-0.12.4-sources.jar</sources>
+      <sources>$IVY2/cache/org.scala-sbt/sbt/srcs/sbt-0.12.4-sources.jar</sources>
+      <sources>$IVY2/cache/org.scala-sbt/task-system/srcs/task-system-0.12.4-sources.jar</sources>
+      <sources>$IVY2/cache/org.scala-sbt/tasks/srcs/tasks-0.12.4-sources.jar</sources>
+      <sources>$IVY2/cache/org.scala-sbt/test-agent/srcs/test-agent-0.12.4-sources.jar</sources>
+      <sources>$IVY2/cache/org.scala-sbt/testing/srcs/testing-0.12.4-sources.jar</sources>
+      <sources>$IVY2/cache/org.scala-sbt/tracking/srcs/tracking-0.12.4-sources.jar</sources>
+      <sources>$IVY2/cache/org.scala-tools.sbinary/sbinary_2.9.0/srcs/sbinary_2.9.0-0.4.0-sources.jar</sources>
     </build>
     <scala>
       <version>2.10.1</version>
@@ -98,23 +99,23 @@
       <jar>$SBT_BOOT/scala-2.10.1/lib/scala-reflect.jar</jar>
     </scala>
     <configuration id="compile">
-      <sources>$BASE/src/main/java</sources>
-      <sources>$BASE/src/main/scala</sources>
+      <sources >$BASE/src/main/java</sources>
+      <sources >$BASE/src/main/scala</sources>
       <sources managed="true">$BASE/target/scala-2.10/src_managed/main</sources>
-      <resources>$BASE/src/main/resources</resources>
+      <resources >$BASE/src/main/resources</resources>
       <resources managed="true">$BASE/target/scala-2.10/resource_managed/main</resources>
       <classes>$BASE/target/scala-2.10/classes</classes>
     </configuration>
     <configuration id="test">
-      <sources>$BASE/src/test/java</sources>
-      <sources>$BASE/src/test/scala</sources>
+      <sources >$BASE/src/test/java</sources>
+      <sources >$BASE/src/test/scala</sources>
       <sources managed="true">$BASE/target/scala-2.10/src_managed/test</sources>
-      <resources>$BASE/src/test/resources</resources>
+      <resources >$BASE/src/test/resources</resources>
       <resources managed="true">$BASE/target/scala-2.10/resource_managed/test</resources>
       <classes>$BASE/target/scala-2.10/test-classes</classes>
     </configuration>
     <dependencies>
-      <module revision="2.10.1" name="scala-library" artifactType="jar" configurations="compile" organization="org.scala-lang" classifier=""></module>
+      <module classifier="" organization="org.scala-lang" artifactType="jar" name="scala-library" revision="2.10.1" configurations="compile"></module>
     </dependencies>
     <resolver name="public" root="http://repo1.maven.org/maven2/"></resolver>
   </project>
@@ -124,5 +125,5 @@
       <src>$IVY2/cache/org.scala-lang/scala-library/srcs/scala-library-2.10.1-sources.jar</src>
     </module>
   </repository>
-  <localCachePath>$IVY2</localCachePath>
+  <localCachePath>$HOME/sbt-structure-global/ivy2</localCachePath>
 </structure>

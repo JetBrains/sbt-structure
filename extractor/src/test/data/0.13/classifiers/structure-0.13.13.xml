@@ -2,6 +2,7 @@
 <structure sbt="0.13.13">
   <project>
     <id>classifiers</id>
+    <buildURI>$URI_BASE</buildURI>
     <name>classifiers</name>
     <organization>default</organization>
     <version>0.1-SNAPSHOT</version>
@@ -154,6 +155,7 @@
   </project>
   <project>
     <id>bar</id>
+    <buildURI>$URI_BASE</buildURI>
     <name>bar</name>
     <organization>bar</organization>
     <version>0.1-SNAPSHOT</version>
@@ -310,6 +312,7 @@
   </project>
   <project>
     <id>foo</id>
+    <buildURI>$URI_BASE</buildURI>
     <name>foo</name>
     <organization>foo</organization>
     <version>0.1-SNAPSHOT</version>
