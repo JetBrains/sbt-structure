@@ -268,6 +268,46 @@ trait DataSerializers {
     }
   }
 
+  implicit val settingDataSerializer = new XmlSerializer[SettingData] {
+    override def serialize(what: SettingData): Elem = {
+      <setting>
+        <label>{what.label}</label>
+        { what.description.toSeq.map { description =>
+          <description>{description}</description> }
+        }
+        <rank>{what.rank}</rank>
+      </setting>
+    }
+
+    override def deserialize(what: Node): Either[Throwable, SettingData] = {
+      val label = (what \ "label").text
+      val description = (what \ "description").headOption.map(_.text)
+      val rank = (what \ "rank").text.toInt
+
+      Right(SettingData(label, description, rank))
+    }
+  }
+
+  implicit val taskDataSerializer = new XmlSerializer[TaskData] {
+    override def serialize(what: TaskData): Elem = {
+      <task>
+        <label>{what.label}</label>
+        { what.description.toSeq.map { description =>
+        <description>{description}</description> }
+        }
+        <rank>{what.rank}</rank>
+      </task>
+    }
+
+    override def deserialize(what: Node): Either[Throwable, TaskData] = {
+      val label = (what \ "label").text
+      val description = (what \ "description").headOption.map(_.text)
+      val rank = (what \ "rank").text.toInt
+
+      Right(TaskData(label, description, rank))
+    }
+  }
+
   implicit val apkLibSerializer = new XmlSerializer[ApkLib] {
     override def serialize(what: ApkLib): Elem =
       <apkLib name={what.name}>
@@ -369,6 +409,8 @@ trait DataSerializers {
         {what.dependencies.serialize}
         {what.resolvers.map(_.serialize).toSeq}
         {what.play2.map(_.serialize).toSeq}
+        {what.settings.map(_.serialize).toSeq}
+        {what.tasks.map(_.serialize).toSeq}
       </project>
 
     override def deserialize(what: Node): Either[Throwable,ProjectData] = {
@@ -388,6 +430,9 @@ trait DataSerializers {
       val resolvers = (what \ "resolver").deserialize[ResolverData].toSet
       val play2 = (what \ "play2").deserialize[Play2Data].headOption
 
+      val settings = (what \ "setting").deserialize[SettingData]
+      val tasks = (what \ "task").deserialize[TaskData]
+
       val tryBuildAndDeps = {
         val build = (what \ "build").deserializeOne[BuildData]
         val deps = (what \ "dependencies").deserializeOne[DependencyData]
@@ -397,7 +442,7 @@ trait DataSerializers {
       tryBuildAndDeps.fold(exc => Left(exc), { case(build, dependencies) =>
         Right(ProjectData(id, buildURI, name, organization, version, base, basePackages,
           target, build, configurations, java, scala, android,
-          dependencies, resolvers, play2))
+          dependencies, resolvers, play2, settings, tasks))
       })
     }
   }

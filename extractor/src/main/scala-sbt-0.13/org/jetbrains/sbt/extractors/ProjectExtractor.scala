@@ -33,21 +33,28 @@ class ProjectExtractor(projectRef: ProjectRef,
                        dependencies: DependencyData,
                        build: BuildData,
                        android: Option[AndroidData],
-                       play2: Option[Play2Data]) {
+                       play2: Option[Play2Data],
+                       settingKeys: Seq[SettingData],
+                       taskKeys: Seq[TaskData]
+                      ) {
 
 
   private[extractors] def extract: Seq[ProjectData] = {
+
     val resolvers = allResolvers.collect {
       case MavenRepository(repoName, root) => ResolverData(repoName, root)
     }.toSet
-    val configurations  =
+
+    val configurations =
       mergeConfigurations(
         sourceConfigurations.flatMap(extractConfiguration(Compile.name) _) ++
           testConfigurations.flatMap(extractConfiguration(Test.name) _)
       )
-    val projectData = ProjectData(projectRef.id, projectRef.build, name, organization, version, base,
+    val projectData = ProjectData(
+      projectRef.id, projectRef.build, name, organization, version, base,
       basePackages, target, build, configurations,
-      extractJava, extractScala, android, dependencies, resolvers, play2)
+      extractJava, extractScala, android, dependencies, resolvers, play2,
+      settingKeys, taskKeys)
 
     android match {
       case None => Seq(projectData)
@@ -176,7 +183,9 @@ object ProjectExtractor extends SbtStateOps with TaskOps {
         StructureKeys.extractDependencies.value,
         StructureKeys.extractBuild.value,
         StructureKeys.extractAndroid.value,
-        StructureKeys.extractPlay2.value
+        StructureKeys.extractPlay2.value,
+        KeysExtractor.settingKeys.value,
+        KeysExtractor.taskKeys.value
       ).extract
     }
   }

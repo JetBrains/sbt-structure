@@ -56,7 +56,13 @@ case class ProjectData(id: String,
                        android: Option[AndroidData],
                        dependencies: DependencyData,
                        resolvers: Set[ResolverData],
-                       play2: Option[Play2Data])
+                       play2: Option[Play2Data],
+                       settings: Seq[SettingData],
+                       tasks: Seq[TaskData]
+                      )
+
+case class SettingData(label: String, description: Option[String], rank: Int)
+case class TaskData(label: String, description: Option[String], rank: Int)
 
 /**
  * Information about build dependencies and implicit imports for proper editing of .sbt files
