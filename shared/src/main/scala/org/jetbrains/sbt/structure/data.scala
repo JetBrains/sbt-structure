@@ -58,11 +58,13 @@ case class ProjectData(id: String,
                        resolvers: Set[ResolverData],
                        play2: Option[Play2Data],
                        settings: Seq[SettingData],
-                       tasks: Seq[TaskData]
+                       tasks: Seq[TaskData],
+                       commands: Seq[CommandData]
                       )
 
-case class SettingData(label: String, description: Option[String], rank: Int)
+case class SettingData(label: String, description: Option[String], rank: Int, stringValue: Option[String])
 case class TaskData(label: String, description: Option[String], rank: Int)
+case class CommandData(name: String, help: Seq[(String,String)])
 
 /**
  * Information about build dependencies and implicit imports for proper editing of .sbt files

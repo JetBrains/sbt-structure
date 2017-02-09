@@ -46,7 +46,8 @@ class ProjectExtractor(projectRef: ProjectRef,
       basePackages, target, build, configurations,
       extractJava, extractScala, android, dependencies, resolvers, play2,
       settings = Nil, // don't bother supporting this feature in sbt 0.12
-      tasks = Nil
+      tasks = Nil,
+      commands = Nil
     )
 
     android match {

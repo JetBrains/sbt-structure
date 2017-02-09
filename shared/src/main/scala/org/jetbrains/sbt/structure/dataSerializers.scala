@@ -272,10 +272,9 @@ trait DataSerializers {
     override def serialize(what: SettingData): Elem = {
       <setting>
         <label>{what.label}</label>
-        { what.description.toSeq.map { description =>
-          <description>{description}</description> }
-        }
+        { what.description.toSeq.map { description => <description>{description}</description> } }
         <rank>{what.rank}</rank>
+        { what.stringValue.toSeq.map { value => <value>{value}</value> } }
       </setting>
     }
 
@@ -283,8 +282,33 @@ trait DataSerializers {
       val label = (what \ "label").text
       val description = (what \ "description").headOption.map(_.text)
       val rank = (what \ "rank").text.toInt
+      val stringValue = (what \ "value").headOption.map(_.text)
 
-      Right(SettingData(label, description, rank))
+      Right(SettingData(label, description, rank, stringValue))
+    }
+  }
+
+  implicit val commandDataSerializer = new XmlSerializer[CommandData] {
+    override def serialize(what: CommandData): Elem = {
+      <command>
+        <name>{what.name}</name>
+        { what.help.map { case (cmd,description) =>
+          <help>
+            <cmd>{cmd}</cmd>
+            <desc>{description}</desc>
+          </help>
+        }}
+      </command>
+    }
+
+    override def deserialize(what: Node): Either[Throwable, CommandData] = {
+      val name = (what \ "name").text
+      val help = (what \ "help").map { helpNode =>
+        val cmd = (helpNode \ "cmd").text
+        val description = (helpNode \ "desc").text
+        (cmd, description)
+      }
+      Right(CommandData(name, help))
     }
   }
 
@@ -409,8 +433,9 @@ trait DataSerializers {
         {what.dependencies.serialize}
         {what.resolvers.map(_.serialize).toSeq}
         {what.play2.map(_.serialize).toSeq}
-        {what.settings.map(_.serialize).toSeq}
-        {what.tasks.map(_.serialize).toSeq}
+        {what.settings.map(_.serialize)}
+        {what.tasks.map(_.serialize)}
+        {what.commands.map(_.serialize)}
       </project>
 
     override def deserialize(what: Node): Either[Throwable,ProjectData] = {
@@ -432,6 +457,7 @@ trait DataSerializers {
 
       val settings = (what \ "setting").deserialize[SettingData]
       val tasks = (what \ "task").deserialize[TaskData]
+      val commands = (what \ "command").deserialize[CommandData]
 
       val tryBuildAndDeps = {
         val build = (what \ "build").deserializeOne[BuildData]
@@ -442,7 +468,7 @@ trait DataSerializers {
       tryBuildAndDeps.fold(exc => Left(exc), { case(build, dependencies) =>
         Right(ProjectData(id, buildURI, name, organization, version, base, basePackages,
           target, build, configurations, java, scala, android,
-          dependencies, resolvers, play2, settings, tasks))
+          dependencies, resolvers, play2, settings, tasks, commands))
       })
     }
   }

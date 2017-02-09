@@ -7,7 +7,10 @@ import sbt.{Command, SimpleCommand}
   */
 object BadCitizen {
 
-  def isSimpleCommand(cmd: Command): Boolean =
-    cmd.isInstanceOf[SimpleCommand]
+  def commandName(cmd: Command): Option[String] =
+    cmd match {
+      case simple: SimpleCommand => Option(simple.name)
+      case _ => None
+    }
 
 }

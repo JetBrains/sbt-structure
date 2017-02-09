@@ -73,7 +73,7 @@ object AndroidSdkPluginExtractor extends SbtStateOps with TaskOps  {
       ConfigurationData("compile",
         Seq(DirectoryData(lib.layout.sources, managed = true)),
         Seq(DirectoryData(lib.layout.resources, managed = true)), Nil, lib.getJarFile) :: Nil, None, None, Some(android),
-      DependencyData(Nil, Nil, Nil), Set.empty, None, Nil, Nil)
+      DependencyData(Nil, Nil, Nil), Set.empty, None, Nil, Nil, Nil)
     Aar(fixedLibName, project)
   }
 

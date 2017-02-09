@@ -34,8 +34,9 @@ class ProjectExtractor(projectRef: ProjectRef,
                        build: BuildData,
                        android: Option[AndroidData],
                        play2: Option[Play2Data],
-                       settingKeys: Seq[SettingData],
-                       taskKeys: Seq[TaskData]
+                       settingData: Seq[SettingData],
+                       taskData: Seq[TaskData],
+                       commandData: Seq[CommandData]
                       ) {
 
 
@@ -54,7 +55,7 @@ class ProjectExtractor(projectRef: ProjectRef,
       projectRef.id, projectRef.build, name, organization, version, base,
       basePackages, target, build, configurations,
       extractJava, extractScala, android, dependencies, resolvers, play2,
-      settingKeys, taskKeys)
+      settingData, taskData, commandData)
 
     android match {
       case None => Seq(projectData)
@@ -184,8 +185,9 @@ object ProjectExtractor extends SbtStateOps with TaskOps {
         StructureKeys.extractBuild.value,
         StructureKeys.extractAndroid.value,
         StructureKeys.extractPlay2.value,
-        KeysExtractor.settingKeys.value,
-        KeysExtractor.taskKeys.value
+        KeysExtractor.settingData.value,
+        KeysExtractor.taskData.value,
+        KeysExtractor.commandData.value
       ).extract
     }
   }
