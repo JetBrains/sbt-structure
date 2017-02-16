@@ -59,3 +59,5 @@ lazy val extractor = newProject("extractor")
 lazy val sbtStructure = project.in(file(".")).aggregate(core, extractor)
 
 lazy val testSetup = taskKey[Unit]("Setup tests for extractor")
+
+addCommandAlias("publishAllLocal", ";project core; + publishLocal; project extractor; ^^ 0.12 publishLocal; ^^ 0.13 publishLocal")
