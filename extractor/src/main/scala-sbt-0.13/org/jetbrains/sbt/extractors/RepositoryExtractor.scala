@@ -1,9 +1,9 @@
 package org.jetbrains.sbt.extractors
 
 import org.jetbrains.sbt.structure.{ModuleData, ModuleIdentifier, RepositoryData}
-import org.jetbrains.sbt.{ModuleReportAdapter, ModulesOps, Options, SbtStateOps, StructureKeys, TaskOps, UpdateReportAdapter}
+import org.jetbrains.sbt.{ModuleReportAdapter, ModulesOps, Options, SbtStateOps, StructureKeys, TaskOps, UpdateReportAdapter, UtilityTasks}
 import sbt.Def.Initialize
-import sbt._
+import sbt.{Def, _}
 
 /**
  * @author Nikolay Obedin
@@ -69,7 +69,17 @@ object RepositoryExtractor extends SbtStateOps with TaskOps {
   def taskDef: Initialize[Task[Option[RepositoryData]]] = Def.taskDyn {
     val state = Keys.state.value
     val options = StructureKeys.sbtStructureOpts.value
-    val acceptedProjects = StructureKeys.acceptedProjects.value
+    val acceptedProjects = UtilityTasks.acceptedProjects.value
+
+    Def.task {
+      extractRepositoryData(state, options, acceptedProjects)
+        .onlyIf(options.download).value
+    }
+  }
+
+  def taskDef(options: Options): Def.Initialize[Task[Option[RepositoryData]]] = Def.taskDyn {
+    val state = Keys.state.value
+    val acceptedProjects = UtilityTasks.acceptedProjects.value
 
     Def.task {
       extractRepositoryData(state, options, acceptedProjects)

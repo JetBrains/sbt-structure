@@ -2,9 +2,10 @@ package org.jetbrains.sbt
 
 import java.io.{BufferedWriter, FileOutputStream, OutputStreamWriter}
 
-import sbt._
-import extractors.SettingKeys
+import sbt.{Def, _}
+import extractors.{ProjectExtractor, SettingKeys, StructureExtractor}
 import Def.Initialize
+import org.jetbrains.sbt.structure.ProjectData
 import structure.XmlSerializer._
 
 import scala.language.reflectiveCalls
@@ -15,8 +16,29 @@ import scala.xml._
  */
 object UtilityTasks extends SbtStateOps {
 
+  def dumpStructureTo: Def.Initialize[InputTask[File]] = Def.inputTask {
+    val params: Seq[String] =
+      Def.spaceDelimited("<file> [prettyPrint] [download] [resolveClassifiers] [resolveJavadocs] [resolveSbtClassifiers]").parsed
+
+    val outputFile: File = file(params.head)
+    val options = Options.readFromSeq(params.tail)
+    val structure = StructureExtractor.taskDef.value.serialize
+    val log = Keys.streams.value.log
+
+    val outputText = {
+      if (options.prettyPrint) new PrettyPrinter(180, 2).format(structure)
+      else xml.Utility.trim(structure).mkString
+    }
+
+    log.info("Writing structure to " + outputFile.getPath + "...")
+    // noinspection UnitInMap
+    writeToFile(outputFile, outputText)
+    log.info("Done.")
+    outputFile
+  }
+
   def dumpStructure: Initialize[Task[Unit]] = Def.task {
-    val structure = StructureKeys.extractStructure.value
+    val structure = StructureExtractor.taskDef.value
     val options = StructureKeys.sbtStructureOpts.value
     val outputFile = StructureKeys.sbtStructureOutputFile.value
     val log = Keys.streams.value.log
@@ -46,6 +68,18 @@ object UtilityTasks extends SbtStateOps {
         SettingKeys.ideSkipProject.in(ref).getOrElse(state, false) ||
           SettingKeys.sbtIdeaIgnoreModule.in(ref).getOrElse(state, false)
       isProjectAccepted && !shouldSkipProject
+    }
+  }
+
+  def extractProjects: Def.Initialize[Task[Seq[ProjectData]]] = Def.taskDyn {
+    val state = Keys.state.value
+    val accepted = UtilityTasks.acceptedProjects.value
+
+    Def.task {
+      StructureKeys.extractProject
+        .forAllProjects(state, accepted)
+        .map(_.values.toSeq.flatten)
+        .value
     }
   }
 
