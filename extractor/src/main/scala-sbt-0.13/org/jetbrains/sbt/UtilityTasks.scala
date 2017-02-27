@@ -2,11 +2,13 @@ package org.jetbrains.sbt
 
 import java.io.{BufferedWriter, FileOutputStream, OutputStreamWriter}
 
-import sbt.{Def, _}
-import extractors.{ProjectExtractor, SettingKeys, StructureExtractor}
-import Def.Initialize
+import org.jetbrains.sbt.extractors.{SettingKeys, StructureExtractor}
 import org.jetbrains.sbt.structure.ProjectData
-import structure.XmlSerializer._
+import org.jetbrains.sbt.structure.XmlSerializer._
+import sbt.Def.Initialize
+import sbt.complete.{DefaultParsers, Parser}
+import DefaultParsers._
+import sbt.{Artifact, Configuration, Def, File, GetClassifiersModule, InputTask, Keys, ProjectRef, ResolvedProject, Task, file}
 
 import scala.language.reflectiveCalls
 import scala.xml._
@@ -16,12 +18,15 @@ import scala.xml._
  */
 object UtilityTasks extends SbtStateOps {
 
-  def dumpStructureTo: Def.Initialize[InputTask[File]] = Def.inputTask {
-    val params: Seq[String] =
-      Def.spaceDelimited("<file> [prettyPrint] [download] [resolveClassifiers] [resolveJavadocs] [resolveSbtClassifiers]").parsed
+  private val optParser: Parser[Seq[String]] =
+    ("prettyPrint" | "download" | "resolveClassifiers" | "resolveJavadocs" | "resolveSbtClassifiers").*
+  private val fileOptParser = DefaultParsers.fileParser(file("/")) ~ optParser
 
-    val outputFile: File = file(params.head)
-    val options = Options.readFromSeq(params.tail)
+  def dumpStructureTo: Def.Initialize[InputTask[File]] = Def.inputTask {
+
+    val (outputFile, params) = fileOptParser.parsed
+
+    val options = Options.readFromSeq(params)
     val structure = StructureExtractor.taskDef.value.serialize
     val log = Keys.streams.value.log
 
@@ -94,6 +99,7 @@ object UtilityTasks extends SbtStateOps {
   }
 
   def testConfigurations: Def.Initialize[Seq[Configuration]] = allConfigurationsWithSource.apply { cs =>
+    import sbt._
     val predefinedTest = Set(Test, IntegrationTest)
     val transitiveTest = cs.filter(c =>
       transitiveExtends(c.extendsConfigs)
@@ -104,11 +110,14 @@ object UtilityTasks extends SbtStateOps {
   }
 
   def sourceConfigurations: Def.Initialize[Seq[Configuration]] = Def.setting {
+    import sbt._
     (allConfigurationsWithSource.value.diff(testConfigurations.value) ++ Seq(Compile)).distinct
   }
 
-  def dependencyConfigurations: Def.Initialize[Seq[Configuration]] =
+  def dependencyConfigurations: Def.Initialize[Seq[Configuration]] = {
+    import sbt._
     allConfigurationsWithSource.apply(cs => (cs ++ Seq(Runtime, Provided, Optional)).distinct)
+  }
 
   def classifiersModuleRespectingStructureOpts: Initialize[Task[GetClassifiersModule]] = Def.task {
     val module = (Keys.classifiersModule in Keys.updateClassifiers).value
