@@ -19,27 +19,30 @@ import scala.xml._
 object UtilityTasks extends SbtStateOps {
 
   private val optParser: Parser[Seq[String]] =
-    ("prettyPrint" | "download" | "resolveClassifiers" | "resolveJavadocs" | "resolveSbtClassifiers").*
+    (' ' ~> token("prettyPrint" | "download" | "resolveClassifiers" | "resolveJavadocs" | "resolveSbtClassifiers")).*
+      .map(_.distinct)
   private val fileOptParser = DefaultParsers.fileParser(file("/")) ~ optParser
 
-  def dumpStructureTo: Def.Initialize[InputTask[File]] = Def.inputTask {
+  def dumpStructureTo: Def.Initialize[InputTask[File]] = Def.inputTaskDyn {
 
     val (outputFile, params) = fileOptParser.parsed
-
     val options = Options.readFromSeq(params)
-    val structure = StructureExtractor.taskDef.value.serialize
     val log = Keys.streams.value.log
+    val structureTask = StructureExtractor.taskDef(options)
 
-    val outputText = {
-      if (options.prettyPrint) new PrettyPrinter(180, 2).format(structure)
-      else xml.Utility.trim(structure).mkString
+    Def.task {
+      val structure = structureTask.value.serialize
+      val outputText = {
+        if (options.prettyPrint) new PrettyPrinter(180, 2).format(structure)
+        else xml.Utility.trim(structure).mkString
+      }
+
+      log.info("Writing structure to " + outputFile.getPath + "...")
+      // noinspection UnitInMap
+      writeToFile(outputFile, outputText)
+      log.info("Done.")
+      outputFile
     }
-
-    log.info("Writing structure to " + outputFile.getPath + "...")
-    // noinspection UnitInMap
-    writeToFile(outputFile, outputText)
-    log.info("Done.")
-    outputFile
   }
 
   def dumpStructure: Initialize[Task[Unit]] = Def.task {
