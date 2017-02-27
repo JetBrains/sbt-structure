@@ -183,7 +183,7 @@ object ProjectExtractor extends SbtStateOps with TaskOps {
         UtilityTasks.testConfigurations.value,
         DependenciesExtractor.taskDef.value,
         BuildExtractor.taskDef.value,
-        tasks.extractAndroidSdkPlugin.value,
+        extractors.extractAndroidSdkPlugin.value,
         Play2Extractor.taskDef.value,
         KeysExtractor.settingData.value,
         KeysExtractor.taskData.value,

@@ -11,7 +11,8 @@ object CreateTasks extends (State => State) with SbtStateOps {
 
   def globalSettings: Seq[Setting[_]] = Seq[Setting[_]](
     StructureKeys.sbtStructureOpts := StructureKeys.sbtStructureOptions.apply(Options.readFromString).value,
-    StructureKeys.dumpStructure := UtilityTasks.dumpStructure.value
+    StructureKeys.dumpStructure := UtilityTasks.dumpStructure.value,
+    StructureKeys.dumpStructureTo := UtilityTasks.dumpStructureTo.evaluated
   )
 
   def projectSettings: Seq[Setting[_]] = Seq[Setting[_]](

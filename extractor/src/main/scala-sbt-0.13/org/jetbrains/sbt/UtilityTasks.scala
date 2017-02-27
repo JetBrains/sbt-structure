@@ -2,12 +2,12 @@ package org.jetbrains.sbt
 
 import java.io.{BufferedWriter, FileOutputStream, OutputStreamWriter}
 
-import org.jetbrains.sbt.extractors.{SettingKeys, StructureExtractor}
+import org.jetbrains.sbt.extractors.SettingKeys
 import org.jetbrains.sbt.structure.ProjectData
 import org.jetbrains.sbt.structure.XmlSerializer._
 import sbt.Def.Initialize
+import sbt.complete.DefaultParsers._
 import sbt.complete.{DefaultParsers, Parser}
-import DefaultParsers._
 import sbt.{Artifact, Configuration, Def, File, GetClassifiersModule, InputTask, Keys, ProjectRef, ResolvedProject, Task, file}
 
 import scala.language.reflectiveCalls
@@ -28,7 +28,7 @@ object UtilityTasks extends SbtStateOps {
     val (outputFile, params) = fileOptParser.parsed
     val options = Options.readFromSeq(params)
     val log = Keys.streams.value.log
-    val structureTask = StructureExtractor.taskDef(options)
+    val structureTask = extractors.extractStructure(options)
 
     Def.task {
       val structure = structureTask.value.serialize
@@ -46,7 +46,7 @@ object UtilityTasks extends SbtStateOps {
   }
 
   def dumpStructure: Initialize[Task[Unit]] = Def.task {
-    val structure = StructureExtractor.taskDef.value
+    val structure = extractors.extractStructure.value
     val options = StructureKeys.sbtStructureOpts.value
     val outputFile = StructureKeys.sbtStructureOutputFile.value
     val log = Keys.streams.value.log
