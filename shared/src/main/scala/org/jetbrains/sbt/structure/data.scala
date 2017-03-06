@@ -107,7 +107,8 @@ case class DirectoryData(file: File, managed: Boolean)
 
 case class JavaData(home: Option[File], options: Seq[String])
 
-case class ScalaData(version: String,
+case class ScalaData(organization: String,
+                     version: String,
                      jars: Seq[File],
                      options: Seq[String])
 

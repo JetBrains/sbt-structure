@@ -24,6 +24,7 @@ class ProjectExtractor(projectRef: ProjectRef,
                        unmanagedResourceDirectories: sbt.Configuration => Seq[File],
                        excludedDirectories: Seq[File],
                        ideOutputDirectory: sbt.Configuration => Option[File],
+                       scalaOrganization: String,
                        scalaInstance: Option[ScalaInstance],
                        scalacOptions: Seq[String],
                        javaHome: Option[File],
@@ -96,7 +97,7 @@ class ProjectExtractor(projectRef: ProjectRef,
       instance.libraryJar +:
       instance.compilerJar +:
       instance.extraJars.filter(_.getName.contains("reflect"))
-    ScalaData(instance.version, jars, scalacOptions)
+    ScalaData(scalaOrganization, instance.version, jars, scalacOptions)
   }
 
   private def extractJava: Option[JavaData] =
@@ -154,6 +155,8 @@ object ProjectExtractor extends SbtStateOps with TaskOps {
         def ideOutputDirectory(conf: sbt.Configuration) =
           SettingKeys.ideOutputDirectory.in(projectRef, conf).find(state).flatten
 
+        val scalaOrganization = Keys.scalaOrganization.in(projectRef, Compile).get(state)
+
         val scalaInstanceTask =
           Keys.scalaInstance.in(projectRef, Compile).get(state).onlyIf(options.download)
         val scalacOptionsTask =
@@ -177,7 +180,7 @@ object ProjectExtractor extends SbtStateOps with TaskOps {
             inConfiguration(Keys.unmanagedResourceDirectories),
             excludedDirectories,
             ideOutputDirectory,
-            scalaInstance, scalacOptions.getOrElse(Seq.empty),
+            scalaOrganization, scalaInstance, scalacOptions.getOrElse(Seq.empty),
             javaHome, javacOptions.getOrElse(Seq.empty),
             sourceConfigurations,
             testConfigurations,

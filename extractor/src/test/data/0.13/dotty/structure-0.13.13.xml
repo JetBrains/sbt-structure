@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<structure sbt="0.13.13">
+  <project>
+    <id>dotty</id>
+    <buildURI>$URI_BASE</buildURI>
+    <name>some-name</name>
+    <organization>some-organization</organization>
+    <version>1.2.3</version>
+    <base>$BASE</base>
+    <target>$BASE/target</target>
+    <build>
+      <import>
+        import _root_.sbt.plugins.IvyPlugin, _root_.sbt.plugins.JvmPlugin, _root_.sbt.plugins.CorePlugin, _root_.sbt.plugins.JUnitXmlReportPlugin, _root_.sbt.plugins.Giter8TemplatePlugin
+      </import>
+      <import>import sbt._, Keys._, dsl._</import>
+      <classes>$SBT_BOOT/scala-2.10.6/lib/jansi.jar</classes>
+      <classes>$SBT_BOOT/scala-2.10.6/lib/jline.jar</classes>
+      <classes>$SBT_BOOT/scala-2.10.6/lib/scala-compiler.jar</classes>
+      <classes>$SBT_BOOT/scala-2.10.6/lib/scala-library.jar</classes>
+      <classes>$SBT_BOOT/scala-2.10.6/lib/scala-reflect.jar</classes>
+      <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/actions-0.13.13.jar</classes>
+      <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/api-0.13.13.jar</classes>
+      <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/apply-macro-0.13.13.jar</classes>
+      <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/cache-0.13.13.jar</classes>
+      <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/classfile-0.13.13.jar</classes>
+      <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/classpath-0.13.13.jar</classes>
+      <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/collections-0.13.13.jar</classes>
+      <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/command-0.13.13.jar</classes>
+      <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/compile-0.13.13.jar</classes>
+      <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/compiler-integration-0.13.13.jar</classes>
+      <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/compiler-interface-0.13.13.jar</classes>
+      <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/compiler-ivy-integration-0.13.13.jar</classes>
+      <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/completion-0.13.13.jar</classes>
+      <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/control-0.13.13.jar</classes>
+      <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/cross-0.13.13.jar</classes>
+      <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/incremental-compiler-0.13.13.jar</classes>
+      <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/io-0.13.13.jar</classes>
+      <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/ivy-0.13.13.jar</classes>
+      <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/ivy-2.3.0-sbt-2cf13e211b2cb31f0d3b317289dca70eca3362f6.jar</classes>
+      <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/jansi-1.11.jar</classes>
+      <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/jawn-parser_2.10-0.6.0.jar</classes>
+      <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/jline-2.13.jar</classes>
+      <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/jsch-0.1.50.jar</classes>
+      <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/json4s-ast_2.10-3.2.10.jar</classes>
+      <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/json4s-core_2.10-3.2.10.jar</classes>
+      <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/json4s-support_2.10-0.6.0.jar</classes>
+      <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/launcher-interface-1.0.0-M1.jar</classes>
+      <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/logging-0.13.13.jar</classes>
+      <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/logic-0.13.13.jar</classes>
+      <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/main-0.13.13.jar</classes>
+      <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/main-settings-0.13.13.jar</classes>
+      <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/paranamer-2.6.jar</classes>
+      <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/persist-0.13.13.jar</classes>
+      <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/process-0.13.13.jar</classes>
+      <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/quasiquotes_2.10-2.0.1.jar</classes>
+      <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/relation-0.13.13.jar</classes>
+      <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/run-0.13.13.jar</classes>
+      <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/sbinary_2.10-0.4.2.jar</classes>
+      <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/sbt-0.13.13.jar</classes>
+      <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/scala-pickling_2.10-0.10.1.jar</classes>
+      <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/scala-reflect-2.10.6.jar</classes>
+      <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/serialization_2.10-0.1.2.jar</classes>
+      <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/task-system-0.13.13.jar</classes>
+      <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/tasks-0.13.13.jar</classes>
+      <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/template-resolver-0.1.jar</classes>
+      <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/test-agent-0.13.13.jar</classes>
+      <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/test-interface-1.0.jar</classes>
+      <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/testing-0.13.13.jar</classes>
+      <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/tracking-0.13.13.jar</classes>
+      <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/xsbti/interface-0.13.13.jar</classes>
+    </build>
+    <scala>
+      <organization>ch.epfl.lamp</organization>
+      <version>0.1.1-20170108-add9a03-NIGHTLY</version>
+      <jar>$IVY2/cache/ch.epfl.lamp/dotty-compiler_2.11/jars/dotty-compiler_2.11-0.1.1-20170108-add9a03-NIGHTLY.jar</jar>
+      <jar>$IVY2/cache/ch.epfl.lamp/dotty-interfaces/jars/dotty-interfaces-0.1.1-20170108-add9a03-NIGHTLY.jar</jar>
+      <jar>$IVY2/cache/ch.epfl.lamp/dotty-library_2.11/jars/dotty-library_2.11-0.1.1-20170108-add9a03-NIGHTLY.jar</jar>
+      <jar>$IVY2/cache/ch.epfl.lamp/dotty_2.11/jars/dotty_2.11-0.1.1-20170108-add9a03-NIGHTLY.jar</jar>
+      <jar>$IVY2/cache/ch.epfl.lamp/dottydoc-client/jars/dottydoc-client-0.1.0.jar</jar>
+      <jar>$IVY2/cache/com.github.spullara.mustache.java/compiler/jars/compiler-0.9.3.jar</jar>
+      <jar>$IVY2/cache/com.typesafe.sbt/sbt-interface/jars/sbt-interface-0.13.11.jar</jar>
+      <jar>$IVY2/cache/me.d-d/scala-compiler/jars/scala-compiler-2.11.5-20160322-171045-e19b30b3cd.jar</jar>
+      <jar>$IVY2/cache/org.scala-lang.modules/scala-parser-combinators_2.11/bundles/scala-parser-combinators_2.11-1.0.2.jar</jar>
+      <jar>$IVY2/cache/org.scala-lang.modules/scala-xml_2.11/bundles/scala-xml_2.11-1.0.1.jar</jar>
+      <jar>$IVY2/cache/org.scala-lang/scala-library/jars/scala-library-2.11.5.jar</jar>
+      <jar>$IVY2/cache/org.scala-lang/scala-reflect/jars/scala-reflect-2.11.5.jar</jar>
+    </scala>
+    <configuration id="compile">
+      <sources>$BASE/src/main/java</sources>
+      <sources>$BASE/src/main/scala</sources>
+      <sources>$BASE/src/main/scala-2.11</sources>
+      <sources managed="true">$BASE/target/scala-2.11/src_managed/main</sources>
+      <resources>$BASE/src/main/resources</resources>
+      <resources managed="true">$BASE/target/scala-2.11/resource_managed/main</resources>
+      <classes>$BASE/target/scala-2.11/classes</classes>
+    </configuration>
+    <configuration id="test">
+      <sources>$BASE/src/test/java</sources>
+      <sources>$BASE/src/test/scala</sources>
+      <sources>$BASE/src/test/scala-2.11</sources>
+      <sources managed="true">$BASE/target/scala-2.11/src_managed/test</sources>
+      <resources>$BASE/src/test/resources</resources>
+      <resources managed="true">$BASE/target/scala-2.11/resource_managed/test</resources>
+      <classes>$BASE/target/scala-2.11/test-classes</classes>
+    </configuration>
+    <dependencies>
+      <module configurations="compile" organization="ch.epfl.lamp" name="dotty-library_2.11" revision="0.1.1-20170108-add9a03-NIGHTLY" artifactType="jar" classifier=""/>
+      <module configurations="compile" organization="ch.epfl.lamp" name="scala-library" revision="0.1.1-20170108-add9a03-NIGHTLY" artifactType="jar" classifier=""/>
+      <module configurations="compile" organization="org.scala-lang" name="scala-library" revision="2.11.5" artifactType="jar" classifier=""/>
+      <module configurations="compile" organization="org.scala-lang" name="scala-reflect" revision="2.11.5" artifactType="jar" classifier=""/>
+    </dependencies>
+    <resolver name="public" root="https://repo1.maven.org/maven2/"/>
+  </project>
+  <repository>
+    <module organization="ch.epfl.lamp" name="dotty-library_2.11" revision="0.1.1-20170108-add9a03-NIGHTLY" artifactType="jar" classifier="">
+      <jar>$IVY2/cache/ch.epfl.lamp/dotty-library_2.11/jars/dotty-library_2.11-0.1.1-20170108-add9a03-NIGHTLY.jar</jar>
+    </module>
+    <module organization="ch.epfl.lamp" name="scala-library" revision="0.1.1-20170108-add9a03-NIGHTLY" artifactType="jar" classifier="">
+      <jar>$IVY2/cache/ch.epfl.lamp/scala-library/jars/scala-library-0.1.1-20170108-add9a03-NIGHTLY.jar</jar>
+    </module>
+    <module organization="org.scala-lang" name="scala-library" revision="2.11.5" artifactType="jar" classifier="">
+      <jar>$IVY2/cache/org.scala-lang/scala-library/jars/scala-library-2.11.5.jar</jar>
+    </module>
+    <module organization="org.scala-lang" name="scala-reflect" revision="2.11.5" artifactType="jar" classifier="">
+      <jar>$IVY2/cache/org.scala-lang/scala-reflect/jars/scala-reflect-2.11.5.jar</jar>
+    </module>
+  </repository>
+</structure>

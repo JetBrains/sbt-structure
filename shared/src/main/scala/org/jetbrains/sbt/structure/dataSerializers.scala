@@ -3,6 +3,7 @@ package org.jetbrains.sbt.structure
 import java.io.File
 import java.net.URI
 
+import org.jetbrains.sbt.structure.DataSerializers._
 import org.jetbrains.sbt.structure.XmlSerializer._
 
 import scala.xml._
@@ -137,6 +138,9 @@ trait DataSerializers {
   implicit val scalaDataSerializer = new XmlSerializer[ScalaData] {
     override def serialize(what: ScalaData): Elem =
       <scala>
+        {Some(what.organization).filterNot(_ == DefaultScalaOrganization).toSeq.map { organization =>
+        <organization>{organization}</organization>
+      }}
         <version>{what.version}</version>
         {what.jars.map { jar =>
         <jar>{jar.path}</jar>
@@ -147,10 +151,11 @@ trait DataSerializers {
       </scala>
 
     override def deserialize(what: Node): Either[Throwable,ScalaData] = {
+      val organization = (what \ "organization").headOption.map(_.text).getOrElse(DefaultScalaOrganization)
       val version = (what \ "version").text
       val jars = (what \ "jar").map(e => e.text.file)
       val options = (what \ "option").map(o => o.text.canonIfFile)
-      Right(ScalaData(version, jars, options))
+      Right(ScalaData(organization, version, jars, options))
     }
   }
 
@@ -493,4 +498,8 @@ trait DataSerializers {
         Right(StructureData(sbtVersion, projects, repository, localCachePath))
     }
   }
+}
+
+private object DataSerializers {
+  private val DefaultScalaOrganization = "org.scala-lang"
 }
