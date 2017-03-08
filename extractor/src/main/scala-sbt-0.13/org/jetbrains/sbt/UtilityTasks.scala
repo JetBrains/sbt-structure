@@ -2,10 +2,13 @@ package org.jetbrains.sbt
 
 import java.io.{BufferedWriter, FileOutputStream, OutputStreamWriter}
 
-import sbt._
-import extractors.SettingKeys
-import Def.Initialize
-import structure.XmlSerializer._
+import org.jetbrains.sbt.extractors.SettingKeys
+import org.jetbrains.sbt.structure.ProjectData
+import org.jetbrains.sbt.structure.XmlSerializer._
+import sbt.Def.Initialize
+import sbt.complete.DefaultParsers._
+import sbt.complete.{DefaultParsers, Parser}
+import sbt.{Artifact, Configuration, Def, File, GetClassifiersModule, InputTask, Keys, ProjectRef, ResolvedProject, Task, file}
 
 import scala.language.reflectiveCalls
 import scala.xml._
@@ -15,8 +18,35 @@ import scala.xml._
  */
 object UtilityTasks extends SbtStateOps {
 
+  private val optParser: Parser[Seq[String]] =
+    (' ' ~> token("prettyPrint" | "download" | "resolveClassifiers" | "resolveJavadocs" | "resolveSbtClassifiers")).*
+      .map(_.distinct)
+  private val fileOptParser = DefaultParsers.fileParser(file("/")) ~ optParser
+
+  def dumpStructureTo: Def.Initialize[InputTask[File]] = Def.inputTaskDyn {
+
+    val (outputFile, params) = fileOptParser.parsed
+    val options = Options.readFromSeq(params)
+    val log = Keys.streams.value.log
+    val structureTask = extractors.extractStructure(options)
+
+    Def.task {
+      val structure = structureTask.value.serialize
+      val outputText = {
+        if (options.prettyPrint) new PrettyPrinter(180, 2).format(structure)
+        else xml.Utility.trim(structure).mkString
+      }
+
+      log.info("Writing structure to " + outputFile.getPath + "...")
+      // noinspection UnitInMap
+      writeToFile(outputFile, outputText)
+      log.info("Done.")
+      outputFile
+    }
+  }
+
   def dumpStructure: Initialize[Task[Unit]] = Def.task {
-    val structure = StructureKeys.extractStructure.value
+    val structure = extractors.extractStructure.value
     val options = StructureKeys.sbtStructureOpts.value
     val outputFile = StructureKeys.sbtStructureOutputFile.value
     val log = Keys.streams.value.log
@@ -49,6 +79,18 @@ object UtilityTasks extends SbtStateOps {
     }
   }
 
+  def extractProjects: Def.Initialize[Task[Seq[ProjectData]]] = Def.taskDyn {
+    val state = Keys.state.value
+    val accepted = UtilityTasks.acceptedProjects.value
+
+    Def.task {
+      StructureKeys.extractProject
+        .forAllProjects(state, accepted)
+        .map(_.values.toSeq.flatten)
+        .value
+    }
+  }
+
   def allConfigurationsWithSource: Def.Initialize[Seq[Configuration]] = Def.settingDyn {
     val cs = for {
       c <- Keys.ivyConfigurations.value
@@ -60,6 +102,7 @@ object UtilityTasks extends SbtStateOps {
   }
 
   def testConfigurations: Def.Initialize[Seq[Configuration]] = allConfigurationsWithSource.apply { cs =>
+    import sbt._
     val predefinedTest = Set(Test, IntegrationTest)
     val transitiveTest = cs.filter(c =>
       transitiveExtends(c.extendsConfigs)
@@ -70,11 +113,14 @@ object UtilityTasks extends SbtStateOps {
   }
 
   def sourceConfigurations: Def.Initialize[Seq[Configuration]] = Def.setting {
+    import sbt._
     (allConfigurationsWithSource.value.diff(testConfigurations.value) ++ Seq(Compile)).distinct
   }
 
-  def dependencyConfigurations: Def.Initialize[Seq[Configuration]] =
+  def dependencyConfigurations: Def.Initialize[Seq[Configuration]] = {
+    import sbt._
     allConfigurationsWithSource.apply(cs => (cs ++ Seq(Runtime, Provided, Optional)).distinct)
+  }
 
   def classifiersModuleRespectingStructureOpts: Initialize[Task[GetClassifiersModule]] = Def.task {
     val module = (Keys.classifiersModule in Keys.updateClassifiers).value

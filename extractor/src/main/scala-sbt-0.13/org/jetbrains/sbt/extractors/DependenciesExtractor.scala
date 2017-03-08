@@ -2,7 +2,7 @@ package org.jetbrains.sbt
 package extractors
 
 import org.jetbrains.sbt.structure._
-import org.jetbrains.sbt.{ModulesOps, SbtStateOps, StructureKeys, TaskOps, structure => jb}
+import org.jetbrains.sbt.{structure => jb}
 import sbt._
 
 /**
@@ -81,8 +81,8 @@ object DependenciesExtractor extends SbtStateOps with TaskOps {
     val projectRef = Keys.thisProjectRef.value
     val buildDependencies = Keys.buildDependencies.value
     val options = StructureKeys.sbtStructureOpts.value
-    val dependencyConfigurations = StructureKeys.dependencyConfigurations.value
-    val testConfigurations = StructureKeys.testConfigurations.value
+    val dependencyConfigurations = UtilityTasks.dependencyConfigurations.value
+    val testConfigurations = UtilityTasks.testConfigurations.value
 
     val unmanagedClasspathTask =
       sbt.Keys.unmanagedClasspath.in(projectRef)

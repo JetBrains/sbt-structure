@@ -18,5 +18,13 @@ object Options {
     resolveSbtClassifiers = options.contains("resolveSbtClassifiers"),
     prettyPrint = options.contains("prettyPrint")
   )
+
+  def readFromSeq(options: Seq[String]): Options = Options(
+    download = options.contains("download"),
+    resolveClassifiers = options.contains("resolveClassifiers"),
+    resolveJavadocs = options.contains("resolveJavadocs"),
+    resolveSbtClassifiers = options.contains("resolveSbtClassifiers"),
+    prettyPrint = options.contains("prettyPrint")
+  )
 }
 

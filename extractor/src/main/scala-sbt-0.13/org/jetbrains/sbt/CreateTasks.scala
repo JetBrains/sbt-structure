@@ -8,54 +8,23 @@ import sbt._
  */
 
 object CreateTasks extends (State => State) with SbtStateOps {
-  def apply(state: State): State = {
-    val globalSettings = Seq[Setting[_]](
-      StructureKeys.sbtStructureOpts :=
-        StructureKeys.sbtStructureOptions.apply(Options.readFromString).value,
-      StructureKeys.dumpStructure :=
-        UtilityTasks.dumpStructure.value,
-      StructureKeys.acceptedProjects :=
-        UtilityTasks.acceptedProjects.value,
-      StructureKeys.extractProjects := Def.taskDyn {
-        val state = Keys.state.value
-        val accepted = StructureKeys.acceptedProjects.value
 
-        Def.task {
-          StructureKeys.extractProject
-            .forAllProjects(state, accepted)
-            .map(_.values.toSeq.flatten)
-            .value
-        }
-      }.value,
-      StructureKeys.extractRepository :=
-        RepositoryExtractor.taskDef.value,
-      StructureKeys.extractStructure :=
-        StructureExtractor.taskDef.value
-    )
+  def globalSettings: Seq[Setting[_]] = Seq[Setting[_]](
+    StructureKeys.sbtStructureOpts := StructureKeys.sbtStructureOptions.apply(Options.readFromString).value,
+    StructureKeys.dumpStructure := UtilityTasks.dumpStructure.value,
+    StructureKeys.dumpStructureTo := UtilityTasks.dumpStructureTo.evaluated
+  )
 
-    val projectSettings = Seq[Setting[_]](
-      StructureKeys.testConfigurations :=
-        UtilityTasks.testConfigurations.value,
-      StructureKeys.sourceConfigurations :=
-        UtilityTasks.sourceConfigurations.value,
-      StructureKeys.dependencyConfigurations :=
-        UtilityTasks.dependencyConfigurations.value,
-      StructureKeys.extractAndroid :=
-        tasks.extractAndroidSdkPlugin.value,
-      StructureKeys.extractPlay2 :=
-        Play2Extractor.taskDef.value,
-      StructureKeys.extractBuild :=
-        BuildExtractor.taskDef.value,
-      StructureKeys.extractDependencies :=
-        DependenciesExtractor.taskDef.value,
-      StructureKeys.extractProject :=
-        ProjectExtractor.taskDef.value,
-      Keys.classifiersModule.in(Keys.updateClassifiers) :=
-        UtilityTasks.classifiersModuleRespectingStructureOpts.value
-    )
+  def projectSettings: Seq[Setting[_]] = Seq[Setting[_]](
+    Keys.classifiersModule.in(Keys.updateClassifiers) :=
+      UtilityTasks.classifiersModuleRespectingStructureOpts.value,
+    StructureKeys.dependencyConfigurations := UtilityTasks.dependencyConfigurations.value,
+    StructureKeys.extractProject := ProjectExtractor.taskDef.value
+  )
 
+
+  def apply(state: State): State =
     applySettings(state, globalSettings, projectSettings)
-  }
 
   private def applySettings(state: State, globalSettings: Seq[Setting[_]], projectSettings: Seq[Setting[_]]): State = {
     val extracted = Project.extract(state)

@@ -26,4 +26,5 @@ object StructureKeys {
   lazy val sbtStructureOutputFile: SettingKey[Option[File]] = SettingKey[Option[File]]("sbt-structure-output-file")
   lazy val extractStructure: TaskKey[StructureData] = TaskKey[StructureData]("extract-structure")
   lazy val dumpStructure: TaskKey[Unit] = TaskKey[Unit]("dump-structure")
+  lazy val dumpStructureTo: InputKey[File] = InputKey[File]("dump-structure-to")
 }
