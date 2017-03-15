@@ -1,8 +1,8 @@
 package org.jetbrains.sbt.extractors
 
 import org.jetbrains.sbt.structure.{CommandData, SettingData, TaskData}
-import sbt.{AttributeKey, BuiltinCommands, Command, Def, Keys, Project, SettingKey, Task}
 import sbt.jetbrains.BadCitizen
+import sbt.{AttributeKey, BuiltinCommands, Def, Keys, Project, SettingKey, Task}
 
 
 /**
@@ -25,6 +25,7 @@ object KeysExtractor {
       .map { k =>
         val stringValue = for {
           value <- extracted.getOpt(SettingKey(k))
+          if value != null
           // only get a display string if it has a chance of being meaningful to the user, ie is redefined
           if value.getClass.getMethod("toString").getDeclaringClass ne classOf[Any]
         } yield {
