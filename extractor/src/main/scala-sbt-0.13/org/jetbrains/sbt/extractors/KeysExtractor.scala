@@ -28,10 +28,12 @@ object KeysExtractor {
           if value != null
           // only get a display string if it has a chance of being meaningful to the user, ie is redefined
           if value.getClass.getMethod("toString").getDeclaringClass ne classOf[Any]
+          stringValue <- Option(value.toString) // some zany settings might return a null toString
         } yield {
-          val stringified = value.toString.trim
+          val stringified = stringValue.toString.trim
+
           if (stringified.length > maxValueStringLength)
-            stringified.substring(0, maxValueStringLength-3) + "..."
+              stringified.substring(0, maxValueStringLength-3) + "..."
           else stringified
         }
         SettingData(k.label, k.description, k.rank, stringValue)
