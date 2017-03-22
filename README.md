@@ -35,6 +35,33 @@ val structure: Either[Throwable, StructureData] = structureXml.deserialize[Struc
 
 ### Extractor
 
+Extractor can be run as a regular sbt plugin, or loaded into the build during an sbt shell session.
+
+#### As an sbt plugin
+
+The quickest way to try out the extractor is by adding it to your build in `project/plugins.sbt` as an sbt plugin:
+
+```scala
+resolvers += Resolver.url("jb-structure-extractor-0.13", url(s"http://dl.bintray.com/jetbrains/sbt-plugins"))(sbt.Patterns(false,"[organisation]/[module]/scala_2.10/sbt_0.13/[revision]/[type]s/[artifact](-[classifier]).[ext]"))
+addSbtPlugin("org.jetbrains" % "sbt-structure-extractor-0-13" % "7.0.0-12-ga98ec5e")
+```
+
+Then from the sbt shell run:
+
+    */*:dump-structure
+    
+This will output the xml directly to the shell.
+
+To write the xml to a file, run:
+
+    */*:dumpStructureTo structure.xml prettyPrint download
+    
+The `dumpStructure` task uses the settings described below, the `dumpStructureTo` task takes them as parameters instead.
+
+#### Sideloading
+
+This is the way Intellij-Scala imports projects by default.
+
 Extractor is run in several steps:
 
 - Configure it by defining `sbt-structure-output-file` and
@@ -50,6 +77,8 @@ set SettingKey[String]("sbt-structure-options") in Global := "prettyPrint downlo
 apply -cp <path-to-extractor-jar> org.jetbrains.sbt.CreateTasks
 */*:dump-structure
 ```
+
+#### Settings
 
 `sbt-structure-options` contains space-separated list of options.
 `sbt-structure-output-file` points to a file where structure will be written; if
