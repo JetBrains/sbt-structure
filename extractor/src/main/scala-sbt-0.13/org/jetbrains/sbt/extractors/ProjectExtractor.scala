@@ -49,8 +49,8 @@ class ProjectExtractor(projectRef: ProjectRef,
 
     val configurations =
       mergeConfigurations(
-        sourceConfigurations.flatMap(extractConfiguration(Compile.name) _) ++
-          testConfigurations.flatMap(extractConfiguration(Test.name) _)
+        sourceConfigurations.flatMap(extractConfiguration(Compile.name)) ++
+          testConfigurations.flatMap(extractConfiguration(Test.name))
       )
     val projectData = ProjectData(
       projectRef.id, projectRef.build, name, organization, version, base,
