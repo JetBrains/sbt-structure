@@ -1,5 +1,6 @@
 package org.jetbrains.sbt.extractors
 
+import org.jetbrains.sbt.StructureKeys
 import org.jetbrains.sbt.structure.{CommandData, SettingData, TaskData}
 import sbt.jetbrains.BadCitizen
 import sbt.{AttributeKey, BuiltinCommands, Def, Keys, Project, SettingKey, Task}
@@ -11,16 +12,17 @@ import sbt.{AttributeKey, BuiltinCommands, Def, Keys, Project, SettingKey, Task}
   */
 object KeysExtractor {
 
+  /** Maximum length of toString'ed setting value exported. */
   val maxValueStringLength = 103
 
-  def allKeys: Def.Initialize[Task[Seq[AttributeKey[_]]]] = Def.task {
+  val allKeys: Def.Initialize[Task[Seq[AttributeKey[_]]]] = Def.task {
     BuiltinCommands.allTaskAndSettingKeys(Keys.state.value)
   }
 
-  def settingData: Def.Initialize[Task[Seq[SettingData]]] = Def.task {
+  val settingData: Def.Initialize[Task[Seq[SettingData]]] = Def.task {
     val state = Keys.state.value
     val extracted = Project.extract(state)
-    allKeys.value
+    StructureKeys.allKeys.value
       .filterNot(a => BuiltinCommands.isTask(a.manifest))
       .map { k =>
         val stringValue = for {
@@ -40,9 +42,8 @@ object KeysExtractor {
       }
   }
 
-  // TODO filter sbtStructure-specific keys
-  def taskData: Def.Initialize[Task[Seq[TaskData]]] = Def.task {
-    allKeys.value
+  val taskData: Def.Initialize[Task[Seq[TaskData]]] = Def.task {
+    StructureKeys.allKeys.value
       .filter(a => BuiltinCommands.isTask(a.manifest))
       .map { k => TaskData(k.label, k.description, k.rank) }
   }
@@ -52,7 +53,7 @@ object KeysExtractor {
     * Finds all named commands
     * @return
     */
-  def commandData: Def.Initialize[Task[Seq[CommandData]]] = Def.task {
+  val commandData: Def.Initialize[Task[Seq[CommandData]]] = Def.task {
     val state = Keys.state.value
     val commands = state.definedCommands
     for {

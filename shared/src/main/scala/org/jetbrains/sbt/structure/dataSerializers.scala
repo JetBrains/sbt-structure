@@ -483,14 +483,14 @@ trait DataSerializers {
       <structure sbt={what.sbtVersion}>
         {what.projects.sortBy(_.base).map(project => project.serialize)}
         {what.repository.map(_.serialize).toSeq}
-        {what.localCachePath.map(path => <localCachePath>{path.file.path}</localCachePath>).toSeq}
+        {what.localCachePath.map(path => <localCachePath>{path.path}</localCachePath>).toSeq}
       </structure>
 
     override def deserialize(what: Node): Either[Throwable,StructureData] = {
       val sbtVersion = (what \ "@sbt").text
       val projects = (what \ "project").deserialize[ProjectData]
       val repository = (what \ "repository").deserialize[RepositoryData].headOption
-      val localCachePath = (what \ "localCachePath").headOption.map(_.text.file.path)
+      val localCachePath = (what \ "localCachePath").headOption.map(_.text.file)
 
       if (sbtVersion.isEmpty)
         Left(new Error("<structure> property 'sbt' is empty"))

@@ -2,29 +2,37 @@ package org.jetbrains.sbt
 
 import sbt.{Configuration, _}
 import structure._
+import KeyRanks._
 
 /**
   * @author Nikolay Obedin
   * @since 11/10/15.
   */
 object StructureKeys {
-  lazy val dependencyConfigurations: SettingKey[Seq[Configuration]] = SettingKey[Seq[sbt.Configuration]]("ss-dependency-configurations")
-  lazy val sourceConfigurations: SettingKey[Seq[Configuration]] = SettingKey[Seq[sbt.Configuration]]("ss-source-configurations")
-  lazy val testConfigurations: SettingKey[Seq[Configuration]] = SettingKey[Seq[sbt.Configuration]]("ss-test-configurations")
-  lazy val acceptedProjects: TaskKey[Seq[ProjectRef]] = TaskKey[Seq[ProjectRef]]("ss-accepted-projects")
-  lazy val sbtStructureOpts: SettingKey[Options] = SettingKey[Options]("ss-options")
+  val dependencyConfigurations: SettingKey[Seq[Configuration]] = SettingKey("ss-dependency-configurations", rank = Invisible)
+  val sourceConfigurations: SettingKey[Seq[Configuration]] = SettingKey("ss-source-configurations", rank = Invisible)
+  val testConfigurations: SettingKey[Seq[Configuration]] = SettingKey("ss-test-configurations", rank = Invisible)
+  val acceptedProjects: TaskKey[Seq[ProjectRef]] = TaskKey("ss-accepted-projects", rank = Invisible)
 
-  lazy val extractPlay2: TaskKey[Option[Play2Data]] = TaskKey[Option[Play2Data]]("ss-extract-play-2")
-  lazy val extractAndroid: TaskKey[Option[AndroidData]] = TaskKey[Option[AndroidData]]("ss-extract-android")
-  lazy val extractBuild: TaskKey[BuildData] = TaskKey[BuildData]("ss-extract-build")
-  lazy val extractDependencies: TaskKey[DependencyData] = TaskKey[DependencyData]("ss-extract-dependencies")
-  lazy val extractProject: TaskKey[Seq[ProjectData]] = TaskKey[Seq[ProjectData]]("ss-extract-project")
-  lazy val extractProjects: TaskKey[Seq[ProjectData]] = TaskKey[Seq[ProjectData]]("ss-extract-projects")
-  lazy val extractRepository: TaskKey[Option[RepositoryData]] = TaskKey[Option[RepositoryData]]("ss-extract-repository")
+  val extractPlay2: TaskKey[Option[Play2Data]] = TaskKey("ss-extract-play-2", rank = Invisible)
+  val extractAndroid: TaskKey[Option[AndroidData]] = TaskKey("ss-extract-android", rank = Invisible)
+  val extractBuild: TaskKey[BuildData] = TaskKey("ss-extract-build", rank = Invisible)
+  val extractDependencies: TaskKey[DependencyData] = TaskKey("ss-extract-dependencies", rank = Invisible)
+  val extractProject: TaskKey[Seq[ProjectData]] = TaskKey("ss-extract-project", rank = Invisible)
+  val extractProjects: TaskKey[Seq[ProjectData]] = TaskKey("ss-extract-projects", rank = Invisible)
+  val extractRepository: TaskKey[Option[RepositoryData]] = TaskKey("ss-extract-repository", rank = Invisible)
+  val extractStructure: TaskKey[StructureData] = TaskKey("extract-structure", rank = Invisible)
 
-  lazy val sbtStructureOptions: SettingKey[String] = SettingKey[String]("sbt-structure-options")
-  lazy val sbtStructureOutputFile: SettingKey[Option[File]] = SettingKey[Option[File]]("sbt-structure-output-file")
-  lazy val extractStructure: TaskKey[StructureData] = TaskKey[StructureData]("extract-structure")
-  lazy val dumpStructure: TaskKey[Unit] = TaskKey[Unit]("dump-structure")
-  lazy val dumpStructureTo: InputKey[File] = InputKey[File]("dump-structure-to")
+  val settingData: TaskKey[Seq[SettingData]] = TaskKey("settingData", rank = Invisible)
+  val taskData: TaskKey[Seq[TaskData]] = TaskKey("taskData", rank = Invisible)
+  val commandData: TaskKey[Seq[CommandData]] = TaskKey("commandData", rank = Invisible)
+  val localCachePath: TaskKey[Option[File]] = TaskKey("localCachePath", rank = Invisible)
+  val allKeys:TaskKey[Seq[AttributeKey[_]]] = TaskKey("allKeys", rank = Invisible)
+  val allConfigurationsWithSource: SettingKey[Seq[Configuration]] = SettingKey("allConfigurationsWithSource", rank = Invisible)
+
+  val sbtStructureOpts: SettingKey[Options] = SettingKey("ss-options", rank = DSetting)
+  val sbtStructureOptions: SettingKey[String] = SettingKey("sbt-structure-options", "options for dumpStructure task", rank = DSetting)
+  val sbtStructureOutputFile: SettingKey[Option[File]] = SettingKey("sbt-structure-output-file", "output file for dumpStructure task",rank = DSetting)
+  val dumpStructure: TaskKey[Unit] = TaskKey("dump-structure", "dump project structure to XML readable by IntelliJ", rank = DTask)
+  val dumpStructureTo: InputKey[File] = InputKey("dump-structure-to", "dump structure to specified file using provided command line options", rank = DTask)
 }

@@ -1,10 +1,10 @@
-package org.jetbrains.sbt
+package org.jetbrains.sbt.extractors
 
 import java.io.{BufferedWriter, FileOutputStream, OutputStreamWriter}
 
-import org.jetbrains.sbt.extractors.SettingKeys
 import org.jetbrains.sbt.structure.ProjectData
 import org.jetbrains.sbt.structure.XmlSerializer._
+import org.jetbrains.sbt._
 import sbt.Def.Initialize
 import sbt.complete.DefaultParsers._
 import sbt.complete.{DefaultParsers, Parser}
@@ -23,7 +23,7 @@ object UtilityTasks extends SbtStateOps {
       .map(_.distinct)
   private val fileOptParser = DefaultParsers.fileParser(file("/")) ~ optParser
 
-  def dumpStructureTo: Def.Initialize[InputTask[File]] = Def.inputTaskDyn {
+  lazy val dumpStructureTo: Def.Initialize[InputTask[File]] = Def.inputTaskDyn {
 
     val (outputFile, params) = fileOptParser.parsed
     val options = Options.readFromSeq(params)
@@ -45,8 +45,8 @@ object UtilityTasks extends SbtStateOps {
     }
   }
 
-  def dumpStructure: Initialize[Task[Unit]] = Def.task {
-    val structure = extractors.extractStructure.value
+  lazy val dumpStructure: Initialize[Task[Unit]] = Def.task {
+    val structure = StructureKeys.extractStructure.value
     val options = StructureKeys.sbtStructureOpts.value
     val outputFile = StructureKeys.sbtStructureOutputFile.value
     val log = Keys.streams.value.log
@@ -69,7 +69,11 @@ object UtilityTasks extends SbtStateOps {
     log.info("Done.")
   }
 
-  def acceptedProjects: Initialize[Task[Seq[ProjectRef]]] = Keys.state.map { state =>
+  lazy val localCachePath: Def.Initialize[Task[Option[File]]] = Def.task {
+    Option(System.getProperty("sbt.ivy.home", System.getProperty("ivy.home"))).map(file)
+  }
+
+  lazy val acceptedProjects: Initialize[Task[Seq[ProjectRef]]] = Keys.state.map { state =>
     structure(state).allProjectRefs.filter { case ref@ProjectRef(_, id) =>
       val isProjectAccepted = structure(state).allProjects.find(_.id == id).exists(areNecessaryPluginsLoaded)
       val shouldSkipProject =
@@ -79,9 +83,9 @@ object UtilityTasks extends SbtStateOps {
     }
   }
 
-  def extractProjects: Def.Initialize[Task[Seq[ProjectData]]] = Def.taskDyn {
+  lazy val extractProjects: Def.Initialize[Task[Seq[ProjectData]]] = Def.taskDyn {
     val state = Keys.state.value
-    val accepted = UtilityTasks.acceptedProjects.value
+    val accepted = StructureKeys.acceptedProjects.value
 
     Def.task {
       StructureKeys.extractProject
@@ -101,20 +105,21 @@ object UtilityTasks extends SbtStateOps {
     }
   }
 
-  def testConfigurations: Def.Initialize[Seq[Configuration]] = allConfigurationsWithSource.apply { cs =>
-    import sbt._
-    val predefinedTest = Set(Test, IntegrationTest)
-    val transitiveTest = cs.filter(c =>
-      transitiveExtends(c.extendsConfigs)
-        .toSet
-        .intersect(predefinedTest).nonEmpty) ++
-    predefinedTest
-    transitiveTest.distinct
-  }
+  def testConfigurations: Def.Initialize[Seq[Configuration]] =
+    StructureKeys.allConfigurationsWithSource.apply { cs =>
+      import sbt._
+      val predefinedTest = Set(Test, IntegrationTest)
+      val transitiveTest = cs.filter(c =>
+        transitiveExtends(c.extendsConfigs)
+          .toSet
+          .intersect(predefinedTest).nonEmpty) ++
+        predefinedTest
+      transitiveTest.distinct
+    }
 
   def sourceConfigurations: Def.Initialize[Seq[Configuration]] = Def.setting {
     import sbt._
-    (allConfigurationsWithSource.value.diff(testConfigurations.value) ++ Seq(Compile)).distinct
+    (allConfigurationsWithSource.value.diff(StructureKeys.testConfigurations.value) ++ Seq(Compile)).distinct
   }
 
   def dependencyConfigurations: Def.Initialize[Seq[Configuration]] = {

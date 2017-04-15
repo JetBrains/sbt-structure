@@ -81,8 +81,8 @@ object DependenciesExtractor extends SbtStateOps with TaskOps {
     val projectRef = Keys.thisProjectRef.value
     val buildDependencies = Keys.buildDependencies.value
     val options = StructureKeys.sbtStructureOpts.value
-    val dependencyConfigurations = UtilityTasks.dependencyConfigurations.value
-    val testConfigurations = UtilityTasks.testConfigurations.value
+    val dependencyConfigurations = StructureKeys.dependencyConfigurations.value
+    val testConfigurations = StructureKeys.testConfigurations.value
 
     val unmanagedClasspathTask =
       sbt.Keys.unmanagedClasspath.in(projectRef)

@@ -181,15 +181,15 @@ object ProjectExtractor extends SbtStateOps with TaskOps {
         ideOutputDirectory,
         scalaOrganization, scalaInstance, scalacOptions.getOrElse(Seq.empty),
         javaHome, javacOptions.getOrElse(Seq.empty),
-        UtilityTasks.sourceConfigurations.value,
-        UtilityTasks.testConfigurations.value,
-        DependenciesExtractor.taskDef.value,
-        BuildExtractor.taskDef.value,
-        extractors.extractAndroidSdkPlugin.value,
-        Play2Extractor.taskDef.value,
-        KeysExtractor.settingData.value,
-        KeysExtractor.taskData.value,
-        KeysExtractor.commandData.value
+        StructureKeys.sourceConfigurations.value,
+        StructureKeys.testConfigurations.value,
+        StructureKeys.extractDependencies.value,
+        StructureKeys.extractBuild.value,
+        StructureKeys.extractAndroid.value,
+        StructureKeys.extractPlay2.value,
+        StructureKeys.settingData.value,
+        StructureKeys.taskData.value,
+        StructureKeys.commandData.value
       ).extract
     }
   }

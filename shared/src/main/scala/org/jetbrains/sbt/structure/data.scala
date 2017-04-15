@@ -34,7 +34,7 @@ object Configuration {
 case class StructureData(sbtVersion: String,
                          projects: Seq[ProjectData],
                          repository: Option[RepositoryData],
-                         localCachePath: Option[String])
+                         localCachePath: Option[File])
 
 /**
  * Represents single project in build. Corresponds to IDEA module.
