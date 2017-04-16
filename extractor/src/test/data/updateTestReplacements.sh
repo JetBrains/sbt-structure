@@ -1,7 +1,7 @@
 #! /bin/bash
 # update a locally generated xml file with the replacements used to make the tests machine-independent
 # use with find:
-# find -name 'structure-0.13.*-actual.xml' -execdir ../../updateTestReplacement.sh {} \;
+# find -name 'structure-0.13.*-actual.xml' -execdir ../../updateTestReplacement.sh "{}" \;
 
 FILE=$1
 BASE=`pwd`
