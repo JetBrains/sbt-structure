@@ -13,7 +13,7 @@ object StructureExtractor {
     , StructureKeys.extractRepository
     , Keys.sbtVersion) map {
       (projects, repository, sbtVersion) =>
-        val localCachePath  = Option(System.getProperty("sbt.ivy.home", System.getProperty("ivy.home")))
+        val localCachePath  = Option(System.getProperty("sbt.ivy.home", System.getProperty("ivy.home"))).map(file)
         StructureData(sbtVersion, projects, repository, localCachePath)
     }
 }
