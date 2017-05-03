@@ -3,7 +3,9 @@ package org.jetbrains.sbt.extractors
 import org.jetbrains.sbt.StructureKeys
 import org.jetbrains.sbt.structure.{CommandData, SettingData, TaskData}
 import sbt.jetbrains.BadCitizen
-import sbt.{AttributeKey, BuiltinCommands, Def, Keys, Project, SettingKey, Task}
+import sbt.{AttributeKey, BuiltinCommands, Def, Extracted, KeyRanks, Keys, Project, SettingKey, Task}
+
+import scala.util.control.NonFatal
 
 
 /**
@@ -15,37 +17,50 @@ object KeysExtractor {
   /** Maximum length of toString'ed setting value exported. */
   val maxValueStringLength = 103
 
-  val allKeys: Def.Initialize[Task[Seq[AttributeKey[_]]]] = Def.task {
-    BuiltinCommands.allTaskAndSettingKeys(Keys.state.value)
-  }
+  val allKeys: Def.Initialize[Task[Seq[AttributeKey[_]]]] = Def.task (
+    try {
+      BuiltinCommands
+        .allTaskAndSettingKeys(Keys.state.value)
+        .filter(a => a.rank < KeyRanks.Invisible) // not interested in importing implementation details
+    } catch {
+      // prior to sbt 0.13.9, this error is not caught, so mitigate it here in case users are affected
+      case NonFatal(x) =>
+        Keys.state.value.log.warn(s"Unable to extract task and setting keys. Upgrade your project sbt to 0.13.11 or later. Error was: ${x.getMessage}")
+        Seq.empty
+    }
+  )
 
   val settingData: Def.Initialize[Task[Seq[SettingData]]] = Def.task {
     val state = Keys.state.value
     val extracted = Project.extract(state)
-    StructureKeys.allKeys.value
-      .filterNot(a => BuiltinCommands.isTask(a.manifest))
-      .map { k =>
-        val stringValue = for {
-          value <- extracted.getOpt(SettingKey(k))
-          if value != null
-          // only get a display string if it has a chance of being meaningful to the user, ie is redefined
-          if value.getClass.getMethod("toString").getDeclaringClass ne classOf[Any]
-          stringValue <- Option(value.toString) // some zany settings might return a null toString
-        } yield {
-          val stringified = stringValue.toString.trim
 
-          if (stringified.length > maxValueStringLength)
-              stringified.substring(0, maxValueStringLength-3) + "..."
-          else stringified
-        }
-        SettingData(k.label, k.description, k.rank, stringValue)
-      }
+    for {
+      key <- StructureKeys.allKeys.value
+      if ! BuiltinCommands.isTask(key.manifest)
+    } yield {
+      val displayString = settingStringValue(extracted,key)
+      SettingData(key.label, key.description, key.rank, displayString)
+    }
+  }
+
+  private def settingStringValue(extracted: Extracted, key: AttributeKey[_]) = for {
+    value <- extracted.getOpt(SettingKey(key))
+    // only get a display string if it has a chance of being meaningful to the user, ie is redefined
+    if value != null && (value.getClass.getMethod("toString").getDeclaringClass ne classOf[Any])
+    stringValue <- Option(value.toString) // some zany settings might return a null toString
+  } yield {
+    val trimmed = stringValue.toString.trim
+    if (trimmed.length > maxValueStringLength)
+      trimmed.substring(0, maxValueStringLength - 3) + "..."
+    else trimmed
   }
 
   val taskData: Def.Initialize[Task[Seq[TaskData]]] = Def.task {
-    StructureKeys.allKeys.value
-      .filter(a => BuiltinCommands.isTask(a.manifest))
-      .map { k => TaskData(k.label, k.description, k.rank) }
+    for {
+      key <- StructureKeys.allKeys.value
+      if !BuiltinCommands.isTask(key.manifest)
+    } yield
+      TaskData(key.label, key.description, key.rank)
   }
 
 

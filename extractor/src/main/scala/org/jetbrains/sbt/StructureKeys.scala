@@ -1,8 +1,8 @@
 package org.jetbrains.sbt
 
+import org.jetbrains.sbt.structure._
+import sbt.KeyRanks._
 import sbt.{Configuration, _}
-import structure._
-import KeyRanks._
 
 /**
   * @author Nikolay Obedin
