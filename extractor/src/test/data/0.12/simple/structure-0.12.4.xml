@@ -132,5 +132,5 @@
       <src>$IVY2/cache/org.scala-lang/scala-library/srcs/scala-library-2.10.1-sources.jar</src>
     </module>
   </repository>
-  <localCachePath>$HOME/sbt-structure-global/ivy2</localCachePath>
+  <localCachePath>$HOME/.sbt-structure-global/ivy2</localCachePath>
 </structure>
