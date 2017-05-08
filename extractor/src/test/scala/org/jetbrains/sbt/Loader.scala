@@ -14,7 +14,7 @@ object Loader {
 
   def load(project: File, options: String, sbtVersion: String, pluginFile: File,
            sbtGlobalBase: File, sbtBootDir: File, sbtIvyHome: File,
-           verbose: Boolean = false): Seq[String] = {
+           verbose: Boolean = false): String = {
     val structureFile = createTempFile("sbt-structure", ".xml")
     val commandsFile = createTempFile("sbt-commands", ".lst")
 

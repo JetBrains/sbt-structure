@@ -1,8 +1,6 @@
 package org.jetbrains.sbt
 
 import org.jetbrains.sbt.extractors._
-import org.jetbrains.sbt.structure.{CommandData, SettingData, TaskData}
-import sbt.KeyRanks.Invisible
 import sbt._
 
 /**

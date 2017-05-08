@@ -8,10 +8,10 @@ import scala.io.Source
  * @author Pavel Fatin
  */
 object TestUtil {
-  def read(file: File): Seq[String] = {
+  def read(file: File): String = {
     val source = Source.fromFile(file)
     try {
-      source.getLines().toList
+      source.getLines().mkString("\n")
     } finally {
       source.close()
     }

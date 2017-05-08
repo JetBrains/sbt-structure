@@ -33,7 +33,7 @@ lazy val core = newProject("core")
           Seq.empty
       }
     },
-    crossScalaVersions := Seq("2.9.3", "2.10.6", "2.11.9", "2.12.1")
+    crossScalaVersions := Seq("2.9.3", "2.10.6", "2.11.9", "2.12.2")
   )
 
 lazy val extractor = newProject("extractor")
@@ -55,10 +55,9 @@ lazy val extractor = newProject("extractor")
     name in bintray := "sbt-structure-extractor",
     scalacOptions ++= Seq("-deprecation")
   )
+  .enablePlugins(TestDataDumper)
 
 lazy val sbtStructure = project.in(file(".")).aggregate(core, extractor)
 
 lazy val testSetup = taskKey[Unit]("Setup tests for extractor")
 
-addCommandAlias("publishAllLocal", ";project core; ++ 2.9.3 publishLocal; ++ 2.10.6. publishLocal; ++ 2.11.9 publishLocal; project extractor; ^^ 0.12 publishLocal; ^^ 0.13 publishLocal")
-addCommandAlias("publishAll", ";project core; ++ 2.9.3 publish; ++ 2.10.6. publish; ++ 2.11.9 publish; project extractor; ^^ 0.12 publish; ^^ 0.13 publish")

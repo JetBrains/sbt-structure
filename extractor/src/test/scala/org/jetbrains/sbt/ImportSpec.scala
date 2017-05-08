@@ -10,6 +10,7 @@ import org.specs2.mutable._
 
 import scala.collection.JavaConverters._
 import scala.xml._
+import scala.xml.transform.{RewriteRule, RuleTransformer}
 
 class ImportSpec extends Specification with XmlMatchers {
 
@@ -65,15 +66,15 @@ class ImportSpec extends Specification with XmlMatchers {
 
     testDataFile must exist.setMessage("No test data for version " + SbtVersionFull + " found at " + testDataFile.getPath)
 
-
     val expectedStr = getExpectedStr(testDataFile, base)
     val actualStr = Loader.load(
       base, options, SbtVersionFull, pluginFile = PluginFile,
       sbtGlobalBase = sbtGlobalBase, sbtBootDir = sbtBootDir, sbtIvyHome = sbtIvyHome,
-      verbose = true).mkString("\n")
+      verbose = true)
 
-    val actualXml = XML.loadString(actualStr)
-    val expectedXml = XML.loadString(expectedStr)
+    val actualXml = loadSanitizedXml(actualStr)
+    val expectedXml = loadSanitizedXml(expectedStr)
+
     val actual = actualXml.deserialize[StructureData].right.get
     val expected = expectedXml.deserialize[StructureData].right.get
 
@@ -105,10 +106,34 @@ class ImportSpec extends Specification with XmlMatchers {
     actualXml must beEqualToIgnoringSpace(expectedXml).updateMessage(_ => onXmlFail)
   }
 
+  private val xmlSanitizer = {
+    val filterSettingValues = new RewriteRule {
+      override def transform(n: Node): Seq[Node] = n match {
+        case e: Elem if e.label == "setting" =>
+          // setting values can change depending on where they are run, don't include in comparison
+          e.copy(child = e.child.filterNot(_.label == "value"))
+        case other => other
+      }
+    }
+    new RuleTransformer(filterSettingValues)
+  }
+
+  /** Load and sanitize xml to exclude values that cause troubles when comparing in tests. */
+  private def loadSanitizedXml(xmlString: String) = {
+    try {
+      val xml = XML.loadString(xmlString)
+      val transformed = xmlSanitizer.transform(xml)
+      xml.copy(child = NodeSeq.seqToNodeSeq(transformed).head.child)
+    } catch {
+      case x: Throwable =>
+        throw new RuntimeException("failed to load and sanitize xml string", x)
+    }
+  }
+
   private def canon(path: String): String = path.stripSuffix("/").stripSuffix("\\")
 
   private def getExpectedStr(testDataFile: File, base: File): String = {
-    val raw = TestUtil.read(testDataFile).mkString("\n")
+    val raw = TestUtil.read(testDataFile)
       .replace("$URI_BASE", base.getCanonicalFile.toURI.toString)
       .replace("$BASE", base.getCanonicalPath)
       .replace("$URI_ANDROID_HOME", AndroidHome.map(p => canon(p.toURI.toString)).getOrElse(""))
@@ -117,7 +142,12 @@ class ImportSpec extends Specification with XmlMatchers {
       .replace("$SBT_BOOT", sbtBootDir.getCanonicalPath)
       .replace("$HOME", UserHome.getCanonicalPath)
     // re-serialize and deserialize again to normalize all system-dependent paths
-    XML.loadString(raw).deserialize[StructureData].right.get.serialize.mkString
+    try {
+      XML.loadString(raw).deserialize[StructureData].right.get.serialize.mkString
+    } catch {
+      case x: Exception =>
+        throw new RuntimeException("unable to read test data from " + testDataFile.getAbsolutePath, x)
+    }
   }
 
   private def getDiff(expected: String, actual: String): String = {
