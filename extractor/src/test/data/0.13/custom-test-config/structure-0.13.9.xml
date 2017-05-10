@@ -151,7 +151,8 @@
     </configuration>
     <dependencies>
       <module configurations="compile" organization="org.scala-lang" name="scala-library" revision="2.10.1" artifactType="jar" classifier=""/>
-      <module configurations="test" organization="org.scala-lang" name="scala-reflect" revision="2.10.1" artifactType="jar" classifier=""/>
+      <module configurations="test" organization="org.scala-lang" name="scala-library" revision="2.10.4" artifactType="jar" classifier=""/>
+      <module configurations="test" organization="org.scala-lang" name="scala-reflect" revision="2.10.4" artifactType="jar" classifier=""/>
       <module configurations="test" organization="org.scalaz" name="scalaz-concurrent_2.10" revision="7.1.0" artifactType="jar" classifier=""/>
       <module configurations="test" organization="org.scalaz" name="scalaz-core_2.10" revision="7.1.0" artifactType="jar" classifier=""/>
       <module configurations="test" organization="org.scalaz" name="scalaz-effect_2.10" revision="7.1.0" artifactType="jar" classifier=""/>
@@ -251,7 +252,7 @@
       <label>testResultLogger</label>
       <description>Logs results after a test task completes.</description>
       <rank>20000</rank>
-      <value>Main(&lt;function1&gt;,sbt.TestResultLogger$$anon$1@7c230a63,sbt.TestResultLogger$$anon$1@4b5c7d30,sbt.Tes...</value>
+      <value>Main(&lt;function1&gt;,sbt.TestResultLogger$$anon$1@1d67f653,sbt.TestResultLogger$$anon$1@5058b370,sbt.Tes...</value>
     </setting>
     <setting>
       <label>loadedBuild</label>
@@ -874,7 +875,7 @@
       <label>taskTemporaryDirectory</label>
       <description>Directory used for temporary files for tasks that is deleted after each task execution.</description>
       <rank>10000</rank>
-      <value>/var/folders/5k/4b5my29x26q_dhrys3ghf9wh0000gn/T/sbt_e33877f5</value>
+      <value>/var/folders/5k/4b5my29x26q_dhrys3ghf9wh0000gn/T/sbt_f0b03b94</value>
     </setting>
     <setting>
       <label>configuration</label>
@@ -1838,10 +1839,15 @@
       <doc>$IVY2/cache/org.scala-lang/scala-library/docs/scala-library-2.10.1-javadoc.jar</doc>
       <src>$IVY2/cache/org.scala-lang/scala-library/srcs/scala-library-2.10.1-sources.jar</src>
     </module>
-    <module organization="org.scala-lang" name="scala-reflect" revision="2.10.1" artifactType="jar" classifier="">
-      <jar>$IVY2/cache/org.scala-lang/scala-reflect/jars/scala-reflect-2.10.1.jar</jar>
-      <doc>$IVY2/cache/org.scala-lang/scala-reflect/docs/scala-reflect-2.10.1-javadoc.jar</doc>
-      <src>$IVY2/cache/org.scala-lang/scala-reflect/srcs/scala-reflect-2.10.1-sources.jar</src>
+    <module organization="org.scala-lang" name="scala-library" revision="2.10.4" artifactType="jar" classifier="">
+      <jar>$IVY2/cache/org.scala-lang/scala-library/jars/scala-library-2.10.4.jar</jar>
+      <doc>$IVY2/cache/org.scala-lang/scala-library/docs/scala-library-2.10.4-javadoc.jar</doc>
+      <src>$IVY2/cache/org.scala-lang/scala-library/srcs/scala-library-2.10.4-sources.jar</src>
+    </module>
+    <module organization="org.scala-lang" name="scala-reflect" revision="2.10.4" artifactType="jar" classifier="">
+      <jar>$IVY2/cache/org.scala-lang/scala-reflect/jars/scala-reflect-2.10.4.jar</jar>
+      <doc>$IVY2/cache/org.scala-lang/scala-reflect/docs/scala-reflect-2.10.4-javadoc.jar</doc>
+      <src>$IVY2/cache/org.scala-lang/scala-reflect/srcs/scala-reflect-2.10.4-sources.jar</src>
     </module>
     <module organization="org.scalaz" name="scalaz-concurrent_2.10" revision="7.1.0" artifactType="jar" classifier="">
       <jar>$IVY2/cache/org.scalaz/scalaz-concurrent_2.10/bundles/scalaz-concurrent_2.10-7.1.0.jar</jar>
