@@ -18,33 +18,6 @@ import scala.xml._
  */
 object UtilityTasks extends SbtStateOps {
 
-  private val optParser: Parser[Seq[String]] =
-    (' ' ~> token("prettyPrint" | "download" | "resolveClassifiers" | "resolveJavadocs" | "resolveSbtClassifiers")).*
-      .map(_.distinct)
-  private val fileOptParser = DefaultParsers.fileParser(file("/")) ~ optParser
-
-  lazy val dumpStructureTo: Def.Initialize[InputTask[File]] = Def.inputTaskDyn {
-
-    val (outputFile, params) = fileOptParser.parsed
-    val options = Options.readFromSeq(params)
-    val log = Keys.streams.value.log
-    val structureTask = extractors.extractStructure(options)
-
-    Def.task {
-      val structure = structureTask.value.serialize
-      val outputText = {
-        if (options.prettyPrint) new PrettyPrinter(180, 2).format(structure)
-        else xml.Utility.trim(structure).mkString
-      }
-
-      log.info("Writing structure to " + outputFile.getPath + "...")
-      // noinspection UnitInMap
-      writeToFile(outputFile, outputText)
-      log.info("Done.")
-      outputFile
-    }
-  }
-
   lazy val dumpStructure: Initialize[Task[Unit]] = Def.task {
     val structure = StructureKeys.extractStructure.value
     val options = StructureKeys.sbtStructureOpts.value
@@ -156,7 +129,7 @@ object UtilityTasks extends SbtStateOps {
     }
   }
 
-  private def writeToFile(file: File, xml: String) {
+  def writeToFile(file: File, xml: String): Unit = {
     val writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), "UTF-8"))
     try {
       writer.write("""<?xml version="1.0" encoding="UTF-8"?>""")

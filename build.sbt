@@ -53,7 +53,15 @@ lazy val extractor = newProject("extractor")
     test in Test := (test in Test).dependsOn(testSetup).value,
     testOnly in Test := (testOnly in Test).dependsOn(testSetup).evaluated,
     name in bintray := "sbt-structure-extractor",
-    scalacOptions ++= Seq("-deprecation")
+    scalacOptions ++= Seq("-deprecation"),
+    sources in Compile := {
+      val sbtVer = (sbtVersion in sbtPlugin).value
+      val srcs = (sources in Compile).value
+      // remove the AutoPlugin since it doesn't compile when testing for sbt 0.13.0
+      if (sbtVer == "0.13.0")
+        srcs.filterNot(_.getName == "StructurePlugin.scala")
+      else srcs
+    }
   )
   .enablePlugins(TestDataDumper)
 
