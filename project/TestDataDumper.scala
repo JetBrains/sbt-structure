@@ -19,21 +19,36 @@ object TestDataDumper extends AutoPlugin {
   private def canon(path: String): String = path.stripSuffix("/").stripSuffix("\\")
 
   object autoImport {
-    val dumpStructure013: TaskKey[Seq[File]] = taskKey[Seq[File]]("dump xml output for running current version of sbt-structure on all of the 0.13 test data directories")
+    val dumpTestStructure013: TaskKey[Seq[File]] = taskKey[Seq[File]]("dump xml output for running sbt-structure on all of the 0.13 test data directories for all versions of sbt where a structure-{sbtVersion}.xml exists")
+    val dumpTestStructure: InputKey[File] = inputKey[File]("dump xml output for running sbt-structure with the curent sbtVersion on the directory in the argument")
     val sbtLauncher: SettingKey[File] = settingKey[File]("where is the sbt launcher hidden")
   }
 
   import autoImport._
 
   override def projectSettings: Seq[Def.Setting[_]] = Seq(
-    dumpStructure013 := dumpStructure013Task.value
+    dumpTestStructure013 := dumpTestStructure013Task.value,
+    dumpTestStructure := dumpTestStructureTask.evaluated
   )
 
   override def buildSettings: Seq[Def.Setting[_]] = Seq(
     sbtLauncher := baseDirectory.value / "sbt-launch.jar"
   )
 
-  val dumpStructure013Task: Def.Initialize[Task[Seq[File]]] = Def.task {
+  private val dumpTestStructureTask = Def.inputTask {
+    import complete.DefaultParsers._
+
+    val args: Seq[String] = spaceDelimited("<path relative to test/data>").parsed
+    val testDir = (sourceDirectory in Test).value / "data" / args.head
+    val sbtVer = (sbtVersion in sbtPlugin).value
+    val pluginJar = (packagedArtifact in (Compile,packageBin)).value._2
+
+    val generatedFile = dumpStructureFunc(sbtVer, version.value, sbtLauncher.value, pluginJar, testDir).get
+    streams.value.log.info(s"regenerated $generatedFile for sbt ${sbtVer}")
+    generatedFile
+  }
+
+  private val dumpTestStructure013Task: Def.Initialize[Task[Seq[File]]] = Def.task {
     import sbt.NameFilter._
 
     val pluginJar = (packagedArtifact in (Compile,packageBin)).value._2
@@ -45,12 +60,12 @@ object TestDataDumper extends AutoPlugin {
       sbtVer <- (testDir ** nameFilter).get.map(_.name.stripPrefix("structure-").stripSuffix(".xml"))
       dumpFile <- {
         streams.value.log.info(s"dumping structure xml for $testDir")
-        dumpStructure(sbtVer, version.value, sbtLauncher.value, pluginJar, testDir).toOption
+        dumpStructureFunc(sbtVer, version.value, sbtLauncher.value, pluginJar, testDir).toOption
       }
     } yield dumpFile
   }
 
-  def dumpStructure(sbtVersion: String, sbtStructureVersion: String, sbtLauncherJar: File, pluginJar: File, workingDir: File): Try[File] = {
+  private def dumpStructureFunc(sbtVersion: String, sbtStructureVersion: String, sbtLauncherJar: File, pluginJar: File, workingDir: File): Try[File] = {
 
     val userHome = path(file(System.getProperty("user.home")))
     val androidHome = Option(System.getenv.get("ANDROID_HOME")).map(new File(_).getCanonicalFile)

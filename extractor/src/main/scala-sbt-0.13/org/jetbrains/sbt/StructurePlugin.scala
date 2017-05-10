@@ -20,7 +20,7 @@ object StructurePlugin extends AutoPlugin {
   override lazy val globalSettings: Seq[Setting[_]] = Seq(
     StructureKeys.sbtStructureOutputFile := None, // TODO deprecate for plugin use
     StructureKeys.sbtStructureOptions := "prettyPrint download", // TODO deprecate for plugin use
-      StructureKeys.dumpStructureTo := pluginOnlyTasks.dumpStructureTo.evaluated
+    StructureKeys.dumpStructureTo := pluginOnlyTasks.dumpStructureTo.evaluated
   ) ++ CreateTasks.globalSettings
 
   override lazy val projectSettings: Seq[Setting[_]] = CreateTasks.projectSettings
