@@ -2,13 +2,11 @@ package org.jetbrains.sbt.extractors
 
 import java.io.{BufferedWriter, FileOutputStream, OutputStreamWriter}
 
+import org.jetbrains.sbt._
 import org.jetbrains.sbt.structure.ProjectData
 import org.jetbrains.sbt.structure.XmlSerializer._
-import org.jetbrains.sbt._
 import sbt.Def.Initialize
-import sbt.complete.DefaultParsers._
-import sbt.complete.{DefaultParsers, Parser}
-import sbt.{Artifact, Configuration, Def, File, GetClassifiersModule, InputTask, Keys, ProjectRef, ResolvedProject, Task, file}
+import sbt.{Artifact, Configuration, Def, File, GetClassifiersModule, Keys, ProjectRef, ResolvedProject, Task, file}
 
 import scala.language.reflectiveCalls
 import scala.xml._
