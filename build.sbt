@@ -77,6 +77,14 @@ lazy val extractor = newProject("extractor")
       if (sbtVer == "0.13.0")
         srcs.filterNot(_.getName == "StructurePlugin.scala")
       else srcs
+    },
+
+    // I want to share source between 0.13 and 1.0, but not 0.12
+    unmanagedSourceDirectories in Compile ++= {
+      partialVersion((sbtVersion in pluginCrossBuild).value) match {
+        case Some((1, 0)) => Seq((sourceDirectory in Compile).value / "scala-sbt-0.13")
+        case _ => Seq.empty[File]
+      }
     }
   )
   .enablePlugins(TestDataDumper)
