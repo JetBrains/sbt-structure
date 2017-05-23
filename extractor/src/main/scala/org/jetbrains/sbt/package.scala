@@ -24,7 +24,7 @@ package object sbt {
 
   /** Transitive hull of configs that a config extends. */
   @scala.annotation.tailrec
-  def transitiveExtends(configs: List[Configuration]): List[Configuration] = {
+  def transitiveExtends(configs: Seq[Configuration]): Seq[Configuration] = {
     val extended = (configs.flatMap(_.extendsConfigs) ++ configs).distinct
     if (extended.map(_.name) == configs.map(_.name)) extended
     else transitiveExtends(extended)
