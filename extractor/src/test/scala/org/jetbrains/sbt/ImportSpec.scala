@@ -37,7 +37,7 @@ class ImportSpec extends Specification with XmlMatchers {
   private val SbtVersionFull = System.getProperty("structure.sbtversion.full")
   private val ScalaVersion = System.getProperty("structure.scalaversion")
 
-  private val PluginFile = new File("extractor/target/scala-" + ScalaVersion + "/sbt-" + SbtVersionFull +"/classes/").getCanonicalFile
+  private val PluginFile = new File("extractor/target/scala-" + ScalaVersion + "/sbt-" + SbtVersion +"/classes/").getCanonicalFile
 
   private val sbtGlobalRoot = new File(System.getProperty("user.home"), ".sbt-structure-global/").getCanonicalFile
   private val sbtGlobalBase = new File(sbtGlobalRoot, SbtVersion).getCanonicalFile
