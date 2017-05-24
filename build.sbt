@@ -71,9 +71,10 @@ lazy val extractor = newProject("extractor")
     scalacOptions ++= Seq("-deprecation"),
 
     sources in Compile := {
-      val sbtVer = (sbtVersion in sbtPlugin).value
+      val sbtVer = (sbtVersion in pluginCrossBuild).value
       val srcs = (sources in Compile).value
       // remove the AutoPlugin since it doesn't compile when testing for sbt 0.13.0
+      // it's okay to compile it into the jar, old sbt won't know about it!
       if (sbtVer == "0.13.0")
         srcs.filterNot(_.getName == "StructurePlugin.scala")
       else srcs
