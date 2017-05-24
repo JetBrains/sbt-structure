@@ -20,7 +20,7 @@ object TestDataDumper extends AutoPlugin {
 
   object autoImport {
     val dumpTestStructure013: TaskKey[Seq[File]] = taskKey[Seq[File]]("dump xml output for running sbt-structure on all of the 0.13 test data directories for all versions of sbt where a structure-{sbtVersion}.xml exists")
-    val dumpTestStructure: InputKey[File] = inputKey[File]("dump xml output for running sbt-structure with the curent sbtVersion on the directory in the argument")
+    val dumpTestStructure: InputKey[File] = inputKey[File]("dump xml output for running sbt-structure with the current sbtVersion on the directory in the argument")
     val sbtLauncher: SettingKey[File] = settingKey[File]("where is the sbt launcher hidden")
   }
 
@@ -44,7 +44,7 @@ object TestDataDumper extends AutoPlugin {
     val pluginJar = (packagedArtifact in (Compile,packageBin)).value._2
 
     val generatedFile = dumpStructureFunc(sbtVer, version.value, sbtLauncher.value, pluginJar, testDir).get
-    streams.value.log.info(s"regenerated $generatedFile for sbt ${sbtVer}")
+    streams.value.log.info(s"regenerated $generatedFile for sbt $sbtVer")
     generatedFile
   }
 

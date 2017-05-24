@@ -42,7 +42,9 @@ object Loader {
 
     assert(structureFile.exists, "File must be created: " + structureFile.getPath)
 
-    TestUtil.read(structureFile)
+    val structureString = TestUtil.read(structureFile)
+    assert(structureString.nonEmpty, "structure dump was empty for project " + project.getPath)
+    structureString
   }
 
   private def path(file: File): String = file.getAbsolutePath.replace('\\', '/')
