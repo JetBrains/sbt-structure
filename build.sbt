@@ -42,7 +42,7 @@ lazy val core = newProject("core")
 
 lazy val extractor = newProject("extractor")
   .settings(
-    name := name.value + "-" + (sbtVersion in pluginCrossBuild).value,
+    name := name.value + "-" + (sbtBinaryVersion in pluginCrossBuild).value,
 
     sbtPlugin := true,
 
@@ -100,3 +100,8 @@ lazy val sbtStructure = project.in(file(".")).aggregate(core, extractor)
 
 lazy val testSetup = taskKey[Unit]("Setup tests for extractor")
 
+// the ^ sbt-cross operator doesn't work that well for publishing, so we need to be more explicit about the command chain
+addCommandAlias("publishAll_012","; reload ; project core ; ++ 2.9.2 publish ; project extractor ; ^^ 0.12.4 publish")
+addCommandAlias("publishAllLocal_012", "; reload ; project core ; ++ 2.9.2 publishLocal ; project extractor ; ^^ 0.12.4 publishLocal")
+addCommandAlias("publishAll", "; reload ; project core ; + publish ; project extractor ; reload ; ^^ 0.13.13 publish ; reload ; ^^ 1.0.0-M5 publish")
+addCommandAlias("publishAllLocal", "; reload ; project core ; + publishLocal ; project extractor ; reload ; ^^ 0.13.13 publishLocal ; reload ; ^^ 1.0.0-M5 publishLocal")
