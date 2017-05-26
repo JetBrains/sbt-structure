@@ -42,8 +42,6 @@ lazy val core = newProject("core")
 
 lazy val extractor = newProject("extractor")
   .settings(
-    name := name.value + "-" + (sbtBinaryVersion in pluginCrossBuild).value,
-
     sbtPlugin := true,
 
     scalaVersion := (sbtVersionSeries.value match {
@@ -51,7 +49,6 @@ lazy val extractor = newProject("extractor")
       case Sbt013 => "2.10.6"
       case Sbt1 => "2.12.2"
     }),
-
 
     libraryDependencies ++= Seq(
       "com.googlecode.java-diff-utils" % "diffutils" % "1.2" % "test" withSources(),
