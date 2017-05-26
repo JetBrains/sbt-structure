@@ -4,6 +4,7 @@ package extractors
 import org.jetbrains.sbt.structure._
 import sbt.Def.Initialize
 import sbt.{Configuration => _, _}
+import sbt.jetbrains.apiAdapter._
 
 /**
   * @author Nikolay Obedin
@@ -44,7 +45,7 @@ class ProjectExtractor(projectRef: ProjectRef,
   private[extractors] def extract: Seq[ProjectData] = {
 
     val resolvers = allResolvers.collect {
-      case MavenRepository(repoName, root) => ResolverData(repoName, root)
+      case repo: MavenRepository => ResolverData(repo.name, repo.root)
     }.toSet
 
     val configurations =
@@ -103,7 +104,7 @@ class ProjectExtractor(projectRef: ProjectRef,
     }
 
   private def extractScala: Option[ScalaData] = scalaInstance.map { instance =>
-    ScalaData(scalaOrganization, instance.version, instance.jars.filter(_.exists).sorted, scalacOptions)
+    ScalaData(scalaOrganization, instance.version, instance.allJars.toSeq.filter(_.exists).sorted, scalacOptions)
   }
 
   private def extractJava: Option[JavaData] =

@@ -5,6 +5,7 @@ import java.io.File
 import org.jetbrains.sbt.structure.{Aar, AndroidData, ApkLib, BuildData, ConfigurationData, DependencyData, DirectoryData, ProjectData}
 import org.jetbrains.sbt.{SbtStateOps, TaskOps}
 import sbt._
+import sbt.jetbrains.apiAdapter._
 
 //noinspection LanguageFeature
 object AndroidSdkPluginExtractor extends SbtStateOps with TaskOps  {

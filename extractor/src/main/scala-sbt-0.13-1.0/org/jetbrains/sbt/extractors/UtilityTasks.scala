@@ -6,7 +6,8 @@ import org.jetbrains.sbt._
 import org.jetbrains.sbt.structure.ProjectData
 import org.jetbrains.sbt.structure.XmlSerializer._
 import sbt.Def.Initialize
-import sbt.{Artifact, Configuration, Def, File, GetClassifiersModule, Keys, ProjectRef, ResolvedProject, Task, file}
+import sbt._
+import sbt.jetbrains.apiAdapter._
 
 import scala.language.reflectiveCalls
 import scala.xml._

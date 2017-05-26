@@ -82,11 +82,17 @@ lazy val extractor = newProject("extractor")
 
     // I want to share source between 0.13 and 1.0, but not 0.12
     unmanagedSourceDirectories in Compile ++= {
+      val sbt013_100_shared = (sourceDirectory in Compile).value / "scala-sbt-0.13-1.0"
       partialVersion((sbtVersion in pluginCrossBuild).value) match {
-        case Some((1, 0)) => Seq((sourceDirectory in Compile).value / "scala-sbt-0.13")
+        case Some((0,13)) => Seq(sbt013_100_shared)
+        case Some((1, 0)) => Seq(
+          sbt013_100_shared,
+          (sourceDirectory in Compile).value / "scala-sbt-1.0" // workaround for https://github.com/sbt/sbt/issues/3217
+        )
         case _ => Seq.empty[File]
       }
     }
+
   )
   .enablePlugins(TestDataDumper)
 

@@ -4,6 +4,7 @@ package extractors
 import org.jetbrains.sbt.structure._
 import org.jetbrains.sbt.{structure => jb}
 import sbt._
+import sbt.jetbrains.apiAdapter._
 
 /**
  * @author Nikolay Obedin

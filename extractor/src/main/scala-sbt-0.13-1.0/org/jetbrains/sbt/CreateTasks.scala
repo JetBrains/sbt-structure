@@ -2,6 +2,7 @@ package org.jetbrains.sbt
 
 import org.jetbrains.sbt.extractors._
 import sbt._
+import sbt.jetbrains.apiAdapter._
 
 /**
  * @author Nikolay Obedin

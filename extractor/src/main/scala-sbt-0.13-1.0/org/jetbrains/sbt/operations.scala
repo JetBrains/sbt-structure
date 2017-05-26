@@ -2,6 +2,7 @@ package org.jetbrains.sbt
 
 import org.jetbrains.sbt.structure.ModuleIdentifier
 import sbt._
+import sbt.jetbrains.apiAdapter._
 
 /**
  * @author Nikolay Obedin
