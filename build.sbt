@@ -37,7 +37,7 @@ def xmlArtifact(scalaVersion: String) =
 lazy val core = newProject("core")
   .settings(
     libraryDependencies ++= xmlArtifact(scalaVersion.value),
-    crossScalaVersions := Seq("2.9.3", "2.10.6", "2.11.9", "2.12.2")
+    crossScalaVersions := Seq("2.10.6", "2.11.9", "2.12.2")
   )
 
 lazy val extractor = newProject("extractor")
