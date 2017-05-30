@@ -55,7 +55,7 @@ lazy val extractor = newProject("extractor")
       specsArtifact(scalaVersion.value)
     ),
 
-    crossSbtVersions := Seq("0.13.0", "0.13.9", "0.13.13", "1.0.0-M5"),
+    crossSbtVersions := Seq("0.13.0", "0.13.9", "0.13.13", "1.0.0-M6"),
 
     testSetup := {
       System.setProperty("structure.sbtversion.full", (sbtVersion in pluginCrossBuild).value)
@@ -97,8 +97,16 @@ lazy val sbtStructure = project.in(file(".")).aggregate(core, extractor)
 
 lazy val testSetup = taskKey[Unit]("Setup tests for extractor")
 
+val publishVersions = Seq("0.13.13", "1.0.0-M6")
+val publishAllCommand =
+  "; reload ; project core ; + publish ; project extractor " +
+    publishVersions.map(v => s"; reload ; ^^ $v publish ").mkString
+val publishAllLocalCommand =
+  "; reload ; project core ; + publishLocal ; project extractor " +
+    publishVersions.map(v => s"; reload ; ^^ $v publishLocal ").mkString
+
 // the ^ sbt-cross operator doesn't work that well for publishing, so we need to be more explicit about the command chain
 addCommandAlias("publishAll_012","; reload ; project core ; ++ 2.9.2 publish ; project extractor ; ^^ 0.12.4 publish")
 addCommandAlias("publishAllLocal_012", "; reload ; project core ; ++ 2.9.2 publishLocal ; project extractor ; ^^ 0.12.4 publishLocal")
-addCommandAlias("publishAll", "; reload ; project core ; + publish ; project extractor ; reload ; ^^ 0.13.13 publish ; reload ; ^^ 1.0.0-M5 publish")
-addCommandAlias("publishAllLocal", "; reload ; project core ; + publishLocal ; project extractor ; reload ; ^^ 0.13.13 publishLocal ; reload ; ^^ 1.0.0-M5 publishLocal")
+addCommandAlias("publishAll", publishAllCommand)
+addCommandAlias("publishAllLocal", publishAllLocalCommand)
