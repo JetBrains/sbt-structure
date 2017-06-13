@@ -1,3 +1,5 @@
+import java.io.File
+
 import CrossBuildingPlugin.autoImport.sbtVersionSeries
 import CrossVersion.partialVersion
 import sbt.Keys.scalaVersion

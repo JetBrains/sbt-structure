@@ -12,6 +12,7 @@ object CreateTasks extends (State => State) with SbtStateOps {
 
   lazy val globalSettings: Seq[Setting[_]] = Seq[Setting[_]](
     StructureKeys.sbtStructureOpts := StructureKeys.sbtStructureOptions.apply(Options.readFromString).value,
+    StructureKeys.loadOptions := UtilityTasks.loadOptions.value,
     StructureKeys.dumpStructure := UtilityTasks.dumpStructure.value,
     StructureKeys.acceptedProjects := UtilityTasks.acceptedProjects.value,
     StructureKeys.extractProjects := UtilityTasks.extractProjects.value,

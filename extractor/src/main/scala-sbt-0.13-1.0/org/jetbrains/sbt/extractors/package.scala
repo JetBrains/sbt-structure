@@ -1,9 +1,8 @@
 package org.jetbrains.sbt
 
-import org.jetbrains.sbt.extractors.AndroidSdkPluginExtractor.androidTask
-import org.jetbrains.sbt.structure.{AndroidData, ProjectData, RepositoryData, StructureData}
+import org.jetbrains.sbt.extractors.AndroidSdkPluginExtractor.{androidTask, _}
+import org.jetbrains.sbt.structure.{AndroidData, StructureData}
 import sbt.{Def, Keys, Task}
-import org.jetbrains.sbt.extractors.AndroidSdkPluginExtractor._
 
 
 /**
@@ -16,16 +15,6 @@ package object extractors {
       Keys.sbtVersion.value,
       StructureKeys.extractProjects.value,
       StructureKeys.extractRepository.value,
-      StructureKeys.localCachePath.value
-    )
-  }
-
-  /** Extract structure with parameterized options. Useful when called from an inputTask. */
-  def extractStructure(options: Options): Def.Initialize[Task[StructureData]] = Def.task {
-    StructureData(
-      Keys.sbtVersion.value,
-      StructureKeys.extractProjects.value,
-      RepositoryExtractor.taskDef(options).value,
       StructureKeys.localCachePath.value
     )
   }

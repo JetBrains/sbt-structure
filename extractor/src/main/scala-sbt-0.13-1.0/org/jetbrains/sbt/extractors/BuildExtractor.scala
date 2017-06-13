@@ -28,7 +28,7 @@ object BuildExtractor extends SbtStateOps with TaskOps {
   def taskDef: Def.Initialize[Task[BuildData]] = Def.taskDyn {
     val state = Keys.state.value
     val projectRef = Keys.thisProjectRef.value
-    val options = StructureKeys.sbtStructureOpts.value
+    val options = StructureKeys.loadOptions.value
     val unit = LoadedBuildUnitAdapter(structure(state).units(projectRef.build))
 
     Def.task {

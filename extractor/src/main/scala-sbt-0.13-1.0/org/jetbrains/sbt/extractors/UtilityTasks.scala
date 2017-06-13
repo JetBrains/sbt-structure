@@ -6,7 +6,8 @@ import org.jetbrains.sbt._
 import org.jetbrains.sbt.structure.ProjectData
 import org.jetbrains.sbt.structure.XmlSerializer._
 import sbt.Def.Initialize
-import sbt._
+import sbt.{Def, _}
+// don't remove this import: sbt.jetbrains.apiAdapter._ -- it shadows some symbols for sbt 1.0 compatibility
 import sbt.jetbrains.apiAdapter._
 
 import scala.language.reflectiveCalls
@@ -19,7 +20,7 @@ object UtilityTasks extends SbtStateOps {
 
   lazy val dumpStructure: Initialize[Task[Unit]] = Def.task {
     val structure = StructureKeys.extractStructure.value
-    val options = StructureKeys.sbtStructureOpts.value
+    val options = StructureKeys.loadOptions.value
     val outputFile = StructureKeys.sbtStructureOutputFile.value
     val log = Keys.streams.value.log
 
@@ -39,6 +40,13 @@ object UtilityTasks extends SbtStateOps {
       println(outputText)
     }
     log.info("Done.")
+  }
+
+  lazy val loadOptions: Def.Initialize[Task[Options]] = Def.task {
+    StructureKeys.optionsFile.value.map { file =>
+      Options.readFromSeq(IO.readLines(file))
+    }
+    .getOrElse(StructureKeys.sbtStructureOpts.value)
   }
 
   lazy val localCachePath: Def.Initialize[Task[Option[File]]] = Def.task {
@@ -101,7 +109,7 @@ object UtilityTasks extends SbtStateOps {
 
   def classifiersModuleRespectingStructureOpts: Initialize[Task[GetClassifiersModule]] = Def.task {
     val module = (Keys.classifiersModule in Keys.updateClassifiers).value
-    val options = StructureKeys.sbtStructureOpts.value
+    val options = StructureKeys.loadOptions.value
     if (options.resolveJavadocs) {
       module
     } else {

@@ -1,11 +1,10 @@
 package org.jetbrains.sbt
 
 import org.jetbrains.sbt.extractors.UtilityTasks.writeToFile
-import sbt._
-import sbt.plugins.JvmPlugin
 import org.jetbrains.sbt.structure.XmlSerializer._
-import sbt.complete.DefaultParsers._
-import sbt.complete.{DefaultParsers, Parser}
+import sbt._
+import sbt.complete.DefaultParsers
+import sbt.plugins.JvmPlugin
 
 import scala.xml.PrettyPrinter
 
@@ -18,6 +17,7 @@ object StructurePlugin extends AutoPlugin {
   override def trigger: PluginTrigger = allRequirements
 
   override lazy val globalSettings: Seq[Setting[_]] = Seq(
+    StructureKeys.optionsFile := None,
     StructureKeys.sbtStructureOutputFile := None, // TODO deprecate for plugin use
     StructureKeys.sbtStructureOptions := "prettyPrint download", // TODO deprecate for plugin use
     StructureKeys.dumpStructureTo := pluginOnlyTasks.dumpStructureTo.evaluated
@@ -29,18 +29,17 @@ object StructurePlugin extends AutoPlugin {
 
 private object pluginOnlyTasks {
 
-  private val optParser: Parser[Seq[String]] =
-    (' ' ~> token(literal("prettyPrint") | "download" | "resolveClassifiers" | "resolveJavadocs" | "resolveSbtClassifiers")).*
-      .map(_.distinct)
-  private val fileOptParser = DefaultParsers.fileParser(file("/")) ~ optParser
+  private val targetFileParser = DefaultParsers.fileParser(file("/"))
+
 
   // this task is not compatible with old sbt versions (0.13.0) and only interesting as part of the plugin
   lazy val dumpStructureTo: Def.Initialize[InputTask[File]] = Def.inputTaskDyn {
 
-    val (outputFile, params) = fileOptParser.parsed
-    val options = Options.readFromSeq(params)
+    val outputFile = targetFileParser.parsed
+    val options = StructureKeys.loadOptions.value
+
     val log = Keys.streams.value.log
-    val structureTask = extractors.extractStructure(options)
+    val structureTask = extractors.extractStructure
 
     Def.task {
       val structure = structureTask.value.serialize

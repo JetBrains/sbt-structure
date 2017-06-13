@@ -4,13 +4,14 @@ package org.jetbrains.sbt
  * @author Nikolay Obedin
  * @since 10/5/15.
  */
-final case class Options(download: Boolean,
-                         resolveClassifiers: Boolean,
-                         resolveJavadocs: Boolean,
-                         resolveSbtClassifiers: Boolean,
-                         prettyPrint: Boolean)
+final case class Options(download: Boolean = false,
+                         resolveClassifiers: Boolean = false,
+                         resolveJavadocs: Boolean = false,
+                         resolveSbtClassifiers: Boolean = false,
+                         prettyPrint: Boolean = false)
 
 object Options {
+
   def readFromString(options: String): Options = Options(
     download = options.contains("download"),
     resolveClassifiers = options.contains("resolveClassifiers"),

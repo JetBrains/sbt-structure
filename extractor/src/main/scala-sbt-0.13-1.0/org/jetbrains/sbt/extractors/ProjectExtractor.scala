@@ -4,6 +4,7 @@ package extractors
 import org.jetbrains.sbt.structure._
 import sbt.Def.Initialize
 import sbt.{Configuration => _, _}
+// don't remove this import: sbt.jetbrains.apiAdapter._ -- it shadows some dymbol for sbt 1.0 compatibility
 import sbt.jetbrains.apiAdapter._
 
 /**
@@ -148,7 +149,7 @@ object ProjectExtractor extends SbtStateOps with TaskOps {
     def ideOutputDirectory(conf: sbt.Configuration) =
       SettingKeys.ideOutputDirectory.in(projectRef, conf).find(state).flatten
 
-    val options = StructureKeys.sbtStructureOpts.value
+    val options = StructureKeys.loadOptions.value
 
     val managedSourceDirsInConfig = settingInConfiguration(Keys.managedSourceDirectories)
     val unmanagedSourceDirsInConfig = settingInConfiguration(Keys.unmanagedSourceDirectories)

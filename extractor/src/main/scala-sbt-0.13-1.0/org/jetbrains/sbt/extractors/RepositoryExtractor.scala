@@ -68,17 +68,7 @@ object RepositoryExtractor extends SbtStateOps with TaskOps {
 
   def taskDef: Initialize[Task[Option[RepositoryData]]] = Def.taskDyn {
     val state = Keys.state.value
-    val options = StructureKeys.sbtStructureOpts.value
-    val acceptedProjects = StructureKeys.acceptedProjects.value
-
-    Def.task {
-      extractRepositoryData(state, options, acceptedProjects)
-        .onlyIf(options.download).value
-    }
-  }
-
-  def taskDef(options: Options): Def.Initialize[Task[Option[RepositoryData]]] = Def.taskDyn {
-    val state = Keys.state.value
+    val options = StructureKeys.loadOptions.value
     val acceptedProjects = StructureKeys.acceptedProjects.value
 
     Def.task {
