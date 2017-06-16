@@ -81,7 +81,7 @@ object DependenciesExtractor extends SbtStateOps with TaskOps {
     val state = Keys.state.value
     val projectRef = Keys.thisProjectRef.value
     val buildDependencies = Keys.buildDependencies.value
-    val options = StructureKeys.loadOptions.value
+    val options = StructureKeys.sbtStructureOpts.value
     val dependencyConfigurations = StructureKeys.dependencyConfigurations.value
     val testConfigurations = StructureKeys.testConfigurations.value
 

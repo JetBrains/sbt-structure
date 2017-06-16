@@ -16,10 +16,11 @@ object StructurePlugin extends AutoPlugin {
   override def requires: Plugins = JvmPlugin
   override def trigger: PluginTrigger = allRequirements
 
+  val autoImport = Seq(StructureKeys.sbtStructureOptions)
+
   override lazy val globalSettings: Seq[Setting[_]] = Seq(
-    StructureKeys.optionsFile := None,
-    StructureKeys.sbtStructureOutputFile := None, // TODO deprecate for plugin use
-    StructureKeys.sbtStructureOptions := "prettyPrint download", // TODO deprecate for plugin use
+    StructureKeys.sbtStructureOutputFile := None,
+    StructureKeys.sbtStructureOptions := "prettyPrint download",
     StructureKeys.dumpStructureTo := pluginOnlyTasks.dumpStructureTo.evaluated
   ) ++ CreateTasks.globalSettings
 
@@ -32,11 +33,11 @@ private object pluginOnlyTasks {
   private val targetFileParser = DefaultParsers.fileParser(file("/"))
 
 
-  // this task is not compatible with old sbt versions (0.13.0) and only interesting as part of the plugin
+  // this task is not compatible with old sbt versions (0.13.0) and only available as part of the StructurePlugin
   lazy val dumpStructureTo: Def.Initialize[InputTask[File]] = Def.inputTaskDyn {
 
     val outputFile = targetFileParser.parsed
-    val options = StructureKeys.loadOptions.value
+    val options = StructureKeys.sbtStructureOpts.value
 
     val log = Keys.streams.value.log
     val structureTask = extractors.extractStructure

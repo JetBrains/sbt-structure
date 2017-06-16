@@ -149,7 +149,7 @@ object ProjectExtractor extends SbtStateOps with TaskOps {
     def ideOutputDirectory(conf: sbt.Configuration) =
       SettingKeys.ideOutputDirectory.in(projectRef, conf).find(state).flatten
 
-    val options = StructureKeys.loadOptions.value
+    val options = StructureKeys.sbtStructureOpts.value
 
     val managedSourceDirsInConfig = settingInConfiguration(Keys.managedSourceDirectories)
     val unmanagedSourceDirsInConfig = settingInConfiguration(Keys.unmanagedSourceDirectories)

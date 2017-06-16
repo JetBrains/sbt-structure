@@ -30,8 +30,6 @@ object StructureKeys {
   val allKeys:TaskKey[Seq[AttributeKey[_]]] = TaskKey("allKeys", rank = Invisible)
   val allConfigurationsWithSource: SettingKey[Seq[Configuration]] = SettingKey("allConfigurationsWithSource", rank = Invisible)
 
-  val optionsFile: SettingKey[Option[File]] = SettingKey("ssOptionsFile", "file to load options from dynamically", rank = Invisible)
-  /* Don't depend on sbtStructureOpts directly. Use loadOptions instead to respect sbtStructureOptionsFile. */
   val sbtStructureOpts: SettingKey[Options] = SettingKey("ssOptions", "options for dumpStructure task", rank = DSetting)
   val sbtStructureOptions: SettingKey[String] = SettingKey("sbtStructureOptions", "options for dumpStructure task as string", rank = DSetting)
   val sbtStructureOutputFile: SettingKey[Option[File]] = SettingKey("sbtStructureOutputFile", "output file for dumpStructure task",rank = DSetting)
