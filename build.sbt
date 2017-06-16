@@ -57,7 +57,7 @@ lazy val extractor = newProject("extractor")
       specsArtifact(scalaVersion.value)
     ),
 
-    crossSbtVersions := Seq("0.13.0", "0.13.9", "0.13.13", "1.0.0-M6"),
+    crossSbtVersions := Seq("0.13.0", "0.13.9", "0.13.13"),
 
     testSetup := {
       System.setProperty("structure.sbtversion.full", (sbtVersion in pluginCrossBuild).value)
