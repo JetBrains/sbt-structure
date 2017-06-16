@@ -21,10 +21,10 @@ object Loader {
     val opts = "download prettyPrint " + options
 
     writeLinesTo(commandsFile,
-      "set SettingKey[Option[File]](\"sbt-structure-output-file\") in Global := Some(file(\"" + path(structureFile) + "\"))",
-      "set SettingKey[String](\"sbt-structure-options\") in Global := \"" + opts + "\"",
+      "set SettingKey[Option[File]](\"sbtStructureOutputFile\") in Global := Some(file(\"" + path(structureFile) + "\"))",
+      "set SettingKey[String](\"sbtStructureOptions\") in Global := \"" + opts + "\"",
       "apply -cp " + path(pluginFile) + " org.jetbrains.sbt.CreateTasks",
-      "*/*:dump-structure")
+      "*/*:dumpStructure")
 
     val commands = Seq(JavaVM,
 //      "-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=5005",

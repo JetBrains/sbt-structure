@@ -81,9 +81,9 @@ object TestDataDumper extends AutoPlugin {
       else defaultOpts
 
     val commands = Seq(
-      s"""set Seq(SettingKey[Option[File]]("sbt-structure-output-file") in Global := Some(file("${path(structureFile)}")), SettingKey[String]("sbt-structure-options") in Global := "$opts")""",
+      s"""set Seq(SettingKey[Option[File]]("sbtStructureOutputFile") in Global := Some(file("${path(structureFile)}")), SettingKey[String]("sbtStructureOptions") in Global := "$opts")""",
       s"apply -cp ${path(pluginJar)} org.jetbrains.sbt.CreateTasks",
-      "*/*:dump-structure"
+      "*/*:dumpStructure"
     )
 
     IO.withTemporaryFile("commands","") { commandsFile =>
