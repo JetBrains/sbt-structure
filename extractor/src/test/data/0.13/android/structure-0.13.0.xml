@@ -471,12 +471,6 @@
       <rank>25</rank>
     </setting>
     <setting>
-      <label>ssOptions</label>
-      <description></description>
-      <rank>10000</rank>
-      <value>Options(true,true,true,true,true)</value>
-    </setting>
-    <setting>
       <label>history</label>
       <description>The location where command line history is persisted.</description>
       <rank>40</rank>
@@ -1054,7 +1048,7 @@
       <label>taskTemporaryDirectory</label>
       <description>Directory used for temporary files for tasks that is deleted after each task execution.</description>
       <rank>10000</rank>
-      <value>/var/folders/5k/4b5my29x26q_dhrys3ghf9wh0000gn/T/sbt_23dd968</value>
+      <value>/var/folders/5k/4b5my29x26q_dhrys3ghf9wh0000gn/T/sbt_b67b62bb</value>
     </setting>
     <setting>
       <label>targetSdkVersion</label>
@@ -1077,6 +1071,12 @@
       <description>The message to show when triggered execution waits for sources to change.</description>
       <rank>10000</rank>
       <value>&lt;function1&gt;</value>
+    </setting>
+    <setting>
+      <label>ssOptions</label>
+      <description>options for dumpStructure task</description>
+      <rank>10000</rank>
+      <value>Options(true,true,true,true,true)</value>
     </setting>
     <setting>
       <label>managedResourceDirectories</label>

@@ -371,12 +371,6 @@
       <value>Set current project to some-name (in build file:$HOME/workspace/sbt-structure/extractor/src/te...</value>
     </setting>
     <setting>
-      <label>ssOptions</label>
-      <description></description>
-      <rank>10000</rank>
-      <value>Options(true,true,true,true,true)</value>
-    </setting>
-    <setting>
       <label>history</label>
       <description>The location where command line history is persisted.</description>
       <rank>40</rank>
@@ -838,7 +832,7 @@
       <label>taskTemporaryDirectory</label>
       <description>Directory used for temporary files for tasks that is deleted after each task execution.</description>
       <rank>10000</rank>
-      <value>/var/folders/5k/4b5my29x26q_dhrys3ghf9wh0000gn/T/sbt_6b51b68</value>
+      <value>/var/folders/5k/4b5my29x26q_dhrys3ghf9wh0000gn/T/sbt_755cd93d</value>
     </setting>
     <setting>
       <label>configuration</label>
@@ -856,6 +850,12 @@
       <description>The message to show when triggered execution waits for sources to change.</description>
       <rank>10000</rank>
       <value>&lt;function1&gt;</value>
+    </setting>
+    <setting>
+      <label>ssOptions</label>
+      <description>options for dumpStructure task</description>
+      <rank>10000</rank>
+      <value>Options(true,true,true,true,true)</value>
     </setting>
     <setting>
       <label>managedResourceDirectories</label>
@@ -906,7 +906,7 @@
       <label>commands</label>
       <description>Defines commands to be registered when this project or build is the current selected one.</description>
       <rank>100</rank>
-      <value>List(sbt.SimpleCommand@6cbdd1c5)</value>
+      <value>List(sbt.SimpleCommand@60816371)</value>
     </setting>
     <setting>
       <label>offline</label>

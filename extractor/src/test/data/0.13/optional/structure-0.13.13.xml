@@ -242,7 +242,7 @@
       <label>testResultLogger</label>
       <description>Logs results after a test task completes.</description>
       <rank>20000</rank>
-      <value>Main(&lt;function1&gt;,sbt.TestResultLogger$$anon$1@24695314,sbt.TestResultLogger$$anon$1@56277be5,sbt.Tes...</value>
+      <value>Main(&lt;function1&gt;,sbt.TestResultLogger$$anon$1@5f387083,sbt.TestResultLogger$$anon$1@e00086b,sbt.Test...</value>
     </setting>
     <setting>
       <label>loadedBuild</label>
@@ -388,12 +388,6 @@
       <description>Message to display when the project is loaded.</description>
       <rank>10000</rank>
       <value>Set current project to optional (in build file:$HOME/workspace/sbt-structure/extractor/src/tes...</value>
-    </setting>
-    <setting>
-      <label>ssOptions</label>
-      <description></description>
-      <rank>10000</rank>
-      <value>Options(true,true,true,true,true)</value>
     </setting>
     <setting>
       <label>history</label>
@@ -902,7 +896,7 @@
       <label>taskTemporaryDirectory</label>
       <description>Directory used for temporary files for tasks that is deleted after each task execution.</description>
       <rank>10000</rank>
-      <value>/var/folders/5k/4b5my29x26q_dhrys3ghf9wh0000gn/T/sbt_c1db38a4</value>
+      <value>/var/folders/5k/4b5my29x26q_dhrys3ghf9wh0000gn/T/sbt_d49725a9</value>
     </setting>
     <setting>
       <label>configuration</label>
@@ -920,6 +914,12 @@
       <description>The message to show when triggered execution waits for sources to change.</description>
       <rank>10000</rank>
       <value>&lt;function1&gt;</value>
+    </setting>
+    <setting>
+      <label>ssOptions</label>
+      <description>options for dumpStructure task</description>
+      <rank>10000</rank>
+      <value>Options(true,true,true,true,true)</value>
     </setting>
     <setting>
       <label>managedResourceDirectories</label>
