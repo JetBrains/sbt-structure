@@ -6,8 +6,8 @@
     <name>ch.acra-acra-4.8.2</name>
     <organization>sbt-android-synthetic-organization</organization>
     <version>0.1-SNAPSHOT-sbt-android</version>
-    <base>$HOME/.android/sbt/exploded-aars/ch.acra-acra-4.8.2</base>
-    <target>$HOME/.android/sbt/exploded-aars/ch.acra-acra-4.8.2/bin</target>
+    <base>$ANDROID_HOME/sbt/exploded-aars/ch.acra-acra-4.8.2</base>
+    <target>$ANDROID_HOME/sbt/exploded-aars/ch.acra-acra-4.8.2/bin</target>
     <build>
       <import>import _root_.android.AndroidPlugin.autoImport._</import>
       <import>import _root_.android.Plugin._</import>
@@ -247,7 +247,7 @@
     </build>
     <java>
       <option>-bootclasspath</option>
-      <option>$ANDROID_HOME/platforms/android-22/android.jar</option>
+      <option>$ANDROID_HOME/sbt/sdk/platforms/android-22/android.jar</option>
       <option>-g</option>
     </java>
     <scala>
@@ -259,25 +259,25 @@
       <jar>$IVY2/cache/org.scala-lang/scala-library/jars/scala-library-2.11.8.jar</jar>
       <jar>$IVY2/cache/org.scala-lang/scala-reflect/jars/scala-reflect-2.11.8.jar</jar>
       <option>-bootclasspath</option>
-      <option>$ANDROID_HOME/platforms/android-22/android.jar</option>
+      <option>$ANDROID_HOME/sbt/sdk/platforms/android-22/android.jar</option>
       <option>-javabootclasspath</option>
-      <option>$ANDROID_HOME/platforms/android-22/android.jar</option>
+      <option>$ANDROID_HOME/sbt/sdk/platforms/android-22/android.jar</option>
     </scala>
     <android>
       <version>22</version>
-      <manifest>$HOME/.android/sbt/exploded-aars/ch.acra-acra-4.8.2/AndroidManifest.xml</manifest>
-      <resources>$HOME/.android/sbt/exploded-aars/ch.acra-acra-4.8.2/res</resources>
-      <assets>$HOME/.android/sbt/exploded-aars/ch.acra-acra-4.8.2/assets</assets>
-      <generatedFiles>$HOME/.android/sbt/exploded-aars/ch.acra-acra-4.8.2/bin/generated/source</generatedFiles>
-      <nativeLibs>$HOME/.android/sbt/exploded-aars/ch.acra-acra-4.8.2/libs</nativeLibs>
-      <apk>$HOME/.android/sbt/exploded-aars/ch.acra-acra-4.8.2</apk>
+      <manifest>$ANDROID_HOME/sbt/exploded-aars/ch.acra-acra-4.8.2/AndroidManifest.xml</manifest>
+      <resources>$ANDROID_HOME/sbt/exploded-aars/ch.acra-acra-4.8.2/res</resources>
+      <assets>$ANDROID_HOME/sbt/exploded-aars/ch.acra-acra-4.8.2/assets</assets>
+      <generatedFiles>$ANDROID_HOME/sbt/exploded-aars/ch.acra-acra-4.8.2/bin/generated/source</generatedFiles>
+      <nativeLibs>$ANDROID_HOME/sbt/exploded-aars/ch.acra-acra-4.8.2/libs</nativeLibs>
+      <apk>$ANDROID_HOME/sbt/exploded-aars/ch.acra-acra-4.8.2</apk>
       <isLibrary>true</isLibrary>
       <proguard> </proguard>
     </android>
     <configuration id="compile">
-      <sources managed="true">$HOME/.android/sbt/exploded-aars/ch.acra-acra-4.8.2/src</sources>
-      <resources managed="true">$HOME/.android/sbt/exploded-aars/ch.acra-acra-4.8.2/resources</resources>
-      <classes>$HOME/.android/sbt/exploded-aars/ch.acra-acra-4.8.2/ch.acra-acra-4.8.2.jar</classes>
+      <sources managed="true">$ANDROID_HOME/sbt/exploded-aars/ch.acra-acra-4.8.2/src</sources>
+      <resources managed="true">$ANDROID_HOME/sbt/exploded-aars/ch.acra-acra-4.8.2/resources</resources>
+      <classes>$ANDROID_HOME/sbt/exploded-aars/ch.acra-acra-4.8.2/ch.acra-acra-4.8.2.jar</classes>
     </configuration>
     <dependencies>
       <module configurations="compile" organization="com.android.support" name="support-annotations" revision="23.1.1" artifactType="jar" classifier=""/>
@@ -285,12 +285,12 @@
       <module configurations="compile" organization="com.hanhuy.android" name="scala-common_2.11" revision="1.3" artifactType="jar" classifier=""/>
       <module configurations="compile" organization="com.lihaoyi" name="scalarx_2.11" revision="0.3.0" artifactType="jar" classifier=""/>
       <module configurations="compile" organization="org.scala-lang" name="scala-library" revision="2.11.8" artifactType="jar" classifier=""/>
-      <jar configurations="compile">$HOME/.android/sbt/exploded-aars/com.android.support-support-v4-23.1.1/com.android.support-support-v4-23.1.1.jar</jar>
-      <jar configurations="compile">$HOME/.android/sbt/exploded-aars/com.android.support-support-v4-23.1.1/libs/internal_impl-23.1.1.jar</jar>
+      <jar configurations="compile">$ANDROID_HOME/sbt/exploded-aars/com.android.support-support-v4-23.1.1/com.android.support-support-v4-23.1.1.jar</jar>
+      <jar configurations="compile">$ANDROID_HOME/sbt/exploded-aars/com.android.support-support-v4-23.1.1/libs/internal_impl-23.1.1.jar</jar>
     </dependencies>
     <resolver name="public" root="https://repo1.maven.org/maven2/"/>
     <resolver name="google libraries" root="$URI_ANDROID_HOME/extras/google/m2repository"/>
-    <resolver name="android libraries" root="$URI_ANDROID_HOME/extras/android/m2repository/"/>
+    <resolver name="android libraries" root="$URI_ANDROID_HOME/extras/android/m2repository"/>
   </project>
   <project>
     <id>com.android.support-support-v4-23.1.1</id>
@@ -298,8 +298,8 @@
     <name>com.android.support-support-v4-23.1.1</name>
     <organization>sbt-android-synthetic-organization</organization>
     <version>0.1-SNAPSHOT-sbt-android</version>
-    <base>$HOME/.android/sbt/exploded-aars/com.android.support-support-v4-23.1.1</base>
-    <target>$HOME/.android/sbt/exploded-aars/com.android.support-support-v4-23.1.1/bin</target>
+    <base>$ANDROID_HOME/sbt/exploded-aars/com.android.support-support-v4-23.1.1</base>
+    <target>$ANDROID_HOME/sbt/exploded-aars/com.android.support-support-v4-23.1.1/bin</target>
     <build>
       <import>import _root_.android.AndroidPlugin.autoImport._</import>
       <import>import _root_.android.Plugin._</import>
@@ -539,7 +539,7 @@
     </build>
     <java>
       <option>-bootclasspath</option>
-      <option>$ANDROID_HOME/platforms/android-22/android.jar</option>
+      <option>$ANDROID_HOME/sbt/sdk/platforms/android-22/android.jar</option>
       <option>-g</option>
     </java>
     <scala>
@@ -551,25 +551,25 @@
       <jar>$IVY2/cache/org.scala-lang/scala-library/jars/scala-library-2.11.8.jar</jar>
       <jar>$IVY2/cache/org.scala-lang/scala-reflect/jars/scala-reflect-2.11.8.jar</jar>
       <option>-bootclasspath</option>
-      <option>$ANDROID_HOME/platforms/android-22/android.jar</option>
+      <option>$ANDROID_HOME/sbt/sdk/platforms/android-22/android.jar</option>
       <option>-javabootclasspath</option>
-      <option>$ANDROID_HOME/platforms/android-22/android.jar</option>
+      <option>$ANDROID_HOME/sbt/sdk/platforms/android-22/android.jar</option>
     </scala>
     <android>
       <version>22</version>
-      <manifest>$HOME/.android/sbt/exploded-aars/com.android.support-support-v4-23.1.1/AndroidManifest.xml</manifest>
-      <resources>$HOME/.android/sbt/exploded-aars/com.android.support-support-v4-23.1.1/res</resources>
-      <assets>$HOME/.android/sbt/exploded-aars/com.android.support-support-v4-23.1.1/assets</assets>
-      <generatedFiles>$HOME/.android/sbt/exploded-aars/com.android.support-support-v4-23.1.1/bin/generated/source</generatedFiles>
-      <nativeLibs>$HOME/.android/sbt/exploded-aars/com.android.support-support-v4-23.1.1/libs</nativeLibs>
-      <apk>$HOME/.android/sbt/exploded-aars/com.android.support-support-v4-23.1.1</apk>
+      <manifest>$ANDROID_HOME/sbt/exploded-aars/com.android.support-support-v4-23.1.1/AndroidManifest.xml</manifest>
+      <resources>$ANDROID_HOME/sbt/exploded-aars/com.android.support-support-v4-23.1.1/res</resources>
+      <assets>$ANDROID_HOME/sbt/exploded-aars/com.android.support-support-v4-23.1.1/assets</assets>
+      <generatedFiles>$ANDROID_HOME/sbt/exploded-aars/com.android.support-support-v4-23.1.1/bin/generated/source</generatedFiles>
+      <nativeLibs>$ANDROID_HOME/sbt/exploded-aars/com.android.support-support-v4-23.1.1/libs</nativeLibs>
+      <apk>$ANDROID_HOME/sbt/exploded-aars/com.android.support-support-v4-23.1.1</apk>
       <isLibrary>true</isLibrary>
       <proguard> </proguard>
     </android>
     <configuration id="compile">
-      <sources managed="true">$HOME/.android/sbt/exploded-aars/com.android.support-support-v4-23.1.1/src</sources>
-      <resources managed="true">$HOME/.android/sbt/exploded-aars/com.android.support-support-v4-23.1.1/resources</resources>
-      <classes>$HOME/.android/sbt/exploded-aars/com.android.support-support-v4-23.1.1/com.android.support-support-v4-23.1.1.jar</classes>
+      <sources managed="true">$ANDROID_HOME/sbt/exploded-aars/com.android.support-support-v4-23.1.1/src</sources>
+      <resources managed="true">$ANDROID_HOME/sbt/exploded-aars/com.android.support-support-v4-23.1.1/resources</resources>
+      <classes>$ANDROID_HOME/sbt/exploded-aars/com.android.support-support-v4-23.1.1/com.android.support-support-v4-23.1.1.jar</classes>
     </configuration>
     <dependencies>
       <module configurations="compile" organization="com.android.support" name="support-annotations" revision="23.1.1" artifactType="jar" classifier=""/>
@@ -577,12 +577,12 @@
       <module configurations="compile" organization="com.hanhuy.android" name="scala-common_2.11" revision="1.3" artifactType="jar" classifier=""/>
       <module configurations="compile" organization="com.lihaoyi" name="scalarx_2.11" revision="0.3.0" artifactType="jar" classifier=""/>
       <module configurations="compile" organization="org.scala-lang" name="scala-library" revision="2.11.8" artifactType="jar" classifier=""/>
-      <jar configurations="compile">$HOME/.android/sbt/exploded-aars/com.android.support-support-v4-23.1.1/com.android.support-support-v4-23.1.1.jar</jar>
-      <jar configurations="compile">$HOME/.android/sbt/exploded-aars/com.android.support-support-v4-23.1.1/libs/internal_impl-23.1.1.jar</jar>
+      <jar configurations="compile">$ANDROID_HOME/sbt/exploded-aars/com.android.support-support-v4-23.1.1/com.android.support-support-v4-23.1.1.jar</jar>
+      <jar configurations="compile">$ANDROID_HOME/sbt/exploded-aars/com.android.support-support-v4-23.1.1/libs/internal_impl-23.1.1.jar</jar>
     </dependencies>
     <resolver name="public" root="https://repo1.maven.org/maven2/"/>
     <resolver name="google libraries" root="$URI_ANDROID_HOME/extras/google/m2repository"/>
-    <resolver name="android libraries" root="$URI_ANDROID_HOME/extras/android/m2repository/"/>
+    <resolver name="android libraries" root="$URI_ANDROID_HOME/extras/android/m2repository"/>
   </project>
   <project>
     <id>android-1-6</id>
@@ -831,7 +831,7 @@
     </build>
     <java>
       <option>-bootclasspath</option>
-      <option>$ANDROID_HOME/platforms/android-22/android.jar</option>
+      <option>$ANDROID_HOME/sbt/sdk/platforms/android-22/android.jar</option>
       <option>-g</option>
     </java>
     <scala>
@@ -843,9 +843,9 @@
       <jar>$IVY2/cache/org.scala-lang/scala-library/jars/scala-library-2.11.8.jar</jar>
       <jar>$IVY2/cache/org.scala-lang/scala-reflect/jars/scala-reflect-2.11.8.jar</jar>
       <option>-bootclasspath</option>
-      <option>$ANDROID_HOME/platforms/android-22/android.jar</option>
+      <option>$ANDROID_HOME/sbt/sdk/platforms/android-22/android.jar</option>
       <option>-javabootclasspath</option>
-      <option>$ANDROID_HOME/platforms/android-22/android.jar</option>
+      <option>$ANDROID_HOME/sbt/sdk/platforms/android-22/android.jar</option>
     </scala>
     <android>
       <version>22</version>
@@ -885,12 +885,12 @@
       <module configurations="compile" organization="com.hanhuy.android" name="scala-common_2.11" revision="1.3" artifactType="jar" classifier=""/>
       <module configurations="compile" organization="com.lihaoyi" name="scalarx_2.11" revision="0.3.0" artifactType="jar" classifier=""/>
       <module configurations="compile" organization="org.scala-lang" name="scala-library" revision="2.11.8" artifactType="jar" classifier=""/>
-      <jar configurations="compile">$HOME/.android/sbt/exploded-aars/com.android.support-support-v4-23.1.1/com.android.support-support-v4-23.1.1.jar</jar>
-      <jar configurations="compile">$HOME/.android/sbt/exploded-aars/com.android.support-support-v4-23.1.1/libs/internal_impl-23.1.1.jar</jar>
+      <jar configurations="compile">$ANDROID_HOME/sbt/exploded-aars/com.android.support-support-v4-23.1.1/com.android.support-support-v4-23.1.1.jar</jar>
+      <jar configurations="compile">$ANDROID_HOME/sbt/exploded-aars/com.android.support-support-v4-23.1.1/libs/internal_impl-23.1.1.jar</jar>
     </dependencies>
     <resolver name="public" root="https://repo1.maven.org/maven2/"/>
     <resolver name="google libraries" root="$URI_ANDROID_HOME/extras/google/m2repository"/>
-    <resolver name="android libraries" root="$URI_ANDROID_HOME/extras/android/m2repository/"/>
+    <resolver name="android libraries" root="$URI_ANDROID_HOME/extras/android/m2repository"/>
     <setting>
       <label>dependencyOverrides</label>
       <description>Declares managed dependency overrides.</description>
@@ -1006,7 +1006,7 @@
       <label>testResultLogger</label>
       <description>Logs results after a test task completes.</description>
       <rank>20000</rank>
-      <value>Main(&lt;function1&gt;,sbt.TestResultLogger$$anon$1@323509f2,sbt.TestResultLogger$$anon$1@121434f,sbt.Test...</value>
+      <value>Main(&lt;function1&gt;,sbt.TestResultLogger$$anon$1@136176b9,sbt.TestResultLogger$$anon$1@5924a6f6,sbt.Tes...</value>
     </setting>
     <setting>
       <label>loadedBuild</label>
@@ -1566,7 +1566,7 @@
       <label>resolvers</label>
       <description>The user-defined additional resolvers for automatically managed dependencies.</description>
       <rank>31</rank>
-      <value>List(google libraries: $URI_ANDROID_HOME/extras/google/m2repository, android librari...</value>
+      <value>List(google libraries: $URI_ANDROID_HOME/extras/google/m2repository, android libraries: file...</value>
     </setting>
     <setting>
       <label>publishMavenStyle</label>
@@ -1954,7 +1954,7 @@
       <label>taskTemporaryDirectory</label>
       <description>Directory used for temporary files for tasks that is deleted after each task execution.</description>
       <rank>10000</rank>
-      <value>/var/folders/5k/4b5my29x26q_dhrys3ghf9wh0000gn/T/sbt_81f5020f</value>
+      <value>/var/folders/5k/4b5my29x26q_dhrys3ghf9wh0000gn/T/sbt_63df547d</value>
     </setting>
     <setting>
       <label>configuration</label>
@@ -3378,13 +3378,13 @@
       <src>$IVY2/cache/ch.acra/acra/srcs/acra-4.8.2-sources.jar</src>
     </module>
     <module organization="com.android.support" name="support-annotations" revision="23.1.1" artifactType="jar" classifier="">
-      <jar>$ANDROID_HOME/extras/android/m2repository/com/android/support/support-annotations/23.1.1/support-annotations-23.1.1.jar</jar>
-      <doc>$ANDROID_HOME/extras/android/m2repository/com/android/support/support-annotations/23.1.1/support-annotations-23.1.1-javadoc.jar</doc>
-      <src>$ANDROID_HOME/extras/android/m2repository/com/android/support/support-annotations/23.1.1/support-annotations-23.1.1-sources.jar</src>
+      <jar>$ANDROID_HOME/sbt/sdk/extras/android/m2repository/com/android/support/support-annotations/23.1.1/support-annotations-23.1.1.jar</jar>
+      <doc>$ANDROID_HOME/sbt/sdk/extras/android/m2repository/com/android/support/support-annotations/23.1.1/support-annotations-23.1.1-javadoc.jar</doc>
+      <src>$ANDROID_HOME/sbt/sdk/extras/android/m2repository/com/android/support/support-annotations/23.1.1/support-annotations-23.1.1-sources.jar</src>
     </module>
     <module organization="com.android.support" name="support-v4" revision="23.1.1" artifactType="jar" classifier="">
-      <doc>$ANDROID_HOME/extras/android/m2repository/com/android/support/support-v4/23.1.1/support-v4-23.1.1-javadoc.jar</doc>
-      <src>$ANDROID_HOME/extras/android/m2repository/com/android/support/support-v4/23.1.1/support-v4-23.1.1-sources.jar</src>
+      <doc>$ANDROID_HOME/sbt/sdk/extras/android/m2repository/com/android/support/support-v4/23.1.1/support-v4-23.1.1-javadoc.jar</doc>
+      <src>$ANDROID_HOME/sbt/sdk/extras/android/m2repository/com/android/support/support-v4/23.1.1/support-v4-23.1.1-sources.jar</src>
     </module>
     <module organization="com.hanhuy.android" name="iota_2.11" revision="1.0.4" artifactType="jar" classifier="">
       <jar>$IVY2/cache/com.hanhuy.android/iota_2.11/jars/iota_2.11-1.0.4.jar</jar>
