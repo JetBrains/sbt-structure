@@ -17,6 +17,7 @@ def newProject(projectName: String): Project =
     .settings(
       bintrayRepository := "sbt-plugins",
       bintrayOrganization := Some("jetbrains"),
+      bintrayVcsUrl := Some("https://github.com/jetbrains/sbt-structure"),
       bintrayCredentialsFile := file(".credentials")
     )
 
