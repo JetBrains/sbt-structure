@@ -58,6 +58,7 @@ lazy val extractor = newProject("extractor")
       specsArtifact(scalaVersion.value)
     ),
 
+    // used only for testing, see publishVersions for versions that are actually used to publish artifacts
     crossSbtVersions := Seq("0.13.0", "0.13.9", "0.13.13"),
 
     testSetup := {
@@ -100,13 +101,13 @@ lazy val sbtStructure = project.in(file(".")).aggregate(core, extractor)
 
 lazy val testSetup = taskKey[Unit]("Setup tests for extractor")
 
-val publishVersions = Seq("0.13.13", "1.0.0-M6")
+val publishSbtVersions = Seq("0.13.13", "1.0.0-RC2")
 val publishAllCommand =
   "; reload ; project core ; + publish ; project extractor " +
-    publishVersions.map(v => s"; reload ; ^^ $v publish ").mkString
+    publishSbtVersions.map(v => s"; reload ; ^^ $v publish ").mkString
 val publishAllLocalCommand =
   "; reload ; project core ; + publishLocal ; project extractor " +
-    publishVersions.map(v => s"; reload ; ^^ $v publishLocal ").mkString
+    publishSbtVersions.map(v => s"; reload ; ^^ $v publishLocal ").mkString
 
 // the ^ sbt-cross operator doesn't work that well for publishing, so we need to be more explicit about the command chain
 addCommandAlias("publishAll_012","; reload ; project core ; ++ 2.9.2 publish ; project extractor ; ^^ 0.12.4 publish")

@@ -85,7 +85,7 @@ object AndroidSdkPluginExtractor extends SbtStateOps with TaskOps  {
 
   def androidTask(state: State, projectRef: ProjectRef): Option[Task[Option[AndroidData]]] = {
     val keys = state.attributes.get(sbt.Keys.sessionSettings) match {
-      case Some(SessionSettings(_, _, settings, _, _, _)) => settings map { _.key }
+      case Some(sessionSettings) => sessionSettings.original map { _.key }
       case _ => Seq.empty
     }
 

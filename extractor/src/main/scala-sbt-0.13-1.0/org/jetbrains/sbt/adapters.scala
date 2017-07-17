@@ -15,7 +15,7 @@ case class LoadedBuildUnitAdapter(delegate: LoadedBuildUnit) {
 case class UpdateReportAdapter(configurationToModule: Map[String, Seq[ModuleReportAdapter]]) {
   def this(delegate: UpdateReport) {
     this(delegate.configurations.map { report =>
-      (report.configuration, report.modules.map(new ModuleReportAdapter(_)))
+      (configReportName(report), report.modules.map(new ModuleReportAdapter(_)))
     }.toMap)
   }
 

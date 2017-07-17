@@ -106,8 +106,8 @@ object UtilityTasks extends SbtStateOps {
     if (options.resolveJavadocs) {
       module
     } else {
-      val classifiersWithoutJavadocs = module.classifiers.filterNot(_ == Artifact.DocClassifier)
-      module.copy(classifiers = classifiersWithoutJavadocs)
+      val classifiersWithoutJavadocs = module.classifiers.filterNot(_ == Artifact.DocClassifier).toVector
+      module.withClassifiers(classifiersWithoutJavadocs)
     }
   }
 
