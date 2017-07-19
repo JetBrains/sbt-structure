@@ -17,8 +17,7 @@ def newProject(projectName: String): Project =
     .settings(
       bintrayRepository := "sbt-plugins",
       bintrayOrganization := Some("jetbrains"),
-      bintrayVcsUrl := Some("https://github.com/jetbrains/sbt-structure"),
-      bintrayCredentialsFile in Global := file(".credentials")
+      bintrayVcsUrl := Some("https://github.com/jetbrains/sbt-structure")
     )
 
 
@@ -86,10 +85,7 @@ lazy val extractor = newProject("extractor")
       val sbt013_100_shared = (sourceDirectory in Compile).value / "scala-sbt-0.13-1.0"
       partialVersion((sbtVersion in pluginCrossBuild).value) match {
         case Some((0,13)) => Seq(sbt013_100_shared)
-        case Some((1, 0)) => Seq(
-          sbt013_100_shared,
-          (sourceDirectory in Compile).value / "scala-sbt-1.0" // workaround for https://github.com/sbt/sbt/issues/3217
-        )
+        case Some((1, 0)) => Seq(sbt013_100_shared)
         case _ => Seq.empty[File]
       }
     }
