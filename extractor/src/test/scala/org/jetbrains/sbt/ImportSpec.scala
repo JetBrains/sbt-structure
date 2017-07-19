@@ -26,7 +26,7 @@ class ImportSpec extends Specification with XmlMatchers {
     equalExpectedOneIn("optional", onlyFor013)
     equalExpectedOneIn("play", onlyFor("0.13.9", "0.13.13"), options = "")
     equalExpectedOneIn("android-1.4", onlyFor("0.13.9") and ifAndroidDefined)
-    equalExpectedOneIn("android-1.6", onlyFor("0.13.9", "0.13.13") and ifAndroidDefined)
+    equalExpectedOneIn("android-1.6", onlyFor("0.13.13") and ifAndroidDefined)
     equalExpectedOneIn("android", onlyFor("0.13.0", "0.13.9") and ifAndroidDefined)
     equalExpectedOneIn("ide-settings", onlyFor("0.13.9", "0.13.13"))
     equalExpectedOneIn("sbt-idea", onlyFor013)
