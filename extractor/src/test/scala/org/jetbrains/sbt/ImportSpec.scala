@@ -25,11 +25,15 @@ class ImportSpec extends Specification with XmlMatchers {
     equalExpectedOneIn("classifiers", onlyFor013)
     equalExpectedOneIn("optional", onlyFor013)
     equalExpectedOneIn("play", onlyFor("0.13.9", "0.13.13"), options = "")
-    equalExpectedOneIn("android-1.6", onlyFor("0.13.13") and ifAndroidDefined)
     equalExpectedOneIn("ide-settings", onlyFor("0.13.9", "0.13.13"))
     equalExpectedOneIn("sbt-idea", onlyFor013)
     equalExpectedOneIn("custom-test-config", onlyFor("0.13.0", "0.13.13"))
+
+//    equalExpectedOneIn("android-1.4", onlyFor("0.13.9") and ifAndroidDefined)
+//    equalExpectedOneIn("android", onlyFor("0.13.0", "0.13.9") and ifAndroidDefined)
+//    equalExpectedOneIn("android-1.6", onlyFor("0.13.13") and ifAndroidDefined)
   }
+
 
   private val SbtVersion = System.getProperty("structure.sbtversion.short")
   private val SbtVersionFull = System.getProperty("structure.sbtversion.full")
