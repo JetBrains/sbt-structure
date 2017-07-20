@@ -67,8 +67,8 @@ class ImportSpec extends Specification with XmlMatchers {
     val expectedStr = getExpectedStr(testDataFile, base)
     val actualStr = Loader.load(
       base, options, SbtVersionFull, pluginFile = PluginFile,
-      sbtGlobalBase = sbtGlobalBase, sbtBootDir = sbtBootDir, sbtIvyHome = sbtIvyHome,
-      verbose = true)
+      sbtGlobalBase = sbtGlobalBase, sbtBootDir = sbtBootDir, sbtIvyHome = sbtIvyHome
+    )
 
     val actualXml = loadSanitizedXml(actualStr)
     val expectedXml = loadSanitizedXml(expectedStr)
