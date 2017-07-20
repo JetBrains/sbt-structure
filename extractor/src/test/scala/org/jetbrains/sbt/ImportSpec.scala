@@ -97,7 +97,7 @@ class ImportSpec extends Specification with XmlMatchers {
       dumpToFile(new File(base, "expected.txt"), expectedPretty)
       val errorMessage = "Objects are not equal, compare 'actual.txt' and 'expected.txt'"
 
-      formatErrorMessage(errorMessage, actualPretty, expectedPretty)
+      formatErrorMessage(errorMessage, expectedPretty, actualPretty)
     }
 
     (actual == expected) must beTrue.updateMessage(_ => onEqualsFail)
