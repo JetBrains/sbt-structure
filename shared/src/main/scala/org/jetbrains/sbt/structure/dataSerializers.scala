@@ -61,7 +61,7 @@ trait DataSerializers {
 
   import Helpers._
 
-  implicit val buildDataSerializer = new XmlSerializer[BuildData] {
+  implicit val buildDataSerializer: XmlSerializer[BuildData] = new XmlSerializer[BuildData] {
     override def serialize(what: BuildData): Elem =
       <build>
         {what.imports.map { it =>
@@ -84,7 +84,7 @@ trait DataSerializers {
     }
   }
 
-  implicit val configurationDataSerializer = new XmlSerializer[ConfigurationData] {
+  implicit val configurationDataSerializer: XmlSerializer[ConfigurationData] = new XmlSerializer[ConfigurationData] {
     override def serialize(what: ConfigurationData): Elem =
       <configuration id={what.id}>
         {what.sources.sortBy(it => (it.managed, it.file)).map { directory =>
@@ -117,7 +117,7 @@ trait DataSerializers {
     private def format(b: Boolean) = if (b) Some(Text("true")) else None
   }
 
-  implicit val javaDataSerializer = new XmlSerializer[JavaData] {
+  implicit val javaDataSerializer: XmlSerializer[JavaData] = new XmlSerializer[JavaData] {
     override def serialize(what: JavaData): Elem =
       <java>
         {what.home.toSeq.map { file =>
@@ -135,7 +135,7 @@ trait DataSerializers {
     }
   }
 
-  implicit val scalaDataSerializer = new XmlSerializer[ScalaData] {
+  implicit val scalaDataSerializer: XmlSerializer[ScalaData] = new XmlSerializer[ScalaData] {
     override def serialize(what: ScalaData): Elem =
       <scala>
         {Some(what.organization).filterNot(_ == DefaultScalaOrganization).toSeq.map { organization =>
@@ -159,7 +159,7 @@ trait DataSerializers {
     }
   }
 
-  implicit val projectDependencySerializer = new XmlSerializer[ProjectDependencyData] {
+  implicit val projectDependencySerializer: XmlSerializer[ProjectDependencyData] = new XmlSerializer[ProjectDependencyData] {
     override def serialize(what: ProjectDependencyData): Elem =
       <project configurations={what.configuration.mkString(";")}>{what.project}</project>
 
@@ -170,7 +170,7 @@ trait DataSerializers {
     }
   }
 
-  implicit val moduleIdentifierSerializer = new XmlSerializer[ModuleIdentifier] {
+  implicit val moduleIdentifierSerializer: XmlSerializer[ModuleIdentifier] = new XmlSerializer[ModuleIdentifier] {
     override def serialize(what: ModuleIdentifier): Elem =
         <module organization={what.organization}
                 name={what.name}
@@ -188,7 +188,7 @@ trait DataSerializers {
     }
   }
 
-  implicit val moduleDependencyDataSerializer = new XmlSerializer[ModuleDependencyData] {
+  implicit val moduleDependencyDataSerializer: XmlSerializer[ModuleDependencyData] = new XmlSerializer[ModuleDependencyData] {
     override def serialize(what: ModuleDependencyData): Elem = {
       val elem = what.id.serialize
       elem % Attribute("configurations", Text(what.configurations.mkString(";")), Null)
@@ -202,7 +202,7 @@ trait DataSerializers {
     }
   }
 
-  implicit val jarDependencyDataSerializer = new XmlSerializer[JarDependencyData] {
+  implicit val jarDependencyDataSerializer: XmlSerializer[JarDependencyData] = new XmlSerializer[JarDependencyData] {
     override def serialize(what: JarDependencyData): Elem =
       <jar configurations={what.configurations.mkString(";")}>{what.file.path}</jar>
 
@@ -213,7 +213,7 @@ trait DataSerializers {
     }
   }
 
-  implicit val dependencyDataSerializer = new XmlSerializer[DependencyData] {
+  implicit val dependencyDataSerializer: XmlSerializer[DependencyData] = new XmlSerializer[DependencyData] {
     override def serialize(what: DependencyData): Elem =
       <dependencies>
         {what.projects.sortBy(_.project).map(_.serialize)}
@@ -229,7 +229,7 @@ trait DataSerializers {
     }
   }
 
-  implicit val moduleDataSerializer = new XmlSerializer[ModuleData] {
+  implicit val moduleDataSerializer: XmlSerializer[ModuleData] = new XmlSerializer[ModuleData] {
     override def serialize(what: ModuleData): Elem = {
       val artifacts =
         what.binaries.toSeq.sorted.map(it => <jar>{it.path}</jar>) ++
@@ -247,7 +247,7 @@ trait DataSerializers {
       })
   }
 
-  implicit val repositoryDataSerializer = new XmlSerializer[RepositoryData] {
+  implicit val repositoryDataSerializer: XmlSerializer[RepositoryData] = new XmlSerializer[RepositoryData] {
     override def serialize(what: RepositoryData): Elem =
       <repository>
         {what.modules.sortBy(_.id.key).map(_.serialize)}
@@ -259,7 +259,7 @@ trait DataSerializers {
     }
   }
 
-  implicit val resolverDataSerializer = new XmlSerializer[ResolverData] {
+  implicit val resolverDataSerializer: XmlSerializer[ResolverData] = new XmlSerializer[ResolverData] {
     override def serialize(what: ResolverData): Elem = {
       val uri = new URI(what.root)
       <resolver name={what.name} root={canonUri(uri).toString}/>
@@ -273,7 +273,7 @@ trait DataSerializers {
     }
   }
 
-  implicit val settingDataSerializer = new XmlSerializer[SettingData] {
+  implicit val settingDataSerializer: XmlSerializer[SettingData] = new XmlSerializer[SettingData] {
     override def serialize(what: SettingData): Elem = {
       <setting>
         <label>{what.label}</label>
@@ -293,7 +293,7 @@ trait DataSerializers {
     }
   }
 
-  implicit val commandDataSerializer = new XmlSerializer[CommandData] {
+  implicit val commandDataSerializer: XmlSerializer[CommandData] = new XmlSerializer[CommandData] {
     override def serialize(what: CommandData): Elem = {
       <command>
         <name>{what.name}</name>
@@ -317,7 +317,7 @@ trait DataSerializers {
     }
   }
 
-  implicit val taskDataSerializer = new XmlSerializer[TaskData] {
+  implicit val taskDataSerializer: XmlSerializer[TaskData] = new XmlSerializer[TaskData] {
     override def serialize(what: TaskData): Elem = {
       <task>
         <label>{what.label}</label>
@@ -337,7 +337,7 @@ trait DataSerializers {
     }
   }
 
-  implicit val apkLibSerializer = new XmlSerializer[ApkLib] {
+  implicit val apkLibSerializer: XmlSerializer[ApkLib] = new XmlSerializer[ApkLib] {
     override def serialize(what: ApkLib): Elem =
       <apkLib name={what.name}>
         <manifest>{what.manifest.path}</manifest>
@@ -360,7 +360,7 @@ trait DataSerializers {
     }
   }
 
-  implicit val androidDataSerializer = new XmlSerializer[AndroidData] {
+  implicit val androidDataSerializer: XmlSerializer[AndroidData] = new XmlSerializer[AndroidData] {
     override def serialize(what: AndroidData): Elem =
       <android>
         <version>{what.targetVersion}</version>
@@ -395,7 +395,7 @@ trait DataSerializers {
     }
   }
 
-  implicit val play2DataSerializer = new XmlSerializer[Play2Data] {
+  implicit val play2DataSerializer: XmlSerializer[Play2Data] = new XmlSerializer[Play2Data] {
     override def serialize(what: Play2Data): Elem =
       <play2>
         {what.playVersion.toSeq.map(ver => <version>{ver}</version> )}
@@ -419,7 +419,7 @@ trait DataSerializers {
     }
   }
 
-  implicit val projectDataSerializer = new XmlSerializer[ProjectData] {
+  implicit val projectDataSerializer: XmlSerializer[ProjectData] = new XmlSerializer[ProjectData] {
     override def serialize(what: ProjectData): Elem =
       <project>
         <id>{what.id}</id>
@@ -478,7 +478,7 @@ trait DataSerializers {
     }
   }
 
-  implicit val structureDataSerializer = new XmlSerializer[StructureData] {
+  implicit val structureDataSerializer: XmlSerializer[StructureData] = new XmlSerializer[StructureData] {
     override def serialize(what: StructureData): Elem =
       <structure sbt={what.sbtVersion}>
         {what.projects.sortBy(_.base).map(project => project.serialize)}
