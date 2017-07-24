@@ -20,16 +20,16 @@ class BuildExtractorSpec extends Specification {
   }
 
   val stubImports = Seq("import foo.bar", "import bar.baz")
-  val stubPlugins = Seq("foo.jar").map(file)
+  val stubPlugins: Seq[File] = Seq("foo.jar").map(file)
 
   val stubLoadedBuildUnitAdapter = new LoadedBuildUnitAdapter(null) {
-    override def imports = stubImports
-    override def pluginsClasspath =
+    override def imports: Seq[String] = stubImports
+    override def pluginsClasspath: Seq[Attributed[File]] =
       stubPlugins.map(Attributed(_)(AttributeMap.empty))
   }
 
-  val stubDocs = Seq("foo-docs.jar").map(file)
-  val stubSources = Seq("bar-sources.jar").map(file)
+  val stubDocs: Seq[File] = Seq("foo-docs.jar").map(file)
+  val stubSources: Seq[File] = Seq("bar-sources.jar").map(file)
 
   def toModuleReportAdapter(artifactType: String)(file: File): ModuleReportAdapter = {
     val moduleId = ModuleID("example.com", file.getName, "SNAPSHOT")
@@ -38,7 +38,7 @@ class BuildExtractorSpec extends Specification {
   }
 
   val stubUpdateClassifiersReport = UpdateReportAdapter(Map(
-    Compile.name ->(
+    Compile.name -> (
       stubDocs.map(toModuleReportAdapter(Artifact.DocType)) ++
       stubSources.map(toModuleReportAdapter(Artifact.SourceType))
     )))

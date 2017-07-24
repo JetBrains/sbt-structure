@@ -93,7 +93,7 @@ class RepositoryExtractorSpec extends Specification {
       val actual = new RepositoryExtractor(
         projects = projects.init,
         updateReports = Map(
-          projects(0) -> UpdateReportAdapter(Map(
+          projects.head -> UpdateReportAdapter(Map(
             sbt.Compile.name -> Seq(
               ModuleReportAdapter(moduleId, Seq(
                 Artifact("foo") -> file("foo.jar"),
@@ -118,5 +118,5 @@ class RepositoryExtractorSpec extends Specification {
   def toIdentifier(moduleId: ModuleID): ModuleIdentifier =
     ModuleIdentifier(moduleId.organization, moduleId.name, moduleId.revision, Artifact.DefaultType, "")
 
-  val projects = Seq("project-1", "project-2").map(ProjectRef(file("/tmp/test-project"), _))
+  val projects: Seq[ProjectRef] = Seq("project-1", "project-2").map(ProjectRef(file("/tmp/test-project"), _))
 }

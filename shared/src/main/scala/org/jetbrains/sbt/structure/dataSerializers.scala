@@ -51,6 +51,15 @@ private object Helpers {
   implicit def string2RicherString(string: String): RicherString =
     new RicherString(string)
 
+  // sbt provides bad uris with spaces for local resolvers
+  // https://youtrack.jetbrains.com/issue/SCL-12292
+  def fixUri(path: String): URI = {
+    val filePrefix = "file:/"
+    if (path.startsWith("file:/"))
+      path.stripPrefix("file:/").file.toURI
+    else new URI(path)
+  }
+
   def canonUri(uri: URI): URI =
     (if (uri.getScheme == "file")
       new File(uri).getCanonicalFile.toURI
@@ -261,14 +270,14 @@ trait DataSerializers {
 
   implicit val resolverDataSerializer: XmlSerializer[ResolverData] = new XmlSerializer[ResolverData] {
     override def serialize(what: ResolverData): Elem = {
-      val uri = new URI(what.root)
+      val uri = fixUri(what.root)
       <resolver name={what.name} root={canonUri(uri).toString}/>
     }
 
     override def deserialize(what: Node): Either[Throwable,ResolverData] = {
       val name = (what \ "@name").text
       val root = (what \ "@root").text
-      val canonRoot = canonUri(new URI(root)).toString
+      val canonRoot = canonUri(root.uri).toString
       Right(ResolverData(name, canonRoot))
     }
   }
