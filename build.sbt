@@ -1,6 +1,5 @@
 import java.io.File
 
-import CrossBuildingPlugin.autoImport.sbtVersionSeries
 import CrossVersion.partialVersion
 import sbt.Keys.scalaVersion
 
@@ -45,12 +44,6 @@ lazy val core = newProject("core")
 lazy val extractor = newProject("extractor")
   .settings(
     sbtPlugin := true,
-
-    scalaVersion := (sbtVersionSeries.value match {
-      case Sbt012 => "2.9.2"
-      case Sbt013 => "2.10.6"
-      case Sbt1 => "2.12.2"
-    }),
 
     libraryDependencies ++= Seq(
       "com.googlecode.java-diff-utils" % "diffutils" % "1.2" % "test" withSources(),
