@@ -38,7 +38,7 @@ def xmlArtifact(scalaVersion: String) =
 lazy val core = newProject("core")
   .settings(
     libraryDependencies ++= xmlArtifact(scalaVersion.value),
-    crossScalaVersions := Seq("2.10.6", "2.11.9", "2.12.2")
+    crossScalaVersions := Seq("2.10.6", "2.11.9", "2.12.3")
   )
 
 lazy val extractor = newProject("extractor")
@@ -90,7 +90,7 @@ lazy val sbtStructure = project.in(file(".")).aggregate(core, extractor)
 
 lazy val testSetup = taskKey[Unit]("Setup tests for extractor")
 
-val publishSbtVersions = Seq("0.13.13", "1.0.0-RC2")
+val publishSbtVersions = Seq("0.13.16", "1.0.0-RC3")
 val publishAllCommand =
   "; reload ; project core ; + publish ; project extractor " +
     publishSbtVersions.map(v => s"; reload ; ^^ $v publish ").mkString
