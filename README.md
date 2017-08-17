@@ -10,6 +10,10 @@ Intellij Scala plugin in order to import arbitrary SBT projects into IDEA.
 
 - `sbt-structure-extractor` is SBT plugin that actually extracts information from SBT build
 
+## Problems?
+
+Please report any issues related to sbt-structure in IntelliJ on the [IntelliJ Scala YouTrack project]( https://youtrack.jetbrains.com/issues/SCL).
+
 ## Usage
 
 ### Core
@@ -17,10 +21,9 @@ Intellij Scala plugin in order to import arbitrary SBT projects into IDEA.
 Add to your `build.sbt`
 
 ```scala
-
 resolvers += Resolver.url("jb-bintray", url("http://dl.bintray.com/jetbrains/sbt-plugins"))(Resolver.ivyStylePatterns)
 
-libraryDependencies += "org.jetbrains" %% "sbt-structure-core" % "5.1.2" // or later version
+libraryDependencies += "org.jetbrains" %% "sbt-structure-core" % "<version>"
 ```
 
 Then run extractor or get XML of the structure any other way and deserialize it:
@@ -42,8 +45,7 @@ Extractor can be run as a regular sbt plugin, or loaded into the build during an
 The quickest way to try out the extractor is by adding it to your build in `project/plugins.sbt` as an sbt plugin:
 
 ```scala
-resolvers += Resolver.url("jb-structure-extractor-0.13", url(s"http://dl.bintray.com/jetbrains/sbt-plugins"))(sbt.Patterns(false,"[organisation]/[module]/scala_2.10/sbt_0.13/[revision]/[type]s/[artifact](-[classifier]).[ext]"))
-addSbtPlugin("org.jetbrains" % "sbt-structure-extractor-0-13" % "7.0.0-12-ga98ec5e")
+addSbtPlugin("org.jetbrains" % "sbt-structure-extracto" % "<version>")
 ```
 
 Then from the sbt shell run:
@@ -54,9 +56,11 @@ This will output the xml directly to the shell.
 
 To write the xml to a file, run:
 
-    */*:dumpStructureTo structure.xml prettyPrint download
+    set org.jetbrains.sbt.StrcutureKeys.sbtStructureOptions in Global := "prettyPrint download"
+    */*:dumpStructureTo structure.xml
     
-The `dumpStructure` task uses the settings described below, the `dumpStructureTo` task takes them as parameters instead.
+The `dumpStructure` task uses the settings described below, the `dumpStructureTo` task takes `sbtStructureFile` as parameter instead.
+
 
 #### Sideloading
 
@@ -72,8 +76,8 @@ Extractor is run in several steps:
 Here is an example of how to run extractor from SBT REPL:
 
 ```scala
-set SettingKey[Option[File]]("sbt-structure-output-file") in Global := Some(file("structure.xml"))
-set SettingKey[String]("sbt-structure-options") in Global := "prettyPrint download"
+set SettingKey[Option[File]]("sbtStructureOutputFile") in Global := Some(file("structure.xml"))
+set SettingKey[String]("sbtStructureOptions") in Global := "prettyPrint download"
 apply -cp <path-to-extractor-jar> org.jetbrains.sbt.CreateTasks
 */*:dump-structure
 ```
