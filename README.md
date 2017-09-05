@@ -1,18 +1,23 @@
-# sbt-structure
-
-[![Join the chat at https://gitter.im/JetBrains/sbt-structure](https://badges.gitter.im/JetBrains/sbt-structure.svg)](https://gitter.im/JetBrains/sbt-structure?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![official JetBrains project](http://jb.gg/badges/official.svg)](https://confluence.jetbrains.com/display/ALL/JetBrains+on+GitHub)
 
 [![Download](https://api.bintray.com/packages/jetbrains/sbt-plugins/sbt-structure-core/images/download.svg) ](https://bintray.com/jetbrains/sbt-plugins/sbt-structure-core/_latestVersion)
 [![Build Status](https://travis-ci.org/JetBrains/sbt-structure.svg)](https://travis-ci.org/JetBrains/sbt-structure)
 
-This plugin extracts the structure of an SBT build in XML format. It is used in
-Intellij Scala plugin in order to import arbitrary SBT projects into IDEA.
+[![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/JetBrains/intellij-scala)
 
-- `sbt-structure-extractor` is SBT plugin that actually extracts information from SBT build
+# sbt-structure
+
+This plugin extracts the structure of an sbt build in XML format. It is used in
+Intellij Scala plugin in order to import arbitrary sbt projects into IDEA.
 
 ## Problems?
 
 Please report any issues related to sbt-structure in IntelliJ on the [IntelliJ Scala YouTrack project]( https://youtrack.jetbrains.com/issues/SCL).
+
+## Project structure
+
+- `extractor` is an sbt plugin that actually extracts information from the sbt build
+- `core` is a shared library that is used by both `extractor` and the Intellij Scala plugin.
 
 ## Usage
 
@@ -73,7 +78,7 @@ Extractor is run in several steps:
 - Create necessary tasks by applying extractor's jar to your project
 - Run `dump-structure` task in `Global` scope
 
-Here is an example of how to run extractor from SBT REPL:
+Here is an example of how to run extractor from sbt REPL:
 
 ```scala
 set SettingKey[Option[File]]("sbtStructureOutputFile") in Global := Some(file("structure.xml"))
@@ -101,7 +106,7 @@ Available options to set in `sbt-structure-options`:
 
 - `resolveSbtClassifiers`
 
-  This option tells extractor to download sources and javadocs for SBT itself and plugins.
+  This option tells extractor to download sources and javadocs for sbt itself and plugins.
 
 - `prettyPrint`
 
@@ -109,11 +114,11 @@ Available options to set in `sbt-structure-options`:
 
 ## Development notes
 
-- Testing against all supported SBT versions can be done with `^ test` command
-- Testing against specific version of SBT, for example, 0.13.7: `^^ 0.13.7 test`
+- Testing against all supported sbt versions can be done with `^ test` command
+- Testing against specific version of sbt, for example, 0.13.7: `^^ 0.13.7 test`
 - Selected tests can be run with `testOnly` command, e.g. `^ testOnly -- -ex "project name"`
 
-To publish artifacts bump version in `build.sbt` and run in SBT REPL:
+To publish artifacts bump version in `build.sbt` and run in sbt REPL:
 
 ```scala
 project extractor
