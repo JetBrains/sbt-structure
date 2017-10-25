@@ -130,8 +130,8 @@ object ProjectExtractor extends SbtStateOps with TaskOps {
 
   def taskDef: Initialize[Task[Seq[ProjectData]]] = Def.taskDyn {
 
-    implicit val state = Keys.state.value
-    implicit val projectRef = sbt.Keys.thisProjectRef.value
+    implicit val state: State = Keys.state.value
+    implicit val projectRef: ProjectRef = sbt.Keys.thisProjectRef.value
 
     val basePackages =
       SettingKeys.ideBasePackages.in(projectRef).find(state)

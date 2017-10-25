@@ -90,7 +90,7 @@ lazy val sbtStructure = project.in(file(".")).aggregate(core, extractor)
 
 lazy val testSetup = taskKey[Unit]("Setup tests for extractor")
 
-val publishSbtVersions = Seq("0.13.16", "1.0.0")
+val publishSbtVersions = Seq("0.13.16", "1.0.2")
 val publishAllCommand =
   "; reload ; project core ; + publish ; project extractor " +
     publishSbtVersions.map(v => s"; reload ; ^^ $v publish ").mkString

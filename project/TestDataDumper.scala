@@ -5,6 +5,7 @@ import Keys._
 import sbt.plugins.JvmPlugin
 
 import scala.io.Source
+import scala.sys.process.Process
 import scala.util.Try
 
 
