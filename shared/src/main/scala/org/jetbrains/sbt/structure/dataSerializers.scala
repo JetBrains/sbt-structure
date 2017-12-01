@@ -55,8 +55,8 @@ private object Helpers {
   // https://youtrack.jetbrains.com/issue/SCL-12292
   def fixUri(path: String): URI = {
     val filePrefix = "file:/"
-    if (path.startsWith("file:/"))
-      path.stripPrefix("file:/").file.toURI
+    if (path.startsWith(filePrefix))
+      path.stripPrefix(filePrefix).file.toURI
     else new URI(path)
   }
 
