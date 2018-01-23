@@ -50,7 +50,7 @@ Extractor can be run as a regular sbt plugin, or loaded into the build during an
 The quickest way to try out the extractor is by adding it to your build in `project/plugins.sbt` as an sbt plugin:
 
 ```scala
-addSbtPlugin("org.jetbrains" % "sbt-structure-extracto" % "<version>")
+addSbtPlugin("org.jetbrains" % "sbt-structure-extractor" % "<version>")
 ```
 
 Then from the sbt shell run:
