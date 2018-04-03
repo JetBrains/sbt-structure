@@ -55,7 +55,7 @@ class ProjectExtractor(projectRef: ProjectRef,
           testConfigurations.flatMap(extractConfiguration(Test.name))
       )
     val projectData = ProjectData(
-      projectRef.id, projectRef.build, name, organization, version, base,
+      ExtractorUtils.extractId(projectRef), projectRef.build, name, organization, version, base,
       basePackages, target, build, configurations,
       extractJava, extractScala, android, dependencies, resolvers, play2,
       settingData, taskData, commandData)

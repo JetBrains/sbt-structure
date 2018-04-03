@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <structure sbt="0.13.9">
   <project>
-    <id>ideSettings</id>
+    <id>ideSettings:$URI_BASE</id>
     <buildURI>$URI_BASE</buildURI>
     <name>some-name</name>
     <organization>some-organization</organization>
@@ -1733,7 +1733,7 @@
     </command>
   </project>
   <project>
-    <id>projectToRedirectOutput</id>
+    <id>projectToRedirectOutput:$URI_BASE</id>
     <buildURI>$URI_BASE</buildURI>
     <name>projectToRedirectOutput</name>
     <organization>projecttoredirectoutput</organization>
