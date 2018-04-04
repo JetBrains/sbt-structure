@@ -43,7 +43,7 @@ class ProjectExtractor(projectRef: ProjectRef,
     }.toSet
     val configurations  =
       mergeConfigurations(sourceConfigurations.flatMap(extractConfiguration))
-    val projectData = ProjectData(projectRef.id, projectRef.build, name, organization, version, base,
+    val projectData = ProjectData(ExtractorUtils.extractId(projectRef), projectRef.build, name, organization, version, base,
       basePackages, target, build, configurations,
       extractJava, extractScala, android, dependencies, resolvers, play2,
       settings = Nil, // don't bother supporting this feature in sbt 0.12

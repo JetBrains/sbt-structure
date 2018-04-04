@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <structure sbt="0.13.0">
   <project>
-    <id>classifiers</id>
+    <id>classifiers:$URI_BASE</id>
     <buildURI>$URI_BASE</buildURI>
     <name>classifiers</name>
     <organization>default</organization>
@@ -1536,7 +1536,7 @@
     </command>
   </project>
   <project>
-    <id>bar</id>
+    <id>bar:$URI_BASE</id>
     <buildURI>$URI_BASE</buildURI>
     <name>bar</name>
     <organization>bar</organization>
@@ -3075,7 +3075,7 @@
     </command>
   </project>
   <project>
-    <id>foo</id>
+    <id>foo:$URI_BASE</id>
     <buildURI>$URI_BASE</buildURI>
     <name>foo</name>
     <organization>foo</organization>

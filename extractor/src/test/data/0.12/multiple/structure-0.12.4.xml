@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <structure sbt="0.12.4">
   <project>
-    <id>root</id>
+    <id>root:$URI_BASE</id>
     <buildURI>$URI_BASE</buildURI>
     <name>some-name</name>
     <organization>some-organization</organization>
@@ -121,7 +121,7 @@
     <resolver name="public" root="http://repo1.maven.org/maven2/"></resolver>
   </project>
   <project>
-    <id>bar</id>
+    <id>bar:$URI_BASE</id>
     <buildURI>$URI_BASE</buildURI>
     <name>bar</name>
     <organization>bar</organization>
@@ -240,7 +240,7 @@
     <resolver name="public" root="http://repo1.maven.org/maven2/"></resolver>
   </project>
   <project>
-    <id>foo</id>
+    <id>foo:$URI_BASE</id>
     <buildURI>$URI_BASE</buildURI>
     <name>foo</name>
     <organization>foo</organization>

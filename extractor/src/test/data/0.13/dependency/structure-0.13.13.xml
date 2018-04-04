@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <structure sbt="0.13.13">
   <project>
-    <id>dependency</id>
+    <id>dependency:$URI_BASE</id>
     <buildURI>$URI_BASE</buildURI>
     <name>some-name</name>
     <organization>some-organization</organization>

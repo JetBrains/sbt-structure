@@ -22,7 +22,7 @@ class DependenciesExtractorSpec extends Specification {
 
       val expected = DependencyData(
         projects = Seq(
-          ProjectDependencyData(projects(1).id, Seq(jb.Configuration.Compile))
+          ProjectDependencyData(ExtractorUtils.extractId(projects(1)), Seq(jb.Configuration.Compile))
         ),
         modules = Nil,
         jars = Nil)
@@ -46,7 +46,7 @@ class DependenciesExtractorSpec extends Specification {
 
       val expected = DependencyData(
         projects = Seq(
-          ProjectDependencyData(projects(1).id, Seq(jb.Configuration.Compile))
+          ProjectDependencyData(ExtractorUtils.extractId(projects(1)), Seq(jb.Configuration.Compile))
         ),
         modules = Nil,
         jars = Seq(
@@ -78,7 +78,7 @@ class DependenciesExtractorSpec extends Specification {
 
       val expected = DependencyData(
         projects = Seq(
-          ProjectDependencyData(projects(1).id, Seq(jb.Configuration.Compile))
+          ProjectDependencyData(ExtractorUtils.extractId(projects(1)), Seq(jb.Configuration.Compile))
         ),
         modules = Seq(
           ModuleDependencyData(toIdentifier(moduleId("foo")), Seq(jb.Configuration.Compile)),
@@ -110,7 +110,7 @@ class DependenciesExtractorSpec extends Specification {
 
       val expected = DependencyData(
         projects = Seq(
-          ProjectDependencyData(projects(1).id, Seq(jb.Configuration.Compile))
+          ProjectDependencyData(ExtractorUtils.extractId(projects(1)), Seq(jb.Configuration.Compile))
         ),
         modules = Seq(
           ModuleDependencyData(toIdentifier(moduleId("baz")), Seq(jb.Configuration.Test)),
@@ -144,7 +144,7 @@ class DependenciesExtractorSpec extends Specification {
       val expectedModules = Seq(toIdentifier(moduleId), toIdentifier(moduleId).copy(classifier = "tests"))
       val expected = DependencyData(
         projects = Seq(
-          ProjectDependencyData(projects(1).id, Seq(jb.Configuration.Compile))
+          ProjectDependencyData(ExtractorUtils.extractId(projects(1)), Seq(jb.Configuration.Compile))
         ),
         modules = expectedModules.map(it => ModuleDependencyData(it, Seq(jb.Configuration.Compile))),
         jars = Nil
@@ -173,7 +173,7 @@ class DependenciesExtractorSpec extends Specification {
 
       val expected = DependencyData(
         projects = Seq(
-          ProjectDependencyData(projects(1).id, Seq(jb.Configuration.Compile))
+          ProjectDependencyData(ExtractorUtils.extractId(projects(1)), Seq(jb.Configuration.Compile))
         ),
         modules = Seq(
           ModuleDependencyData(toIdentifier(moduleId), Seq(jb.Configuration.Compile))
@@ -203,7 +203,7 @@ class DependenciesExtractorSpec extends Specification {
 
       val expected = DependencyData(
         projects = Seq(
-          ProjectDependencyData(projects(1).id, Seq(jb.Configuration.Compile))
+          ProjectDependencyData(ExtractorUtils.extractId(projects(1)), Seq(jb.Configuration.Compile))
         ),
         modules = Seq(
           ModuleDependencyData(toIdentifier(moduleId), Seq(jb.Configuration.Provided))
