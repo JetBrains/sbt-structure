@@ -25,7 +25,7 @@ class DependenciesExtractor(projectRef: ProjectRef,
   private def projectDependencies: Seq[ProjectDependencyData] =
     buildDependencies.classpath.getOrElse(projectRef, Seq.empty).map { it =>
       val configurations = it.configuration.map(jb.Configuration.fromString).getOrElse(Seq.empty)
-      ProjectDependencyData(it.project.id, configurations)
+      ProjectDependencyData(it.project.id, it.project.build, configurations)
     }
 
   private def moduleDependencies: Seq[ModuleDependencyData] =

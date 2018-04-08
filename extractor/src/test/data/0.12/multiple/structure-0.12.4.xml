@@ -115,7 +115,7 @@
       <classes>$BASE/target/scala-2.10/test-classes</classes>
     </configuration>
     <dependencies>
-      <project configurations="">bar</project>
+      <project buildURI="$URI_BASE" configurations="">bar</project>
       <module classifier="" organization="org.scala-lang" artifactType="jar" name="scala-library" revision="2.10.1" configurations="compile"></module>
     </dependencies>
     <resolver name="public" root="http://repo1.maven.org/maven2/"></resolver>
