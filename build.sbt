@@ -78,7 +78,7 @@ lazy val extractor = newProject("extractor")
       val sbt013_100_shared = (sourceDirectory in Compile).value / "scala-sbt-0.13-1.0"
       partialVersion((sbtVersion in pluginCrossBuild).value) match {
         case Some((0,13)) => Seq(sbt013_100_shared)
-        case Some((1, 0)) => Seq(sbt013_100_shared)
+        case Some((1, _)) => Seq(sbt013_100_shared)
         case _ => Seq.empty[File]
       }
     }
@@ -90,7 +90,7 @@ lazy val sbtStructure = project.in(file(".")).aggregate(core, extractor)
 
 lazy val testSetup = taskKey[Unit]("Setup tests for extractor")
 
-val publishSbtVersions = Seq("0.13.16", "1.0.2")
+val publishSbtVersions = Seq("0.13.17", "1.1.5")
 val publishAllCommand =
   "; reload ; project core ; + publish ; project extractor " +
     publishSbtVersions.map(v => s"; reload ; ^^ $v publish ").mkString
