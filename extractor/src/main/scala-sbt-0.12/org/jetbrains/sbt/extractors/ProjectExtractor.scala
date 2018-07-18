@@ -54,7 +54,7 @@ class ProjectExtractor(projectRef: ProjectRef,
     android match {
       case None => Seq(projectData)
       case Some(a) =>
-        val deps = a.aars.map(aar => ProjectDependencyData(aar.name, null, Configuration.Compile :: Nil))
+        val deps = a.aars.map(aar => ProjectDependencyData(aar.name, None, Configuration.Compile :: Nil))
         // add aar module dependencies
         val updatedProject = projectData.copy(dependencies = dependencies.copy(projects = projectData.dependencies.projects ++ deps))
         updatedProject +: a.aars.map(_.project.copy(
