@@ -5,12 +5,6 @@ jdk:
 
 sudo: false
 
-# https://docs.travis-ci.com/user/languages/java/
-addons:
-  apt:
-    packages:
-      - oracle-java8-installer
-
 script:
     - sbt compile 'project extractor' '^ test'
 
