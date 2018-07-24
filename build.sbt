@@ -19,13 +19,6 @@ def newProject(projectName: String): Project =
       bintrayVcsUrl := Some("https://github.com/jetbrains/sbt-structure")
     )
 
-
-def specsArtifact(scalaVersion: String) =
-  partialVersion(scalaVersion) match {
-    case Some((2,9)) | Some((2,10)) => "org.specs2" %% "specs2" % "1.12.3" % "test"
-    case _ => "org.specs2" %% "specs2-core" % "3.8.9" % "test"
-  }
-
 def xmlArtifact(scalaVersion: String) =
   partialVersion(scalaVersion) match {
     // if scala 2.11+ is used, add dependency on scala-xml module
@@ -38,7 +31,7 @@ def xmlArtifact(scalaVersion: String) =
 lazy val core = newProject("core")
   .settings(
     libraryDependencies ++= xmlArtifact(scalaVersion.value),
-    crossScalaVersions := Seq("2.10.6", "2.11.9", "2.12.3")
+    crossScalaVersions := Seq("2.10.7", "2.11.12", "2.12.6")
   )
 
 lazy val extractor = newProject("extractor")
@@ -47,7 +40,8 @@ lazy val extractor = newProject("extractor")
 
     libraryDependencies ++= Seq(
       "com.googlecode.java-diff-utils" % "diffutils" % "1.2" % "test" withSources(),
-      specsArtifact(scalaVersion.value)
+      "org.specs2" %% "specs2-core" % "3.10.0" % "test",
+      "org.specs2" %% "specs2-matcher-extra" % "3.10.0" % "test"
     ),
 
     // used only for testing, see publishVersions for versions that are actually used to publish artifacts
@@ -90,7 +84,7 @@ lazy val sbtStructure = project.in(file(".")).aggregate(core, extractor)
 
 lazy val testSetup = taskKey[Unit]("Setup tests for extractor")
 
-val publishSbtVersions = Seq("0.13.17", "1.1.5")
+val publishSbtVersions = Seq("0.13.17", "1.1.6")
 val publishAllCommand =
   "; reload ; project core ; + publish ; project extractor " +
     publishSbtVersions.map(v => s"; reload ; ^^ $v publish ").mkString
@@ -99,7 +93,5 @@ val publishAllLocalCommand =
     publishSbtVersions.map(v => s"; reload ; ^^ $v publishLocal ").mkString
 
 // the ^ sbt-cross operator doesn't work that well for publishing, so we need to be more explicit about the command chain
-addCommandAlias("publishAll_012","; reload ; project core ; ++ 2.9.2 publish ; project extractor ; ^^ 0.12.4 publish")
-addCommandAlias("publishAllLocal_012", "; reload ; project core ; ++ 2.9.2 publishLocal ; project extractor ; ^^ 0.12.4 publishLocal")
 addCommandAlias("publishAll", publishAllCommand)
 addCommandAlias("publishAllLocal", publishAllLocalCommand)

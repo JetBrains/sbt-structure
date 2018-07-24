@@ -32,7 +32,7 @@ class dataSerializersSpec extends Specification {
 
       // it won't deserialize to exactly the same format because there's a URI encode step in there
       // we just ensure that the serialization works at all
-      assert(new URI(result.root).getScheme == "file")
+      new URI(result.root).getScheme must_== "file"
     }
   }
 

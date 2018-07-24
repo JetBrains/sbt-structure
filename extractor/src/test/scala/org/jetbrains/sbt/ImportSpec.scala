@@ -12,7 +12,7 @@ import scala.collection.JavaConverters._
 import scala.xml._
 import scala.xml.transform.{RewriteRule, RuleTransformer}
 
-class ImportSpec extends Specification with XmlMatchers {
+class ImportSpec extends Specification with XmlMatchers with FileMatchers {
 
   // TODO make it possible to run each of the tests separately
   "Actual structure" should {
@@ -83,7 +83,7 @@ class ImportSpec extends Specification with XmlMatchers {
     def formatErrorMessage(message: String, expected: String, actual: String): String =
       String.format("Project: %s %n%s %n%s", project, message, getDiff(expected, actual))
 
-    def onFail() = {
+    def onFail(): Unit = {
       dumpToFile(new File(base, structureFileName("-actual")), actualStr)
     }
 
