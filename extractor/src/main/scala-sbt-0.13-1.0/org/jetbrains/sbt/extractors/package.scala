@@ -13,6 +13,7 @@ package object extractors {
   val extractStructure: Def.Initialize[Task[StructureData]] = Def.task {
     StructureData(
       Keys.sbtVersion.value,
+      StructureKeys.extractBuilds.value,
       StructureKeys.extractProjects.value,
       StructureKeys.extractRepository.value,
       StructureKeys.localCachePath.value

@@ -32,6 +32,7 @@ object Configuration {
  * @param localCachePath Path to a place where Ivy downloads artifacts. Usually ~/.ivy2/cache
  */
 case class StructureData(sbtVersion: String,
+                         builds: Seq[BuildData],
                          projects: Seq[ProjectData],
                          repository: Option[RepositoryData],
                          localCachePath: Option[File])
@@ -49,7 +50,6 @@ case class ProjectData(id: String,
                        base: File,
                        basePackages: Seq[String],
                        target: File,
-                       build: BuildData,
                        configurations: Seq[ConfigurationData],
                        java: Option[JavaData],
                        scala: Option[ScalaData],
@@ -70,6 +70,7 @@ case class CommandData(name: String, help: Seq[(String,String)])
  * Information about build dependencies and implicit imports for proper editing of .sbt files
  */
 sealed abstract class BuildData extends Product {
+  val uri: URI
   val imports: Seq[String]
   val classes: Seq[File]
   val docs: Seq[File]
@@ -77,11 +78,12 @@ sealed abstract class BuildData extends Product {
 }
 // hack a case class with private constructor to ensure some invariants in constructions
 object BuildData {
-  private case class BuildDataImpl (imports: Seq[String], classes: Seq[File], docs: Seq[File], sources: Seq[File]) extends BuildData
+  private case class BuildDataImpl (uri: URI, imports: Seq[String], classes: Seq[File], docs: Seq[File], sources: Seq[File]) extends BuildData
   private def sort(files: Seq[File]): Seq[File] = files.sortBy(_.getCanonicalPath)
 
-  def apply(imports: Seq[String], classes: Seq[File], docs: Seq[File], sources: Seq[File]): BuildData =
+  def apply(uri: URI, imports: Seq[String], classes: Seq[File], docs: Seq[File], sources: Seq[File]): BuildData =
     BuildDataImpl(
+      uri.normalize(),
       imports.sorted,
       sort(classes),
       sort(docs),

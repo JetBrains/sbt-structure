@@ -73,6 +73,7 @@ trait DataSerializers {
   implicit val buildDataSerializer: XmlSerializer[BuildData] = new XmlSerializer[BuildData] {
     override def serialize(what: BuildData): Elem =
       <build>
+        {<uri>what.uri.toString</uri>}
         {what.imports.map { it =>
         <import>{it}</import>
       }}{what.classes.map(_.path).sorted.map { it =>
@@ -85,11 +86,12 @@ trait DataSerializers {
       </build>
 
     override def deserialize(what: Node): Either[Throwable,BuildData] = {
+      val uri     = (what \ "uri").map(_.text.uri).head
       val imports = (what \ "import").map(_.text)
       val classes = (what \ "classes").map(e => e.text.file)
       val docs    = (what \ "docs").map(e => e.text.file)
       val sources = (what \ "sources").map(e => e.text.file)
-      Right(BuildData(imports, classes, docs, sources))
+      Right(BuildData(uri, imports, classes, docs, sources))
     }
   }
 
@@ -446,7 +448,6 @@ trait DataSerializers {
         <base>{what.base.path}</base>
         {what.basePackages.map(name => <basePackage>{name}</basePackage>)}
         <target>{what.target.path}</target>
-        {what.build.serialize}
         {what.java.map(_.serialize).toSeq}
         {what.scala.map(_.serialize).toSeq}
         {what.android.map(_.serialize).toSeq}
@@ -480,23 +481,20 @@ trait DataSerializers {
       val tasks = (what \ "task").deserialize[TaskData]
       val commands = (what \ "command").deserialize[CommandData]
 
-      val tryBuildAndDeps = {
-        val build = (what \ "build").deserializeOne[BuildData]
-        val deps = (what \ "dependencies").deserializeOne[DependencyData]
-        build.fold(exc => Left(exc), b => deps.fold(exc => Left(exc), d => Right((b, d))))
+      val tryDeps = (what \ "dependencies").deserializeOne[DependencyData]
+      tryDeps.right.map { dependencies =>
+        ProjectData(id, buildURI, name, organization, version, base, basePackages,
+          target, configurations, java, scala, android,
+          dependencies, resolvers, play2, settings, tasks, commands)
       }
 
-      tryBuildAndDeps.fold(exc => Left(exc), { case(build, dependencies) =>
-        Right(ProjectData(id, buildURI, name, organization, version, base, basePackages,
-          target, build, configurations, java, scala, android,
-          dependencies, resolvers, play2, settings, tasks, commands))
-      })
     }
   }
 
   implicit val structureDataSerializer: XmlSerializer[StructureData] = new XmlSerializer[StructureData] {
     override def serialize(what: StructureData): Elem =
       <structure sbt={what.sbtVersion}>
+        {what.builds.sortBy(_.uri).map(_.serialize)}
         {what.projects.sortBy(_.base).map(project => project.serialize)}
         {what.repository.map(_.serialize).toSeq}
         {what.localCachePath.map(path => <localCachePath>{path.path}</localCachePath>).toSeq}
@@ -504,6 +502,7 @@ trait DataSerializers {
 
     override def deserialize(what: Node): Either[Throwable,StructureData] = {
       val sbtVersion = (what \ "@sbt").text
+      val builds = (what \ "build").deserialize[BuildData]
       val projects = (what \ "project").deserialize[ProjectData]
       val repository = (what \ "repository").deserialize[RepositoryData].headOption
       val localCachePath = (what \ "localCachePath").headOption.map(_.text.file)
@@ -511,7 +510,7 @@ trait DataSerializers {
       if (sbtVersion.isEmpty)
         Left(new Error("<structure> property 'sbt' is empty"))
       else
-        Right(StructureData(sbtVersion, projects, repository, localCachePath))
+        Right(StructureData(sbtVersion, builds, projects, repository, localCachePath))
     }
   }
 }

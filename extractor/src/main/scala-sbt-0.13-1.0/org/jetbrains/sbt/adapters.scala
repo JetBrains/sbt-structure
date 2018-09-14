@@ -5,6 +5,10 @@ import sbt.jetbrains.apiAdapter._
 
 
 case class LoadedBuildUnitAdapter(delegate: LoadedBuildUnit) {
+
+  def uri: URI =
+    delegate.unit.uri
+
   def imports: Seq[String] =
     delegate.imports
 

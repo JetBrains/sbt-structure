@@ -56,6 +56,26 @@ object UtilityTasks extends SbtStateOps {
     }
   }
 
+  /**
+    * The build needs to be extracted for only one project per build, as it is shared among subprojects.
+    */
+  lazy val extractBuilds = Def.taskDyn {
+    val state = Keys.state.value
+
+    val buildProjects = StructureKeys.acceptedProjects.value
+      .groupBy(_.build)
+      .values
+      .map(_.head)
+      .toSeq
+
+    Def.task {
+      StructureKeys.extractBuild
+        .forAllProjects(state, buildProjects)
+        .map(_.values.toSeq)
+        .value
+    }
+  }
+
   lazy val extractProjects: Def.Initialize[Task[Seq[ProjectData]]] = Def.taskDyn {
     val state = Keys.state.value
     val accepted = StructureKeys.acceptedProjects.value

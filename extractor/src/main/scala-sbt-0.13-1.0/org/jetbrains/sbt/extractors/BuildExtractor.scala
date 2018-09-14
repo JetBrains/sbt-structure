@@ -13,7 +13,7 @@ import sbt._
 class BuildExtractor(unit: LoadedBuildUnitAdapter, updateSbtClassifiers: Option[UpdateReportAdapter]) {
   private[extractors] def extract: BuildData = {
     val (docs, sources) = extractSbtClassifiers
-    BuildData(unit.imports, unit.pluginsClasspath.map(_.data), docs, sources)
+    BuildData(unit.uri, unit.imports, unit.pluginsClasspath.map(_.data), docs, sources)
   }
 
   private def extractSbtClassifiers: (Seq[File], Seq[File]) =

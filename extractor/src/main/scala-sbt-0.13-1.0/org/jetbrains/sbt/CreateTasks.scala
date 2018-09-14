@@ -15,6 +15,7 @@ object CreateTasks extends (State => State) with SbtStateOps {
     StructureKeys.dumpStructure := UtilityTasks.dumpStructure.value,
     StructureKeys.acceptedProjects := UtilityTasks.acceptedProjects.value,
     StructureKeys.extractProjects := UtilityTasks.extractProjects.value,
+    StructureKeys.extractBuilds := UtilityTasks.extractBuilds.value,
     StructureKeys.extractRepository := RepositoryExtractor.taskDef.value,
     StructureKeys.extractStructure := extractors.extractStructure.value,
     StructureKeys.localCachePath := UtilityTasks.localCachePath.value

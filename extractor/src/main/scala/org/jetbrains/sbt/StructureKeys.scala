@@ -17,6 +17,7 @@ object StructureKeys {
   val extractPlay2: TaskKey[Option[Play2Data]] = TaskKey("ssExtractPlay2", rank = Invisible)
   val extractAndroid: TaskKey[Option[AndroidData]] = TaskKey("ssExtractAndroid", rank = Invisible)
   val extractBuild: TaskKey[BuildData] = TaskKey("ssExtractBuild", rank = Invisible)
+  val extractBuilds: TaskKey[Seq[BuildData]] = TaskKey("ssExtractBuilds", rank = Invisible)
   val extractDependencies: TaskKey[DependencyData] = TaskKey("ssExtractDependencies", rank = Invisible)
   val extractProject: TaskKey[Seq[ProjectData]] = TaskKey("ssExtractProject", rank = Invisible)
   val extractProjects: TaskKey[Seq[ProjectData]] = TaskKey("ssExtractProjects", rank = Invisible)

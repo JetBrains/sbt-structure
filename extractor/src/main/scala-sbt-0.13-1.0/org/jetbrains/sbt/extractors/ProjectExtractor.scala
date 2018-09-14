@@ -34,7 +34,6 @@ class ProjectExtractor(projectRef: ProjectRef,
                        sourceConfigurations: Seq[sbt.Configuration],
                        testConfigurations: Seq[sbt.Configuration],
                        dependencies: DependencyData,
-                       build: BuildData,
                        android: Option[AndroidData],
                        play2: Option[Play2Data],
                        settingData: Seq[SettingData],
@@ -56,7 +55,7 @@ class ProjectExtractor(projectRef: ProjectRef,
       )
     val projectData = ProjectData(
       projectRef.id, projectRef.build, name, organization, version, base,
-      basePackages, target, build, configurations,
+      basePackages, target, configurations,
       extractJava, extractScala, android, dependencies, resolvers, play2,
       settingData, taskData, commandData)
 
@@ -69,7 +68,6 @@ class ProjectExtractor(projectRef: ProjectRef,
         updatedProject +: a.aars.map(_.project.copy(
           java         = projectData.java,
           scala        = projectData.scala,
-          build        = projectData.build,
           resolvers    = projectData.resolvers,
           dependencies = projectData.dependencies
         ))
@@ -186,7 +184,6 @@ object ProjectExtractor extends SbtStateOps with TaskOps {
         StructureKeys.sourceConfigurations.value,
         StructureKeys.testConfigurations.value,
         StructureKeys.extractDependencies.value,
-        StructureKeys.extractBuild.value,
         StructureKeys.extractAndroid.value,
         StructureKeys.extractPlay2.value,
         StructureKeys.settingData.value,

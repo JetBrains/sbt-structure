@@ -10,19 +10,20 @@ class BuildExtractorSpec extends Specification {
   "BuildExtractor" should {
     "always extract imports and plugins' files" in {
       val actual = new BuildExtractor(stubLoadedBuildUnitAdapter, None).extract
-      actual must beEqualTo(BuildData(stubImports, stubPlugins, Nil, Nil))
+      actual must beEqualTo(BuildData(stubURI, stubImports, stubPlugins, Nil, Nil))
     }
 
     "extract plugins sources and docs when supplied" in {
       val actual = new BuildExtractor(stubLoadedBuildUnitAdapter, Some(stubUpdateClassifiersReport)).extract
-      actual must beEqualTo(BuildData(stubImports, stubPlugins, stubDocs, stubSources))
+      actual must beEqualTo(BuildData(stubURI, stubImports, stubPlugins, stubDocs, stubSources))
     }
   }
 
-  val stubImports = Seq("import foo.bar", "import bar.baz")
+  val stubURI = new URI("stub")
+  val stubImports: Seq[String] = Seq("import foo.bar", "import bar.baz")
   val stubPlugins: Seq[File] = Seq("foo.jar").map(file)
 
-  val stubLoadedBuildUnitAdapter = new LoadedBuildUnitAdapter(null) {
+  val stubLoadedBuildUnitAdapter: LoadedBuildUnitAdapter = new LoadedBuildUnitAdapter(null) {
     override def imports: Seq[String] = stubImports
     override def pluginsClasspath: Seq[Attributed[File]] =
       stubPlugins.map(Attributed(_)(AttributeMap.empty))
