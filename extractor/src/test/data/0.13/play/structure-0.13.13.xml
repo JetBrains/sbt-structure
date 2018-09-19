@@ -1,5 +1,194 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <structure sbt="0.13.13">
+  <build>
+    <uri>$URI_BASE</uri>
+    <import>import _root_.com.typesafe.sbteclipse.plugin.EclipsePlugin._, _root_.org.sbtidea.SbtIdeaPlugin._, _root_.com.typesafe.sbt.SbtNativePackager._, MyBuild._</import>
+    <import>
+      import _root_.play.Play.autoImport._, _root_.play.twirl.sbt.SbtTwirl.autoImport._, _root_.com.typesafe.sbt.jse.SbtJsEngine.autoImport._, _root_.com.typesafe.sbt.jse.SbtJsTask.autoImport._, _root_.com.typesafe.sbt.web.SbtWeb.autoImport._, _root_.com.typesafe.sbt.webdriver.SbtWebDriver.autoImport._
+    </import>
+    <import>
+      import _root_.sbt.plugins.IvyPlugin, _root_.sbt.plugins.JvmPlugin, _root_.sbt.plugins.CorePlugin, _root_.sbt.plugins.JUnitXmlReportPlugin, _root_.sbt.plugins.Giter8TemplatePlugin, _root_.play.Play, _root_.play.PlayJava, _root_.play.PlayScala, _root_.play.twirl.sbt.SbtTwirl, _root_.com.typesafe.sbt.jse.SbtJsEngine, _root_.com.typesafe.sbt.jse.SbtJsTask, _root_.com.typesafe.sbt.web.SbtWeb, _root_.com.typesafe.sbt.webdriver.SbtWebDriver
+    </import>
+    <import>import sbt._, Keys._, dsl._</import>
+    <classes>$SBT_BOOT/scala-2.10.6/lib/jansi.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.6/lib/jline.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.6/lib/scala-compiler.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.6/lib/scala-library.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.6/lib/scala-reflect.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/actions-0.13.13.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/api-0.13.13.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/apply-macro-0.13.13.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/cache-0.13.13.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/classfile-0.13.13.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/classpath-0.13.13.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/collections-0.13.13.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/command-0.13.13.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/compile-0.13.13.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/compiler-integration-0.13.13.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/compiler-interface-0.13.13.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/compiler-ivy-integration-0.13.13.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/completion-0.13.13.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/control-0.13.13.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/cross-0.13.13.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/incremental-compiler-0.13.13.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/io-0.13.13.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/ivy-0.13.13.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/ivy-2.3.0-sbt-2cf13e211b2cb31f0d3b317289dca70eca3362f6.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/jansi-1.11.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/jawn-parser_2.10-0.6.0.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/jline-2.13.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/jsch-0.1.50.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/json4s-ast_2.10-3.2.10.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/json4s-core_2.10-3.2.10.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/json4s-support_2.10-0.6.0.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/launcher-interface-1.0.0-M1.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/logging-0.13.13.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/logic-0.13.13.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/main-0.13.13.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/main-settings-0.13.13.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/paranamer-2.6.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/persist-0.13.13.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/process-0.13.13.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/quasiquotes_2.10-2.0.1.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/relation-0.13.13.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/run-0.13.13.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/sbinary_2.10-0.4.2.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/sbt-0.13.13.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/scala-pickling_2.10-0.10.1.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/scala-reflect-2.10.6.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/serialization_2.10-0.1.2.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/task-system-0.13.13.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/tasks-0.13.13.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/template-resolver-0.1.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/test-agent-0.13.13.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/test-interface-1.0.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/testing-0.13.13.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/tracking-0.13.13.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/xsbti/interface-0.13.13.jar</classes>
+    <classes>$IVY2/cache/aopalliance/aopalliance/jars/aopalliance-1.0.jar</classes>
+    <classes>$IVY2/cache/com.fasterxml.jackson.core/jackson-annotations/bundles/jackson-annotations-2.3.0.jar</classes>
+    <classes>$IVY2/cache/com.fasterxml.jackson.core/jackson-core/bundles/jackson-core-2.3.3.jar</classes>
+    <classes>$IVY2/cache/com.fasterxml.jackson.core/jackson-databind/bundles/jackson-databind-2.3.3.jar</classes>
+    <classes>$IVY2/cache/com.google.guava/guava/bundles/guava-16.0.1.jar</classes>
+    <classes>$IVY2/cache/com.google.javascript/closure-compiler/jars/closure-compiler-v20130603.jar</classes>
+    <classes>$IVY2/cache/com.google.protobuf/protobuf-java/bundles/protobuf-java-2.5.0.jar</classes>
+    <classes>$IVY2/cache/com.h2database/h2/jars/h2-1.3.175.jar</classes>
+    <classes>$IVY2/cache/com.typesafe.akka/akka-actor_2.10/jars/akka-actor_2.10-2.3.2.jar</classes>
+    <classes>$IVY2/cache/com.typesafe.akka/akka-cluster_2.10/jars/akka-cluster_2.10-2.3.2.jar</classes>
+    <classes>$IVY2/cache/com.typesafe.akka/akka-contrib_2.10/jars/akka-contrib_2.10-2.3.2.jar</classes>
+    <classes>$IVY2/cache/com.typesafe.akka/akka-persistence-experimental_2.10/jars/akka-persistence-experimental_2.10-2.3.2.jar</classes>
+    <classes>$IVY2/cache/com.typesafe.akka/akka-remote_2.10/jars/akka-remote_2.10-2.3.2.jar</classes>
+    <classes>$IVY2/cache/com.typesafe.play/build-link/jars/build-link-2.3.7.jar</classes>
+    <classes>$IVY2/cache/com.typesafe.play/play-exceptions/jars/play-exceptions-2.3.7.jar</classes>
+    <classes>$IVY2/cache/com.typesafe.play/routes-compiler_2.10/jars/routes-compiler_2.10-2.3.7.jar</classes>
+    <classes>$IVY2/cache/com.typesafe.play/sbt-run-support_2.10/jars/sbt-run-support_2.10-2.3.7.jar</classes>
+    <classes>$IVY2/cache/com.typesafe.play/twirl-api_2.10/jars/twirl-api_2.10-1.0.2.jar</classes>
+    <classes>$IVY2/cache/com.typesafe.play/twirl-compiler_2.10/jars/twirl-compiler_2.10-1.0.2.jar</classes>
+    <classes>$IVY2/cache/com.typesafe.play/twirl-parser_2.10/jars/twirl-parser_2.10-1.0.2.jar</classes>
+    <classes>$IVY2/cache/com.typesafe/config/bundles/config-1.2.1.jar</classes>
+    <classes>$IVY2/cache/com.typesafe/jse_2.10/jars/jse_2.10-1.0.0.jar</classes>
+    <classes>$IVY2/cache/com.typesafe/npm_2.10/jars/npm_2.10-1.0.0.jar</classes>
+    <classes>$IVY2/cache/com.typesafe/webdriver_2.10/jars/webdriver_2.10-1.0.0.jar</classes>
+    <classes>$IVY2/cache/commons-codec/commons-codec/jars/commons-codec-1.9.jar</classes>
+    <classes>$IVY2/cache/commons-collections/commons-collections/jars/commons-collections-3.2.1.jar</classes>
+    <classes>$IVY2/cache/commons-io/commons-io/jars/commons-io-2.4.jar</classes>
+    <classes>$IVY2/cache/commons-logging/commons-logging/jars/commons-logging-1.1.3.jar</classes>
+    <classes>$IVY2/cache/io.apigee.trireme/trireme-core/jars/trireme-core-0.7.5.jar</classes>
+    <classes>$IVY2/cache/io.apigee.trireme/trireme-node10src/jars/trireme-node10src-0.7.5.jar</classes>
+    <classes>$IVY2/cache/io.netty/netty/bundles/netty-3.8.0.Final.jar</classes>
+    <classes>$IVY2/cache/io.spray/spray-can/bundles/spray-can-1.3.1.jar</classes>
+    <classes>$IVY2/cache/io.spray/spray-client/bundles/spray-client-1.3.1.jar</classes>
+    <classes>$IVY2/cache/io.spray/spray-http/bundles/spray-http-1.3.1.jar</classes>
+    <classes>$IVY2/cache/io.spray/spray-httpx/bundles/spray-httpx-1.3.1.jar</classes>
+    <classes>$IVY2/cache/io.spray/spray-io/bundles/spray-io-1.3.1.jar</classes>
+    <classes>$IVY2/cache/io.spray/spray-json_2.10/bundles/spray-json_2.10-1.2.6.jar</classes>
+    <classes>$IVY2/cache/io.spray/spray-util/bundles/spray-util-1.3.1.jar</classes>
+    <classes>$IVY2/cache/javax.annotation/jsr250-api/jars/jsr250-api-1.0.jar</classes>
+    <classes>$IVY2/cache/javax.enterprise/cdi-api/jars/cdi-api-1.0.jar</classes>
+    <classes>$IVY2/cache/javax.inject/javax.inject/jars/javax.inject-1.jar</classes>
+    <classes>$IVY2/cache/net.contentobjects.jnotify/jnotify/jars/jnotify-0.94.jar</classes>
+    <classes>$IVY2/cache/net.sourceforge.cssparser/cssparser/jars/cssparser-0.9.13.jar</classes>
+    <classes>$IVY2/cache/net.sourceforge.htmlunit/htmlunit-core-js/jars/htmlunit-core-js-2.14.jar</classes>
+    <classes>$IVY2/cache/net.sourceforge.htmlunit/htmlunit/jars/htmlunit-2.14.jar</classes>
+    <classes>$IVY2/cache/net.sourceforge.nekohtml/nekohtml/jars/nekohtml-1.9.20.jar</classes>
+    <classes>$IVY2/cache/org.apache.ant/ant-launcher/jars/ant-launcher-1.9.3.jar</classes>
+    <classes>$IVY2/cache/org.apache.ant/ant/jars/ant-1.9.3.jar</classes>
+    <classes>$IVY2/cache/org.apache.commons/commons-compress/jars/commons-compress-1.7.jar</classes>
+    <classes>$IVY2/cache/org.apache.commons/commons-lang3/jars/commons-lang3-3.2.1.jar</classes>
+    <classes>$IVY2/cache/org.apache.httpcomponents/httpclient/jars/httpclient-4.3.2.jar</classes>
+    <classes>$IVY2/cache/org.apache.httpcomponents/httpcore/jars/httpcore-4.3.1.jar</classes>
+    <classes>$IVY2/cache/org.apache.httpcomponents/httpmime/jars/httpmime-4.3.2.jar</classes>
+    <classes>$IVY2/cache/org.apache.maven/maven-aether-provider/jars/maven-aether-provider-3.2.2.jar</classes>
+    <classes>$IVY2/cache/org.apache.maven/maven-artifact/jars/maven-artifact-3.2.2.jar</classes>
+    <classes>$IVY2/cache/org.apache.maven/maven-core/jars/maven-core-3.2.2.jar</classes>
+    <classes>$IVY2/cache/org.apache.maven/maven-model-builder/jars/maven-model-builder-3.2.2.jar</classes>
+    <classes>$IVY2/cache/org.apache.maven/maven-model/jars/maven-model-3.2.2.jar</classes>
+    <classes>$IVY2/cache/org.apache.maven/maven-plugin-api/jars/maven-plugin-api-3.2.2.jar</classes>
+    <classes>$IVY2/cache/org.apache.maven/maven-repository-metadata/jars/maven-repository-metadata-3.2.2.jar</classes>
+    <classes>$IVY2/cache/org.apache.maven/maven-settings-builder/jars/maven-settings-builder-3.2.2.jar</classes>
+    <classes>$IVY2/cache/org.apache.maven/maven-settings/jars/maven-settings-3.2.2.jar</classes>
+    <classes>$IVY2/cache/org.avaje.ebeanorm/avaje-ebeanorm-agent/jars/avaje-ebeanorm-agent-3.2.2.jar</classes>
+    <classes>$IVY2/cache/org.bouncycastle/bcpg-jdk15on/jars/bcpg-jdk15on-1.51.jar</classes>
+    <classes>$IVY2/cache/org.bouncycastle/bcprov-jdk15on/jars/bcprov-jdk15on-1.51.jar</classes>
+    <classes>$IVY2/cache/org.codehaus.plexus/plexus-classworlds/bundles/plexus-classworlds-2.5.1.jar</classes>
+    <classes>$IVY2/cache/org.codehaus.plexus/plexus-component-annotations/jars/plexus-component-annotations-1.5.5.jar</classes>
+    <classes>$IVY2/cache/org.codehaus.plexus/plexus-interpolation/jars/plexus-interpolation-1.19.jar</classes>
+    <classes>$IVY2/cache/org.codehaus.plexus/plexus-utils/jars/plexus-utils-3.0.17.jar</classes>
+    <classes>$IVY2/cache/org.eclipse.aether/aether-api/jars/aether-api-0.9.0.M2.jar</classes>
+    <classes>$IVY2/cache/org.eclipse.aether/aether-impl/jars/aether-impl-0.9.0.M2.jar</classes>
+    <classes>$IVY2/cache/org.eclipse.aether/aether-spi/jars/aether-spi-0.9.0.M2.jar</classes>
+    <classes>$IVY2/cache/org.eclipse.aether/aether-util/jars/aether-util-0.9.0.M2.jar</classes>
+    <classes>$IVY2/cache/org.eclipse.jetty/jetty-http/jars/jetty-http-8.1.14.v20131031.jar</classes>
+    <classes>$IVY2/cache/org.eclipse.jetty/jetty-io/jars/jetty-io-8.1.14.v20131031.jar</classes>
+    <classes>$IVY2/cache/org.eclipse.jetty/jetty-util/jars/jetty-util-8.1.14.v20131031.jar</classes>
+    <classes>$IVY2/cache/org.eclipse.jetty/jetty-websocket/jars/jetty-websocket-8.1.14.v20131031.jar</classes>
+    <classes>$IVY2/cache/org.eclipse.sisu/org.eclipse.sisu.inject/eclipse-plugins/org.eclipse.sisu.inject-0.0.0.M5.jar</classes>
+    <classes>$IVY2/cache/org.eclipse.sisu/org.eclipse.sisu.plexus/eclipse-plugins/org.eclipse.sisu.plexus-0.0.0.M5.jar</classes>
+    <classes>$IVY2/cache/org.fusesource.hawtjni/hawtjni-runtime/jars/hawtjni-runtime-1.8.jar</classes>
+    <classes>$IVY2/cache/org.fusesource.leveldbjni/leveldbjni-all/bundles/leveldbjni-all-1.7.jar</classes>
+    <classes>$IVY2/cache/org.fusesource.leveldbjni/leveldbjni-linux32/jars/leveldbjni-linux32-1.5.jar</classes>
+    <classes>$IVY2/cache/org.fusesource.leveldbjni/leveldbjni-linux64/jars/leveldbjni-linux64-1.5.jar</classes>
+    <classes>$IVY2/cache/org.fusesource.leveldbjni/leveldbjni-osx/jars/leveldbjni-osx-1.5.jar</classes>
+    <classes>$IVY2/cache/org.fusesource.leveldbjni/leveldbjni-win32/jars/leveldbjni-win32-1.5.jar</classes>
+    <classes>$IVY2/cache/org.fusesource.leveldbjni/leveldbjni-win64/jars/leveldbjni-win64-1.5.jar</classes>
+    <classes>$IVY2/cache/org.fusesource.leveldbjni/leveldbjni/jars/leveldbjni-1.7.jar</classes>
+    <classes>$IVY2/cache/org.iq80.leveldb/leveldb-api/jars/leveldb-api-0.5.jar</classes>
+    <classes>$IVY2/cache/org.iq80.leveldb/leveldb/jars/leveldb-0.5.jar</classes>
+    <classes>$IVY2/cache/org.javassist/javassist/bundles/javassist-3.18.2-GA.jar</classes>
+    <classes>$IVY2/cache/org.json/json/jars/json-20090211.jar</classes>
+    <classes>$IVY2/cache/org.jvnet.mimepull/mimepull/jars/mimepull-1.9.4.jar</classes>
+    <classes>$IVY2/cache/org.mozilla/rhino/jars/rhino-1.7R4.jar</classes>
+    <classes>$IVY2/cache/org.parboiled/parboiled-core/bundles/parboiled-core-1.1.6.jar</classes>
+    <classes>$IVY2/cache/org.parboiled/parboiled-scala_2.10/bundles/parboiled-scala_2.10-1.1.6.jar</classes>
+    <classes>$IVY2/cache/org.scala-sbt/control/jars/control-0.13.5.jar</classes>
+    <classes>$IVY2/cache/org.scala-sbt/io/jars/io-0.13.5.jar</classes>
+    <classes>$IVY2/cache/org.scalaz/scalaz-core_2.10/bundles/scalaz-core_2.10-7.0.2.jar</classes>
+    <classes>$IVY2/cache/org.scalaz/scalaz-effect_2.10/bundles/scalaz-effect_2.10-7.0.2.jar</classes>
+    <classes>$IVY2/cache/org.slf4j/slf4j-api/jars/slf4j-api-1.7.7.jar</classes>
+    <classes>$IVY2/cache/org.slf4j/slf4j-simple/jars/slf4j-simple-1.7.7.jar</classes>
+    <classes>$IVY2/cache/org.sonatype.plexus/plexus-cipher/jars/plexus-cipher-1.4.jar</classes>
+    <classes>$IVY2/cache/org.sonatype.plexus/plexus-sec-dispatcher/jars/plexus-sec-dispatcher-1.3.jar</classes>
+    <classes>$IVY2/cache/org.sonatype.sisu/sisu-guice/jars/sisu-guice-3.1.0-no_aop.jar</classes>
+    <classes>$IVY2/cache/org.tukaani/xz/jars/xz-1.4.jar</classes>
+    <classes>$IVY2/cache/org.uncommons.maths/uncommons-maths/jars/uncommons-maths-1.2.2a.jar</classes>
+    <classes>$IVY2/cache/org.vafer/jdeb/jars/jdeb-1.3.jar</classes>
+    <classes>$IVY2/cache/org.w3c.css/sac/jars/sac-1.3.jar</classes>
+    <classes>$IVY2/cache/org.webjars/npm/jars/npm-1.3.26.jar</classes>
+    <classes>$IVY2/cache/org.webjars/webjars-locator/jars/webjars-locator-0.14.jar</classes>
+    <classes>$IVY2/cache/scala_2.10/sbt_0.13/com.github.mpeltonen/sbt-idea/jars/sbt-idea-1.5.1.jar</classes>
+    <classes>$IVY2/cache/scala_2.10/sbt_0.13/com.typesafe.play/sbt-plugin/jars/sbt-plugin-2.3.7.jar</classes>
+    <classes>$IVY2/cache/scala_2.10/sbt_0.13/com.typesafe.sbt/sbt-js-engine/jars/sbt-js-engine-1.0.1.jar</classes>
+    <classes>$IVY2/cache/scala_2.10/sbt_0.13/com.typesafe.sbt/sbt-native-packager/jars/sbt-native-packager-0.7.4.jar</classes>
+    <classes>$IVY2/cache/scala_2.10/sbt_0.13/com.typesafe.sbt/sbt-twirl/jars/sbt-twirl-1.0.2.jar</classes>
+    <classes>$IVY2/cache/scala_2.10/sbt_0.13/com.typesafe.sbt/sbt-web/jars/sbt-web-1.0.2.jar</classes>
+    <classes>$IVY2/cache/scala_2.10/sbt_0.13/com.typesafe.sbt/sbt-webdriver/jars/sbt-webdriver-1.0.0.jar</classes>
+    <classes>$IVY2/cache/scala_2.10/sbt_0.13/com.typesafe.sbteclipse/sbteclipse-core/jars/sbteclipse-core-2.4.0.jar</classes>
+    <classes>$IVY2/cache/scala_2.10/sbt_0.13/com.typesafe.sbteclipse/sbteclipse-plugin/jars/sbteclipse-plugin-2.4.0.jar</classes>
+    <classes>$IVY2/cache/xalan/serializer/jars/serializer-2.7.1.jar</classes>
+    <classes>$IVY2/cache/xalan/xalan/jars/xalan-2.7.1.jar</classes>
+    <classes>$IVY2/cache/xerces/xercesImpl/jars/xercesImpl-2.11.0.jar</classes>
+    <classes>$IVY2/cache/xml-apis/xml-apis/jars/xml-apis-1.4.01.jar</classes>
+  </build>
   <project>
     <id>root</id>
     <buildURI>$URI_BASE</buildURI>
@@ -8,194 +197,6 @@
     <version>1.0.0-SNAPSHOT</version>
     <base>$BASE</base>
     <target>$BASE/target</target>
-    <build>
-      <import>import _root_.com.typesafe.sbteclipse.plugin.EclipsePlugin._, _root_.org.sbtidea.SbtIdeaPlugin._, _root_.com.typesafe.sbt.SbtNativePackager._, MyBuild._</import>
-      <import>
-        import _root_.play.Play.autoImport._, _root_.play.twirl.sbt.SbtTwirl.autoImport._, _root_.com.typesafe.sbt.jse.SbtJsEngine.autoImport._, _root_.com.typesafe.sbt.jse.SbtJsTask.autoImport._, _root_.com.typesafe.sbt.web.SbtWeb.autoImport._, _root_.com.typesafe.sbt.webdriver.SbtWebDriver.autoImport._
-      </import>
-      <import>
-        import _root_.sbt.plugins.IvyPlugin, _root_.sbt.plugins.JvmPlugin, _root_.sbt.plugins.CorePlugin, _root_.sbt.plugins.JUnitXmlReportPlugin, _root_.sbt.plugins.Giter8TemplatePlugin, _root_.play.Play, _root_.play.PlayJava, _root_.play.PlayScala, _root_.play.twirl.sbt.SbtTwirl, _root_.com.typesafe.sbt.jse.SbtJsEngine, _root_.com.typesafe.sbt.jse.SbtJsTask, _root_.com.typesafe.sbt.web.SbtWeb, _root_.com.typesafe.sbt.webdriver.SbtWebDriver
-      </import>
-      <import>import sbt._, Keys._, dsl._</import>
-      <classes>$SBT_BOOT/scala-2.10.6/lib/jansi.jar</classes>
-      <classes>$SBT_BOOT/scala-2.10.6/lib/jline.jar</classes>
-      <classes>$SBT_BOOT/scala-2.10.6/lib/scala-compiler.jar</classes>
-      <classes>$SBT_BOOT/scala-2.10.6/lib/scala-library.jar</classes>
-      <classes>$SBT_BOOT/scala-2.10.6/lib/scala-reflect.jar</classes>
-      <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/actions-0.13.13.jar</classes>
-      <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/api-0.13.13.jar</classes>
-      <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/apply-macro-0.13.13.jar</classes>
-      <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/cache-0.13.13.jar</classes>
-      <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/classfile-0.13.13.jar</classes>
-      <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/classpath-0.13.13.jar</classes>
-      <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/collections-0.13.13.jar</classes>
-      <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/command-0.13.13.jar</classes>
-      <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/compile-0.13.13.jar</classes>
-      <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/compiler-integration-0.13.13.jar</classes>
-      <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/compiler-interface-0.13.13.jar</classes>
-      <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/compiler-ivy-integration-0.13.13.jar</classes>
-      <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/completion-0.13.13.jar</classes>
-      <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/control-0.13.13.jar</classes>
-      <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/cross-0.13.13.jar</classes>
-      <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/incremental-compiler-0.13.13.jar</classes>
-      <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/io-0.13.13.jar</classes>
-      <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/ivy-0.13.13.jar</classes>
-      <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/ivy-2.3.0-sbt-2cf13e211b2cb31f0d3b317289dca70eca3362f6.jar</classes>
-      <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/jansi-1.11.jar</classes>
-      <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/jawn-parser_2.10-0.6.0.jar</classes>
-      <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/jline-2.13.jar</classes>
-      <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/jsch-0.1.50.jar</classes>
-      <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/json4s-ast_2.10-3.2.10.jar</classes>
-      <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/json4s-core_2.10-3.2.10.jar</classes>
-      <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/json4s-support_2.10-0.6.0.jar</classes>
-      <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/launcher-interface-1.0.0-M1.jar</classes>
-      <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/logging-0.13.13.jar</classes>
-      <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/logic-0.13.13.jar</classes>
-      <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/main-0.13.13.jar</classes>
-      <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/main-settings-0.13.13.jar</classes>
-      <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/paranamer-2.6.jar</classes>
-      <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/persist-0.13.13.jar</classes>
-      <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/process-0.13.13.jar</classes>
-      <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/quasiquotes_2.10-2.0.1.jar</classes>
-      <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/relation-0.13.13.jar</classes>
-      <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/run-0.13.13.jar</classes>
-      <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/sbinary_2.10-0.4.2.jar</classes>
-      <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/sbt-0.13.13.jar</classes>
-      <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/scala-pickling_2.10-0.10.1.jar</classes>
-      <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/scala-reflect-2.10.6.jar</classes>
-      <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/serialization_2.10-0.1.2.jar</classes>
-      <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/task-system-0.13.13.jar</classes>
-      <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/tasks-0.13.13.jar</classes>
-      <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/template-resolver-0.1.jar</classes>
-      <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/test-agent-0.13.13.jar</classes>
-      <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/test-interface-1.0.jar</classes>
-      <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/testing-0.13.13.jar</classes>
-      <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/tracking-0.13.13.jar</classes>
-      <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/xsbti/interface-0.13.13.jar</classes>
-      <classes>$IVY2/cache/aopalliance/aopalliance/jars/aopalliance-1.0.jar</classes>
-      <classes>$IVY2/cache/com.fasterxml.jackson.core/jackson-annotations/bundles/jackson-annotations-2.3.0.jar</classes>
-      <classes>$IVY2/cache/com.fasterxml.jackson.core/jackson-core/bundles/jackson-core-2.3.3.jar</classes>
-      <classes>$IVY2/cache/com.fasterxml.jackson.core/jackson-databind/bundles/jackson-databind-2.3.3.jar</classes>
-      <classes>$IVY2/cache/com.google.guava/guava/bundles/guava-16.0.1.jar</classes>
-      <classes>$IVY2/cache/com.google.javascript/closure-compiler/jars/closure-compiler-v20130603.jar</classes>
-      <classes>$IVY2/cache/com.google.protobuf/protobuf-java/bundles/protobuf-java-2.5.0.jar</classes>
-      <classes>$IVY2/cache/com.h2database/h2/jars/h2-1.3.175.jar</classes>
-      <classes>$IVY2/cache/com.typesafe.akka/akka-actor_2.10/jars/akka-actor_2.10-2.3.2.jar</classes>
-      <classes>$IVY2/cache/com.typesafe.akka/akka-cluster_2.10/jars/akka-cluster_2.10-2.3.2.jar</classes>
-      <classes>$IVY2/cache/com.typesafe.akka/akka-contrib_2.10/jars/akka-contrib_2.10-2.3.2.jar</classes>
-      <classes>$IVY2/cache/com.typesafe.akka/akka-persistence-experimental_2.10/jars/akka-persistence-experimental_2.10-2.3.2.jar</classes>
-      <classes>$IVY2/cache/com.typesafe.akka/akka-remote_2.10/jars/akka-remote_2.10-2.3.2.jar</classes>
-      <classes>$IVY2/cache/com.typesafe.play/build-link/jars/build-link-2.3.7.jar</classes>
-      <classes>$IVY2/cache/com.typesafe.play/play-exceptions/jars/play-exceptions-2.3.7.jar</classes>
-      <classes>$IVY2/cache/com.typesafe.play/routes-compiler_2.10/jars/routes-compiler_2.10-2.3.7.jar</classes>
-      <classes>$IVY2/cache/com.typesafe.play/sbt-run-support_2.10/jars/sbt-run-support_2.10-2.3.7.jar</classes>
-      <classes>$IVY2/cache/com.typesafe.play/twirl-api_2.10/jars/twirl-api_2.10-1.0.2.jar</classes>
-      <classes>$IVY2/cache/com.typesafe.play/twirl-compiler_2.10/jars/twirl-compiler_2.10-1.0.2.jar</classes>
-      <classes>$IVY2/cache/com.typesafe.play/twirl-parser_2.10/jars/twirl-parser_2.10-1.0.2.jar</classes>
-      <classes>$IVY2/cache/com.typesafe/config/bundles/config-1.2.1.jar</classes>
-      <classes>$IVY2/cache/com.typesafe/jse_2.10/jars/jse_2.10-1.0.0.jar</classes>
-      <classes>$IVY2/cache/com.typesafe/npm_2.10/jars/npm_2.10-1.0.0.jar</classes>
-      <classes>$IVY2/cache/com.typesafe/webdriver_2.10/jars/webdriver_2.10-1.0.0.jar</classes>
-      <classes>$IVY2/cache/commons-codec/commons-codec/jars/commons-codec-1.9.jar</classes>
-      <classes>$IVY2/cache/commons-collections/commons-collections/jars/commons-collections-3.2.1.jar</classes>
-      <classes>$IVY2/cache/commons-io/commons-io/jars/commons-io-2.4.jar</classes>
-      <classes>$IVY2/cache/commons-logging/commons-logging/jars/commons-logging-1.1.3.jar</classes>
-      <classes>$IVY2/cache/io.apigee.trireme/trireme-core/jars/trireme-core-0.7.5.jar</classes>
-      <classes>$IVY2/cache/io.apigee.trireme/trireme-node10src/jars/trireme-node10src-0.7.5.jar</classes>
-      <classes>$IVY2/cache/io.netty/netty/bundles/netty-3.8.0.Final.jar</classes>
-      <classes>$IVY2/cache/io.spray/spray-can/bundles/spray-can-1.3.1.jar</classes>
-      <classes>$IVY2/cache/io.spray/spray-client/bundles/spray-client-1.3.1.jar</classes>
-      <classes>$IVY2/cache/io.spray/spray-http/bundles/spray-http-1.3.1.jar</classes>
-      <classes>$IVY2/cache/io.spray/spray-httpx/bundles/spray-httpx-1.3.1.jar</classes>
-      <classes>$IVY2/cache/io.spray/spray-io/bundles/spray-io-1.3.1.jar</classes>
-      <classes>$IVY2/cache/io.spray/spray-json_2.10/bundles/spray-json_2.10-1.2.6.jar</classes>
-      <classes>$IVY2/cache/io.spray/spray-util/bundles/spray-util-1.3.1.jar</classes>
-      <classes>$IVY2/cache/javax.annotation/jsr250-api/jars/jsr250-api-1.0.jar</classes>
-      <classes>$IVY2/cache/javax.enterprise/cdi-api/jars/cdi-api-1.0.jar</classes>
-      <classes>$IVY2/cache/javax.inject/javax.inject/jars/javax.inject-1.jar</classes>
-      <classes>$IVY2/cache/net.contentobjects.jnotify/jnotify/jars/jnotify-0.94.jar</classes>
-      <classes>$IVY2/cache/net.sourceforge.cssparser/cssparser/jars/cssparser-0.9.13.jar</classes>
-      <classes>$IVY2/cache/net.sourceforge.htmlunit/htmlunit-core-js/jars/htmlunit-core-js-2.14.jar</classes>
-      <classes>$IVY2/cache/net.sourceforge.htmlunit/htmlunit/jars/htmlunit-2.14.jar</classes>
-      <classes>$IVY2/cache/net.sourceforge.nekohtml/nekohtml/jars/nekohtml-1.9.20.jar</classes>
-      <classes>$IVY2/cache/org.apache.ant/ant-launcher/jars/ant-launcher-1.9.3.jar</classes>
-      <classes>$IVY2/cache/org.apache.ant/ant/jars/ant-1.9.3.jar</classes>
-      <classes>$IVY2/cache/org.apache.commons/commons-compress/jars/commons-compress-1.7.jar</classes>
-      <classes>$IVY2/cache/org.apache.commons/commons-lang3/jars/commons-lang3-3.2.1.jar</classes>
-      <classes>$IVY2/cache/org.apache.httpcomponents/httpclient/jars/httpclient-4.3.2.jar</classes>
-      <classes>$IVY2/cache/org.apache.httpcomponents/httpcore/jars/httpcore-4.3.1.jar</classes>
-      <classes>$IVY2/cache/org.apache.httpcomponents/httpmime/jars/httpmime-4.3.2.jar</classes>
-      <classes>$IVY2/cache/org.apache.maven/maven-aether-provider/jars/maven-aether-provider-3.2.2.jar</classes>
-      <classes>$IVY2/cache/org.apache.maven/maven-artifact/jars/maven-artifact-3.2.2.jar</classes>
-      <classes>$IVY2/cache/org.apache.maven/maven-core/jars/maven-core-3.2.2.jar</classes>
-      <classes>$IVY2/cache/org.apache.maven/maven-model-builder/jars/maven-model-builder-3.2.2.jar</classes>
-      <classes>$IVY2/cache/org.apache.maven/maven-model/jars/maven-model-3.2.2.jar</classes>
-      <classes>$IVY2/cache/org.apache.maven/maven-plugin-api/jars/maven-plugin-api-3.2.2.jar</classes>
-      <classes>$IVY2/cache/org.apache.maven/maven-repository-metadata/jars/maven-repository-metadata-3.2.2.jar</classes>
-      <classes>$IVY2/cache/org.apache.maven/maven-settings-builder/jars/maven-settings-builder-3.2.2.jar</classes>
-      <classes>$IVY2/cache/org.apache.maven/maven-settings/jars/maven-settings-3.2.2.jar</classes>
-      <classes>$IVY2/cache/org.avaje.ebeanorm/avaje-ebeanorm-agent/jars/avaje-ebeanorm-agent-3.2.2.jar</classes>
-      <classes>$IVY2/cache/org.bouncycastle/bcpg-jdk15on/jars/bcpg-jdk15on-1.51.jar</classes>
-      <classes>$IVY2/cache/org.bouncycastle/bcprov-jdk15on/jars/bcprov-jdk15on-1.51.jar</classes>
-      <classes>$IVY2/cache/org.codehaus.plexus/plexus-classworlds/bundles/plexus-classworlds-2.5.1.jar</classes>
-      <classes>$IVY2/cache/org.codehaus.plexus/plexus-component-annotations/jars/plexus-component-annotations-1.5.5.jar</classes>
-      <classes>$IVY2/cache/org.codehaus.plexus/plexus-interpolation/jars/plexus-interpolation-1.19.jar</classes>
-      <classes>$IVY2/cache/org.codehaus.plexus/plexus-utils/jars/plexus-utils-3.0.17.jar</classes>
-      <classes>$IVY2/cache/org.eclipse.aether/aether-api/jars/aether-api-0.9.0.M2.jar</classes>
-      <classes>$IVY2/cache/org.eclipse.aether/aether-impl/jars/aether-impl-0.9.0.M2.jar</classes>
-      <classes>$IVY2/cache/org.eclipse.aether/aether-spi/jars/aether-spi-0.9.0.M2.jar</classes>
-      <classes>$IVY2/cache/org.eclipse.aether/aether-util/jars/aether-util-0.9.0.M2.jar</classes>
-      <classes>$IVY2/cache/org.eclipse.jetty/jetty-http/jars/jetty-http-8.1.14.v20131031.jar</classes>
-      <classes>$IVY2/cache/org.eclipse.jetty/jetty-io/jars/jetty-io-8.1.14.v20131031.jar</classes>
-      <classes>$IVY2/cache/org.eclipse.jetty/jetty-util/jars/jetty-util-8.1.14.v20131031.jar</classes>
-      <classes>$IVY2/cache/org.eclipse.jetty/jetty-websocket/jars/jetty-websocket-8.1.14.v20131031.jar</classes>
-      <classes>$IVY2/cache/org.eclipse.sisu/org.eclipse.sisu.inject/eclipse-plugins/org.eclipse.sisu.inject-0.0.0.M5.jar</classes>
-      <classes>$IVY2/cache/org.eclipse.sisu/org.eclipse.sisu.plexus/eclipse-plugins/org.eclipse.sisu.plexus-0.0.0.M5.jar</classes>
-      <classes>$IVY2/cache/org.fusesource.hawtjni/hawtjni-runtime/jars/hawtjni-runtime-1.8.jar</classes>
-      <classes>$IVY2/cache/org.fusesource.leveldbjni/leveldbjni-all/bundles/leveldbjni-all-1.7.jar</classes>
-      <classes>$IVY2/cache/org.fusesource.leveldbjni/leveldbjni-linux32/jars/leveldbjni-linux32-1.5.jar</classes>
-      <classes>$IVY2/cache/org.fusesource.leveldbjni/leveldbjni-linux64/jars/leveldbjni-linux64-1.5.jar</classes>
-      <classes>$IVY2/cache/org.fusesource.leveldbjni/leveldbjni-osx/jars/leveldbjni-osx-1.5.jar</classes>
-      <classes>$IVY2/cache/org.fusesource.leveldbjni/leveldbjni-win32/jars/leveldbjni-win32-1.5.jar</classes>
-      <classes>$IVY2/cache/org.fusesource.leveldbjni/leveldbjni-win64/jars/leveldbjni-win64-1.5.jar</classes>
-      <classes>$IVY2/cache/org.fusesource.leveldbjni/leveldbjni/jars/leveldbjni-1.7.jar</classes>
-      <classes>$IVY2/cache/org.iq80.leveldb/leveldb-api/jars/leveldb-api-0.5.jar</classes>
-      <classes>$IVY2/cache/org.iq80.leveldb/leveldb/jars/leveldb-0.5.jar</classes>
-      <classes>$IVY2/cache/org.javassist/javassist/bundles/javassist-3.18.2-GA.jar</classes>
-      <classes>$IVY2/cache/org.json/json/jars/json-20090211.jar</classes>
-      <classes>$IVY2/cache/org.jvnet.mimepull/mimepull/jars/mimepull-1.9.4.jar</classes>
-      <classes>$IVY2/cache/org.mozilla/rhino/jars/rhino-1.7R4.jar</classes>
-      <classes>$IVY2/cache/org.parboiled/parboiled-core/bundles/parboiled-core-1.1.6.jar</classes>
-      <classes>$IVY2/cache/org.parboiled/parboiled-scala_2.10/bundles/parboiled-scala_2.10-1.1.6.jar</classes>
-      <classes>$IVY2/cache/org.scala-sbt/control/jars/control-0.13.5.jar</classes>
-      <classes>$IVY2/cache/org.scala-sbt/io/jars/io-0.13.5.jar</classes>
-      <classes>$IVY2/cache/org.scalaz/scalaz-core_2.10/bundles/scalaz-core_2.10-7.0.2.jar</classes>
-      <classes>$IVY2/cache/org.scalaz/scalaz-effect_2.10/bundles/scalaz-effect_2.10-7.0.2.jar</classes>
-      <classes>$IVY2/cache/org.slf4j/slf4j-api/jars/slf4j-api-1.7.7.jar</classes>
-      <classes>$IVY2/cache/org.slf4j/slf4j-simple/jars/slf4j-simple-1.7.7.jar</classes>
-      <classes>$IVY2/cache/org.sonatype.plexus/plexus-cipher/jars/plexus-cipher-1.4.jar</classes>
-      <classes>$IVY2/cache/org.sonatype.plexus/plexus-sec-dispatcher/jars/plexus-sec-dispatcher-1.3.jar</classes>
-      <classes>$IVY2/cache/org.sonatype.sisu/sisu-guice/jars/sisu-guice-3.1.0-no_aop.jar</classes>
-      <classes>$IVY2/cache/org.tukaani/xz/jars/xz-1.4.jar</classes>
-      <classes>$IVY2/cache/org.uncommons.maths/uncommons-maths/jars/uncommons-maths-1.2.2a.jar</classes>
-      <classes>$IVY2/cache/org.vafer/jdeb/jars/jdeb-1.3.jar</classes>
-      <classes>$IVY2/cache/org.w3c.css/sac/jars/sac-1.3.jar</classes>
-      <classes>$IVY2/cache/org.webjars/npm/jars/npm-1.3.26.jar</classes>
-      <classes>$IVY2/cache/org.webjars/webjars-locator/jars/webjars-locator-0.14.jar</classes>
-      <classes>$IVY2/cache/scala_2.10/sbt_0.13/com.github.mpeltonen/sbt-idea/jars/sbt-idea-1.5.1.jar</classes>
-      <classes>$IVY2/cache/scala_2.10/sbt_0.13/com.typesafe.play/sbt-plugin/jars/sbt-plugin-2.3.7.jar</classes>
-      <classes>$IVY2/cache/scala_2.10/sbt_0.13/com.typesafe.sbt/sbt-js-engine/jars/sbt-js-engine-1.0.1.jar</classes>
-      <classes>$IVY2/cache/scala_2.10/sbt_0.13/com.typesafe.sbt/sbt-native-packager/jars/sbt-native-packager-0.7.4.jar</classes>
-      <classes>$IVY2/cache/scala_2.10/sbt_0.13/com.typesafe.sbt/sbt-twirl/jars/sbt-twirl-1.0.2.jar</classes>
-      <classes>$IVY2/cache/scala_2.10/sbt_0.13/com.typesafe.sbt/sbt-web/jars/sbt-web-1.0.2.jar</classes>
-      <classes>$IVY2/cache/scala_2.10/sbt_0.13/com.typesafe.sbt/sbt-webdriver/jars/sbt-webdriver-1.0.0.jar</classes>
-      <classes>$IVY2/cache/scala_2.10/sbt_0.13/com.typesafe.sbteclipse/sbteclipse-core/jars/sbteclipse-core-2.4.0.jar</classes>
-      <classes>$IVY2/cache/scala_2.10/sbt_0.13/com.typesafe.sbteclipse/sbteclipse-plugin/jars/sbteclipse-plugin-2.4.0.jar</classes>
-      <classes>$IVY2/cache/xalan/serializer/jars/serializer-2.7.1.jar</classes>
-      <classes>$IVY2/cache/xalan/xalan/jars/xalan-2.7.1.jar</classes>
-      <classes>$IVY2/cache/xerces/xercesImpl/jars/xercesImpl-2.11.0.jar</classes>
-      <classes>$IVY2/cache/xml-apis/xml-apis/jars/xml-apis-1.4.01.jar</classes>
-    </build>
     <java>
       <option>-encoding</option>
       <option>utf8</option>
@@ -509,7 +510,7 @@
       <label>testResultLogger</label>
       <description>Logs results after a test task completes.</description>
       <rank>20000</rank>
-      <value>Main(&lt;function1&gt;,sbt.TestResultLogger$$anon$1@69d2d86f,sbt.TestResultLogger$$anon$1@373c3f13,sbt.Tes...</value>
+      <value>Main(&lt;function1&gt;,sbt.TestResultLogger$$anon$1@224ede03,sbt.TestResultLogger$$anon$1@7cab0444,sbt.Tes...</value>
     </setting>
     <setting>
       <label>loadedBuild</label>
@@ -660,7 +661,7 @@
       <label>wixProductUpgradeId</label>
       <description>The uuid associated with upgrades for this package.</description>
       <rank>25</rank>
-      <value>1a9b81a3-ed67-41c2-81cc-5613fa98b0cd</value>
+      <value>afd6b277-218b-4061-a65a-38cd81a9934c</value>
     </setting>
     <setting>
       <label>debianSection</label>
@@ -730,7 +731,7 @@
       <label>eclipsePreTasks</label>
       <description>The tasks to be evaluated prior to creating the Eclipse project definition.</description>
       <rank>25</rank>
-      <value>List(sbt.Scoped$$anon$2@eddaf09)</value>
+      <value>List(sbt.Scoped$$anon$2@c96eaee)</value>
     </setting>
     <setting>
       <label>ideaExtraFacets</label>
@@ -868,7 +869,7 @@
       <label>wixProductId</label>
       <description>The uuid of the windows package.</description>
       <rank>25</rank>
-      <value>634c3c0c-a67b-47f5-bd0c-f8123a63704f</value>
+      <value>cd5bc4b2-5a42-4a4a-9c58-eb6060d07c60</value>
     </setting>
     <setting>
       <label>exportToInternal</label>
@@ -1134,7 +1135,7 @@
       <label>wixPackageInfo</label>
       <description>The configuration for this package.</description>
       <rank>25</rank>
-      <value>WindowsProductInfo(634c3c0c-a67b-47f5-bd0c-f8123a63704f,,1.0.0-SNAPSHOT,,,1a9b81a3-ed67-41c2-81cc-56...</value>
+      <value>WindowsProductInfo(cd5bc4b2-5a42-4a4a-9c58-eb6060d07c60,,1.0.0-SNAPSHOT,,,afd6b277-218b-4061-a65a-38...</value>
     </setting>
     <setting>
       <label>autoCompilerPlugins</label>
@@ -1311,7 +1312,7 @@
       <label>eclipseClasspathTransformerFactory</label>
       <description>Factories for a rewrite rule for the .classpath file.</description>
       <rank>25</rank>
-      <value>List(play.PlayEclipse$$anon$6@759b3c1f)</value>
+      <value>List(play.PlayEclipse$$anon$6@429f7c22)</value>
     </setting>
     <setting>
       <label>scalaVersion</label>
@@ -1757,7 +1758,7 @@
       <label>taskTemporaryDirectory</label>
       <description>Directory used for temporary files for tasks that is deleted after each task execution.</description>
       <rank>10000</rank>
-      <value>/var/folders/5k/4b5my29x26q_dhrys3ghf9wh0000gn/T/sbt_923a6845</value>
+      <value>/var/folders/5k/4b5my29x26q_dhrys3ghf9wh0000gn/T/sbt_ebd8bbf5</value>
     </setting>
     <setting>
       <label>configuration</label>

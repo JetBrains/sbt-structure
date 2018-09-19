@@ -24,6 +24,7 @@ class BuildExtractorSpec extends Specification {
   val stubPlugins: Seq[File] = Seq("foo.jar").map(file)
 
   val stubLoadedBuildUnitAdapter: LoadedBuildUnitAdapter = new LoadedBuildUnitAdapter(null) {
+    override def uri = stubURI
     override def imports: Seq[String] = stubImports
     override def pluginsClasspath: Seq[Attributed[File]] =
       stubPlugins.map(Attributed(_)(AttributeMap.empty))

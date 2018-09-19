@@ -1,5 +1,114 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <structure sbt="0.13.9">
+  <build>
+    <uri>$URI_BASE</uri>
+    <import>import _root_.sbt.plugins.IvyPlugin, _root_.sbt.plugins.JvmPlugin, _root_.sbt.plugins.CorePlugin, _root_.sbt.plugins.JUnitXmlReportPlugin</import>
+    <import>import sbt._, Keys._, dsl._</import>
+    <classes>$SBT_BOOT/scala-2.10.5/lib/jansi.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.5/lib/jline.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.5/lib/scala-compiler.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.5/lib/scala-library.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.5/lib/scala-reflect.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.5/org.scala-sbt/sbt/0.13.9/actions-0.13.9.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.5/org.scala-sbt/sbt/0.13.9/api-0.13.9.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.5/org.scala-sbt/sbt/0.13.9/apply-macro-0.13.9.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.5/org.scala-sbt/sbt/0.13.9/cache-0.13.9.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.5/org.scala-sbt/sbt/0.13.9/classfile-0.13.9.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.5/org.scala-sbt/sbt/0.13.9/classpath-0.13.9.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.5/org.scala-sbt/sbt/0.13.9/collections-0.13.9.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.5/org.scala-sbt/sbt/0.13.9/command-0.13.9.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.5/org.scala-sbt/sbt/0.13.9/compile-0.13.9.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.5/org.scala-sbt/sbt/0.13.9/compiler-integration-0.13.9.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.5/org.scala-sbt/sbt/0.13.9/compiler-ivy-integration-0.13.9.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.5/org.scala-sbt/sbt/0.13.9/completion-0.13.9.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.5/org.scala-sbt/sbt/0.13.9/control-0.13.9.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.5/org.scala-sbt/sbt/0.13.9/cross-0.13.9.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.5/org.scala-sbt/sbt/0.13.9/incremental-compiler-0.13.9.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.5/org.scala-sbt/sbt/0.13.9/io-0.13.9.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.5/org.scala-sbt/sbt/0.13.9/ivy-0.13.9.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.5/org.scala-sbt/sbt/0.13.9/ivy-2.3.0-sbt-c5d1b95fdcc1e1007740ffbecf4eb07abc51ec93.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.5/org.scala-sbt/sbt/0.13.9/jawn-parser_2.10-0.6.0.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.5/org.scala-sbt/sbt/0.13.9/jline-2.11.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.5/org.scala-sbt/sbt/0.13.9/jsch-0.1.46.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.5/org.scala-sbt/sbt/0.13.9/json4s-ast_2.10-3.2.10.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.5/org.scala-sbt/sbt/0.13.9/json4s-core_2.10-3.2.10.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.5/org.scala-sbt/sbt/0.13.9/json4s-support_2.10-0.6.0.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.5/org.scala-sbt/sbt/0.13.9/launcher-interface-1.0.0-M1.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.5/org.scala-sbt/sbt/0.13.9/logging-0.13.9.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.5/org.scala-sbt/sbt/0.13.9/logic-0.13.9.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.5/org.scala-sbt/sbt/0.13.9/main-0.13.9.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.5/org.scala-sbt/sbt/0.13.9/main-settings-0.13.9.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.5/org.scala-sbt/sbt/0.13.9/paranamer-2.6.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.5/org.scala-sbt/sbt/0.13.9/persist-0.13.9.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.5/org.scala-sbt/sbt/0.13.9/process-0.13.9.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.5/org.scala-sbt/sbt/0.13.9/quasiquotes_2.10-2.0.1.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.5/org.scala-sbt/sbt/0.13.9/relation-0.13.9.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.5/org.scala-sbt/sbt/0.13.9/run-0.13.9.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.5/org.scala-sbt/sbt/0.13.9/sbinary_2.10-0.4.2.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.5/org.scala-sbt/sbt/0.13.9/sbt-0.13.9.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.5/org.scala-sbt/sbt/0.13.9/scala-pickling_2.10-0.10.0.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.5/org.scala-sbt/sbt/0.13.9/scala-reflect-2.10.5.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.5/org.scala-sbt/sbt/0.13.9/serialization_2.10-0.1.1.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.5/org.scala-sbt/sbt/0.13.9/task-system-0.13.9.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.5/org.scala-sbt/sbt/0.13.9/tasks-0.13.9.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.5/org.scala-sbt/sbt/0.13.9/test-agent-0.13.9.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.5/org.scala-sbt/sbt/0.13.9/test-interface-1.0.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.5/org.scala-sbt/sbt/0.13.9/testing-0.13.9.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.5/org.scala-sbt/sbt/0.13.9/tracking-0.13.9.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.5/org.scala-sbt/sbt/0.13.9/xsbti/interface-0.13.9.jar</classes>
+    <sources>$IVY2/cache/com.jcraft/jsch/srcs/jsch-0.1.46-sources.jar</sources>
+    <sources>$IVY2/cache/com.thoughtworks.paranamer/paranamer/srcs/paranamer-2.6-sources.jar</sources>
+    <sources>$IVY2/cache/jline/jline/srcs/jline-2.11-sources.jar</sources>
+    <sources>$IVY2/cache/org.json4s/json4s-ast_2.10/srcs/json4s-ast_2.10-3.2.10-sources.jar</sources>
+    <sources>$IVY2/cache/org.json4s/json4s-core_2.10/srcs/json4s-core_2.10-3.2.10-sources.jar</sources>
+    <sources>$IVY2/cache/org.scala-lang.modules/scala-pickling_2.10/srcs/scala-pickling_2.10-0.10.0-sources.jar</sources>
+    <sources>$IVY2/cache/org.scala-lang/scala-compiler/srcs/scala-compiler-2.10.5-sources.jar</sources>
+    <sources>$IVY2/cache/org.scala-lang/scala-library/srcs/scala-library-2.10.5-sources.jar</sources>
+    <sources>$IVY2/cache/org.scala-lang/scala-reflect/srcs/scala-reflect-2.10.5-sources.jar</sources>
+    <sources>$IVY2/cache/org.scala-sbt.ivy/ivy/srcs/ivy-2.3.0-sbt-c5d1b95fdcc1e1007740ffbecf4eb07abc51ec93-sources.jar</sources>
+    <sources>$IVY2/cache/org.scala-sbt/actions/srcs/actions-0.13.9-sources.jar</sources>
+    <sources>$IVY2/cache/org.scala-sbt/api/srcs/api-0.13.9-sources.jar</sources>
+    <sources>$IVY2/cache/org.scala-sbt/apply-macro/srcs/apply-macro-0.13.9-sources.jar</sources>
+    <sources>$IVY2/cache/org.scala-sbt/cache/srcs/cache-0.13.9-sources.jar</sources>
+    <sources>$IVY2/cache/org.scala-sbt/classfile/srcs/classfile-0.13.9-sources.jar</sources>
+    <sources>$IVY2/cache/org.scala-sbt/classpath/srcs/classpath-0.13.9-sources.jar</sources>
+    <sources>$IVY2/cache/org.scala-sbt/collections/srcs/collections-0.13.9-sources.jar</sources>
+    <sources>$IVY2/cache/org.scala-sbt/command/srcs/command-0.13.9-sources.jar</sources>
+    <sources>$IVY2/cache/org.scala-sbt/compile/srcs/compile-0.13.9-sources.jar</sources>
+    <sources>$IVY2/cache/org.scala-sbt/compiler-integration/srcs/compiler-integration-0.13.9-sources.jar</sources>
+    <sources>$IVY2/cache/org.scala-sbt/compiler-ivy-integration/srcs/compiler-ivy-integration-0.13.9-sources.jar</sources>
+    <sources>$IVY2/cache/org.scala-sbt/completion/srcs/completion-0.13.9-sources.jar</sources>
+    <sources>$IVY2/cache/org.scala-sbt/control/srcs/control-0.13.9-sources.jar</sources>
+    <sources>$IVY2/cache/org.scala-sbt/cross/srcs/cross-0.13.9-sources.jar</sources>
+    <sources>$IVY2/cache/org.scala-sbt/incremental-compiler/srcs/incremental-compiler-0.13.9-sources.jar</sources>
+    <sources>$IVY2/cache/org.scala-sbt/interface/srcs/interface-0.13.9-sources.jar</sources>
+    <sources>$IVY2/cache/org.scala-sbt/io/srcs/io-0.13.9-sources.jar</sources>
+    <sources>$IVY2/cache/org.scala-sbt/ivy/srcs/ivy-0.13.9-sources.jar</sources>
+    <sources>$IVY2/cache/org.scala-sbt/launcher-interface/srcs/launcher-interface-1.0.0-M1-sources.jar</sources>
+    <sources>$IVY2/cache/org.scala-sbt/logging/srcs/logging-0.13.9-sources.jar</sources>
+    <sources>$IVY2/cache/org.scala-sbt/logic/srcs/logic-0.13.9-sources.jar</sources>
+    <sources>$IVY2/cache/org.scala-sbt/main-settings/srcs/main-settings-0.13.9-sources.jar</sources>
+    <sources>$IVY2/cache/org.scala-sbt/main/srcs/main-0.13.9-sources.jar</sources>
+    <sources>$IVY2/cache/org.scala-sbt/persist/srcs/persist-0.13.9-sources.jar</sources>
+    <sources>$IVY2/cache/org.scala-sbt/precompiled-2_8_2/srcs/precompiled-2_8_2-0.13.9-sources.jar</sources>
+    <sources>$IVY2/cache/org.scala-sbt/precompiled-2_9_2/srcs/precompiled-2_9_2-0.13.9-sources.jar</sources>
+    <sources>$IVY2/cache/org.scala-sbt/precompiled-2_9_3/srcs/precompiled-2_9_3-0.13.9-sources.jar</sources>
+    <sources>$IVY2/cache/org.scala-sbt/process/srcs/process-0.13.9-sources.jar</sources>
+    <sources>$IVY2/cache/org.scala-sbt/relation/srcs/relation-0.13.9-sources.jar</sources>
+    <sources>$IVY2/cache/org.scala-sbt/run/srcs/run-0.13.9-sources.jar</sources>
+    <sources>$IVY2/cache/org.scala-sbt/sbt/srcs/sbt-0.13.9-sources.jar</sources>
+    <sources>$IVY2/cache/org.scala-sbt/serialization_2.10/srcs/serialization_2.10-0.1.1-sources.jar</sources>
+    <sources>$IVY2/cache/org.scala-sbt/task-system/srcs/task-system-0.13.9-sources.jar</sources>
+    <sources>$IVY2/cache/org.scala-sbt/tasks/srcs/tasks-0.13.9-sources.jar</sources>
+    <sources>$IVY2/cache/org.scala-sbt/test-agent/srcs/test-agent-0.13.9-sources.jar</sources>
+    <sources>$IVY2/cache/org.scala-sbt/test-interface/srcs/test-interface-1.0-sources.jar</sources>
+    <sources>$IVY2/cache/org.scala-sbt/testing/srcs/testing-0.13.9-sources.jar</sources>
+    <sources>$IVY2/cache/org.scala-sbt/tracking/srcs/tracking-0.13.9-sources.jar</sources>
+    <sources>$IVY2/cache/org.scala-tools.sbinary/sbinary_2.10/srcs/sbinary_2.10-0.4.2-sources.jar</sources>
+    <sources>$IVY2/cache/org.scalamacros/quasiquotes_2.10/srcs/quasiquotes_2.10-2.0.1-sources.jar</sources>
+    <sources>$IVY2/cache/org.spire-math/jawn-parser_2.10/srcs/jawn-parser_2.10-0.6.0-sources.jar</sources>
+    <sources>$IVY2/cache/org.spire-math/json4s-support_2.10/srcs/json4s-support_2.10-0.6.0-sources.jar</sources>
+  </build>
   <project>
     <id>simple</id>
     <buildURI>$URI_BASE</buildURI>
@@ -8,114 +117,6 @@
     <version>1.2.3</version>
     <base>$BASE</base>
     <target>$BASE/target</target>
-    <build>
-      <import>import _root_.sbt.plugins.IvyPlugin, _root_.sbt.plugins.JvmPlugin, _root_.sbt.plugins.CorePlugin, _root_.sbt.plugins.JUnitXmlReportPlugin</import>
-      <import>import sbt._, Keys._, dsl._</import>
-      <classes>$SBT_BOOT/scala-2.10.5/lib/jansi.jar</classes>
-      <classes>$SBT_BOOT/scala-2.10.5/lib/jline.jar</classes>
-      <classes>$SBT_BOOT/scala-2.10.5/lib/scala-compiler.jar</classes>
-      <classes>$SBT_BOOT/scala-2.10.5/lib/scala-library.jar</classes>
-      <classes>$SBT_BOOT/scala-2.10.5/lib/scala-reflect.jar</classes>
-      <classes>$SBT_BOOT/scala-2.10.5/org.scala-sbt/sbt/0.13.9/actions-0.13.9.jar</classes>
-      <classes>$SBT_BOOT/scala-2.10.5/org.scala-sbt/sbt/0.13.9/api-0.13.9.jar</classes>
-      <classes>$SBT_BOOT/scala-2.10.5/org.scala-sbt/sbt/0.13.9/apply-macro-0.13.9.jar</classes>
-      <classes>$SBT_BOOT/scala-2.10.5/org.scala-sbt/sbt/0.13.9/cache-0.13.9.jar</classes>
-      <classes>$SBT_BOOT/scala-2.10.5/org.scala-sbt/sbt/0.13.9/classfile-0.13.9.jar</classes>
-      <classes>$SBT_BOOT/scala-2.10.5/org.scala-sbt/sbt/0.13.9/classpath-0.13.9.jar</classes>
-      <classes>$SBT_BOOT/scala-2.10.5/org.scala-sbt/sbt/0.13.9/collections-0.13.9.jar</classes>
-      <classes>$SBT_BOOT/scala-2.10.5/org.scala-sbt/sbt/0.13.9/command-0.13.9.jar</classes>
-      <classes>$SBT_BOOT/scala-2.10.5/org.scala-sbt/sbt/0.13.9/compile-0.13.9.jar</classes>
-      <classes>$SBT_BOOT/scala-2.10.5/org.scala-sbt/sbt/0.13.9/compiler-integration-0.13.9.jar</classes>
-      <classes>$SBT_BOOT/scala-2.10.5/org.scala-sbt/sbt/0.13.9/compiler-ivy-integration-0.13.9.jar</classes>
-      <classes>$SBT_BOOT/scala-2.10.5/org.scala-sbt/sbt/0.13.9/completion-0.13.9.jar</classes>
-      <classes>$SBT_BOOT/scala-2.10.5/org.scala-sbt/sbt/0.13.9/control-0.13.9.jar</classes>
-      <classes>$SBT_BOOT/scala-2.10.5/org.scala-sbt/sbt/0.13.9/cross-0.13.9.jar</classes>
-      <classes>$SBT_BOOT/scala-2.10.5/org.scala-sbt/sbt/0.13.9/incremental-compiler-0.13.9.jar</classes>
-      <classes>$SBT_BOOT/scala-2.10.5/org.scala-sbt/sbt/0.13.9/io-0.13.9.jar</classes>
-      <classes>$SBT_BOOT/scala-2.10.5/org.scala-sbt/sbt/0.13.9/ivy-0.13.9.jar</classes>
-      <classes>$SBT_BOOT/scala-2.10.5/org.scala-sbt/sbt/0.13.9/ivy-2.3.0-sbt-c5d1b95fdcc1e1007740ffbecf4eb07abc51ec93.jar</classes>
-      <classes>$SBT_BOOT/scala-2.10.5/org.scala-sbt/sbt/0.13.9/jawn-parser_2.10-0.6.0.jar</classes>
-      <classes>$SBT_BOOT/scala-2.10.5/org.scala-sbt/sbt/0.13.9/jline-2.11.jar</classes>
-      <classes>$SBT_BOOT/scala-2.10.5/org.scala-sbt/sbt/0.13.9/jsch-0.1.46.jar</classes>
-      <classes>$SBT_BOOT/scala-2.10.5/org.scala-sbt/sbt/0.13.9/json4s-ast_2.10-3.2.10.jar</classes>
-      <classes>$SBT_BOOT/scala-2.10.5/org.scala-sbt/sbt/0.13.9/json4s-core_2.10-3.2.10.jar</classes>
-      <classes>$SBT_BOOT/scala-2.10.5/org.scala-sbt/sbt/0.13.9/json4s-support_2.10-0.6.0.jar</classes>
-      <classes>$SBT_BOOT/scala-2.10.5/org.scala-sbt/sbt/0.13.9/launcher-interface-1.0.0-M1.jar</classes>
-      <classes>$SBT_BOOT/scala-2.10.5/org.scala-sbt/sbt/0.13.9/logging-0.13.9.jar</classes>
-      <classes>$SBT_BOOT/scala-2.10.5/org.scala-sbt/sbt/0.13.9/logic-0.13.9.jar</classes>
-      <classes>$SBT_BOOT/scala-2.10.5/org.scala-sbt/sbt/0.13.9/main-0.13.9.jar</classes>
-      <classes>$SBT_BOOT/scala-2.10.5/org.scala-sbt/sbt/0.13.9/main-settings-0.13.9.jar</classes>
-      <classes>$SBT_BOOT/scala-2.10.5/org.scala-sbt/sbt/0.13.9/paranamer-2.6.jar</classes>
-      <classes>$SBT_BOOT/scala-2.10.5/org.scala-sbt/sbt/0.13.9/persist-0.13.9.jar</classes>
-      <classes>$SBT_BOOT/scala-2.10.5/org.scala-sbt/sbt/0.13.9/process-0.13.9.jar</classes>
-      <classes>$SBT_BOOT/scala-2.10.5/org.scala-sbt/sbt/0.13.9/quasiquotes_2.10-2.0.1.jar</classes>
-      <classes>$SBT_BOOT/scala-2.10.5/org.scala-sbt/sbt/0.13.9/relation-0.13.9.jar</classes>
-      <classes>$SBT_BOOT/scala-2.10.5/org.scala-sbt/sbt/0.13.9/run-0.13.9.jar</classes>
-      <classes>$SBT_BOOT/scala-2.10.5/org.scala-sbt/sbt/0.13.9/sbinary_2.10-0.4.2.jar</classes>
-      <classes>$SBT_BOOT/scala-2.10.5/org.scala-sbt/sbt/0.13.9/sbt-0.13.9.jar</classes>
-      <classes>$SBT_BOOT/scala-2.10.5/org.scala-sbt/sbt/0.13.9/scala-pickling_2.10-0.10.0.jar</classes>
-      <classes>$SBT_BOOT/scala-2.10.5/org.scala-sbt/sbt/0.13.9/scala-reflect-2.10.5.jar</classes>
-      <classes>$SBT_BOOT/scala-2.10.5/org.scala-sbt/sbt/0.13.9/serialization_2.10-0.1.1.jar</classes>
-      <classes>$SBT_BOOT/scala-2.10.5/org.scala-sbt/sbt/0.13.9/task-system-0.13.9.jar</classes>
-      <classes>$SBT_BOOT/scala-2.10.5/org.scala-sbt/sbt/0.13.9/tasks-0.13.9.jar</classes>
-      <classes>$SBT_BOOT/scala-2.10.5/org.scala-sbt/sbt/0.13.9/test-agent-0.13.9.jar</classes>
-      <classes>$SBT_BOOT/scala-2.10.5/org.scala-sbt/sbt/0.13.9/test-interface-1.0.jar</classes>
-      <classes>$SBT_BOOT/scala-2.10.5/org.scala-sbt/sbt/0.13.9/testing-0.13.9.jar</classes>
-      <classes>$SBT_BOOT/scala-2.10.5/org.scala-sbt/sbt/0.13.9/tracking-0.13.9.jar</classes>
-      <classes>$SBT_BOOT/scala-2.10.5/org.scala-sbt/sbt/0.13.9/xsbti/interface-0.13.9.jar</classes>
-      <sources>$IVY2/cache/com.jcraft/jsch/srcs/jsch-0.1.46-sources.jar</sources>
-      <sources>$IVY2/cache/com.thoughtworks.paranamer/paranamer/srcs/paranamer-2.6-sources.jar</sources>
-      <sources>$IVY2/cache/jline/jline/srcs/jline-2.11-sources.jar</sources>
-      <sources>$IVY2/cache/org.json4s/json4s-ast_2.10/srcs/json4s-ast_2.10-3.2.10-sources.jar</sources>
-      <sources>$IVY2/cache/org.json4s/json4s-core_2.10/srcs/json4s-core_2.10-3.2.10-sources.jar</sources>
-      <sources>$IVY2/cache/org.scala-lang.modules/scala-pickling_2.10/srcs/scala-pickling_2.10-0.10.0-sources.jar</sources>
-      <sources>$IVY2/cache/org.scala-lang/scala-compiler/srcs/scala-compiler-2.10.5-sources.jar</sources>
-      <sources>$IVY2/cache/org.scala-lang/scala-library/srcs/scala-library-2.10.5-sources.jar</sources>
-      <sources>$IVY2/cache/org.scala-lang/scala-reflect/srcs/scala-reflect-2.10.5-sources.jar</sources>
-      <sources>$IVY2/cache/org.scala-sbt.ivy/ivy/srcs/ivy-2.3.0-sbt-c5d1b95fdcc1e1007740ffbecf4eb07abc51ec93-sources.jar</sources>
-      <sources>$IVY2/cache/org.scala-sbt/actions/srcs/actions-0.13.9-sources.jar</sources>
-      <sources>$IVY2/cache/org.scala-sbt/api/srcs/api-0.13.9-sources.jar</sources>
-      <sources>$IVY2/cache/org.scala-sbt/apply-macro/srcs/apply-macro-0.13.9-sources.jar</sources>
-      <sources>$IVY2/cache/org.scala-sbt/cache/srcs/cache-0.13.9-sources.jar</sources>
-      <sources>$IVY2/cache/org.scala-sbt/classfile/srcs/classfile-0.13.9-sources.jar</sources>
-      <sources>$IVY2/cache/org.scala-sbt/classpath/srcs/classpath-0.13.9-sources.jar</sources>
-      <sources>$IVY2/cache/org.scala-sbt/collections/srcs/collections-0.13.9-sources.jar</sources>
-      <sources>$IVY2/cache/org.scala-sbt/command/srcs/command-0.13.9-sources.jar</sources>
-      <sources>$IVY2/cache/org.scala-sbt/compile/srcs/compile-0.13.9-sources.jar</sources>
-      <sources>$IVY2/cache/org.scala-sbt/compiler-integration/srcs/compiler-integration-0.13.9-sources.jar</sources>
-      <sources>$IVY2/cache/org.scala-sbt/compiler-ivy-integration/srcs/compiler-ivy-integration-0.13.9-sources.jar</sources>
-      <sources>$IVY2/cache/org.scala-sbt/completion/srcs/completion-0.13.9-sources.jar</sources>
-      <sources>$IVY2/cache/org.scala-sbt/control/srcs/control-0.13.9-sources.jar</sources>
-      <sources>$IVY2/cache/org.scala-sbt/cross/srcs/cross-0.13.9-sources.jar</sources>
-      <sources>$IVY2/cache/org.scala-sbt/incremental-compiler/srcs/incremental-compiler-0.13.9-sources.jar</sources>
-      <sources>$IVY2/cache/org.scala-sbt/interface/srcs/interface-0.13.9-sources.jar</sources>
-      <sources>$IVY2/cache/org.scala-sbt/io/srcs/io-0.13.9-sources.jar</sources>
-      <sources>$IVY2/cache/org.scala-sbt/ivy/srcs/ivy-0.13.9-sources.jar</sources>
-      <sources>$IVY2/cache/org.scala-sbt/launcher-interface/srcs/launcher-interface-1.0.0-M1-sources.jar</sources>
-      <sources>$IVY2/cache/org.scala-sbt/logging/srcs/logging-0.13.9-sources.jar</sources>
-      <sources>$IVY2/cache/org.scala-sbt/logic/srcs/logic-0.13.9-sources.jar</sources>
-      <sources>$IVY2/cache/org.scala-sbt/main-settings/srcs/main-settings-0.13.9-sources.jar</sources>
-      <sources>$IVY2/cache/org.scala-sbt/main/srcs/main-0.13.9-sources.jar</sources>
-      <sources>$IVY2/cache/org.scala-sbt/persist/srcs/persist-0.13.9-sources.jar</sources>
-      <sources>$IVY2/cache/org.scala-sbt/precompiled-2_8_2/srcs/precompiled-2_8_2-0.13.9-sources.jar</sources>
-      <sources>$IVY2/cache/org.scala-sbt/precompiled-2_9_2/srcs/precompiled-2_9_2-0.13.9-sources.jar</sources>
-      <sources>$IVY2/cache/org.scala-sbt/precompiled-2_9_3/srcs/precompiled-2_9_3-0.13.9-sources.jar</sources>
-      <sources>$IVY2/cache/org.scala-sbt/process/srcs/process-0.13.9-sources.jar</sources>
-      <sources>$IVY2/cache/org.scala-sbt/relation/srcs/relation-0.13.9-sources.jar</sources>
-      <sources>$IVY2/cache/org.scala-sbt/run/srcs/run-0.13.9-sources.jar</sources>
-      <sources>$IVY2/cache/org.scala-sbt/sbt/srcs/sbt-0.13.9-sources.jar</sources>
-      <sources>$IVY2/cache/org.scala-sbt/serialization_2.10/srcs/serialization_2.10-0.1.1-sources.jar</sources>
-      <sources>$IVY2/cache/org.scala-sbt/task-system/srcs/task-system-0.13.9-sources.jar</sources>
-      <sources>$IVY2/cache/org.scala-sbt/tasks/srcs/tasks-0.13.9-sources.jar</sources>
-      <sources>$IVY2/cache/org.scala-sbt/test-agent/srcs/test-agent-0.13.9-sources.jar</sources>
-      <sources>$IVY2/cache/org.scala-sbt/test-interface/srcs/test-interface-1.0-sources.jar</sources>
-      <sources>$IVY2/cache/org.scala-sbt/testing/srcs/testing-0.13.9-sources.jar</sources>
-      <sources>$IVY2/cache/org.scala-sbt/tracking/srcs/tracking-0.13.9-sources.jar</sources>
-      <sources>$IVY2/cache/org.scala-tools.sbinary/sbinary_2.10/srcs/sbinary_2.10-0.4.2-sources.jar</sources>
-      <sources>$IVY2/cache/org.scalamacros/quasiquotes_2.10/srcs/quasiquotes_2.10-2.0.1-sources.jar</sources>
-      <sources>$IVY2/cache/org.spire-math/jawn-parser_2.10/srcs/jawn-parser_2.10-0.6.0-sources.jar</sources>
-      <sources>$IVY2/cache/org.spire-math/json4s-support_2.10/srcs/json4s-support_2.10-0.6.0-sources.jar</sources>
-    </build>
     <java>
       <home>$BASE/some/home</home>
       <option>-j1</option>
@@ -243,7 +244,7 @@
       <label>testResultLogger</label>
       <description>Logs results after a test task completes.</description>
       <rank>20000</rank>
-      <value>Main(&lt;function1&gt;,sbt.TestResultLogger$$anon$1@13e8e186,sbt.TestResultLogger$$anon$1@684f0538,sbt.Tes...</value>
+      <value>Main(&lt;function1&gt;,sbt.TestResultLogger$$anon$1@53692752,sbt.TestResultLogger$$anon$1@339b4939,sbt.Tes...</value>
     </setting>
     <setting>
       <label>loadedBuild</label>
@@ -866,7 +867,7 @@
       <label>taskTemporaryDirectory</label>
       <description>Directory used for temporary files for tasks that is deleted after each task execution.</description>
       <rank>10000</rank>
-      <value>/var/folders/5k/4b5my29x26q_dhrys3ghf9wh0000gn/T/sbt_3bac910</value>
+      <value>/var/folders/5k/4b5my29x26q_dhrys3ghf9wh0000gn/T/sbt_d59478ee</value>
     </setting>
     <setting>
       <label>configuration</label>
