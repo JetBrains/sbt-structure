@@ -73,7 +73,7 @@ trait DataSerializers {
   implicit val buildDataSerializer: XmlSerializer[BuildData] = new XmlSerializer[BuildData] {
     override def serialize(what: BuildData): Elem =
       <build>
-        {<uri>what.uri.toString</uri>}
+        <uri>{what.uri.toString}</uri>
         {what.imports.map { it =>
         <import>{it}</import>
       }}{what.classes.map(_.path).sorted.map { it =>
