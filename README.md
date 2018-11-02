@@ -55,7 +55,7 @@ addSbtPlugin("org.jetbrains" % "sbt-structure-extractor" % "<version>")
 
 Then from the sbt shell run:
 
-    */*:dump-structure
+    */*:dumpStructure
     
 This will output the xml directly to the shell.
 
@@ -76,7 +76,7 @@ Extractor is run in several steps:
 - Configure it by defining `sbt-structure-output-file` and
   `sbt-structure-options` settings in `Global` scope.
 - Create necessary tasks by applying extractor's jar to your project
-- Run `dump-structure` task in `Global` scope
+- Run `dumpStructure` task in `Global` scope
 
 Here is an example of how to run extractor from sbt REPL:
 
@@ -84,7 +84,7 @@ Here is an example of how to run extractor from sbt REPL:
 set SettingKey[Option[File]]("sbtStructureOutputFile") in Global := Some(file("structure.xml"))
 set SettingKey[String]("sbtStructureOptions") in Global := "prettyPrint download"
 apply -cp <path-to-extractor-jar> org.jetbrains.sbt.CreateTasks
-*/*:dump-structure
+*/*:dumpStructure
 ```
 
 #### Settings
