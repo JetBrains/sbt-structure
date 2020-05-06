@@ -45,7 +45,7 @@ lazy val extractor = newProject("extractor")
       "org.specs2" %% "specs2-matcher-extra" % "3.10.0" % "test"
     ),
     // used only for testing, see publishVersions for versions that are actually used to publish artifacts
-    crossSbtVersions := Seq("0.13.0", "0.13.9", "0.13.13"),
+    crossSbtVersions := Seq("0.13.9", "0.13.13"),
     testSetup := {
       System.setProperty(
         "structure.sbtversion.full",

@@ -18,60 +18,87 @@ class ImportSpec extends Specification with XmlMatchers with FileMatchers {
   "Actual structure" should {
     sequential // running 10 sbt instances at once is a bad idea unless you have >16G of ram
 
-    equalExpectedOneIn("bare", options="resolveClassifiers resolveSbtClassifiers")
-    equalExpectedOneIn("dependency")
-    equalExpectedOneIn("multiple")
-    equalExpectedOneIn("simple", options="resolveClassifiers resolveSbtClassifiers")
-    equalExpectedOneIn("classifiers", onlyFor013)
-    equalExpectedOneIn("optional", onlyFor013)
+    equalExpectedOneIn(
+      "bare",
+      options = "resolveClassifiers resolveSbtClassifiers",
+      conditions = onlyFor("0.13.9", "0.13.13")
+    )
+    equalExpectedOneIn("dependency", onlyFor("0.13.9", "0.13.13"))
+    equalExpectedOneIn("multiple", onlyFor("0.13.9", "0.13.13"))
+    equalExpectedOneIn(
+      "simple",
+      options = "resolveClassifiers resolveSbtClassifiers",
+      conditions = onlyFor("0.13.9", "0.13.13")
+    )
+    equalExpectedOneIn("classifiers", onlyFor("0.13.9", "0.13.13"))
+    equalExpectedOneIn("optional", onlyFor("0.13.9", "0.13.13"))
     equalExpectedOneIn("play", onlyFor("0.13.9", "0.13.13"), options = "")
     equalExpectedOneIn("ide-settings", onlyFor("0.13.9", "0.13.13"))
-    equalExpectedOneIn("sbt-idea", onlyFor013)
-    equalExpectedOneIn("custom-test-config", onlyFor("0.13.0", "0.13.13"))
+    equalExpectedOneIn("sbt-idea", onlyFor("0.13.9", "0.13.13"))
+    equalExpectedOneIn("custom-test-config", onlyFor("0.13.13"))
 
 //    equalExpectedOneIn("android-1.4", onlyFor("0.13.9") and ifAndroidDefined)
-//    equalExpectedOneIn("android", onlyFor("0.13.0", "0.13.9") and ifAndroidDefined)
+//    equalExpectedOneIn("android", onlyFor("0.13.9") and ifAndroidDefined)
 //    equalExpectedOneIn("android-1.6", onlyFor("0.13.13") and ifAndroidDefined)
   }
-
 
   private val SbtVersion = System.getProperty("structure.sbtversion.short")
   private val SbtVersionFull = System.getProperty("structure.sbtversion.full")
   private val ScalaVersion = System.getProperty("structure.scalaversion")
 
-  private val PluginFile = new File("extractor/target/scala-" + ScalaVersion + "/sbt-" + SbtVersion +"/classes/").getCanonicalFile
+  private val PluginFile = new File(
+    "extractor/target/scala-" + ScalaVersion + "/sbt-" + SbtVersion + "/classes/"
+  ).getCanonicalFile
 
-  private val sbtGlobalRoot = new File(System.getProperty("user.home"), ".sbt-structure-global/").getCanonicalFile
-  private val sbtGlobalBase = new File(sbtGlobalRoot, SbtVersion).getCanonicalFile
+  private val sbtGlobalRoot = new File(
+    System.getProperty("user.home"),
+    ".sbt-structure-global/"
+  ).getCanonicalFile
+  private val sbtGlobalBase =
+    new File(sbtGlobalRoot, SbtVersion).getCanonicalFile
   private val sbtBootDir = new File(sbtGlobalRoot, "boot/").getCanonicalFile
   private val sbtIvyHome = new File(sbtGlobalRoot, "ivy2/").getCanonicalFile
 
   private val TestDataRoot = new File("extractor/src/test/data/" + SbtVersion).getCanonicalFile
-  private val AndroidHome = Option(System.getenv.get("ANDROID_HOME")).map(new File(_).getCanonicalFile)
+  private val AndroidHome =
+    Option(System.getenv.get("ANDROID_HOME")).map(new File(_).getCanonicalFile)
   // assuming user.home is always defined
   private val UserHome = new File(System.getProperty("user.home")).getCanonicalFile
 
-  private def equalExpectedOneIn(projectName: String, conditions: => MatchResult[Any] = always,
-                                 options: String = "resolveClassifiers resolveSbtClassifiers resolveJavadocs") =
-    ("equal expected one in '" + projectName + "' project [" + SbtVersionFull + "]").in { _: String =>
-      if (conditions.isSuccess)
-        testProject(projectName, options)
-      else
-        conditions
-    }
+  private def equalExpectedOneIn(
+    projectName: String,
+    conditions: => MatchResult[Any] = always,
+    options: String = "resolveClassifiers resolveSbtClassifiers resolveJavadocs"
+  ) =
+    ("equal expected one in '" + projectName + "' project [" + SbtVersionFull + "]")
+      .in { _: String =>
+        if (conditions.isSuccess)
+          testProject(projectName, options)
+        else
+          conditions
+      }
 
-  private def testProject(project: String, options: String): MatchResult[Elem] = {
+  private def testProject(project: String,
+                          options: String): MatchResult[Elem] = {
     val base = new File(TestDataRoot, project)
 
-    def structureFileName(suffix: String) = "structure-" + SbtVersionFull + suffix + ".xml"
+    def structureFileName(suffix: String) =
+      "structure-" + SbtVersionFull + suffix + ".xml"
     val testDataFile = new File(base, structureFileName(""))
 
-    testDataFile must exist.setMessage("No test data for version " + SbtVersionFull + " found at " + testDataFile.getPath)
+    testDataFile must exist.setMessage(
+      "No test data for version " + SbtVersionFull + " found at " + testDataFile.getPath
+    )
 
     val expectedStr = getExpectedStr(testDataFile, base)
     val actualStr = Loader.load(
-      base, options, SbtVersionFull, pluginFile = PluginFile,
-      sbtGlobalBase = sbtGlobalBase, sbtBootDir = sbtBootDir, sbtIvyHome = sbtIvyHome
+      base,
+      options,
+      SbtVersionFull,
+      pluginFile = PluginFile,
+      sbtGlobalBase = sbtGlobalBase,
+      sbtBootDir = sbtBootDir,
+      sbtIvyHome = sbtIvyHome
     )
 
     val actualXml = loadSanitizedXml(actualStr)
@@ -80,8 +107,15 @@ class ImportSpec extends Specification with XmlMatchers with FileMatchers {
     val actual = actualXml.deserialize[StructureData].right.get
     val expected = expectedXml.deserialize[StructureData].right.get
 
-    def formatErrorMessage(message: String, expected: String, actual: String): String =
-      String.format("Project: %s %n%s %n%s", project, message, getDiff(expected, actual))
+    def formatErrorMessage(message: String,
+                           expected: String,
+                           actual: String): String =
+      String.format(
+        "Project: %s %n%s %n%s",
+        project,
+        message,
+        getDiff(expected, actual)
+      )
 
     def onFail(): Unit = {
       dumpToFile(new File(base, structureFileName("-actual")), actualStr)
@@ -99,13 +133,16 @@ class ImportSpec extends Specification with XmlMatchers with FileMatchers {
       val expectedPretty = prettyPrintCaseClass(expected)
       dumpToFile(new File(base, "actual.txt"), actualPretty)
       dumpToFile(new File(base, "expected.txt"), expectedPretty)
-      val errorMessage = "Objects are not equal, compare 'actual.txt' and 'expected.txt'"
+      val errorMessage =
+        "Objects are not equal, compare 'actual.txt' and 'expected.txt'"
 
       formatErrorMessage(errorMessage, expectedPretty, actualPretty)
     }
 
     (actual == expected) must beTrue.updateMessage(_ => onEqualsFail)
-    actualXml must beEqualToIgnoringSpace(expectedXml).updateMessage(_ => onXmlFail)
+    actualXml must beEqualToIgnoringSpace(expectedXml).updateMessage(
+      _ => onXmlFail
+    )
   }
 
   private val xmlSanitizer = {
@@ -132,23 +169,40 @@ class ImportSpec extends Specification with XmlMatchers with FileMatchers {
     }
   }
 
-  private def canon(path: String): String = path.stripSuffix("/").stripSuffix("\\")
+  private def canon(path: String): String =
+    path.stripSuffix("/").stripSuffix("\\")
 
   private def getExpectedStr(testDataFile: File, base: File): String = {
-    val raw = TestUtil.read(testDataFile)
+    val raw = TestUtil
+      .read(testDataFile)
       .replace("$URI_BASE", base.getCanonicalFile.toURI.toString)
       .replace("$BASE", base.getCanonicalPath)
-      .replace("$URI_ANDROID_HOME", AndroidHome.map(p => canon(p.toURI.toString)).getOrElse(""))
-      .replace("$ANDROID_HOME", AndroidHome.map(p => canon(p.toString)).getOrElse(""))
+      .replace(
+        "$URI_ANDROID_HOME",
+        AndroidHome.map(p => canon(p.toURI.toString)).getOrElse("")
+      )
+      .replace(
+        "$ANDROID_HOME",
+        AndroidHome.map(p => canon(p.toString)).getOrElse("")
+      )
       .replace("$IVY2", sbtIvyHome.getCanonicalPath)
       .replace("$SBT_BOOT", sbtBootDir.getCanonicalPath)
       .replace("$HOME", UserHome.getCanonicalPath)
     // re-serialize and deserialize again to normalize all system-dependent paths
     try {
-      XML.loadString(raw).deserialize[StructureData].right.get.serialize.mkString
+      XML
+        .loadString(raw)
+        .deserialize[StructureData]
+        .right
+        .get
+        .serialize
+        .mkString
     } catch {
       case x: Exception =>
-        throw new RuntimeException("unable to read test data from " + testDataFile.getAbsolutePath, x)
+        throw new RuntimeException(
+          "unable to read test data from " + testDataFile.getAbsolutePath,
+          x
+        )
     }
   }
 
@@ -181,16 +235,19 @@ class ImportSpec extends Specification with XmlMatchers with FileMatchers {
   private def prettyPrintCaseClass(toPrint: Product): String = {
     val indentStep = "  "
     def print0(what: Any, indent: String): String = what match {
-      case p : Product =>
+      case p: Product =>
         if (p.productArity == 0) {
           indent + p.productPrefix
         } else {
           indent + p.productPrefix + ":\n" +
-            p.productIterator.map {
-              case s : Seq[_] => s.map(x => print0(x, indent + indentStep)).mkString("\n")
-              case pp : Product => print0(pp, indent + indentStep)
-              case other => indent + indentStep + other.toString
-            }.mkString("\n")
+            p.productIterator
+              .map {
+                case s: Seq[_] =>
+                  s.map(x => print0(x, indent + indentStep)).mkString("\n")
+                case pp: Product => print0(pp, indent + indentStep)
+                case other       => indent + indentStep + other.toString
+              }
+              .mkString("\n")
         }
       case other => indent + other.toString
     }
@@ -199,15 +256,19 @@ class ImportSpec extends Specification with XmlMatchers with FileMatchers {
   }
 
   private def onlyFor013 =
-    SbtVersionFull must startWith ("0.13")
-        .orSkip(_ => "This test is only for SBT version 0.13.x")
+    SbtVersionFull must startWith("0.13")
+      .orSkip(_ => "This test is only for SBT version 0.13.x")
 
   private def onlyFor(versions: String*): MatchResult[Seq[String]] =
     versions must contain[String](SbtVersionFull)
       .orSkip(_ => "This test is for SBT " + versions.mkString(", ") + " only")
 
   private def notFor(versions: String*) =
-    versions must not (contain[String](SbtVersionFull)).orSkip(_ => "This test is not applicable for SBT versions " + versions.mkString(", "))
+    versions must not(contain[String](SbtVersionFull)).orSkip(
+      _ =>
+        "This test is not applicable for SBT versions " + versions
+          .mkString(", ")
+    )
 
   private def ifAndroidDefined =
     AndroidHome must beSome.orSkip(_ => "ANDROID_HOME is not defined")

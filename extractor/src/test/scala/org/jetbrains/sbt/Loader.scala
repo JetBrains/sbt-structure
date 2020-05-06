@@ -5,28 +5,40 @@ import java.io.{File, FileWriter, PrintWriter}
 import scala.io.Source
 
 /**
- * @author Pavel Fatin
- * @author Nikolay Obedin
- */
+  * @author Pavel Fatin
+  * @author Nikolay Obedin
+  */
 object Loader {
-  private val JavaVM = path(new File(new File(new File(System.getProperty("java.home")), "bin"), "java"))
+  private val JavaVM = path(
+    new File(new File(new File(System.getProperty("java.home")), "bin"), "java")
+  )
   private val SbtLauncher = path(new File("sbt-launch.jar"))
 
-  def load(project: File, options: String, sbtVersion: String, pluginFile: File,
-           sbtGlobalBase: File, sbtBootDir: File, sbtIvyHome: File,
+  def load(project: File,
+           options: String,
+           sbtVersion: String,
+           pluginFile: File,
+           sbtGlobalBase: File,
+           sbtBootDir: File,
+           sbtIvyHome: File,
            verbose: Boolean = false): String = {
     val structureFile = createTempFile("sbt-structure", ".xml")
     val commandsFile = createTempFile("sbt-commands", ".lst")
 
     val opts = "download prettyPrint " + options
 
-    writeLinesTo(commandsFile,
-      "set SettingKey[Option[File]](\"sbtStructureOutputFile\") in Global := Some(file(\"" + path(structureFile) + "\"))",
+    writeLinesTo(
+      commandsFile,
+      "set SettingKey[Option[File]](\"sbtStructureOutputFile\") in Global := Some(file(\"" + path(
+        structureFile
+      ) + "\"))",
       "set SettingKey[String](\"sbtStructureOptions\") in Global := \"" + opts + "\"",
       "apply -cp " + path(pluginFile) + " org.jetbrains.sbt.CreateTasks",
-      "*/*:dumpStructure")
+      "*/*:dumpStructure"
+    )
 
-    val commands = Seq(JavaVM,
+    val commands = Seq(
+      JavaVM,
 //      "-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=5005",
       "-Dsbt.log.noformat=true",
       "-Dsbt.version=" + sbtVersion,
@@ -35,15 +47,23 @@ object Loader {
       "-Dsbt.global.base=" + sbtGlobalBase,
       "-Dsbt.boot.directory=" + sbtBootDir,
       "-Dsbt.ivy.home=" + sbtIvyHome,
-      "-jar", SbtLauncher,
-      "< " + path(commandsFile))
+      "-jar",
+      SbtLauncher,
+      "< " + path(commandsFile)
+    )
 
     run(commands, project, verbose)
 
-    assert(structureFile.exists, "File must be created: " + structureFile.getPath)
+    assert(
+      structureFile.exists,
+      "File must be created: " + structureFile.getPath
+    )
 
     val structureString = TestUtil.read(structureFile)
-    assert(structureString.nonEmpty, "structure dump was empty for project " + project.getPath)
+    assert(
+      structureString.nonEmpty,
+      "structure dump was empty for project " + project.getPath
+    )
     structureString
   }
 
@@ -67,7 +87,10 @@ object Loader {
     val stdinThread = inThread {
       Source.fromInputStream(process.getInputStream).getLines().foreach { it =>
         if (verbose) System.out.println("stdout: " + it) else ()
-        if (it.startsWith("[error]")) process.destroy()
+        if (it.startsWith("[error]")) {
+          System.out.println(s"error running sbt in $directory:\n" + it)
+          process.destroy()
+        }
       }
     }
 
