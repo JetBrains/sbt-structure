@@ -330,6 +330,7 @@
       <module configurations="compile" organization="xerces" name="xercesImpl" revision="2.11.0" artifactType="jar" classifier=""/>
       <module configurations="compile" organization="xml-apis" name="xml-apis" revision="1.4.01" artifactType="jar" classifier=""/>
     </dependencies>
+    <resolver name="local-preloaded" root="file:$HOME/.sbt-structure-global/0.13.9/preloaded"/>
     <resolver name="public" root="https://repo1.maven.org/maven2/"/>
     <resolver name="Typesafe Releases Repository" root="https://repo.typesafe.com/typesafe/releases/"/>
     <play2>
@@ -501,7 +502,7 @@
       <label>testResultLogger</label>
       <description>Logs results after a test task completes.</description>
       <rank>20000</rank>
-      <value>Main(&lt;function1&gt;,sbt.TestResultLogger$$anon$1@58e42365,sbt.TestResultLogger$$anon$1@65f7e451,sbt.Tes...</value>
+      <value>Main(&lt;function1&gt;,sbt.TestResultLogger$$anon$1@5932b863,sbt.TestResultLogger$$anon$1@2d508d72,sbt.Tes...</value>
     </setting>
     <setting>
       <label>loadedBuild</label>
@@ -587,7 +588,7 @@
       <label>wdParallelism</label>
       <description>The number of parallel tasks for the webdriver host. Defaults to the # of available processors + 1 to keep things busy.</description>
       <rank>25</rank>
-      <value>9</value>
+      <value>17</value>
     </setting>
     <setting>
       <label>excludeDependencies</label>
@@ -646,7 +647,7 @@
       <label>wixProductUpgradeId</label>
       <description>The uuid associated with upgrades for this package.</description>
       <rank>25</rank>
-      <value>4185ca94-580b-4f76-98ef-1ab51298dd4d</value>
+      <value>2a1eb89e-c6d1-4e05-a2b0-11a375ae7ebd</value>
     </setting>
     <setting>
       <label>debianSection</label>
@@ -715,7 +716,7 @@
       <label>eclipsePreTasks</label>
       <description>The tasks to be evaluated prior to creating the Eclipse project definition.</description>
       <rank>25</rank>
-      <value>List(sbt.Scoped$$anon$2@144d889e)</value>
+      <value>List(sbt.Scoped$$anon$2@47cb6207)</value>
     </setting>
     <setting>
       <label>ideaExtraFacets</label>
@@ -847,7 +848,7 @@
       <label>wixProductId</label>
       <description>The uuid of the windows package.</description>
       <rank>25</rank>
-      <value>fc3ff5f0-e443-42f6-b8ad-f50e80c7fbc0</value>
+      <value>00f6ca28-fc00-4764-9897-ce337a2d1d6e</value>
     </setting>
     <setting>
       <label>scmInfo</label>
@@ -1021,7 +1022,7 @@
       <label>jseParallelism</label>
       <description>The number of parallel tasks for the JavaScript engine. Defaults to the # of available processors + 1 to keep things busy.</description>
       <rank>25</rank>
-      <value>9</value>
+      <value>17</value>
     </setting>
     <setting>
       <label>ideaProjectName</label>
@@ -1101,7 +1102,7 @@
       <label>wixPackageInfo</label>
       <description>The configuration for this package.</description>
       <rank>25</rank>
-      <value>WindowsProductInfo(fc3ff5f0-e443-42f6-b8ad-f50e80c7fbc0,,1.0.0-SNAPSHOT,,,4185ca94-580b-4f76-98ef-1a...</value>
+      <value>WindowsProductInfo(00f6ca28-fc00-4764-9897-ce337a2d1d6e,,1.0.0-SNAPSHOT,,,2a1eb89e-c6d1-4e05-a2b0-11...</value>
     </setting>
     <setting>
       <label>autoCompilerPlugins</label>
@@ -1278,7 +1279,7 @@
       <label>eclipseClasspathTransformerFactory</label>
       <description>Factories for a rewrite rule for the .classpath file.</description>
       <rank>25</rank>
-      <value>List(play.PlayEclipse$$anon$6@cf64ce4)</value>
+      <value>List(play.PlayEclipse$$anon$6@7656107c)</value>
     </setting>
     <setting>
       <label>scalaVersion</label>
@@ -1718,7 +1719,7 @@
       <label>taskTemporaryDirectory</label>
       <description>Directory used for temporary files for tasks that is deleted after each task execution.</description>
       <rank>10000</rank>
-      <value>/var/folders/5k/4b5my29x26q_dhrys3ghf9wh0000gn/T/sbt_243930d5</value>
+      <value>/var/folders/5k/4b5my29x26q_dhrys3ghf9wh0000gn/T/sbt_7e1d05df</value>
     </setting>
     <setting>
       <label>configuration</label>

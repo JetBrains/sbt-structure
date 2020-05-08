@@ -153,6 +153,7 @@
     <dependencies>
       <module configurations="compile" organization="org.scala-lang" name="scala-library" revision="2.10.1" artifactType="jar" classifier=""/>
     </dependencies>
+    <resolver name="local-preloaded" root="file:$HOME/.sbt-structure-global/0.13.9/preloaded"/>
     <resolver name="public" root="https://repo1.maven.org/maven2/"/>
     <setting>
       <label>dependencyOverrides</label>
@@ -244,7 +245,7 @@
       <label>testResultLogger</label>
       <description>Logs results after a test task completes.</description>
       <rank>20000</rank>
-      <value>Main(&lt;function1&gt;,sbt.TestResultLogger$$anon$1@53692752,sbt.TestResultLogger$$anon$1@339b4939,sbt.Tes...</value>
+      <value>Main(&lt;function1&gt;,sbt.TestResultLogger$$anon$1@65dad6a1,sbt.TestResultLogger$$anon$1@5206ec7,sbt.Test...</value>
     </setting>
     <setting>
       <label>loadedBuild</label>
@@ -867,7 +868,7 @@
       <label>taskTemporaryDirectory</label>
       <description>Directory used for temporary files for tasks that is deleted after each task execution.</description>
       <rank>10000</rank>
-      <value>/var/folders/5k/4b5my29x26q_dhrys3ghf9wh0000gn/T/sbt_d59478ee</value>
+      <value>/var/folders/5k/4b5my29x26q_dhrys3ghf9wh0000gn/T/sbt_b9e0cf69</value>
     </setting>
     <setting>
       <label>configuration</label>

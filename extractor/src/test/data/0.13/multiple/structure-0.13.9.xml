@@ -148,6 +148,7 @@
       <project buildURI="$URI_BASE" configurations="">bar</project>
       <module configurations="compile" organization="org.scala-lang" name="scala-library" revision="2.10.1" artifactType="jar" classifier=""/>
     </dependencies>
+    <resolver name="local-preloaded" root="file:$HOME/.sbt-structure-global/0.13.9/preloaded"/>
     <resolver name="public" root="https://repo1.maven.org/maven2/"/>
     <setting>
       <label>dependencyOverrides</label>
@@ -239,7 +240,7 @@
       <label>testResultLogger</label>
       <description>Logs results after a test task completes.</description>
       <rank>20000</rank>
-      <value>Main(&lt;function1&gt;,sbt.TestResultLogger$$anon$1@e8f00a1,sbt.TestResultLogger$$anon$1@5072a30b,sbt.Test...</value>
+      <value>Main(&lt;function1&gt;,sbt.TestResultLogger$$anon$1@d0c8967,sbt.TestResultLogger$$anon$1@246d8439,sbt.Test...</value>
     </setting>
     <setting>
       <label>loadedBuild</label>
@@ -856,7 +857,7 @@
       <label>taskTemporaryDirectory</label>
       <description>Directory used for temporary files for tasks that is deleted after each task execution.</description>
       <rank>10000</rank>
-      <value>/var/folders/5k/4b5my29x26q_dhrys3ghf9wh0000gn/T/sbt_823a22e5</value>
+      <value>/var/folders/5k/4b5my29x26q_dhrys3ghf9wh0000gn/T/sbt_58a62c61</value>
     </setting>
     <setting>
       <label>configuration</label>
@@ -1743,6 +1744,7 @@
     <dependencies>
       <module configurations="compile" organization="org.scala-lang" name="scala-library" revision="2.10.1" artifactType="jar" classifier=""/>
     </dependencies>
+    <resolver name="local-preloaded" root="file:$HOME/.sbt-structure-global/0.13.9/preloaded"/>
     <resolver name="public" root="https://repo1.maven.org/maven2/"/>
     <setting>
       <label>dependencyOverrides</label>
@@ -1834,7 +1836,7 @@
       <label>testResultLogger</label>
       <description>Logs results after a test task completes.</description>
       <rank>20000</rank>
-      <value>Main(&lt;function1&gt;,sbt.TestResultLogger$$anon$1@e8f00a1,sbt.TestResultLogger$$anon$1@5072a30b,sbt.Test...</value>
+      <value>Main(&lt;function1&gt;,sbt.TestResultLogger$$anon$1@d0c8967,sbt.TestResultLogger$$anon$1@246d8439,sbt.Test...</value>
     </setting>
     <setting>
       <label>loadedBuild</label>
@@ -2451,7 +2453,7 @@
       <label>taskTemporaryDirectory</label>
       <description>Directory used for temporary files for tasks that is deleted after each task execution.</description>
       <rank>10000</rank>
-      <value>/var/folders/5k/4b5my29x26q_dhrys3ghf9wh0000gn/T/sbt_823a22e5</value>
+      <value>/var/folders/5k/4b5my29x26q_dhrys3ghf9wh0000gn/T/sbt_58a62c61</value>
     </setting>
     <setting>
       <label>configuration</label>
@@ -3337,6 +3339,7 @@
     <dependencies>
       <module configurations="compile" organization="org.scala-lang" name="scala-library" revision="2.9.2" artifactType="jar" classifier=""/>
     </dependencies>
+    <resolver name="local-preloaded" root="file:$HOME/.sbt-structure-global/0.13.9/preloaded"/>
     <resolver name="public" root="https://repo1.maven.org/maven2/"/>
     <setting>
       <label>dependencyOverrides</label>
@@ -3428,7 +3431,7 @@
       <label>testResultLogger</label>
       <description>Logs results after a test task completes.</description>
       <rank>20000</rank>
-      <value>Main(&lt;function1&gt;,sbt.TestResultLogger$$anon$1@e8f00a1,sbt.TestResultLogger$$anon$1@5072a30b,sbt.Test...</value>
+      <value>Main(&lt;function1&gt;,sbt.TestResultLogger$$anon$1@d0c8967,sbt.TestResultLogger$$anon$1@246d8439,sbt.Test...</value>
     </setting>
     <setting>
       <label>loadedBuild</label>
@@ -4045,7 +4048,7 @@
       <label>taskTemporaryDirectory</label>
       <description>Directory used for temporary files for tasks that is deleted after each task execution.</description>
       <rank>10000</rank>
-      <value>/var/folders/5k/4b5my29x26q_dhrys3ghf9wh0000gn/T/sbt_823a22e5</value>
+      <value>/var/folders/5k/4b5my29x26q_dhrys3ghf9wh0000gn/T/sbt_58a62c61</value>
     </setting>
     <setting>
       <label>configuration</label>
