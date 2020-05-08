@@ -26,7 +26,7 @@ Please report any issues related to sbt-structure in IntelliJ on the [IntelliJ S
 Add to your `build.sbt`
 
 ```scala
-resolvers += Resolver.url("jb-bintray", url("http://dl.bintray.com/jetbrains/sbt-plugins"))(Resolver.ivyStylePatterns)
+resolvers += Resolver.url("jb-bintray", url("https://dl.bintray.com/jetbrains/sbt-plugins"))(Resolver.ivyStylePatterns)
 
 libraryDependencies += "org.jetbrains" %% "sbt-structure-core" % "<version>"
 ```

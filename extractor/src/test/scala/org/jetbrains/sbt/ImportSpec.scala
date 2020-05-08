@@ -36,10 +36,6 @@ class ImportSpec extends Specification with XmlMatchers with FileMatchers {
     equalExpectedOneIn("ide-settings", onlyFor("0.13.9", "0.13.13"))
     equalExpectedOneIn("sbt-idea", onlyFor("0.13.9", "0.13.13"))
     equalExpectedOneIn("custom-test-config", onlyFor("0.13.13"))
-
-//    equalExpectedOneIn("android-1.4", onlyFor("0.13.9") and ifAndroidDefined)
-//    equalExpectedOneIn("android", onlyFor("0.13.9") and ifAndroidDefined)
-//    equalExpectedOneIn("android-1.6", onlyFor("0.13.13") and ifAndroidDefined)
   }
 
   private val SbtVersion = System.getProperty("structure.sbtversion.short")
@@ -91,15 +87,18 @@ class ImportSpec extends Specification with XmlMatchers with FileMatchers {
     )
 
     val expectedStr = getExpectedStr(testDataFile, base)
-    val actualStr = Loader.load(
-      base,
-      options,
-      SbtVersionFull,
-      pluginFile = PluginFile,
-      sbtGlobalBase = sbtGlobalBase,
-      sbtBootDir = sbtBootDir,
-      sbtIvyHome = sbtIvyHome
-    )
+      .replaceAll("file:/.*/preloaded", "file:/dummy/preloaded")
+    val actualStr = Loader
+      .load(
+        base,
+        options,
+        SbtVersionFull,
+        pluginFile = PluginFile,
+        sbtGlobalBase = sbtGlobalBase,
+        sbtBootDir = sbtBootDir,
+        sbtIvyHome = sbtIvyHome
+      )
+      .replaceAll("file:/.*/preloaded", "file:/dummy/preloaded")
 
     val actualXml = loadSanitizedXml(actualStr)
     val expectedXml = loadSanitizedXml(expectedStr)

@@ -1,8 +1,6 @@
 package sbt.jetbrains
 
-import org.jetbrains.sbt.structure.ResolverData
-import sbt.{ConfigurationReport, MavenRepository, Reference, Scope, Select, Zero}
-import sbt.librarymanagement.GetClassifiersModule
+import sbt.{ConfigurationReport, Reference, Scope, Select, Zero}
 
 /**
   * Hacky workaround for some types having been moved to internal in sbt 1.0.
@@ -18,9 +16,15 @@ object apiAdapter {
   type ScalaInstance = sbt.internal.inc.ScalaInstance
   type MavenRepository = sbt.librarymanagement.MavenRepository
 
+  val Using = sbt.io.Using
+  val IO = sbt.io.IO
+
+  val buildDependencies = sbt.internal.BuildDependencies.apply _
 
   // copied from sbt.internal.Load
-  def projectScope(project: Reference): Scope = Scope(Select(project), Zero, Zero, Zero)
+  def projectScope(project: Reference): Scope =
+    Scope(Select(project), Zero, Zero, Zero)
 
-  def configReportName(configReport: ConfigurationReport): String = configReport.configuration.name
+  def configReportName(configReport: ConfigurationReport): String =
+    configReport.configuration.name
 }

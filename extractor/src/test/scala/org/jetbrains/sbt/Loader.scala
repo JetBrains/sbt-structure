@@ -1,6 +1,9 @@
 package org.jetbrains.sbt
 
 import java.io.{File, FileWriter, PrintWriter}
+import java.net.URL
+
+import sbt.jetbrains.apiAdapter._
 
 import scala.io.Source
 
@@ -12,7 +15,21 @@ object Loader {
   private val JavaVM = path(
     new File(new File(new File(System.getProperty("java.home")), "bin"), "java")
   )
-  private val SbtLauncher = path(new File("sbt-launch.jar"))
+
+  private def sbtLauncher = {
+    val launcher = new File("sbt-launch.jar")
+
+    if (!launcher.exists())
+      Using.urlInputStream(
+        new URL(
+          "https://repo1.maven.org/maven2/org/scala-sbt/sbt-launch/1.3.10/sbt-launch-1.3.10.jar"
+        )
+      ) { in =>
+        IO.transfer(in, launcher)
+      }
+
+    path(launcher)
+  }
 
   def load(project: File,
            options: String,
@@ -21,7 +38,7 @@ object Loader {
            sbtGlobalBase: File,
            sbtBootDir: File,
            sbtIvyHome: File,
-           verbose: Boolean = false): String = {
+           verbose: Boolean = true): String = {
     val structureFile = createTempFile("sbt-structure", ".xml")
     val commandsFile = createTempFile("sbt-commands", ".lst")
 
@@ -48,7 +65,7 @@ object Loader {
       "-Dsbt.boot.directory=" + sbtBootDir,
       "-Dsbt.ivy.home=" + sbtIvyHome,
       "-jar",
-      SbtLauncher,
+      sbtLauncher,
       "< " + path(commandsFile)
     )
 
