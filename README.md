@@ -61,7 +61,7 @@ This will output the xml directly to the shell.
 
 To write the xml to a file, run:
 
-    set org.jetbrains.sbt.StrcutureKeys.sbtStructureOptions in Global := "prettyPrint download"
+    set org.jetbrains.sbt.StructureKeys.sbtStructureOptions in Global := "prettyPrint download"
     */*:dumpStructureTo structure.xml
     
 The `dumpStructure` task uses the settings described below, the `dumpStructureTo` task takes `sbtStructureFile` as parameter instead.
