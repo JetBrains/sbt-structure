@@ -14,6 +14,7 @@ object MyBuild extends Build {
     scalaVersion := "2.10.1",
     scalacOptions := Seq("-s1", "-s2"),
     ideExcludedDirectories := Seq(file(".idea")),
+    idePackagePrefix := Some("org.example.application"),
     ideBasePackages := Seq("org.jetbrains", "org.intellij")
   )
 

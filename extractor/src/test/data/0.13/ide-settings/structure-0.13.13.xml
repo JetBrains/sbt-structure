@@ -63,7 +63,7 @@
     <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/testing-0.13.13.jar</classes>
     <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/tracking-0.13.13.jar</classes>
     <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/xsbti/interface-0.13.13.jar</classes>
-    <classes>$IVY2/cache/scala_2.10/sbt_0.13/org.jetbrains/sbt-ide-settings/jars/sbt-ide-settings-0.1.2.jar</classes>
+    <classes>$IVY2/cache/scala_2.10/sbt_0.13/org.jetbrains/sbt-ide-settings/jars/sbt-ide-settings-1.1.0.jar</classes>
     <sources>$IVY2/cache/com.jcraft/jsch/srcs/jsch-0.1.50-sources.jar</sources>
     <sources>$IVY2/cache/com.thoughtworks.paranamer/paranamer/srcs/paranamer-2.6-sources.jar</sources>
     <sources>$IVY2/cache/jline/jline/srcs/jline-2.13-sources.jar</sources>
@@ -116,7 +116,7 @@
     <sources>$IVY2/cache/org.scalamacros/quasiquotes_2.10/srcs/quasiquotes_2.10-2.0.1-sources.jar</sources>
     <sources>$IVY2/cache/org.spire-math/jawn-parser_2.10/srcs/jawn-parser_2.10-0.6.0-sources.jar</sources>
     <sources>$IVY2/cache/org.spire-math/json4s-support_2.10/srcs/json4s-support_2.10-0.6.0-sources.jar</sources>
-    <sources>$IVY2/cache/scala_2.10/sbt_0.13/org.jetbrains/sbt-ide-settings/srcs/sbt-ide-settings-0.1.2-sources.jar</sources>
+    <sources>$IVY2/cache/scala_2.10/sbt_0.13/org.jetbrains/sbt-ide-settings/srcs/sbt-ide-settings-1.1.0-sources.jar</sources>
   </build>
   <project>
     <id>ideSettings</id>
@@ -125,6 +125,7 @@
     <organization>some-organization</organization>
     <version>1.2.3</version>
     <base>$BASE</base>
+    <packagePrefix>org.example.application</packagePrefix>
     <basePackage>org.jetbrains</basePackage>
     <basePackage>org.intellij</basePackage>
     <target>$BASE/target</target>

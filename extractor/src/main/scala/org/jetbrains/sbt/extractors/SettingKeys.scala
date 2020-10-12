@@ -8,6 +8,7 @@ import sbt.SettingKey
  * @since 4/10/15.
  */
 object SettingKeys {
+  val idePackagePrefix: SettingKey[Option[String]] = SettingKey[Option[String]]("ide-package-prefix")
   val ideBasePackages: SettingKey[Seq[String]] = SettingKey[Seq[String]]("ide-base-packages")
   val ideExcludedDirectories: SettingKey[Seq[File]] = SettingKey[Seq[File]]("ide-excluded-directories")
   val ideSkipProject: SettingKey[Boolean] = SettingKey[Boolean]("ide-skip-project")

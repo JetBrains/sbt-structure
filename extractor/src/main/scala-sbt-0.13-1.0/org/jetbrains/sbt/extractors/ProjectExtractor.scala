@@ -18,6 +18,7 @@ class ProjectExtractor(
   version: String,
   base: File,
   target: File,
+  packagePrefix: Option[String],
   basePackages: Seq[String],
   allResolvers: Seq[Resolver],
   classDirectory: sbt.Configuration => Option[File],
@@ -60,6 +61,7 @@ class ProjectExtractor(
       organization,
       version,
       base,
+      packagePrefix,
       basePackages,
       target,
       configurations,
@@ -179,6 +181,9 @@ object ProjectExtractor extends SbtStateOps with TaskOps {
     implicit val state: State = Keys.state.value
     implicit val projectRef: ProjectRef = sbt.Keys.thisProjectRef.value
 
+    val idePackagePrefix =
+      SettingKeys.idePackagePrefix.in(projectRef).find(state).flatten
+
     val basePackages =
       SettingKeys.ideBasePackages
         .in(projectRef)
@@ -242,6 +247,7 @@ object ProjectExtractor extends SbtStateOps with TaskOps {
         version,
         base,
         target,
+        idePackagePrefix,
         basePackages,
         Keys.fullResolvers.value,
         classDirectory,

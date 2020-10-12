@@ -70,7 +70,7 @@ object AndroidSdkPluginExtractor extends SbtStateOps with TaskOps  {
       fixedLibName,
       "sbt-android-synthetic-organization",
       "0.1-SNAPSHOT-sbt-android",
-      lib.layout.base, Nil, lib.layout.bin,
+      lib.layout.base, None, Nil, lib.layout.bin,
       ConfigurationData("compile",
         Seq(DirectoryData(lib.layout.sources, managed = true)),
         Seq(DirectoryData(lib.layout.resources, managed = true)), Nil, lib.getJarFile) :: Nil, None, None, Some(android),

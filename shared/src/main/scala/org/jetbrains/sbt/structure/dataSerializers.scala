@@ -446,6 +446,7 @@ trait DataSerializers {
         <organization>{what.organization}</organization>
         <version>{what.version}</version>
         <base>{what.base.path}</base>
+        {what.packagePrefix.map(prefix => <packagePrefix>{prefix}</packagePrefix>).toSeq}
         {what.basePackages.map(name => <basePackage>{name}</basePackage>)}
         <target>{what.target.path}</target>
         {what.java.map(_.serialize).toSeq}
@@ -467,6 +468,7 @@ trait DataSerializers {
       val organization = (what \ "organization").text
       val version = (what \ "version").text
       val base = (what \ "base").text.file
+      val packagePrefix = (what \ "packagePrefix").headOption.map(_.text)
       val basePackages = (what \ "basePackage").map(_.text)
       val target = (what \ "target").text.file
 
@@ -483,7 +485,7 @@ trait DataSerializers {
 
       val tryDeps = (what \ "dependencies").deserializeOne[DependencyData]
       tryDeps.right.map { dependencies =>
-        ProjectData(id, buildURI, name, organization, version, base, basePackages,
+        ProjectData(id, buildURI, name, organization, version, base, packagePrefix, basePackages,
           target, configurations, java, scala, android,
           dependencies, resolvers, play2, settings, tasks, commands)
       }

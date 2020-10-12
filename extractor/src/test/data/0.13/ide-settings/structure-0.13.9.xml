@@ -60,7 +60,7 @@
     <classes>$SBT_BOOT/scala-2.10.5/org.scala-sbt/sbt/0.13.9/testing-0.13.9.jar</classes>
     <classes>$SBT_BOOT/scala-2.10.5/org.scala-sbt/sbt/0.13.9/tracking-0.13.9.jar</classes>
     <classes>$SBT_BOOT/scala-2.10.5/org.scala-sbt/sbt/0.13.9/xsbti/interface-0.13.9.jar</classes>
-    <classes>$IVY2/cache/scala_2.10/sbt_0.13/org.jetbrains/sbt-ide-settings/jars/sbt-ide-settings-0.1.2.jar</classes>
+    <classes>$IVY2/cache/scala_2.10/sbt_0.13/org.jetbrains/sbt-ide-settings/jars/sbt-ide-settings-1.1.0.jar</classes>
     <sources>$IVY2/cache/com.jcraft/jsch/srcs/jsch-0.1.46-sources.jar</sources>
     <sources>$IVY2/cache/com.thoughtworks.paranamer/paranamer/srcs/paranamer-2.6-sources.jar</sources>
     <sources>$IVY2/cache/jline/jline/srcs/jline-2.11-sources.jar</sources>
@@ -113,7 +113,7 @@
     <sources>$IVY2/cache/org.scalamacros/quasiquotes_2.10/srcs/quasiquotes_2.10-2.0.1-sources.jar</sources>
     <sources>$IVY2/cache/org.spire-math/jawn-parser_2.10/srcs/jawn-parser_2.10-0.6.0-sources.jar</sources>
     <sources>$IVY2/cache/org.spire-math/json4s-support_2.10/srcs/json4s-support_2.10-0.6.0-sources.jar</sources>
-    <sources>$IVY2/cache/scala_2.10/sbt_0.13/org.jetbrains/sbt-ide-settings/srcs/sbt-ide-settings-0.1.2-sources.jar</sources>
+    <sources>$IVY2/cache/scala_2.10/sbt_0.13/org.jetbrains/sbt-ide-settings/srcs/sbt-ide-settings-1.1.0-sources.jar</sources>
   </build>
   <project>
     <id>ideSettings</id>
@@ -122,6 +122,7 @@
     <organization>some-organization</organization>
     <version>1.2.3</version>
     <base>$BASE</base>
+    <packagePrefix>org.example.application</packagePrefix>
     <basePackage>org.jetbrains</basePackage>
     <basePackage>org.intellij</basePackage>
     <target>$BASE/target</target>
@@ -856,6 +857,14 @@
       <description>Artifact types that are included on the classpath.</description>
       <rank>40</rank>
       <value>Set(eclipse-plugin, bundle, scala-jar, hk2-jar, orbit, jar)</value>
+    </setting>
+    <setting>
+      <label>idePackagePrefix</label>
+      <description>
+        If package prefix is org.example.application, a PATH is a source directory implies org/example/application/PATH, so you don't have to create explicit org, example, and application subdirectories.
+      </description>
+      <rank>25</rank>
+      <value>Some(org.example.application)</value>
     </setting>
     <setting>
       <label>cleanFiles</label>
@@ -2464,6 +2473,14 @@
       <description>Artifact types that are included on the classpath.</description>
       <rank>40</rank>
       <value>Set(eclipse-plugin, bundle, scala-jar, hk2-jar, orbit, jar)</value>
+    </setting>
+    <setting>
+      <label>idePackagePrefix</label>
+      <description>
+        If package prefix is org.example.application, a PATH is a source directory implies org/example/application/PATH, so you don't have to create explicit org, example, and application subdirectories.
+      </description>
+      <rank>25</rank>
+      <value>Some(org.example.application)</value>
     </setting>
     <setting>
       <label>cleanFiles</label>
