@@ -118,14 +118,14 @@ Available options to set in `sbt-structure-options`:
 - Testing against specific version of sbt, for example, 0.13.7: `^^ 0.13.7 test`
 - Selected tests can be run with `testOnly` command, e.g. `^ testOnly -- -ex "project name"`
 
-To publish artifacts bump version in `build.sbt` and run in sbt REPL:
+To publish artifacts locally bump version in `build.sbt` and run in sbt REPL:
 
-```scala
-project extractor
-^^ 0.12 publish
-^^ 0.13 publish
+```
+publishAllLocal
 ```
    
 ## Compatibility
 
-Sbt 0.12 is built against Scala 2.9 and will not run on JVM 8. To test for 0.12, you need to run sbt with Java 7
+sbt-structure is built and published for sbt 0.13.x and 1.x
+
+sbt-structure-core is built and published for Scala 2.10, 2.11, 2.12, 2.13
