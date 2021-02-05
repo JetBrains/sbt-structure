@@ -1,24 +1,21 @@
 import java.io.File
-
 import CrossVersion.partialVersion
-import sbt.Keys.scalaVersion
+import sbt.Keys.{crossScalaVersions, scalaVersion}
+import sbt.{ThisBuild, url}
+import xerial.sbt.Sonatype.GitHubHosting
 
 def newProject(projectName: String): Project =
   Project(projectName, file(projectName))
     .settings(
       name := "sbt-structure-" + projectName,
-      organization := "org.jetbrains",
-      licenses += ("Apache-2.0", url(
-        "http://www.apache.org/licenses/LICENSE-2.0.html"
-      )),
       unmanagedSourceDirectories in Compile +=
         baseDirectory.value.getParentFile / "shared" / "src" / "main" / "scala",
-      publishMavenStyle := false
-    )
-    .settings(
-      bintrayRepository := "sbt-plugins",
-      bintrayOrganization := Some("jetbrains"),
-      bintrayVcsUrl := Some("https://github.com/jetbrains/sbt-structure")
+
+      // Sonatype settings
+      sonatypeProfileName := "org.jetbrains",
+      homepage := Some(url("https://github.com/JetBrains/sbt-structure")),
+      sonatypeProjectHosting := Some(GitHubHosting("JetBrains", "sbt-structure", "scala-developers@jetbrains.com")),
+      licenses += ("Apache-2.0", url("http://www.apache.org/licenses/LICENSE-2.0"))
     )
 
 def xmlArtifact(scalaVersion: String) =
@@ -45,7 +42,16 @@ lazy val extractor = newProject("extractor")
       "org.specs2" %% "specs2-matcher-extra" % "3.10.0" % "test"
     ),
     // used only for testing, see publishVersions for versions that are actually used to publish artifacts
-    crossSbtVersions := Seq("0.13.9", "0.13.13"),
+    crossSbtVersions   := Nil, // handled by explicitly setting sbtVersion via scalaVersion
+    crossScalaVersions := Seq("2.12.11", "2.10.7"),
+    sbtVersion in pluginCrossBuild := {
+      // keep this as low as possible to avoid running into binary incompatibility such as https://github.com/sbt/sbt/issues/5049
+      scalaBinaryVersion.value match {
+        case "2.10" => "0.13.17"
+        case "2.12" => "1.2.1"
+      }
+    },
+
     testSetup := {
       System.setProperty(
         "structure.sbtversion.full",
@@ -59,8 +65,8 @@ lazy val extractor = newProject("extractor")
     },
     test in Test := (test in Test).dependsOn(testSetup).value,
     testOnly in Test := (testOnly in Test).dependsOn(testSetup).evaluated,
-    name in bintray := "sbt-structure-extractor",
     scalacOptions ++= Seq("-deprecation"),
+
     sources in Compile := {
       val sbtVer = (sbtVersion in pluginCrossBuild).value
       val srcs = (sources in Compile).value
@@ -70,6 +76,7 @@ lazy val extractor = newProject("extractor")
         srcs.filterNot(_.getName == "StructurePlugin.scala")
       else srcs
     },
+
     // I want to share source between 0.13 and 1.0, but not 0.12
     unmanagedSourceDirectories in Compile ++= {
       val sbt013_100_shared = (sourceDirectory in Compile).value / "scala-sbt-0.13-1.0"
@@ -77,6 +84,14 @@ lazy val extractor = newProject("extractor")
         case Some((0, 13)) => Seq(sbt013_100_shared)
         case Some((1, _))  => Seq(sbt013_100_shared)
         case _             => Seq.empty[File]
+      }
+    },
+
+    sbtVersion in pluginCrossBuild := {
+      // keep this as low as possible to avoid running into binary incompatibility such as https://github.com/sbt/sbt/issues/5049
+      scalaBinaryVersion.value match {
+        case "2.10" => "0.13.17"
+        case "2.12" => "1.2.1"
       }
     }
   )
@@ -86,13 +101,13 @@ lazy val sbtStructure = project.in(file(".")).aggregate(core, extractor)
 
 lazy val testSetup = taskKey[Unit]("Setup tests for extractor")
 
+Global / excludeLintKeys += crossSbtVersions
+
 val publishSbtVersions = Seq("0.13.18", "1.1.6")
 val publishAllCommand =
-  "; reload ; project core ; + publish ; project extractor " +
-    publishSbtVersions.map(v => s"; reload ; ^^ $v publish ").mkString
+  "; reload ; project core ; ci-release ; project extractor ; ci-release "
 val publishAllLocalCommand =
-  "; reload ; project core ; + publishLocal ; project extractor " +
-    publishSbtVersions.map(v => s"; reload ; ^^ $v publishLocal ").mkString
+  "; reload ; project core ; + publishLocal ; project extractor ; + publishLocal"
 
 // the ^ sbt-cross operator doesn't work that well for publishing, so we need to be more explicit about the command chain
 addCommandAlias("publishAll", publishAllCommand)
