@@ -1,7 +1,7 @@
 import java.io.File
 import CrossVersion.partialVersion
-import sbt.Keys.{crossScalaVersions, scalaVersion}
-import sbt.{ThisBuild, url}
+import sbt.Keys.{crossScalaVersions, excludeLintKeys, scalaVersion}
+import sbt.url
 import xerial.sbt.Sonatype.GitHubHosting
 
 def newProject(projectName: String): Project =
@@ -42,7 +42,7 @@ lazy val extractor = newProject("extractor")
       "org.specs2" %% "specs2-matcher-extra" % "3.10.0" % "test"
     ),
     // used only for testing, see publishVersions for versions that are actually used to publish artifacts
-    crossSbtVersions   := Nil, // handled by explicitly setting sbtVersion via scalaVersion
+    crossSbtVersions := Nil, // handled by explicitly setting sbtVersion via scalaVersion
     crossScalaVersions := Seq("2.12.11", "2.10.7"),
     sbtVersion in pluginCrossBuild := {
       // keep this as low as possible to avoid running into binary incompatibility such as https://github.com/sbt/sbt/issues/5049
@@ -52,21 +52,7 @@ lazy val extractor = newProject("extractor")
       }
     },
 
-    testSetup := {
-      System.setProperty(
-        "structure.sbtversion.full",
-        (sbtVersion in pluginCrossBuild).value
-      )
-      System.setProperty(
-        "structure.sbtversion.short",
-        (sbtBinaryVersion in pluginCrossBuild).value
-      )
-      System.setProperty("structure.scalaversion", scalaBinaryVersion.value)
-    },
-    test in Test := (test in Test).dependsOn(testSetup).value,
-    testOnly in Test := (testOnly in Test).dependsOn(testSetup).evaluated,
     scalacOptions ++= Seq("-deprecation"),
-
     sources in Compile := {
       val sbtVer = (sbtVersion in pluginCrossBuild).value
       val srcs = (sources in Compile).value
@@ -86,14 +72,6 @@ lazy val extractor = newProject("extractor")
         case _             => Seq.empty[File]
       }
     },
-
-    sbtVersion in pluginCrossBuild := {
-      // keep this as low as possible to avoid running into binary incompatibility such as https://github.com/sbt/sbt/issues/5049
-      scalaBinaryVersion.value match {
-        case "2.10" => "0.13.17"
-        case "2.12" => "1.2.1"
-      }
-    }
   )
   .enablePlugins(TestDataDumper)
 
@@ -101,9 +79,8 @@ lazy val sbtStructure = project.in(file(".")).aggregate(core, extractor)
 
 lazy val testSetup = taskKey[Unit]("Setup tests for extractor")
 
-Global / excludeLintKeys += crossSbtVersions
+excludeLintKeys in Global += crossSbtVersions
 
-val publishSbtVersions = Seq("0.13.18", "1.1.6")
 val publishAllCommand =
   "; reload ; project core ; ci-release ; project extractor ; ci-release "
 val publishAllLocalCommand =

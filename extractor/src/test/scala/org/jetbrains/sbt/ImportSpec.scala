@@ -1,12 +1,12 @@
 package org.jetbrains.sbt
 
 import java.io.{File, PrintWriter}
-
 import difflib._
 import org.jetbrains.sbt.structure.XmlSerializer._
 import org.jetbrains.sbt.structure._
 import org.specs2.matcher._
 import org.specs2.mutable._
+import org.specs2.specification.core.{Fragment, Fragments}
 
 import scala.collection.JavaConverters._
 import scala.xml._
@@ -14,48 +14,30 @@ import scala.xml.transform.{RewriteRule, RuleTransformer}
 
 class ImportSpec extends Specification with XmlMatchers with FileMatchers {
 
+  val defaultTestSbtVersions = List("0.13.9", "0.13.13")
+
   // TODO make it possible to run each of the tests separately
   "Actual structure" should {
     sequential // running 10 sbt instances at once is a bad idea unless you have >16G of ram
 
-    equalExpectedOneIn(
-      "bare",
-      options = "resolveClassifiers resolveSbtClassifiers",
-      conditions = onlyFor("0.13.9", "0.13.13")
-    )
-    equalExpectedOneIn("dependency", onlyFor("0.13.9", "0.13.13"))
-    equalExpectedOneIn("multiple", onlyFor("0.13.9", "0.13.13"))
-    equalExpectedOneIn(
-      "simple",
-      options = "resolveClassifiers resolveSbtClassifiers",
-      conditions = onlyFor("0.13.9", "0.13.13")
-    )
-    equalExpectedOneIn("classifiers", onlyFor("0.13.9", "0.13.13"))
-    equalExpectedOneIn("optional", onlyFor("0.13.9", "0.13.13"))
-    equalExpectedOneIn("play", onlyFor("0.13.9", "0.13.13"), options = "")
-    equalExpectedOneIn("ide-settings", onlyFor("0.13.9", "0.13.13"))
-    equalExpectedOneIn("sbt-idea", onlyFor("0.13.9", "0.13.13"))
-    equalExpectedOneIn("custom-test-config", onlyFor("0.13.13"))
+    equalExpectedOneIn("bare", options = "resolveClassifiers resolveSbtClassifiers")
+    equalExpectedOneIn("dependency")
+    equalExpectedOneIn("multiple")
+    equalExpectedOneIn("simple", options = "resolveClassifiers resolveSbtClassifiers")
+    equalExpectedOneIn("classifiers")
+    equalExpectedOneIn("optional")
+    equalExpectedOneIn("play", options = "")
+    equalExpectedOneIn("ide-settings")
+    equalExpectedOneIn("sbt-idea")
+    equalExpectedOneIn("custom-test-config", List("0.13.13"))
   }
-
-  private val SbtVersion = System.getProperty("structure.sbtversion.short")
-  private val SbtVersionFull = System.getProperty("structure.sbtversion.full")
-  private val ScalaVersion = System.getProperty("structure.scalaversion")
-
-  private val PluginFile = new File(
-    "extractor/target/scala-" + ScalaVersion + "/sbt-" + SbtVersion + "/classes/"
-  ).getCanonicalFile
 
   private val sbtGlobalRoot = new File(
     System.getProperty("user.home"),
     ".sbt-structure-global/"
   ).getCanonicalFile
-  private val sbtGlobalBase =
-    new File(sbtGlobalRoot, SbtVersion).getCanonicalFile
-  private val sbtBootDir = new File(sbtGlobalRoot, "boot/").getCanonicalFile
-  private val sbtIvyHome = new File(sbtGlobalRoot, "ivy2/").getCanonicalFile
 
-  private val TestDataRoot = new File("extractor/src/test/data/" + SbtVersion).getCanonicalFile
+  private val TestDataRoot = new File("extractor/src/test/data/").getCanonicalFile
   private val AndroidHome =
     Option(System.getenv.get("ANDROID_HOME")).map(new File(_).getCanonicalFile)
   // assuming user.home is always defined
@@ -63,36 +45,61 @@ class ImportSpec extends Specification with XmlMatchers with FileMatchers {
 
   private def equalExpectedOneIn(
     projectName: String,
-    conditions: => MatchResult[Any] = always,
+    sbtVersions: List[String] = defaultTestSbtVersions,
     options: String = "resolveClassifiers resolveSbtClassifiers resolveJavadocs"
-  ) =
-    ("equal expected one in '" + projectName + "' project [" + SbtVersionFull + "]")
-      .in { _: String =>
-        if (conditions.isSuccess)
-          testProject(projectName, options)
-        else
-          conditions
+  ): Fragments = Fragment.foreach(sbtVersions) { sbtVersionFull =>
+        ("equal expected structure in '" + projectName + "' project [" + sbtVersionFull + "]")
+          .in { _: String =>
+            testProject(projectName, options, sbtVersionFull)
+          }
       }
 
+  private def sbtVersionBase(sbtVersionFull: String) =
+    sbtVersionFull.split('.') match {
+      case Array("0", "13", _) => "0.13"
+      case Array("1", _, _) => "1.0"
+      case _ => throw new IllegalArgumentException("sbt version not supported by this test")
+    }
+
+  private def sbtScalaVersion(sbtVersion: String) =
+    sbtVersion.split('.') match {
+      case Array("0", "13") => "2.10"
+      case Array("1", "0") => "2.12"
+      case _ => throw new IllegalArgumentException("sbt version not supported by this test")
+    }
+
   private def testProject(project: String,
-                          options: String): MatchResult[Elem] = {
-    val base = new File(TestDataRoot, project)
+                          options: String,
+                          sbtVersionFull: String,
+                         ): MatchResult[Elem] = {
+
+    val sbtVersion = sbtVersionBase(sbtVersionFull)
+    val scalaVersion = sbtScalaVersion(sbtVersion)
+    val sbtGlobalBase =
+      new File(sbtGlobalRoot, sbtVersion).getCanonicalFile
+    val sbtBootDir = new File(sbtGlobalRoot, "boot/").getCanonicalFile
+    val sbtIvyHome = new File(sbtGlobalRoot, "ivy2/").getCanonicalFile
+    val base = new File(new File(TestDataRoot, sbtVersion), project)
+
+    val PluginFile = new File(
+      "extractor/target/scala-" + scalaVersion + "/sbt-" + sbtVersion + "/classes/"
+    ).getCanonicalFile
 
     def structureFileName(suffix: String) =
-      "structure-" + SbtVersionFull + suffix + ".xml"
+      "structure-" + sbtVersionFull + suffix + ".xml"
     val testDataFile = new File(base, structureFileName(""))
 
     testDataFile must exist.setMessage(
-      "No test data for version " + SbtVersionFull + " found at " + testDataFile.getPath
+      "No test data for version " + sbtVersionFull + " found at " + testDataFile.getPath
     )
 
-    val expectedStr = getExpectedStr(testDataFile, base)
+    val expectedStr = getExpectedStr(testDataFile, base, sbtIvyHome, sbtBootDir)
       .replaceAll("file:/.*/preloaded", "file:/dummy/preloaded")
     val actualStr = Loader
       .load(
         base,
         options,
-        SbtVersionFull,
+        sbtVersionFull,
         pluginFile = PluginFile,
         sbtGlobalBase = sbtGlobalBase,
         sbtBootDir = sbtBootDir,
@@ -122,7 +129,7 @@ class ImportSpec extends Specification with XmlMatchers with FileMatchers {
 
     def onXmlFail: String = {
       onFail()
-      val errorMessage = "Xml files are not equal, compare 'actual.xml' and 'structure-" + SbtVersionFull + ".xml'"
+      val errorMessage = "Xml files are not equal, compare 'actual.xml' and 'structure-" + sbtVersionFull + ".xml'"
       formatErrorMessage(errorMessage, expectedStr, actualStr)
     }
 
@@ -171,7 +178,7 @@ class ImportSpec extends Specification with XmlMatchers with FileMatchers {
   private def canon(path: String): String =
     path.stripSuffix("/").stripSuffix("\\")
 
-  private def getExpectedStr(testDataFile: File, base: File): String = {
+  private def getExpectedStr(testDataFile: File, base: File, sbtIvyHome: File, sbtBootDir: File): String = {
     val raw = TestUtil
       .read(testDataFile)
       .replace("$URI_BASE", base.getCanonicalFile.toURI.toString)
@@ -254,24 +261,4 @@ class ImportSpec extends Specification with XmlMatchers with FileMatchers {
     print0(toPrint, indentStep)
   }
 
-  private def onlyFor013 =
-    SbtVersionFull must startWith("0.13")
-      .orSkip(_ => "This test is only for SBT version 0.13.x")
-
-  private def onlyFor(versions: String*): MatchResult[Seq[String]] =
-    versions must contain[String](SbtVersionFull)
-      .orSkip(_ => "This test is for SBT " + versions.mkString(", ") + " only")
-
-  private def notFor(versions: String*) =
-    versions must not(contain[String](SbtVersionFull)).orSkip(
-      _ =>
-        "This test is not applicable for SBT versions " + versions
-          .mkString(", ")
-    )
-
-  private def ifAndroidDefined =
-    AndroidHome must beSome.orSkip(_ => "ANDROID_HOME is not defined")
-
-  private def always =
-    true must beTrue
 }
