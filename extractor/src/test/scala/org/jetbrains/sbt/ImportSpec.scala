@@ -54,7 +54,7 @@ class ImportSpec extends Specification with XmlMatchers with FileMatchers {
           }
       }
 
-  private def sbtVersionBase(sbtVersionFull: String) =
+  private def sbtVersionBinary(sbtVersionFull: String) =
     sbtVersionFull.split('.') match {
       case Array("0", "13", _) => "0.13"
       case Array("1", _, _) => "1.0"
@@ -70,10 +70,10 @@ class ImportSpec extends Specification with XmlMatchers with FileMatchers {
 
   private def testProject(project: String,
                           options: String,
-                          sbtVersionFull: String,
+                          sbtVersionFull: String
                          ): MatchResult[Elem] = {
 
-    val sbtVersion = sbtVersionBase(sbtVersionFull)
+    val sbtVersion = sbtVersionBinary(sbtVersionFull)
     val scalaVersion = sbtScalaVersion(sbtVersion)
     val sbtGlobalBase =
       new File(sbtGlobalRoot, sbtVersion).getCanonicalFile

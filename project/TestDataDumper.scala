@@ -46,9 +46,11 @@ object TestDataDumper extends AutoPlugin {
     import complete.DefaultParsers._
 
     val args: Seq[String] =
-      spaceDelimited("<path relative to test/data>").parsed
-    val testDir = (sourceDirectory in Test).value / "data" / args.head
-    val sbtVer = (sbtVersion in pluginCrossBuild).value
+      spaceDelimited("<path relative to test/data> <sbt version>").parsed
+
+    val Seq(testDirName, sbtVer) = args
+    val sbtBinaryVer = sbtVersionBinary(sbtVer)
+    val testDir = (sourceDirectory in Test).value / "data" / sbtBinaryVer / testDirName
     val pluginJar = (packagedArtifact in (Compile, packageBin)).value._2
 
     val generatedFile =
@@ -56,6 +58,13 @@ object TestDataDumper extends AutoPlugin {
     streams.value.log.info(s"regenerated $generatedFile for sbt $sbtVer")
     generatedFile
   }
+
+  private def sbtVersionBinary(sbtVersionFull: String) =
+    sbtVersionFull.split('.') match {
+      case Array("0", "13", _) => "0.13"
+      case Array("1", _, _) => "1.0"
+      case _ => throw new IllegalArgumentException("sbt version not supported by this test")
+    }
 
   private val dumpTestStructure013Task: Def.Initialize[Task[Seq[File]]] =
     Def.task {
