@@ -13,11 +13,11 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - uses: olafurpg/setup-scala@v5
+    - uses: olafurpg/setup-scala@v10
       with:
         java-version: adopt@1.8
     - name: cache coursier cache
-      uses: actions/cache@v1
+      uses: actions/cache@v2
       with:
         path: ~/.coursier/cache
         key: ${{ runner.os }}-coursier-cache-${{ hashFiles('**/*.sbt') }}-${{ hashFiles('project/**/*.scala') }}
