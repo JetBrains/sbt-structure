@@ -41,4 +41,4 @@ jobs:
           ${{ runner.os }}-sbt-${{ hashFiles('**/*.sbt') }}
           ${{ runner.os }}-sbt
     - name: compile & test
-      run: sbt compile 'project extractor' '^ test'
+      run: sbt '; + compile ; project extractor ; test'
