@@ -16,12 +16,13 @@ class ImportSpec extends Specification with XmlMatchers with FileMatchers {
 
   val defaultTestSbtVersions = List("0.13.9", "0.13.13")
 
+  sequential // running 10 sbt instances at once is a bad idea unless you have >16G of ram
   // TODO make it possible to run each of the tests separately
   "Actual structure" should {
-    sequential // running 10 sbt instances at once is a bad idea unless you have >16G of ram
 
     equalExpectedOneIn("bare", options = "resolveClassifiers resolveSbtClassifiers")
     equalExpectedOneIn("dependency")
+
     equalExpectedOneIn("multiple")
     equalExpectedOneIn("simple", options = "resolveClassifiers resolveSbtClassifiers")
     equalExpectedOneIn("classifiers")
