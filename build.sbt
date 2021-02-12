@@ -80,7 +80,8 @@ lazy val sbtStructure = project.in(file("."))
     // disable publishing in root project
     skip in publish := true,
     crossScalaVersions := Nil,
-    crossSbtVersions := Nil
+    crossSbtVersions := Nil,
+    sonatypePublishTo := None
   )
   .aggregate(core, extractor)
 
