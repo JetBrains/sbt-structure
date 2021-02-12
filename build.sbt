@@ -8,6 +8,7 @@ def newProject(projectName: String): Project =
   Project(projectName, file(projectName))
     .settings(
       name := "sbt-structure-" + projectName,
+      organization := "org.jetbrains.scala",
       unmanagedSourceDirectories in Compile +=
         baseDirectory.value.getParentFile / "shared" / "src" / "main" / "scala",
 
