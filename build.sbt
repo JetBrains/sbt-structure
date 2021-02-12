@@ -75,7 +75,14 @@ lazy val extractor = newProject("extractor")
   )
   .enablePlugins(TestDataDumper)
 
-lazy val sbtStructure = project.in(file(".")).aggregate(core, extractor)
+lazy val sbtStructure = project.in(file("."))
+  .settings(
+    // disable publishing in root project
+    skip in publish := true,
+    crossScalaVersions := Nil,
+    crossSbtVersions := Nil
+  )
+  .aggregate(core, extractor)
 
 lazy val testSetup = taskKey[Unit]("Setup tests for extractor")
 
