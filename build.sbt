@@ -91,11 +91,17 @@ lazy val testSetup = taskKey[Unit]("Setup tests for extractor")
 // uncomment when we can upgrade to sbt 1.4+
 //excludeLintKeys in Global += crossSbtVersions
 
+val publishCoreCommand =
+  "; project core ; ci-release"
+val publishExtractorCommand =
+  "; project extractor ; ci-release"
 val publishAllCommand =
   "; reload ; project core ; ci-release ; project extractor ; ci-release "
 val publishAllLocalCommand =
   "; reload ; project core ; + publishLocal ; project extractor ; + publishLocal"
 
 // the ^ sbt-cross operator doesn't work that well for publishing, so we need to be more explicit about the command chain
+addCommandAlias("publishCore", publishCoreCommand)
+addCommandAlias("publishExtractor", publishExtractorCommand)
 addCommandAlias("publishAll", publishAllCommand)
 addCommandAlias("publishAllLocal", publishAllLocalCommand)
