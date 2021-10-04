@@ -9,7 +9,7 @@ def newProject(projectName: String): Project =
     .settings(
       name := "sbt-structure-" + projectName,
       organization := "org.jetbrains.scala",
-      unmanagedSourceDirectories in Compile +=
+      Compile / unmanagedSourceDirectories +=
         baseDirectory.value.getParentFile / "shared" / "src" / "main" / "scala",
 
       // Sonatype settings
@@ -45,7 +45,7 @@ lazy val extractor = newProject("extractor")
     // used only for testing, see publishVersions for versions that are actually used to publish artifacts
     crossSbtVersions := Nil, // handled by explicitly setting sbtVersion via scalaVersion
     crossScalaVersions := Seq("2.12.11", "2.10.7"),
-    sbtVersion in pluginCrossBuild := {
+    pluginCrossBuild / sbtVersion := {
       // keep this as low as possible to avoid running into binary incompatibility such as https://github.com/sbt/sbt/issues/5049
       scalaBinaryVersion.value match {
         case "2.10" => "0.13.17"
@@ -54,9 +54,9 @@ lazy val extractor = newProject("extractor")
     },
 
     scalacOptions ++= Seq("-deprecation"),
-    sources in Compile := {
-      val sbtVer = (sbtVersion in pluginCrossBuild).value
-      val srcs = (sources in Compile).value
+    Compile / sources := {
+      val sbtVer = (pluginCrossBuild / sbtVersion).value
+      val srcs = (Compile / sources).value
       // remove the AutoPlugin since it doesn't compile when testing for sbt 0.13.0
       // it's okay to compile it into the jar, old sbt won't know about it!
       if (sbtVer == "0.13.0")
@@ -65,9 +65,9 @@ lazy val extractor = newProject("extractor")
     },
 
     // I want to share source between 0.13 and 1.0, but not 0.12
-    unmanagedSourceDirectories in Compile ++= {
-      val sbt013_100_shared = (sourceDirectory in Compile).value / "scala-sbt-0.13-1.0"
-      partialVersion((sbtVersion in pluginCrossBuild).value) match {
+    Compile / unmanagedSourceDirectories ++= {
+      val sbt013_100_shared = (Compile / sourceDirectory).value / "scala-sbt-0.13-1.0"
+      partialVersion((pluginCrossBuild / sbtVersion).value) match {
         case Some((0, 13)) => Seq(sbt013_100_shared)
         case Some((1, _))  => Seq(sbt013_100_shared)
         case _             => Seq.empty[File]
@@ -79,7 +79,7 @@ lazy val extractor = newProject("extractor")
 lazy val sbtStructure = project.in(file("."))
   .settings(
     // disable publishing in root project
-    skip in publish := true,
+    publish / skip := true,
     crossScalaVersions := Nil,
     crossSbtVersions := Nil,
     sonatypePublishTo := None
