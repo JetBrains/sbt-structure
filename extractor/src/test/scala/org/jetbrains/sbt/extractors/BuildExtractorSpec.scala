@@ -1,21 +1,23 @@
 package org.jetbrains.sbt
 package extractors
 
-import org.specs2.mutable._
 import org.jetbrains.sbt.structure._
-import sbt._
+import org.scalatest.freespec.AnyFreeSpec
+import org.scalatest.matchers.must.Matchers.{convertToAnyMustWrapper, equal}
+import sbt.{globFilter => _, _}
 
-class BuildExtractorSpec extends Specification {
+//noinspection ForwardReference
+class BuildExtractorSpec extends AnyFreeSpec {
 
-  "BuildExtractor" should {
-    "always extract imports and plugins' files" in {
+  "BuildExtractor" - {
+    "should always extract imports and plugins' files" in {
       val actual = new BuildExtractor(stubLoadedBuildUnitAdapter, None).extract
-      actual must beEqualTo(BuildData(stubURI, stubImports, stubPlugins, Nil, Nil))
+      actual must equal (BuildData(stubURI, stubImports, stubPlugins, Nil, Nil))
     }
 
-    "extract plugins sources and docs when supplied" in {
+    "should extract plugins sources and docs when supplied" in {
       val actual = new BuildExtractor(stubLoadedBuildUnitAdapter, Some(stubUpdateClassifiersReport)).extract
-      actual must beEqualTo(BuildData(stubURI, stubImports, stubPlugins, stubDocs, stubSources))
+      actual must equal(BuildData(stubURI, stubImports, stubPlugins, stubDocs, stubSources))
     }
   }
 

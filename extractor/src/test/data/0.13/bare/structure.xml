@@ -1,147 +1,137 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<structure sbt="0.13.13">
+<structure sbt="0.13.18">
   <build>
     <uri>$URI_BASE</uri>
-    <import>import _root_.org.sbtidea.SbtIdeaPlugin._, MyBuild._</import>
     <import>
       import _root_.sbt.plugins.IvyPlugin, _root_.sbt.plugins.JvmPlugin, _root_.sbt.plugins.CorePlugin, _root_.sbt.plugins.JUnitXmlReportPlugin, _root_.sbt.plugins.Giter8TemplatePlugin
     </import>
     <import>import sbt._, Keys._, dsl._</import>
-    <classes>$SBT_BOOT/scala-2.10.6/lib/jansi.jar</classes>
-    <classes>$SBT_BOOT/scala-2.10.6/lib/jline.jar</classes>
-    <classes>$SBT_BOOT/scala-2.10.6/lib/scala-compiler.jar</classes>
-    <classes>$SBT_BOOT/scala-2.10.6/lib/scala-library.jar</classes>
-    <classes>$SBT_BOOT/scala-2.10.6/lib/scala-reflect.jar</classes>
-    <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/actions-0.13.13.jar</classes>
-    <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/api-0.13.13.jar</classes>
-    <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/apply-macro-0.13.13.jar</classes>
-    <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/cache-0.13.13.jar</classes>
-    <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/classfile-0.13.13.jar</classes>
-    <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/classpath-0.13.13.jar</classes>
-    <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/collections-0.13.13.jar</classes>
-    <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/command-0.13.13.jar</classes>
-    <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/compile-0.13.13.jar</classes>
-    <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/compiler-integration-0.13.13.jar</classes>
-    <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/compiler-interface-0.13.13.jar</classes>
-    <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/compiler-ivy-integration-0.13.13.jar</classes>
-    <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/completion-0.13.13.jar</classes>
-    <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/control-0.13.13.jar</classes>
-    <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/cross-0.13.13.jar</classes>
-    <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/incremental-compiler-0.13.13.jar</classes>
-    <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/io-0.13.13.jar</classes>
-    <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/ivy-0.13.13.jar</classes>
-    <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/ivy-2.3.0-sbt-2cf13e211b2cb31f0d3b317289dca70eca3362f6.jar</classes>
-    <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/jansi-1.11.jar</classes>
-    <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/jawn-parser_2.10-0.6.0.jar</classes>
-    <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/jline-2.13.jar</classes>
-    <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/jsch-0.1.50.jar</classes>
-    <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/json4s-ast_2.10-3.2.10.jar</classes>
-    <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/json4s-core_2.10-3.2.10.jar</classes>
-    <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/json4s-support_2.10-0.6.0.jar</classes>
-    <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/launcher-interface-1.0.0-M1.jar</classes>
-    <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/logging-0.13.13.jar</classes>
-    <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/logic-0.13.13.jar</classes>
-    <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/main-0.13.13.jar</classes>
-    <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/main-settings-0.13.13.jar</classes>
-    <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/paranamer-2.6.jar</classes>
-    <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/persist-0.13.13.jar</classes>
-    <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/process-0.13.13.jar</classes>
-    <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/quasiquotes_2.10-2.0.1.jar</classes>
-    <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/relation-0.13.13.jar</classes>
-    <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/run-0.13.13.jar</classes>
-    <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/sbinary_2.10-0.4.2.jar</classes>
-    <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/sbt-0.13.13.jar</classes>
-    <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/scala-pickling_2.10-0.10.1.jar</classes>
-    <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/scala-reflect-2.10.6.jar</classes>
-    <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/serialization_2.10-0.1.2.jar</classes>
-    <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/task-system-0.13.13.jar</classes>
-    <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/tasks-0.13.13.jar</classes>
-    <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/template-resolver-0.1.jar</classes>
-    <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/test-agent-0.13.13.jar</classes>
-    <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/test-interface-1.0.jar</classes>
-    <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/testing-0.13.13.jar</classes>
-    <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/tracking-0.13.13.jar</classes>
-    <classes>$SBT_BOOT/scala-2.10.6/org.scala-sbt/sbt/0.13.13/xsbti/interface-0.13.13.jar</classes>
-    <classes>$IVY2/cache/commons-io/commons-io/jars/commons-io-2.0.1.jar</classes>
-    <classes>$IVY2/cache/scala_2.10/sbt_0.13/com.github.mpeltonen/sbt-idea/jars/sbt-idea-1.6.0.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.7/lib/jansi.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.7/lib/jline.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.7/lib/scala-compiler.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.7/lib/scala-library.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.7/lib/scala-reflect.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.7/org.scala-sbt/sbt/0.13.18/actions-0.13.18.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.7/org.scala-sbt/sbt/0.13.18/api-0.13.18.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.7/org.scala-sbt/sbt/0.13.18/apply-macro-0.13.18.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.7/org.scala-sbt/sbt/0.13.18/cache-0.13.18.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.7/org.scala-sbt/sbt/0.13.18/classfile-0.13.18.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.7/org.scala-sbt/sbt/0.13.18/classpath-0.13.18.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.7/org.scala-sbt/sbt/0.13.18/collections-0.13.18.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.7/org.scala-sbt/sbt/0.13.18/command-0.13.18.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.7/org.scala-sbt/sbt/0.13.18/compile-0.13.18.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.7/org.scala-sbt/sbt/0.13.18/compiler-integration-0.13.18.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.7/org.scala-sbt/sbt/0.13.18/compiler-interface-0.13.18.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.7/org.scala-sbt/sbt/0.13.18/compiler-ivy-integration-0.13.18.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.7/org.scala-sbt/sbt/0.13.18/completion-0.13.18.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.7/org.scala-sbt/sbt/0.13.18/control-0.13.18.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.7/org.scala-sbt/sbt/0.13.18/cross-0.13.18.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.7/org.scala-sbt/sbt/0.13.18/incremental-compiler-0.13.18.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.7/org.scala-sbt/sbt/0.13.18/io-0.13.18.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.7/org.scala-sbt/sbt/0.13.18/ivy-0.13.18.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.7/org.scala-sbt/sbt/0.13.18/ivy-2.3.0-sbt-b18f59ea3bc914a297bb6f1a4f7fb0ace399e310.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.7/org.scala-sbt/sbt/0.13.18/jawn-parser_2.10-0.6.0.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.7/org.scala-sbt/sbt/0.13.18/jline-2.14.5.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.7/org.scala-sbt/sbt/0.13.18/jsch-0.1.50.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.7/org.scala-sbt/sbt/0.13.18/json4s-ast_2.10-3.2.10.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.7/org.scala-sbt/sbt/0.13.18/json4s-core_2.10-3.2.10.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.7/org.scala-sbt/sbt/0.13.18/json4s-support_2.10-0.6.0.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.7/org.scala-sbt/sbt/0.13.18/launcher-interface-1.0.1.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.7/org.scala-sbt/sbt/0.13.18/logging-0.13.18.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.7/org.scala-sbt/sbt/0.13.18/logic-0.13.18.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.7/org.scala-sbt/sbt/0.13.18/main-0.13.18.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.7/org.scala-sbt/sbt/0.13.18/main-settings-0.13.18.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.7/org.scala-sbt/sbt/0.13.18/paranamer-2.6.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.7/org.scala-sbt/sbt/0.13.18/persist-0.13.18.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.7/org.scala-sbt/sbt/0.13.18/process-0.13.18.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.7/org.scala-sbt/sbt/0.13.18/quasiquotes_2.10-2.0.1.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.7/org.scala-sbt/sbt/0.13.18/relation-0.13.18.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.7/org.scala-sbt/sbt/0.13.18/run-0.13.18.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.7/org.scala-sbt/sbt/0.13.18/sbinary_2.10-0.4.2.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.7/org.scala-sbt/sbt/0.13.18/sbt-0.13.18.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.7/org.scala-sbt/sbt/0.13.18/scala-pickling_2.10-0.10.1.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.7/org.scala-sbt/sbt/0.13.18/scala-reflect-2.10.7.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.7/org.scala-sbt/sbt/0.13.18/serialization_2.10-0.1.2.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.7/org.scala-sbt/sbt/0.13.18/task-system-0.13.18.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.7/org.scala-sbt/sbt/0.13.18/tasks-0.13.18.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.7/org.scala-sbt/sbt/0.13.18/template-resolver-0.1.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.7/org.scala-sbt/sbt/0.13.18/test-agent-0.13.18.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.7/org.scala-sbt/sbt/0.13.18/test-interface-1.0.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.7/org.scala-sbt/sbt/0.13.18/testing-0.13.18.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.7/org.scala-sbt/sbt/0.13.18/tracking-0.13.18.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.7/org.scala-sbt/sbt/0.13.18/xsbti/interface-0.13.18.jar</classes>
     <sources>$IVY2/cache/com.jcraft/jsch/srcs/jsch-0.1.50-sources.jar</sources>
     <sources>$IVY2/cache/com.thoughtworks.paranamer/paranamer/srcs/paranamer-2.6-sources.jar</sources>
-    <sources>$IVY2/cache/commons-io/commons-io/srcs/commons-io-2.0.1-sources.jar</sources>
-    <sources>$IVY2/cache/jline/jline/srcs/jline-2.13-sources.jar</sources>
-    <sources>$IVY2/cache/org.fusesource.jansi/jansi/srcs/jansi-1.11-sources.jar</sources>
+    <sources>$IVY2/cache/jline/jline/srcs/jline-2.14.5-sources.jar</sources>
     <sources>$IVY2/cache/org.json4s/json4s-ast_2.10/srcs/json4s-ast_2.10-3.2.10-sources.jar</sources>
     <sources>$IVY2/cache/org.json4s/json4s-core_2.10/srcs/json4s-core_2.10-3.2.10-sources.jar</sources>
     <sources>$IVY2/cache/org.scala-lang.modules/scala-pickling_2.10/srcs/scala-pickling_2.10-0.10.1-sources.jar</sources>
-    <sources>$IVY2/cache/org.scala-lang/scala-compiler/srcs/scala-compiler-2.10.6-sources.jar</sources>
-    <sources>$IVY2/cache/org.scala-lang/scala-library/srcs/scala-library-2.10.6-sources.jar</sources>
-    <sources>$IVY2/cache/org.scala-lang/scala-reflect/srcs/scala-reflect-2.10.6-sources.jar</sources>
-    <sources>$IVY2/cache/org.scala-sbt.ivy/ivy/srcs/ivy-2.3.0-sbt-2cf13e211b2cb31f0d3b317289dca70eca3362f6-sources.jar</sources>
-    <sources>$IVY2/cache/org.scala-sbt/actions/srcs/actions-0.13.13-sources.jar</sources>
-    <sources>$IVY2/cache/org.scala-sbt/api/srcs/api-0.13.13-sources.jar</sources>
-    <sources>$IVY2/cache/org.scala-sbt/apply-macro/srcs/apply-macro-0.13.13-sources.jar</sources>
-    <sources>$IVY2/cache/org.scala-sbt/cache/srcs/cache-0.13.13-sources.jar</sources>
-    <sources>$IVY2/cache/org.scala-sbt/classfile/srcs/classfile-0.13.13-sources.jar</sources>
-    <sources>$IVY2/cache/org.scala-sbt/classpath/srcs/classpath-0.13.13-sources.jar</sources>
-    <sources>$IVY2/cache/org.scala-sbt/collections/srcs/collections-0.13.13-sources.jar</sources>
-    <sources>$IVY2/cache/org.scala-sbt/command/srcs/command-0.13.13-sources.jar</sources>
-    <sources>$IVY2/cache/org.scala-sbt/compile/srcs/compile-0.13.13-sources.jar</sources>
-    <sources>$IVY2/cache/org.scala-sbt/compiler-integration/srcs/compiler-integration-0.13.13-sources.jar</sources>
-    <sources>$IVY2/cache/org.scala-sbt/compiler-interface/srcs/compiler-interface-0.13.13-sources.jar</sources>
-    <sources>$IVY2/cache/org.scala-sbt/compiler-ivy-integration/srcs/compiler-ivy-integration-0.13.13-sources.jar</sources>
-    <sources>$IVY2/cache/org.scala-sbt/completion/srcs/completion-0.13.13-sources.jar</sources>
-    <sources>$IVY2/cache/org.scala-sbt/control/srcs/control-0.13.13-sources.jar</sources>
-    <sources>$IVY2/cache/org.scala-sbt/cross/srcs/cross-0.13.13-sources.jar</sources>
-    <sources>$IVY2/cache/org.scala-sbt/incremental-compiler/srcs/incremental-compiler-0.13.13-sources.jar</sources>
-    <sources>$IVY2/cache/org.scala-sbt/interface/srcs/interface-0.13.13-sources.jar</sources>
-    <sources>$IVY2/cache/org.scala-sbt/io/srcs/io-0.13.13-sources.jar</sources>
-    <sources>$IVY2/cache/org.scala-sbt/ivy/srcs/ivy-0.13.13-sources.jar</sources>
-    <sources>$IVY2/cache/org.scala-sbt/launcher-interface/srcs/launcher-interface-1.0.0-M1-sources.jar</sources>
-    <sources>$IVY2/cache/org.scala-sbt/logging/srcs/logging-0.13.13-sources.jar</sources>
-    <sources>$IVY2/cache/org.scala-sbt/logic/srcs/logic-0.13.13-sources.jar</sources>
-    <sources>$IVY2/cache/org.scala-sbt/main-settings/srcs/main-settings-0.13.13-sources.jar</sources>
-    <sources>$IVY2/cache/org.scala-sbt/main/srcs/main-0.13.13-sources.jar</sources>
-    <sources>$IVY2/cache/org.scala-sbt/persist/srcs/persist-0.13.13-sources.jar</sources>
-    <sources>$IVY2/cache/org.scala-sbt/process/srcs/process-0.13.13-sources.jar</sources>
-    <sources>$IVY2/cache/org.scala-sbt/relation/srcs/relation-0.13.13-sources.jar</sources>
-    <sources>$IVY2/cache/org.scala-sbt/run/srcs/run-0.13.13-sources.jar</sources>
-    <sources>$IVY2/cache/org.scala-sbt/sbt/srcs/sbt-0.13.13-sources.jar</sources>
+    <sources>$IVY2/cache/org.scala-lang/scala-compiler/srcs/scala-compiler-2.10.7-sources.jar</sources>
+    <sources>$IVY2/cache/org.scala-lang/scala-library/srcs/scala-library-2.10.7-sources.jar</sources>
+    <sources>$IVY2/cache/org.scala-lang/scala-reflect/srcs/scala-reflect-2.10.7-sources.jar</sources>
+    <sources>$IVY2/cache/org.scala-sbt.ivy/ivy/srcs/ivy-2.3.0-sbt-b18f59ea3bc914a297bb6f1a4f7fb0ace399e310-sources.jar</sources>
+    <sources>$IVY2/cache/org.scala-sbt/actions/srcs/actions-0.13.18-sources.jar</sources>
+    <sources>$IVY2/cache/org.scala-sbt/api/srcs/api-0.13.18-sources.jar</sources>
+    <sources>$IVY2/cache/org.scala-sbt/apply-macro/srcs/apply-macro-0.13.18-sources.jar</sources>
+    <sources>$IVY2/cache/org.scala-sbt/cache/srcs/cache-0.13.18-sources.jar</sources>
+    <sources>$IVY2/cache/org.scala-sbt/classfile/srcs/classfile-0.13.18-sources.jar</sources>
+    <sources>$IVY2/cache/org.scala-sbt/classpath/srcs/classpath-0.13.18-sources.jar</sources>
+    <sources>$IVY2/cache/org.scala-sbt/collections/srcs/collections-0.13.18-sources.jar</sources>
+    <sources>$IVY2/cache/org.scala-sbt/command/srcs/command-0.13.18-sources.jar</sources>
+    <sources>$IVY2/cache/org.scala-sbt/compile/srcs/compile-0.13.18-sources.jar</sources>
+    <sources>$IVY2/cache/org.scala-sbt/compiler-integration/srcs/compiler-integration-0.13.18-sources.jar</sources>
+    <sources>$IVY2/cache/org.scala-sbt/compiler-interface/srcs/compiler-interface-0.13.18-sources.jar</sources>
+    <sources>$IVY2/cache/org.scala-sbt/compiler-ivy-integration/srcs/compiler-ivy-integration-0.13.18-sources.jar</sources>
+    <sources>$IVY2/cache/org.scala-sbt/completion/srcs/completion-0.13.18-sources.jar</sources>
+    <sources>$IVY2/cache/org.scala-sbt/control/srcs/control-0.13.18-sources.jar</sources>
+    <sources>$IVY2/cache/org.scala-sbt/cross/srcs/cross-0.13.18-sources.jar</sources>
+    <sources>$IVY2/cache/org.scala-sbt/incremental-compiler/srcs/incremental-compiler-0.13.18-sources.jar</sources>
+    <sources>$IVY2/cache/org.scala-sbt/interface/srcs/interface-0.13.18-sources.jar</sources>
+    <sources>$IVY2/cache/org.scala-sbt/io/srcs/io-0.13.18-sources.jar</sources>
+    <sources>$IVY2/cache/org.scala-sbt/ivy/srcs/ivy-0.13.18-sources.jar</sources>
+    <sources>$IVY2/cache/org.scala-sbt/launcher-interface/srcs/launcher-interface-1.0.1-sources.jar</sources>
+    <sources>$IVY2/cache/org.scala-sbt/logging/srcs/logging-0.13.18-sources.jar</sources>
+    <sources>$IVY2/cache/org.scala-sbt/logic/srcs/logic-0.13.18-sources.jar</sources>
+    <sources>$IVY2/cache/org.scala-sbt/main-settings/srcs/main-settings-0.13.18-sources.jar</sources>
+    <sources>$IVY2/cache/org.scala-sbt/main/srcs/main-0.13.18-sources.jar</sources>
+    <sources>$IVY2/cache/org.scala-sbt/persist/srcs/persist-0.13.18-sources.jar</sources>
+    <sources>$IVY2/cache/org.scala-sbt/process/srcs/process-0.13.18-sources.jar</sources>
+    <sources>$IVY2/cache/org.scala-sbt/relation/srcs/relation-0.13.18-sources.jar</sources>
+    <sources>$IVY2/cache/org.scala-sbt/run/srcs/run-0.13.18-sources.jar</sources>
+    <sources>$IVY2/cache/org.scala-sbt/sbt/srcs/sbt-0.13.18-sources.jar</sources>
     <sources>$IVY2/cache/org.scala-sbt/serialization_2.10/srcs/serialization_2.10-0.1.2-sources.jar</sources>
-    <sources>$IVY2/cache/org.scala-sbt/task-system/srcs/task-system-0.13.13-sources.jar</sources>
-    <sources>$IVY2/cache/org.scala-sbt/tasks/srcs/tasks-0.13.13-sources.jar</sources>
+    <sources>$IVY2/cache/org.scala-sbt/task-system/srcs/task-system-0.13.18-sources.jar</sources>
+    <sources>$IVY2/cache/org.scala-sbt/tasks/srcs/tasks-0.13.18-sources.jar</sources>
     <sources>$IVY2/cache/org.scala-sbt/template-resolver/srcs/template-resolver-0.1-sources.jar</sources>
-    <sources>$IVY2/cache/org.scala-sbt/test-agent/srcs/test-agent-0.13.13-sources.jar</sources>
+    <sources>$IVY2/cache/org.scala-sbt/test-agent/srcs/test-agent-0.13.18-sources.jar</sources>
     <sources>$IVY2/cache/org.scala-sbt/test-interface/srcs/test-interface-1.0-sources.jar</sources>
-    <sources>$IVY2/cache/org.scala-sbt/testing/srcs/testing-0.13.13-sources.jar</sources>
-    <sources>$IVY2/cache/org.scala-sbt/tracking/srcs/tracking-0.13.13-sources.jar</sources>
+    <sources>$IVY2/cache/org.scala-sbt/testing/srcs/testing-0.13.18-sources.jar</sources>
+    <sources>$IVY2/cache/org.scala-sbt/tracking/srcs/tracking-0.13.18-sources.jar</sources>
     <sources>$IVY2/cache/org.scala-tools.sbinary/sbinary_2.10/srcs/sbinary_2.10-0.4.2-sources.jar</sources>
     <sources>$IVY2/cache/org.scalamacros/quasiquotes_2.10/srcs/quasiquotes_2.10-2.0.1-sources.jar</sources>
     <sources>$IVY2/cache/org.spire-math/jawn-parser_2.10/srcs/jawn-parser_2.10-0.6.0-sources.jar</sources>
     <sources>$IVY2/cache/org.spire-math/json4s-support_2.10/srcs/json4s-support_2.10-0.6.0-sources.jar</sources>
-    <sources>$IVY2/cache/scala_2.10/sbt_0.13/com.github.mpeltonen/sbt-idea/srcs/sbt-idea-1.6.0-sources.jar</sources>
   </build>
   <project>
-    <id>sbtIdea</id>
+    <id>bare</id>
     <buildURI>$URI_BASE</buildURI>
     <name>some-name</name>
     <organization>some-organization</organization>
     <version>1.2.3</version>
     <base>$BASE</base>
-    <basePackage>org.jetbrains</basePackage>
     <target>$BASE/target</target>
-    <java>
-      <home>$BASE/some/home</home>
-      <option>-j1</option>
-      <option>-j2</option>
-    </java>
     <scala>
       <version>2.10.1</version>
-      <jar>$IVY2/cache/org.fusesource.jansi/jansi/jars/jansi-1.4.jar</jar>
-      <jar>$IVY2/cache/org.scala-lang/jline/jars/jline-2.10.1.jar</jar>
-      <jar>$IVY2/cache/org.scala-lang/scala-compiler/jars/scala-compiler-2.10.1.jar</jar>
-      <jar>$IVY2/cache/org.scala-lang/scala-library/jars/scala-library-2.10.1.jar</jar>
-      <jar>$IVY2/cache/org.scala-lang/scala-reflect/jars/scala-reflect-2.10.1.jar</jar>
-      <option>-s1</option>
-      <option>-s2</option>
+      <libraryJars>
+        <jar>$IVY2/cache/org.scala-lang/scala-library/jars/scala-library-2.10.1.jar</jar>
+      </libraryJars>
+      <compilerJars>
+        <jar>$IVY2/cache/org.fusesource.jansi/jansi/jars/jansi-1.4.jar</jar>
+        <jar>$IVY2/cache/org.scala-lang/jline/jars/jline-2.10.1.jar</jar>
+        <jar>$IVY2/cache/org.scala-lang/scala-compiler/jars/scala-compiler-2.10.1.jar</jar>
+        <jar>$IVY2/cache/org.scala-lang/scala-reflect/jars/scala-reflect-2.10.1.jar</jar>
+      </compilerJars>
+      <extraJars> </extraJars>
     </scala>
     <configuration id="compile">
       <sources>$BASE/src/main/java</sources>
@@ -150,7 +140,6 @@
       <sources managed="true">$BASE/target/scala-2.10/src_managed/main</sources>
       <resources>$BASE/src/main/resources</resources>
       <resources managed="true">$BASE/target/scala-2.10/resource_managed/main</resources>
-      <exclude>$BASE/.idea</exclude>
       <classes>$BASE/target/scala-2.10/classes</classes>
     </configuration>
     <configuration id="test">
@@ -160,14 +149,14 @@
       <sources managed="true">$BASE/target/scala-2.10/src_managed/test</sources>
       <resources>$BASE/src/test/resources</resources>
       <resources managed="true">$BASE/target/scala-2.10/resource_managed/test</resources>
-      <exclude>$BASE/.idea</exclude>
       <classes>$BASE/target/scala-2.10/test-classes</classes>
     </configuration>
     <dependencies>
       <module configurations="compile" organization="org.scala-lang" name="scala-library" revision="2.10.1" artifactType="jar" classifier=""/>
     </dependencies>
     <resolver name="public" root="https://repo1.maven.org/maven2/"/>
-    <resolver name="local-preloaded" root="file:$HOME/.sbt-structure-global/0.13.13/preloaded"/>
+    <resolver name="local-preloaded" root="file:/dummy/preloaded"/>
+    <resolver name="java.net Maven2 Repository" root="https://maven.java.net/content/repositories/public/"/>
     <setting>
       <label>dependencyOverrides</label>
       <description>Declares managed dependency overrides.</description>
@@ -186,25 +175,13 @@
       <label>sourceManaged</label>
       <description>Default directory for sources generated by the build.</description>
       <rank>39</rank>
-      <value>$BASE/target/scala-2.10/src_managed</value>
-    </setting>
-    <setting>
-      <label>ideaExcludeFolders</label>
-      <description></description>
-      <rank>25</rank>
-      <value>List(.idea)</value>
+      <value>$BASE/target/scala-2...</value>
     </setting>
     <setting>
       <label>maxErrors</label>
       <description>The maximum number of errors, such as compile errors, to list.</description>
       <rank>10</rank>
       <value>100</value>
-    </setting>
-    <setting>
-      <label>ideaIncludeScalaFacet</label>
-      <description></description>
-      <rank>25</rank>
-      <value>true</value>
     </setting>
     <setting>
       <label>cleanupCommands</label>
@@ -270,7 +247,7 @@
       <label>testResultLogger</label>
       <description>Logs results after a test task completes.</description>
       <rank>20000</rank>
-      <value>Main(&lt;function1&gt;,sbt.TestResultLogger$$anon$1@7d1f03c5,sbt.TestResultLogger$$anon$1@48079a40,sbt.Tes...</value>
+      <value>Main(&lt;function1&gt;,sbt.TestResultLogger$$anon$1@46ada9fa,sbt.TestResultLogger$$anon$1@65dccda3,sbt.Tes...</value>
     </setting>
     <setting>
       <label>loadedBuild</label>
@@ -351,7 +328,7 @@
       <label>makePomConfiguration</label>
       <description>Configuration for generating a pom.</description>
       <rank>10000</rank>
-      <value>MakePomConfiguration($BASE/targe...</value>
+      <value>MakePomConfiguration($HOME/Desktop/dev/sbt-structure/extractor/src/test/data/0.1...</value>
     </setting>
     <setting>
       <label>artifactClassifier</label>
@@ -363,7 +340,7 @@
       <label>ivyPaths</label>
       <description>Configures paths used by Ivy for dependency management.</description>
       <rank>10000</rank>
-      <value>IvyPath($BASE, Some($HOME/...</value>
+      <value>IvyPath($BASE, Some(...</value>
     </setting>
     <setting>
       <label>projectInfo</label>
@@ -381,13 +358,7 @@
       <label>sbtDependency</label>
       <description>Provides a definition for declaring the current version of sbt.</description>
       <rank>41</rank>
-      <value>org.scala-sbt:sbt:0.13.13</value>
-    </setting>
-    <setting>
-      <label>ideaExtraFacets</label>
-      <description></description>
-      <rank>25</rank>
-      <value></value>
+      <value>org.scala-sbt:sbt:0.13.18</value>
     </setting>
     <setting>
       <label>resourceDirectories</label>
@@ -404,7 +375,7 @@
       <label>cacheDirectory</label>
       <description>Directory used for caching task data.</description>
       <rank>41</rank>
-      <value>$BASE/target/scala-2.10/cache/sb...</value>
+      <value>$BASE/target/scala-2...</value>
     </setting>
     <setting>
       <label>scalaBinaryVersion</label>
@@ -421,13 +392,13 @@
       <label>onLoadMessage</label>
       <description>Message to display when the project is loaded.</description>
       <rank>10000</rank>
-      <value>Set current project to some-name (in build file:$HOME/workspace/sbt-structure/extractor/src/te...</value>
+      <value>Set current project to some-name (in build file:$HOME/Desktop/dev/sbt-structure...</value>
     </setting>
     <setting>
       <label>history</label>
       <description>The location where command line history is persisted.</description>
       <rank>40</rank>
-      <value>Some($BASE/target/.history)</value>
+      <value>Some($BASE/target/.h...</value>
     </setting>
     <setting>
       <label>pomPostProcess</label>
@@ -444,13 +415,13 @@
       <label>sbtVersion</label>
       <description>Provides the version of sbt. This setting should be not be modified.</description>
       <rank>11</rank>
-      <value>0.13.13</value>
+      <value>0.13.18</value>
     </setting>
     <setting>
       <label>cleanKeepFiles</label>
-      <description>Files to keep during a clean.</description>
+      <description>Files or directories to keep during a clean. Must be direct children of target.</description>
       <rank>100</rank>
-      <value>List($BASE/target/.history)</value>
+      <value>Vector($BASE/target/...</value>
     </setting>
     <setting>
       <label>normalizedName</label>
@@ -558,7 +529,7 @@
       <label>scalaCompilerBridgeSource</label>
       <description>Configures the module ID of the sources of the compiler bridge.</description>
       <rank>100</rank>
-      <value>org.scala-sbt:compiler-interface:0.13.13:component</value>
+      <value>org.scala-sbt:compiler-interface:0.13.18:component</value>
     </setting>
     <setting>
       <label>publishTo</label>
@@ -587,12 +558,6 @@
       <description>Organization homepage.</description>
       <rank>41</rank>
       <value>None</value>
-    </setting>
-    <setting>
-      <label>ideaProjectName</label>
-      <description></description>
-      <rank>25</rank>
-      <value>IdeaProject</value>
     </setting>
     <setting>
       <label>pomIncludeRepository</label>
@@ -655,7 +620,7 @@
       <label>thisProjectRef</label>
       <description>Provides a fully-resolved reference to the current project for the referencing scope.</description>
       <rank>100</rank>
-      <value>ProjectRef($URI_BASE,sbtIdea)</value>
+      <value>ProjectRef(file:$HOME/Desktop/dev/sbt-structure/extractor/src/test/data/0.13/ba...</value>
     </setting>
     <setting>
       <label>unmanagedSourceDirectories</label>
@@ -668,12 +633,6 @@
       <rank>1000</rank>
     </setting>
     <setting>
-      <label>ideaPackagePrefix</label>
-      <description>The package prefix for source directories.</description>
-      <rank>25</rank>
-      <value>None</value>
-    </setting>
-    <setting>
       <label>overrideBuildResolvers</label>
       <description>Whether or not all the build resolvers should be overridden with what's defined from the launcher.</description>
       <rank>41</rank>
@@ -683,7 +642,7 @@
       <label>resolvers</label>
       <description>The user-defined additional resolvers for automatically managed dependencies.</description>
       <rank>31</rank>
-      <value>List()</value>
+      <value>List(java.net Maven2 Repository: https://maven.java.net/content/repositories/public/)</value>
     </setting>
     <setting>
       <label>publishMavenStyle</label>
@@ -731,7 +690,7 @@
       <label>conflictWarning</label>
       <description>Configures warnings for conflicts in dependency management.</description>
       <rank>100</rank>
-      <value>ConflictWarning({$URI_BASE}sbt...</value>
+      <value>ConflictWarning({file:$HOME/Desktop/dev/sbt-structure/extractor/src/test/data/0...</value>
     </setting>
     <setting>
       <label>internalConfigurationMap</label>
@@ -762,6 +721,12 @@
       <description>Enables/disables Ivy validation of module metadata.</description>
       <rank>40</rank>
       <value>false</value>
+    </setting>
+    <setting>
+      <label>autogeneratedProject</label>
+      <description>If it exists, represents that the project (and name) were automatically created, rather than user specified.</description>
+      <rank>10000</rank>
+      <value>true</value>
     </setting>
     <setting>
       <label>testForkedParallel</label>
@@ -805,12 +770,6 @@
       <value>List(compile, runtime, test, provided, optional, compile-internal, runtime-internal, test-internal, ...</value>
     </setting>
     <setting>
-      <label>ideaJavadocsClassifiers</label>
-      <description></description>
-      <rank>25</rank>
-      <value>List(javadoc)</value>
-    </setting>
-    <setting>
       <label>retrieveManagedSync</label>
       <description>If true, enables synchronizing the dependencies retrieved to the current build by removed unneeded files.</description>
       <rank>40</rank>
@@ -832,12 +791,6 @@
       <description>If true, forks a new JVM when running. If false, runs in the same JVM as the build.</description>
       <rank>10</rank>
       <value>false</value>
-    </setting>
-    <setting>
-      <label>ideaBasePackage</label>
-      <description>The base package configured in the Scala Facet, used by IDEA to generated nested package clauses. For example, com.acme.wibble</description>
-      <rank>25</rank>
-      <value>Some(org.jetbrains)</value>
     </setting>
     <setting>
       <label>updateConfiguration</label>
@@ -875,7 +828,7 @@
       <label>resourceManaged</label>
       <description>Default managed resource directory, used when generating resources.</description>
       <rank>40</rank>
-      <value>$BASE/target/scala-2.10/resource...</value>
+      <value>$BASE/target/scala-2...</value>
     </setting>
     <setting>
       <label>resourceGenerators</label>
@@ -925,7 +878,7 @@
       <label>cleanFiles</label>
       <description>The files to recursively delete during a clean.</description>
       <rank>40</rank>
-      <value>List($BASE/lib_managed, /Users/j...</value>
+      <value>List($BASE/lib_manag...</value>
     </setting>
     <setting>
       <label>classDirectory</label>
@@ -948,7 +901,7 @@
       <label>taskTemporaryDirectory</label>
       <description>Directory used for temporary files for tasks that is deleted after each task execution.</description>
       <rank>10000</rank>
-      <value>/var/folders/5k/4b5my29x26q_dhrys3ghf9wh0000gn/T/sbt_4d494b07</value>
+      <value>C:/WINDOWS/sbt_61ec32fe</value>
     </setting>
     <setting>
       <label>configuration</label>
@@ -959,7 +912,7 @@
       <label>thisProject</label>
       <description>Provides the current project for the referencing scope.</description>
       <rank>100</rank>
-      <value>Project(id sbtIdea, base: $BASE,...</value>
+      <value>Project(id bare, base: $HOME/Desktop/dev/sbt-structure/extractor/src/test/data/0...</value>
     </setting>
     <setting>
       <label>watchingMessage</label>
@@ -971,7 +924,7 @@
       <label>ssOptions</label>
       <description>options for dumpStructure task</description>
       <rank>10000</rank>
-      <value>Options(true,true,true,true,true)</value>
+      <value>Options(true,true,false,true,true)</value>
     </setting>
     <setting>
       <label>managedResourceDirectories</label>
@@ -990,22 +943,22 @@
       <value>List()</value>
     </setting>
     <setting>
-      <label>ideaSourcesClassifiers</label>
-      <description></description>
-      <rank>25</rank>
-      <value>List(sources)</value>
-    </setting>
-    <setting>
       <label>target</label>
       <description>Main directory for files generated by the build.</description>
       <rank>11</rank>
       <value>$BASE/target</value>
     </setting>
     <setting>
+      <label>crossSbtVersions</label>
+      <description>The versions of Sbt used when cross-building an sbt plugin.</description>
+      <rank>25</rank>
+      <value>Vector(0.13.18)</value>
+    </setting>
+    <setting>
       <label>javaHome</label>
       <description>Selects the Java installation used for compiling and forking. If None, uses the Java installation running the build.</description>
       <rank>10</rank>
-      <value>Some(some/home)</value>
+      <value>None</value>
     </setting>
     <setting>
       <label>evictionWarningOptions</label>
@@ -1033,12 +986,6 @@
       <label>sourceGenerators</label>
       <description>List of tasks that generate sources.</description>
       <rank>100</rank>
-    </setting>
-    <setting>
-      <label>commands</label>
-      <description>Defines commands to be registered when this project or build is the current selected one.</description>
-      <rank>100</rank>
-      <value>List(SimpleCommand(gen-idea))</value>
     </setting>
     <setting>
       <label>offline</label>
@@ -1202,6 +1149,11 @@
       <label>deliverConfiguration</label>
       <description>Configuration for generating the finished Ivy file for publishing.</description>
       <rank>20000</rank>
+    </task>
+    <task>
+      <label>cleanFilesTask</label>
+      <description>The files to recursively delete during a clean.</description>
+      <rank>40</rank>
     </task>
     <task>
       <label>consoleProject</label>
@@ -1646,9 +1598,6 @@
       <rank>20000</rank>
     </task>
     <command>
-      <name>gen-idea</name>
-    </command>
-    <command>
       <name>resumeFromFailure</name>
     </command>
     <command>
@@ -1770,6 +1719,12 @@
       </help>
     </command>
     <command>
+      <name>write-sbt-version</name>
+    </command>
+    <command>
+      <name>notify-users-about-shell</name>
+    </command>
+    <command>
       <name>iflast</name>
     </command>
     <command>
@@ -1838,7 +1793,6 @@
   <repository>
     <module organization="org.scala-lang" name="scala-library" revision="2.10.1" artifactType="jar" classifier="">
       <jar>$IVY2/cache/org.scala-lang/scala-library/jars/scala-library-2.10.1.jar</jar>
-      <doc>$IVY2/cache/org.scala-lang/scala-library/docs/scala-library-2.10.1-javadoc.jar</doc>
       <src>$IVY2/cache/org.scala-lang/scala-library/srcs/scala-library-2.10.1-sources.jar</src>
     </module>
   </repository>

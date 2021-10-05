@@ -3,12 +3,12 @@ package extractors
 
 import org.jetbrains.sbt.structure._
 import org.jetbrains.sbt.{structure => jb}
-import org.specs2.matcher.Matcher
-import org.specs2.mutable._
-import sbt._
+import org.scalatest.freespec.AnyFreeSpecLike
+import org.scalatest.matchers.must.Matchers.{contain, convertToAnyMustWrapper}
+import sbt.{globFilter => _, _}
 import sbt.jetbrains.apiAdapter
 
-class DependenciesExtractorSpec extends Specification {
+class DependenciesExtractorSpec extends AnyFreeSpecLike {
 
   val projects: Seq[ProjectRef] =
     Seq("project-1", "project-2").map(ProjectRef(file("/tmp/test-project"), _))
@@ -23,8 +23,8 @@ class DependenciesExtractorSpec extends Specification {
     Map.empty
   )
 
-  "DependenciesExtractor" should {
-    "always extract build dependencies" in {
+  "DependenciesExtractor" - {
+    "should always extract build dependencies" in {
       val actual = new DependenciesExtractor(
         projects.head,
         buildDependencies = buildDependencies,
@@ -45,7 +45,7 @@ class DependenciesExtractorSpec extends Specification {
         modules = Nil,
         jars = Nil
       )
-      actual must beIdenticalTo(expected)
+      assertIdentical(expected, actual)
     }
 
     "always extract unmanaged dependencies" in {
@@ -79,7 +79,7 @@ class DependenciesExtractorSpec extends Specification {
           JarDependencyData(file("baz.jar"), Seq(jb.Configuration.Test))
         )
       )
-      actual must beIdenticalTo(expected)
+      assertIdentical(expected, actual)
     }
 
     "extract managed dependencies when supplied" in {
@@ -129,7 +129,7 @@ class DependenciesExtractorSpec extends Specification {
         jars = Nil
       )
 
-      actual must beIdenticalTo(expected)
+      assertIdentical(expected, actual)
     }
 
     "merge custom test configurations in unmanaged and managed dependencies" in {
@@ -180,7 +180,7 @@ class DependenciesExtractorSpec extends Specification {
         )
       )
 
-      actual must beIdenticalTo(expected)
+      assertIdentical(expected, actual)
     }
 
     "extract managed dependency with classifier as different dependencies" in {
@@ -222,7 +222,7 @@ class DependenciesExtractorSpec extends Specification {
         ),
         jars = Nil
       )
-      actual must beIdenticalTo(expected)
+      assertIdentical(expected, actual)
     }
 
     "merge (compile, test, runtime) -> compile in unmanaged and managed dependencies to match IDEA scopes" in {
@@ -270,7 +270,7 @@ class DependenciesExtractorSpec extends Specification {
         jars =
           Seq(JarDependencyData(file("bar.jar"), Seq(jb.Configuration.Compile)))
       )
-      actual must beIdenticalTo(expected)
+      assertIdentical(expected, actual)
     }
 
     "merge (compile, test) -> provided in unmanaged and managed dependencies to match IDEA scopes" in {
@@ -315,15 +315,14 @@ class DependenciesExtractorSpec extends Specification {
           JarDependencyData(file("bar.jar"), Seq(jb.Configuration.Provided))
         )
       )
-      actual must beIdenticalTo(expected)
+      assertIdentical(expected, actual)
     }
   }
 
-  def beIdenticalTo(expected: DependencyData): Matcher[DependencyData] = {
-    actual: DependencyData =>
-      (actual.projects must containTheSameElementsAs(expected.projects)) and
-        (actual.jars must containTheSameElementsAs(expected.jars)) and
-        (actual.modules must containTheSameElementsAs(expected.modules))
+  def assertIdentical(expected: DependencyData, actual: DependencyData): Unit = {
+    actual.projects must contain theSameElementsAs expected.projects
+    actual.jars must contain theSameElementsAs expected.jars
+    actual.modules must contain theSameElementsAs expected.modules
   }
 
   def attributedWith(file: File)(moduleId: ModuleID,

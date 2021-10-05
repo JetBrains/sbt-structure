@@ -4,6 +4,9 @@ package extractors
 import org.jetbrains.sbt.structure._
 import sbt.Def.Initialize
 import sbt.{Configuration => _, _}
+
+import scala.reflect.ClassTag
+import scala.util.{Failure, Success, Try}
 // don't remove this import: sbt.jetbrains.apiAdapter._ -- it shadows some symbols for sbt 1.0 compatibility
 import sbt.jetbrains.apiAdapter._
 
@@ -135,14 +138,107 @@ class ProjectExtractor(
       )
     }
 
+  /**
+    * [[sbt.internal.inc.ScalaInstance]] has different structure in different sbt versions (0.13, 1.0, 1.3, 1.5)<br>
+    * We need to convert it to our internal representation [[org.jetbrains.sbt.structure.ScalaData]]
+    * which reflects structure of the latest sbt version (1.5.x)<br>
+    * To do this there are two options:
+    *   1. cross-publish sbt-structure-extractor plugin to more then 1 version: 0.13, 1.0, 1.3, 1.5
+    *      and move some methods to [[sbt.jetbrains.apiAdapter]]
+    *   1. use reflection
+    *
+    * We use reflection approach to
+    *  1. easy project configuration
+    *  1. decrease Scala Plugin size (we need to bundle all versions of sbt plugin)
+    *
+    * Structure of ScalaInstance in different sbt versions: {{{
+    *    //in sbt 0.13.x
+    *    class ScalaInstance(
+    *        ...
+    *        val libraryJar: File,
+    *        val compilerJar: File,
+    *        val extraJars: Seq[File],
+    *        ...
+    *    )
+    *
+    *    //in zinc-classpath 1.0.0
+    *    class ScalaInstance(
+    *        ...
+    *        val libraryJar: File,
+    *        val compilerJar: File,
+    *        val allJars: Array[File],
+    *        ...
+    *    )
+    *
+    *    //in zinc-classpath 1.3.0
+    *    class ScalaInstance(
+    *        ...
+    *        val libraryJars: Array[File],
+    *        val compilerJar: File,
+    *        val allJars: Array[File],
+    *        ...
+    *    )
+    *
+    *    //in zinc-classpath 1.5.0
+    *    class ScalaInstance(
+    *        ...
+    *        val libraryJars: Array[File],
+    *        val compilerJars: Array[File],
+    *        val allJars: Array[File],
+    *        ...
+    *    )
+    * }}}
+    *
+    * @note before `libraryJars: Array[File]` was introduced `libraryJar` contained single `scala-library.jar`.<br>
+    *       Since Scala 3.0 it can contain extra `scala3-library_3.jar`.
+    * @note before `compilerJars: Array[File]` was introduced `allJars` contained all compiler jars
+    * @see SCL-19086
+    */
   private def extractScala: Option[ScalaData] = scalaInstance.map { instance =>
+    def normalize(files: Seq[File]): Seq[File] =
+      files
+        .filter(_.exists)
+        // Sort files by absolute path (String) for better tests reproducibility
+        //
+        // NOTE 1: we do not use `files.sorted` because files ordering is OS-dependent
+        // on Windows it's case-insensitive and on Unix it's case-sensitive
+        // In Scala 3 some jar names are upper-case, so we need to sort by Strings (it's the same on all OS)
+        //
+        // NOTE 2: we cache absolute path in a tuple , in order `fs.resolve` is not called multiple times during the sorting
+        .map(f => (f, f.getAbsolutePath))
+        .sortBy(_._2: String)
+        .map(_._1)
+
+    val libraryJars  = normalize(extractLibraryJars(instance))
+    val compilerJars = normalize((extractCompilerJars(instance).toSet -- libraryJars).toSeq)
+    val extraJars    = normalize((instance.allJars.toSet -- libraryJars -- compilerJars).toSeq)
+
     ScalaData(
       scalaOrganization,
       instance.version,
-      instance.allJars.toSeq.filter(_.exists).sorted,
+      libraryJars,
+      compilerJars,
+      extraJars,
       scalacOptions
     )
   }
+
+  /** @see docs of [[extractScala]] */
+  private def extractLibraryJars(instance: ScalaInstance): Seq[File] =
+    invokeMethodIfExists[Array[File]](instance, "libraryJars").map(_.toSeq).getOrElse(Seq(instance.libraryJar))
+
+  /** @see docs of [[extractScala]] */
+  private def extractCompilerJars(instance: ScalaInstance): Seq[File] = {
+    // yes we need to fallback to allJars cause `compilerJar` contained only `scala-compiler.jar`
+    invokeMethodIfExists[Array[File]](instance, "compilerJars").map(_.toSeq).getOrElse(instance.allJars.toSeq)
+  }
+
+  private def invokeMethodIfExists[R : ClassTag](obj: AnyRef, methodName: String): Option[R] =
+    Try(obj.getClass.getMethod(methodName)) match {
+      case Success(method)                   => Some(method.invoke(obj).asInstanceOf[R])
+      case Failure(_: NoSuchMethodException) => None
+      case Failure(ex)                       => throw ex
+    }
 
   private def extractJava: Option[JavaData] =
     if (javaHome.isDefined || javacOptions.nonEmpty)

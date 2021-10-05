@@ -2,14 +2,16 @@ package org.jetbrains.sbt
 package extractors
 
 import org.jetbrains.sbt.structure._
-import org.jetbrains.sbt.{structure => jb}
-import org.specs2.mutable._
-import sbt._
+import org.scalatest.freespec.AnyFreeSpecLike
+import org.scalatest.matchers.must.Matchers.{contain, convertToAnyMustWrapper}
+import sbt.{globFilter => _, _}
 
+//noinspection ZeroIndexToHead
+class RepositoryExtractorSpec extends AnyFreeSpecLike {
 
-class RepositoryExtractorSpec extends Specification {
+  private val projects: Seq[ProjectRef] = Seq("project-1", "project-2").map(ProjectRef(file("/tmp/test-project"), _))
 
-  "RepositoryExtractor" should {
+  "RepositoryExtractor" - {
     "extract modules for all accepted projects when supplied" in {
       val moduleId = (name: String) => ModuleID("com.example", name, "SNAPSHOT")
 
@@ -39,7 +41,7 @@ class RepositoryExtractorSpec extends Specification {
         ModuleData(toIdentifier(moduleId("bar")), Set(file("bar.jar")), Set.empty, Set.empty),
         ModuleData(toIdentifier(moduleId("baz")), Set(file("baz.jar")), Set.empty, Set.empty)
       )
-      actual.modules must containTheSameElementsAs(expected)
+      actual.modules must contain theSameElementsAs expected
     }
 
     "extract modules with docs and sources for all accepted projects when supplied" in {
@@ -84,7 +86,7 @@ class RepositoryExtractorSpec extends Specification {
         ModuleData(toIdentifier(moduleId("bar")), Set(file("bar.jar")), Set(file("bar-doc.jar")), Set.empty),
         ModuleData(toIdentifier(moduleId("baz")), Set(file("baz.jar")), Set.empty, Set(file("baz-src.jar")))
       )
-      actual.modules must containTheSameElementsAs(expected)
+      actual.modules must contain theSameElementsAs expected
     }
 
     "extract module that have artifacts with classifiers as different modules" in {
@@ -111,12 +113,10 @@ class RepositoryExtractorSpec extends Specification {
         ModuleData(toIdentifier(moduleId).copy(classifier = "tests"), Set(file("foo-tests.jar")), Set.empty, Set.empty)
       )
 
-      actual.modules must containTheSameElementsAs(expected)
+      actual.modules must contain theSameElementsAs expected
     }
   }
 
   def toIdentifier(moduleId: ModuleID): ModuleIdentifier =
     ModuleIdentifier(moduleId.organization, moduleId.name, moduleId.revision, Artifact.DefaultType, "")
-
-  val projects: Seq[ProjectRef] = Seq("project-1", "project-2").map(ProjectRef(file("/tmp/test-project"), _))
 }

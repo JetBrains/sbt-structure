@@ -114,6 +114,11 @@ Available options to set in `sbt-structure-options`:
 
 ## Development notes
 
+- The plugin is cross-built for sbt 0.13 and 1.x  
+(see https://www.scala-sbt.org/1.x/docs/Cross-Build-Plugins.html) \
+The project is not imported correctly in IntelliJ (some source folders are not detected, etc...) 
+This is a known issue, see [correctly handle cross-projects
+  ](https://youtrack.jetbrains.com/issue/SCL-12945) 
 - Testing against all supported sbt versions can be done with `^ test` command
 - Testing against specific version of sbt, for example, 0.13.7: `^^ 0.13.7 test`
 - Selected tests can be run with `testOnly` command, e.g. `^ testOnly -- -ex "project name"`

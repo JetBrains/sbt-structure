@@ -31,20 +31,18 @@ def xmlArtifact(scalaVersion: String) =
 lazy val core = newProject("core")
   .settings(
     libraryDependencies ++= xmlArtifact(scalaVersion.value),
-    crossScalaVersions := Seq("2.10.7", "2.11.12", "2.12.11", "2.13.2")
+    crossScalaVersions := Seq("2.10.7", "2.11.12", "2.12.15", "2.13.6")
   )
 
 lazy val extractor = newProject("extractor")
   .settings(
     sbtPlugin := true,
     libraryDependencies ++= Seq(
-      "com.googlecode.java-diff-utils" % "diffutils" % "1.2" % "test" withSources (),
-      "org.specs2" %% "specs2-core" % "3.10.0" % "test",
-      "org.specs2" %% "specs2-matcher-extra" % "3.10.0" % "test"
+      "org.scalatest" %% "scalatest" % "3.2.10" % Test withSources()
     ),
     // used only for testing, see publishVersions for versions that are actually used to publish artifacts
     crossSbtVersions := Nil, // handled by explicitly setting sbtVersion via scalaVersion
-    crossScalaVersions := Seq("2.12.11", "2.10.7"),
+    crossScalaVersions := Seq("2.12.15", "2.10.7"),
     pluginCrossBuild / sbtVersion := {
       // keep this as low as possible to avoid running into binary incompatibility such as https://github.com/sbt/sbt/issues/5049
       scalaBinaryVersion.value match {

@@ -17,11 +17,16 @@ class RepositoryExtractor(projects: Seq[ProjectRef],
   extends ModulesOps {
 
   private[extractors] def extract: RepositoryData = {
-    val modules = fixModulesIdsToSupportClassifiers(allModulesWithDocs)
-    RepositoryData(groupByModuleIdentifiers(modules).toSeq.map((createModuleData _).tupled))
+    val moduleReports = fixModulesIdsToSupportClassifiers(allModulesWithDocs)
+    val modulesReportsByIdentifier = groupByModuleIdentifiers(moduleReports)
+    val modulesData = modulesReportsByIdentifier.toSeq.map((createModuleData _).tupled)
+    RepositoryData(modulesData)
   }
 
-  private def allModulesWithDocs: Seq[ModuleReportAdapter] = projects.flatMap { projectRef =>
+  private def allModulesWithDocs: Seq[ModuleReportAdapter] = projects.flatMap(moduleWithDoc)
+
+  private def moduleWithDoc(projectRef: ProjectRef): Seq[ModuleReportAdapter] = {
+
     val modulesWithoutDocs = getModulesForProject(projectRef, updateReports)
 
     val modulesWithDocs = updateClassifiersReports.map { updateClassifiersReportsFn =>
@@ -60,7 +65,12 @@ class RepositoryExtractor(projects: Seq[ProjectRef],
       case (a, f) if moduleId.classifier == fuseClassifier(a) && kinds.contains(a.`type`) => f
     }.toSet
 
-    ModuleData(moduleId, artifacts(allClasspathTypes), artifacts(Set(Artifact.DocType)), artifacts(Set(Artifact.SourceType)))
+    ModuleData(
+      moduleId,
+      artifacts(allClasspathTypes),
+      artifacts(Set(Artifact.DocType)),
+      artifacts(Set(Artifact.SourceType))
+    )
   }
 }
 
@@ -83,7 +93,7 @@ object RepositoryExtractor extends SbtStateOps with TaskOps {
     def dependencyConfigurations(projectRef: ProjectRef) =
       StructureKeys.dependencyConfigurations.in(projectRef).get(state)
 
-    val updateAllTask =
+    val updateAllTask: Task[Map[ProjectRef, UpdateReportAdapter]] =
       Keys.update
         .forAllProjects(state, acceptedProjects)
         .map(_.mapValues(new UpdateReportAdapter(_)))
@@ -97,8 +107,14 @@ object RepositoryExtractor extends SbtStateOps with TaskOps {
       updateReports <- updateAllTask
       updateClassifiersReports <- updateAllClassifiersTask
     } yield {
-      new RepositoryExtractor(acceptedProjects, updateReports.apply,
-        updateClassifiersReports.map(_.apply), classpathTypes, dependencyConfigurations).extract
+      val extractor = new RepositoryExtractor(
+        acceptedProjects,
+        updateReports.apply,
+        updateClassifiersReports.map(_.apply),
+        classpathTypes,
+        dependencyConfigurations
+      )
+      extractor.extract
     }
   }
 }

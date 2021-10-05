@@ -39,7 +39,7 @@ private object Helpers {
       new File(string.trim).getCanonicalFile
 
     def uri: URI =
-      canonUri(new URI(string))
+      canonUri(new URI(string.replace("\\", "/"))) // handle windows separators
   }
 
   implicit def file2richFile(file: File): RichFile =
@@ -60,10 +60,14 @@ private object Helpers {
     else new URI(path)
   }
 
-  def canonUri(uri: URI): URI =
-    (if (uri.getScheme == "file")
-      new File(uri).getCanonicalFile.toURI
-    else uri).normalize()
+  def canonUri(uri: URI): URI = {
+    val uri1 =
+      if (uri.getScheme == "file")
+        new File(uri).getCanonicalFile.toURI
+      else
+        uri
+    uri1.normalize()
+  }
 }
 
 trait DataSerializers {
@@ -151,22 +155,33 @@ trait DataSerializers {
       <scala>
         {Some(what.organization).filterNot(_ == DefaultScalaOrganization).toSeq.map { organization =>
         <organization>{organization}</organization>
-      }}
+        }}
         <version>{what.version}</version>
-        {what.jars.map { jar =>
-        <jar>{jar.path}</jar>
-      }}
-        {what.options.map { option =>
-        <option>{option.canonIfFile}</option>
-      }}
+
+        <libraryJars>  { what.libraryJars.map  { jar => <jar>{jar.path}</jar> }} </libraryJars>
+        <compilerJars> { what.compilerJars.map { jar => <jar>{jar.path}</jar> }} </compilerJars>
+        <extraJars>    { what.extraJars.map    { jar => <jar>{jar.path}</jar> }} </extraJars>
+
+        { what.options.map { option => <option>{option.canonIfFile}</option> }}
       </scala>
 
     override def deserialize(what: Node): Either[Throwable,ScalaData] = {
       val organization = (what \ "organization").headOption.map(_.text).getOrElse(DefaultScalaOrganization)
       val version = (what \ "version").text
-      val jars = (what \ "jar").map(e => e.text.file)
+
+      val libraryJars = (what \ "libraryJars" \ "jar").map(_.text.file)
+      val compilerJars = (what \ "compilerJars"\ "jar").map(_.text.file)
+      val extraJars = (what \ "extraJars"\ "jar").map(_.text.file)
+
       val options = (what \ "option").map(o => o.text.canonIfFile)
-      Right(ScalaData(organization, version, jars, options))
+      Right(ScalaData(
+        organization,
+        version,
+        libraryJars,
+        compilerJars,
+        extraJars,
+        options
+      ))
     }
   }
 

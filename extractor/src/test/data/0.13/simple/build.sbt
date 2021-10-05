@@ -6,8 +6,8 @@ version := "1.2.3"
 
 javaHome := Some(new File("some/home"))
 
-javacOptions := Seq("-j1", "-j2")
+javacOptions := Seq("-javacOption1", "-javacOption2")
 
-scalaVersion := "2.10.1"
+scalaVersion := "2.13.6"
 
-scalacOptions := Seq("-s1", "-s2")
+scalacOptions := Seq("-scalaсOption1", "-scalaсOption2")
