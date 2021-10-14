@@ -34,15 +34,24 @@ lazy val core = newProject("core")
     crossScalaVersions := Seq("2.10.7", "2.11.12", "2.12.15", "2.13.6")
   )
 
+val scala210 = "2.10.7"
+val scala212 = "2.12.15"
+
 lazy val extractor = newProject("extractor")
   .settings(
     sbtPlugin := true,
+    scalacOptions ++= Seq("-deprecation"),
+
+    // keep it 2.10, otherwise "-Xsource:3" option will be imported in IntelliJ because it's added to 212 sbt plugin
+    // by default (see sbt.Defaults.configTasks) and currently IntelliJ works poorly with cross-built projects
+    scalaVersion := scala210,
+
     libraryDependencies ++= Seq(
       "org.scalatest" %% "scalatest" % "3.2.10" % Test withSources()
     ),
     // used only for testing, see publishVersions for versions that are actually used to publish artifacts
     crossSbtVersions := Nil, // handled by explicitly setting sbtVersion via scalaVersion
-    crossScalaVersions := Seq("2.12.15", "2.10.7"),
+    crossScalaVersions := Seq(scala212, scala210),
     pluginCrossBuild / sbtVersion := {
       // keep this as low as possible to avoid running into binary incompatibility such as https://github.com/sbt/sbt/issues/5049
       scalaBinaryVersion.value match {
@@ -51,7 +60,6 @@ lazy val extractor = newProject("extractor")
       }
     },
 
-    scalacOptions ++= Seq("-deprecation"),
     Compile / sources := {
       val sbtVer = (pluginCrossBuild / sbtVersion).value
       val srcs = (Compile / sources).value
