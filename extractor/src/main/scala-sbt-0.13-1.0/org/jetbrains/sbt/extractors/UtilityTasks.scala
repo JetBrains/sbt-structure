@@ -18,6 +18,48 @@ import scala.xml._
  */
 object UtilityTasks extends SbtStateOps {
 
+  /*
+    Selects Scala 2 in Scala 3 projects that contain Scala 2 in crossScalaVersions.
+    https://youtrack.jetbrains.com/issue/SCL-19573
+
+    The ++ command is per-build, but the crossScalaVersions key is per-project and values may vary.
+    The built-in command affects projects that contain a compatible Scala 2 version, but not necessarily all projects that contain Scala 2 in crossScalaVersions.
+    Besides, the built-in command switches to a compatible Scala version, even if the exact version is not listed in crossScalaVersions.
+    To use listed Scala versions, per project, we have to re-implement the sbt.Cross.switchVersion command.
+    It's not clear whether it's safe to select different Scala 2 versions in different projects.
+    In practice, crossScalaVersions in different projects should be compatible.
+  */
+  lazy val preferScala2: Command = Command.command("preferScala2") { state =>
+    val (structure, data) = {
+      val extracted = Project.extract(state)
+      (extracted.structure, extracted.structure.data)
+    }
+
+    val scalaVersions = structure.allProjectRefs
+      .flatMap(project => Keys.scalaVersion.in(project).get(data).toSeq)
+
+    val crossScalaVersions = structure.allProjectRefs.flatMap { project =>
+      Keys.crossScalaVersions.in(project).get(data)
+        .getOrElse(Keys.scalaVersion.in(project).get(data).toSeq)
+    }
+
+    if (scalaVersions.exists(_.startsWith("3.")) && crossScalaVersions.exists(_.startsWith("2."))) {
+      val maxScala2Version = crossScalaVersions
+        .filter(_.startsWith("2."))
+        .maxBy(numbersOf)
+
+      "++" + maxScala2Version :: state
+    } else {
+      state
+    }
+  }
+
+  private def numbersOf(version: String): (Int, Int, Int) = {
+    val prefix = version.split('.').filter(s => s.nonEmpty && s.forall(_.isDigit)).map(_.toInt).take(3)
+    val xs = prefix ++ Seq.fill(3 - prefix.length)(0)
+    (xs(0), xs(1), xs(2))
+  }
+
   lazy val dumpStructure: Initialize[Task[Unit]] = Def.task {
     val structure = StructureKeys.extractStructure.value
     val options = StructureKeys.sbtStructureOpts.value
