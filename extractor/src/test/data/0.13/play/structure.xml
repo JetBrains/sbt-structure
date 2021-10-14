@@ -517,7 +517,7 @@
       <label>testResultLogger</label>
       <description>Logs results after a test task completes.</description>
       <rank>20000</rank>
-      <value>Main(&lt;function1&gt;,sbt.TestResultLogger$$anon$1@df3bb03,sbt.TestResultLogger$$anon$1@71a0ba04,sbt.Test...</value>
+      <value>Main(&lt;function1&gt;,sbt.TestResultLogger$$anon$1@12893b38,sbt.TestResultLogger$$anon$1@3f0a0e71,sbt.Tes...</value>
     </setting>
     <setting>
       <label>loadedBuild</label>
@@ -668,7 +668,7 @@
       <label>wixProductUpgradeId</label>
       <description>The uuid associated with upgrades for this package.</description>
       <rank>25</rank>
-      <value>e86a27f0-51a4-432d-b839-300e92d9b17f</value>
+      <value>5e599f28-52e0-40c7-98ed-3ef518e06aab</value>
     </setting>
     <setting>
       <label>debianSection</label>
@@ -738,7 +738,7 @@
       <label>eclipsePreTasks</label>
       <description>The tasks to be evaluated prior to creating the Eclipse project definition.</description>
       <rank>25</rank>
-      <value>List(sbt.Scoped$$anon$2@508c2567)</value>
+      <value>List(sbt.Scoped$$anon$2@78b1e51e)</value>
     </setting>
     <setting>
       <label>ideaExtraFacets</label>
@@ -876,7 +876,7 @@
       <label>wixProductId</label>
       <description>The uuid of the windows package.</description>
       <rank>25</rank>
-      <value>9fde4720-e53d-4c71-9519-e0c0dc55738b</value>
+      <value>543c8bd1-7e3c-4a21-83ce-04d1623677f4</value>
     </setting>
     <setting>
       <label>exportToInternal</label>
@@ -1142,7 +1142,7 @@
       <label>wixPackageInfo</label>
       <description>The configuration for this package.</description>
       <rank>25</rank>
-      <value>WindowsProductInfo(9fde4720-e53d-4c71-9519-e0c0dc55738b,,1.0.0-SNAPSHOT,,,e86a27f0-51a4-432d-b839-30...</value>
+      <value>WindowsProductInfo(543c8bd1-7e3c-4a21-83ce-04d1623677f4,,1.0.0-SNAPSHOT,,,5e599f28-52e0-40c7-98ed-3e...</value>
     </setting>
     <setting>
       <label>autoCompilerPlugins</label>
@@ -1319,7 +1319,7 @@
       <label>eclipseClasspathTransformerFactory</label>
       <description>Factories for a rewrite rule for the .classpath file.</description>
       <rank>25</rank>
-      <value>List(play.PlayEclipse$$anon$6@3366e98a)</value>
+      <value>List(play.PlayEclipse$$anon$6@5b8a0d3d)</value>
     </setting>
     <setting>
       <label>scalaVersion</label>
@@ -1765,7 +1765,7 @@
       <label>taskTemporaryDirectory</label>
       <description>Directory used for temporary files for tasks that is deleted after each task execution.</description>
       <rank>10000</rank>
-      <value>C:/WINDOWS/sbt_90a04bb7</value>
+      <value>C:/WINDOWS/sbt_f9534a07</value>
     </setting>
     <setting>
       <label>configuration</label>
@@ -3030,15 +3030,6 @@
     </command>
     <command>
       <name>eclipse</name>
-    </command>
-    <command>
-      <name>eclipse</name>
-    </command>
-    <command>
-      <name>gen-idea</name>
-    </command>
-    <command>
-      <name>preferScala2</name>
     </command>
     <command>
       <name>resumeFromFailure</name>

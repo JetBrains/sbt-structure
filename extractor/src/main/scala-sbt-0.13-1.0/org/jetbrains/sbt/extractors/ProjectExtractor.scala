@@ -365,7 +365,7 @@ object ProjectExtractor extends SbtStateOps with TaskOps {
         StructureKeys.extractPlay2.value,
         StructureKeys.settingData.value,
         StructureKeys.taskData.value,
-        StructureKeys.commandData.value
+        StructureKeys.commandData.value.distinct
       ).extract
     }
   }
