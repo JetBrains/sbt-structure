@@ -614,7 +614,7 @@
       <label>testResultLogger</label>
       <description>Logs results after a test task completes.</description>
       <rank>20000</rank>
-      <value>Main(sbt.TestResultLogger$Defaults$$$Lambda$1190/0x00000008007e6040@318303fa,sbt.TestResultLogger$$a...</value>
+      <value>Main(sbt.TestResultLogger$Defaults$$$Lambda$1251/0x000000080098e840@41297d03,sbt.TestResultLogger$$a...</value>
     </setting>
     <setting>
       <label>resourceManaged</label>
@@ -1758,6 +1758,9 @@
       <description>Provides the list of defined tests.</description>
       <rank>31</rank>
     </task>
+    <command>
+      <name>preferScala2</name>
+    </command>
     <command>
       <name>about</name>
       <help>

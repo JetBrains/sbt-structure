@@ -665,7 +665,7 @@
       <label>testResultLogger</label>
       <description>Logs results after a test task completes.</description>
       <rank>20000</rank>
-      <value>Main(sbt.TestResultLogger$Defaults$$$Lambda$1169/0x000000080084f040@3b5a167a,sbt.TestResultLogger$$a...</value>
+      <value>Main(sbt.TestResultLogger$Defaults$$$Lambda$1195/0x00000008009af040@9126e57,sbt.TestResultLogger$$an...</value>
     </setting>
     <setting>
       <label>resourceManaged</label>
@@ -886,7 +886,7 @@
       <label>taskTemporaryDirectory</label>
       <description>Directory used for temporary files for tasks that is deleted after each task execution.</description>
       <rank>10000</rank>
-      <value>C:/WINDOWS/sbt_a393e488</value>
+      <value>C:/WINDOWS/sbt_8e2f9f56</value>
     </setting>
     <setting>
       <label>docArtifactTypes</label>
@@ -1752,6 +1752,9 @@
       <description>Provides the list of defined tests.</description>
       <rank>31</rank>
     </task>
+    <command>
+      <name>preferScala2</name>
+    </command>
     <command>
       <name>about</name>
       <help>

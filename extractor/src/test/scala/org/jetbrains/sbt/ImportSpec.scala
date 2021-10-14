@@ -126,6 +126,10 @@ class ImportSpec extends AnyFreeSpecLike {
       f
     }
 
+    //uncomment to update test data from actual data fast (carefully review it manually)
+//    dumpToFile(testDataFile, TestUtil.read(new File(base, s"actual-structure-$sbtVersionFull-for-test-data-1.xml")))
+//    return
+
     val pathVarsSubstitutor = new PathVariablesSubstitutor(base, sbtIvyHome, sbtCoursierHome, sbtBootDir)
 
     val expectedXmlStrNormalized: String = {
