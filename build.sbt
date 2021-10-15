@@ -42,8 +42,6 @@ lazy val extractor = newProject("extractor")
     sbtPlugin := true,
     scalacOptions ++= Seq("-deprecation"),
 
-    // keep it 2.10, otherwise "-Xsource:3" option will be imported in IntelliJ because it's added to 212 sbt plugin
-    // by default (see sbt.Defaults.configTasks) and currently IntelliJ works poorly with cross-built projects
     scalaVersion := scala210,
 
     libraryDependencies ++= Seq(
