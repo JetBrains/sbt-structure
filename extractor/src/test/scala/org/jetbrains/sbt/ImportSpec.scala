@@ -55,6 +55,7 @@ class ImportSpec extends AnyFreeSpecLike {
 
       "simple 1.6" in { testProject("simple", "1.6.2") }
       "simple 1.7" in { testProject("simple", "1.7.2") }
+      "compile-order" in { testProject("compile-order", "1.7.2") }
     }
   }
 
