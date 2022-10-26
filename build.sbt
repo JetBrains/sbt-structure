@@ -28,14 +28,14 @@ def xmlArtifact(scalaVersion: String) =
       Seq.empty
   }
 
+val scala210 = "2.10.7"
+val scala212 = "2.12.17"
+
 lazy val core = newProject("core")
   .settings(
     libraryDependencies ++= xmlArtifact(scalaVersion.value),
-    crossScalaVersions := Seq("2.10.7", "2.11.12", "2.12.15", "2.13.6")
+    crossScalaVersions := Seq(scala210, "2.11.12", scala212, "2.13.10")
   )
-
-val scala210 = "2.10.7"
-val scala212 = "2.12.15"
 
 lazy val extractor = newProject("extractor")
   .settings(
@@ -45,7 +45,7 @@ lazy val extractor = newProject("extractor")
     scalaVersion := scala210,
 
     libraryDependencies ++= Seq(
-      "org.scalatest" %% "scalatest" % "3.2.10" % Test withSources()
+      "org.scalatest" %% "scalatest" % "3.2.14" % Test withSources()
     ),
     // used only for testing, see publishVersions for versions that are actually used to publish artifacts
     crossSbtVersions := Nil, // handled by explicitly setting sbtVersion via scalaVersion
