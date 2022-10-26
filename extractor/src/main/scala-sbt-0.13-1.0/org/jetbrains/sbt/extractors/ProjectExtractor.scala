@@ -36,6 +36,7 @@ class ProjectExtractor(
   scalacOptions: Seq[String],
   javaHome: Option[File],
   javacOptions: Seq[String],
+  compileOrder: CompileOrder,
   sourceConfigurations: Seq[sbt.Configuration],
   testConfigurations: Seq[sbt.Configuration],
   dependencies: DependencyData,
@@ -70,6 +71,7 @@ class ProjectExtractor(
       configurations,
       extractJava,
       extractScala,
+      compileOrder.toString,
       android,
       dependencies,
       resolvers,
@@ -335,6 +337,7 @@ object ProjectExtractor extends SbtStateOps with TaskOps {
       val base = Keys.baseDirectory.in(projectRef, Compile).value
       val target = Keys.target.in(projectRef, Compile).value
       val javaHome = Keys.javaHome.in(projectRef, Compile).value
+      val compileOrder = Keys.compileOrder.in(projectRef, Compile).value
 
       new ProjectExtractor(
         projectRef,
@@ -358,6 +361,7 @@ object ProjectExtractor extends SbtStateOps with TaskOps {
         scalacOptions.getOrElse(Seq.empty),
         javaHome,
         javacOptions.getOrElse(Seq.empty),
+        compileOrder,
         StructureKeys.sourceConfigurations.value,
         StructureKeys.testConfigurations.value,
         StructureKeys.extractDependencies.value,

@@ -466,6 +466,7 @@ trait DataSerializers {
         <target>{what.target.path}</target>
         {what.java.map(_.serialize).toSeq}
         {what.scala.map(_.serialize).toSeq}
+        <compileOrder>{what.compileOrder}</compileOrder>
         {what.android.map(_.serialize).toSeq}
         {what.configurations.sortBy(_.id).map(_.serialize)}
         {what.dependencies.serialize}
@@ -490,6 +491,7 @@ trait DataSerializers {
       val configurations = (what \ "configuration").deserialize[ConfigurationData]
       val java = (what \ "java").deserialize[JavaData].headOption
       val scala = (what \ "scala").deserialize[ScalaData].headOption
+      val compileOrder = (what \ "compileOrder").text
       val android = (what \ "android").deserialize[AndroidData].headOption
       val resolvers = (what \ "resolver").deserialize[ResolverData].toSet
       val play2 = (what \ "play2").deserialize[Play2Data].headOption
@@ -501,7 +503,7 @@ trait DataSerializers {
       val tryDeps = (what \ "dependencies").deserializeOne[DependencyData]
       tryDeps.right.map { dependencies =>
         ProjectData(id, buildURI, name, organization, version, base, packagePrefix, basePackages,
-          target, configurations, java, scala, android,
+          target, configurations, java, scala, compileOrder, android,
           dependencies, resolvers, play2, settings, tasks, commands)
       }
 
