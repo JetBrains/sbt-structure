@@ -1,6 +1,6 @@
 import java.io.File
 import CrossVersion.partialVersion
-import sbt.Keys.{crossScalaVersions, scalaVersion}
+import sbt.Keys.{crossScalaVersions, excludeLintKeys, scalaVersion}
 import sbt.url
 import xerial.sbt.Sonatype.GitHubHosting
 
@@ -92,8 +92,7 @@ lazy val sbtStructure = project.in(file("."))
 
 lazy val testSetup = taskKey[Unit]("Setup tests for extractor")
 
-// uncomment when we can upgrade to sbt 1.4+
-//excludeLintKeys in Global += crossSbtVersions
+Global / excludeLintKeys += Keys.crossSbtVersions
 
 val publishCoreCommand =
   "; project core ; ci-release"
