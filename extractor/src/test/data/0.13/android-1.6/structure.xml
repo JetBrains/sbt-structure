@@ -266,6 +266,7 @@
       <option>-javabootclasspath</option>
       <option>$ANDROID_HOME/sbt/sdk/platforms/android-22/android.jar</option>
     </scala>
+    <compileOrder>Mixed</compileOrder>
     <android>
       <version>22</version>
       <manifest>$ANDROID_HOME/sbt/exploded-aars/ch.acra-acra-4.8.2/AndroidManifest.xml</manifest>
@@ -561,6 +562,7 @@
       <option>-javabootclasspath</option>
       <option>$ANDROID_HOME/sbt/sdk/platforms/android-22/android.jar</option>
     </scala>
+    <compileOrder>Mixed</compileOrder>
     <android>
       <version>22</version>
       <manifest>$ANDROID_HOME/sbt/exploded-aars/com.android.support-support-v4-23.1.1/AndroidManifest.xml</manifest>

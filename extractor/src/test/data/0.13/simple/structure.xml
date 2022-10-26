@@ -140,6 +140,7 @@
       <option>-scalaсOption1</option>
       <option>-scalaсOption2</option>
     </scala>
+    <compileOrder>Mixed</compileOrder>
     <configuration id="compile">
       <sources>$BASE/src/main/java</sources>
       <sources>$BASE/src/main/scala</sources>

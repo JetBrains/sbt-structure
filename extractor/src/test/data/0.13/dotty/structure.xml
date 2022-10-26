@@ -85,6 +85,7 @@
       <jar>$IVY2/cache/org.scala-lang/scala-library/jars/scala-library-2.11.5.jar</jar>
       <jar>$IVY2/cache/org.scala-lang/scala-reflect/jars/scala-reflect-2.11.5.jar</jar>
     </scala>
+    <compileOrder>Mixed</compileOrder>
     <configuration id="compile">
       <sources>$BASE/src/main/java</sources>
       <sources>$BASE/src/main/scala</sources>

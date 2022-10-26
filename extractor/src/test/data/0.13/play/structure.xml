@@ -220,6 +220,7 @@
       <option>-encoding</option>
       <option>utf8</option>
     </scala>
+    <compileOrder>Mixed</compileOrder>
     <configuration id="compile">
       <sources>$BASE/app</sources>
       <sources>$BASE/app-2.10</sources>

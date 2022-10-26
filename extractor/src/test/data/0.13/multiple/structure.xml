@@ -134,6 +134,7 @@
       </compilerJars>
       <extraJars> </extraJars>
     </scala>
+    <compileOrder>Mixed</compileOrder>
     <configuration id="compile">
       <sources>$BASE/src/main/java</sources>
       <sources>$BASE/src/main/scala</sources>
@@ -1809,6 +1810,7 @@
       </compilerJars>
       <extraJars> </extraJars>
     </scala>
+    <compileOrder>Mixed</compileOrder>
     <configuration id="compile">
       <sources>$BASE/bar/src/main/java</sources>
       <sources>$BASE/bar/src/main/scala</sources>
@@ -3482,6 +3484,7 @@
       </compilerJars>
       <extraJars> </extraJars>
     </scala>
+    <compileOrder>Mixed</compileOrder>
     <configuration id="compile">
       <sources>$BASE/foo/src/main/java</sources>
       <sources>$BASE/foo/src/main/scala</sources>

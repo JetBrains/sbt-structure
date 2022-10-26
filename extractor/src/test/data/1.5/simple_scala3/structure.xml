@@ -384,6 +384,7 @@
         <jar>$COURSIER/cache/https/repo1.maven.org/maven2/org/yaml/snakeyaml/1.23/snakeyaml-1.23.jar</jar>
       </extraJars>
     </scala>
+    <compileOrder>Mixed</compileOrder>
     <configuration id="compile">
       <sources>$BASE/src/main/java</sources>
       <sources>$BASE/src/main/scala</sources>

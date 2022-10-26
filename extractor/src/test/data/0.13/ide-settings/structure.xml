@@ -147,6 +147,7 @@
       <option>-s1</option>
       <option>-s2</option>
     </scala>
+    <compileOrder>Mixed</compileOrder>
     <configuration id="compile">
       <sources>$BASE/src/main/java</sources>
       <sources>$BASE/src/main/scala</sources>
@@ -1843,6 +1844,7 @@
       </compilerJars>
       <extraJars> </extraJars>
     </scala>
+    <compileOrder>Mixed</compileOrder>
     <configuration id="compile">
       <sources>$BASE/redirectOutput/src/main/java</sources>
       <sources>$BASE/redirectOutput/src/main/scala</sources>

@@ -186,6 +186,7 @@
       <option>-javabootclasspath</option>
       <option>$ANDROID_HOME/platforms/android-22/android.jar</option>
     </scala>
+    <compileOrder>Mixed</compileOrder>
     <android>
       <version>22</version>
       <manifest>$BASE/target/android-bin/AndroidManifest.xml</manifest>
@@ -2492,6 +2493,7 @@
       <option>-javabootclasspath</option>
       <option>$ANDROID_HOME/platforms/android-22/android.jar</option>
     </scala>
+    <compileOrder>Mixed</compileOrder>
     <android>
       <version>22</version>
       <manifest>$BASE/target/aars/com.android.support-support-v4-20.0.0/AndroidManifest.xml</manifest>

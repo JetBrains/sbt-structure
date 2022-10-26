@@ -260,6 +260,7 @@
       <option>-javabootclasspath</option>
       <option>$ANDROID_HOME/platforms/android-22/android.jar</option>
     </scala>
+    <compileOrder>Mixed</compileOrder>
     <android>
       <version>22</version>
       <manifest>$BASE/target/android/intermediates/manifest/AndroidManifest.xml</manifest>
@@ -2910,6 +2911,7 @@
       <option>-javabootclasspath</option>
       <option>$ANDROID_HOME/platforms/android-22/android.jar</option>
     </scala>
+    <compileOrder>Mixed</compileOrder>
     <android>
       <version>22</version>
       <manifest>
