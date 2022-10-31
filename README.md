@@ -1,8 +1,7 @@
 [![official JetBrains project](http://jb.gg/badges/official.svg)](https://confluence.jetbrains.com/display/ALL/JetBrains+on+GitHub)
-
-[![Download](https://api.bintray.com/packages/jetbrains/sbt-plugins/sbt-structure-core/images/download.svg) ](https://bintray.com/jetbrains/sbt-plugins/sbt-structure-core/_latestVersion)
-[![Build Status](https://travis-ci.org/JetBrains/sbt-structure.svg)](https://travis-ci.org/JetBrains/sbt-structure)
-
+[![Version](https://maven-badges.herokuapp.com/maven-central/org.jetbrains.scala/sbt-structure-extractor/badge.svg)](https://maven-badges.herokuapp.com/maven-central/org.jetbrains.scala/sbt-structure-extractor)
+![Build Status](https://github.com/jetbrains/sbt-structure/actions/workflows/build.yml/badge.svg)
+[![Discord](https://badgen.net/badge/icon/discord?icon=discord&label)](https://discord.gg/aUKpZzeHCK)
 [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/JetBrains/intellij-scala)
 
 # sbt-structure
