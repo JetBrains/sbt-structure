@@ -1,4 +1,3 @@
-import java.io.File
 import CrossVersion.partialVersion
 import sbt.Keys.{crossScalaVersions, excludeLintKeys, scalaVersion}
 import sbt.url
@@ -69,8 +68,6 @@ lazy val sbtStructure = project.in(file("."))
     sonatypePublishTo := None
   )
   .aggregate(core, extractor)
-
-lazy val testSetup = taskKey[Unit]("Setup tests for extractor")
 
 Global / excludeLintKeys += Keys.crossSbtVersions
 
