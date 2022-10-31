@@ -27,7 +27,7 @@ object TestDataDumper extends AutoPlugin {
     val dumpTestStructure: InputKey[File] = inputKey[File](
       "dump xml output from running sbt-structure with the current (sbtVersion in pluginCrossBuild) on the directory in the argument (subdir of src/test/data/)"
     )
-    val sbtLauncher: SettingKey[File] =
+    val dumpTestStructureSbtLauncher: SettingKey[File] =
       settingKey[File]("where is the sbt launcher hidden")
   }
 
@@ -39,7 +39,7 @@ object TestDataDumper extends AutoPlugin {
   )
 
   override def buildSettings: Seq[Def.Setting[_]] = Seq(
-    sbtLauncher := baseDirectory.value / "sbt-launch.jar"
+    dumpTestStructureSbtLauncher := baseDirectory.value / "sbt-launch.jar"
   )
 
   private val dumpTestStructureTask = Def.inputTask {
@@ -50,11 +50,11 @@ object TestDataDumper extends AutoPlugin {
 
     val Seq(testDirName, sbtVer) = args
     val sbtBinaryVer = sbtVersionBinary(sbtVer)
-    val testDir = (sourceDirectory in Test).value / "data" / sbtBinaryVer / testDirName
-    val pluginJar = (packagedArtifact in (Compile, packageBin)).value._2
+    val testDir = (Test / sourceDirectory).value / "data" / sbtBinaryVer / testDirName
+    val pluginJar = (Compile / packageBin / packagedArtifact).value._2
 
     val generatedFile =
-      dumpStructureFunc(sbtVer, sbtLauncher.value, pluginJar, testDir).get
+      dumpStructureFunc(sbtVer, dumpTestStructureSbtLauncher.value, pluginJar, testDir).get
     streams.value.log.info(s"regenerated $generatedFile for sbt $sbtVer")
     generatedFile
   }
@@ -70,9 +70,9 @@ object TestDataDumper extends AutoPlugin {
     Def.task {
       import sbt.NameFilter._
 
-      val pluginJar = (packagedArtifact in (Compile, packageBin)).value._2
+      val pluginJar = (Compile / packageBin / packagedArtifact).value._2
       val testDataDirs =
-        ((sourceDirectory in Test).value / "data" / "0.13").listFiles
+        ((Test / sourceDirectory).value / "data" / "0.13").listFiles
           .filter(_.isDirectory)
           .toSeq
       val nameFilter = (name: String) => name.matches("structure-[0-9.]+\\.xml")
@@ -83,7 +83,7 @@ object TestDataDumper extends AutoPlugin {
           .map(_.name.stripPrefix("structure-").stripSuffix(".xml"))
         dumpFile <- {
           streams.value.log.info(s"dumping structure xml for $testDir")
-          dumpStructureFunc(sbtVer, sbtLauncher.value, pluginJar, testDir).toOption
+          dumpStructureFunc(sbtVer, dumpTestStructureSbtLauncher.value, pluginJar, testDir).toOption
         }
       } yield dumpFile
     }
