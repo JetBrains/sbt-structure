@@ -44,7 +44,7 @@ lazy val extractor = newProject("extractor")
     scalaVersion := scala210,
 
     libraryDependencies ++= Seq(
-      "org.scalatest" %% "scalatest" % "3.2.14" % Test withSources()
+      "org.scalatest" %% "scalatest" % "3.2.14" % Test
     ),
     // used only for testing, see publishVersions for versions that are actually used to publish artifacts
     crossSbtVersions := Nil, // handled by explicitly setting sbtVersion via scalaVersion
