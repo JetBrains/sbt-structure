@@ -12,12 +12,12 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - uses: olafurpg/setup-scala@v13
       with:
         java-version: adopt@1.11
     - name: cache coursier cache
-      uses: actions/cache@v2
+      uses: actions/cache@v3
       with:
         path: ~/.coursier/cache
         key: ${{ runner.os }}-coursier-cache-${{ hashFiles('**/*.sbt') }}-${{ hashFiles('project/**/*.scala') }}
@@ -25,7 +25,7 @@ jobs:
           ${{ runner.os }}-coursier-cache-${{ hashFiles('**/*.sbt') }}
           ${{ runner.os }}-coursier-cache
     - name: cache ivy cache
-      uses: actions/cache@v1
+      uses: actions/cache@v3
       with:
         path: ~/.ivy2/cache
         key: ${{ runner.os }}-ivy-cache-${{ hashFiles('**/*.sbt') }}-${{ hashFiles('project/**/*.scala') }}
@@ -33,7 +33,7 @@ jobs:
           ${{ runner.os }}-ivy-cache-${{ hashFiles('**/*.sbt') }}
           ${{ runner.os }}-ivy-cache
     - name: cache sbt
-      uses: actions/cache@v1
+      uses: actions/cache@v3
       with:
         path: ~/.sbt
         key: ${{ runner.os }}-sbt-${{ hashFiles('**/*.sbt') }}-${{ hashFiles('project/**/*.scala') }}
