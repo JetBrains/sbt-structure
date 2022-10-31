@@ -56,16 +56,6 @@ lazy val extractor = newProject("extractor")
         case "2.10" => "0.13.17"
         case "2.12" => "1.2.1"
       }
-    },
-
-    Compile / sources := {
-      val sbtVer = (pluginCrossBuild / sbtVersion).value
-      val srcs = (Compile / sources).value
-      // remove the AutoPlugin since it doesn't compile when testing for sbt 0.13.0
-      // it's okay to compile it into the jar, old sbt won't know about it!
-      if (sbtVer == "0.13.0")
-        srcs.filterNot(_.getName == "StructurePlugin.scala")
-      else srcs
     }
   )
   .enablePlugins(TestDataDumper)
