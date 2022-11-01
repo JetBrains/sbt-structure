@@ -15,8 +15,14 @@ Please report any issues related to sbt-structure in IntelliJ on the [IntelliJ S
 
 ## Project structure
 
-- `extractor` is an sbt plugin that actually extracts information from the sbt build
+- `extractor` is an sbt plugin that actually extracts information from the sbt build.
 - `core` is a shared library that is used by both `extractor` and the Intellij Scala plugin.
+
+**_Note:_** `extractor` is packaged as a fat jar, by compiling the sources of `core` and including the output `.class`
+files in the resulting jar. This packaging structure is implicitly expected by the Intellij Scala  plugin, due to how
+the jar is injected in sbt for extracting the information of a sbt build. The shared sources are contained in the
+`shared` directory and linked in the `extractor` and `core` modules, in order to create a source dependency that can be
+recognized by IDEA.
 
 ## Usage
 
