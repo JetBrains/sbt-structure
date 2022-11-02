@@ -1,10 +1,13 @@
 import xerial.sbt.Sonatype.GitHubHosting
 
 ThisBuild / organization := "org.jetbrains.scala"
-ThisBuild / sonatypeProfileName := "org.jetbrains"
 ThisBuild / homepage := Some(url("https://github.com/JetBrains/sbt-structure"))
-ThisBuild / sonatypeProjectHosting := Some(GitHubHosting("JetBrains", "sbt-structure", "scala-developers@jetbrains.com"))
 ThisBuild / licenses += ("Apache-2.0", url("http://www.apache.org/licenses/LICENSE-2.0"))
+
+lazy val sonatypeSettings = Seq(
+  sonatypeProfileName := "org.jetbrains",
+  sonatypeProjectHosting := Some(GitHubHosting("JetBrains", "sbt-structure", "scala-developers@jetbrains.com"))
+)
 
 lazy val sbtStructure = project.in(file("."))
   .aggregate(core, extractor)
@@ -14,7 +17,8 @@ lazy val sbtStructure = project.in(file("."))
     publish / skip := true,
     crossScalaVersions := List.empty,
     crossSbtVersions := List.empty,
-    sonatypePublishTo := None
+    sonatypePublishTo := None,
+    sonatypeSettings
   )
 
 val scala210: String = "2.10.7"
@@ -33,10 +37,12 @@ lazy val core = project.in(file("core"))
           Seq.empty
       }
     },
-    crossScalaVersions := Seq("2.13.10", scala212, "2.11.12", scala210)
+    crossScalaVersions := Seq("2.13.10", scala212, "2.11.12", scala210),
+    sonatypeSettings
   )
 
 lazy val extractor = project.in(file("extractor"))
+  .enablePlugins(SbtPlugin, TestDataDumper)
   .settings(
     name := "sbt-structure-extractor",
     Compile / unmanagedSourceDirectories +=
@@ -50,9 +56,9 @@ lazy val extractor = project.in(file("extractor"))
         case "2.10" => "0.13.17"
         case "2.12" => "1.2.1"
       }
-    }
+    },
+    sonatypeSettings
   )
-  .enablePlugins(SbtPlugin, TestDataDumper)
 
 val publishCoreCommand =
   "; project core ; ci-release"
