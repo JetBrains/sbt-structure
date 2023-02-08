@@ -48,7 +48,7 @@ lazy val extractor = project.in(file("extractor"))
     Compile / unmanagedSourceDirectories +=
       (ThisBuild / baseDirectory).value / "shared" / "src" / "main" / "scala",
     scalacOptions ++= Seq("-deprecation"),
-    libraryDependencies += "org.scalatest" %% "scalatest" % "3.2.14" % Test,
+    libraryDependencies += "org.scalatest" %% "scalatest" % "3.2.15" % Test,
     crossScalaVersions := Seq(scala212, scala210),
     pluginCrossBuild / sbtVersion := {
       // keep this as low as possible to avoid running into binary incompatibility such as https://github.com/sbt/sbt/issues/5049
