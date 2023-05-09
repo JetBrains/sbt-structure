@@ -63,6 +63,15 @@ trait SbtStateOps {
       }
       std.TaskExtra.joinTasks(tasks).join.map(_.toMap)
     }
+
+    def forAllProjectsAndConfigurations(state: State, configurations: Seq[sbt.Configuration], projects: Seq[ProjectRef]): Task[Map[T, ProjectRef]] = {
+      val projectsMergedWithConfigurations = projects.flatMap { p => configurations.map((p, _)) }
+      val tasks = projectsMergedWithConfigurations
+        .flatMap { c =>
+          key.in(c._1, c._2).get(structure(state).data).map(_.map(it => (it, c._1)))
+        }
+      std.TaskExtra.joinTasks(tasks).join.map(_.toMap)
+    }
   }
 }
 
