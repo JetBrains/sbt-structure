@@ -21,6 +21,10 @@ trait SbtStateOps {
 
     def getOrElse(state: State, default: => T): T =
       find(state).getOrElse(default)
+
+    def forAllProjects(state: State, projects: Seq[ProjectRef]): Seq[(ProjectRef, T)] =
+      projects.flatMap(p => key.in(p).find(state).map(it => (p, it)))
+
   }
 
   implicit class `enrich TaskKey`[T](key: TaskKey[T]) {

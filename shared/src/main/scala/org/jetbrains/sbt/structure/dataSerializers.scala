@@ -187,7 +187,7 @@ trait DataSerializers {
 
   implicit val projectDependencySerializer: XmlSerializer[ProjectDependencyData] = new XmlSerializer[ProjectDependencyData] {
     override def serialize(what: ProjectDependencyData): Elem = {
-      val configurations = what.configuration.mkString(";")
+      val configurations = what.configurations.mkString(";")
       what.buildURI.map { buildURI =>
         <project buildURI={buildURI.toString} configurations={configurations}>{what.project}</project>
       } getOrElse {
@@ -195,7 +195,7 @@ trait DataSerializers {
       }
     }
 
-    override def deserialize(what: Node): Either[Throwable,ProjectDependencyData] = {
+    override def deserialize(what: Node): Either[Throwable, ProjectDependencyData] = {
       val project = what.text
       val buildURI = (what \ "@buildURI").text.uri
       val configurations = (what \ "@configurations").headOption.map(n => Configuration.fromString(n.text))
