@@ -14,6 +14,8 @@ object StructureKeys {
   val testConfigurations: SettingKey[Seq[Configuration]] = SettingKey("ssTestConfigurations", rank = Invisible)
   val acceptedProjects: TaskKey[Seq[ProjectRef]] = TaskKey("ssAcceptedProjects", rank = Invisible)
 
+  val allSourceConfigurations: TaskKey[Seq[Configuration]] = TaskKey("ssAllSourceConfigurations", rank = Invisible)
+  val allTestConfigurations: TaskKey[Seq[Configuration]] = TaskKey("ssAllTestConfigurations", rank = Invisible)
   val extractPlay2: TaskKey[Option[Play2Data]] = TaskKey("ssExtractPlay2", rank = Invisible)
   val extractBuild: TaskKey[BuildData] = TaskKey("ssExtractBuild", rank = Invisible)
   val extractBuilds: TaskKey[Seq[BuildData]] = TaskKey("ssExtractBuilds", rank = Invisible)

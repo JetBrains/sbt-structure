@@ -32,7 +32,8 @@ object CreateTasks extends (State => State) with SbtStateOps {
     StructureKeys.extractBuild := BuildExtractor.taskDef.value,
     StructureKeys.extractDependencies := DependenciesExtractor.taskDef.value,
     StructureKeys.extractProject := ProjectExtractor.taskDef.value,
-
+    StructureKeys.allSourceConfigurations := KeysExtractor.allSourceConfigurations.value,
+    StructureKeys.allTestConfigurations := KeysExtractor.allTestConfigurations.value,
     StructureKeys.allKeys := KeysExtractor.allKeys.value,
     StructureKeys.taskData := KeysExtractor.taskData.value,
     StructureKeys.settingData := KeysExtractor.settingData.value,

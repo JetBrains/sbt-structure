@@ -1,9 +1,9 @@
 package org.jetbrains.sbt.extractors
 
-import org.jetbrains.sbt.StructureKeys
+import org.jetbrains.sbt.{SbtStateOps, StructureKeys}
 import org.jetbrains.sbt.structure.{CommandData, SettingData, TaskData}
 import sbt.jetbrains.BadCitizen
-import sbt.{AttributeKey, BuiltinCommands, Def, Extracted, KeyRanks, Keys, Logger, Project, SettingKey, Task}
+import sbt.{AttributeKey, BuiltinCommands, Configuration, Def, Extracted, KeyRanks, Keys, Logger, Project, SettingKey, Task}
 
 import scala.util.control.NonFatal
 
@@ -12,7 +12,7 @@ import scala.util.control.NonFatal
   * Extract setting and task keys.
   * For instance, settings could show a stringified form directly.
   */
-object KeysExtractor {
+object KeysExtractor extends SbtStateOps {
 
   /** Maximum length of toString'ed setting value exported. */
   val maxValueStringLength = 103
@@ -53,6 +53,22 @@ object KeysExtractor {
         if key != null && BuiltinCommands.isTask(key.manifest)
       } yield
         TaskData(key.label, key.description, key.rank)
+    }
+  }
+
+  val allSourceConfigurations: Def.Initialize[Task[Seq[Configuration]]] = Def.task {
+    val acceptedProjects = StructureKeys.acceptedProjects.value
+    val state = Keys.state.value
+    acceptedProjects.flatMap { project =>
+      StructureKeys.sourceConfigurations.in(project).get(state)
+    }
+  }
+
+  val allTestConfigurations: Def.Initialize[Task[Seq[Configuration]]] = Def.task {
+    val acceptedProjects = StructureKeys.acceptedProjects.value
+    val state = Keys.state.value
+    acceptedProjects.flatMap { project =>
+      StructureKeys.testConfigurations.in(project).get(state)
     }
   }
 
