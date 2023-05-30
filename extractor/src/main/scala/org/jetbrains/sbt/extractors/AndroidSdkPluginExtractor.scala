@@ -2,7 +2,7 @@ package org.jetbrains.sbt.extractors
 
 import java.io.File
 
-import org.jetbrains.sbt.structure.{Aar, AndroidData, ApkLib, BuildData, ConfigurationData, DependencyData, DirectoryData, ProjectData}
+import org.jetbrains.sbt.structure.{Aar, AndroidData, ApkLib, ConfigurationData, DependencyData, DirectoryData, ProjectData, Dependencies}
 import org.jetbrains.sbt.{SbtStateOps, TaskOps}
 import sbt._
 import sbt.jetbrains.apiAdapter._
@@ -74,7 +74,7 @@ object AndroidSdkPluginExtractor extends SbtStateOps with TaskOps  {
       ConfigurationData("compile",
         Seq(DirectoryData(lib.layout.sources, managed = true)),
         Seq(DirectoryData(lib.layout.resources, managed = true)), Nil, lib.getJarFile) :: Nil, None, None, CompileOrder.Mixed.toString, Some(android),
-      DependencyData(Nil, Nil, Nil), Set.empty, None, Nil, Nil, Nil)
+      DependencyData(Dependencies(Nil, Nil), Nil, Nil), Set.empty, None, Nil, Nil, Nil)
     Aar(fixedLibName, project)
   }
 

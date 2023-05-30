@@ -38,8 +38,29 @@ trait SbtStateOps {
       std.TaskExtra.joinTasks(tasks).join.map(_.toMap)
     }
 
-    def forAllConfigurations(state: State, configurations: Seq[sbt.Configuration]): Task[Map[sbt.Configuration, T]] = {
-      val tasks = configurations.flatMap(c => key.in(c).get(structure(state).data).map(_.map(it => (c, it))))
+    // this workaround is created for android projects. For some unknown reason, triggering compilation during
+    // internalDependencyClasspath task causes a lint error
+    private def substituteDummyConfigNeeded(configuration: sbt.Configuration, isAndroid: Boolean): sbt.Configuration =
+      if (isAndroid) {
+        val dummyConfiguration = config("dummyConfig").extend(configuration)
+        sbt.Keys.trackInternalDependencies.in(dummyConfiguration) := TrackLevel.NoTracking
+        dummyConfiguration
+      } else configuration
+
+    def forAllConfigurations(state: State, configurations: Seq[sbt.Configuration], isAndroid: Boolean = false): Task[Map[sbt.Configuration, T]] = {
+      val tasks = configurations.flatMap { c =>
+        val config = substituteDummyConfigNeeded(c, isAndroid)
+        key.in(config).get(structure(state).data).map(_.map(it => (c, it)))
+      }
+      std.TaskExtra.joinTasks(tasks).join.map(_.toMap)
+    }
+
+    def forAllProjectsAndConfigurations(state: State, configurations: Seq[sbt.Configuration], projects: Seq[ProjectRef], isAndroid: Boolean = false): Task[Map[T, ProjectRef]] = {
+      val projectsMergedWithConfigurations = projects.flatMap { p => configurations.map((p, _)) }
+      val tasks = projectsMergedWithConfigurations.flatMap { case (project, configuration) =>
+        val config = substituteDummyConfigNeeded(configuration, isAndroid)
+        key.in(project, config).get(structure(state).data).map(_.map(it => (it, project)))
+      }
       std.TaskExtra.joinTasks(tasks).join.map(_.toMap)
     }
   }

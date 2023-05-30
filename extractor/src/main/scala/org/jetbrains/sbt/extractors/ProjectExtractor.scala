@@ -89,9 +89,12 @@ class ProjectExtractor(
             ProjectDependencyData(aar.name, None, Configuration.Compile :: Nil)
         )
         // add aar module dependencies
+        val projectDependencies = projectData.dependencies.projects
         val updatedProject = projectData.copy(
           dependencies = dependencies
-            .copy(projects = projectData.dependencies.projects ++ deps)
+            .copy(projects = Dependencies(projectDependencies.forTestSources,
+              projectDependencies.forProductionSources ++ deps)
+            )
         )
         updatedProject +: a.aars.map(
           _.project.copy(
