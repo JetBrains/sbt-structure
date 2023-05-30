@@ -129,15 +129,17 @@ case class ScalaData(organization: String,
   def allCompilerJars: Seq[File] = libraryJars ++ compilerJars
 }
 
-case class DependencyData(projects: Seq[ProjectDependencyData],
+case class DependencyData(projects: Dependencies[ProjectDependencyData],
                           modules: Seq[ModuleDependencyData],
                           jars: Seq[JarDependencyData])
+
+case class Dependencies[T](forTestSources: Seq[T], forProductionSources: Seq[T])
 
 /**
  * Inter-project dependency
  * @param project What project to depend on
  */
-case class ProjectDependencyData(project: String, buildURI: Option[URI], configuration: Seq[Configuration])
+case class ProjectDependencyData(project: String, buildURI: Option[URI], configurations: Seq[Configuration])
 
 /**
  * External library dependency
