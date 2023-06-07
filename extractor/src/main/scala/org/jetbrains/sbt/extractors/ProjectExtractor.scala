@@ -40,6 +40,7 @@ class ProjectExtractor(
   sourceConfigurations: Seq[sbt.Configuration],
   testConfigurations: Seq[sbt.Configuration],
   dependencies: DependencyData,
+  sourceDirectory: File,
   android: Option[AndroidData],
   play2: Option[Play2Data],
   settingData: Seq[SettingData],
@@ -56,7 +57,13 @@ class ProjectExtractor(
     val configurations =
       mergeConfigurations(
         sourceConfigurations.flatMap(extractConfiguration(Compile.name)) ++
-          testConfigurations.flatMap(extractConfiguration(Test.name))
+          testConfigurations.flatMap { configuration =>
+            val ideConfig = configuration match {
+              case sbt.IntegrationTest => IntegrationTest
+              case _ => Test
+            }
+            extractConfiguration(ideConfig.name)(configuration)
+          }
       )
     val projectData = ProjectData(
       projectRef.id,
@@ -74,6 +81,7 @@ class ProjectExtractor(
       compileOrder.toString,
       android,
       dependencies,
+      sourceDirectory,
       resolvers,
       play2,
       settingData,
@@ -86,7 +94,7 @@ class ProjectExtractor(
       case Some(a) =>
         val deps = a.aars.map(
           aar =>
-            ProjectDependencyData(aar.name, None, Configuration.Compile :: Nil)
+            ProjectDependencyData(DependenciesExtractor.convertProjectName(aar.name, sbt.Compile), None, Configuration.Compile :: Nil)
         )
         // add aar module dependencies
         val projectDependencies = projectData.dependencies.projects
@@ -341,6 +349,7 @@ object ProjectExtractor extends SbtStateOps with TaskOps {
       val target = Keys.target.in(projectRef, Compile).value
       val javaHome = Keys.javaHome.in(projectRef, Compile).value
       val compileOrder = Keys.compileOrder.in(projectRef, Compile).value
+      val sourceDirectory = Keys.sourceDirectory.in(projectRef).value
 
       new ProjectExtractor(
         projectRef,
@@ -368,6 +377,7 @@ object ProjectExtractor extends SbtStateOps with TaskOps {
         StructureKeys.sourceConfigurations.value,
         StructureKeys.testConfigurations.value,
         StructureKeys.extractDependencies.value,
+        sourceDirectory,
         StructureKeys.extractAndroid.value,
         StructureKeys.extractPlay2.value,
         StructureKeys.settingData.value,

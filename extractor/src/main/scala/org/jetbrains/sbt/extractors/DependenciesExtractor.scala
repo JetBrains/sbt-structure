@@ -22,74 +22,18 @@ class DependenciesExtractor(projectRef: ProjectRef,
                             exportedClasspathToProjectMapping: Map[File, ProjectRef])
   extends ModulesOps {
 
-  private[extractors] def extract: DependencyData ={
+  private[extractors] def extract: DependencyData = {
     val projectDependencies = processDependenciesMap(forAllConfigurations(projectsIn)) { case ((project, uri), configs) =>
       ProjectDependencyData(project, uri, configs)
     }
+    val moduleDependencies = processDependenciesMap(forAllConfigurations(modulesIn)) { case (moduleIdentifier, configs) =>
+      ModuleDependencyData(moduleIdentifier, configs)
+    }
+    val jarDependencies = processDependenciesMap(forAllConfigurations(jarsIn)) { case (file, configs) =>
+      JarDependencyData(file, configs)
+    }
     DependencyData(projectDependencies, moduleDependencies, jarDependencies)
   }
-
-  private def processDependenciesMap[D, F](dependenciesList: Seq[(D, Seq[jb.Configuration])])
-                                          (mapToTargetType: ((D, Seq[jb.Configuration])) => F): Dependencies[F] = {
-    val productionDependencies = mutable.Map.empty[D, Seq[jb.Configuration]]
-    val testDependencies = mutable.Map.empty[D, Seq[jb.Configuration]]
-
-    def updateDependenciesInProductionAndTest(project: D, configsForProduction: Seq[jb.Configuration], configsForTest: Seq[jb.Configuration]): Unit = {
-      Seq((productionDependencies, configsForProduction), (testDependencies, configsForTest))
-        .filterNot(_._2.isEmpty)
-        .foreach { case (dependencies, configs) =>
-          val existingConfigurations = dependencies.getOrElse(project, Seq.empty)
-          dependencies.update(project, existingConfigurations ++ configs)
-        }
-    }
-
-    dependenciesList.foreach { case (dependency, configurations) =>
-      val cs = mapProjectDependenciesConfigurations(configurations)
-      updateDependenciesInProductionAndTest(dependency, cs.forProductionSources, cs.forTestSources)
-    }
-    Dependencies(testDependencies.toSeq.map(mapToTargetType), productionDependencies.toSeq.map(mapToTargetType))
-  }
-
-  // We have to perform this configurations mapping because we're using sbt keys, which give
-  // us only information which dependencies are visible in what configurations instead of explicitly declared configurations.
-  private def mapProjectDependenciesConfigurations(configurations: Seq[jb.Configuration]): Dependencies[jb.Configuration] = {
-    val cs = swapAllDerivativesOfTestConfigurations(configurations)
-    // TODO: after splitting production and test sources all test configurations should be changed to Compile (sbt does not distinguish between test compile & runtime)
-    val resultConfigurations: (Seq[jb.Configuration], Seq[jb.Configuration]) = {
-      if (Seq(jb.Configuration.Compile, jb.Configuration.Test, jb.Configuration.Runtime).forall(cs.contains)) { // compile configuration
-        (Seq(jb.Configuration.Compile), Seq(jb.Configuration.Compile))
-      } else if (Seq(jb.Configuration.Compile, jb.Configuration.Test).forall(cs.contains)) { // provided configuration
-        (Seq(jb.Configuration.Provided), Seq(jb.Configuration.Provided))
-      } else if (Seq(jb.Configuration.Test, jb.Configuration.Runtime).forall(cs.contains)) { // runtime configuration
-        (Seq(jb.Configuration.Runtime), Seq(jb.Configuration.Runtime))
-      } else {
-        if (!cs.exists(Seq(jb.Configuration.Compile, jb.Configuration.Runtime, jb.Configuration.Test).contains(_))) {
-          (Seq(jb.Configuration.Compile), Seq(jb.Configuration.Compile))
-        } else {
-          Seq(
-            (cs.contains(jb.Configuration.Test), (Nil, Seq(jb.Configuration.Test))),
-            (cs.contains(jb.Configuration.Compile), (Seq(jb.Configuration.Provided), Nil)),
-            (cs.contains(jb.Configuration.Runtime), (Seq(jb.Configuration.Runtime), Nil))
-          ).foldLeft((Seq.empty[jb.Configuration], Seq.empty[jb.Configuration])) { (acc, cur) =>
-            val (condition, (productionConfigs, testConfigs)) = cur
-            if (condition) (acc._1 ++ productionConfigs, acc._2 ++ testConfigs)
-            else acc
-          }
-        }
-      }
-    }
-    Dependencies(resultConfigurations._2, resultConfigurations._1)
-  }
-
-  private def moduleDependencies: Seq[ModuleDependencyData] =
-    forAllConfigurations(modulesIn).map { case (moduleId, configurations) =>
-      ModuleDependencyData(moduleId, mapConfigurations(configurations))
-    }
-
-  private def jarDependencies: Seq[JarDependencyData] =
-    forAllConfigurations(jarsIn).map { case (file, configurations) =>
-      JarDependencyData(file, mapConfigurations(configurations))
-    }
 
   private def jarsIn(configuration: sbt.Configuration): Seq[File] =
     unmanagedClasspath(configuration).map(_.data)
@@ -110,30 +54,67 @@ class DependenciesExtractor(projectRef: ProjectRef,
       entry <- internalDependencyClasspath(configuration)
       project <- exportedClasspathToProjectMapping.get(entry.data)
       if !(configuration.name == jb.Configuration.Runtime.name && project == projectRef)
+      entryConfiguration <- entry.get(Keys.configuration.key)
     } yield {
-      (project.project, Some(project.build))
+      (DependenciesExtractor.convertProjectName(project.project, entryConfiguration), Some(project.build))
     }
 
-  private def forAllConfigurations[T](fn: sbt.Configuration => Seq[T]): Seq[(T, Seq[jb.Configuration])] = {
+  private def forAllConfigurations[T](fn: sbt.Configuration => Seq[T]): Seq[(T, Seq[jb.Configuration])] =
     dependencyConfigurations
       .flatMap(conf => fn(conf).map(it => (it, conf)))
       .groupBy(_._1)
       .mapValues(_.unzip._2.map(c => jb.Configuration(c.name)))
       .toSeq
+
+  // We have to perform configurations mapping because we're using various sbt keys, which give
+  // us only information which dependencies are visible in what configurations instead of explicitly declared configurations
+  private def mapConfigurations(configurations: Seq[jb.Configuration]): Dependencies[jb.Configuration] = {
+    val cs = swapAllDerivativesOfTestConfigurations(configurations)
+    val resultConfigurations: (Seq[jb.Configuration], Seq[jb.Configuration]) = {
+      if (Seq(jb.Configuration.Compile, jb.Configuration.Test, jb.Configuration.Runtime).forall(cs.contains)) { // compile configuration
+        (Seq(jb.Configuration.Compile), Seq(jb.Configuration.Compile))
+      } else if (Seq(jb.Configuration.Compile, jb.Configuration.Test).forall(cs.contains)) { // provided configuration
+        (Seq(jb.Configuration.Provided), Seq(jb.Configuration.Compile))
+      } else if (Seq(jb.Configuration.Test, jb.Configuration.Runtime).forall(cs.contains)) { // runtime configuration
+        (Seq(jb.Configuration.Runtime), Seq(jb.Configuration.Compile))
+      } else {
+        if (!cs.exists(Seq(jb.Configuration.Compile, jb.Configuration.Runtime, jb.Configuration.Test).contains(_))) {
+          (Seq(jb.Configuration.Compile), Seq(jb.Configuration.Compile))
+        } else {
+          Seq(
+            (cs.contains(jb.Configuration.Test), (Nil, Seq(jb.Configuration.Compile))),
+            (cs.contains(jb.Configuration.Compile), (Seq(jb.Configuration.Provided), Nil)),
+            (cs.contains(jb.Configuration.Runtime), (Seq(jb.Configuration.Runtime), Nil))
+          ).foldLeft((Seq.empty[jb.Configuration], Seq.empty[jb.Configuration])) { (acc, cur) =>
+            val (condition, (productionConfigs, testConfigs)) = cur
+            if (condition) (acc._1 ++ productionConfigs, acc._2 ++ testConfigs)
+            else acc
+          }
+        }
+      }
+    }
+    Dependencies(resultConfigurations._2, resultConfigurations._1)
   }
 
-  // We have to perform this configurations mapping because we're using externalDependencyClasspath
-  // rather than libraryDependencies (to acquire transitive dependencies),  so we detect
-  // module presence (in external classpath) instead of explicitly declared configurations.
-  private def mapConfigurations(configurations: Seq[jb.Configuration]): Seq[jb.Configuration] = {
-    val cs = swapAllDerivativesOfTestConfigurations(configurations)
-    if (cs == Set(jb.Configuration.Compile, jb.Configuration.Test, jb.Configuration.Runtime)) {
-      Seq(jb.Configuration.Compile)
-    } else if (cs == Set(jb.Configuration.Compile, jb.Configuration.Test)) {
-      Seq(jb.Configuration.Provided)
-    } else {
-      cs.toSeq
+  private def processDependenciesMap[D, F](dependenciesList: Seq[(D, Seq[jb.Configuration])])
+                                       (mapToTargetType: ((D, Seq[jb.Configuration])) => F): Dependencies[F] = {
+    val productionDependencies = mutable.Map.empty[D, Seq[jb.Configuration]]
+    val testDependencies = mutable.Map.empty[D, Seq[jb.Configuration]]
+
+    def updateDependenciesInProductionAndTest(project: D, configsForProduction: Seq[jb.Configuration], configsForTest: Seq[jb.Configuration]): Unit = {
+      Seq((productionDependencies, configsForProduction), (testDependencies, configsForTest))
+        .filterNot(_._2.isEmpty)
+        .foreach { case (dependencies, configs) =>
+          val existingConfigurations = dependencies.getOrElse(project, Seq.empty)
+          dependencies.update(project, existingConfigurations ++ configs)
+        }
     }
+
+    dependenciesList.foreach { case (dependency, configurations) =>
+      val cs = mapConfigurations(configurations)
+      updateDependenciesInProductionAndTest(dependency, cs.forProductionSources, cs.forTestSources)
+    }
+    Dependencies(testDependencies.toSeq.map(mapToTargetType), productionDependencies.toSeq.map(mapToTargetType))
   }
 
   private def swapAllDerivativesOfTestConfigurations(configurations: Seq[jb.Configuration]): Set[jb.Configuration] = {
@@ -203,4 +184,12 @@ object DependenciesExtractor extends SbtStateOps with TaskOps {
         cause.foreach(c => throw c)
         Map.empty
     }
+
+  def convertProjectName(project: String, configuration: sbt.Configuration): String = {
+    val sourceKind = configuration match {
+      case sbt.Test | sbt.IntegrationTest => "test"
+      case _ => "main"
+    }
+    s"$project:$sourceKind"
+  }
 }

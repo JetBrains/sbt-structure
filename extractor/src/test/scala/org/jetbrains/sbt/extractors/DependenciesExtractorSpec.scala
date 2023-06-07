@@ -61,16 +61,16 @@ class DependenciesExtractorSpec extends AnyFreeSpecLike {
       ).extract
 
       val testDependencies = Seq(
-        ProjectDependencyData(projects(1).project, Some(projects(1).build), Seq(jb.Configuration.Compile)),
-        ProjectDependencyData(projects.head.project, Some(projects.head.build), Seq(jb.Configuration.Test))
+        ProjectDependencyData(s"${projects(1).project}:main", Some(projects(1).build), Seq(jb.Configuration.Compile)),
+        ProjectDependencyData(s"${projects.head.project}:main", Some(projects.head.build), Seq(jb.Configuration.Compile))
       )
       val productionDependencies = Seq(
-        ProjectDependencyData(projects(1).project, Some(projects(1).build), Seq(jb.Configuration.Compile))
+        ProjectDependencyData(s"${projects(1).project}:main", Some(projects(1).build), Seq(jb.Configuration.Compile))
       )
       val expected = DependencyData(
         projects = Dependencies(testDependencies, productionDependencies),
-        modules = Nil,
-        jars = Nil
+        modules = Dependencies(Nil,Nil),
+        jars = Dependencies(Nil,Nil)
       )
       assertIdentical(expected, actual)
     }
@@ -97,16 +97,16 @@ class DependenciesExtractorSpec extends AnyFreeSpecLike {
       ).extract
 
       val testDependencies = Seq(
-        ProjectDependencyData(projects(1).project, Some(projects(1).build), Seq(jb.Configuration.Provided)),
-        ProjectDependencyData(projects.head.project, Some(projects.head.build), Seq(jb.Configuration.Test))
+        ProjectDependencyData(s"${projects(1).project}:main", Some(projects(1).build), Seq(jb.Configuration.Compile)),
+        ProjectDependencyData(s"${projects.head.project}:main", Some(projects.head.build), Seq(jb.Configuration.Compile))
       )
       val productionDependencies = Seq(
-        ProjectDependencyData(projects(1).project, Some(projects(1).build), Seq(jb.Configuration.Provided))
+        ProjectDependencyData(s"${projects(1).project}:main", Some(projects(1).build), Seq(jb.Configuration.Provided))
       )
       val expected = DependencyData(
         projects = Dependencies(testDependencies, productionDependencies),
-        modules = Nil,
-        jars = Nil
+        modules = Dependencies(Nil,Nil),
+        jars = Dependencies(Nil,Nil)
       )
       assertIdentical(expected, actual)
     }
@@ -135,16 +135,16 @@ class DependenciesExtractorSpec extends AnyFreeSpecLike {
       ).extract
 
       val testDependencies = Seq(
-        ProjectDependencyData(projects(1).project, Some(projects(1).build), Seq(jb.Configuration.Runtime)),
-        ProjectDependencyData(projects.head.project, Some(projects.head.build), Seq(jb.Configuration.Test))
+        ProjectDependencyData(s"${projects(1).project}:main", Some(projects(1).build), Seq(jb.Configuration.Compile)),
+        ProjectDependencyData(s"${projects.head.project}:main", Some(projects.head.build), Seq(jb.Configuration.Compile))
       )
       val productionDependencies = Seq(
-        ProjectDependencyData(projects(1).project, Some(projects(1).build), Seq(jb.Configuration.Runtime))
+        ProjectDependencyData(s"${projects(1).project}:main", Some(projects(1).build), Seq(jb.Configuration.Runtime))
       )
       val expected = DependencyData(
         projects = Dependencies(testDependencies, productionDependencies),
-        modules = Nil,
-        jars = Nil
+        modules = Dependencies(Nil,Nil),
+        jars = Dependencies(Nil,Nil)
       )
       assertIdentical(expected, actual)
     }
@@ -168,12 +168,16 @@ class DependenciesExtractorSpec extends AnyFreeSpecLike {
         exportedClasspathToProjectMapping = dependencyClasspathMapping
       ).extract
 
+      val testDependencies = Seq(
+        ProjectDependencyData(s"${projects.head.project}:main", Some(projects.head.build), Seq(jb.Configuration.Compile))
+      )
+      val productionDependencies = Seq(
+        ProjectDependencyData(s"${projects(1).project}:main", Some(projects(1).build), Seq(jb.Configuration.Provided))
+      )
       val expected = DependencyData(
-        projects = Dependencies(
-          forTestSources = Seq(ProjectDependencyData(projects.head.project, Some(projects.head.build), Seq(jb.Configuration.Test))),
-          forProductionSources = Seq(ProjectDependencyData(projects(1).project, Some(projects(1).build), Seq(jb.Configuration.Provided)))),
-        modules = Nil,
-        jars = Nil
+        projects = Dependencies(testDependencies, productionDependencies),
+        modules = Dependencies(Nil,Nil),
+        jars = Dependencies(Nil,Nil)
       )
       assertIdentical(expected, actual)
     }
@@ -199,13 +203,13 @@ class DependenciesExtractorSpec extends AnyFreeSpecLike {
       ).extract
 
       val testDependencies = Seq(
-        ProjectDependencyData(projects(1).project, Some(projects(1).build), Seq(jb.Configuration.Test)),
-        ProjectDependencyData(projects.head.project, Some(projects.head.build), Seq(jb.Configuration.Test))
+        ProjectDependencyData(s"${projects(1).project}:main", Some(projects(1).build), Seq(jb.Configuration.Compile)),
+        ProjectDependencyData(s"${projects.head.project}:main", Some(projects.head.build), Seq(jb.Configuration.Compile))
       )
       val expected = DependencyData(
         projects = Dependencies(testDependencies, Nil),
-        modules = Nil,
-        jars = Nil
+        modules = Dependencies(Nil,Nil),
+        jars = Dependencies(Nil,Nil)
       )
       assertIdentical(expected, actual)
     }
@@ -231,13 +235,13 @@ class DependenciesExtractorSpec extends AnyFreeSpecLike {
       ).extract
 
       val testDependencies = Seq(
-        ProjectDependencyData(projects(1).project, Some(projects(1).build), Seq(jb.Configuration.Test)),
-        ProjectDependencyData(projects.head.project, Some(projects.head.build), Seq(jb.Configuration.Test))
+        ProjectDependencyData(s"${projects(1).project}:main", Some(projects(1).build), Seq(jb.Configuration.Compile)),
+        ProjectDependencyData(s"${projects.head.project}:main", Some(projects.head.build), Seq(jb.Configuration.Compile))
       )
       val expected = DependencyData(
         projects = Dependencies(testDependencies, Nil),
-        modules = Nil,
-        jars = Nil
+        modules = Dependencies(Nil,Nil),
+        jars = Dependencies(Nil,Nil)
       )
       assertIdentical(expected, actual)
     }
@@ -259,20 +263,20 @@ class DependenciesExtractorSpec extends AnyFreeSpecLike {
         exportedClasspathToProjectMapping = dependencyClasspathMapping
       ).extract
 
-      val testDependencies = Seq(
-        ProjectDependencyData(projects(1).project, Some(projects(1).build), Seq(jb.Configuration.Provided)),
-        ProjectDependencyData(projects.head.project, Some(projects.head.build), Seq(jb.Configuration.Test))
+      val projectDependencies = Dependencies(
+        forTestSources = Seq(ProjectDependencyData(s"${projects(1).project}:main", Some(projects(1).build), Seq(jb.Configuration.Compile)),
+          ProjectDependencyData(s"${projects.head.project}:main", Some(projects.head.build), Seq(jb.Configuration.Compile))),
+        forProductionSources = Seq(ProjectDependencyData(s"${projects(1).project}:main", Some(projects(1).build), Seq(jb.Configuration.Provided)))
+      )
+      val jarDependencies = Dependencies(
+        forTestSources = Seq(JarDependencyData(file("baz.jar"), Seq(jb.Configuration.Compile))),
+        forProductionSources = Seq(JarDependencyData(file("bar.jar"), Seq(jb.Configuration.Provided)),
+          JarDependencyData(file("foo.jar"), Seq(jb.Configuration.Provided)))
       )
       val expected = DependencyData(
-        projects = Dependencies(
-          forTestSources = testDependencies,
-          forProductionSources = Seq(ProjectDependencyData(projects(1).project, Some(projects(1).build), Seq(jb.Configuration.Provided)))),
-        modules = Nil,
-        jars = Seq(
-          JarDependencyData(file("foo.jar"), Seq(jb.Configuration.Compile)),
-          JarDependencyData(file("bar.jar"), Seq(jb.Configuration.Compile)),
-          JarDependencyData(file("baz.jar"), Seq(jb.Configuration.Test))
-        )
+        projects = projectDependencies,
+        modules = Dependencies(Nil,Nil),
+        jars = jarDependencies
       )
       assertIdentical(expected, actual)
     }
@@ -300,30 +304,23 @@ class DependenciesExtractorSpec extends AnyFreeSpecLike {
         exportedClasspathToProjectMapping = dependencyClasspathMapping
       ).extract
 
-      val testDependencies = Seq(
-        ProjectDependencyData(projects(1).project, Some(projects(1).build), Seq(jb.Configuration.Provided)),
-        ProjectDependencyData(projects.head.project, Some(projects.head.build), Seq(jb.Configuration.Test))
+      val projectDependencies = Dependencies(
+        forTestSources = Seq(ProjectDependencyData(s"${projects(1).project}:main", Some(projects(1).build), Seq(jb.Configuration.Compile)),
+         ProjectDependencyData(s"${projects.head.project}:main", Some(projects.head.build), Seq(jb.Configuration.Compile))),
+        forProductionSources = Seq(ProjectDependencyData(s"${projects(1).project}:main", Some(projects(1).build), Seq(jb.Configuration.Provided)))
       )
-      val productionDependencies = Seq(
-        ProjectDependencyData(projects(1).project, Some(projects(1).build), Seq(jb.Configuration.Provided))
+      val moduleDependencies = Dependencies(
+        forTestSources = Seq(ModuleDependencyData(toIdentifier(moduleId("baz")), Seq(jb.Configuration.Compile))),
+        forProductionSources = Seq(
+          ModuleDependencyData(toIdentifier(moduleId("foo")), Seq(jb.Configuration.Provided)),
+          ModuleDependencyData(toIdentifier(moduleId("bar")), Seq(jb.Configuration.Provided)),
+        )
       )
+
       val expected = DependencyData(
-        projects = Dependencies(testDependencies, productionDependencies),
-        modules = Seq(
-          ModuleDependencyData(
-            toIdentifier(moduleId("foo")),
-            Seq(jb.Configuration.Compile)
-          ),
-          ModuleDependencyData(
-            toIdentifier(moduleId("bar")),
-            Seq(jb.Configuration.Compile)
-          ),
-          ModuleDependencyData(
-            toIdentifier(moduleId("baz")),
-            Seq(jb.Configuration.Test)
-          )
-        ),
-        jars = Nil
+        projects = projectDependencies,
+        modules = moduleDependencies,
+        jars = Dependencies(Nil,Nil)
       )
 
       assertIdentical(expected, actual)
@@ -355,25 +352,27 @@ class DependenciesExtractorSpec extends AnyFreeSpecLike {
       ).extract
 
       val testDependencies = Seq(
-        ProjectDependencyData(projects(1).project, Some(projects(1).build), Seq(jb.Configuration.Test)),
-        ProjectDependencyData(projects.head.project, Some(projects.head.build), Seq(jb.Configuration.Test))
+        ProjectDependencyData(s"${projects(1).project}:main", Some(projects(1).build), Seq(jb.Configuration.Compile)),
+        ProjectDependencyData(s"${projects.head.project}:main", Some(projects.head.build), Seq(jb.Configuration.Compile))
+      )
+      val moduleDependencies = Dependencies(
+        forTestSources = Seq(
+          ModuleDependencyData(toIdentifier(moduleId("baz")), Seq(jb.Configuration.Compile)),
+          ModuleDependencyData(toIdentifier(moduleId("qux")), Seq(jb.Configuration.Compile))
+        ),
+        forProductionSources = Nil
+      )
+      val jarDependencies = Dependencies(
+        forTestSources = Seq(
+          JarDependencyData(file("foo.jar"), Seq(jb.Configuration.Compile)),
+          JarDependencyData(file("bar.jar"), Seq(jb.Configuration.Compile))
+        ),
+        forProductionSources = Nil
       )
       val expected = DependencyData(
         projects = Dependencies(testDependencies, Nil),
-        modules = Seq(
-          ModuleDependencyData(
-            toIdentifier(moduleId("baz")),
-            Seq(jb.Configuration.Test)
-          ),
-          ModuleDependencyData(
-            toIdentifier(moduleId("qux")),
-            Seq(jb.Configuration.Test)
-          )
-        ),
-        jars = Seq(
-          JarDependencyData(file("foo.jar"), Seq(jb.Configuration.Test)),
-          JarDependencyData(file("bar.jar"), Seq(jb.Configuration.Test))
-        )
+        modules = moduleDependencies,
+        jars = jarDependencies
       )
 
       assertIdentical(expected, actual)
@@ -406,15 +405,16 @@ class DependenciesExtractorSpec extends AnyFreeSpecLike {
         toIdentifier(moduleId),
         toIdentifier(moduleId).copy(classifier = "tests")
       )
-      val productionDependencies = Seq(
-        ProjectDependencyData(projects(1).project, Some(projects(1).build), Seq(jb.Configuration.Provided))
+      val moduleDependencies = Dependencies(
+        forTestSources = Nil,
+        forProductionSources = expectedModules.map(
+          it => ModuleDependencyData(it, Seq(jb.Configuration.Provided))
+        )
       )
       val expected = DependencyData(
-        projects = Dependencies(Nil, productionDependencies),
-        modules = expectedModules.map(
-          it => ModuleDependencyData(it, Seq(jb.Configuration.Compile))
-        ),
-        jars = Nil
+        projects = Dependencies(Nil, Seq(ProjectDependencyData(s"${projects(1).project}:main", Some(projects(1).build), Seq(jb.Configuration.Provided)))),
+        modules = moduleDependencies,
+        jars = Dependencies(Nil,Nil)
       )
       assertIdentical(expected, actual)
     }
@@ -448,23 +448,24 @@ class DependenciesExtractorSpec extends AnyFreeSpecLike {
         exportedClasspathToProjectMapping = dependencyClasspathMapping
       ).extract
 
-      val testDependencies = Seq(
-        ProjectDependencyData(projects(1).project, Some(projects(1).build),Seq(jb.Configuration.Compile)),
-      ProjectDependencyData(projects.head.project, Some(projects.head.build), Seq(jb.Configuration.Test))
+      val projectDependencies = Dependencies(
+        forTestSources = Seq(ProjectDependencyData(s"${projects(1).project}:main", Some(projects(1).build), Seq(jb.Configuration.Compile)),
+          ProjectDependencyData(s"${projects.head.project}:main", Some(projects.head.build), Seq(jb.Configuration.Compile))
+        ),
+        forProductionSources = Seq(ProjectDependencyData(s"${projects(1).project}:main", Some(projects(1).build), Seq(jb.Configuration.Compile)))
       )
-      val productionDependencies = Seq(
-        ProjectDependencyData(projects(1).project, Some(projects(1).build), Seq(jb.Configuration.Compile))
+      val moduleDependencies = Dependencies(
+        forTestSources = Seq(ModuleDependencyData(toIdentifier(moduleId), Seq(jb.Configuration.Compile))),
+        forProductionSources = Seq(ModuleDependencyData(toIdentifier(moduleId), Seq(jb.Configuration.Compile)))
+      )
+      val jarDependencies = Dependencies(
+        forTestSources = Seq(JarDependencyData(file("bar.jar"), Seq(jb.Configuration.Compile))),
+        forProductionSources = Seq(JarDependencyData(file("bar.jar"), Seq(jb.Configuration.Compile)))
       )
       val expected = DependencyData(
-        projects = Dependencies(testDependencies, productionDependencies),
-        modules = Seq(
-          ModuleDependencyData(
-            toIdentifier(moduleId),
-            Seq(jb.Configuration.Compile)
-          )
-        ),
-        jars =
-          Seq(JarDependencyData(file("bar.jar"), Seq(jb.Configuration.Compile)))
+        projects = projectDependencies,
+        modules = moduleDependencies,
+        jars = jarDependencies
       )
       assertIdentical(expected, actual)
     }
@@ -494,34 +495,38 @@ class DependenciesExtractorSpec extends AnyFreeSpecLike {
         exportedClasspathToProjectMapping = dependencyClasspathMapping
       ).extract
 
-      val testDependencies = Seq(
-        ProjectDependencyData(projects(1).project, Some(projects(1).build), Seq(jb.Configuration.Provided)),
-        ProjectDependencyData(projects.head.project, Some(projects.head.build), Seq(jb.Configuration.Test))
+      val projectDependencies = Dependencies(
+        forTestSources = Seq(
+          ProjectDependencyData(s"${projects(1).project}:main", Some(projects(1).build), Seq(jb.Configuration.Compile)),
+          ProjectDependencyData(s"${projects.head.project}:main", Some(projects.head.build), Seq(jb.Configuration.Compile))
+        ),
+        forProductionSources = Seq(ProjectDependencyData(s"${projects(1).project}:main", Some(projects(1).build), Seq(jb.Configuration.Provided)))
       )
-      val productionDependencies = Seq(
-        ProjectDependencyData(projects(1).project, Some(projects(1).build), Seq(jb.Configuration.Provided))
+      val moduleDependencies = Dependencies(
+        forTestSources = Seq(ModuleDependencyData(toIdentifier(moduleId), Seq(jb.Configuration.Compile))),
+        forProductionSources = Seq(ModuleDependencyData(toIdentifier(moduleId), Seq(jb.Configuration.Provided)))
+      )
+      val jarDependencies = Dependencies(
+        forTestSources = Seq(JarDependencyData(file("bar.jar"), Seq(jb.Configuration.Compile))),
+        forProductionSources = Seq(JarDependencyData(file("bar.jar"), Seq(jb.Configuration.Provided)))
       )
       val expected = DependencyData(
-        projects = Dependencies(testDependencies, productionDependencies),
-        modules = Seq(
-          ModuleDependencyData(
-            toIdentifier(moduleId),
-            Seq(jb.Configuration.Provided)
-          )
-        ),
-        jars = Seq(
-          JarDependencyData(file("bar.jar"), Seq(jb.Configuration.Provided))
-        )
+        projects = projectDependencies,
+        modules = moduleDependencies,
+        jars = jarDependencies
       )
       assertIdentical(expected, actual)
     }
   }
 
   def assertIdentical(expected: DependencyData, actual: DependencyData): Unit = {
-    actual.projects.forTestSources must contain theSameElementsAs expected.projects.forTestSources
-    actual.projects.forProductionSources must contain theSameElementsAs expected.projects.forProductionSources
-    actual.jars must contain theSameElementsAs expected.jars
-    actual.modules must contain theSameElementsAs expected.modules
+    def checkAllDependenciesElements[D](actual: Dependencies[D], expected: Dependencies[D]): Unit = {
+      actual.forTestSources must contain theSameElementsAs expected.forTestSources
+      actual.forProductionSources must contain theSameElementsAs expected.forProductionSources
+    }
+    checkAllDependenciesElements(actual.projects, expected.projects)
+    checkAllDependenciesElements(actual.modules, expected.modules)
+    checkAllDependenciesElements(actual.jars, expected.jars)
   }
 
   def attributedWith(file: File)(moduleId: ModuleID,

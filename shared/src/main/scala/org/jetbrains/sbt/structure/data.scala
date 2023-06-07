@@ -57,6 +57,7 @@ case class ProjectData(id: String,
                        compileOrder: String,
                        android: Option[AndroidData],
                        dependencies: DependencyData,
+                       sourceDirectory: File,
                        resolvers: Set[ResolverData],
                        play2: Option[Play2Data],
                        settings: Seq[SettingData],
@@ -130,8 +131,8 @@ case class ScalaData(organization: String,
 }
 
 case class DependencyData(projects: Dependencies[ProjectDependencyData],
-                          modules: Seq[ModuleDependencyData],
-                          jars: Seq[JarDependencyData])
+                          modules: Dependencies[ModuleDependencyData],
+                          jars: Dependencies[JarDependencyData])
 
 case class Dependencies[T](forTestSources: Seq[T], forProductionSources: Seq[T])
 

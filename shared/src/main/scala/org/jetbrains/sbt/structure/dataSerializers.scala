@@ -185,25 +185,39 @@ trait DataSerializers {
     }
   }
 
-  implicit val projectDependencySerializer: XmlSerializer[ProjectDependencyData] = new XmlSerializer[ProjectDependencyData] {
-    override def serialize(what: ProjectDependencyData): Elem = {
-      val configurations = what.configurations.mkString(";")
-      what.buildURI.map { buildURI =>
-        <project buildURI={buildURI.toString} configurations={configurations}>
-          {what.project}
-        </project>
-      } getOrElse {
-        <project configurations={configurations}>
-          {what.project}
-        </project>
-      }
-    }
+  implicit val moduleDependenciesSerializer: XmlSerializer[Dependencies[ModuleDependencyData]] = new XmlSerializer[Dependencies[ModuleDependencyData]] {
+    override def serialize(what: Dependencies[ModuleDependencyData]): Elem =
+      <modules>
+        <forTestSources>
+          {what.forTestSources.map(_.serialize)}
+        </forTestSources>
+        <forProductionSources>
+          {what.forProductionSources.map(_.serialize)}
+        </forProductionSources>
+      </modules>
 
-    override def deserialize(what: Node): Either[Throwable, ProjectDependencyData] = {
-      val project = what.text
-      val buildURI = (what \ "@buildURI").text.uri
-      val configurations = (what \ "@configurations").headOption.map(n => Configuration.fromString(n.text))
-      Right(ProjectDependencyData(project, Some(buildURI), configurations.getOrElse(Seq.empty)))
+    override def deserialize(what: Node): Either[Throwable, Dependencies[ModuleDependencyData]] = {
+      val testDependencies = (what \ "forTestSources" \ "module").deserialize[ModuleDependencyData]
+      val compileDependencies = (what \ "forProductionSources" \ "module").deserialize[ModuleDependencyData]
+      Right(Dependencies(testDependencies, compileDependencies))
+    }
+  }
+
+  implicit val jarDependenciesSerializer: XmlSerializer[Dependencies[JarDependencyData]] = new XmlSerializer[Dependencies[JarDependencyData]] {
+    override def serialize(what: Dependencies[JarDependencyData]): Elem =
+      <jars>
+        <forTestSources>
+          {what.forTestSources.map(_.serialize)}
+        </forTestSources>
+        <forProductionSources>
+          {what.forProductionSources.map(_.serialize)}
+        </forProductionSources>
+      </jars>
+
+    override def deserialize(what: Node): Either[Throwable, Dependencies[JarDependencyData]] = {
+      val testDependencies = (what \ "forTestSources" \ "jar").deserialize[JarDependencyData]
+      val compileDependencies = (what \ "forProductionSources" \ "jar").deserialize[JarDependencyData]
+      Right(Dependencies(testDependencies, compileDependencies))
     }
   }
 
@@ -243,6 +257,28 @@ trait DataSerializers {
     }
   }
 
+  implicit val projectDependencySerializer: XmlSerializer[ProjectDependencyData] = new XmlSerializer[ProjectDependencyData] {
+    override def serialize(what: ProjectDependencyData): Elem = {
+      val configurations = what.configurations.mkString(";")
+      what.buildURI.map { buildURI =>
+        <project buildURI={buildURI.toString} configurations={configurations}>
+          {what.project}
+        </project>
+      } getOrElse {
+        <project configurations={configurations}>
+          {what.project}
+        </project>
+      }
+    }
+
+    override def deserialize(what: Node): Either[Throwable, ProjectDependencyData] = {
+      val project = what.text
+      val buildURI = (what \ "@buildURI").text.uri
+      val configurations = (what \ "@configurations").headOption.map(n => Configuration.fromString(n.text))
+      Right(ProjectDependencyData(project, Some(buildURI), configurations.getOrElse(Seq.empty)))
+    }
+  }
+
   implicit val moduleDependencyDataSerializer: XmlSerializer[ModuleDependencyData] = new XmlSerializer[ModuleDependencyData] {
     override def serialize(what: ModuleDependencyData): Elem = {
       val elem = what.id.serialize
@@ -272,15 +308,17 @@ trait DataSerializers {
     override def serialize(what: DependencyData): Elem =
       <dependencies>
         {what.projects.serialize}
-        {what.modules.sortBy(_.id.key).map(_.serialize)}
-        {what.jars.sortBy(_.file).map(_.serialize)}
+        {what.modules.serialize}
+        {what.jars.serialize}
       </dependencies>
 
     override def deserialize(what: Node): Either[Throwable,DependencyData] = {
-      val modules = (what \ "module").deserialize[ModuleDependencyData]
-      val jars = (what \ "jar").deserialize[JarDependencyData]
-      (what \ "projects").deserializeOne[Dependencies[ProjectDependencyData]].right.map { projectDependencies =>
-        DependencyData(projectDependencies, modules, jars)
+      for {
+        projects <- (what \ "projects").deserializeOne[Dependencies[ProjectDependencyData]].right
+        modules <- (what \ "modules").deserializeOne[Dependencies[ModuleDependencyData]].right
+        jars <- (what \ "jars").deserializeOne[Dependencies[JarDependencyData]].right
+      } yield {
+        DependencyData(projects, modules, jars)
       }
     }
   }
@@ -493,6 +531,7 @@ trait DataSerializers {
         {what.android.map(_.serialize).toSeq}
         {what.configurations.sortBy(_.id).map(_.serialize)}
         {what.dependencies.serialize}
+        <sourceDirectory>{what.sourceDirectory.path}</sourceDirectory>
         {what.resolvers.map(_.serialize).toSeq}
         {what.play2.map(_.serialize).toSeq}
         {what.settings.map(_.serialize)}
@@ -507,6 +546,7 @@ trait DataSerializers {
       val organization = (what \ "organization").text
       val version = (what \ "version").text
       val base = (what \ "base").text.file
+      val sourceDirectory = (what \ "sourceDirectory").text.file
       val packagePrefix = (what \ "packagePrefix").headOption.map(_.text)
       val basePackages = (what \ "basePackage").map(_.text)
       val target = (what \ "target").text.file
@@ -527,7 +567,7 @@ trait DataSerializers {
       tryDeps.right.map { dependencies =>
         ProjectData(id, buildURI, name, organization, version, base, packagePrefix, basePackages,
           target, configurations, java, scala, compileOrder, android,
-          dependencies, resolvers, play2, settings, tasks, commands)
+          dependencies, sourceDirectory, resolvers, play2, settings, tasks, commands)
       }
 
     }
