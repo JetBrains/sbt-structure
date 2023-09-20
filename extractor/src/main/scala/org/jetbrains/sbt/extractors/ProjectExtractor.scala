@@ -40,14 +40,13 @@ class ProjectExtractor(
   sourceConfigurations: Seq[sbt.Configuration],
   testConfigurations: Seq[sbt.Configuration],
   dependencies: DependencyData,
-  android: Option[AndroidData],
   play2: Option[Play2Data],
   settingData: Seq[SettingData],
   taskData: Seq[TaskData],
   commandData: Seq[CommandData]
 ) {
 
-  private[extractors] def extract: Seq[ProjectData] = {
+  private[extractors] def extract: ProjectData = {
 
     val resolvers = allResolvers.collect {
       case repo: MavenRepository => ResolverData(repo.name, repo.root)
@@ -58,7 +57,7 @@ class ProjectExtractor(
         sourceConfigurations.flatMap(extractConfiguration(Compile.name)) ++
           testConfigurations.flatMap(extractConfiguration(Test.name))
       )
-    val projectData = ProjectData(
+    ProjectData(
       projectRef.id,
       projectRef.build,
       name,
@@ -72,7 +71,6 @@ class ProjectExtractor(
       extractJava,
       extractScala,
       compileOrder.toString,
-      android,
       dependencies,
       resolvers,
       play2,
@@ -80,28 +78,6 @@ class ProjectExtractor(
       taskData,
       commandData
     )
-
-    android match {
-      case None => Seq(projectData)
-      case Some(a) =>
-        val deps = a.aars.map(
-          aar =>
-            ProjectDependencyData(aar.name, None, Configuration.Compile :: Nil)
-        )
-        // add aar module dependencies
-        val updatedProject = projectData.copy(
-          dependencies = dependencies
-            .copy(projects = projectData.dependencies.projects ++ deps)
-        )
-        updatedProject +: a.aars.map(
-          _.project.copy(
-            java = projectData.java,
-            scala = projectData.scala,
-            resolvers = projectData.resolvers,
-            dependencies = projectData.dependencies
-          )
-        )
-    }
   }
 
   private def extractConfiguration(
@@ -274,7 +250,7 @@ object ProjectExtractor extends SbtStateOps with TaskOps {
                                                 state: State) =
     key.in(projectRef, Compile).get(state)
 
-  def taskDef: Initialize[Task[Seq[ProjectData]]] = Def.taskDyn {
+  def taskDef: Initialize[Task[ProjectData]] = Def.taskDyn {
 
     implicit val state: State = Keys.state.value
     implicit val projectRef: ProjectRef = sbt.Keys.thisProjectRef.value
@@ -365,7 +341,6 @@ object ProjectExtractor extends SbtStateOps with TaskOps {
         StructureKeys.sourceConfigurations.value,
         StructureKeys.testConfigurations.value,
         StructureKeys.extractDependencies.value,
-        StructureKeys.extractAndroid.value,
         StructureKeys.extractPlay2.value,
         StructureKeys.settingData.value,
         StructureKeys.taskData.value,

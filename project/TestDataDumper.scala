@@ -94,8 +94,6 @@ object TestDataDumper extends AutoPlugin {
                                 workingDir: File): Try[File] = {
 
     val userHome = path(file(System.getProperty("user.home")))
-    val androidHome = Option(System.getenv.get("ANDROID_HOME"))
-      .map(new File(_).getCanonicalFile)
     val sbtGlobalRoot = file(System.getProperty("user.home")) / ".sbt-structure-global/"
     val sbtBootDir = path(sbtGlobalRoot / "boot/")
     val sbtIvyHome = path(sbtGlobalRoot / "ivy2/")
@@ -146,7 +144,6 @@ object TestDataDumper extends AutoPlugin {
           structureFile,
           workingDir,
           userHome,
-          androidHome,
           sbtBootDir,
           sbtIvyHome
         )
@@ -162,7 +159,6 @@ object TestDataDumper extends AutoPlugin {
   def replaceVariables(structureFile: File,
                        base: File,
                        userHome: String,
-                       androidHome: Option[File],
                        sbtBootDir: String,
                        sbtIvyHome: String): Unit = {
 
@@ -172,11 +168,6 @@ object TestDataDumper extends AutoPlugin {
       .mkString("\n")
       .replace(base.getCanonicalFile.toURI.toString, "$URI_BASE")
       .replace(base.getCanonicalPath, "$BASE")
-      .replace(
-        androidHome.map(p => canon(p.toURI.toString)).getOrElse(""),
-        "$URI_ANDROID_HOME"
-      )
-      .replace(androidHome.map(p => path(p)).getOrElse(""), "$ANDROID_HOME")
       .replace(sbtIvyHome, "$IVY2")
       .replace(sbtBootDir, "$SBT_BOOT")
       .replace(userHome, "$HOME")

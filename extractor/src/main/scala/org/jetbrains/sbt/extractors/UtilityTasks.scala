@@ -120,7 +120,7 @@ object UtilityTasks extends SbtStateOps {
     Def.task {
       StructureKeys.extractProject
         .forAllProjects(state, accepted)
-        .map(_.values.toSeq.flatten)
+        .map(_.values.toSeq)
         .value
     }
   }

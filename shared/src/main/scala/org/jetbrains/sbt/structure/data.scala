@@ -55,7 +55,6 @@ case class ProjectData(id: String,
                        java: Option[JavaData],
                        scala: Option[ScalaData],
                        compileOrder: String,
-                       android: Option[AndroidData],
                        dependencies: DependencyData,
                        resolvers: Set[ResolverData],
                        play2: Option[Play2Data],
@@ -185,29 +184,6 @@ case class RepositoryData(modules: Seq[ModuleData])
  * @param root URL or local path to a repo
  */
 case class ResolverData(name: String, root: String)
-
-/**
- * Information used to configure Android facet in IDEA.
- * Currently only android-sdk-plugin is supported.
- */
-case class AndroidData(targetVersion: String,
-                       manifest: File,
-                       apk: File,
-                       res: File,
-                       assets: File,
-                       gen: File,
-                       libs: File,
-                       isLibrary: Boolean,
-                       proguardConfig: Seq[String],
-                       apklibs: Seq[ApkLib],
-                       aars: Seq[Aar])
-
-case class Aar(name: String, project: ProjectData)
-
-/**
- * Information about certain apklib used in Android project
- */
-case class ApkLib(name: String, base: File, manifest: File, sources: File, resources: File, libs: File, gen: File)
 
 /**
  * List of parameters specific to Play projects

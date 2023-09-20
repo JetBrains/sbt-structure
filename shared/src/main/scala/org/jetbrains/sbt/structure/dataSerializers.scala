@@ -370,64 +370,6 @@ trait DataSerializers {
     }
   }
 
-  implicit val apkLibSerializer: XmlSerializer[ApkLib] = new XmlSerializer[ApkLib] {
-    override def serialize(what: ApkLib): Elem =
-      <apkLib name={what.name}>
-        <manifest>{what.manifest.path}</manifest>
-        <base>{what.base.path}</base>
-        <sources>{what.sources.path}</sources>
-        <resources>{what.resources.path}</resources>
-        <libs>{what.libs.path}</libs>
-        <gen>{what.gen.path}</gen>
-      </apkLib>
-
-    override def deserialize(what: Node): Either[Throwable, ApkLib] = {
-      val name = (what \ "@name").text
-      val base = (what \ "base").text
-      val manifest = (what \ "manifest").text
-      val sources = (what \ "sources").text
-      val resources = (what \ "resources").text
-      val libs = (what \ "libs").text
-      val gen = (what \ "gen").text
-      Right(ApkLib(name, base.file, manifest.file, sources.file, resources.file, libs.file, gen.file))
-    }
-  }
-
-  implicit val androidDataSerializer: XmlSerializer[AndroidData] = new XmlSerializer[AndroidData] {
-    override def serialize(what: AndroidData): Elem =
-      <android>
-        <version>{what.targetVersion}</version>
-        <manifest>{what.manifest.path}</manifest>
-        <resources>{what.res.path}</resources>
-        <assets>{what.assets.path}</assets>
-        <generatedFiles>{what.gen.path}</generatedFiles>
-        <nativeLibs>{what.libs.path}</nativeLibs>
-        <apk>{what.apk.path}</apk>
-        <isLibrary>{what.isLibrary}</isLibrary>
-        <proguard>{what.proguardConfig.map { opt =>
-          <option>{opt}</option>
-        }}
-        </proguard>
-        {what.apklibs.map(_.serialize)}
-      </android>
-
-    override def deserialize(what: Node): Either[Throwable,AndroidData] = {
-      val version         = (what \ "version").text
-      val manifestPath    = (what \ "manifest").text
-      val apkPath         = (what \ "apk").text
-      val resPath         = (what \ "resources").text
-      val assetsPath      = (what \ "assets").text
-      val genPath         = (what \ "generatedFiles").text
-      val libsPath        = (what \ "nativeLibs").text
-      val isLibrary       = (what \ "isLibrary").text.toBoolean
-      val proguardConfig  = (what \ "proguard" \ "option").map(_.text)
-      val apklibs         = (what \ "apkLib").deserialize[ApkLib]
-      Right(AndroidData(version, manifestPath.file, apkPath.file,
-        resPath.file, assetsPath.file, genPath.file,
-        libsPath.file, isLibrary, proguardConfig, apklibs, Nil))
-    }
-  }
-
   implicit val play2DataSerializer: XmlSerializer[Play2Data] = new XmlSerializer[Play2Data] {
     override def serialize(what: Play2Data): Elem =
       <play2>
@@ -467,7 +409,6 @@ trait DataSerializers {
         {what.java.map(_.serialize).toSeq}
         {what.scala.map(_.serialize).toSeq}
         <compileOrder>{what.compileOrder}</compileOrder>
-        {what.android.map(_.serialize).toSeq}
         {what.configurations.sortBy(_.id).map(_.serialize)}
         {what.dependencies.serialize}
         {what.resolvers.map(_.serialize).toSeq}
@@ -492,7 +433,6 @@ trait DataSerializers {
       val java = (what \ "java").deserialize[JavaData].headOption
       val scala = (what \ "scala").deserialize[ScalaData].headOption
       val compileOrder = (what \ "compileOrder").text
-      val android = (what \ "android").deserialize[AndroidData].headOption
       val resolvers = (what \ "resolver").deserialize[ResolverData].toSet
       val play2 = (what \ "play2").deserialize[Play2Data].headOption
 
@@ -503,7 +443,7 @@ trait DataSerializers {
       val tryDeps = (what \ "dependencies").deserializeOne[DependencyData]
       tryDeps.right.map { dependencies =>
         ProjectData(id, buildURI, name, organization, version, base, packagePrefix, basePackages,
-          target, configurations, java, scala, compileOrder, android,
+          target, configurations, java, scala, compileOrder,
           dependencies, resolvers, play2, settings, tasks, commands)
       }
 
