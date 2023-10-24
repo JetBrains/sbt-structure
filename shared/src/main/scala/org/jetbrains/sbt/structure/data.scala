@@ -136,7 +136,7 @@ case class DependencyData(projects: Seq[ProjectDependencyData],
  * Inter-project dependency
  * @param project What project to depend on
  */
-case class ProjectDependencyData(project: String, buildURI: Option[URI], configuration: Seq[Configuration])
+case class ProjectDependencyData(project: String, buildURI: Option[URI], configurations: Seq[Configuration])
 
 /**
  * External library dependency

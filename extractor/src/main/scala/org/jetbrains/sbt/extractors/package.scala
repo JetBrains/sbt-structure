@@ -18,4 +18,12 @@ package object extractors {
       StructureKeys.localCachePath.value
     )
   }
+
+  def invert[K, V](map: Map[K, Seq[V]]): Map[V, Seq[K]] = {
+    val tuples: Seq[(V, K)] = for {
+      (key, values) <- map.toSeq
+      value <- values
+    } yield value -> key
+    tuples.groupBy(_._1).mapValues(_.map(_._2))
+  }
 }

@@ -8,7 +8,8 @@ final case class Options(download: Boolean = false,
                          resolveClassifiers: Boolean = false,
                          resolveJavadocs: Boolean = false,
                          resolveSbtClassifiers: Boolean = false,
-                         prettyPrint: Boolean = false)
+                         prettyPrint: Boolean = false,
+                         insertProjectTransitiveDependencies: Boolean = true)
 
 object Options {
 
@@ -17,7 +18,8 @@ object Options {
     resolveClassifiers = options.contains("resolveClassifiers"),
     resolveJavadocs = options.contains("resolveJavadocs"),
     resolveSbtClassifiers = options.contains("resolveSbtClassifiers"),
-    prettyPrint = options.contains("prettyPrint")
+    prettyPrint = options.contains("prettyPrint"),
+    insertProjectTransitiveDependencies = options.contains("insertProjectTransitiveDependencies")
   )
 
   def readFromSeq(options: Seq[String]): Options = Options(

@@ -56,7 +56,6 @@ object KeysExtractor {
     }
   }
 
-
   /**
     * Finds all named commands
     * @return
