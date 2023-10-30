@@ -22,7 +22,10 @@ lazy val sbtStructure = project.in(file("."))
   )
 
 val scala210: String = "2.10.7"
-val scala212: String = "2.12.17"
+//NOTE: extra scala 2.12 version is used just to distinguish between different sbt 1.x versions
+// when calculating pluginCrossBuild / sbtVersion
+val scala212_6: String = "2.12.6" //used for sbt < 1.3
+val scala212: String = "2.12.18" //used for sbt >= 1.3
 
 lazy val core = project.in(file("core"))
   .settings(
@@ -43,6 +46,10 @@ lazy val core = project.in(file("core"))
     sonatypeSettings
   )
 
+val SbtVersion_0_13 = "0.13.17"
+val SbtVersion_1_2 = "1.2.1"
+val SbtVersion_1_3 = "1.3.0"
+
 lazy val extractor = project.in(file("extractor"))
   .enablePlugins(SbtPlugin, TestDataDumper)
   .settings(
@@ -51,12 +58,42 @@ lazy val extractor = project.in(file("extractor"))
       (ThisBuild / baseDirectory).value / "shared" / "src" / "main" / "scala",
     scalacOptions ++= Seq("-deprecation"),
     libraryDependencies += "org.scalatest" %% "scalatest" % "3.2.15" % Test,
-    crossScalaVersions := Seq(scala212, scala210),
+    scalaVersion := scala212,
+    crossScalaVersions := Seq(
+      scala212,
+      scala212_6,
+      scala210
+    ),
+    crossSbtVersions := Seq(
+      SbtVersion_0_13,
+      SbtVersion_1_2,
+      SbtVersion_1_3,
+    ),
     pluginCrossBuild / sbtVersion := {
       // keep this as low as possible to avoid running into binary incompatibility such as https://github.com/sbt/sbt/issues/5049
-      scalaBinaryVersion.value match {
-        case "2.10" => "0.13.17"
-        case "2.12" => "1.2.1"
+      val scalaVer = scalaVersion.value
+      if (scalaBinaryVersion.value == "2.10")
+        SbtVersion_0_13
+      else if (scalaVer == scala212_6)
+        SbtVersion_1_2
+      else if (scalaVer == scala212)
+        SbtVersion_1_3
+      else
+        throw new AssertionError(s"Unexpected scala version $scalaVer")
+    },
+    //By default when you crosscompile sbt plugin for multiple sbt 1.x versions it will use same binary version 1.0 for all of them
+    //It will use the same source directory `scala-sbt-1.0`, same target dirs, same artifact names
+    //But we need different directories because some code compiles in sbt 1.x but not in sbt 1.y
+    pluginCrossBuild / sbtBinaryVersion := {
+      val sbtVersion3Digits = (pluginCrossBuild / sbtVersion).value
+      val sbtVersion2Digits = sbtVersion3Digits.substring(0, sbtVersion3Digits.lastIndexOf("."))
+      sbtVersion2Digits
+    },
+    Compile / unmanagedSourceDirectories ++= {
+      val sbtBinVer = (pluginCrossBuild / sbtBinaryVersion).value
+      if (sbtBinVer.startsWith("0")) Nil else {
+        val baseDir = (Compile / sourceDirectory).value
+        Seq(baseDir / "scala-sbt-1.x") //shared source dir for all sbt 1.x
       }
     },
     sonatypeSettings
