@@ -111,19 +111,23 @@ case class DirectoryData(file: File, managed: Boolean)
 case class JavaData(home: Option[File], options: Seq[String])
 
 /**
-  * Analog of `sbt.internal.inc.ScalaInstance`
-  *
-  * @param libraryJars  contains scala-library.jar and (in case of Scala 3) scala3-library_3.jar
-  * @param compilerJars contains all jars required to instantiate scala compiler<br>
-  *                     (except for library jars, which should also be included when creating a compiler instance)
-  * @param extraJars    other jars, usually contain jars required to run ScalaDoc
-  */
-case class ScalaData(organization: String,
-                     version: String,
-                     libraryJars: Seq[File],
-                     compilerJars: Seq[File],
-                     extraJars: Seq[File],
-                     options: Seq[String]) {
+ * Analog of `sbt.internal.inc.ScalaInstance`
+ *
+ * @param libraryJars             contains scala-library.jar and (in case of Scala 3) scala3-library_3.jar
+ * @param compilerJars            contains all jars required to instantiate scala  compiler<br>
+ *                                (except for library jars, which should also be included when creating a compiler instance)
+ * @param extraJars               other jars, usually contain jars required to run ScalaDoc
+ * @param compilerBridgeBinaryJar scala3-compiler-bridge_3.x.jar, extracted from `sbt.Keys.scalaCompilerBridgeBinaryJar`
+ */
+case class ScalaData(
+  organization: String,
+  version: String,
+  libraryJars: Seq[File],
+  compilerJars: Seq[File],
+  extraJars: Seq[File],
+  compilerBridgeBinaryJar: Option[File],
+  options: Seq[String]
+) {
   def allJars: Seq[File] = libraryJars ++ compilerJars ++ extraJars
   def allCompilerJars: Seq[File] = libraryJars ++ compilerJars
 }

@@ -162,6 +162,8 @@ trait DataSerializers {
         <compilerJars> { what.compilerJars.map { jar => <jar>{jar.path}</jar> }} </compilerJars>
         <extraJars>    { what.extraJars.map    { jar => <jar>{jar.path}</jar> }} </extraJars>
 
+        { what.compilerBridgeBinaryJar.toSeq.map { jar => <compilerBridgeBinaryJar>{jar.path}</compilerBridgeBinaryJar>} }
+
         { what.options.map { option => <option>{option.canonIfFile}</option> }}
       </scala>
 
@@ -172,6 +174,7 @@ trait DataSerializers {
       val libraryJars = (what \ "libraryJars" \ "jar").map(_.text.file)
       val compilerJars = (what \ "compilerJars"\ "jar").map(_.text.file)
       val extraJars = (what \ "extraJars"\ "jar").map(_.text.file)
+      val compilerBridgeBinaryJar = (what \ "compilerBridgeBinaryJar").headOption.map(_.text.file)
 
       val options = (what \ "option").map(o => o.text.canonIfFile)
       Right(ScalaData(
@@ -180,6 +183,7 @@ trait DataSerializers {
         libraryJars,
         compilerJars,
         extraJars,
+        compilerBridgeBinaryJar,
         options
       ))
     }

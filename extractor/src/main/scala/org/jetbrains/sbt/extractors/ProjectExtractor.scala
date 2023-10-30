@@ -3,7 +3,8 @@ package extractors
 
 import org.jetbrains.sbt.structure._
 import sbt.Def.Initialize
-import sbt.{Configuration => _, _}
+import sbt.jetbrains.keysAdapterEx
+import sbt.{Def, File, Configuration => _, _}
 
 import scala.reflect.ClassTag
 import scala.util.{Failure, Success, Try}
@@ -11,9 +12,9 @@ import scala.util.{Failure, Success, Try}
 import sbt.jetbrains.apiAdapter._
 
 /**
-  * @author Nikolay Obedin
-  * @since 4/10/15.
-  */
+ * @author Nikolay Obedin
+ * @since 4/10/15.
+ */
 class ProjectExtractor(
   projectRef: ProjectRef,
   name: String,
@@ -33,6 +34,7 @@ class ProjectExtractor(
   ideOutputDirectory: sbt.Configuration => Option[File],
   scalaOrganization: String,
   scalaInstance: Option[ScalaInstance],
+  scalaCompilerBridgeBinaryJar: Option[File],
   scalacOptions: Seq[String],
   javaHome: Option[File],
   javacOptions: Seq[String],
@@ -117,61 +119,61 @@ class ProjectExtractor(
     }
 
   /**
-    * [[sbt.internal.inc.ScalaInstance]] has different structure in different sbt versions (0.13, 1.0, 1.3, 1.5)<br>
-    * We need to convert it to our internal representation [[org.jetbrains.sbt.structure.ScalaData]]
-    * which reflects structure of the latest sbt version (1.5.x)<br>
-    * To do this there are two options:
-    *   1. cross-publish sbt-structure-extractor plugin to more then 1 version: 0.13, 1.0, 1.3, 1.5
-    *      and move some methods to [[sbt.jetbrains.apiAdapter]]
-    *   1. use reflection
-    *
-    * We use reflection approach to
-    *  1. easy project configuration
-    *  1. decrease Scala Plugin size (we need to bundle all versions of sbt plugin)
-    *
-    * Structure of ScalaInstance in different sbt versions: {{{
-    *    //in sbt 0.13.x
-    *    class ScalaInstance(
-    *        ...
-    *        val libraryJar: File,
-    *        val compilerJar: File,
-    *        val extraJars: Seq[File],
-    *        ...
-    *    )
-    *
-    *    //in zinc-classpath 1.0.0
-    *    class ScalaInstance(
-    *        ...
-    *        val libraryJar: File,
-    *        val compilerJar: File,
-    *        val allJars: Array[File],
-    *        ...
-    *    )
-    *
-    *    //in zinc-classpath 1.3.0
-    *    class ScalaInstance(
-    *        ...
-    *        val libraryJars: Array[File],
-    *        val compilerJar: File,
-    *        val allJars: Array[File],
-    *        ...
-    *    )
-    *
-    *    //in zinc-classpath 1.5.0
-    *    class ScalaInstance(
-    *        ...
-    *        val libraryJars: Array[File],
-    *        val compilerJars: Array[File],
-    *        val allJars: Array[File],
-    *        ...
-    *    )
-    * }}}
-    *
-    * @note before `libraryJars: Array[File]` was introduced `libraryJar` contained single `scala-library.jar`.<br>
-    *       Since Scala 3.0 it can contain extra `scala3-library_3.jar`.
-    * @note before `compilerJars: Array[File]` was introduced `allJars` contained all compiler jars
-    * @see SCL-19086
-    */
+   * [[sbt.internal.inc.ScalaInstance]] has different structure in different sbt versions (0.13, 1.0, 1.3, 1.5)<br>
+   * We need to convert it to our internal representation [[org.jetbrains.sbt.structure.ScalaData]]
+   * which reflects structure of the latest sbt version (1.5.x)<br>
+   * To do this there are two options:
+   *   1. cross-publish sbt-structure-extractor plugin to more then 1 version: 0.13, 1.0, 1.3, 1.5
+   *      and move some methods to [[sbt.jetbrains.apiAdapter]]
+   *   1. use reflection
+   *
+   * We use reflection approach to
+   *  1. easy project configuration
+   *  1. decrease Scala Plugin size (we need to bundle all versions of sbt plugin)
+   *
+   * Structure of ScalaInstance in different sbt versions: {{{
+   *    //in sbt 0.13.x
+   *    class ScalaInstance(
+   *        ...
+   *        val libraryJar: File,
+   *        val compilerJar: File,
+   *        val extraJars: Seq[File],
+   *        ...
+   *    )
+   *
+   *    //in zinc-classpath 1.0.0
+   *    class ScalaInstance(
+   *        ...
+   *        val libraryJar: File,
+   *        val compilerJar: File,
+   *        val allJars: Array[File],
+   *        ...
+   *    )
+   *
+   *    //in zinc-classpath 1.3.0
+   *    class ScalaInstance(
+   *        ...
+   *        val libraryJars: Array[File],
+   *        val compilerJar: File,
+   *        val allJars: Array[File],
+   *        ...
+   *    )
+   *
+   *    //in zinc-classpath 1.5.0
+   *    class ScalaInstance(
+   *        ...
+   *        val libraryJars: Array[File],
+   *        val compilerJars: Array[File],
+   *        val allJars: Array[File],
+   *        ...
+   *    )
+   * }}}
+   *
+   * @note before `libraryJars: Array[File]` was introduced `libraryJar` contained single `scala-library.jar`.<br>
+   *       Since Scala 3.0 it can contain extra `scala3-library_3.jar`.
+   * @note before `compilerJars: Array[File]` was introduced `allJars` contained all compiler jars
+   * @see SCL-19086
+   */
   private def extractScala: Option[ScalaData] = scalaInstance.map { instance =>
     def normalize(files: Seq[File]): Seq[File] =
       files
@@ -197,6 +199,7 @@ class ProjectExtractor(
       libraryJars,
       compilerJars,
       extraJars,
+      scalaCompilerBridgeBinaryJar,
       scalacOptions
     )
   }
@@ -297,11 +300,12 @@ object ProjectExtractor extends SbtStateOps with TaskOps {
       settingInConfiguration(Keys.unmanagedResourceDirectories)
 
     Def.task {
-
       val scalaOrganization =
         Keys.scalaOrganization.in(projectRef, Compile).value
       val scalaInstance =
         taskInCompile(Keys.scalaInstance).onlyIf(options.download).value
+      val scalaCompilerBridgeBinaryJar =
+        keysAdapterEx.myScalaCompilerBridgeBinaryJar.value
       val scalacOptions =
         taskInCompile(Keys.scalacOptions).onlyIf(options.download).value
       val javacOptions =
@@ -334,6 +338,7 @@ object ProjectExtractor extends SbtStateOps with TaskOps {
         ideOutputDirectory,
         scalaOrganization,
         scalaInstance,
+        scalaCompilerBridgeBinaryJar,
         scalacOptions.getOrElse(Seq.empty),
         javaHome,
         javacOptions.getOrElse(Seq.empty),
@@ -348,5 +353,4 @@ object ProjectExtractor extends SbtStateOps with TaskOps {
       ).extract
     }
   }
-
 }
