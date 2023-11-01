@@ -50,11 +50,11 @@ class ImportSpec extends AnyFreeSpecLike {
       "simple 1.3" in { testProject("simple", "1.3.13") }
       "simple 1.4" in { testProject("simple", "1.4.9") }
       "simple 1.5" in { testProject("simple", "1.5.5") }
-
       "simple_scala3 1.5" in { testProject("simple_scala3", "1.5.5") }
-
       "simple 1.6" in { testProject("simple", "1.6.2") }
       "simple 1.7" in { testProject("simple", "1.7.3") }
+      "simple 1.8" in { testProject("simple", "1.8.3") }
+      "simple 1.9" in { testProject("simple", "1.9.6") }
       "compile-order" in { testProject("compile-order", "1.7.3") }
     }
   }
@@ -102,11 +102,16 @@ class ImportSpec extends AnyFreeSpecLike {
     }
 
     val pluginClassesDir: File = {
-      val crossBuiltSbtVersion = {
-        if (sbtVersionShort.startsWith("0.")) sbtVersionShort
-        else "1.0" // we do not cross-publish to different 1.x plugin versions (not yet)
-      }
-      new File(s"extractor/target/scala-$scalaVersion/sbt-$crossBuiltSbtVersion/classes/").getCanonicalFile
+      //See `build.sbt` to better understand the logic
+      val isBefore1_3 = sbtVersionShort.startsWith("1.0") || sbtVersionShort.startsWith("1.1") || sbtVersionShort.startsWith("1.2")
+      val crossBuiltSbtVersion: String = if (sbtVersionShort.startsWith("0."))
+        sbtVersionShort
+      else if (isBefore1_3)
+        "1.2"
+      else
+        "1.3"
+      val file = new File(s"extractor/target/scala-$scalaVersion/sbt-$crossBuiltSbtVersion/classes/").getCanonicalFile
+      file.ensuring(_.exists(), s"Plugin file does not exist: $file")
     }
 
     // support different versions of expected structure file name
