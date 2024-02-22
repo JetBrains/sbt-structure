@@ -1,10 +1,10 @@
 package org.jetbrains.sbt
 package extractors
 
-import org.jetbrains.sbt.structure.*
+import org.jetbrains.sbt.structure._
 import org.scalatest.freespec.AnyFreeSpecLike
 import org.scalatest.matchers.must.Matchers.{contain, convertToAnyMustWrapper}
-import sbt.{Configuration => SbtConfiguration, Attributed, globFilter as _, *}
+import sbt.{Configuration => SbtConfiguration, Attributed, globFilter => _, _}
 import sbt.jetbrains.apiAdapter
 
 import scala.collection.Seq
@@ -44,7 +44,7 @@ class DependenciesExtractorSpec extends AnyFreeSpecLike {
         insertProjectTransitiveDependencies = true,
         projectToConfigurations = Map(
           projects(1) -> Seq(Configuration.Compile, Configuration.Runtime, Configuration.Test)
-        ),
+        )
       ).extract
 
       val expected = DependencyData(
@@ -89,7 +89,7 @@ class DependenciesExtractorSpec extends AnyFreeSpecLike {
         insertProjectTransitiveDependencies = true,
         projectToConfigurations = Map(
           projects(1) -> Seq(Configuration.Compile, Configuration.Test, Configuration.Runtime)
-        ),
+        )
       ).extract
 
       val expected = DependencyData(
@@ -146,7 +146,7 @@ class DependenciesExtractorSpec extends AnyFreeSpecLike {
         insertProjectTransitiveDependencies = true,
         projectToConfigurations = Map(
           projects(1) -> Seq(Configuration.Compile, Configuration.Test, Configuration.Runtime)
-        ),
+        )
       ).extract
 
       val expected = DependencyData(
@@ -200,7 +200,7 @@ class DependenciesExtractorSpec extends AnyFreeSpecLike {
         insertProjectTransitiveDependencies = true,
         projectToConfigurations = Map(
           projects(1) -> Seq(Configuration.Compile, Configuration.Test, Configuration.Runtime)
-        ),
+        )
       ).extract
 
       val expectedModules = Seq(
@@ -253,7 +253,7 @@ class DependenciesExtractorSpec extends AnyFreeSpecLike {
         insertProjectTransitiveDependencies = true,
         projectToConfigurations = Map(
           projects(1) -> Seq(Configuration.Compile, Configuration.Test, Configuration.Runtime)
-        ),
+        )
       ).extract
 
       val expected = DependencyData(
@@ -302,7 +302,7 @@ class DependenciesExtractorSpec extends AnyFreeSpecLike {
         insertProjectTransitiveDependencies = true,
         projectToConfigurations = Map(
           projects(1) -> Seq(Configuration.Compile, Configuration.Test, Configuration.Runtime)
-        ),
+        )
       ).extract
 
       val expected = DependencyData(
@@ -341,7 +341,7 @@ class DependenciesExtractorSpec extends AnyFreeSpecLike {
         true,
         projectToConfigurations = Map(
           projects(1) -> Seq(Configuration.Compile, Configuration.Test, Configuration.Runtime)
-        ),
+        )
       ).extract
 
       val productionDependencies = Seq(
@@ -367,7 +367,7 @@ class DependenciesExtractorSpec extends AnyFreeSpecLike {
         true,
         projectToConfigurations = Map(
           projects(1) -> Seq(Configuration.Compile, Configuration.Test)
-        ),
+        )
       ).extract
 
       val expected = DependencyData(
@@ -392,7 +392,7 @@ class DependenciesExtractorSpec extends AnyFreeSpecLike {
         true,
         projectToConfigurations = Map(
           projects(1) -> Seq(Configuration.Compile, Configuration(CustomConf.name))
-        ),
+        )
       ).extract
 
       val expected = DependencyData(
@@ -433,5 +433,4 @@ class DependenciesExtractorSpec extends AnyFreeSpecLike {
       Artifact.DefaultType,
       ""
     )
-
 }
