@@ -24,8 +24,6 @@ class ImportSpec extends AnyFreeSpecLike {
   )
 
   private val TestDataRoot = new File("extractor/src/test/data/").getCanonicalFile
-  private val AndroidHome =
-    Option(System.getenv.get("ANDROID_HOME")).map(new File(_).getCanonicalFile)
   // assuming user.home is always defined
   private val UserHome = new File(System.getProperty("user.home")).getCanonicalFile
 
@@ -237,8 +235,6 @@ class ImportSpec extends AnyFreeSpecLike {
     private lazy val pathSubstitutions: Seq[(String, Option[String])] = Seq(
       "$URI_BASE"         -> Some(base.getCanonicalFile.toURI.toString),
       "$BASE"             -> Some(base.getCanonicalPath),
-      "$URI_ANDROID_HOME" -> AndroidHome.map(p => canon(p.toURI.toString)),
-      "$ANDROID_HOME"     -> AndroidHome.map(p => canon(p.toString)),
       "$IVY2"             -> Some(sbtIvyHome.getCanonicalPath),
       "$COURSIER"         -> Some(sbtCoursierHome.getCanonicalPath),
       "$SBT_BOOT"         -> Some(sbtBootDir.getCanonicalPath),
