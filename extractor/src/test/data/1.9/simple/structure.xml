@@ -198,7 +198,7 @@
         <jar>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-lang/scala-compiler/2.13.10/scala-compiler-2.13.10.jar</jar>
         <jar>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-lang/scala-reflect/2.13.10/scala-reflect-2.13.10.jar</jar>
       </compilerJars>
-      <extraJars></extraJars>
+      <extraJars/>
     </scala>
     <compileOrder>Mixed</compileOrder>
     <configuration id="compile">

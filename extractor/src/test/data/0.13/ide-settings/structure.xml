@@ -141,7 +141,7 @@
         <jar>$IVY2/cache/org.scala-lang/scala-compiler/jars/scala-compiler-2.10.1.jar</jar>
         <jar>$IVY2/cache/org.scala-lang/scala-reflect/jars/scala-reflect-2.10.1.jar</jar>
       </compilerJars>
-      <extraJars></extraJars>
+      <extraJars/>
       <option>-s1</option>
       <option>-s2</option>
     </scala>
@@ -1711,7 +1711,7 @@
         <jar>$SBT_BOOT/scala-2.10.7/lib/scala-compiler.jar</jar>
         <jar>$SBT_BOOT/scala-2.10.7/lib/scala-reflect.jar</jar>
       </compilerJars>
-      <extraJars></extraJars>
+      <extraJars/>
     </scala>
     <compileOrder>Mixed</compileOrder>
     <configuration id="compile">

@@ -130,7 +130,7 @@
         <jar>$IVY2/cache/org.scala-lang/scala-compiler/jars/scala-compiler-2.10.1.jar</jar>
         <jar>$IVY2/cache/org.scala-lang/scala-reflect/jars/scala-reflect-2.10.1.jar</jar>
       </compilerJars>
-      <extraJars></extraJars>
+      <extraJars/>
     </scala>
     <compileOrder>Mixed</compileOrder>
     <configuration id="compile">
@@ -1682,7 +1682,7 @@
         <jar>$IVY2/cache/org.scala-lang/scala-compiler/jars/scala-compiler-2.10.1.jar</jar>
         <jar>$IVY2/cache/org.scala-lang/scala-reflect/jars/scala-reflect-2.10.1.jar</jar>
       </compilerJars>
-      <extraJars></extraJars>
+      <extraJars/>
     </scala>
     <compileOrder>Mixed</compileOrder>
     <configuration id="compile">
@@ -3232,7 +3232,7 @@
         <jar>$IVY2/cache/org.scala-lang/jline/jars/jline-2.9.2.jar</jar>
         <jar>$IVY2/cache/org.scala-lang/scala-compiler/jars/scala-compiler-2.9.2.jar</jar>
       </compilerJars>
-      <extraJars></extraJars>
+      <extraJars/>
     </scala>
     <compileOrder>Mixed</compileOrder>
     <configuration id="compile">

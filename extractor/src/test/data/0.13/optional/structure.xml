@@ -129,7 +129,7 @@
         <jar>$SBT_BOOT/scala-2.10.7/lib/scala-compiler.jar</jar>
         <jar>$SBT_BOOT/scala-2.10.7/lib/scala-reflect.jar</jar>
       </compilerJars>
-      <extraJars></extraJars>
+      <extraJars/>
     </scala>
     <compileOrder>Mixed</compileOrder>
     <configuration id="compile">

@@ -12,6 +12,14 @@ import scala.xml._
 
 class ImportSpec extends AnyFreeSpecLike {
 
+  //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  // Set this value to `true` to copy structure to expected
+  // NOTE: you need to first run the tests in a normal mode and wait for all tests to finish
+  //       then rerun the test with this flag set to "true"
+  // ATTENTION: carefully review the changes in expected data manually
+  //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  private val CopyActualStructureToExpected = false
+
   private val sbtGlobalRoot = new File(
     System.getProperty("user.home"),
     ".sbt-structure-global/"
@@ -129,10 +137,10 @@ class ImportSpec extends AnyFreeSpecLike {
       f
     }
 
-    //Uncomment lines below to update test data from actual data fast (you need to first wait for all tests to pass)
-//    !!! ATTENTION !!! first, carefully review it manually in the failed tests diff view
-//    dumpToFile(testDataFile, TestUtil.read(new File(base, s"actual-structure-$sbtVersionFull-for-test-data.xml")))
-//    return
+    if (CopyActualStructureToExpected) {
+      dumpToFile(testDataFile, TestUtil.read(new File(base, s"actual-structure-$sbtVersionFull-for-test-data.xml")))
+      return
+    }
 
     val pathVarsSubstitutor = new PathVariablesSubstitutor(base, sbtIvyHome, sbtCoursierHome, sbtBootDir)
 

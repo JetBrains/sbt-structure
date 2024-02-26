@@ -134,7 +134,7 @@
         <jar>$IVY2/cache/org.scala-lang/scala-compiler/jars/scala-compiler-2.13.6.jar</jar>
         <jar>$IVY2/cache/org.scala-lang/scala-reflect/jars/scala-reflect-2.13.6.jar</jar>
       </compilerJars>
-      <extraJars></extraJars>
+      <extraJars/>
       <option>-scalaсOption1</option>
       <option>-scalaсOption2</option>
     </scala>

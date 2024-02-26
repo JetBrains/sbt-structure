@@ -158,9 +158,9 @@ trait DataSerializers {
         }}
         <version>{what.version}</version>
 
-        <libraryJars>  { what.libraryJars.map  { jar => <jar>{jar.path}</jar> }} </libraryJars>
-        <compilerJars> { what.compilerJars.map { jar => <jar>{jar.path}</jar> }} </compilerJars>
-        <extraJars>    { what.extraJars.map    { jar => <jar>{jar.path}</jar> }} </extraJars>
+        <libraryJars>{ what.libraryJars.map  { jar => <jar>{jar.path}</jar> }}</libraryJars>
+        <compilerJars>{ what.compilerJars.map { jar => <jar>{jar.path}</jar> }}</compilerJars>
+        <extraJars>{ what.extraJars.map    { jar => <jar>{jar.path}</jar> }}</extraJars>
 
         { what.compilerBridgeBinaryJar.toSeq.map { jar => <compilerBridgeBinaryJar>{jar.path}</compilerBridgeBinaryJar>} }
 
