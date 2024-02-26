@@ -101,7 +101,7 @@ object RepositoryExtractor extends SbtStateOps with TaskOps {
       Keys.updateClassifiers
         .forAllProjects(state, acceptedProjects)
         .map(_.mapValues(new UpdateReportAdapter(_)))
-        .onlyIf(options.resolveClassifiers)
+        .onlyIf(options.resolveSourceClassifiers || options.resolveJavadocClassifiers)
 
     for {
       updateReports <- updateAllTask

@@ -1679,42 +1679,34 @@
   <repository>
     <module organization="org.scala-lang" name="scala-library" revision="2.10.1" artifactType="jar" classifier="">
       <jar>$IVY2/cache/org.scala-lang/scala-library/jars/scala-library-2.10.1.jar</jar>
-      <doc>$IVY2/cache/org.scala-lang/scala-library/docs/scala-library-2.10.1-javadoc.jar</doc>
       <src>$IVY2/cache/org.scala-lang/scala-library/srcs/scala-library-2.10.1-sources.jar</src>
     </module>
     <module organization="org.scala-lang" name="scala-reflect" revision="2.10.1" artifactType="jar" classifier="">
       <jar>$IVY2/cache/org.scala-lang/scala-reflect/jars/scala-reflect-2.10.1.jar</jar>
-      <doc>$IVY2/cache/org.scala-lang/scala-reflect/docs/scala-reflect-2.10.1-javadoc.jar</doc>
       <src>$IVY2/cache/org.scala-lang/scala-reflect/srcs/scala-reflect-2.10.1-sources.jar</src>
     </module>
     <module organization="org.scalaz" name="scalaz-concurrent_2.10" revision="7.1.0" artifactType="jar" classifier="">
       <jar>$IVY2/cache/org.scalaz/scalaz-concurrent_2.10/bundles/scalaz-concurrent_2.10-7.1.0.jar</jar>
-      <doc>$IVY2/cache/org.scalaz/scalaz-concurrent_2.10/docs/scalaz-concurrent_2.10-7.1.0-javadoc.jar</doc>
       <src>$IVY2/cache/org.scalaz/scalaz-concurrent_2.10/srcs/scalaz-concurrent_2.10-7.1.0-sources.jar</src>
     </module>
     <module organization="org.scalaz" name="scalaz-core_2.10" revision="7.1.0" artifactType="jar" classifier="">
       <jar>$IVY2/cache/org.scalaz/scalaz-core_2.10/bundles/scalaz-core_2.10-7.1.0.jar</jar>
-      <doc>$IVY2/cache/org.scalaz/scalaz-core_2.10/docs/scalaz-core_2.10-7.1.0-javadoc.jar</doc>
       <src>$IVY2/cache/org.scalaz/scalaz-core_2.10/srcs/scalaz-core_2.10-7.1.0-sources.jar</src>
     </module>
     <module organization="org.scalaz" name="scalaz-effect_2.10" revision="7.1.0" artifactType="jar" classifier="">
       <jar>$IVY2/cache/org.scalaz/scalaz-effect_2.10/bundles/scalaz-effect_2.10-7.1.0.jar</jar>
-      <doc>$IVY2/cache/org.scalaz/scalaz-effect_2.10/docs/scalaz-effect_2.10-7.1.0-javadoc.jar</doc>
       <src>$IVY2/cache/org.scalaz/scalaz-effect_2.10/srcs/scalaz-effect_2.10-7.1.0-sources.jar</src>
     </module>
     <module organization="org.specs2" name="specs2-common_2.10" revision="2.4.14" artifactType="jar" classifier="">
       <jar>$IVY2/cache/org.specs2/specs2-common_2.10/jars/specs2-common_2.10-2.4.14.jar</jar>
-      <doc>$IVY2/cache/org.specs2/specs2-common_2.10/docs/specs2-common_2.10-2.4.14-javadoc.jar</doc>
       <src>$IVY2/cache/org.specs2/specs2-common_2.10/srcs/specs2-common_2.10-2.4.14-sources.jar</src>
     </module>
     <module organization="org.specs2" name="specs2-core_2.10" revision="2.4.14" artifactType="jar" classifier="">
       <jar>$IVY2/cache/org.specs2/specs2-core_2.10/jars/specs2-core_2.10-2.4.14.jar</jar>
-      <doc>$IVY2/cache/org.specs2/specs2-core_2.10/docs/specs2-core_2.10-2.4.14-javadoc.jar</doc>
       <src>$IVY2/cache/org.specs2/specs2-core_2.10/srcs/specs2-core_2.10-2.4.14-sources.jar</src>
     </module>
     <module organization="org.specs2" name="specs2-matcher_2.10" revision="2.4.14" artifactType="jar" classifier="">
       <jar>$IVY2/cache/org.specs2/specs2-matcher_2.10/jars/specs2-matcher_2.10-2.4.14.jar</jar>
-      <doc>$IVY2/cache/org.specs2/specs2-matcher_2.10/docs/specs2-matcher_2.10-2.4.14-javadoc.jar</doc>
       <src>$IVY2/cache/org.specs2/specs2-matcher_2.10/srcs/specs2-matcher_2.10-2.4.14-sources.jar</src>
     </module>
   </repository>

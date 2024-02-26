@@ -1,33 +1,41 @@
 package org.jetbrains.sbt
 
-/**
- * @author Nikolay Obedin
- * @since 10/5/15.
- */
 final case class Options(download: Boolean = false,
-                         resolveClassifiers: Boolean = false,
-                         resolveJavadocs: Boolean = false,
+                         resolveSourceClassifiers: Boolean = false,
+                         resolveJavadocClassifiers: Boolean = false,
                          resolveSbtClassifiers: Boolean = false,
                          prettyPrint: Boolean = false,
                          insertProjectTransitiveDependencies: Boolean = true)
 
 object Options {
 
-  def readFromString(options: String): Options = Options(
-    download = options.contains("download"),
-    resolveClassifiers = options.contains("resolveClassifiers"),
-    resolveJavadocs = options.contains("resolveJavadocs"),
-    resolveSbtClassifiers = options.contains("resolveSbtClassifiers"),
-    prettyPrint = options.contains("prettyPrint"),
-    insertProjectTransitiveDependencies = options.contains("insertProjectTransitiveDependencies")
+  private val ComaOrSpacesRegex = "(,|\\s+)".r
+
+  /**
+   * @param optionsString comma-separated or space-separated list of options, example
+   */
+  def readFromString(optionsString: String): Options = {
+    val options = ComaOrSpacesRegex.split(optionsString).map(_.trim).filter(_.nonEmpty)
+    readFromSeq(options)
+  }
+
+  //noinspection ScalaWeakerAccess (can be used by plugin users)
+  def readFromSeq(options: Seq[String]): Options = Options(
+    download = options.contains(Keys.Download),
+    resolveSourceClassifiers = options.contains(Keys.ResolveSourceClassifiers),
+    resolveJavadocClassifiers = options.contains(Keys.ResolveJavadocClassifiers),
+    resolveSbtClassifiers = options.contains(Keys.ResolveSbtClassifiers),
+    prettyPrint = options.contains(Keys.PrettyPrint),
+    insertProjectTransitiveDependencies = options.contains(Keys.InsertProjectTransitiveDependencies)
   )
 
-  def readFromSeq(options: Seq[String]): Options = Options(
-    download = options.contains("download"),
-    resolveClassifiers = options.contains("resolveClassifiers"),
-    resolveJavadocs = options.contains("resolveJavadocs"),
-    resolveSbtClassifiers = options.contains("resolveSbtClassifiers"),
-    prettyPrint = options.contains("prettyPrint")
-  )
+  object Keys {
+    val Download = "download"
+    val ResolveSourceClassifiers = "resolveSourceClassifiers"
+    val ResolveJavadocClassifiers = "resolveJavadocClassifiers"
+    val ResolveSbtClassifiers = "resolveSbtClassifiers"
+    val PrettyPrint = "prettyPrint"
+    val InsertProjectTransitiveDependencies = "insertProjectTransitiveDependencies"
+  }
 }
 

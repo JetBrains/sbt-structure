@@ -7,9 +7,8 @@ import sbt.Def.Initialize
 import sbt.{Def, _}
 
 import java.io.{BufferedWriter, FileOutputStream, OutputStreamWriter}
+import scala.collection.mutable.ArrayBuffer
 // don't remove this import: sbt.jetbrains.apiAdapter._ -- it shadows some symbols for sbt 1.0 compatibility
-import sbt.jetbrains.apiAdapter._
-
 import scala.language.reflectiveCalls
 
 /**
@@ -156,15 +155,13 @@ object UtilityTasks extends SbtStateOps {
     allConfigurationsWithSource.apply(cs => (cs ++ Seq(Runtime, Provided, Optional)).distinct)
   }
 
-  def classifiersModuleRespectingStructureOpts: Initialize[Task[GetClassifiersModule]] = Def.task {
-    val module = (Keys.classifiersModule in Keys.updateClassifiers).value
-    val options = StructureKeys.sbtStructureOpts.value
-    if (options.resolveJavadocs) {
-      module
-    } else {
-      val classifiersWithoutJavadocs = module.classifiers.filterNot(_ == Artifact.DocClassifier).toVector
-      module.withClassifiers(classifiersWithoutJavadocs)
-    }
+  def librariesClassifiers(options: Options): Seq[String] = {
+    val buffer = new ArrayBuffer[String]
+    if (options.resolveSourceClassifiers)
+      buffer += Artifact.SourceClassifier
+    if (options.resolveJavadocClassifiers)
+      buffer += Artifact.DocClassifier
+    buffer
   }
 
   private def areNecessaryPluginsLoaded(project: ResolvedProject): Boolean = {

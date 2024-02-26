@@ -1670,12 +1670,10 @@
   <repository>
     <module organization="io.netty" name="netty" revision="3.6.6.Final" artifactType="jar" classifier="">
       <jar>$IVY2/cache/io.netty/netty/bundles/netty-3.6.6.Final.jar</jar>
-      <doc>$IVY2/cache/io.netty/netty/docs/netty-3.6.6.Final-javadoc.jar</doc>
       <src>$IVY2/cache/io.netty/netty/srcs/netty-3.6.6.Final-sources.jar</src>
     </module>
     <module organization="org.scala-lang" name="scala-library" revision="2.10.7" artifactType="jar" classifier="">
       <jar>$SBT_BOOT/scala-2.10.7/lib/scala-library.jar</jar>
-      <doc>$IVY2/cache/org.scala-lang/scala-library/docs/scala-library-2.10.7-javadoc.jar</doc>
       <src>$IVY2/cache/org.scala-lang/scala-library/srcs/scala-library-2.10.7-sources.jar</src>
     </module>
   </repository>

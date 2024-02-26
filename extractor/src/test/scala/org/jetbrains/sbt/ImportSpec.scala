@@ -20,45 +20,64 @@ class ImportSpec extends AnyFreeSpecLike {
   //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
   private val CopyActualStructureToExpected = false
 
-  private val sbtGlobalRoot = new File(
-    System.getProperty("user.home"),
-    ".sbt-structure-global/"
-  ).getCanonicalFile
+  private val UserHome = new File(System.getProperty("user.home")).getCanonicalFile.ensuring(_.exists())
+  private val SbtGlobalRoot = new File(UserHome, ".sbt-structure-global/").getCanonicalFile
 
   println(
-    s"""Test SBT global root: $sbtGlobalRoot
-       |See sbt-launcher logs in ${sbtGlobalRoot}boot/update.log""".stripMargin
+    s"""Test SBT global root: $SbtGlobalRoot
+       |See sbt-launcher logs in ${SbtGlobalRoot}boot/update.log""".stripMargin
   )
 
   private val TestDataRoot = new File("extractor/src/test/data/").getCanonicalFile
 
+  import Options.Keys
+
+  private val ResolveNone = ""
+  private val ResolveSources = s"${Keys.ResolveSourceClassifiers}"
+  private val ResolveJavadocs = s"${Keys.ResolveJavadocClassifiers}"
+  private val ResolveSbtClassifiers = s"${Keys.ResolveSbtClassifiers}"
+  private val ResolveSourcesAndSbtClassifiers = s"${Keys.ResolveSourceClassifiers} ${Keys.ResolveSbtClassifiers}"
+  private val ResolveSourcesAndJavaDocsAndSbtClassifiers = s"${Keys.ResolveSourceClassifiers}, ${Keys.ResolveJavadocClassifiers}, ${Keys.ResolveSbtClassifiers}"
+
   "extracted structure should equal to expected structure" - {
     "sbt 0.13.18" - {
-      "bare"               in { testProject_013("bare", options = "resolveClassifiers resolveSbtClassifiers") }
-      "dependency"         in { testProject_013("dependency") }
-      "multiple"           in { testProject_013("multiple") }
-      "simple"             in { testProject_013("simple", options = "resolveClassifiers resolveSbtClassifiers") }
-      "classifiers"        in { testProject_013("classifiers") }
-      "optional"           in { testProject_013("optional") }
-      "play"               in { testProject_013("play", options = "") }
-      "ide-settings"       in { testProject_013("ide-settings") }
-      "sbt-idea"           in { testProject_013("sbt-idea") }
-      "custom-test-config" in { testProject_013("custom-test-config")}
+      "bare"               in { testProject_013("bare", options = ResolveSourcesAndSbtClassifiers) }
+      "multiple"           in { testProject_013("multiple", options = ResolveSourcesAndSbtClassifiers) }
+      "simple"             in { testProject_013("simple", options = ResolveSourcesAndSbtClassifiers) }
+      "classifiers"        in { testProject_013("classifiers", options = ResolveSourcesAndSbtClassifiers) }
+      "optional"           in { testProject_013("optional", options = ResolveSourcesAndSbtClassifiers) }
+      "play"               in { testProject_013("play", options = ResolveNone) }
+      "ide-settings"       in { testProject_013("ide-settings", options = ResolveSourcesAndSbtClassifiers) }
+      "sbt-idea"           in { testProject_013("sbt-idea", options = ResolveSourcesAndSbtClassifiers) }
+      "custom-test-config" in { testProject_013("custom-test-config", options = ResolveSourcesAndSbtClassifiers)}
+
+      "dependency_resolve_none" in { testProject_013("dependency_resolve_none", options = ResolveNone) }
+      "dependency_resolve_none_with_explicit_classifiers" in { testProject_013("dependency_resolve_none_with_explicit_classifiers", options = ResolveNone) }
+      "dependency_resolve_sources" in { testProject_013("dependency_resolve_sources", options = ResolveSources) }
+      "dependency_resolve_javadocs" in { testProject_013("dependency_resolve_javadocs", options = ResolveJavadocs) }
+      "dependency_resolve_sources_and_javadocs_and_sbt_classifiers" in { testProject_013("dependency_resolve_sources_and_javadocs_and_sbt_classifiers", options = ResolveSourcesAndJavaDocsAndSbtClassifiers) }
     }
 
-    "sbt 1.x" - {
-      "simple 1.0" in { testProject("simple", "1.0.4") }
-      "simple 1.1" in { testProject("simple", "1.1.6") }
-      "simple 1.2" in { testProject("simple", "1.2.8") }
-      "simple 1.3" in { testProject("simple", "1.3.13") }
-      "simple 1.4" in { testProject("simple", "1.4.9") }
-      "simple 1.5" in { testProject("simple", "1.5.5") }
-      "simple_scala3 1.5" in { testProject("simple_scala3", "1.5.5") }
-      "simple 1.6" in { testProject("simple", "1.6.2") }
-      "simple 1.7" in { testProject("simple", "1.7.3") }
-      "simple 1.8" in { testProject("simple", "1.8.3") }
-      "simple 1.9" in { testProject("simple", "1.9.6") }
-      "compile-order" in { testProject("compile-order", "1.7.3") }
+    "1.0 simple" in { testProject("simple", "1.0.4", ResolveSourcesAndSbtClassifiers) }
+    "1.1 simple" in { testProject("simple", "1.1.6", ResolveSourcesAndSbtClassifiers) }
+    "1.2 simple" in { testProject("simple", "1.2.8", ResolveSourcesAndSbtClassifiers) }
+    "1.3 simple" in { testProject("simple", "1.3.13", ResolveSourcesAndSbtClassifiers) }
+    "1.4 simple" in { testProject("simple", "1.4.9", ResolveSourcesAndSbtClassifiers) }
+    "1.5 simple" in { testProject("simple", "1.5.5", ResolveSourcesAndSbtClassifiers) }
+    "1.5 scala3 simple" in { testProject("simple_scala3", "1.5.5", ResolveSourcesAndSbtClassifiers) }
+    "1.6 simple" in { testProject("simple", "1.6.2", ResolveSourcesAndSbtClassifiers) }
+    "1.7 simple" in { testProject("simple", "1.7.3", ResolveSourcesAndSbtClassifiers) }
+    "1.7 compile-order" in { testProject("compile-order", "1.7.3", ResolveSourcesAndSbtClassifiers) }
+    "1.8 simple " in { testProject("simple", "1.8.3", ResolveSourcesAndSbtClassifiers) }
+
+    "1.9" - {
+      val SbtVersion_1_9 = "1.9.6"
+      "dependency_resolve_none" in { testProject("dependency_resolve_none", SbtVersion_1_9, options = ResolveNone) }
+      "dependency_resolve_none_with_explicit_classifiers" in { testProject("dependency_resolve_none_with_explicit_classifiers", SbtVersion_1_9, options = ResolveNone) }
+      "dependency_resolve_sources" in { testProject("dependency_resolve_sources", SbtVersion_1_9, options = ResolveSources) }
+      "dependency_resolve_javadocs" in { testProject("dependency_resolve_javadocs", SbtVersion_1_9, options = ResolveJavadocs) }
+      "dependency_resolve_sbt_classifiers" in { testProject("dependency_resolve_sbt_classifiers", SbtVersion_1_9, options = ResolveSbtClassifiers) }
+      "dependency_resolve_sources_and_javadocs_and_sbt_classifiers" in { testProject("dependency_resolve_sources_and_javadocs_and_sbt_classifiers", SbtVersion_1_9, options = ResolveSourcesAndJavaDocsAndSbtClassifiers) }
     }
   }
 
@@ -76,7 +95,7 @@ class ImportSpec extends AnyFreeSpecLike {
 
   private def testProject_013(
     project: String,
-    options: String = "resolveClassifiers resolveSbtClassifiers resolveJavadocs"
+    options: String
   ): Unit = testProject(
     project,
     "0.13.18",
@@ -86,15 +105,15 @@ class ImportSpec extends AnyFreeSpecLike {
   private def testProject(
     project: String,
     sbtVersionFull: String,
-    options: String = "resolveClassifiers resolveSbtClassifiers resolveJavadocs"
+    options: String
   ): Unit = {
     val sbtVersionShort = sbtVersionBinary(sbtVersionFull)
     val scalaVersion = sbtScalaVersion(sbtVersionShort)
 
-    val sbtGlobalBase = new File(sbtGlobalRoot, sbtVersionShort).getCanonicalFile
-    val sbtBootDir = new File(sbtGlobalRoot, "boot/").getCanonicalFile
-    val sbtIvyHome = new File(sbtGlobalRoot, "ivy2/").getCanonicalFile
-    val sbtCoursierHome = new File(sbtGlobalRoot, "coursier/").getCanonicalFile
+    val sbtGlobalBase = new File(SbtGlobalRoot, sbtVersionShort).getCanonicalFile
+    val sbtBootDir = new File(SbtGlobalRoot, "boot/").getCanonicalFile
+    val sbtIvyHome = new File(SbtGlobalRoot, "ivy2/").getCanonicalFile
+    val sbtCoursierHome = new File(SbtGlobalRoot, "coursier/").getCanonicalFile
 
     val base = new File(new File(TestDataRoot, sbtVersionShort), project)
     println(s"Running test: $project, sbtVersion: $sbtVersionFull, path: $base")
@@ -242,7 +261,6 @@ class ImportSpec extends AnyFreeSpecLike {
   }
 
   private class PathVariablesSubstitutor(base: File, sbtIvyHome: File, sbtCoursierHome: File, sbtBootDir: File) {
-    private val UserHome = new File(System.getProperty("user.home")).getCanonicalFile
 
     private lazy val varToPathSubstitutions: Seq[(String, String)] = Seq(
       "$URI_BASE"         -> base.getCanonicalFile.toURI.toString,

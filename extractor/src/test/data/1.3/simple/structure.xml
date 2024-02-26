@@ -405,6 +405,11 @@
       <rank>100</rank>
     </setting>
     <setting>
+      <label>transitiveClassifiers</label>
+      <description>List of classifiers used for transitively obtaining extra artifacts for sbt or declared dependencies.</description>
+      <rank>40</rank>
+    </setting>
+    <setting>
       <label>bgHashClasspath</label>
       <description>Toggles whether to use a hash or the last modified time to stamp the classpath jars</description>
       <rank>25</rank>
