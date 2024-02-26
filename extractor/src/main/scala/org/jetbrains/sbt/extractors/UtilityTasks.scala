@@ -1,17 +1,16 @@
 package org.jetbrains.sbt.extractors
 
-import java.io.{BufferedWriter, FileOutputStream, OutputStreamWriter}
-
 import org.jetbrains.sbt._
 import org.jetbrains.sbt.structure.ProjectData
 import org.jetbrains.sbt.structure.XmlSerializer._
 import sbt.Def.Initialize
 import sbt.{Def, _}
+
+import java.io.{BufferedWriter, FileOutputStream, OutputStreamWriter}
 // don't remove this import: sbt.jetbrains.apiAdapter._ -- it shadows some symbols for sbt 1.0 compatibility
 import sbt.jetbrains.apiAdapter._
 
 import scala.language.reflectiveCalls
-import scala.xml._
 
 /**
  * @author Nikolay Obedin
@@ -63,7 +62,7 @@ object UtilityTasks extends SbtStateOps {
 
     val outputText = {
       if (options.prettyPrint)
-        new PrettyPrinter(180, 2).format(structure.serialize)
+        newXmlPrettyPrinter.format(structure.serialize)
       else
         xml.Utility.trim(structure.serialize).mkString
     }

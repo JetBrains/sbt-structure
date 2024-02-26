@@ -6,9 +6,7 @@
     <import>import _root_.sbt.ScriptedPlugin.autoImport._, _root_.sbt.plugins.JUnitXmlReportPlugin.autoImport._, _root_.sbt.plugins.MiniDependencyTreePlugin.autoImport._</import>
     <import>import _root_.sbt._</import>
     <import>import _root_.sbt.nio.Keys._</import>
-    <import>
-      import _root_.sbt.plugins.IvyPlugin, _root_.sbt.plugins.JvmPlugin, _root_.sbt.plugins.CorePlugin, _root_.sbt.ScriptedPlugin, _root_.sbt.plugins.SbtPlugin, _root_.sbt.plugins.SemanticdbPlugin, _root_.sbt.plugins.JUnitXmlReportPlugin, _root_.sbt.plugins.Giter8TemplatePlugin, _root_.sbt.plugins.MiniDependencyTreePlugin
-    </import>
+    <import>import _root_.sbt.plugins.IvyPlugin, _root_.sbt.plugins.JvmPlugin, _root_.sbt.plugins.CorePlugin, _root_.sbt.ScriptedPlugin, _root_.sbt.plugins.SbtPlugin, _root_.sbt.plugins.SemanticdbPlugin, _root_.sbt.plugins.JUnitXmlReportPlugin, _root_.sbt.plugins.Giter8TemplatePlugin, _root_.sbt.plugins.MiniDependencyTreePlugin</import>
     <import>import _root_.scala.xml.{TopScope=&gt;$scope}</import>
     <classes>$SBT_BOOT/scala-2.12.16/lib/jline.jar</classes>
     <classes>$SBT_BOOT/scala-2.12.16/lib/scala-compiler.jar</classes>
@@ -96,48 +94,28 @@
     <classes>$SBT_BOOT/scala-2.12.16/org.scala-sbt/sbt/1.7.3/zinc-persist-core-assembly-1.7.2.jar</classes>
     <classes>$SBT_BOOT/scala-2.12.16/org.scala-sbt/sbt/1.7.3/zinc-persist_2.12-1.7.2.jar</classes>
     <classes>$SBT_BOOT/scala-2.12.16/org.scala-sbt/sbt/1.7.3/zinc_2.12-1.7.2.jar</classes>
-    <sources>
-      $COURSIER/cache/https/repo1.maven.org/maven2/com/eed3si9n/gigahorse-apache-http_2.12/0.7.0/gigahorse-apache-http_2.12-0.7.0-sources.jar
-    </sources>
+    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/com/eed3si9n/gigahorse-apache-http_2.12/0.7.0/gigahorse-apache-http_2.12-0.7.0-sources.jar</sources>
     <sources>$COURSIER/cache/https/repo1.maven.org/maven2/com/eed3si9n/gigahorse-core_2.12/0.7.0/gigahorse-core_2.12-0.7.0-sources.jar</sources>
-    <sources>
-      $COURSIER/cache/https/repo1.maven.org/maven2/com/eed3si9n/shaded-apache-httpasyncclient/0.7.0/shaded-apache-httpasyncclient-0.7.0-sources.jar
-    </sources>
-    <sources>
-      $COURSIER/cache/https/repo1.maven.org/maven2/com/eed3si9n/shaded-jawn-parser_2.12/0.9.1/shaded-jawn-parser_2.12-0.9.1-sources.jar
-    </sources>
-    <sources>
-      $COURSIER/cache/https/repo1.maven.org/maven2/com/eed3si9n/shaded-scalajson_2.12/1.0.0-M4/shaded-scalajson_2.12-1.0.0-M4-sources.jar
-    </sources>
+    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/com/eed3si9n/shaded-apache-httpasyncclient/0.7.0/shaded-apache-httpasyncclient-0.7.0-sources.jar</sources>
+    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/com/eed3si9n/shaded-jawn-parser_2.12/0.9.1/shaded-jawn-parser_2.12-0.9.1-sources.jar</sources>
+    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/com/eed3si9n/shaded-scalajson_2.12/1.0.0-M4/shaded-scalajson_2.12-1.0.0-M4-sources.jar</sources>
     <sources>$COURSIER/cache/https/repo1.maven.org/maven2/com/eed3si9n/sjson-new-core_2.12/0.9.1/sjson-new-core_2.12-0.9.1-sources.jar</sources>
-    <sources>
-      $COURSIER/cache/https/repo1.maven.org/maven2/com/eed3si9n/sjson-new-murmurhash_2.12/0.9.1/sjson-new-murmurhash_2.12-0.9.1-sources.jar
-    </sources>
-    <sources>
-      $COURSIER/cache/https/repo1.maven.org/maven2/com/eed3si9n/sjson-new-scalajson_2.12/0.9.1/sjson-new-scalajson_2.12-0.9.1-sources.jar
-    </sources>
+    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/com/eed3si9n/sjson-new-murmurhash_2.12/0.9.1/sjson-new-murmurhash_2.12-0.9.1-sources.jar</sources>
+    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/com/eed3si9n/sjson-new-scalajson_2.12/0.9.1/sjson-new-scalajson_2.12-0.9.1-sources.jar</sources>
     <sources>$COURSIER/cache/https/repo1.maven.org/maven2/com/github/ben-manes/caffeine/caffeine/2.8.5/caffeine-2.8.5-sources.jar</sources>
-    <sources>
-      $COURSIER/cache/https/repo1.maven.org/maven2/com/google/errorprone/error_prone_annotations/2.4.0/error_prone_annotations-2.4.0-sources.jar
-    </sources>
+    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/com/google/errorprone/error_prone_annotations/2.4.0/error_prone_annotations-2.4.0-sources.jar</sources>
     <sources>$COURSIER/cache/https/repo1.maven.org/maven2/com/jcraft/jsch/0.1.54/jsch-0.1.54-sources.jar</sources>
     <sources>$COURSIER/cache/https/repo1.maven.org/maven2/com/lmax/disruptor/3.4.2/disruptor-3.4.2-sources.jar</sources>
     <sources>$COURSIER/cache/https/repo1.maven.org/maven2/com/swoval/file-tree-views/2.1.9/file-tree-views-2.1.9-sources.jar</sources>
     <sources>$COURSIER/cache/https/repo1.maven.org/maven2/com/typesafe/config/1.4.2/config-1.4.2-sources.jar</sources>
     <sources>$COURSIER/cache/https/repo1.maven.org/maven2/com/typesafe/ssl-config-core_2.12/0.6.1/ssl-config-core_2.12-0.6.1-sources.jar</sources>
-    <sources>
-      $COURSIER/cache/https/repo1.maven.org/maven2/io/get-coursier/lm-coursier-shaded_2.12/2.0.12/lm-coursier-shaded_2.12-2.0.12-sources.jar
-    </sources>
+    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/io/get-coursier/lm-coursier-shaded_2.12/2.0.12/lm-coursier-shaded_2.12-2.0.12-sources.jar</sources>
     <sources>$COURSIER/cache/https/repo1.maven.org/maven2/net/java/dev/jna/jna-platform/5.12.0/jna-platform-5.12.0-sources.jar</sources>
     <sources>$COURSIER/cache/https/repo1.maven.org/maven2/net/java/dev/jna/jna/5.12.0/jna-5.12.0-sources.jar</sources>
-    <sources>
-      $COURSIER/cache/https/repo1.maven.org/maven2/net/openhft/zero-allocation-hashing/0.10.1/zero-allocation-hashing-0.10.1-sources.jar
-    </sources>
+    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/net/openhft/zero-allocation-hashing/0.10.1/zero-allocation-hashing-0.10.1-sources.jar</sources>
     <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/apache/logging/log4j/log4j-api/2.17.1/log4j-api-2.17.1-sources.jar</sources>
     <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/apache/logging/log4j/log4j-core/2.17.1/log4j-core-2.17.1-sources.jar</sources>
-    <sources>
-      $COURSIER/cache/https/repo1.maven.org/maven2/org/apache/logging/log4j/log4j-slf4j-impl/2.17.1/log4j-slf4j-impl-2.17.1-sources.jar
-    </sources>
+    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/apache/logging/log4j/log4j-slf4j-impl/2.17.1/log4j-slf4j-impl-2.17.1-sources.jar</sources>
     <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/checkerframework/checker-qual/3.4.1/checker-qual-3.4.1-sources.jar</sources>
     <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/fusesource/jansi/jansi/2.1.0/jansi-2.1.0-sources.jar</sources>
     <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/jline/jline-builtins/3.19.0/jline-builtins-3.19.0-sources.jar</sources>
@@ -147,12 +125,8 @@
     <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/jline/jline-terminal-jna/3.19.0/jline-terminal-jna-3.19.0-sources.jar</sources>
     <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/jline/jline-terminal/3.19.0/jline-terminal-3.19.0-sources.jar</sources>
     <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/reactivestreams/reactive-streams/1.0.3/reactive-streams-1.0.3-sources.jar</sources>
-    <sources>
-      $COURSIER/cache/https/repo1.maven.org/maven2/org/scala-lang/modules/scala-collection-compat_2.12/2.8.1/scala-collection-compat_2.12-2.8.1-sources.jar
-    </sources>
-    <sources>
-      $COURSIER/cache/https/repo1.maven.org/maven2/org/scala-lang/modules/scala-parser-combinators_2.12/1.1.2/scala-parser-combinators_2.12-1.1.2-sources.jar
-    </sources>
+    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-lang/modules/scala-collection-compat_2.12/2.8.1/scala-collection-compat_2.12-2.8.1-sources.jar</sources>
+    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-lang/modules/scala-parser-combinators_2.12/1.1.2/scala-parser-combinators_2.12-1.1.2-sources.jar</sources>
     <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-lang/modules/scala-xml_2.12/1.3.0/scala-xml_2.12-1.3.0-sources.jar</sources>
     <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-lang/scala-compiler/2.12.16/scala-compiler-2.12.16-sources.jar</sources>
     <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-lang/scala-library/2.12.16/scala-library-2.12.16-sources.jar</sources>
@@ -166,19 +140,11 @@
     <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/core-macros_2.12/1.7.3/core-macros_2.12-1.7.3-sources.jar</sources>
     <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/io_2.12/1.7.0/io_2.12-1.7.0-sources.jar</sources>
     <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/ipcsocket/ipcsocket/1.5.0/ipcsocket-1.5.0-sources.jar</sources>
-    <sources>
-      $COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/ivy/ivy/2.3.0-sbt-fbc4f586aeeb1591710b14eb4f41b94880dcd745/ivy-2.3.0-sbt-fbc4f586aeeb1591710b14eb4f41b94880dcd745-sources.jar
-    </sources>
-    <sources>
-      $COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/jline/jline/2.14.7-sbt-a1b0ffbb8f64bb820f4f84a0c07a0c0964507493/jline-2.14.7-sbt-a1b0ffbb8f64bb820f4f84a0c07a0c0964507493-sources.jar
-    </sources>
+    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/ivy/ivy/2.3.0-sbt-fbc4f586aeeb1591710b14eb4f41b94880dcd745/ivy-2.3.0-sbt-fbc4f586aeeb1591710b14eb4f41b94880dcd745-sources.jar</sources>
+    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/jline/jline/2.14.7-sbt-a1b0ffbb8f64bb820f4f84a0c07a0c0964507493/jline-2.14.7-sbt-a1b0ffbb8f64bb820f4f84a0c07a0c0964507493-sources.jar</sources>
     <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/launcher-interface/1.4.1/launcher-interface-1.4.1-sources.jar</sources>
-    <sources>
-      $COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/librarymanagement-core_2.12/1.7.1/librarymanagement-core_2.12-1.7.1-sources.jar
-    </sources>
-    <sources>
-      $COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/librarymanagement-ivy_2.12/1.7.1/librarymanagement-ivy_2.12-1.7.1-sources.jar
-    </sources>
+    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/librarymanagement-core_2.12/1.7.1/librarymanagement-core_2.12-1.7.1-sources.jar</sources>
+    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/librarymanagement-ivy_2.12/1.7.1/librarymanagement-ivy_2.12-1.7.1-sources.jar</sources>
     <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/logic_2.12/1.7.3/logic_2.12-1.7.3-sources.jar</sources>
     <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/main-settings_2.12/1.7.3/main-settings_2.12-1.7.3-sources.jar</sources>
     <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/main_2.12/1.7.3/main_2.12-1.7.3-sources.jar</sources>
@@ -203,17 +169,11 @@
     <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/zinc-apiinfo_2.12/1.7.2/zinc-apiinfo_2.12-1.7.2-sources.jar</sources>
     <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/zinc-classfile_2.12/1.7.2/zinc-classfile_2.12-1.7.2-sources.jar</sources>
     <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/zinc-classpath_2.12/1.7.2/zinc-classpath_2.12-1.7.2-sources.jar</sources>
-    <sources>
-      $COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/zinc-compile-core_2.12/1.7.2/zinc-compile-core_2.12-1.7.2-sources.jar
-    </sources>
+    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/zinc-compile-core_2.12/1.7.2/zinc-compile-core_2.12-1.7.2-sources.jar</sources>
     <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/zinc-compile_2.12/1.7.2/zinc-compile_2.12-1.7.2-sources.jar</sources>
     <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/zinc-core_2.12/1.7.2/zinc-core_2.12-1.7.2-sources.jar</sources>
-    <sources>
-      $COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/zinc-lm-integration_2.12/1.7.3/zinc-lm-integration_2.12-1.7.3-sources.jar
-    </sources>
-    <sources>
-      $COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/zinc-persist-core-assembly/1.7.2/zinc-persist-core-assembly-1.7.2-sources.jar
-    </sources>
+    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/zinc-lm-integration_2.12/1.7.3/zinc-lm-integration_2.12-1.7.3-sources.jar</sources>
+    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/zinc-persist-core-assembly/1.7.2/zinc-persist-core-assembly-1.7.2-sources.jar</sources>
     <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/zinc-persist_2.12/1.7.2/zinc-persist_2.12-1.7.2-sources.jar</sources>
     <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/zinc_2.12/1.7.2/zinc_2.12-1.7.2-sources.jar</sources>
     <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/slf4j/slf4j-api/2.0.3/slf4j-api-2.0.3-sources.jar</sources>
@@ -321,13 +281,13 @@
       <label>makePomConfiguration</label>
       <description>Configuration for generating a pom.</description>
       <rank>10000</rank>
-      <value>MakePomConfiguration(Some($BASE/...</value>
+      <value>MakePomConfiguration(Some($HOME/Desktop/dev/sbt-structure/extractor/src/test/data/...</value>
     </setting>
     <setting>
       <label>ivyPaths</label>
       <description>Configures paths used by Ivy for dependency management.</description>
       <rank>10000</rank>
-      <value>IvyPaths($BASE, Some(/Users/vasi...</value>
+      <value>IvyPaths($BASE...</value>
     </setting>
     <setting>
       <label>projectInfo</label>
@@ -361,7 +321,7 @@
       <label>history</label>
       <description>The location where command line history is persisted.</description>
       <rank>40</rank>
-      <value>Some($BASE/target/.history3)</value>
+      <value>Some($BASE/tar...</value>
     </setting>
     <setting>
       <label>autoGeneratedProject</label>
@@ -424,7 +384,7 @@
       <label>thisProjectRef</label>
       <description>Provides a fully-resolved reference to the current project for the referencing scope.</description>
       <rank>100</rank>
-      <value>ProjectRef($URI_BASE,compile-o...</value>
+      <value>ProjectRef(file:$HOME/Desktop/dev/sbt-structure/extractor/src/test/data/1.7/compil...</value>
     </setting>
     <setting>
       <label>outputFileStamper</label>
@@ -442,7 +402,7 @@
       <label>sourceManaged</label>
       <description>Default directory for sources generated by the build.</description>
       <rank>39</rank>
-      <value>$BASE/target/scala-2.13/src_managed</value>
+      <value>$BASE/target/s...</value>
     </setting>
     <setting>
       <label>moduleName</label>
@@ -460,7 +420,7 @@
       <label>conflictWarning</label>
       <description>Configures warnings for conflicts in dependency management.</description>
       <rank>100</rank>
-      <value>ConflictWarning(ProjectRef(uri(&quot;file:$HOME/Code/sbt-structure/extractor/src/test/data/1.7/com...</value>
+      <value>ConflictWarning(ProjectRef(uri(&quot;file:$HOME/Desktop/dev/sbt-structure/extractor/src...</value>
     </setting>
     <setting>
       <label>appResolvers</label>
@@ -535,7 +495,7 @@
       <label>crossTarget</label>
       <description>Main directory for files generated by the build that are cross-built.</description>
       <rank>40</rank>
-      <value>$BASE/target/scala-2.13</value>
+      <value>$BASE/target/s...</value>
     </setting>
     <setting>
       <label>version</label>
@@ -547,13 +507,13 @@
       <label>testResultLogger</label>
       <description>Logs results after a test task completes.</description>
       <rank>20000</rank>
-      <value>Main(sbt.TestResultLogger$Defaults$$$Lambda$1209/0x00000008007a7040@617b4c54,sbt.TestResultLogger$$a...</value>
+      <value>Main(sbt.TestResultLogger$Defaults$$$Lambda$1107/0x000000080076f040@45b68718,sbt.TestResultLogger$$a...</value>
     </setting>
     <setting>
       <label>resourceManaged</label>
       <description>Default managed resource directory, used when generating resources.</description>
       <rank>40</rank>
-      <value>$BASE/target/scala-2.13/resource...</value>
+      <value>$BASE/target/s...</value>
     </setting>
     <setting>
       <label>resourceGenerators</label>
@@ -628,7 +588,7 @@
       <label>cleanKeepGlobs</label>
       <description>Globs to keep during a clean. Must be direct children of target.</description>
       <rank>100</rank>
-      <value>List($BASE/target/global-logging...</value>
+      <value>List($BASE/tar...</value>
     </setting>
     <setting>
       <label>cleanKeepFiles</label>
@@ -645,7 +605,7 @@
       <label>onLoadMessage</label>
       <description>Message to display when the project is loaded.</description>
       <rank>10000</rank>
-      <value>set current project to some-name (in build file:$HOME/Code/sbt-structure/extractor/src/test/d...</value>
+      <value>set current project to some-name (in build file:$HOME/Desktop/dev/sbt-structure/ex...</value>
     </setting>
     <setting>
       <label>semanticdbTargetRoot</label>
@@ -656,7 +616,7 @@
       <label>thisProject</label>
       <description>Provides the current project for the referencing scope.</description>
       <rank>100</rank>
-      <value>Project(id compile-order, base: $HOME/Code/sbt-structure/extractor/src/test/data/1.7/compile-...</value>
+      <value>Project(id compile-order, base: $HOME/Desktop/dev/sbt-structure/extractor/src/test...</value>
     </setting>
     <setting>
       <label>sourceDirectory</label>

@@ -6,8 +6,6 @@ import sbt._
 import sbt.complete.DefaultParsers
 import sbt.plugins.JvmPlugin
 
-import scala.xml.PrettyPrinter
-
 /**
   * Created by jast on 2017-02-22.
   */
@@ -43,7 +41,7 @@ private object pluginOnlyTasks {
     Def.task {
       val structure = structureTask.value.serialize
       val outputText = {
-        if (options.prettyPrint) new PrettyPrinter(180, 2).format(structure)
+        if (options.prettyPrint) newXmlPrettyPrinter.format(structure)
         else xml.Utility.trim(structure).mkString
       }
 

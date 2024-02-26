@@ -91,10 +91,10 @@ trait DataSerializers {
 
     override def deserialize(what: Node): Either[Throwable,BuildData] = {
       val uri     = (what \ "uri").map(_.text.uri).head
-      val imports = (what \ "import").map(_.text)
-      val classes = (what \ "classes").map(e => e.text.file)
-      val docs    = (what \ "docs").map(e => e.text.file)
-      val sources = (what \ "sources").map(e => e.text.file)
+      val imports = (what \ ImportElementName).map(_.text)
+      val classes = (what \ ClassesElementName).map(e => e.text.file)
+      val docs    = (what \ DocsElementName).map(e => e.text.file)
+      val sources = (what \ SourcesElementName).map(e => e.text.file)
       Right(BuildData(uri, imports, classes, docs, sources))
     }
   }
@@ -478,6 +478,11 @@ trait DataSerializers {
   }
 }
 
-private object DataSerializers {
+private[sbt] object DataSerializers {
   private val DefaultScalaOrganization = "org.scala-lang"
+
+  val ImportElementName = "import"
+  val ClassesElementName = "classes"
+  val DocsElementName = "docs"
+  val SourcesElementName = "sources"
 }

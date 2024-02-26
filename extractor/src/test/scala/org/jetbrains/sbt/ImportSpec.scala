@@ -195,11 +195,8 @@ class ImportSpec extends AnyFreeSpecLike {
       if (actual != expected) {
         actualPretty mustEqual expectedPretty // expecting to fail
       }
-    }
-    catch {
-      case NonFatal(ex) =>
-        dumpFiles()
-        throw ex
+    } finally {
+      dumpFiles()
     }
   }
 
