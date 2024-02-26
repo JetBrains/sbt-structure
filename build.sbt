@@ -51,7 +51,7 @@ val SbtVersion_1_2 = "1.2.1"
 val SbtVersion_1_3 = "1.3.0"
 
 lazy val extractor = project.in(file("extractor"))
-  .enablePlugins(SbtPlugin, TestDataDumper)
+  .enablePlugins(SbtPlugin)
   .settings(
     name := "sbt-structure-extractor",
     Compile / unmanagedSourceDirectories +=
