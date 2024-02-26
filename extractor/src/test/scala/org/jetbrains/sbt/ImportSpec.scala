@@ -1,15 +1,14 @@
 package org.jetbrains.sbt
 
-import org.jetbrains.sbt.structure.XmlSerializer._
 import org.jetbrains.sbt.structure._
+import org.jetbrains.sbt.structure.XmlSerializer._
 import org.scalatest.StreamlinedXml
 import org.scalatest.freespec.AnyFreeSpecLike
 import org.scalatest.matchers.must.Matchers._
 
 import java.io.{File, PrintWriter}
-import scala.util.control.NonFatal
+import scala.collection.JavaConverters.asScalaIteratorConverter
 import scala.xml._
-import scala.xml.transform.{RewriteRule, RuleTransformer}
 
 class ImportSpec extends AnyFreeSpecLike {
 
@@ -24,8 +23,6 @@ class ImportSpec extends AnyFreeSpecLike {
   )
 
   private val TestDataRoot = new File("extractor/src/test/data/").getCanonicalFile
-  // assuming user.home is always defined
-  private val UserHome = new File(System.getProperty("user.home")).getCanonicalFile
 
   "extracted structure should equal to expected structure" - {
     "sbt 0.13.18" - {
@@ -56,7 +53,6 @@ class ImportSpec extends AnyFreeSpecLike {
       "compile-order" in { testProject("compile-order", "1.7.3") }
     }
   }
-
 
   private def sbtVersionBinary(sbtVersionFull: String) =
     sbtVersionFull.split('.') match {
@@ -133,8 +129,9 @@ class ImportSpec extends AnyFreeSpecLike {
       f
     }
 
-    //uncomment to update test data from actual data fast (carefully review it manually)
-//    dumpToFile(testDataFile, TestUtil.read(new File(base, s"actual-structure-$sbtVersionFull-for-test-data-1.xml")))
+    //Uncomment lines below to update test data from actual data fast (you need to first wait for all tests to pass)
+//    !!! ATTENTION !!! first, carefully review it manually in the failed tests diff view
+//    dumpToFile(testDataFile, TestUtil.read(new File(base, s"actual-structure-$sbtVersionFull-for-test-data.xml")))
 //    return
 
     val pathVarsSubstitutor = new PathVariablesSubstitutor(base, sbtIvyHome, sbtCoursierHome, sbtBootDir)
@@ -142,11 +139,13 @@ class ImportSpec extends AnyFreeSpecLike {
     val expectedXmlStrNormalized: String = {
       val raw = TestUtil.read(testDataFile)
       val normalized = raw.normalizeFilePathSeparatorsInXml
-      val withVarsSubstituted = pathVarsSubstitutor.substitutePaths(normalized)
+      val withVarsSubstituted = pathVarsSubstitutor.replaceVarsWithPaths(normalized)
       withVarsSubstituted
     }
 
-    val actualXmlStrOriginal = Loader
+    MaxXmlWidthInTests = Some(512)
+
+    val actualXmlStringNotSanitized = Loader
       .load(
         base,
         options,
@@ -159,97 +158,106 @@ class ImportSpec extends AnyFreeSpecLike {
       )
       .normalizeFilePathSeparatorsInXml
 
-    val actualXml = loadSanitizedXml(actualXmlStrOriginal)
-    val expectedXml = loadSanitizedXml(expectedXmlStrNormalized)
+    val actualXmlSanitizedAndFormatted = readXmlStringSanitizedAndFormatted(actualXmlStringNotSanitized)
+    val expectedXmlSanitizedAndFormatted = readXmlStringSanitizedAndFormatted(expectedXmlStrNormalized)
 
-    val actual = actualXml.deserialize[StructureData].right.get
-    val expected = expectedXml.deserialize[StructureData].right.get
+    val actualXml = XML.loadString(actualXmlSanitizedAndFormatted)
+    val expectedXml = XML.loadString(expectedXmlSanitizedAndFormatted)
 
-    // why do we even need to test both XML and classes?
-    val actualPretty = prettyPrintCaseClass(actual)
-    val expectedPretty = prettyPrintCaseClass(expected)
+    val actualData = actualXml.deserialize[StructureData].right.get
+    val expectedData = expectedXml.deserialize[StructureData].right.get
 
-    val actualXmlStreamlined: Elem = StreamlinedXml.streamlined.normalized(actualXml)
-    val expectedXmlStreamlined: Elem = StreamlinedXml.streamlined.normalized(expectedXml)
-
-    val formatter = new PrettyPrinter(512, 4)
-    val actualXmlFormatted: String = formatter.format(actualXmlStreamlined)
-    val expectedXmlFormatted: String = formatter.format(expectedXmlStreamlined)
+    val actualDataPretty = prettyPrintCaseClass(actualData)
+    val expectedDataPretty = prettyPrintCaseClass(expectedData)
 
     def dumpFiles(): Unit = {
-      dumpToFile(new File(base, "class-structure-actual.txt"), actualPretty)
-      dumpToFile(new File(base, "class-structure-expected.txt"), expectedPretty)
+      dumpToFile(new File(base, "class-structure-actual.txt"), actualDataPretty)
+      dumpToFile(new File(base, "class-structure-expected.txt"), expectedDataPretty)
 
-      val actualStrForTestData1: String = pathVarsSubstitutor.substituteVars(actualXmlStrOriginal).normalizeFilePathSeparatorsInXml
-      val actualStrForTestData2: String = pathVarsSubstitutor.substituteVars(actualXmlFormatted).normalizeFilePathSeparatorsInXml
-      dumpToFile(new File(base, s"actual-structure-$sbtVersionFull-original.xml"), actualXmlStrOriginal)
-      dumpToFile(new File(base, s"actual-structure-$sbtVersionFull-for-test-data-1.xml"), actualStrForTestData1)
-      dumpToFile(new File(base, s"actual-structure-$sbtVersionFull-for-test-data-2.xml"), actualStrForTestData2)
+      val actualStrForTestData: String = pathVarsSubstitutor.replacePathsWithVars(actualXmlSanitizedAndFormatted).normalizeFilePathSeparatorsInXml
+      dumpToFile(new File(base, s"actual-structure-$sbtVersionFull-original.xml"), actualXmlStringNotSanitized)
+      dumpToFile(new File(base, s"actual-structure-$sbtVersionFull-for-test-data.xml"), actualStrForTestData)
     }
 
     try {
+      val actualXmlStreamlined: Elem = StreamlinedXml.streamlined.normalized(actualXml)
+      val expectedXmlStreamlined: Elem = StreamlinedXml.streamlined.normalized(expectedXml)
+
       if (actualXmlStreamlined != expectedXmlStreamlined) {
-        actualXmlFormatted mustEqual expectedXmlFormatted // expecting to fail
+        actualXmlSanitizedAndFormatted mustEqual expectedXmlSanitizedAndFormatted // expecting to fail
       }
 
-      if (actual != expected) {
-        actualPretty mustEqual expectedPretty // expecting to fail
+      // why do we even need to test both XML and classes?
+      if (actualData != expectedData) {
+        actualDataPretty mustEqual expectedDataPretty // expecting to fail
       }
     } finally {
       dumpFiles()
     }
   }
 
-  private val xmlSanitizer: RuleTransformer = {
-    val filterSettingValues = new RewriteRule {
-      override def transform(n: Node): Seq[Node] = n match {
-        case e: Elem if e.label == "setting" =>
-          // setting values can change depending on where they are run, don't include in comparison
-          e.copy(child = e.child.filterNot(_.label == "value"))
-        case other => other
+  /** Load and sanitize xml to exclude values that cause troubles when comparing in tests */
+  private def readXmlStringSanitizedAndFormatted(xmlString: String): String = {
+    import org.dom4j.Element
+    import org.dom4j.io.{OutputFormat, SAXReader, XMLWriter}
+
+    import java.io.{StringReader, StringWriter}
+
+    val reader = new SAXReader()
+    val document = reader.read(new StringReader(xmlString))
+
+    def removeValueTags(node: Element): Unit = {
+      val elements = node.elementIterator().asScala.toSeq
+      elements.foreach { element =>
+        if (element.getName == "setting") {
+          element.elements("value").clear()
+        }
+        removeValueTags(element)
       }
     }
-    new RuleTransformer(filterSettingValues)
-  }
 
-  /** Load and sanitize xml to exclude values that cause troubles when comparing in tests. */
-  private def loadSanitizedXml(xmlString: String): Elem = {
-    try {
-      val xml = XML.loadString(xmlString)
-      val transformed = xmlSanitizer.transform(xml)
-      xml.copy(child = NodeSeq.seqToNodeSeq(transformed).head.child)
-    } catch {
-      case x: Throwable =>
-        throw new RuntimeException("failed to load and sanitize xml string", x)
-    }
-  }
+    removeValueTags(document.getRootElement)
 
-  private def canon(path: String): String =
-    path.stripSuffix("/").stripSuffix("\\")
+    val format: OutputFormat = OutputFormat.createPrettyPrint()
+    format.setIndentSize(2)
+    //format.setExpandEmptyElements(true)
+    format.setNewLineAfterDeclaration(false)
+    format.setTrimText(true)
+    format.setPadText(false) //workaround for https://github.com/dom4j/dom4j/issues/147
+
+
+    val stringWriter = new StringWriter()
+    val writer = new XMLWriter(stringWriter, format)
+    writer.write(document)
+
+    stringWriter.toString
+  }
 
   private class PathVariablesSubstitutor(base: File, sbtIvyHome: File, sbtCoursierHome: File, sbtBootDir: File) {
+    private val UserHome = new File(System.getProperty("user.home")).getCanonicalFile
 
-    private lazy val pathSubstitutions: Seq[(String, Option[String])] = Seq(
-      "$URI_BASE"         -> Some(base.getCanonicalFile.toURI.toString),
-      "$BASE"             -> Some(base.getCanonicalPath),
-      "$IVY2"             -> Some(sbtIvyHome.getCanonicalPath),
-      "$COURSIER"         -> Some(sbtCoursierHome.getCanonicalPath),
-      "$SBT_BOOT"         -> Some(sbtBootDir.getCanonicalPath),
-      "file:$HOME"        -> Some("file:" + UserHome.getCanonicalPath.ensureStartsWithSlash),
-      "$HOME"             -> Some(UserHome.getCanonicalPath)
+    private lazy val varToPathSubstitutions: Seq[(String, String)] = Seq(
+      "$URI_BASE"         -> base.getCanonicalFile.toURI.toString,
+      "$BASE"             -> base.getCanonicalPath,
+      "$IVY2"             -> sbtIvyHome.getCanonicalPath,
+      "$COURSIER"         -> sbtCoursierHome.getCanonicalPath,
+      "$SBT_BOOT"         -> sbtBootDir.getCanonicalPath,
+      "file:$HOME"        -> s"file:${UserHome.getCanonicalPath.ensureStartsWithSlash}",
+      "$HOME"             -> UserHome.getCanonicalPath
     ).map { case (_1, _2) =>
-      (_1, _2.map(_.normalizeFilePathSeparatorsInXml))
+      (_1, _2.normalizeFilePathSeparatorsInXml)
     }
 
-    def substitutePaths(text: String): String =
-      pathSubstitutions.foldLeft(text) { case (acc, (from, to)) =>
-        acc.replace(from, to.getOrElse(""))
+    private lazy val pathToVarSubstitutions = varToPathSubstitutions.map(_.swap)
+
+    def replaceVarsWithPaths(text: String): String =
+      varToPathSubstitutions.foldLeft(text) { case (acc, (from, to)) =>
+        acc.replace(from, to)
       }
 
-    def substituteVars(text: String): String =
-      pathSubstitutions.map(_.swap).foldLeft(text) {
-        case (acc, (from, to)) =>
-          from.fold(acc)(acc.replace(_, to))
+    def replacePathsWithVars(text: String): String =
+      pathToVarSubstitutions.foldLeft(text) { case (acc, (from, to)) =>
+        acc.replace(from, to)
       }
   }
 
@@ -293,10 +301,7 @@ class ImportSpec extends AnyFreeSpecLike {
       *
       * ATTENTION: this affects all backslashes, not only in file paths
       */
-    def normalizeFilePathSeparatorsInXml: String = {
-      val a = value.replace("\\", "/")
-      val b = a.replaceAll("file:.*/preloaded", "file:/dummy/preloaded")
-      b
-    }
+    def normalizeFilePathSeparatorsInXml: String =
+      value.replace("\\", "/")
   }
 }

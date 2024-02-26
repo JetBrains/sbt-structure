@@ -211,50 +211,24 @@
         <jar>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/util-interface/1.3.0/util-interface-1.3.0.jar</jar>
       </compilerJars>
       <extraJars>
-        <jar>
-          $COURSIER/cache/https/repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-annotations/2.2.3/jackson-annotations-2.2.3.jar
-        </jar>
+        <jar>$COURSIER/cache/https/repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-annotations/2.2.3/jackson-annotations-2.2.3.jar</jar>
         <jar>$COURSIER/cache/https/repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-core/2.9.8/jackson-core-2.9.8.jar</jar>
         <jar>$COURSIER/cache/https/repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-databind/2.2.3/jackson-databind-2.2.3.jar</jar>
-        <jar>
-          $COURSIER/cache/https/repo1.maven.org/maven2/com/fasterxml/jackson/dataformat/jackson-dataformat-yaml/2.9.8/jackson-dataformat-yaml-2.9.8.jar
-        </jar>
-        <jar>
-          $COURSIER/cache/https/repo1.maven.org/maven2/com/vladsch/flexmark/flexmark-ext-anchorlink/0.42.12/flexmark-ext-anchorlink-0.42.12.jar
-        </jar>
-        <jar>
-          $COURSIER/cache/https/repo1.maven.org/maven2/com/vladsch/flexmark/flexmark-ext-autolink/0.42.12/flexmark-ext-autolink-0.42.12.jar
-        </jar>
+        <jar>$COURSIER/cache/https/repo1.maven.org/maven2/com/fasterxml/jackson/dataformat/jackson-dataformat-yaml/2.9.8/jackson-dataformat-yaml-2.9.8.jar</jar>
+        <jar>$COURSIER/cache/https/repo1.maven.org/maven2/com/vladsch/flexmark/flexmark-ext-anchorlink/0.42.12/flexmark-ext-anchorlink-0.42.12.jar</jar>
+        <jar>$COURSIER/cache/https/repo1.maven.org/maven2/com/vladsch/flexmark/flexmark-ext-autolink/0.42.12/flexmark-ext-autolink-0.42.12.jar</jar>
         <jar>$COURSIER/cache/https/repo1.maven.org/maven2/com/vladsch/flexmark/flexmark-ext-emoji/0.42.12/flexmark-ext-emoji-0.42.12.jar</jar>
-        <jar>
-          $COURSIER/cache/https/repo1.maven.org/maven2/com/vladsch/flexmark/flexmark-ext-gfm-strikethrough/0.42.12/flexmark-ext-gfm-strikethrough-0.42.12.jar
-        </jar>
-        <jar>
-          $COURSIER/cache/https/repo1.maven.org/maven2/com/vladsch/flexmark/flexmark-ext-gfm-tables/0.42.12/flexmark-ext-gfm-tables-0.42.12.jar
-        </jar>
-        <jar>
-          $COURSIER/cache/https/repo1.maven.org/maven2/com/vladsch/flexmark/flexmark-ext-gfm-tasklist/0.42.12/flexmark-ext-gfm-tasklist-0.42.12.jar
-        </jar>
+        <jar>$COURSIER/cache/https/repo1.maven.org/maven2/com/vladsch/flexmark/flexmark-ext-gfm-strikethrough/0.42.12/flexmark-ext-gfm-strikethrough-0.42.12.jar</jar>
+        <jar>$COURSIER/cache/https/repo1.maven.org/maven2/com/vladsch/flexmark/flexmark-ext-gfm-tables/0.42.12/flexmark-ext-gfm-tables-0.42.12.jar</jar>
+        <jar>$COURSIER/cache/https/repo1.maven.org/maven2/com/vladsch/flexmark/flexmark-ext-gfm-tasklist/0.42.12/flexmark-ext-gfm-tasklist-0.42.12.jar</jar>
         <jar>$COURSIER/cache/https/repo1.maven.org/maven2/com/vladsch/flexmark/flexmark-ext-ins/0.42.12/flexmark-ext-ins-0.42.12.jar</jar>
-        <jar>
-          $COURSIER/cache/https/repo1.maven.org/maven2/com/vladsch/flexmark/flexmark-ext-superscript/0.42.12/flexmark-ext-superscript-0.42.12.jar
-        </jar>
-        <jar>
-          $COURSIER/cache/https/repo1.maven.org/maven2/com/vladsch/flexmark/flexmark-ext-tables/0.42.12/flexmark-ext-tables-0.42.12.jar
-        </jar>
-        <jar>
-          $COURSIER/cache/https/repo1.maven.org/maven2/com/vladsch/flexmark/flexmark-ext-wikilink/0.42.12/flexmark-ext-wikilink-0.42.12.jar
-        </jar>
-        <jar>
-          $COURSIER/cache/https/repo1.maven.org/maven2/com/vladsch/flexmark/flexmark-ext-yaml-front-matter/0.42.12/flexmark-ext-yaml-front-matter-0.42.12.jar
-        </jar>
+        <jar>$COURSIER/cache/https/repo1.maven.org/maven2/com/vladsch/flexmark/flexmark-ext-superscript/0.42.12/flexmark-ext-superscript-0.42.12.jar</jar>
+        <jar>$COURSIER/cache/https/repo1.maven.org/maven2/com/vladsch/flexmark/flexmark-ext-tables/0.42.12/flexmark-ext-tables-0.42.12.jar</jar>
+        <jar>$COURSIER/cache/https/repo1.maven.org/maven2/com/vladsch/flexmark/flexmark-ext-wikilink/0.42.12/flexmark-ext-wikilink-0.42.12.jar</jar>
+        <jar>$COURSIER/cache/https/repo1.maven.org/maven2/com/vladsch/flexmark/flexmark-ext-yaml-front-matter/0.42.12/flexmark-ext-yaml-front-matter-0.42.12.jar</jar>
         <jar>$COURSIER/cache/https/repo1.maven.org/maven2/com/vladsch/flexmark/flexmark-formatter/0.42.12/flexmark-formatter-0.42.12.jar</jar>
-        <jar>
-          $COURSIER/cache/https/repo1.maven.org/maven2/com/vladsch/flexmark/flexmark-html-parser/0.42.12/flexmark-html-parser-0.42.12.jar
-        </jar>
-        <jar>
-          $COURSIER/cache/https/repo1.maven.org/maven2/com/vladsch/flexmark/flexmark-jira-converter/0.42.12/flexmark-jira-converter-0.42.12.jar
-        </jar>
+        <jar>$COURSIER/cache/https/repo1.maven.org/maven2/com/vladsch/flexmark/flexmark-html-parser/0.42.12/flexmark-html-parser-0.42.12.jar</jar>
+        <jar>$COURSIER/cache/https/repo1.maven.org/maven2/com/vladsch/flexmark/flexmark-jira-converter/0.42.12/flexmark-jira-converter-0.42.12.jar</jar>
         <jar>$COURSIER/cache/https/repo1.maven.org/maven2/com/vladsch/flexmark/flexmark-util/0.42.12/flexmark-util-0.42.12.jar</jar>
         <jar>$COURSIER/cache/https/repo1.maven.org/maven2/com/vladsch/flexmark/flexmark/0.42.12/flexmark-0.42.12.jar</jar>
         <jar>$COURSIER/cache/https/repo1.maven.org/maven2/nl/big-o/liqp/0.6.7/liqp-0.6.7.jar</jar>
@@ -263,15 +237,11 @@
         <jar>$COURSIER/cache/https/repo1.maven.org/maven2/org/antlr/antlr/3.5.1/antlr-3.5.1.jar</jar>
         <jar>$COURSIER/cache/https/repo1.maven.org/maven2/org/jsoup/jsoup/1.13.1/jsoup-1.13.1.jar</jar>
         <jar>$COURSIER/cache/https/repo1.maven.org/maven2/org/nibor/autolink/autolink/0.6.0/autolink-0.6.0.jar</jar>
-        <jar>
-          $COURSIER/cache/https/repo1.maven.org/maven2/org/scala-lang/scala3-tasty-inspector_3/3.0.2/scala3-tasty-inspector_3-3.0.2.jar
-        </jar>
+        <jar>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-lang/scala3-tasty-inspector_3/3.0.2/scala3-tasty-inspector_3-3.0.2.jar</jar>
         <jar>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-lang/scaladoc_3/3.0.2/scaladoc_3-3.0.2.jar</jar>
         <jar>$COURSIER/cache/https/repo1.maven.org/maven2/org/yaml/snakeyaml/1.23/snakeyaml-1.23.jar</jar>
       </extraJars>
-      <compilerBridgeBinaryJar>
-        $COURSIER/cache/https/repo1.maven.org/maven2/org/scala-lang/scala3-sbt-bridge/3.0.2/scala3-sbt-bridge-3.0.2.jar
-      </compilerBridgeBinaryJar>
+      <compilerBridgeBinaryJar>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-lang/scala3-sbt-bridge/3.0.2/scala3-sbt-bridge-3.0.2.jar</compilerBridgeBinaryJar>
     </scala>
     <compileOrder>Mixed</compileOrder>
     <configuration id="compile">
@@ -297,18 +267,16 @@
       <module configurations="compile" organization="org.scala-lang" name="scala3-library_3" revision="3.0.2" artifactType="jar" classifier=""/>
     </dependencies>
     <resolver name="public" root="https://repo1.maven.org/maven2/"/>
-    <resolver name="local-preloaded" root="file:/dummy/preloaded"/>
+    <resolver name="local-preloaded" root="file:$HOME/.sbt-structure-global/1.5/preloaded"/>
     <setting>
       <label>artifacts</label>
       <description>The artifact definitions for the current module. Must be consistent with packagedArtifacts.</description>
       <rank>40</rank>
-      <value>List(Artifact(some-name, pom, pom, None, Vector(pom), None, Map(), None, false), Artifact(some-name,...</value>
     </setting>
     <setting>
       <label>organization</label>
       <description>Organization/group ID.</description>
       <rank>9</rank>
-      <value>some-organization</value>
     </setting>
     <setting>
       <label>testReportsDirectory</label>
@@ -319,7 +287,6 @@
       <label>classLoaderLayeringStrategy</label>
       <description>Creates the classloader layering strategy for the particular configuration.</description>
       <rank>25</rank>
-      <value>ScalaLibrary</value>
     </setting>
     <setting>
       <label>compileAnalysisTargetRoot</label>
@@ -330,13 +297,11 @@
       <label>name</label>
       <description>Project name.</description>
       <rank>9</rank>
-      <value>some-name</value>
     </setting>
     <setting>
       <label>retrieveConfiguration</label>
       <description>Configures retrieving dependencies to the current build.</description>
       <rank>10000</rank>
-      <value>None</value>
     </setting>
     <setting>
       <label>pushRemoteCacheArtifact</label>
@@ -347,19 +312,16 @@
       <label>makePomConfiguration</label>
       <description>Configuration for generating a pom.</description>
       <rank>10000</rank>
-      <value>MakePomConfiguration(Some($HOME/Desktop/dev/sbt-structure/extractor/src/test/data/...</value>
     </setting>
     <setting>
       <label>ivyPaths</label>
       <description>Configures paths used by Ivy for dependency management.</description>
       <rank>10000</rank>
-      <value>IvyPaths($BASE...</value>
     </setting>
     <setting>
       <label>projectInfo</label>
       <description>Addition project information like formal name, homepage, licenses etc.</description>
       <rank>100</rank>
-      <value>ModuleInfo(some-name, some-name, None, None, Vector(), some-organization, None, None, Vector())</value>
     </setting>
     <setting>
       <label>resourceDirectories</label>
@@ -370,13 +332,11 @@
       <label>scalaBinaryVersion</label>
       <description>The Scala version substring describing binary compatibility.</description>
       <rank>39</rank>
-      <value>3</value>
     </setting>
     <setting>
       <label>csrCacheDirectory</label>
       <description>Coursier cache directory. Uses -Dsbt.coursier.home or Coursier's default.</description>
       <rank>100</rank>
-      <value>$COURSIER/cache</value>
     </setting>
     <setting>
       <label>internalDependencyConfigurations</label>
@@ -387,19 +347,16 @@
       <label>history</label>
       <description>The location where command line history is persisted.</description>
       <rank>40</rank>
-      <value>Some($BASE/tar...</value>
     </setting>
     <setting>
       <label>autoGeneratedProject</label>
       <description>If it exists, represents that the project (and name) were automatically created, rather than user specified.</description>
       <rank>10000</rank>
-      <value>true</value>
     </setting>
     <setting>
       <label>normalizedName</label>
       <description>Project name transformed from mixed case and spaces to lowercase and dash-separated.</description>
       <rank>40</rank>
-      <value>some-name</value>
     </setting>
     <setting>
       <label>scalaSource</label>
@@ -408,32 +365,28 @@
     </setting>
     <setting>
       <label>dependencyTreeCrossProjectId</label>
-      <description></description>
+      <description/>
       <rank>25</rank>
     </setting>
     <setting>
       <label>description</label>
       <description>Project description.</description>
       <rank>40</rank>
-      <value>some-name</value>
     </setting>
     <setting>
       <label>scalaCompilerBridgeSource</label>
       <description>Configures the module ID of the sources of the compiler bridge when scalaCompilerBridgeBinaryJar is None</description>
       <rank>100</rank>
-      <value>org.scala-lang:scala3-sbt-bridge:3.0.2:compile</value>
     </setting>
     <setting>
       <label>unmanagedBase</label>
       <description>The default directory for manually managed libraries.</description>
       <rank>10</rank>
-      <value>$BASE/lib</value>
     </setting>
     <setting>
       <label>organizationHomepage</label>
       <description>Organization homepage.</description>
       <rank>41</rank>
-      <value>None</value>
     </setting>
     <setting>
       <label>sourceDirectories</label>
@@ -444,61 +397,51 @@
       <label>sbtBinaryVersion</label>
       <description>Defines the binary compatibility version substring.</description>
       <rank>39</rank>
-      <value>1.0</value>
     </setting>
     <setting>
       <label>thisProjectRef</label>
       <description>Provides a fully-resolved reference to the current project for the referencing scope.</description>
       <rank>100</rank>
-      <value>ProjectRef(file:$HOME/Desktop/dev/sbt-structure/extractor/src/test/data/1.5/simple...</value>
     </setting>
     <setting>
       <label>outputFileStamper</label>
       <description>Toggles the file stamping implementation used to determine whether or not a file has been modified.</description>
       <rank>25</rank>
-      <value>LastModified</value>
     </setting>
     <setting>
       <label>semanticdbCompilerPlugin</label>
       <description>SemanticDB Scalac plugin</description>
       <rank>100</rank>
-      <value>org.scalameta:semanticdb-scalac:4.4.20</value>
     </setting>
     <setting>
       <label>sourceManaged</label>
       <description>Default directory for sources generated by the build.</description>
       <rank>39</rank>
-      <value>$BASE/target/s...</value>
     </setting>
     <setting>
       <label>moduleName</label>
       <description>The name of the current module, used for dependency management.</description>
       <rank>40</rank>
-      <value>some-name</value>
     </setting>
     <setting>
       <label>organizationName</label>
       <description>Organization full/formal name.</description>
       <rank>41</rank>
-      <value>some-organization</value>
     </setting>
     <setting>
       <label>conflictWarning</label>
       <description>Configures warnings for conflicts in dependency management.</description>
       <rank>100</rank>
-      <value>ConflictWarning(ProjectRef(uri(&quot;file:$HOME/Desktop/dev/sbt-structure/extractor/src...</value>
     </setting>
     <setting>
       <label>appResolvers</label>
       <description>The resolvers configured for this application by the sbt launcher.</description>
       <rank>41</rank>
-      <value>Some(Vector(FileRepository(local, Patterns(ivyPatterns=Vector(${ivy.home}/local/[organisation]/[modu...</value>
     </setting>
     <setting>
       <label>publishArtifact</label>
       <description>Enables (true) or disables (false) publishing an artifact.</description>
       <rank>11</rank>
-      <value>true</value>
     </setting>
     <setting>
       <label>persistJarClasspath</label>
@@ -509,19 +452,16 @@
       <label>scalaVersion</label>
       <description>The version of Scala used for building.</description>
       <rank>9</rank>
-      <value>3.0.2</value>
     </setting>
     <setting>
       <label>allExcludeDependencies</label>
       <description>User-defined dependency exclusions and sbt itself in the case of metabuild.</description>
       <rank>200</rank>
-      <value>List()</value>
     </setting>
     <setting>
       <label>ivyConfigurations</label>
       <description>The defined configurations for dependency management. This may be different from the configurations for Project settings.</description>
       <rank>40</rank>
-      <value>List(compile, runtime, test, provided, optional, compile-internal, runtime-internal, test-internal, ...</value>
     </setting>
     <setting>
       <label>earlyOutput</label>
@@ -532,13 +472,11 @@
       <label>sbtDependency</label>
       <description>Provides a definition for declaring the current version of sbt.</description>
       <rank>41</rank>
-      <value>org.scala-sbt:sbt:1.5.5</value>
     </setting>
     <setting>
       <label>crossVersion</label>
       <description>Configures handling of the Scala version when cross-building.</description>
       <rank>100</rank>
-      <value>Binary(, )</value>
     </setting>
     <setting>
       <label>earlyCompileAnalysisTargetRoot</label>
@@ -549,37 +487,31 @@
       <label>bgHashClasspath</label>
       <description>Toggles whether to use a hash or the last modified time to stamp the classpath jars</description>
       <rank>25</rank>
-      <value>true</value>
     </setting>
     <setting>
       <label>updateConfiguration</label>
       <description>Configuration for resolving and retrieving managed dependencies.</description>
       <rank>10000</rank>
-      <value>UpdateConfiguration(None, false, Default, unknown, None, Some(ArtifactTypeFilter(Set(source, javadoc...</value>
     </setting>
     <setting>
       <label>crossTarget</label>
       <description>Main directory for files generated by the build that are cross-built.</description>
       <rank>40</rank>
-      <value>$BASE/target/s...</value>
     </setting>
     <setting>
       <label>version</label>
       <description>The version/revision of the current module.</description>
       <rank>9</rank>
-      <value>1.2.3</value>
     </setting>
     <setting>
       <label>testResultLogger</label>
       <description>Logs results after a test task completes.</description>
       <rank>20000</rank>
-      <value>Main(sbt.TestResultLogger$Defaults$$$Lambda$1091/0x0000000800776040@9eba760,sbt.TestResultLogger$$an...</value>
     </setting>
     <setting>
       <label>resourceManaged</label>
       <description>Default managed resource directory, used when generating resources.</description>
       <rank>40</rank>
-      <value>$BASE/target/s...</value>
     </setting>
     <setting>
       <label>resourceGenerators</label>
@@ -588,11 +520,8 @@
     </setting>
     <setting>
       <label>fileInputs</label>
-      <description>
-        The file globs that are used by a task. This setting will generally be scoped per task. It will also be used to determine the sources to watch during continuous execution.
-      </description>
+      <description>The file globs that are used by a task. This setting will generally be scoped per task. It will also be used to determine the sources to watch during continuous execution.</description>
       <rank>25</rank>
-      <value>List()</value>
     </setting>
     <setting>
       <label>resourceDirectory</label>
@@ -613,7 +542,6 @@
       <label>overrideBuildResolvers</label>
       <description>Whether or not all the build resolvers should be overridden with what's defined from the launcher.</description>
       <rank>41</rank>
-      <value>false</value>
     </setting>
     <setting>
       <label>javaSource</label>
@@ -624,21 +552,16 @@
       <label>remoteCacheResolvers</label>
       <description>Resolvers for remote cache.</description>
       <rank>25</rank>
-      <value>Vector()</value>
     </setting>
     <setting>
       <label>watchForceTriggerOnAnyChange</label>
-      <description>
-        Force the watch process to rerun the current task(s) if any relevant source change is detected regardless of whether or not the underlying file has actually changed.
-      </description>
+      <description>Force the watch process to rerun the current task(s) if any relevant source change is detected regardless of whether or not the underlying file has actually changed.</description>
       <rank>10000</rank>
-      <value>false</value>
     </setting>
     <setting>
       <label>baseDirectory</label>
       <description>The base directory. Depending on the scope, this is the base directory for the build, project, configuration, or task.</description>
       <rank>11</rank>
-      <value>$BASE</value>
     </setting>
     <setting>
       <label>classDirectory</label>
@@ -654,13 +577,11 @@
       <label>cleanKeepGlobs</label>
       <description>Globs to keep during a clean. Must be direct children of target.</description>
       <rank>100</rank>
-      <value>List($BASE/tar...</value>
     </setting>
     <setting>
       <label>cleanKeepFiles</label>
       <description>Files or directories to keep during a clean. Must be direct children of target.</description>
       <rank>100</rank>
-      <value>Vector()</value>
     </setting>
     <setting>
       <label>configuration</label>
@@ -671,7 +592,6 @@
       <label>onLoadMessage</label>
       <description>Message to display when the project is loaded.</description>
       <rank>10000</rank>
-      <value>set current project to some-name (in build file:$HOME/Desktop/dev/sbt-structure/ex...</value>
     </setting>
     <setting>
       <label>semanticdbTargetRoot</label>
@@ -682,13 +602,11 @@
       <label>thisProject</label>
       <description>Provides the current project for the referencing scope.</description>
       <rank>100</rank>
-      <value>Project(id simple_scala3, base: $HOME/Desktop/dev/sbt-structure/extractor/src/test...</value>
     </setting>
     <setting>
       <label>sourceDirectory</label>
       <description>Default directory containing sources.</description>
       <rank>11</rank>
-      <value>$BASE/src</value>
     </setting>
     <setting>
       <label>managedSourceDirectories</label>
@@ -699,19 +617,16 @@
       <label>isSnapshot</label>
       <description>True if the version of the project is a snapshot version.</description>
       <rank>39</rank>
-      <value>false</value>
     </setting>
     <setting>
       <label>target</label>
       <description>Main directory for files generated by the build.</description>
       <rank>11</rank>
-      <value>$BASE/target</value>
     </setting>
     <setting>
       <label>crossSbtVersions</label>
       <description>The versions of Sbt used when cross-building an sbt plugin.</description>
       <rank>25</rank>
-      <value>Vector(1.5.5)</value>
     </setting>
     <setting>
       <label>evictionWarningOptions</label>
@@ -737,19 +652,16 @@
       <label>crossScalaVersions</label>
       <description>The versions of Scala used when cross-building.</description>
       <rank>39</rank>
-      <value>List(3.0.2)</value>
     </setting>
     <setting>
       <label>libraryDependencies</label>
       <description>Declares managed dependencies.</description>
       <rank>9</rank>
-      <value>List(org.scala-lang:scala3-library:3.0.2)</value>
     </setting>
     <setting>
       <label>projectID</label>
       <description>The dependency management descriptor for the current module.</description>
       <rank>41</rank>
-      <value>some-organization:some-name:1.2.3</value>
     </setting>
     <setting>
       <label>fileInputOptions</label>
@@ -765,27 +677,21 @@
       <label>dependencyOverrides</label>
       <description>Declares managed dependency overrides.</description>
       <rank>40</rank>
-      <value>Vector()</value>
     </setting>
     <setting>
       <label>publishMavenStyle</label>
       <description>Configures whether to generate and publish a pom (true) or Ivy file (false).</description>
       <rank>40</rank>
-      <value>true</value>
     </setting>
     <setting>
       <label>scalaModuleInfo</label>
       <description>Configures how Scala dependencies are checked, filtered, and injected.</description>
       <rank>100</rank>
-      <value>Some(ScalaModuleInfo(3.0.2, 3, Vector(), true, false, true, org.scala-lang, Vector(scala-library, sc...</value>
     </setting>
     <setting>
       <label>scalaOrganization</label>
-      <description>
-        Organization/group ID of the Scala used in the project. Default value is 'org.scala-lang'. This is an advanced setting used for clones of the Scala Language. It should be disregarded in standard use cases.
-      </description>
+      <description>Organization/group ID of the Scala used in the project. Default value is 'org.scala-lang'. This is an advanced setting used for clones of the Scala Language. It should be disregarded in standard use cases.</description>
       <rank>100</rank>
-      <value>org.scala-lang</value>
     </setting>
     <setting>
       <label>watched</label>
@@ -796,19 +702,16 @@
       <label>updateOptions</label>
       <description>Options for resolving managed dependencies.</description>
       <rank>10000</rank>
-      <value>UpdateOptions( circularDependencyLevel = warn, latestSnapshots = true, cachedResolution = false )</value>
     </setting>
     <setting>
       <label>artifact</label>
       <description>Describes an artifact.</description>
       <rank>41</rank>
-      <value>Artifact(some-name, jar, jar, None, Vector(), None, Map(), None, false)</value>
     </setting>
     <setting>
       <label>semanticdbOptions</label>
       <description>The Scalac options introduced for SemanticDB</description>
       <rank>100</rank>
-      <value>List(-Xsemanticdb)</value>
     </setting>
     <setting>
       <label>sourceGenerators</label>
@@ -832,7 +735,7 @@
     </task>
     <task>
       <label>csrResolvers</label>
-      <description></description>
+      <description/>
       <rank>17</rank>
     </task>
     <task>
@@ -997,7 +900,7 @@
     </task>
     <task>
       <label>bspScalaTestClassesItem</label>
-      <description></description>
+      <description/>
       <rank>20000</rank>
     </task>
     <task>
@@ -1062,9 +965,7 @@
     </task>
     <task>
       <label>watch</label>
-      <description>
-        Watch a task (or multiple tasks) and rebuild when its file inputs change or user input is received. The semantics are more or less the same as the `~` command except that it cannot transform the state on exit. This means that it cannot be used to reload the build.
-      </description>
+      <description>Watch a task (or multiple tasks) and rebuild when its file inputs change or user input is received. The semantics are more or less the same as the `~` command except that it cannot transform the state on exit. This means that it cannot be used to reload the build.</description>
       <rank>10000</rank>
     </task>
     <task>
@@ -1079,7 +980,7 @@
     </task>
     <task>
       <label>bspBuildTargetResourcesItem</label>
-      <description></description>
+      <description/>
       <rank>20000</rank>
     </task>
     <task>
@@ -1299,7 +1200,7 @@
     </task>
     <task>
       <label>bspBuildTargetDependencySourcesItem</label>
-      <description></description>
+      <description/>
       <rank>20000</rank>
     </task>
     <task>
@@ -1354,7 +1255,7 @@
     </task>
     <task>
       <label>csrProject</label>
-      <description></description>
+      <description/>
       <rank>17</rank>
     </task>
     <task>
@@ -1379,7 +1280,7 @@
     </task>
     <task>
       <label>pushRemoteCacheConfiguration</label>
-      <description></description>
+      <description/>
       <rank>17</rank>
     </task>
     <task>
@@ -1389,7 +1290,7 @@
     </task>
     <task>
       <label>bspBuildTargetScalacOptionsItem</label>
-      <description></description>
+      <description/>
       <rank>20000</rank>
     </task>
     <task>
@@ -1434,7 +1335,7 @@
     </task>
     <task>
       <label>csrPublications</label>
-      <description></description>
+      <description/>
       <rank>17</rank>
     </task>
     <task>
@@ -1444,7 +1345,7 @@
     </task>
     <task>
       <label>csrExtraProjects</label>
-      <description></description>
+      <description/>
       <rank>200</rank>
     </task>
     <task>
@@ -1474,7 +1375,7 @@
     </task>
     <task>
       <label>csrFallbackDependencies</label>
-      <description></description>
+      <description/>
       <rank>17</rank>
     </task>
     <task>
@@ -1489,7 +1390,7 @@
     </task>
     <task>
       <label>bspBuildTargetCompileItem</label>
-      <description></description>
+      <description/>
       <rank>20000</rank>
     </task>
     <task>
@@ -1504,7 +1405,7 @@
     </task>
     <task>
       <label>bspBuildTargetSourcesItem</label>
-      <description></description>
+      <description/>
       <rank>20000</rank>
     </task>
     <task>
@@ -1634,7 +1535,7 @@
     </task>
     <task>
       <label>bspReporter</label>
-      <description></description>
+      <description/>
       <rank>20000</rank>
     </task>
     <task>
@@ -1664,7 +1565,7 @@
     </task>
     <task>
       <label>bspScalaMainClassesItem</label>
-      <description></description>
+      <description/>
       <rank>20000</rank>
     </task>
     <task>

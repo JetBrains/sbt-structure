@@ -57,7 +57,10 @@ lazy val extractor = project.in(file("extractor"))
     Compile / unmanagedSourceDirectories +=
       (ThisBuild / baseDirectory).value / "shared" / "src" / "main" / "scala",
     scalacOptions ++= Seq("-deprecation"),
-    libraryDependencies += "org.scalatest" %% "scalatest" % "3.2.15" % Test,
+    libraryDependencies ++= Seq(
+      "org.scalatest" %% "scalatest" % "3.2.15" % Test,
+      "org.dom4j" % "dom4j" % "2.1.4" % Test
+    ),
     scalaVersion := scala212,
     crossScalaVersions := Seq(
       scala212,

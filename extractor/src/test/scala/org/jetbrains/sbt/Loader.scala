@@ -75,6 +75,9 @@ object Loader {
       s"-Divy.home=$sbtIvyHome",
       s"-Dsbt.coursier.home=$sbtCoursierHome",
 
+      //Debug SBT process running structure extractor plugin
+      //"-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=*:5321",
+
       "-jar", sbtLauncher,
       s"< ${path(commandsFile)}"
     )

@@ -4,9 +4,7 @@
     <uri>$URI_BASE</uri>
     <import>import _root_.sbt.Keys._</import>
     <import>import _root_.sbt._</import>
-    <import>
-      import _root_.sbt.plugins.IvyPlugin, _root_.sbt.plugins.JvmPlugin, _root_.sbt.plugins.CorePlugin, _root_.sbt.plugins.JUnitXmlReportPlugin, _root_.sbt.plugins.Giter8TemplatePlugin
-    </import>
+    <import>import _root_.sbt.plugins.IvyPlugin, _root_.sbt.plugins.JvmPlugin, _root_.sbt.plugins.CorePlugin, _root_.sbt.plugins.JUnitXmlReportPlugin, _root_.sbt.plugins.Giter8TemplatePlugin</import>
     <import>import _root_.scala.xml.{TopScope=&gt;$scope}</import>
     <classes>$SBT_BOOT/scala-2.12.6/lib/jline.jar</classes>
     <classes>$SBT_BOOT/scala-2.12.6/lib/scala-compiler.jar</classes>
@@ -119,9 +117,7 @@
     <sources>$IVY2/cache/org.apache.logging.log4j/log4j-core/srcs/log4j-core-2.8.1-sources.jar</sources>
     <sources>$IVY2/cache/org.apache.logging.log4j/log4j-slf4j-impl/srcs/log4j-slf4j-impl-2.8.1-sources.jar</sources>
     <sources>$IVY2/cache/org.reactivestreams/reactive-streams/srcs/reactive-streams-1.0.0-sources.jar</sources>
-    <sources>
-      $IVY2/cache/org.scala-lang.modules/scala-parser-combinators_2.12/srcs/scala-parser-combinators_2.12-1.0.5-sources.jar
-    </sources>
+    <sources>$IVY2/cache/org.scala-lang.modules/scala-parser-combinators_2.12/srcs/scala-parser-combinators_2.12-1.0.5-sources.jar</sources>
     <sources>$IVY2/cache/org.scala-lang.modules/scala-xml_2.12/srcs/scala-xml_2.12-1.0.6-sources.jar</sources>
     <sources>$IVY2/cache/org.scala-lang/scala-compiler/srcs/scala-compiler-2.12.6-sources.jar</sources>
     <sources>$IVY2/cache/org.scala-lang/scala-library/srcs/scala-library-2.12.6-sources.jar</sources>
@@ -189,7 +185,7 @@
         <jar>$IVY2/cache/org.scala-lang/scala-compiler/jars/scala-compiler-2.13.6.jar</jar>
         <jar>$IVY2/cache/org.scala-lang/scala-reflect/jars/scala-reflect-2.13.6.jar</jar>
       </compilerJars>
-      <extraJars> </extraJars>
+      <extraJars></extraJars>
     </scala>
     <compileOrder>Mixed</compileOrder>
     <configuration id="compile">
@@ -214,60 +210,51 @@
       <module configurations="compile" organization="org.scala-lang" name="scala-library" revision="2.13.6" artifactType="jar" classifier=""/>
     </dependencies>
     <resolver name="public" root="https://repo1.maven.org/maven2/"/>
-    <resolver name="local-preloaded" root="file:/dummy/preloaded"/>
+    <resolver name="local-preloaded" root="file:$HOME/.sbt-structure-global/1.1/preloaded"/>
     <setting>
       <label>cleanupCommands</label>
       <description>Commands to execute before the Scala interpreter exits.</description>
       <rank>41</rank>
-      <value></value>
     </setting>
     <setting>
       <label>licenses</label>
       <description>Project licenses as (name, url) pairs.</description>
       <rank>41</rank>
-      <value>List()</value>
     </setting>
     <setting>
       <label>artifacts</label>
       <description>The artifact definitions for the current module. Must be consistent with packagedArtifacts.</description>
       <rank>40</rank>
-      <value>List(Artifact(some-name, pom, pom, None, Vector(pom), None, Map(), None), Artifact(some-name, jar, j...</value>
     </setting>
     <setting>
       <label>retrievePattern</label>
       <description>Pattern used to retrieve managed dependencies to the current build.</description>
       <rank>10000</rank>
-      <value>[type]s/[organisation]/[module]/(scala_[scalaVersion]/)(sbt_[sbtVersion]/)[artifact](-[revision])(-[...</value>
     </setting>
     <setting>
       <label>watchAntiEntropy</label>
       <description>Duration for which the watch EventMonitor will ignore events for a file after that file has triggered a build.</description>
       <rank>41</rank>
-      <value>40 milliseconds</value>
     </setting>
     <setting>
       <label>organization</label>
       <description>Organization/group ID.</description>
       <rank>9</rank>
-      <value>some-organization</value>
     </setting>
     <setting>
       <label>sbtResolver</label>
       <description>Provides a resolver for obtaining sbt as a dependency.</description>
       <rank>41</rank>
-      <value>URLRepository(typesafe-ivy-releases, Patterns(ivyPatterns=Vector(https://repo.typesafe.com/typesafe/...</value>
     </setting>
     <setting>
       <label>bgJobService</label>
       <description>Job manager used to run background jobs.</description>
       <rank>25</rank>
-      <value>BackgroundJobService(jobs=)</value>
     </setting>
     <setting>
       <label>autoAPIMappings</label>
       <description>If true, automatically manages mappings to the API doc URL.</description>
       <rank>41</rank>
-      <value>false</value>
     </setting>
     <setting>
       <label>loadedBuild</label>
@@ -278,61 +265,51 @@
       <label>name</label>
       <description>Project name.</description>
       <rank>9</rank>
-      <value>some-name</value>
     </setting>
     <setting>
       <label>retrieveConfiguration</label>
       <description>Configures retrieving dependencies to the current build.</description>
       <rank>10000</rank>
-      <value>None</value>
     </setting>
     <setting>
       <label>compileOrder</label>
       <description>Configures the order in which Java and sources within a single compilation are compiled. Valid values are: JavaThenScala, ScalaThenJava, or Mixed.</description>
       <rank>39</rank>
-      <value>Mixed</value>
     </setting>
     <setting>
       <label>conflictManager</label>
       <description>Selects the conflict manager to use for dependency management.</description>
       <rank>100</rank>
-      <value>ConflictManager(latest-revision, *, *)</value>
     </setting>
     <setting>
       <label>excludeDependencies</label>
       <description>Declares managed dependency exclusions.</description>
       <rank>40</rank>
-      <value>List()</value>
     </setting>
     <setting>
       <label>parallelExecution</label>
       <description>Enables (true) or disables (false) parallel execution of tasks.</description>
       <rank>41</rank>
-      <value>true</value>
     </setting>
     <setting>
       <label>makePomConfiguration</label>
       <description>Configuration for generating a pom.</description>
       <rank>10000</rank>
-      <value>MakePomConfiguration(Some($HOME/Desktop/dev/sbt-structure/extractor/src/test/data/...</value>
     </setting>
     <setting>
       <label>ivyPaths</label>
       <description>Configures paths used by Ivy for dependency management.</description>
       <rank>10000</rank>
-      <value>IvyPaths($BASE, Some(...</value>
     </setting>
     <setting>
       <label>projectInfo</label>
       <description>Addition project information like formal name, homepage, licenses etc.</description>
       <rank>100</rank>
-      <value>ModuleInfo(some-name, some-name, None, None, Vector(), some-organization, None, None, Vector())</value>
     </setting>
     <setting>
       <label>connectInput</label>
       <description>If true, connects standard input when running a main class forked.</description>
       <rank>100</rank>
-      <value>false</value>
     </setting>
     <setting>
       <label>resourceDirectories</label>
@@ -343,25 +320,21 @@
       <label>scalaBinaryVersion</label>
       <description>The Scala version substring describing binary compatibility.</description>
       <rank>39</rank>
-      <value>2.13</value>
     </setting>
     <setting>
       <label>history</label>
       <description>The location where command line history is persisted.</description>
       <rank>40</rank>
-      <value>Some($BASE/target/.hi...</value>
     </setting>
     <setting>
       <label>autoGeneratedProject</label>
       <description>If it exists, represents that the project (and name) were automatically created, rather than user specified.</description>
       <rank>10000</rank>
-      <value>true</value>
     </setting>
     <setting>
       <label>normalizedName</label>
       <description>Project name transformed from mixed case and spaces to lowercase and dash-separated.</description>
       <rank>40</rank>
-      <value>some-name</value>
     </setting>
     <setting>
       <label>extraLoggers</label>
@@ -372,13 +345,11 @@
       <label>moduleConfigurations</label>
       <description>Defines module configurations, which override resolvers on a per-module basis.</description>
       <rank>41</rank>
-      <value>List()</value>
     </setting>
     <setting>
       <label>exportToInternal</label>
       <description>The level of tracking for this project by the internal callers.</description>
       <rank>40</rank>
-      <value>TrackAlways</value>
     </setting>
     <setting>
       <label>scalaSource</label>
@@ -389,19 +360,16 @@
       <label>description</label>
       <description>Project description.</description>
       <rank>40</rank>
-      <value>some-name</value>
     </setting>
     <setting>
       <label>scalaHome</label>
       <description>If Some, defines the local Scala installation to use for compilation, running, and testing.</description>
       <rank>10</rank>
-      <value>None</value>
     </setting>
     <setting>
       <label>apiURL</label>
       <description>Base URL for API documentation.</description>
       <rank>41</rank>
-      <value>None</value>
     </setting>
     <setting>
       <label>compatibilityWarningOptions</label>
@@ -412,7 +380,6 @@
       <label>scalaCompilerBridgeSource</label>
       <description>Configures the module ID of the sources of the compiler bridge.</description>
       <rank>100</rank>
-      <value>org.scala-sbt:compiler-bridge_2.13:1.1.7:compile</value>
     </setting>
     <setting>
       <label>tags</label>
@@ -423,19 +390,16 @@
       <label>sourceArtifactTypes</label>
       <description>Ivy artifact types that correspond to source artifacts. Used by IDEs to resolve these resources.</description>
       <rank>40</rank>
-      <value>Vector(src, source, sources)</value>
     </setting>
     <setting>
       <label>unmanagedBase</label>
       <description>The default directory for manually managed libraries.</description>
       <rank>10</rank>
-      <value>$BASE/lib</value>
     </setting>
     <setting>
       <label>organizationHomepage</label>
       <description>Organization homepage.</description>
       <rank>41</rank>
-      <value>None</value>
     </setting>
     <setting>
       <label>pomIncludeRepository</label>
@@ -451,37 +415,31 @@
       <label>trapExit</label>
       <description>If true, enables exit trapping and thread management for 'run'-like tasks. This is currently only suitable for serially-executed 'run'-like tasks.</description>
       <rank>100</rank>
-      <value>true</value>
     </setting>
     <setting>
       <label>sbtBinaryVersion</label>
       <description>Defines the binary compatibility version substring.</description>
       <rank>39</rank>
-      <value>1.0</value>
     </setting>
     <setting>
       <label>retrieveManaged</label>
       <description>If true, enables retrieving dependencies to the current build. Otherwise, dependencies are used directly from the cache.</description>
       <rank>40</rank>
-      <value>false</value>
     </setting>
     <setting>
       <label>autoCompilerPlugins</label>
       <description>If true, enables automatically generating -Xplugin arguments to the compiler based on the classpath for the plugin configuration.</description>
       <rank>11</rank>
-      <value>true</value>
     </setting>
     <setting>
       <label>outputStrategy</label>
       <description>Selects how to log output when running a main class.</description>
       <rank>10000</rank>
-      <value>None</value>
     </setting>
     <setting>
       <label>thisProjectRef</label>
       <description>Provides a fully-resolved reference to the current project for the referencing scope.</description>
       <rank>100</rank>
-      <value>ProjectRef(file:$BASE...</value>
     </setting>
     <setting>
       <label>watch</label>
@@ -492,37 +450,31 @@
       <label>resolvers</label>
       <description>The user-defined additional resolvers for automatically managed dependencies.</description>
       <rank>31</rank>
-      <value>Vector()</value>
     </setting>
     <setting>
       <label>exportJars</label>
       <description>Determines whether the exported classpath for this project contains classes (false) or a packaged jar (true).</description>
       <rank>40</rank>
-      <value>false</value>
     </setting>
     <setting>
       <label>sourceManaged</label>
       <description>Default directory for sources generated by the build.</description>
       <rank>39</rank>
-      <value>$BASE/target/scala-2....</value>
     </setting>
     <setting>
       <label>moduleName</label>
       <description>The name of the current module, used for dependency management.</description>
       <rank>40</rank>
-      <value>some-name</value>
     </setting>
     <setting>
       <label>organizationName</label>
       <description>Organization full/formal name.</description>
       <rank>41</rank>
-      <value>some-organization</value>
     </setting>
     <setting>
       <label>conflictWarning</label>
       <description>Configures warnings for conflicts in dependency management.</description>
       <rank>100</rank>
-      <value>ConflictWarning(ProjectRef(uri(&quot;file:$HOME/Desktop/dev/sbt-structure/extractor/src...</value>
     </setting>
     <setting>
       <label>internalConfigurationMap</label>
@@ -533,43 +485,36 @@
       <label>ivyLoggingLevel</label>
       <description>The logging level for updating.</description>
       <rank>40</rank>
-      <value>Default</value>
     </setting>
     <setting>
       <label>sbtPlugin</label>
       <description>If true, enables adding sbt as a dependency and auto-generation of the plugin descriptor file.</description>
       <rank>41</rank>
-      <value>false</value>
     </setting>
     <setting>
       <label>scalaArtifacts</label>
       <description>Configures the list of artifacts which should match the Scala binary version</description>
       <rank>100</rank>
-      <value>Vector(scala-library, scala-compiler, scala-reflect, scala-actors, scalap)</value>
     </setting>
     <setting>
       <label>appResolvers</label>
       <description>The resolvers configured for this application by the sbt launcher.</description>
       <rank>41</rank>
-      <value>Some(Vector(FileRepository(local, Patterns(ivyPatterns=Vector(${ivy.home}/local/[organisation]/[modu...</value>
     </setting>
     <setting>
       <label>managedDirectory</label>
       <description>Directory to which managed dependencies are retrieved.</description>
       <rank>40</rank>
-      <value>$BASE/lib_managed</value>
     </setting>
     <setting>
       <label>testForkedParallel</label>
       <description>Whether forked tests should be executed in parallel</description>
       <rank>200</rank>
-      <value>false</value>
     </setting>
     <setting>
       <label>publishArtifact</label>
       <description>Enables (true) or disables (false) publishing an artifact.</description>
       <rank>11</rank>
-      <value>true</value>
     </setting>
     <setting>
       <label>artifactName</label>
@@ -580,31 +525,26 @@
       <label>scalaVersion</label>
       <description>The version of Scala used for building.</description>
       <rank>9</rank>
-      <value>2.13.6</value>
     </setting>
     <setting>
       <label>crossPaths</label>
       <description>If true, enables cross paths, which distinguish input and output directories for cross-building.</description>
       <rank>10</rank>
-      <value>true</value>
     </setting>
     <setting>
       <label>startYear</label>
       <description>Year in which the project started.</description>
       <rank>41</rank>
-      <value>None</value>
     </setting>
     <setting>
       <label>ivyConfigurations</label>
       <description>The defined configurations for dependency management. This may be different from the configurations for Project settings.</description>
       <rank>40</rank>
-      <value>List(compile, runtime, test, provided, optional, compile-internal, runtime-internal, test-internal, ...</value>
     </setting>
     <setting>
       <label>sbtDependency</label>
       <description>Provides a definition for declaring the current version of sbt.</description>
       <rank>41</rank>
-      <value>org.scala-sbt:sbt:1.1.6</value>
     </setting>
     <setting>
       <label>watchService</label>
@@ -615,64 +555,51 @@
       <label>crossVersion</label>
       <description>Configures handling of the Scala version when cross-building.</description>
       <rank>100</rank>
-      <value>Binary(, )</value>
     </setting>
     <setting>
       <label>fork</label>
       <description>If true, forks a new JVM when running. If false, runs in the same JVM as the build.</description>
       <rank>10</rank>
-      <value>false</value>
     </setting>
     <setting>
       <label>pomAllRepositories</label>
       <description>If true, includes repositories used in module configurations in the pom repositories section. If false, only the common repositories are included.</description>
       <rank>41</rank>
-      <value>false</value>
     </setting>
     <setting>
       <label>transitiveClassifiers</label>
       <description>List of classifiers used for transitively obtaining extra artifacts for sbt or declared dependencies.</description>
       <rank>40</rank>
-      <value>List(sources, javadoc)</value>
     </setting>
     <setting>
       <label>updateConfiguration</label>
       <description>Configuration for resolving and retrieving managed dependencies.</description>
       <rank>10000</rank>
-      <value>UpdateConfiguration(None, false, Default, unknown, None, Some(ArtifactTypeFilter(Set(source, javadoc...</value>
     </setting>
     <setting>
       <label>crossTarget</label>
       <description>Main directory for files generated by the build that are cross-built.</description>
       <rank>40</rank>
-      <value>$BASE/target/scala-2.13</value>
     </setting>
     <setting>
       <label>version</label>
       <description>The version/revision of the current module.</description>
       <rank>9</rank>
-      <value>1.2.3</value>
     </setting>
     <setting>
       <label>buildDependencies</label>
-      <description>
-        Definitive source of inter-project dependencies for compilation and dependency management.
-	This is populated by default by the dependencies declared on Project instances, but may be modified.
-	The main restriction is that new builds may not be introduced.
-      </description>
+      <description>Definitive source of inter-project dependencies for compilation and dependency management. This is populated by default by the dependencies declared on Project instances, but may be modified. The main restriction is that new builds may not be introduced.</description>
       <rank>10000</rank>
     </setting>
     <setting>
       <label>testResultLogger</label>
       <description>Logs results after a test task completes.</description>
       <rank>20000</rank>
-      <value>Main(sbt.TestResultLogger$Defaults$$$Lambda$1172/0x0000000800842840@52942f2e,sbt.TestResultLogger$$a...</value>
     </setting>
     <setting>
       <label>resourceManaged</label>
       <description>Default managed resource directory, used when generating resources.</description>
       <rank>40</rank>
-      <value>$BASE/target/scala-2....</value>
     </setting>
     <setting>
       <label>resourceGenerators</label>
@@ -683,7 +610,6 @@
       <label>sourcesInBase</label>
       <description>If true, sources from the project's base directory are included as main sources.</description>
       <rank>25</rank>
-      <value>true</value>
     </setting>
     <setting>
       <label>resourceDirectory</label>
@@ -699,7 +625,6 @@
       <label>maxErrors</label>
       <description>The maximum number of errors, such as compile errors, to list.</description>
       <rank>10</rank>
-      <value>100</value>
     </setting>
     <setting>
       <label>logManager</label>
@@ -715,19 +640,16 @@
       <label>overrideBuildResolvers</label>
       <description>Whether or not all the build resolvers should be overridden with what's defined from the launcher.</description>
       <rank>41</rank>
-      <value>false</value>
     </setting>
     <setting>
       <label>ivyValidate</label>
       <description>Enables/disables Ivy validation of module metadata.</description>
       <rank>40</rank>
-      <value>false</value>
     </setting>
     <setting>
       <label>logBuffered</label>
       <description>True if logging should be buffered until work completes.</description>
       <rank>100</rank>
-      <value>false</value>
     </setting>
     <setting>
       <label>javaSource</label>
@@ -738,43 +660,36 @@
       <label>enableBinaryCompileAnalysis</label>
       <description>Writes the analysis file in binary format</description>
       <rank>25</rank>
-      <value>true</value>
     </setting>
     <setting>
       <label>defaultConfiguration</label>
       <description>Defines the configuration used when none is specified for a dependency in ivyXML.</description>
       <rank>100</rank>
-      <value>Some(compile)</value>
     </setting>
     <setting>
       <label>classpathOptions</label>
       <description>Configures handling of Scala classpaths.</description>
       <rank>10000</rank>
-      <value>ClasspathOptions(bootLibrary: true, compiler: false, extra: false, autoBoot: true, filterLibrary: true)</value>
     </setting>
     <setting>
       <label>autoScalaLibrary</label>
       <description>Adds a dependency on scala-library if true.</description>
       <rank>10</rank>
-      <value>true</value>
     </setting>
     <setting>
       <label>baseDirectory</label>
       <description>The base directory. Depending on the scope, this is the base directory for the build, project, configuration, or task.</description>
       <rank>11</rank>
-      <value>$BASE</value>
     </setting>
     <setting>
       <label>classpathTypes</label>
       <description>Artifact types that are included on the classpath.</description>
       <rank>40</rank>
-      <value>Set(eclipse-plugin, bundle, scala-jar, hk2-jar, orbit, jar)</value>
     </setting>
     <setting>
       <label>sbtVersion</label>
       <description>Provides the version of sbt. This setting should not be modified.</description>
       <rank>11</rank>
-      <value>1.1.6</value>
     </setting>
     <setting>
       <label>classDirectory</label>
@@ -785,7 +700,6 @@
       <label>homepage</label>
       <description>Project homepage.</description>
       <rank>40</rank>
-      <value>None</value>
     </setting>
     <setting>
       <label>artifactPath</label>
@@ -796,13 +710,11 @@
       <label>cleanKeepFiles</label>
       <description>Files or directories to keep during a clean. Must be direct children of target.</description>
       <rank>100</rank>
-      <value>Vector($BASE/target/....</value>
     </setting>
     <setting>
       <label>initialCommands</label>
       <description>Initial commands to execute when starting up the Scala interpreter.</description>
       <rank>11</rank>
-      <value></value>
     </setting>
     <setting>
       <label>configuration</label>
@@ -813,13 +725,11 @@
       <label>onLoadMessage</label>
       <description>Message to display when the project is loaded.</description>
       <rank>10000</rank>
-      <value>Set current project to some-name (in build file:$HOME/Desktop/dev/sbt-structure/ex...</value>
     </setting>
     <setting>
       <label>thisProject</label>
       <description>Provides the current project for the referencing scope.</description>
       <rank>100</rank>
-      <value>Project(id simple, base: $HOME/Desktop/dev/sbt-structure/extractor/src/test/data/1...</value>
     </setting>
     <setting>
       <label>watchingMessage</label>
@@ -830,19 +740,16 @@
       <label>ssOptions</label>
       <description>options for dumpStructure task</description>
       <rank>10000</rank>
-      <value>Options(true,true,true,true,true,false)</value>
     </setting>
     <setting>
       <label>forceUpdatePeriod</label>
       <description>Duration after which to force a full update to occur</description>
       <rank>100</rank>
-      <value>None</value>
     </setting>
     <setting>
       <label>sourceDirectory</label>
       <description>Default directory containing sources.</description>
       <rank>11</rank>
-      <value>$BASE/src</value>
     </setting>
     <setting>
       <label>managedSourceDirectories</label>
@@ -853,25 +760,21 @@
       <label>developers</label>
       <description>List of developers implicated in the project</description>
       <rank>41</rank>
-      <value>List()</value>
     </setting>
     <setting>
       <label>isSnapshot</label>
       <description>True if the version of the project is a snapshot version.</description>
       <rank>39</rank>
-      <value>false</value>
     </setting>
     <setting>
       <label>target</label>
       <description>Main directory for files generated by the build.</description>
       <rank>11</rank>
-      <value>$BASE/target</value>
     </setting>
     <setting>
       <label>crossSbtVersions</label>
       <description>The versions of Sbt used when cross-building an sbt plugin.</description>
       <rank>25</rank>
-      <value>Vector(1.1.6)</value>
     </setting>
     <setting>
       <label>evictionWarningOptions</label>
@@ -887,43 +790,36 @@
       <label>taskTemporaryDirectory</label>
       <description>Directory used for temporary files for tasks that is deleted after each task execution.</description>
       <rank>10000</rank>
-      <value>/var/folders/b3/_6nmnkk13gb4t5fps4wd7hwc0000gp/T/sbt_3722d73</value>
     </setting>
     <setting>
       <label>docArtifactTypes</label>
       <description>Ivy artifact types that correspond to javadoc artifacts. Used by IDEs to resolve these resources.</description>
       <rank>40</rank>
-      <value>Vector(doc, docs, javadoc, javadocs)</value>
     </setting>
     <setting>
       <label>crossScalaVersions</label>
       <description>The versions of Scala used when cross-building.</description>
       <rank>39</rank>
-      <value>List(2.13.6)</value>
     </setting>
     <setting>
       <label>configurationsToRetrieve</label>
       <description>An optional set of configurations from which to retrieve dependencies if retrieveManaged is set to true</description>
       <rank>40</rank>
-      <value>None</value>
     </setting>
     <setting>
       <label>libraryDependencies</label>
       <description>Declares managed dependencies.</description>
       <rank>9</rank>
-      <value>List(org.scala-lang:scala-library:2.13.6)</value>
     </setting>
     <setting>
       <label>checksums</label>
       <description>The list of checksums to generate and to verify for dependencies.</description>
       <rank>40</rank>
-      <value>Vector(sha1, md5)</value>
     </setting>
     <setting>
       <label>projectID</label>
       <description>The dependency management descriptor for the current module.</description>
       <rank>41</rank>
-      <value>some-organization:some-name:1.2.3</value>
     </setting>
     <setting>
       <label>fileInputOptions</label>
@@ -934,13 +830,11 @@
       <label>testFrameworks</label>
       <description>Registered, although not necessarily present, test frameworks.</description>
       <rank>200</rank>
-      <value>List(TestFramework(org.scalacheck.ScalaCheckFramework), TestFramework(org.specs2.runner.Specs2Framew...</value>
     </setting>
     <setting>
       <label>bgCopyClasspath</label>
       <description>Copies classpath on bgRun to prevent conflict.</description>
       <rank>25</rank>
-      <value>true</value>
     </setting>
     <setting>
       <label>appConfiguration</label>
@@ -951,13 +845,11 @@
       <label>scmInfo</label>
       <description>Basic SCM information for the project.</description>
       <rank>41</rank>
-      <value>None</value>
     </setting>
     <setting>
       <label>trackInternalDependencies</label>
       <description>The level of tracking for the internal (inter-project) dependency.</description>
       <rank>40</rank>
-      <value>TrackAlways</value>
     </setting>
     <setting>
       <label>includeFilter</label>
@@ -968,13 +860,11 @@
       <label>dependencyOverrides</label>
       <description>Declares managed dependency overrides.</description>
       <rank>40</rank>
-      <value>Vector()</value>
     </setting>
     <setting>
       <label>javaHome</label>
       <description>Selects the Java installation used for compiling and forking. If None, uses the Java installation running the build.</description>
       <rank>10</rank>
-      <value>None</value>
     </setting>
     <setting>
       <label>pomPostProcess</label>
@@ -990,39 +880,31 @@
       <label>publishMavenStyle</label>
       <description>Configures whether to generate and publish a pom (true) or Ivy file (false).</description>
       <rank>40</rank>
-      <value>true</value>
     </setting>
     <setting>
       <label>scalaModuleInfo</label>
       <description>Configures how Scala dependencies are checked, filtered, and injected.</description>
       <rank>100</rank>
-      <value>Some(ScalaModuleInfo(2.13.6, 2.13, Vector(), true, false, true, org.scala-lang, Vector(scala-library...</value>
     </setting>
     <setting>
       <label>scalaOrganization</label>
-      <description>
-        Organization/group ID of the Scala used in the project. Default value is 'org.scala-lang'. This is an advanced setting used for clones of the Scala Language. It should be disregarded in standard use cases.
-      </description>
+      <description>Organization/group ID of the Scala used in the project. Default value is 'org.scala-lang'. This is an advanced setting used for clones of the Scala Language. It should be disregarded in standard use cases.</description>
       <rank>100</rank>
-      <value>org.scala-lang</value>
     </setting>
     <setting>
       <label>artifactClassifier</label>
       <description>Sets the classifier used by the default artifact definition.</description>
       <rank>40</rank>
-      <value>None</value>
     </setting>
     <setting>
       <label>offline</label>
       <description>Configures sbt to work without a network connection where possible.</description>
       <rank>10</rank>
-      <value>false</value>
     </setting>
     <setting>
       <label>updateOptions</label>
       <description>Options for resolving managed dependencies.</description>
       <rank>10000</rank>
-      <value>UpdateOptions( circularDependencyLevel = warn, latestSnapshots = true, cachedResolution = false )</value>
     </setting>
     <setting>
       <label>logLevel</label>
@@ -1033,19 +915,16 @@
       <label>artifact</label>
       <description>Describes an artifact.</description>
       <rank>41</rank>
-      <value>Artifact(some-name, jar, jar, None, Vector(), None, Map(), None)</value>
     </setting>
     <setting>
       <label>managedScalaInstance</label>
       <description>Automatically obtains Scala tools as managed dependencies if true.</description>
       <rank>40</rank>
-      <value>true</value>
     </setting>
     <setting>
       <label>pomExtra</label>
       <description>Extra XML to insert into the generated POM.</description>
       <rank>40</rank>
-      <value></value>
     </setting>
     <setting>
       <label>sourceGenerators</label>
@@ -1056,7 +935,6 @@
       <label>retrieveManagedSync</label>
       <description>If true, enables synchronizing the dependencies retrieved to the current build by removed unneeded files.</description>
       <rank>40</rank>
-      <value>false</value>
     </setting>
     <setting>
       <label>unmanagedResourceDirectories</label>
@@ -1067,19 +945,16 @@
       <label>useJCenter</label>
       <description>Use JCenter as the default repository.</description>
       <rank>40</rank>
-      <value>false</value>
     </setting>
     <setting>
       <label>pollInterval</label>
       <description>Interval between checks for modified sources by the continuous execution command.</description>
       <rank>41</rank>
-      <value>500 milliseconds</value>
     </setting>
     <setting>
       <label>ivyXML</label>
       <description>Defines inline Ivy XML for configuring dependency management.</description>
       <rank>40</rank>
-      <value></value>
     </setting>
     <task>
       <label>dependencyPositions</label>
@@ -1368,9 +1243,7 @@
     </task>
     <task>
       <label>skip</label>
-      <description>
-        For tasks that support it (currently only 'compile' and 'update'), setting skip to true will force the task to not to do its work.  This exact semantics may vary by task.
-      </description>
+      <description>For tasks that support it (currently only 'compile' and 'update'), setting skip to true will force the task to not to do its work. This exact semantics may vary by task.</description>
       <rank>40</rank>
     </task>
     <task>
