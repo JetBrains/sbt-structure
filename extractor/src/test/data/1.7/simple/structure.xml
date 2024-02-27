@@ -1824,7 +1824,6 @@
   <repository>
     <module organization="org.scala-lang" name="scala-library" revision="2.13.10" artifactType="jar" classifier="">
       <jar>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-lang/scala-library/2.13.10/scala-library-2.13.10.jar</jar>
-      <doc>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-lang/scala-library/2.13.10/scala-library-2.13.10-javadoc.jar</doc>
       <src>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-lang/scala-library/2.13.10/scala-library-2.13.10-sources.jar</src>
     </module>
   </repository>
