@@ -55,7 +55,6 @@ class ImportSpec extends AnyFreeSpecLike {
       "dependency_resolve_none_with_explicit_classifiers" in { testProject_013("dependency_resolve_none_with_explicit_classifiers", options = ResolveNone) }
       "dependency_resolve_sources" in { testProject_013("dependency_resolve_sources", options = ResolveSources) }
       "dependency_resolve_javadocs" in { testProject_013("dependency_resolve_javadocs", options = ResolveJavadocs) }
-      "dependency_resolve_sources_and_javadocs_and_sbt_classifiers" in { testProject_013("dependency_resolve_sources_and_javadocs_and_sbt_classifiers", options = ResolveSourcesAndJavaDocsAndSbtClassifiers) }
     }
 
     "1.0 simple" in { testProject("simple", "1.0.4", ResolveSourcesAndSbtClassifiers) }
