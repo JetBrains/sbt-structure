@@ -42,26 +42,29 @@ case class StructureData(sbtVersion: String,
  * @param basePackages List of packages to use as base prefixes in chaining
  * @param target Compiler output directory (value of `target` key)
  */
-case class ProjectData(id: String,
-                       buildURI: URI,
-                       name: String,
-                       organization: String,
-                       version: String,
-                       base: File,
-                       packagePrefix: Option[String],
-                       basePackages: Seq[String],
-                       target: File,
-                       configurations: Seq[ConfigurationData],
-                       java: Option[JavaData],
-                       scala: Option[ScalaData],
-                       compileOrder: String,
-                       dependencies: DependencyData,
-                       resolvers: Set[ResolverData],
-                       play2: Option[Play2Data],
-                       settings: Seq[SettingData],
-                       tasks: Seq[TaskData],
-                       commands: Seq[CommandData]
-                      )
+case class ProjectData(
+  id: String,
+  buildURI: URI,
+  name: String,
+  organization: String,
+  version: String,
+  base: File,
+  packagePrefix: Option[String],
+  basePackages: Seq[String],
+  target: File,
+  configurations: Seq[ConfigurationData],
+  java: Option[JavaData],
+  scala: Option[ScalaData],
+  compileOrder: String,
+  dependencies: DependencyData,
+  resolvers: Set[ResolverData],
+  play2: Option[Play2Data],
+  settings: Seq[SettingData],
+  tasks: Seq[TaskData],
+  commands: Seq[CommandData],
+  testSourceDirectories: Seq[File],
+  mainSourceDirectories: Seq[File]
+)
 
 case class SettingData(label: String, description: Option[String], rank: Int, stringValue: Option[String])
 case class TaskData(label: String, description: Option[String], rank: Int)
@@ -108,7 +111,7 @@ case class ConfigurationData(id: String,
 
 case class DirectoryData(file: File, managed: Boolean)
 
-case class JavaData(home: Option[File], options: Seq[String])
+case class JavaData(home: Option[File], options: Map[Configuration, Seq[String]])
 
 /**
  * Analog of `sbt.internal.inc.ScalaInstance`
@@ -126,15 +129,22 @@ case class ScalaData(
   compilerJars: Seq[File],
   extraJars: Seq[File],
   compilerBridgeBinaryJar: Option[File],
-  options: Seq[String]
+  options: Map[Configuration, Seq[String]]
 ) {
   def allJars: Seq[File] = libraryJars ++ compilerJars ++ extraJars
   def allCompilerJars: Seq[File] = libraryJars ++ compilerJars
 }
 
-case class DependencyData(projects: Seq[ProjectDependencyData],
-                          modules: Seq[ModuleDependencyData],
-                          jars: Seq[JarDependencyData])
+case class DependencyData(projects: Dependencies[ProjectDependencyData],
+                          modules: Dependencies[ModuleDependencyData],
+                          jars: Dependencies[JarDependencyData])
+
+/**
+ * When the project is imported without prod/test sources feature enabled, all dependencies are put in forProduction parameter.
+ * @param forTest dependencies that should go to the test module
+ * @param forProduction dependencies that should go to the main module
+ */
+case class Dependencies[T](forTest: Seq[T], forProduction: Seq[T])
 
 /**
  * Inter-project dependency
