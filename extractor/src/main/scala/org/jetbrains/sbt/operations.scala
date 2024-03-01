@@ -44,6 +44,10 @@ trait SbtStateOps {
     def forAllProjects(state: State, projects: Seq[ProjectRef]): Seq[(ProjectRef, T)] =
       projects.flatMap(p => key.in(p).find(state).map(it => (p, it)))
 
+    def forAllConfigurations(state: State, configurations: Seq[sbt.Configuration]): Seq[(sbt.Configuration, T)] = {
+      configurations.flatMap(c => key.in(c).get(structure(state).data).map(it => (c, it)))
+    }
+
   }
 
   implicit class `enrich TaskKey`[T](key: TaskKey[T]) {

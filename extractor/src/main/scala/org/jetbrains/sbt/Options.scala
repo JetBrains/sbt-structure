@@ -5,7 +5,8 @@ final case class Options(download: Boolean = false,
                          resolveJavadocClassifiers: Boolean = false,
                          resolveSbtClassifiers: Boolean = false,
                          prettyPrint: Boolean = false,
-                         insertProjectTransitiveDependencies: Boolean = true)
+                         insertProjectTransitiveDependencies: Boolean = true,
+                         separateProdAndTestSources: Boolean = false)
 
 object Options {
 
@@ -26,7 +27,8 @@ object Options {
     resolveJavadocClassifiers = options.contains(Keys.ResolveJavadocClassifiers),
     resolveSbtClassifiers = options.contains(Keys.ResolveSbtClassifiers),
     prettyPrint = options.contains(Keys.PrettyPrint),
-    insertProjectTransitiveDependencies = options.contains(Keys.InsertProjectTransitiveDependencies)
+    insertProjectTransitiveDependencies = options.contains(Keys.InsertProjectTransitiveDependencies),
+    separateProdAndTestSources = options.contains(Keys.SeparateProdAndTestSources)
   )
 
   object Keys {
@@ -36,6 +38,7 @@ object Options {
     val ResolveSbtClassifiers = "resolveSbtClassifiers"
     val PrettyPrint = "prettyPrint"
     val InsertProjectTransitiveDependencies = "insertProjectTransitiveDependencies"
+    val SeparateProdAndTestSources = "separateProdAndTestSources"
   }
 }
 
