@@ -5,6 +5,7 @@ import org.jetbrains.sbt.structure.XmlSerializer._
 import sbt._
 import sbt.complete.DefaultParsers
 import sbt.plugins.JvmPlugin
+import sbt.jetbrains.keysAdapterEx
 
 import scala.xml.PrettyPrinter
 
@@ -16,13 +17,15 @@ object StructurePlugin extends AutoPlugin {
   override def requires: Plugins = JvmPlugin
   override def trigger: PluginTrigger = allRequirements
 
+  override def buildSettings: Seq[Def.Setting[_]] = super.buildSettings ++ keysAdapterEx.artifactDownload
+
   override lazy val globalSettings: Seq[Setting[_]] = Seq(
     StructureKeys.sbtStructureOutputFile := None,
     StructureKeys.sbtStructureOptions := "prettyPrint download",
     StructureKeys.dumpStructureTo := pluginOnlyTasks.dumpStructureTo.evaluated
-  ) ++ CreateTasks.globalSettings
+  ) ++ keysAdapterEx.artifactDownload ++ CreateTasks.globalSettings
 
-  override lazy val projectSettings: Seq[Setting[_]] = CreateTasks.projectSettings
+  override lazy val projectSettings: Seq[Setting[_]] = CreateTasks.projectSettings ++ keysAdapterEx.artifactDownload
 
 }
 
