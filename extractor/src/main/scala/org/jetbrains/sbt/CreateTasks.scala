@@ -46,7 +46,7 @@ object CreateTasks extends (State => State) with SbtStateOps {
   def apply(state: State): State =
     applySettings(state, globalSettings, projectSettings)
 
-  private def applySettings(state: State, globalSettings: Seq[Setting[_]], projectSettings: Seq[Setting[_]]): State = {
+  def applySettings(state: State, globalSettings: Seq[Setting[_]], projectSettings: Seq[Setting[_]]): State = {
     val extracted = Project.extract(state)
     import extracted.{structure => extractedStructure, _}
     val transformedGlobalSettings = Project.transform(_ => GlobalScope, globalSettings)

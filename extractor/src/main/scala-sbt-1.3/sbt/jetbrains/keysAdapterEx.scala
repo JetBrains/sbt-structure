@@ -1,23 +1,23 @@
 package sbt.jetbrains
 
 import lmcoursier.definitions.CacheLogger
-import sbt.KeyRanks.{DTask, Invisible}
-import sbt.{Def, File, Global, GlobalScope, Keys, Logger, Setting, Task, TaskKey}
+import sbt.Keys.useSuperShell
+import sbt.{Def, File, Keys, Logger, Setting, Task, TaskKey, ThisBuild}
 
 object keysAdapterEx {
   //NOTE: sbt.Keys.scalaCompilerBridgeBinaryJar exists since SBT 1.2.3, so we detect it only since 1.3.0
   val myScalaCompilerBridgeBinaryJar: Def.Initialize[Task[Option[File]]] = Def.taskDyn {
     sbt.Keys.scalaCompilerBridgeBinaryJar
   }
-  val artifactDownloadTask: TaskKey[Option[CacheLogger]] = TaskKey("artifactDownloadTask", rank = DTask)
   lazy val artifactDownloadCsrLogger: Def.Initialize[Task[Option[CacheLogger]]] = Def.task {
     val st = Keys.streams.value
-    Some(new CoursierLogger(st.log))
+    val progress = (ThisBuild / useSuperShell).value
+    if (progress) None
+    else Some(new CoursierLogger(st.log))
 
   }
 
   val artifactDownload: Seq[Setting[_]] = Seq(
-    artifactDownloadTask := keysAdapterEx.artifactDownloadCsrLogger.value,
     Keys.csrLogger := keysAdapterEx.artifactDownloadCsrLogger.value
   )
 
