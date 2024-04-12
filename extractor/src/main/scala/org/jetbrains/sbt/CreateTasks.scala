@@ -46,21 +46,4 @@ object CreateTasks extends (State => State) with SbtStateOps {
   def apply(state: State): State =
     applySettings(state, globalSettings, projectSettings)
 
-  def applySettings(state: State, globalSettings: Seq[Setting[_]], projectSettings: Seq[Setting[_]]): State = {
-    val extracted = Project.extract(state)
-    import extracted.{structure => extractedStructure, _}
-    val transformedGlobalSettings = Project.transform(_ => GlobalScope, globalSettings)
-    val transformedProjectSettings = extractedStructure.allProjectRefs.flatMap { projectRef =>
-      transformSettings(projectScope(projectRef), projectRef.build, rootProject, projectSettings)
-    }
-    reapply(extracted.session.appendRaw(transformedGlobalSettings ++ transformedProjectSettings), state)
-  }
-
-  // copied from sbt.internal.Load
-  private def transformSettings(thisScope: Scope, uri: URI, rootProject: URI => String, settings: Seq[Setting[_]]): Seq[Setting[_]] =
-    Project.transform(Scope.resolveScope(thisScope, uri, rootProject), settings)
-
-  // copied from sbt.internal.SessionSettings
-  private def reapply(session: SessionSettings, s: State): State =
-    BuiltinCommands.reapply(session, Project.structure(s), s)
 }

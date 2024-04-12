@@ -1,6 +1,6 @@
 package sbt.jetbrains
 
-import sbt.{Def, File, Task, Setting, TaskKey}
+import sbt.{Def, File, Task, Setting}
 
 object keysAdapterEx {
   val myScalaCompilerBridgeBinaryJar: Def.Initialize[Task[Option[File]]] = Def.taskDyn {

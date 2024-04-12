@@ -2,7 +2,7 @@ package sbt.jetbrains
 
 import lmcoursier.definitions.CacheLogger
 import sbt.Keys.useSuperShell
-import sbt.{Def, File, Keys, Logger, Setting, Task, TaskKey, ThisBuild}
+import sbt.{Def, File, Keys, Logger, Setting, Task, ThisBuild}
 
 object keysAdapterEx {
   //NOTE: sbt.Keys.scalaCompilerBridgeBinaryJar exists since SBT 1.2.3, so we detect it only since 1.3.0
