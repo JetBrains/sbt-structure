@@ -5,6 +5,7 @@ import org.jetbrains.sbt.structure.XmlSerializer._
 import sbt._
 import sbt.complete.DefaultParsers
 import sbt.plugins.JvmPlugin
+import sbt.jetbrains.keysAdapterEx
 
 /**
   * Created by jast on 2017-02-22.
@@ -18,7 +19,7 @@ object StructurePlugin extends AutoPlugin {
     StructureKeys.sbtStructureOutputFile := None,
     StructureKeys.sbtStructureOptions := "prettyPrint download",
     StructureKeys.dumpStructureTo := pluginOnlyTasks.dumpStructureTo.evaluated
-  ) ++ CreateTasks.globalSettings
+  ) ++ keysAdapterEx.artifactDownload ++ CreateTasks.globalSettings
 
   override lazy val projectSettings: Seq[Setting[_]] = CreateTasks.projectSettings
 

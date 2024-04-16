@@ -1,6 +1,6 @@
 package sbt.jetbrains
 
-import sbt.{Def, File, Task, TaskKey}
+import sbt.{Def, File, Task, Setting}
 
 object keysAdapterEx {
   val myScalaCompilerBridgeBinaryJar: Def.Initialize[Task[Option[File]]] = Def.taskDyn {
@@ -8,4 +8,6 @@ object keysAdapterEx {
       None
     }
   }
+
+  val artifactDownload: Seq[Setting[_]] = Seq.empty
 }
