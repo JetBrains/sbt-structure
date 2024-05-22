@@ -44,7 +44,7 @@ class DependenciesExtractor(projectRef: ProjectRef,
       val transformedConfigurations = mapConfigurations(configurations).map(mapCustomSourceConfigurationToCompileIfApplicable)
       ProjectDependencyData(project.id, Some(project.build), transformedConfigurations)
     }.toSeq
-    Dependencies(Seq.empty, dependencies)
+    Dependencies(dependencies, Seq.empty)
   }
 
   private def mapToProjectNameWithSourceTypeAppended(projectType: ProjectType): String = {
@@ -67,7 +67,7 @@ class DependenciesExtractor(projectRef: ProjectRef,
       val configurations = it.configuration.map(Configuration.fromString).getOrElse(Seq.empty)
       ProjectDependencyData(it.project.id, Some(it.project.build), configurations)
     }
-    Dependencies(Seq.empty, dependencies)
+    Dependencies(dependencies, Seq.empty)
   }
 
   private def moduleDependencies: Dependencies[ModuleDependencyData] = {
@@ -80,7 +80,7 @@ class DependenciesExtractor(projectRef: ProjectRef,
       val dependencies = allModuleDependencies.map { case(moduleId, configs) =>
         ModuleDependencyData(moduleId, mapConfigurations(configs))
       }
-      Dependencies(Seq.empty, dependencies)
+      Dependencies(dependencies, Seq.empty)
     }
   }
 
@@ -94,7 +94,7 @@ class DependenciesExtractor(projectRef: ProjectRef,
       val dependencies = allJarDependencies.map { case (file, configs) =>
         JarDependencyData(file, mapConfigurations(configs))
       }
-      Dependencies(Seq.empty, dependencies)
+      Dependencies(dependencies, Seq.empty)
     }
   }
 
@@ -146,7 +146,7 @@ class DependenciesExtractor(projectRef: ProjectRef,
         }
       }
     }
-    Dependencies(resultConfigurations._2, resultConfigurations._1)
+    Dependencies(resultConfigurations._1, resultConfigurations._2)
   }
 
   private def processDependencies[D, F](
@@ -168,7 +168,7 @@ class DependenciesExtractor(projectRef: ProjectRef,
       val cs = splitConfigurationsToDifferentSourceSets(configurations)
       updateDependenciesInProductionAndTest(dependency, cs.forProduction, cs.forTest)
     }
-    Dependencies(testDependencies.toSeq.map(mapToTargetType), productionDependencies.toSeq.map(mapToTargetType))
+    Dependencies(productionDependencies.toSeq.map(mapToTargetType), testDependencies.toSeq.map(mapToTargetType))
   }
 
   // We have to perform this configurations mapping because we're using externalDependencyClasspath
@@ -268,15 +268,26 @@ object DependenciesExtractor extends SbtStateOps with TaskOps {
         externalDependencyClasspathOpt <- externalDependencyClasspathTask
         classpathConfiguration <- classpathConfigurationTask
       } yield {
-
-        val arguments = (projectRef, projectToConfigurations, classpathConfiguration, settings, buildDependencies)
         val projectToTransitiveDependencies =
           if (options.separateProdAndTestSources) {
-            (getTransitiveDependenciesForProjectProdTestSources _ tupled)(arguments)
+            getTransitiveDependenciesForProjectProdTestSources(
+              projectRef,
+              projectToConfigurations,
+              classpathConfiguration,
+              settings,
+              buildDependencies
+            )
           } else if (options.insertProjectTransitiveDependencies) {
-            (getTransitiveDependenciesForProject _ tupled)(arguments)
-          } else
+            getTransitiveDependenciesForProject(
+              projectRef,
+              projectToConfigurations,
+              classpathConfiguration,
+              settings,
+              buildDependencies
+            )
+          } else {
             Map.empty[ProjectType, Seq[Configuration]]
+          }
 
         val extractor = new DependenciesExtractor(
           projectRef,
@@ -347,9 +358,9 @@ object DependenciesExtractor extends SbtStateOps with TaskOps {
 
   private case class ProjectConfigurations(source: Seq[String], test: Seq[String])
 
-  sealed abstract class ProjectType(val project: ProjectRef)
-  case class ProductionType(override val project: ProjectRef) extends ProjectType(project)
-  case class TestType(override val project: ProjectRef) extends ProjectType(project)
+  private sealed abstract class ProjectType(val project: ProjectRef)
+  private case class ProductionType(override val project: ProjectRef) extends ProjectType(project)
+  private case class TestType(override val project: ProjectRef) extends ProjectType(project)
 
   object ProjectType {
     def unapply(projectType: ProjectType): Option[ProjectRef] = Some(projectType.project)

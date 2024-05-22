@@ -138,21 +138,13 @@ trait DataSerializers {
         {what.home.toSeq.map { file =>
         <home>{file.path}</home>
       }}
-        {what.options.map { case (k, v) =>
-        <option>
-          <key>{k.name}</key>
-          {v.map(name => <value>{name}</value>)}
-        </option>
+        { what.options.sortBy(_.configuration.name).map(_.serialize) }
       }}
       </java>
 
     override def deserialize(what: Node): Either[Throwable,JavaData] = {
       val home    = (what \ "home").headOption.map(e => e.text.file)
-      val options = (what \ "option").map { option =>
-        val key = (option \ "key").text
-        val values = (option \ "value").map(_.text)
-        Configuration(key) -> values
-      }.toMap
+      val options = (what \ "compilerOptions").deserialize[CompilerOptions]
       Right(JavaData(home, options))
     }
   }
@@ -171,11 +163,7 @@ trait DataSerializers {
 
         { what.compilerBridgeBinaryJar.toSeq.map { jar => <compilerBridgeBinaryJar>{jar.path}</compilerBridgeBinaryJar>} }
 
-        {what.options.map { case (k, v) =>
-          <option>
-            <key>{k.name}</key>
-            {v.map(name => <value>{name}</value>)}
-          </option>
+        { what.options.sortBy(_.configuration.name).map(_.serialize) }
       }}
       </scala>
 
@@ -188,11 +176,7 @@ trait DataSerializers {
       val extraJars = (what \ "extraJars"\ "jar").map(_.text.file)
       val compilerBridgeBinaryJar = (what \ "compilerBridgeBinaryJar").headOption.map(_.text.file)
 
-      val options = (what \ "option").map { option =>
-        val key = (option \ "key").text
-        val values = (option \ "value").map(_.text)
-        Configuration(key) -> values
-      }.toMap
+      val options = (what \ "compilerOptions").deserialize[CompilerOptions]
       Right(ScalaData(
         organization,
         version,
@@ -219,7 +203,7 @@ trait DataSerializers {
     override def deserialize(what: Node): Either[Throwable, Dependencies[ProjectDependencyData]] = {
       val testDependencies = (what \ "forTest" \ "project").deserialize[ProjectDependencyData]
       val compileDependencies = (what \ "forProduction" \ "project").deserialize[ProjectDependencyData]
-      Right(Dependencies(testDependencies, compileDependencies))
+      Right(Dependencies(compileDependencies, testDependencies))
     }
   }
 
@@ -273,7 +257,7 @@ trait DataSerializers {
     override def deserialize(what: Node): Either[Throwable, Dependencies[ModuleDependencyData]] = {
       val testDependencies = (what \ "forTest" \ "module").deserialize[ModuleDependencyData]
       val compileDependencies = (what \ "forProduction" \ "module").deserialize[ModuleDependencyData]
-      Right(Dependencies(testDependencies, compileDependencies))
+      Right(Dependencies(compileDependencies, testDependencies))
     }
   }
 
@@ -305,7 +289,7 @@ trait DataSerializers {
     override def deserialize(what: Node): Either[Throwable, Dependencies[JarDependencyData]] = {
       val testDependencies = (what \ "forTest" \ "jar").deserialize[JarDependencyData]
       val compileDependencies = (what \ "forProduction" \ "jar").deserialize[JarDependencyData]
-      Right(Dependencies(testDependencies, compileDependencies))
+      Right(Dependencies(compileDependencies, testDependencies))
     }
   }
 
@@ -336,6 +320,21 @@ trait DataSerializers {
       } yield {
         DependencyData(projects, modules, jars)
       }
+    }
+  }
+
+  implicit val compilerOptionsSerializer: XmlSerializer[CompilerOptions] = new XmlSerializer[CompilerOptions] {
+    override def serialize(what: CompilerOptions): Elem = {
+      <compilerOptions>
+        <configuration>{what.configuration}</configuration>
+        {what.options.map(option => <option>{option}</option>)}
+      </compilerOptions>
+    }
+
+    override def deserialize(what: Node): Either[Throwable,CompilerOptions] = {
+      val configuration = (what \ "configuration").text
+      val options = (what \ "option").map(_.text)
+      Right(CompilerOptions(Configuration(configuration), options))
     }
   }
 

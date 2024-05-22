@@ -35,9 +35,9 @@ class ProjectExtractor(
   scalaOrganization: String,
   scalaInstance: Option[ScalaInstance],
   scalaCompilerBridgeBinaryJar: Option[File],
-  scalacOptions: Map[Configuration, Seq[String]],
+  scalacOptions: Seq[CompilerOptions],
   javaHome: Option[File],
-  javacOptions: Map[Configuration, Seq[String]],
+  javacOptions: Seq[CompilerOptions],
   compileOrder: CompileOrder,
   sourceConfigurations: Seq[sbt.Configuration],
   testConfigurations: Seq[sbt.Configuration],
@@ -316,15 +316,15 @@ object ProjectExtractor extends SbtStateOps with TaskOps {
       val scalaCompilerBridgeBinaryJar =
         keysAdapterEx.myScalaCompilerBridgeBinaryJar.value
 
-      val configurationToScalacOptions = Map(
-        Configuration.Compile -> taskInConfig(Keys.scalacOptions, Compile).onlyIf(options.download).value.getOrElse(Seq.empty),
-        Configuration.Test -> taskInConfig(Keys.scalacOptions, Test).onlyIf(options.download).value.getOrElse(Seq.empty)
-      )
-      val configurationToJavacOptions = Map(
-        Configuration.Compile -> taskInConfig(Keys.javacOptions, Compile).onlyIf(options.download).value.getOrElse(Seq.empty),
-        Configuration.Test -> taskInConfig(Keys.javacOptions, Test).onlyIf(options.download).value.getOrElse(Seq.empty)
+      val scalacOptions = Seq(
+        CompilerOptions(Configuration.Compile, taskInConfig(Keys.scalacOptions, Compile).onlyIf(options.download).value.getOrElse(Seq.empty)),
+        CompilerOptions(Configuration.Test, taskInConfig(Keys.scalacOptions, Test).onlyIf(options.download).value.getOrElse(Seq.empty))
       )
 
+      val javacOptions = Seq(
+        CompilerOptions(Configuration.Compile, taskInConfig(Keys.javacOptions, Compile).onlyIf(options.download).value.getOrElse(Seq.empty)),
+        CompilerOptions(Configuration.Test, taskInConfig(Keys.javacOptions, Test).onlyIf(options.download).value.getOrElse(Seq.empty))
+      )
 
       val name = Keys.name.in(projectRef, Compile).value
       val organization = Keys.organization.in(projectRef, Compile).value
@@ -366,9 +366,9 @@ object ProjectExtractor extends SbtStateOps with TaskOps {
         scalaOrganization,
         scalaInstance,
         scalaCompilerBridgeBinaryJar,
-        configurationToScalacOptions,
+        scalacOptions,
         javaHome,
-        configurationToJavacOptions,
+        javacOptions,
         compileOrder,
         StructureKeys.sourceConfigurations.value,
         StructureKeys.testConfigurations.value,

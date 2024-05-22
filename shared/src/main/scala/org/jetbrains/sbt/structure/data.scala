@@ -41,6 +41,8 @@ case class StructureData(sbtVersion: String,
  * Represents single project in build. Corresponds to IDEA module.
  * @param basePackages List of packages to use as base prefixes in chaining
  * @param target Compiler output directory (value of `target` key)
+ * @param testSourceDirectories List of source directories in all available test configurations. It is needed to identify ContentRootData#rootPath in the Scala plugin
+ * @param mainSourceDirectories List of source directories in all available source configurations. It is needed to identify ContentRootData#rootPath in the Scala plugin
  */
 case class ProjectData(
   id: String,
@@ -111,7 +113,9 @@ case class ConfigurationData(id: String,
 
 case class DirectoryData(file: File, managed: Boolean)
 
-case class JavaData(home: Option[File], options: Map[Configuration, Seq[String]])
+case class CompilerOptions(configuration: Configuration, options: Seq[String])
+
+case class JavaData(home: Option[File], options: Seq[CompilerOptions])
 
 /**
  * Analog of `sbt.internal.inc.ScalaInstance`
@@ -129,7 +133,7 @@ case class ScalaData(
   compilerJars: Seq[File],
   extraJars: Seq[File],
   compilerBridgeBinaryJar: Option[File],
-  options: Map[Configuration, Seq[String]]
+  options: Seq[CompilerOptions]
 ) {
   def allJars: Seq[File] = libraryJars ++ compilerJars ++ extraJars
   def allCompilerJars: Seq[File] = libraryJars ++ compilerJars
@@ -141,10 +145,10 @@ case class DependencyData(projects: Dependencies[ProjectDependencyData],
 
 /**
  * When the project is imported without prod/test sources feature enabled, all dependencies are put in forProduction parameter.
- * @param forTest dependencies that should go to the test module
  * @param forProduction dependencies that should go to the main module
+ * @param forTest dependencies that should go to the test module
  */
-case class Dependencies[T](forTest: Seq[T], forProduction: Seq[T])
+case class Dependencies[T](forProduction: Seq[T], forTest: Seq[T])
 
 /**
  * Inter-project dependency
