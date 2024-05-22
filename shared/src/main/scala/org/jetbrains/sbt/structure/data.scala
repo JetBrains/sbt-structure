@@ -27,6 +27,7 @@ object Configuration {
 
 /**
  * Represent specified build. Corresponds to IDEA project.
+ *
  * @param projects List of projects in build
  * @param repository List of libraries in build
  * @param localCachePath Path to a place where Ivy downloads artifacts. Usually ~/.ivy2/cache
@@ -39,6 +40,7 @@ case class StructureData(sbtVersion: String,
 
 /**
  * Represents single project in build. Corresponds to IDEA module.
+ *
  * @param basePackages List of packages to use as base prefixes in chaining
  * @param target Compiler output directory (value of `target` key)
  * @param testSourceDirectories List of source directories in all available test configurations. It is needed to identify ContentRootData#rootPath in the Scala plugin
@@ -99,6 +101,7 @@ object BuildData {
 
 /**
  * Lists of directories in specified configuration
+ *
  * @param id Name of configuration, usually "compile" or "test"
  * @param sources List of source directories
  * @param resources List of resource directories
@@ -145,6 +148,7 @@ case class DependencyData(projects: Dependencies[ProjectDependencyData],
 
 /**
  * When the project is imported without prod/test sources feature enabled, all dependencies are put in forProduction parameter.
+ *
  * @param forProduction dependencies that should go to the main module
  * @param forTest dependencies that should go to the test module
  */
@@ -152,24 +156,28 @@ case class Dependencies[T](forProduction: Seq[T], forTest: Seq[T])
 
 /**
  * Inter-project dependency
+ *
  * @param project What project to depend on
  */
 case class ProjectDependencyData(project: String, buildURI: Option[URI], configurations: Seq[Configuration])
 
 /**
  * External library dependency
+ *
  * @param id Library identifier
  */
 case class ModuleDependencyData(id: ModuleIdentifier, configurations: Seq[Configuration])
 
 /**
  * Unmanaged dependency
+ *
  * @param file File to depend on
  */
 case class JarDependencyData(file: File, configurations: Seq[Configuration])
 
 /**
  * Library identifier
+ *
  * @param revision AKA version
  */
 case class ModuleIdentifier(organization: String,
@@ -182,6 +190,7 @@ case class ModuleIdentifier(organization: String,
 
 /**
  * External library data. Corresponds to a project-level library in IDEA.
+ *
  * @param id Library identifier
  * @param binaries List of binary jars
  * @param docs List of javadoc jars
@@ -199,6 +208,7 @@ case class RepositoryData(modules: Seq[ModuleData])
 
 /**
  * Repository used to resolve external library dependencies
+ *
  * @param root URL or local path to a repo
  */
 case class ResolverData(name: String, root: String)
