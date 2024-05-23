@@ -41,7 +41,7 @@ class DependenciesExtractor(projectRef: ProjectRef,
 
   private def transitiveProjectDependencies: Dependencies[ProjectDependencyData] = {
     val dependencies = projectToConfigurations.map { case(ProjectType(project), configurations) =>
-      val transformedConfigurations = mapConfigurations(configurations).map(mapCustomSourceConfigurationToCompileIfApplicable)
+      val transformedConfigurations = mapConfigurations(configurations).map(mapCustomSourceConfigurationIfApplicable)
       ProjectDependencyData(project.id, Some(project.build), transformedConfigurations)
     }.toSeq
     Dependencies(dependencies, Seq.empty)
@@ -126,15 +126,16 @@ class DependenciesExtractor(projectRef: ProjectRef,
    */
   private def splitConfigurationsToDifferentSourceSets(configurations: Seq[Configuration]): Dependencies[Configuration] = {
     val cs = mergeAllTestConfigurations(configurations)
-    val resultConfigurations: (Seq[Configuration], Seq[Configuration]) = {
+    val (prodConfigs, testConfigs) = {
       if (Seq(Configuration.Compile, Configuration.Test, Configuration.Runtime).forall(cs.contains)) { // compile configuration
         (Seq(Configuration.Compile), Seq(Configuration.Compile))
       } else {
         Seq(
-          // note:
-          //    provided -> prod Provided + test Compile
-          //    runtime -> prod Runtime + test Compile
-          // these 3 conditions are also suitable for -internal configurations because when e.g. compile-internal configuration
+          // 1. The downside of this logic is that if cs contains only some custom source configuration (not one that is available in sbt by default),
+          // then prodConfigs will be empty. It is fixed in #updateProductionConfigs.
+          // Mapping custom source configurations to Compile, couldn't be done at the same place as
+          // #mergeAllTestConfigurations, because then Compile would be converted into Provided and it is not the purpose.
+          // 2. These 3 conditions are also suitable for -internal configurations because when e.g. compile-internal configuration
           // is used cs contains only compile configuration and this will cause the dependency to be added to the production module
           // with the provided scope
           (cs.contains(Configuration.Test), Nil, Seq(Configuration.Compile)),
@@ -146,7 +147,27 @@ class DependenciesExtractor(projectRef: ProjectRef,
         }
       }
     }
-    Dependencies(resultConfigurations._1, resultConfigurations._2)
+    val updatedProdConfigs = updateProductionConfigs(prodConfigs, cs)
+    Dependencies(updatedProdConfigs, testConfigs)
+  }
+
+  private def updateProductionConfigs(prodConfigs: Seq[Configuration], allConfigs: Set[Configuration]): Seq[Configuration] = {
+    def mergeProvidedAndRuntime(): Seq[Configuration] =
+      prodConfigs.map {
+        case Configuration.Provided | Configuration.Runtime => Configuration.Compile
+        case x => x
+      }.distinct
+
+    val shouldMergeProvidedAndRuntime = Seq(Configuration.Provided, Configuration.Runtime).forall(prodConfigs.contains)
+    val isCustomSourceConfigPresent = allConfigs.map(_.name).toSeq.intersect(sourceConfigurationsNames).nonEmpty
+
+    if (shouldMergeProvidedAndRuntime) {
+      mergeProvidedAndRuntime()
+    } else if (prodConfigs.isEmpty && isCustomSourceConfigPresent) {
+      Seq(Configuration.Compile)
+    } else {
+      prodConfigs
+    }
   }
 
   private def processDependencies[D, F](
@@ -207,7 +228,7 @@ class DependenciesExtractor(projectRef: ProjectRef,
    *
    * Check behaviour of this logic when SCL-18284 will be fixed
    */
-  private def mapCustomSourceConfigurationToCompileIfApplicable(configuration: Configuration): Configuration = {
+  private def mapCustomSourceConfigurationIfApplicable(configuration: Configuration): Configuration = {
     val matchIDEAScopes = IDEAScopes.contains(configuration.name)
     val isSourceConfiguration = sourceConfigurationsNames.contains(configuration.name)
     if (!matchIDEAScopes && isSourceConfiguration) {
