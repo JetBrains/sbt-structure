@@ -379,9 +379,9 @@ object DependenciesExtractor extends SbtStateOps with TaskOps {
 
   private case class ProjectConfigurations(source: Seq[String], test: Seq[String])
 
-  private sealed abstract class ProjectType(val project: ProjectRef)
-  private case class ProductionType(override val project: ProjectRef) extends ProjectType(project)
-  private case class TestType(override val project: ProjectRef) extends ProjectType(project)
+  private[extractors] sealed abstract class ProjectType(val project: ProjectRef)
+  private[extractors] case class ProductionType(override val project: ProjectRef) extends ProjectType(project)
+  private[extractors] case class TestType(override val project: ProjectRef) extends ProjectType(project)
 
   object ProjectType {
     def unapply(projectType: ProjectType): Option[ProjectRef] = Some(projectType.project)

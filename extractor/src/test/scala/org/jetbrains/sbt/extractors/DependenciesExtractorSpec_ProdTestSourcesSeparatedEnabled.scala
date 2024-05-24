@@ -1,28 +1,26 @@
-package org.jetbrains.sbt
-package extractors
+package org.jetbrains.sbt.extractors
 
+import org.jetbrains.sbt.`enrich ProjectRef`
 import org.jetbrains.sbt.extractors.DependenciesExtractor.ProductionType
-import org.jetbrains.sbt.structure._
+import org.jetbrains.sbt.structure.*
 import org.scalatest.freespec.AnyFreeSpecLike
 import org.scalatest.matchers.must.Matchers.{contain, convertToAnyMustWrapper}
-import sbt.{Configuration => SbtConfiguration, Attributed, globFilter => _, _}
+import sbt.{Attributed, Configuration as SbtConfiguration, globFilter as _, *}
 import sbt.jetbrains.apiAdapter
 
 import scala.collection.Seq
 
-class DependenciesExtractorSpec extends AnyFreeSpecLike {
+class DependenciesExtractorSpec_ProdTestSourcesSeparatedEnabled extends AnyFreeSpecLike {
 
-  val projects: Seq[ProjectRef] =
-    Seq("project-1", "project-2").map(ProjectRef(file("/tmp/test-project"), _))
+  val projects: Seq[ProjectRef] = Seq("project-1", "project-2", "project-3").map { projectName =>
+    ProjectRef(file("/tmp/test-project"), projectName)
+  }
   val emptyClasspath: sbt.Configuration => Keys.Classpath = _ => Nil
   val CustomConf = config("custom-conf").extend(sbt.Test)
+  // note: when prod/test sources are enabled, then in DependenciesExtractor#extract
+  // buildDependencies are not used at all, so it can simply be empty
   val buildDependencies = apiAdapter.buildDependencies(
-    Map(
-      projects.head -> Seq(
-        ResolvedClasspathDependency(projects(1), Some("compile"))
-      ),
-      projects(1) -> Seq.empty
-    ),
+    Map.empty,
     Map.empty
   )
 
@@ -37,36 +35,45 @@ class DependenciesExtractorSpec extends AnyFreeSpecLike {
             attributed(file("foo.jar")),
             attributed(file("bar.jar"))
           ),
-          sbt.Test -> Seq(attributed(file("baz.jar")))
+          sbt.Test -> Seq(attributed(file("foo.jar")))
         ).apply,
         externalDependencyClasspath = None,
         dependencyConfigurations = Seq(sbt.Compile, sbt.Test),
         testConfigurations = Seq(sbt.Test),
         sourceConfigurations = Seq(sbt.Compile, sbt.Runtime),
         insertProjectTransitiveDependencies = true,
-        separateProdTestSources = false,
+        separateProdTestSources = true,
         projectToConfigurations = Map(
-          ProductionType(projects(1)) -> Seq(Configuration.Compile, Configuration.Runtime, Configuration.Test)
+          ProductionType(projects(1)) -> Seq(Configuration.Test),
+          ProductionType(projects.head) -> Seq(Configuration.Test),
         )
       ).extract
 
       val expected = DependencyData(
-        projects = mapToProdDependencies(
-           Seq(
+        projects = Dependencies(
+          forProduction = Seq.empty,
+          forTest = Seq(
             ProjectDependencyData(
-              projects(1).id,
+              s"${projects(1).id}:main",
               Some(projects(1).build),
               Seq(Configuration.Compile)
+            ),
+            ProjectDependencyData(
+              s"${projects.head.id}:main",
+              Some(projects.head.build),
+              Seq(Configuration.Compile)
             )
-           )
+          ),
         ),
         modules = Dependencies(Seq.empty, Seq.empty),
-        jars = mapToProdDependencies(
-          Seq(
-            JarDependencyData(file("foo.jar"), Seq(Configuration.Compile)),
-            JarDependencyData(file("bar.jar"), Seq(Configuration.Compile)),
-            JarDependencyData(file("baz.jar"), Seq(Configuration.Test))
+        jars = Dependencies(
+          forProduction = Seq(
+            JarDependencyData(file("foo.jar"), Seq(Configuration.Provided)),
+            JarDependencyData(file("bar.jar"), Seq(Configuration.Provided)),
           ),
+          forTest = Seq(
+            JarDependencyData(file("foo.jar"), Seq(Configuration.Compile))
+          )
         )
       )
       assertIdentical(expected, actual)
@@ -94,35 +101,44 @@ class DependenciesExtractorSpec extends AnyFreeSpecLike {
         testConfigurations = Seq(sbt.Test),
         sourceConfigurations = Seq(sbt.Compile, sbt.Runtime),
         insertProjectTransitiveDependencies = true,
-        separateProdTestSources = false,
+        separateProdTestSources = true,
         projectToConfigurations = Map(
-          ProductionType(projects(1)) -> Seq(Configuration.Compile, Configuration.Test, Configuration.Runtime)
+          ProductionType(projects(1)) -> Seq(Configuration.Test),
+          ProductionType(projects.head) -> Seq(Configuration.Test)
         )
       ).extract
 
       val expected = DependencyData(
-        projects = mapToProdDependencies(
-          Seq(
+        projects = Dependencies(
+          forProduction = Seq.empty,
+          forTest = Seq(
             ProjectDependencyData(
-              projects(1).id,
+              s"${projects(1).id}:main",
               Some(projects(1).build),
               Seq(Configuration.Compile)
+            ),
+            ProjectDependencyData(
+              s"${projects.head.id}:main",
+              Some(projects.head.build),
+              Seq(Configuration.Compile)
             )
-          )
+          ),
         ),
-        modules = mapToProdDependencies(
-          Seq(
+        modules = Dependencies(
+          forProduction = Seq(
             ModuleDependencyData(
               toIdentifier(moduleId("foo")),
-              Seq(Configuration.Compile)
+              Seq(Configuration.Provided)
             ),
             ModuleDependencyData(
               toIdentifier(moduleId("bar")),
-              Seq(Configuration.Compile)
-            ),
+              Seq(Configuration.Provided)
+            )
+          ),
+          forTest = Seq(
             ModuleDependencyData(
               toIdentifier(moduleId("baz")),
-              Seq(Configuration.Test)
+              Seq(Configuration.Compile)
             )
           )
         ),
@@ -156,38 +172,47 @@ class DependenciesExtractorSpec extends AnyFreeSpecLike {
         testConfigurations = Seq(sbt.Test, CustomConf),
         sourceConfigurations = Seq(sbt.Compile, sbt.Runtime),
         insertProjectTransitiveDependencies = true,
-        separateProdTestSources = false,
+        separateProdTestSources = true,
         projectToConfigurations = Map(
-          ProductionType(projects(1)) -> Seq(Configuration.Compile, Configuration.Test, Configuration.Runtime)
+          ProductionType(projects(1)) -> Seq(Configuration.Test),
+          ProductionType(projects.head) -> Seq(Configuration.Test)
         )
       ).extract
 
       val expected = DependencyData(
-        projects = mapToProdDependencies(
-          Seq(
+        projects = Dependencies(
+          forProduction = Seq.empty,
+          forTest = Seq(
             ProjectDependencyData(
-              projects(1).id,
+              s"${projects(1).id}:main",
               Some(projects(1).build),
+              Seq(Configuration.Compile)
+            ),
+            ProjectDependencyData(
+              s"${projects.head.id}:main",
+              Some(projects.head.build),
+              Seq(Configuration.Compile)
+            )
+          ),
+        ),
+        modules = Dependencies(
+          forProduction = Seq.empty,
+          forTest = Seq(
+            ModuleDependencyData(
+              toIdentifier(moduleId("baz")),
+              Seq(Configuration.Compile)
+            ),
+            ModuleDependencyData(
+              toIdentifier(moduleId("qux")),
               Seq(Configuration.Compile)
             )
           )
         ),
-        modules = mapToProdDependencies(
-          Seq(
-            ModuleDependencyData(
-              toIdentifier(moduleId("baz")),
-              Seq(Configuration.Test)
-            ),
-            ModuleDependencyData(
-              toIdentifier(moduleId("qux")),
-              Seq(Configuration.Test)
-            )
-          )
-        ),
-        jars = mapToProdDependencies(
-          Seq(
-            JarDependencyData(file("foo.jar"), Seq(Configuration.Test)),
-            JarDependencyData(file("bar.jar"), Seq(Configuration.Test))
+        jars = Dependencies(
+          forProduction = Seq.empty,
+          forTest = Seq(
+            JarDependencyData(file("foo.jar"), Seq(Configuration.Compile)),
+            JarDependencyData(file("bar.jar"), Seq(Configuration.Compile))
           )
         )
       )
@@ -202,47 +227,58 @@ class DependenciesExtractorSpec extends AnyFreeSpecLike {
         projects.head,
         buildDependencies = buildDependencies,
         unmanagedClasspath = emptyClasspath,
-        externalDependencyClasspath = Some(
-          Map(
-            sbt.Compile -> Seq(
-              attributedWith(file("foo.jar"))(moduleId, Artifact("foo")),
-              attributedWith(file("foo-tests.jar"))(
-                moduleId,
-                Artifact("foo", "tests")
-              )
+        externalDependencyClasspath = Some(Map(
+          sbt.Compile -> Seq(
+            attributedWith(file("foo.jar"))(moduleId, Artifact("foo")),
+            attributedWith(file("foo-tests.jar"))(
+              moduleId,
+              Artifact("foo", "tests")
             )
-          ).apply
-        ),
+          ),
+        )),
         dependencyConfigurations = Seq(sbt.Compile),
         testConfigurations = Seq.empty,
         sourceConfigurations = Seq(sbt.Compile, sbt.Runtime),
         insertProjectTransitiveDependencies = true,
-        separateProdTestSources = false,
+        separateProdTestSources = true,
         projectToConfigurations = Map(
-          ProductionType(projects(1)) -> Seq(Configuration.Compile, Configuration.Test, Configuration.Runtime)
+          ProductionType(projects(1)) -> Seq(Configuration.Test),
+          ProductionType(projects.head) -> Seq(Configuration.Test)
+
         )
       ).extract
 
       val expectedModules = Seq(toIdentifier(moduleId), toIdentifier(moduleId).copy(classifier = "tests")).map {
-        it => ModuleDependencyData(it, Seq(Configuration.Compile))
+        it => ModuleDependencyData(it, Seq(Configuration.Provided))
       }
       val expected = DependencyData(
-        projects = mapToProdDependencies(
-          Seq(
+        projects = Dependencies(
+          forProduction = Seq.empty,
+          forTest = Seq(
             ProjectDependencyData(
-              projects(1).id,
+              s"${projects(1).id}:main",
               Some(projects(1).build),
               Seq(Configuration.Compile)
+            ),
+            ProjectDependencyData(
+              s"${projects.head.id}:main",
+              Some(projects.head.build),
+              Seq(Configuration.Compile)
             )
-          )
+          ),
         ),
-        modules = mapToProdDependencies(expectedModules),
+        modules = Dependencies(
+          forProduction = expectedModules, forTest= Seq.empty
+        ),
         jars = Dependencies(Seq.empty, Seq.empty)
       )
       assertIdentical(expected, actual)
     }
+  }
 
-    "merge (compile, test, runtime) -> compile in unmanaged and managed dependencies to match IDEA scopes" in {
+  "Validation of mapping configurations to prod and test modules in unmanaged deps, managed deps an project deps" - {
+
+    "Convert (compile, test, runtime) -> to prod compile and test compile" in {
       val moduleId = "com.example" % "foo" % "SNAPSHOT"
 
       val actual = new DependenciesExtractor(
@@ -270,36 +306,68 @@ class DependenciesExtractorSpec extends AnyFreeSpecLike {
         testConfigurations = Seq.empty,
         sourceConfigurations = Seq(sbt.Compile, sbt.Runtime),
         insertProjectTransitiveDependencies = true,
-        separateProdTestSources = false,
+        separateProdTestSources = true,
         projectToConfigurations = Map(
-          ProductionType(projects(1)) -> Seq(Configuration.Compile, Configuration.Test, Configuration.Runtime)
+          ProductionType(projects(1)) -> Seq(Configuration.Compile, Configuration.Test, Configuration.Runtime),
+          ProductionType(projects.head) -> Seq(Configuration.Test)
         )
       ).extract
 
       val expected = DependencyData(
-        projects = mapToProdDependencies(
-          Seq(
+        projects = Dependencies(
+          forProduction = Seq(
             ProjectDependencyData(
-              projects(1).id,
+              s"${projects(1).id}:main",
+              Some(projects(1).build),
+              Seq(Configuration.Compile)
+            )
+          ),
+          forTest = Seq(
+            ProjectDependencyData(
+              s"${projects.head.id}:main",
+              Some(projects.head.build),
+              Seq(Configuration.Compile)
+            ),
+            ProjectDependencyData(
+              s"${projects(1).id}:main",
               Some(projects(1).build),
               Seq(Configuration.Compile)
             )
           )
         ),
-        modules = mapToProdDependencies(
-          Seq(
+        modules = Dependencies(
+          forProduction = Seq(
+            ModuleDependencyData(
+              toIdentifier(moduleId),
+              Seq(Configuration.Compile)
+            )
+          ),
+          forTest = Seq(
             ModuleDependencyData(
               toIdentifier(moduleId),
               Seq(Configuration.Compile)
             )
           )
         ),
-        jars = mapToProdDependencies(Seq(JarDependencyData(file("bar.jar"), Seq(Configuration.Compile))))
+        jars = Dependencies(
+          forProduction = Seq(
+            JarDependencyData(
+              file("bar.jar"),
+              Seq(Configuration.Compile)
+            )
+          ),
+          forTest = Seq(
+            JarDependencyData(
+              file("bar.jar"),
+              Seq(Configuration.Compile)
+            )
+          )
+        ),
       )
       assertIdentical(expected, actual)
     }
 
-    "merge (compile, test) -> provided in unmanaged and managed dependencies to match IDEA scopes" in {
+    "Convert (compile, test) -> to prod provided and test compile" in {
       val moduleId = "com.example" % "foo" % "SNAPSHOT"
 
       val actual = new DependenciesExtractor(
@@ -307,7 +375,8 @@ class DependenciesExtractorSpec extends AnyFreeSpecLike {
         buildDependencies = buildDependencies,
         unmanagedClasspath = Map(
           sbt.Compile -> Seq(attributed(file("bar.jar"))),
-          sbt.Test -> Seq(attributed(file("bar.jar")))
+          sbt.Test -> Seq(attributed(file("bar.jar"))),
+          sbt.Runtime -> Seq.empty
         ).apply,
         externalDependencyClasspath = Some(
           Map(
@@ -316,120 +385,160 @@ class DependenciesExtractorSpec extends AnyFreeSpecLike {
             ),
             sbt.Test -> Seq(
               attributedWith(file("foo.jar"))(moduleId, Artifact("foo"))
-            )
+            ),
+            sbt.Runtime -> Seq.empty
           ).apply
         ),
-        dependencyConfigurations = Seq(sbt.Compile, sbt.Test),
+        dependencyConfigurations = Seq(sbt.Compile, sbt.Test, sbt.Runtime),
         testConfigurations = Seq.empty,
         sourceConfigurations = Seq(sbt.Compile, sbt.Runtime),
         insertProjectTransitiveDependencies = true,
-        separateProdTestSources = false,
+        separateProdTestSources = true,
         projectToConfigurations = Map(
-          ProductionType(projects(1)) -> Seq(Configuration.Compile, Configuration.Test, Configuration.Runtime)
+          ProductionType(projects(1)) -> Seq(Configuration.Test, Configuration.Compile),
+          ProductionType(projects.head) -> Seq(Configuration.Test)
         )
       ).extract
 
       val expected = DependencyData(
-        projects = mapToProdDependencies(
-          Seq(
+        projects = Dependencies(
+          forProduction =  Seq(
             ProjectDependencyData(
-              projects(1).id,
+              s"${projects(1).id}:main",
+              Some(projects(1).build),
+              Seq(Configuration.Provided)
+            )
+          ),
+          forTest = Seq(
+            ProjectDependencyData(
+              s"${projects.head.id}:main",
+              Some(projects.head.build),
+              Seq(Configuration.Compile)
+            ),
+            ProjectDependencyData(
+              s"${projects(1).id}:main",
               Some(projects(1).build),
               Seq(Configuration.Compile)
             )
           )
         ),
-        modules = mapToProdDependencies(
-          Seq(
+        modules = Dependencies(
+          forProduction = Seq(
             ModuleDependencyData(
               toIdentifier(moduleId),
               Seq(Configuration.Provided)
             )
+          ),
+          forTest = Seq(
+            ModuleDependencyData(
+              toIdentifier(moduleId),
+              Seq(Configuration.Compile)
+            )
           )
         ),
-        jars = mapToProdDependencies(Seq(JarDependencyData(file("bar.jar"), Seq(Configuration.Provided))))
-      )
-      assertIdentical(expected, actual)
-    }
-  }
-
-  "DependenciesExtractor for project dependencies" - {
-
-    "merge (compile, test, runtime) -> compile in transitive project dependencies to match IDEA scopes" in {
-      val actual =  new DependenciesExtractor(
-        projects.head,
-        buildDependencies,
-        unmanagedClasspath = emptyClasspath,
-        externalDependencyClasspath = None,
-        dependencyConfigurations = Seq(sbt.Compile, sbt.Test, sbt.Runtime),
-        testConfigurations = Nil,
-        sourceConfigurations = Seq(sbt.Compile, sbt.Runtime),
-        insertProjectTransitiveDependencies = true,
-        separateProdTestSources = false,
-        projectToConfigurations = Map(
-          ProductionType(projects(1)) -> Seq(Configuration.Compile, Configuration.Test, Configuration.Runtime)
+        jars = Dependencies(
+          forProduction = Seq(
+            JarDependencyData(
+              file("bar.jar"),
+              Seq(Configuration.Provided)
+            )
+          ),
+          forTest = Seq(
+            JarDependencyData(
+              file("bar.jar"),
+              Seq(Configuration.Compile)
+            )
+          )
         )
-      ).extract
-
-      val productionDependencies = Seq(
-        ProjectDependencyData(projects(1).project, Some(projects(1).build), Seq(Configuration.Compile))
-      )
-      val expected = DependencyData(
-        projects = mapToProdDependencies(productionDependencies),
-        modules = Dependencies(Seq.empty, Seq.empty),
-        jars = Dependencies(Seq.empty, Seq.empty)
       )
       assertIdentical(expected, actual)
     }
 
-    "merge (compile, test) -> provided in transitive project dependencies to match IDEA scopes" in {
+    "convert (custom test configurations, compile) -> prod provided and test compile" in {
+      val moduleId = "com.example" % "foo" % "SNAPSHOT"
+
       val actual =  new DependenciesExtractor(
         projects.head,
         buildDependencies,
-        unmanagedClasspath = emptyClasspath,
-        externalDependencyClasspath = None,
-        dependencyConfigurations = Seq(sbt.Compile, sbt.Test, sbt.Runtime),
-        testConfigurations = Nil,
-        sourceConfigurations = Seq(sbt.Compile, sbt.Runtime),
-        insertProjectTransitiveDependencies = true,
-        separateProdTestSources = false,
-        projectToConfigurations = Map(
-          ProductionType(projects(1)) -> Seq(Configuration.Compile, Configuration.Test)
-        )
-      ).extract
-
-      val expected = DependencyData(
-        projects = mapToProdDependencies(
-          Seq(ProjectDependencyData(projects(1).project, Some(projects(1).build), Seq(Configuration.Provided)))
+        unmanagedClasspath = Map(
+          sbt.Compile -> Seq(attributed(file("bar.jar"))),
+          CustomConf -> Seq(attributed(file("bar.jar"))),
+          sbt.Runtime -> Seq.empty,
+          sbt.Test -> Seq.empty,
+        ).apply,
+        externalDependencyClasspath = Some(
+          Map(
+            sbt.Compile -> Seq(
+              attributedWith(file("foo.jar"))(moduleId, Artifact("foo"))
+            ),
+            CustomConf -> Seq(
+              attributedWith(file("foo.jar"))(moduleId, Artifact("foo"))
+            ),
+            sbt.Runtime -> Seq.empty,
+            sbt.Test -> Seq.empty,
+          ).apply
         ),
-        modules = Dependencies(Seq.empty, Seq.empty),
-        jars = Dependencies(Seq.empty, Seq.empty)
-      )
-      assertIdentical(expected, actual)
-    }
-
-    "merge (custom test configurations, compile) -> provided in transitive project dependencies to match IDEA scopes" in {
-      val actual =  new DependenciesExtractor(
-        projects.head,
-        buildDependencies,
-        unmanagedClasspath = emptyClasspath,
-        externalDependencyClasspath = None,
         dependencyConfigurations = Seq(sbt.Compile, sbt.Test, sbt.Runtime, CustomConf),
         testConfigurations = Seq(sbt.Test, CustomConf),
         sourceConfigurations = Seq(sbt.Compile, sbt.Runtime),
         insertProjectTransitiveDependencies = true,
-        separateProdTestSources = false,
+        separateProdTestSources = true,
         projectToConfigurations = Map(
-          ProductionType(projects(1)) -> Seq(Configuration.Compile, Configuration(CustomConf.name))
+          ProductionType(projects(1)) -> Seq(Configuration.Compile, Configuration(CustomConf.name)),
+          ProductionType(projects.head) -> Seq(Configuration.Test)
         )
       ).extract
 
       val expected = DependencyData(
-        projects = mapToProdDependencies(
-          Seq(ProjectDependencyData(projects(1).project, Some(projects(1).build), Seq(Configuration.Provided)))
+        projects = Dependencies(
+          forProduction = Seq(
+            ProjectDependencyData(
+              s"${projects(1).id}:main",
+              Some(projects(1).build),
+              Seq(Configuration.Provided)
+            )
+          ),
+          forTest = Seq(
+            ProjectDependencyData(
+              s"${projects(1).id}:main",
+              Some(projects(1).build),
+              Seq(Configuration.Compile)
+            ),
+            ProjectDependencyData(
+              s"${projects.head.id}:main",
+              Some(projects.head.build),
+              Seq(Configuration.Compile)
+            ),
+          )
         ),
-        modules = Dependencies(Seq.empty, Seq.empty),
-        jars = Dependencies(Seq.empty, Seq.empty)
+        modules = Dependencies(
+          forProduction = Seq(
+            ModuleDependencyData(
+              toIdentifier(moduleId),
+              Seq(Configuration.Provided)
+            )
+          ),
+          forTest = Seq(
+            ModuleDependencyData(
+              toIdentifier(moduleId),
+              Seq(Configuration.Compile)
+            )
+          )
+        ),
+        jars = Dependencies(
+          forProduction = Seq(
+            JarDependencyData(
+              file("bar.jar"),
+              Seq(Configuration.Provided)
+            )
+          ),
+          forTest = Seq(
+            JarDependencyData(
+              file("bar.jar"),
+              Seq(Configuration.Compile)
+            )
+          )
+        )
       )
       assertIdentical(expected, actual)
     }
@@ -437,8 +546,11 @@ class DependenciesExtractorSpec extends AnyFreeSpecLike {
 
   def assertIdentical(expected: DependencyData, actual: DependencyData): Unit = {
     actual.projects.forProduction must contain theSameElementsAs expected.projects.forProduction
+    actual.projects.forTest must contain theSameElementsAs expected.projects.forTest
     actual.jars.forProduction must contain theSameElementsAs expected.jars.forProduction
+    actual.jars.forTest must contain theSameElementsAs expected.jars.forTest
     actual.modules.forProduction must contain theSameElementsAs expected.modules.forProduction
+    actual.modules.forTest must contain theSameElementsAs expected.modules.forTest
   }
 
   def attributedWith(file: File)(moduleId: ModuleID,
@@ -459,11 +571,5 @@ class DependenciesExtractorSpec extends AnyFreeSpecLike {
       moduleId.revision,
       Artifact.DefaultType,
       ""
-    )
-
-  private def mapToProdDependencies[T](forProduction: Seq[T]): Dependencies[T] =
-    Dependencies(
-      forProduction = forProduction,
-      forTest = Seq.empty
     )
 }
