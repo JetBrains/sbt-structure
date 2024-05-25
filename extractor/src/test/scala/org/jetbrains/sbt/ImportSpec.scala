@@ -33,10 +33,14 @@ class ImportSpec extends AnyFreeSpecLike {
   import Options.Keys
 
   private val ResolveNone = ""
+  private val ResolveNoneAndSeparateProdTestSources = Keys.SeparateProdAndTestSources
   private val ResolveSources = s"${Keys.ResolveSourceClassifiers}"
   private val ResolveJavadocs = s"${Keys.ResolveJavadocClassifiers}"
   private val ResolveSbtClassifiers = s"${Keys.ResolveSbtClassifiers}"
+  private val ResolveSbtClassifiersAndSeparateProdTestSources = s"${Keys.ResolveSbtClassifiers} ${Keys.SeparateProdAndTestSources}"
   private val ResolveSourcesAndSbtClassifiers = s"${Keys.ResolveSourceClassifiers} ${Keys.ResolveSbtClassifiers}"
+  private val ResolveSourcesAndSbtClassifiersAndSeparateProdTestSources =
+    s"${Keys.ResolveSourceClassifiers} ${Keys.ResolveSbtClassifiers} ${Keys.SeparateProdAndTestSources}"
   private val ResolveSourcesAndJavaDocsAndSbtClassifiers = s"${Keys.ResolveSourceClassifiers}, ${Keys.ResolveJavadocClassifiers}, ${Keys.ResolveSbtClassifiers}"
 
   "extracted structure should equal to expected structure" - {
@@ -55,19 +59,55 @@ class ImportSpec extends AnyFreeSpecLike {
       "dependency_resolve_none_with_explicit_classifiers" in { testProject_013("dependency_resolve_none_with_explicit_classifiers", options = ResolveNone) }
       "dependency_resolve_sources" in { testProject_013("dependency_resolve_sources", options = ResolveSources) }
       "dependency_resolve_javadocs" in { testProject_013("dependency_resolve_javadocs", options = ResolveJavadocs) }
+
+      "prod_test_sources_separated" - {
+        "multiple" in { testProject_013("prod_test_sources_separated/multiple", options = ResolveSourcesAndSbtClassifiersAndSeparateProdTestSources) }
+        "simple" in { testProject_013("prod_test_sources_separated/simple", options = ResolveSourcesAndSbtClassifiersAndSeparateProdTestSources) }
+        "classifiers" in { testProject_013("prod_test_sources_separated/classifiers", options = ResolveSourcesAndSbtClassifiersAndSeparateProdTestSources) }
+        "optional" in { testProject_013("prod_test_sources_separated/optional", options = ResolveSourcesAndSbtClassifiersAndSeparateProdTestSources) }
+        "play" in { testProject_013("prod_test_sources_separated/play", options = ResolveNoneAndSeparateProdTestSources) }
+        "custom-test-config" in { testProject_013("prod_test_sources_separated/custom-test-config", options = ResolveSourcesAndSbtClassifiersAndSeparateProdTestSources)}
+      }
     }
 
-    "1.0 simple" in { testProject("simple", "1.0.4", ResolveSourcesAndSbtClassifiers) }
-    "1.1 simple" in { testProject("simple", "1.1.6", ResolveSourcesAndSbtClassifiers) }
-    "1.2 simple" in { testProject("simple", "1.2.8", ResolveSourcesAndSbtClassifiers) }
-    "1.3 simple" in { testProject("simple", "1.3.13", ResolveSourcesAndSbtClassifiers) }
-    "1.4 simple" in { testProject("simple", "1.4.9", ResolveSourcesAndSbtClassifiers) }
-    "1.5 simple" in { testProject("simple", "1.5.5", ResolveSourcesAndSbtClassifiers) }
-    "1.5 scala3 simple" in { testProject("simple_scala3", "1.5.5", ResolveSourcesAndSbtClassifiers) }
-    "1.6 simple" in { testProject("simple", "1.6.2", ResolveSourcesAndSbtClassifiers) }
-    "1.7 simple" in { testProject("simple", "1.7.3", ResolveSourcesAndSbtClassifiers) }
-    "1.7 compile-order" in { testProject("compile-order", "1.7.3", ResolveSourcesAndSbtClassifiers) }
-    "1.8 simple " in { testProject("simple", "1.8.3", ResolveSourcesAndSbtClassifiers) }
+    "1.0" - {
+      "simple" in { testProject("simple", "1.0.4", ResolveSourcesAndSbtClassifiers) }
+      "prod_test_sources_separated" in { testProject("prod_test_sources_separated", "1.0.4", ResolveSourcesAndSbtClassifiersAndSeparateProdTestSources) }
+    }
+    "1.1" - {
+      "simple" in { testProject("simple", "1.1.6", ResolveSourcesAndSbtClassifiers) }
+      "prod_test_sources_separated" in { testProject("prod_test_sources_separated", "1.1.6", ResolveSourcesAndSbtClassifiersAndSeparateProdTestSources) }
+    }
+    "1.2" - {
+      "simple" in { testProject("simple", "1.2.8", ResolveSourcesAndSbtClassifiers) }
+      "prod_test_sources_separated" in { testProject("prod_test_sources_separated", "1.2.8", ResolveSourcesAndSbtClassifiersAndSeparateProdTestSources) }
+    }
+    "1.3" - {
+      "simple" in { testProject("simple", "1.3.13", ResolveSourcesAndSbtClassifiers) }
+      "prod_test_sources_separated" in { testProject("prod_test_sources_separated", "1.3.13", ResolveSourcesAndSbtClassifiersAndSeparateProdTestSources) }
+    }
+    "1.4" - {
+      "simple" in { testProject("simple", "1.4.9", ResolveSourcesAndSbtClassifiers) }
+      "prod_test_sources_separated" in { testProject("prod_test_sources_separated", "1.4.9", ResolveSourcesAndSbtClassifiersAndSeparateProdTestSources) }
+    }
+    "1.5" - {
+      "simple" in { testProject("simple", "1.5.5", ResolveSourcesAndSbtClassifiers) }
+      "scala3 simple" in { testProject("simple_scala3", "1.5.5", ResolveSourcesAndSbtClassifiers) }
+      "prod_test_sources_separated" in { testProject("prod_test_sources_separated", "1.5.5", ResolveSourcesAndSbtClassifiersAndSeparateProdTestSources) }
+    }
+    "1.6" - {
+      "simple" in { testProject("simple", "1.6.2", ResolveSourcesAndSbtClassifiers) }
+      "prod_test_sources_separated" in { testProject("prod_test_sources_separated", "1.6.2", ResolveSourcesAndSbtClassifiersAndSeparateProdTestSources) }
+    }
+    "1.7" - {
+      "simple" in { testProject("simple", "1.7.3", ResolveSourcesAndSbtClassifiers) }
+      "compile-order" in { testProject("compile-order", "1.7.3", ResolveSourcesAndSbtClassifiers) }
+      "prod_test_sources_separated" in { testProject("prod_test_sources_separated", "1.7.3", ResolveSourcesAndSbtClassifiersAndSeparateProdTestSources) }
+    }
+    "1.8" - {
+      "simple" in { testProject("simple", "1.8.3", ResolveSourcesAndSbtClassifiers) }
+      "prod_test_sources_separated" in { testProject("prod_test_sources_separated", "1.8.3", ResolveSourcesAndSbtClassifiersAndSeparateProdTestSources) }
+    }
 
     "1.9" - {
       val SbtVersion_1_9 = "1.9.6"
@@ -77,6 +117,8 @@ class ImportSpec extends AnyFreeSpecLike {
       "dependency_resolve_javadocs" in { testProject("dependency_resolve_javadocs", SbtVersion_1_9, options = ResolveJavadocs) }
       "dependency_resolve_sbt_classifiers" in { testProject("dependency_resolve_sbt_classifiers", SbtVersion_1_9, options = ResolveSbtClassifiers) }
       "dependency_resolve_sources_and_javadocs_and_sbt_classifiers" in { testProject("dependency_resolve_sources_and_javadocs_and_sbt_classifiers", SbtVersion_1_9, options = ResolveSourcesAndJavaDocsAndSbtClassifiers) }
+
+      "dependency_resolve_sbt_classifiers_prod_test_sources_separated" in { testProject("dependency_resolve_sbt_classifiers_prod_test_sources_separated", SbtVersion_1_9, options = ResolveSbtClassifiersAndSeparateProdTestSources) }
     }
   }
 
