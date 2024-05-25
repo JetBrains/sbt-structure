@@ -152,7 +152,20 @@
       <classes>$BASE/target/scala-2.10/test-classes</classes>
     </configuration>
     <dependencies>
-      <module configurations="compile" organization="org.scala-lang" name="scala-library" revision="2.10.7" artifactType="jar" classifier=""/>
+      <projects>
+        <forTest/>
+        <forProduction/>
+      </projects>
+      <modules>
+        <forTest/>
+        <forProduction>
+          <module configurations="compile" organization="org.scala-lang" name="scala-library" revision="2.10.7" artifactType="jar" classifier=""/>
+        </forProduction>
+      </modules>
+      <jars>
+        <forTest/>
+        <forProduction/>
+      </jars>
     </dependencies>
     <resolver name="public" root="https://repo1.maven.org/maven2/"/>
     <resolver name="local-preloaded" root="file:$HOME/.sbt-structure-global/0.13/preloaded"/>
@@ -1666,6 +1679,8 @@
     <command>
       <name>---</name>
     </command>
+    <testSourceDir>$BASE/src/test</testSourceDir>
+    <mainSourceDir>$BASE/src/main</mainSourceDir>
   </project>
   <project>
     <id>bar</id>
@@ -1708,11 +1723,24 @@
       <classes>$BASE/bar/target/scala-2.10/test-classes</classes>
     </configuration>
     <dependencies>
-      <module configurations="compile" organization="javax.activation" name="activation" revision="1.1.1" artifactType="jar" classifier=""/>
-      <module configurations="compile" organization="javax.mail" name="mail" revision="1.4.4" artifactType="jar" classifier=""/>
-      <module configurations="compile" organization="org.apache.james" name="apache-mailet-api" revision="2.5.0" artifactType="jar" classifier=""/>
-      <module configurations="compile" organization="org.apache.james" name="apache-mailet-base" revision="2.5.0" artifactType="jar" classifier=""/>
-      <module configurations="compile" organization="org.scala-lang" name="scala-library" revision="2.10.7" artifactType="jar" classifier=""/>
+      <projects>
+        <forTest/>
+        <forProduction/>
+      </projects>
+      <modules>
+        <forTest/>
+        <forProduction>
+          <module configurations="compile" organization="javax.activation" name="activation" revision="1.1.1" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="org.apache.james" name="apache-mailet-api" revision="2.5.0" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="org.apache.james" name="apache-mailet-base" revision="2.5.0" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="javax.mail" name="mail" revision="1.4.4" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="org.scala-lang" name="scala-library" revision="2.10.7" artifactType="jar" classifier=""/>
+        </forProduction>
+      </modules>
+      <jars>
+        <forTest/>
+        <forProduction/>
+      </jars>
     </dependencies>
     <resolver name="public" root="https://repo1.maven.org/maven2/"/>
     <resolver name="local-preloaded" root="file:$HOME/.sbt-structure-global/0.13/preloaded"/>
@@ -3226,6 +3254,8 @@
     <command>
       <name>---</name>
     </command>
+    <testSourceDir>$BASE/bar/src/test</testSourceDir>
+    <mainSourceDir>$BASE/bar/src/main</mainSourceDir>
   </project>
   <project>
     <id>foo</id>
@@ -3268,12 +3298,25 @@
       <classes>$BASE/foo/target/scala-2.10/test-classes</classes>
     </configuration>
     <dependencies>
-      <module configurations="compile" organization="javax.activation" name="activation" revision="1.1.1" artifactType="jar" classifier=""/>
-      <module configurations="compile" organization="javax.mail" name="mail" revision="1.4.4" artifactType="jar" classifier=""/>
-      <module configurations="compile" organization="org.apache.james" name="apache-mailet-api" revision="2.5.0" artifactType="jar" classifier=""/>
-      <module configurations="compile" organization="org.apache.james" name="apache-mailet-base" revision="2.5.0" artifactType="jar" classifier=""/>
-      <module configurations="test" organization="org.apache.james" name="apache-mailet-base" revision="2.5.0" artifactType="jar" classifier="tests"/>
-      <module configurations="compile" organization="org.scala-lang" name="scala-library" revision="2.10.7" artifactType="jar" classifier=""/>
+      <projects>
+        <forTest/>
+        <forProduction/>
+      </projects>
+      <modules>
+        <forTest/>
+        <forProduction>
+          <module configurations="compile" organization="javax.activation" name="activation" revision="1.1.1" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="org.apache.james" name="apache-mailet-api" revision="2.5.0" artifactType="jar" classifier=""/>
+          <module configurations="test" organization="org.apache.james" name="apache-mailet-base" revision="2.5.0" artifactType="jar" classifier="tests"/>
+          <module configurations="compile" organization="org.apache.james" name="apache-mailet-base" revision="2.5.0" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="javax.mail" name="mail" revision="1.4.4" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="org.scala-lang" name="scala-library" revision="2.10.7" artifactType="jar" classifier=""/>
+        </forProduction>
+      </modules>
+      <jars>
+        <forTest/>
+        <forProduction/>
+      </jars>
     </dependencies>
     <resolver name="public" root="https://repo1.maven.org/maven2/"/>
     <resolver name="local-preloaded" root="file:$HOME/.sbt-structure-global/0.13/preloaded"/>
@@ -4787,6 +4830,8 @@
     <command>
       <name>---</name>
     </command>
+    <testSourceDir>$BASE/foo/src/test</testSourceDir>
+    <mainSourceDir>$BASE/foo/src/main</mainSourceDir>
   </project>
   <repository>
     <module organization="javax.activation" name="activation" revision="1.1.1" artifactType="jar" classifier="">
