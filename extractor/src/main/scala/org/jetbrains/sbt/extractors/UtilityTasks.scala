@@ -145,7 +145,7 @@ object UtilityTasks extends SbtStateOps {
       // note: IntegrationTest is not a predefined configuration in each sbt project. It has to be manually enabled.
       // So returning it from testConfigurations is not necessary and it causes incorrect values to be returned from the sourceDirectory key.
       val predefinedAvailableTest = predefinedTest.filter(cs.contains).toSeq
-      (predefinedAvailableTest ++ transitiveTest).distinct
+      (transitiveTest ++ predefinedAvailableTest).distinct
     }
 
   def sourceConfigurations: Def.Initialize[Seq[Configuration]] = Def.setting {
