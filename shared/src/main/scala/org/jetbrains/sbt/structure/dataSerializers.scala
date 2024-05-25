@@ -139,7 +139,6 @@ trait DataSerializers {
         <home>{file.path}</home>
       }}
         { what.options.sortBy(_.configuration.name).map(_.serialize) }
-      }}
       </java>
 
     override def deserialize(what: Node): Either[Throwable,JavaData] = {
@@ -164,7 +163,6 @@ trait DataSerializers {
         { what.compilerBridgeBinaryJar.toSeq.map { jar => <compilerBridgeBinaryJar>{jar.path}</compilerBridgeBinaryJar>} }
 
         { what.options.sortBy(_.configuration.name).map(_.serialize) }
-      }}
       </scala>
 
     override def deserialize(what: Node): Either[Throwable,ScalaData] = {
@@ -193,10 +191,10 @@ trait DataSerializers {
     override def serialize(what: Dependencies[ProjectDependencyData]): Elem =
       <projects>
         <forTest>
-          {what.forTest.map(_.serialize)}
+          {what.forTest.sortBy(_.project).map(_.serialize)}
         </forTest>
         <forProduction>
-          {what.forProduction.map(_.serialize)}
+          {what.forProduction.sortBy(_.project).map(_.serialize)}
         </forProduction>
       </projects>
 
@@ -247,10 +245,10 @@ trait DataSerializers {
     override def serialize(what: Dependencies[ModuleDependencyData]): Elem =
       <modules>
         <forTest>
-          {what.forTest.map(_.serialize)}
+          {what.forTest.sortBy(_.id.name).map(_.serialize)}
         </forTest>
         <forProduction>
-          {what.forProduction.map(_.serialize)}
+          {what.forProduction.sortBy(_.id.name).map(_.serialize)}
         </forProduction>
       </modules>
 
@@ -279,10 +277,10 @@ trait DataSerializers {
     override def serialize(what: Dependencies[JarDependencyData]): Elem =
       <jars>
         <forTest>
-          {what.forTest.map(_.serialize)}
+          {what.forTest.sortBy(_.file).map(_.serialize)}
         </forTest>
         <forProduction>
-          {what.forProduction.map(_.serialize)}
+          {what.forProduction.sortBy(_.file).map(_.serialize)}
         </forProduction>
       </jars>
 

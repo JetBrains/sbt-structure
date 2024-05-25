@@ -316,14 +316,24 @@ object ProjectExtractor extends SbtStateOps with TaskOps {
       val scalaCompilerBridgeBinaryJar =
         keysAdapterEx.myScalaCompilerBridgeBinaryJar.value
 
-      val scalacOptions = Seq(
-        CompilerOptions(Configuration.Compile, taskInConfig(Keys.scalacOptions, Compile).onlyIf(options.download).value.getOrElse(Seq.empty)),
-        CompilerOptions(Configuration.Test, taskInConfig(Keys.scalacOptions, Test).onlyIf(options.download).value.getOrElse(Seq.empty))
+      def mapToCompilerOptions(configToOptions: Seq[(Configuration, Seq[String])]) = {
+        configToOptions.collect { case(config, options) if options.nonEmpty =>
+          CompilerOptions(config, options)
+        }
+      }
+
+      val scalacOptions = mapToCompilerOptions(
+        Seq(
+          (Configuration.Compile, taskInConfig(Keys.scalacOptions, Compile).onlyIf(options.download).value.getOrElse(Seq.empty)),
+          (Configuration.Test, taskInConfig(Keys.scalacOptions, Test).onlyIf(options.download).value.getOrElse(Seq.empty))
+        )
       )
 
-      val javacOptions = Seq(
-        CompilerOptions(Configuration.Compile, taskInConfig(Keys.javacOptions, Compile).onlyIf(options.download).value.getOrElse(Seq.empty)),
-        CompilerOptions(Configuration.Test, taskInConfig(Keys.javacOptions, Test).onlyIf(options.download).value.getOrElse(Seq.empty))
+      val javacOptions = mapToCompilerOptions(
+        Seq(
+          (Configuration.Compile, taskInConfig(Keys.javacOptions, Compile).onlyIf(options.download).value.getOrElse(Seq.empty)),
+          (Configuration.Test, taskInConfig(Keys.javacOptions, Test).onlyIf(options.download).value.getOrElse(Seq.empty))
+        )
       )
 
       val name = Keys.name.in(projectRef, Compile).value
@@ -341,10 +351,10 @@ object ProjectExtractor extends SbtStateOps with TaskOps {
       // in all configurations
       val mainSourceDirectories = Keys.sourceDirectory.in(projectRef)
         .forAllConfigurations(state, sourceConfigurations)
-        .map(_._2)
+        .map(_._2).distinct
       val testSourceDirectories = Keys.sourceDirectory.in(projectRef)
         .forAllConfigurations(state, testConfigurations)
-        .map(_._2)
+        .map(_._2).distinct
 
       new ProjectExtractor(
         projectRef,
