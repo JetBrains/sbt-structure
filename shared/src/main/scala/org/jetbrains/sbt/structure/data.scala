@@ -43,8 +43,19 @@ case class StructureData(sbtVersion: String,
  *
  * @param basePackages List of packages to use as base prefixes in chaining
  * @param target Compiler output directory (value of `target` key)
- * @param testSourceDirectories List of source directories in all available test configurations. It is needed to identify ContentRootData#rootPath in the Scala plugin
- * @param mainSourceDirectories List of source directories in all available source configurations. It is needed to identify ContentRootData#rootPath in the Scala plugin
+ * @param mainSourceDirectories List of source directories in all available source configurations.
+ *                              Unlike [[org.jetbrains.sbt.structure.ConfigurationData#sources()]], which was obtained from <code>managedSourceDirectories</code>
+ *                              and <code>unmanagedSourceDirectories</code> keys, this value is sourced from the <code>sourceDirectory</code> key.
+ *                              In a simple sbt project in e.g. compile configuration [[org.jetbrains.sbt.structure.ConfigurationData#sources()]] will be
+ *                              (the project path at the beginning of these paths is skipped) <ul>
+ *                              <li><code>/target/scala-3.3.3/src_managed/main</li>
+ *                              <li><code>/src/main/scala</code></li>
+ *                              <li><code>/src/main/scala-3</code></li>
+ *                              <li><code>/src/main/java</code></li>
+ *                              </ul>
+ *                              But value of this field will be just <code>/src/main</code>.
+ *                              It is needed to identify ContentRootData#rootPath in the Scala plugin.
+ *
  */
 case class ProjectData(
   id: String,
