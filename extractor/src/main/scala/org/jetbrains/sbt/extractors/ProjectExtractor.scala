@@ -81,8 +81,8 @@ class ProjectExtractor(
       settingData,
       taskData,
       commandData,
-      testSourceDirectories,
-      mainSourceDirectories
+      mainSourceDirectories,
+      testSourceDirectories
     )
   }
 
@@ -347,8 +347,6 @@ object ProjectExtractor extends SbtStateOps with TaskOps {
       val sourceConfigurations = StructureKeys.sourceConfigurations.value
       val testConfigurations = StructureKeys.testConfigurations.value
 
-      // note: because we are extracting ConfigurationData with all sourceConfigurations and testConfigurations we also have to take sourceDirectories
-      // in all configurations
       val mainSourceDirectories = Keys.sourceDirectory.in(projectRef)
         .forAllConfigurations(state, sourceConfigurations)
         .map(_._2).distinct

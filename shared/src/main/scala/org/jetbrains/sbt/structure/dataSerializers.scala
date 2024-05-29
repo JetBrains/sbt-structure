@@ -522,7 +522,7 @@ trait DataSerializers {
       tryDeps.right.map { dependencies =>
         ProjectData(id, buildURI, name, organization, version, base, packagePrefix, basePackages,
           target, configurations, java, scala, compileOrder,
-          dependencies, resolvers, play2, settings, tasks, commands, testSourceDirectories, mainSourceDirectories)
+          dependencies, resolvers, play2, settings, tasks, commands, mainSourceDirectories, testSourceDirectories)
       }
 
     }
