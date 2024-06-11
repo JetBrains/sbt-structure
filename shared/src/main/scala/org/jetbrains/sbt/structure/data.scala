@@ -158,10 +158,10 @@ case class DependencyData(projects: Dependencies[ProjectDependencyData],
                           jars: Dependencies[JarDependencyData])
 
 /**
- * When the project is imported without prod/test sources feature enabled, all dependencies are put in forProduction parameter.
- *
- * @param forProduction dependencies that should go to the main module
- * @param forTest dependencies that should go to the test module
+ * @param forProduction dependencies that should go to the main module.
+ *                      If separate modules for production/test sources are disabled, then all dependencies are put in this field.
+ * @param forTest dependencies that should go to the test module.
+ *                If separate modules for production/test sources are disabled, then this field contains en empty Seq.
  */
 case class Dependencies[T](forProduction: Seq[T], forTest: Seq[T])
 
