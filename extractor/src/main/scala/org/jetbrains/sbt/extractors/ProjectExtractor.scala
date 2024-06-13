@@ -54,11 +54,30 @@ class ProjectExtractor(
       case repo: MavenRepository => ResolverData(repo.name, repo.root)
     }.toSet
 
-    val configurations =
-      mergeConfigurations(
-        sourceConfigurations.flatMap(extractConfiguration(Compile.name)) ++
-          testConfigurations.flatMap(extractConfiguration(Test.name))
-      )
+    /**
+     * Ignore "jmh" configuration.<br>
+     * This is a dirty WORKAROUND for https://youtrack.jetbrains.com/issue/SCL-13127<br>
+     * "jmh" configuration is defined in some strange way:<br>
+     *  - it extends Test configuration
+     *  - it also assigns compilation output to Compile configuration compilation output
+     * {{{
+     *   val Jmh = config("jmh") extend Test
+     *   classDirectory := (classDirectory in Compile).value
+     * }}}
+     *
+     * It should be fine to ignore this configuration as we don't support it natively in IntelliJ anyway.
+     *
+     * @see https://github.com/sbt/sbt-jmh
+     * @see https://github.com/sbt/sbt-jmh/blob/main/plugin/src/main/scala/pl/project13/scala/sbt/JmhPlugin.scala
+     */
+    def isJmhConfiguration(config: sbt.Configuration): Boolean =
+      config.name.toLowerCase == "jmh"
+
+    val compileConfigurationsData = sourceConfigurations.flatMap(extractConfiguration(Compile.name))
+    val testConfigurationData = testConfigurations
+      .filterNot(isJmhConfiguration)
+      .flatMap(extractConfiguration(Test.name))
+    val configurations = mergeConfigurations(compileConfigurationsData ++ testConfigurationData)
     ProjectData(
       projectRef.id,
       projectRef.build,
