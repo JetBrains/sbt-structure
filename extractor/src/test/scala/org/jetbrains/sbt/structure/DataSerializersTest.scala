@@ -15,7 +15,9 @@ class DataSerializersTest extends AnyFunSuiteLike {
       Seq(new File("a/b/c").getAbsoluteFile),
       Seq(new File("a/b/c").getAbsoluteFile),
       Some(new File("a/b/c").getAbsoluteFile),
-      Seq("opt1", "opt2")
+      Seq(
+        CompilerOptions(Configuration.Compile, Seq("opt1", "opt2")),
+        CompilerOptions(Configuration.Test, Seq("opt1", "opt2")))
     )
 
     val elem = scalaDataSerializer.serialize(data)

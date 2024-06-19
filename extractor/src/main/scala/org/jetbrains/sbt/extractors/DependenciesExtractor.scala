@@ -1,11 +1,13 @@
 package org.jetbrains.sbt
 package extractors
 
+import org.jetbrains.sbt.extractors.DependenciesExtractor.{ProductionType, ProjectType, TestType}
 import org.jetbrains.sbt.structure._
 import sbt.{Configuration => SbtConfiguration, _}
 import sbt.jetbrains.apiAdapter._
 
-import scala.collection.Seq
+import scala.collection.{Seq, mutable}
+import scala.language.postfixOps
 
 /**
  * @author Nikolay Obedin
@@ -20,7 +22,8 @@ class DependenciesExtractor(projectRef: ProjectRef,
                             testConfigurations: Seq[SbtConfiguration],
                             sourceConfigurations: Seq[SbtConfiguration],
                             insertProjectTransitiveDependencies: Boolean,
-                            projectToConfigurations: Map[ProjectRef, Seq[Configuration]])
+                            separateProdTestSources: Boolean,
+                            projectToConfigurations: Map[ProjectType, Seq[Configuration]])
   extends ModulesOps {
 
   private lazy val testConfigurationNames = testConfigurations.map(_.name)
@@ -28,35 +31,72 @@ class DependenciesExtractor(projectRef: ProjectRef,
   private lazy val sourceConfigurationsNames = sourceConfigurations.map(_.name)
 
   private[extractors] def extract: DependencyData = {
-    val projectDependencies =
-      if (insertProjectTransitiveDependencies) transitiveProjectDependencies
-      else nonTransitiveProjectDependencies
+    val projectDependencies = (separateProdTestSources, insertProjectTransitiveDependencies) match {
+      case (true, _) => separatedSourcesProjectDependencies
+      case (_, true) => transitiveProjectDependencies
+      case _ => nonTransitiveProjectDependencies
+    }
     DependencyData(projectDependencies, moduleDependencies, jarDependencies)
   }
 
-  private def transitiveProjectDependencies: Seq[ProjectDependencyData] = {
-    val dependencies = projectToConfigurations.map { case (project, configurations) =>
-      val transformedConfigurations = mapConfigurations(configurations).map(mapCustomSourceConfigurationToCompileIfApplicable)
+  private def transitiveProjectDependencies: Dependencies[ProjectDependencyData] = {
+    val dependencies = projectToConfigurations.map { case(ProjectType(project), configurations) =>
+      val transformedConfigurations = mapConfigurations(configurations).map(mapCustomSourceConfigurationIfApplicable)
       ProjectDependencyData(project.id, Some(project.build), transformedConfigurations)
     }.toSeq
-    dependencies
+    Dependencies(dependencies, Seq.empty)
   }
 
-  private def nonTransitiveProjectDependencies: Seq[ProjectDependencyData] =
-    buildDependencies.classpath.getOrElse(projectRef, Seq.empty).map { it =>
+  private def mapToProjectNameWithSourceTypeAppended(projectType: ProjectType): String = {
+    val projectName = projectType.project.project
+    projectType match {
+      case ProductionType(_) => s"$projectName:main"
+      case TestType(_) => s"$projectName:test"
+    }
+  }
+
+  private def separatedSourcesProjectDependencies: Dependencies[ProjectDependencyData] = {
+    processDependencies(projectToConfigurations.toSeq) { case (projectType @ ProjectType(project), configs) =>
+      val projectName = mapToProjectNameWithSourceTypeAppended(projectType)
+      ProjectDependencyData(projectName, Option(project.build), configs)
+    }
+  }
+
+  private def nonTransitiveProjectDependencies: Dependencies[ProjectDependencyData] = {
+    val dependencies = buildDependencies.classpath.getOrElse(projectRef, Seq.empty).map { it =>
       val configurations = it.configuration.map(Configuration.fromString).getOrElse(Seq.empty)
       ProjectDependencyData(it.project.id, Some(it.project.build), configurations)
     }
+    Dependencies(dependencies, Seq.empty)
+  }
 
-  private def moduleDependencies: Seq[ModuleDependencyData] =
-    forAllConfigurations(modulesIn).map { case (moduleId, configurations) =>
-      ModuleDependencyData(moduleId, mapConfigurations(configurations))
+  private def moduleDependencies: Dependencies[ModuleDependencyData] = {
+    val allModuleDependencies = forAllConfigurations(modulesIn)
+    if (separateProdTestSources) {
+      processDependencies(allModuleDependencies) { case(moduleId, configs) =>
+        ModuleDependencyData.apply(moduleId, configs)
+      }
+    } else {
+      val dependencies = allModuleDependencies.map { case(moduleId, configs) =>
+        ModuleDependencyData(moduleId, mapConfigurations(configs))
+      }
+      Dependencies(dependencies, Seq.empty)
     }
+  }
 
-  private def jarDependencies: Seq[JarDependencyData] =
-    forAllConfigurations(jarsIn).map { case (file, configurations) =>
-      JarDependencyData(file, mapConfigurations(configurations))
+  private def jarDependencies: Dependencies[JarDependencyData] = {
+    val allJarDependencies = forAllConfigurations(jarsIn)
+    if (separateProdTestSources) {
+      processDependencies(allJarDependencies) { case (file, configs) =>
+        JarDependencyData(file, configs)
+      }
+    } else {
+      val dependencies = allJarDependencies.map { case (file, configs) =>
+        JarDependencyData(file, mapConfigurations(configs))
+      }
+      Dependencies(dependencies, Seq.empty)
     }
+  }
 
   private def jarsIn(configuration: SbtConfiguration): Seq[File] =
     unmanagedClasspath(configuration).map(_.data)
@@ -78,6 +118,78 @@ class DependenciesExtractor(projectRef: ProjectRef,
       .groupBy(_._1)
       .mapValues(_.unzip._2.map(c => Configuration(c.name)))
       .toSeq
+  }
+
+  /**
+   *  Configurations passed in a parameter indicate in what configurations some dependency (project, module, jar) is present. Based on that
+   *  we can infer where (prod/test modules) and in what scope this dependency should be added.
+   */
+  private def splitConfigurationsToDifferentSourceSets(configurations: Seq[Configuration]): Dependencies[Configuration] = {
+    val cs = mergeAllTestConfigurations(configurations)
+    val (prodConfigs, testConfigs) = {
+      if (Seq(Configuration.Compile, Configuration.Test, Configuration.Runtime).forall(cs.contains)) { // compile configuration
+        (Seq(Configuration.Compile), Seq(Configuration.Compile))
+      } else {
+        Seq(
+          // 1. The downside of this logic is that if cs contains only some custom source configuration (not one that is available in sbt by default),
+          // then prodConfigs will be empty. It is fixed in #updateProductionConfigs.
+          // Mapping custom source configurations to Compile, couldn't be done at the same place as
+          // #mergeAllTestConfigurations, because then Compile would be converted into Provided and it is not the purpose.
+          // 2. These 3 conditions are also suitable for -internal configurations because when e.g. compile-internal configuration
+          // is used cs contains only compile configuration and this will cause the dependency to be added to the production module
+          // with the provided scope
+          (cs.contains(Configuration.Test), Nil, Seq(Configuration.Compile)),
+          (cs.contains(Configuration.Compile), Seq(Configuration.Provided), Nil),
+          (cs.contains(Configuration.Runtime), Seq(Configuration.Runtime), Nil)
+        ).foldLeft((Seq.empty[Configuration], Seq.empty[Configuration])) { case((productionSoFar, testSoFar), (condition, productionUpdate, testUpdate)) =>
+          if (condition) (productionSoFar ++ productionUpdate, testSoFar ++ testUpdate)
+          else (productionSoFar, testSoFar)
+        }
+      }
+    }
+    val updatedProdConfigs = updateProductionConfigs(prodConfigs, cs)
+    Dependencies(updatedProdConfigs, testConfigs)
+  }
+
+  private def updateProductionConfigs(prodConfigs: Seq[Configuration], allConfigs: Set[Configuration]): Seq[Configuration] = {
+    def mergeProvidedAndRuntime(): Seq[Configuration] =
+      prodConfigs.map {
+        case Configuration.Provided | Configuration.Runtime => Configuration.Compile
+        case x => x
+      }.distinct
+
+    val shouldMergeProvidedAndRuntime = Seq(Configuration.Provided, Configuration.Runtime).forall(prodConfigs.contains)
+    val isCustomSourceConfigPresent = allConfigs.map(_.name).toSeq.intersect(sourceConfigurationsNames).nonEmpty
+
+    if (shouldMergeProvidedAndRuntime) {
+      mergeProvidedAndRuntime()
+    } else if (prodConfigs.isEmpty && isCustomSourceConfigPresent) {
+      Seq(Configuration.Compile)
+    } else {
+      prodConfigs
+    }
+  }
+
+  private def processDependencies[D, F](
+    dependencies: Seq[(D, Seq[Configuration])]
+  )(mapToTargetType: ((D, Seq[Configuration])) => F): Dependencies[F] = {
+    val productionDependencies = mutable.Map.empty[D, Seq[Configuration]]
+    val testDependencies = mutable.Map.empty[D, Seq[Configuration]]
+
+    def updateDependenciesInProductionAndTest(project: D, configsForProduction: Seq[Configuration], configsForTest: Seq[Configuration]): Unit = {
+      Seq((productionDependencies, configsForProduction), (testDependencies, configsForTest))
+        .filterNot(_._2.isEmpty)
+        .foreach { case(dependencies, configs) =>
+          val existingConfigurations = dependencies.getOrElse(project, Seq.empty)
+          dependencies.update(project, existingConfigurations ++ configs)
+        }
+    }
+
+    dependencies.foreach { case(dependency, configurations) =>
+      val cs = splitConfigurationsToDifferentSourceSets(configurations)
+      updateDependenciesInProductionAndTest(dependency, cs.forProduction, cs.forTest)
+    }
+    Dependencies(productionDependencies.toSeq.map(mapToTargetType), testDependencies.toSeq.map(mapToTargetType))
   }
 
   // We have to perform this configurations mapping because we're using externalDependencyClasspath
@@ -116,7 +228,7 @@ class DependenciesExtractor(projectRef: ProjectRef,
    *
    * Check behaviour of this logic when SCL-18284 will be fixed
    */
-  private def mapCustomSourceConfigurationToCompileIfApplicable(configuration: Configuration): Configuration = {
+  private def mapCustomSourceConfigurationIfApplicable(configuration: Configuration): Configuration = {
     val matchIDEAScopes = IDEAScopes.contains(configuration.name)
     val isSourceConfiguration = sourceConfigurationsNames.contains(configuration.name)
     if (!matchIDEAScopes && isSourceConfiguration) {
@@ -134,6 +246,7 @@ object DependenciesExtractor extends SbtStateOps with TaskOps {
   def taskDef: Def.Initialize[Task[DependencyData]] = Def.taskDyn {
 
     val state = Keys.state.value
+    val settings = Keys.settingsData.value
     val projectRef = Keys.thisProjectRef.value
     val options = StructureKeys.sbtStructureOpts.value
     //example: Seq(compile, runtime, test, provided, optional)
@@ -159,13 +272,16 @@ object DependenciesExtractor extends SbtStateOps with TaskOps {
       .forAllConfigurations(state, dependencyConfigurations)
 
     val allAcceptedProjects = StructureKeys.acceptedProjects.value
-    val allConfigurationsWithSourceOfAllProjects = (StructureKeys.allConfigurationsWithSource
-      .forAllProjects(state, allAcceptedProjects)
-      // From what I checked adding a Compile configuration explicitly is not needed here but this is how it is done in
-      // org.jetbrains.sbt.extractors.UtilityTasks.sourceConfigurations so probably for some cases it is required
-      .flatMap(_._2) ++ Seq(sbt.Compile)).distinct
 
-    val settings = Keys.settingsData.value
+    def getProjectToConfigurations(key: SettingKey[Seq[SbtConfiguration]]) =
+      key.forAllProjects(state, allAcceptedProjects).toMap.mapValues(_.map(_.name)).withDefaultValue(Seq.empty)
+
+    val projectToSourceConfigurations = getProjectToConfigurations(StructureKeys.sourceConfigurations)
+    val projectToTestConfigurations = getProjectToConfigurations(StructureKeys.testConfigurations)
+
+    val projectToConfigurations = allAcceptedProjects.map { proj =>
+      proj -> ProjectConfigurations(projectToSourceConfigurations(proj), projectToTestConfigurations(proj))
+    }.toMap
 
     Def.task {
       (for {
@@ -173,17 +289,26 @@ object DependenciesExtractor extends SbtStateOps with TaskOps {
         externalDependencyClasspathOpt <- externalDependencyClasspathTask
         classpathConfiguration <- classpathConfigurationTask
       } yield {
-
-        val projectToTransitiveDependencies = if (options.insertProjectTransitiveDependencies) {
-          getTransitiveDependenciesForProject(
-            projectRef,
-            allConfigurationsWithSourceOfAllProjects,
-            classpathConfiguration,
-            settings,
-            buildDependencies
-          )
-        } else
-          Map.empty[ProjectRef, Seq[Configuration]]
+        val projectToTransitiveDependencies =
+          if (options.separateProdAndTestSources) {
+            getTransitiveDependenciesForProjectProdTestSources(
+              projectRef,
+              projectToConfigurations,
+              classpathConfiguration,
+              settings,
+              buildDependencies
+            )
+          } else if (options.insertProjectTransitiveDependencies) {
+            getTransitiveDependenciesForProject(
+              projectRef,
+              projectToConfigurations,
+              classpathConfiguration,
+              settings,
+              buildDependencies
+            )
+          } else {
+            Map.empty[ProjectType, Seq[Configuration]]
+          }
 
         val extractor = new DependenciesExtractor(
           projectRef,
@@ -194,6 +319,7 @@ object DependenciesExtractor extends SbtStateOps with TaskOps {
           testConfigurations,
           sourceConfigurations,
           options.insertProjectTransitiveDependencies,
+          options.separateProdAndTestSources,
           projectToTransitiveDependencies
         )
         extractor.extract
@@ -227,23 +353,78 @@ object DependenciesExtractor extends SbtStateOps with TaskOps {
 
   private def getTransitiveDependenciesForProject(
     projectRef: ProjectRef,
-    allConfigurationsWithSourceOfAllProjects: Seq[SbtConfiguration],
+    projectToConfigurations: Map[ProjectRef, ProjectConfigurations],
     classPathConfiguration: Map[SbtConfiguration, SbtConfiguration],
     settings: Settings[Scope],
     buildDependencies: BuildDependencies
-  ): Map[ProjectRef, Seq[Configuration]] = {
-    val configToDependencies: Map[Configuration, Seq[ProjectDependency]] =
-      classPathConfiguration.map { case (selfConfig, config) =>
-        val projectDependencies = retrieveTransitiveProjectDependencies(projectRef, config, settings, buildDependencies)
+  ): Map[ProjectType, Seq[Configuration]] = {
+    val dependencyToConfigurations = retrieveTransitiveProjectToConfigsDependencies(
+      projectRef,
+      classPathConfiguration,
+      settings,
+      buildDependencies,
+      projectToConfigurations
+    )
+    mapDependenciesToProjectType(dependencyToConfigurations) { projectDependency => ProductionType(projectDependency.project) }
+  }
+
+  private def mapDependenciesToProjectType(
+    dependencyToConfigurations: Map[ProjectDependency, Seq[Configuration]]
+  )(projectDependencyMapping: ProjectDependency => ProjectType): Map[ProjectType, Seq[Configuration]] =
+    dependencyToConfigurations.foldLeft(Map.empty[ProjectType, Seq[Configuration]]) { case (acc, (projectDependency, configs)) =>
+      val projectType = projectDependencyMapping(projectDependency)
+      val existingConfigurations = acc.getOrElse(projectType, Seq.empty)
+      acc.updated(projectType, (existingConfigurations ++ configs).distinct)
+    }
+
+  private case class ProjectConfigurations(source: Seq[String], test: Seq[String])
+
+  private[extractors] sealed abstract class ProjectType(val project: ProjectRef)
+  private[extractors] case class ProductionType(override val project: ProjectRef) extends ProjectType(project)
+  private[extractors] case class TestType(override val project: ProjectRef) extends ProjectType(project)
+
+  object ProjectType {
+    def unapply(projectType: ProjectType): Option[ProjectRef] = Some(projectType.project)
+  }
+
+  private def retrieveTransitiveProjectToConfigsDependencies(
+    projectRef: ProjectRef,
+    classPathConfiguration: Map[SbtConfiguration, SbtConfiguration],
+    settings: Settings[Scope],
+    buildDependencies: BuildDependencies,
+    projectToConfigurations: Map[ProjectRef, ProjectConfigurations]
+  ): Map[ProjectDependency, Seq[Configuration]] = {
+    val configToDependencies = classPathConfiguration.map { case (selfConfig, config) =>
+        val projectDependencies = retrieveTransitiveProjectDependencies(projectRef, config, settings, buildDependencies, projectToConfigurations)
         (Configuration(selfConfig.name), projectDependencies)
       }
+    invert(configToDependencies)
+  }
 
-    val allConfigurationsWithSourceOfAllProjectsNames = allConfigurationsWithSourceOfAllProjects.map(_.name)
-    val configToProjects: Map[Configuration, Seq[ProjectRef]] = configToDependencies.mapValues {
-        keepProjectsWithAtLeastOneSourceConfig(_, allConfigurationsWithSourceOfAllProjectsNames)
+  private def getTransitiveDependenciesForProjectProdTestSources(
+    projectRef: ProjectRef,
+    projectToConfigurations: Map[ProjectRef, ProjectConfigurations],
+    classPathConfiguration: Map[SbtConfiguration, SbtConfiguration],
+    settings: Settings[Scope],
+    buildDependencies: BuildDependencies
+  ): Map[ProjectType, Seq[Configuration]] = {
+    val dependencyToConfigurations = retrieveTransitiveProjectToConfigsDependencies(
+      projectRef,
+      classPathConfiguration,
+      settings,
+      buildDependencies,
+      projectToConfigurations
+    )
+    val keysMappedToProjectType = mapDependenciesToProjectType(dependencyToConfigurations) { case ProjectDependency(project, configuration) =>
+      projectToConfigurations.get(project) match {
+        case Some(projectConfigurations) if projectConfigurations.test.contains(configuration) =>
+          TestType(project)
+        case _ =>
+          ProductionType(project)
       }
+    }
 
-    invert(configToProjects)
+    keysMappedToProjectType + (ProductionType(projectRef) -> Seq(Configuration.Test))
   }
 
   /**
@@ -265,12 +446,15 @@ object DependenciesExtractor extends SbtStateOps with TaskOps {
     projectRef: ProjectRef,
     config: sbt.Configuration,
     settings: Settings[Scope],
-    buildDependencies: BuildDependencies
+    buildDependencies: BuildDependencies,
+    projectToConfigurations: Map[ProjectRef, ProjectConfigurations]
   ): Seq[ProjectDependency] = {
     val allDependencies = Classpaths.interSort(projectRef, config, settings, buildDependencies)
-    // note: when production and test sources will be separated removing all dependencies
-    // with origin project itself, should be done more carefully because it will be required to put projectRef production sources in test sources
-    val dependenciesWithoutProjectItself = allDependencies.filter(_._1 != projectRef)
+    val dependenciesWithoutProjectItself = allDependencies
+      // note: removing dependencies to the origin project itself (when prod/test sources are separated prod part is always added to the test part in #getTransitiveDependenciesForProjectProdTestSources)
+      // and projects with configurations that do not have sources e.g. provided
+      .filter { case(project, config) => project != projectRef && isProjectDependencyInSourceConfiguration(project, config, projectToConfigurations) }
+
     dependenciesWithoutProjectItself.map(ProjectDependency.apply)
   }
 
@@ -289,27 +473,14 @@ object DependenciesExtractor extends SbtStateOps with TaskOps {
    * }}}
    * which in practice means that we only have to add `proj2` as a dependency to `root` and `proj1` dependency shouldn't be taken into account.
    */
-  private def keepProjectsWithAtLeastOneSourceConfig(
-    dependencies: Seq[ProjectDependency],
-    allConfigurationsWithSourceOfAllProjectsNames: Seq[String]
-  ): Seq[ProjectRef] = {
-    val projectToConfigs = dependencies
-      .groupBy(_.project)
-      .mapValues(_.map(_.configuration))
-
-    // note: when production and test sources will be separated we shouldn't just check
-    // whether there is at least one source configuration per project (it is a very big simplification but sufficient for now).
-    // For separating production and test sources an analysis should be done to determine what exactly are the configurations of the dependent project and
-    // from this we should conclude whether we should add production or test part of dependent project to the owner of the dependency.
-    // There is still a question of where (in production or test sources of the owner of the dependency) to put production/test part of dependent project,
-    // but it should probably be done in a different place.
-    val projectToConfigsWithAtLeastOneSourceConfig =
-      projectToConfigs.filter { case (_, dependencies) =>
-        dependencies.exists(allConfigurationsWithSourceOfAllProjectsNames.contains)
-      }
-
-    projectToConfigsWithAtLeastOneSourceConfig.keys.toSeq
-  }
+  private def isProjectDependencyInSourceConfiguration(
+    project: ProjectRef,
+    configuration: String,
+    projectToConfigurations: Map[ProjectRef, ProjectConfigurations]
+  ): Boolean =
+    projectToConfigurations.get(project)
+      .fold(Seq.empty[String])(t => t.source ++ t.test)
+      .contains(configuration)
 
   private def throwExceptionIfUpdateFailed(result: Result[Map[sbt.Configuration,Keys.Classpath]]): Map[sbt.Configuration, Keys.Classpath] =
     result match {

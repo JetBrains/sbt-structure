@@ -27,6 +27,7 @@ object Configuration {
 
 /**
  * Represent specified build. Corresponds to IDEA project.
+ *
  * @param projects List of projects in build
  * @param repository List of libraries in build
  * @param localCachePath Path to a place where Ivy downloads artifacts. Usually ~/.ivy2/cache
@@ -39,29 +40,46 @@ case class StructureData(sbtVersion: String,
 
 /**
  * Represents single project in build. Corresponds to IDEA module.
+ *
  * @param basePackages List of packages to use as base prefixes in chaining
  * @param target Compiler output directory (value of `target` key)
+ * @param mainSourceDirectories List of source directories in all available source configurations.
+ *                              Unlike [[org.jetbrains.sbt.structure.ConfigurationData#sources()]], which was obtained from <code>managedSourceDirectories</code>
+ *                              and <code>unmanagedSourceDirectories</code> keys, this value is sourced from the <code>sourceDirectory</code> key.
+ *                              In a simple sbt project in e.g. compile configuration [[org.jetbrains.sbt.structure.ConfigurationData#sources()]] will be
+ *                              (the project path at the beginning of these paths is skipped) <ul>
+ *                              <li><code>/target/scala-3.3.3/src_managed/main</li>
+ *                              <li><code>/src/main/scala</code></li>
+ *                              <li><code>/src/main/scala-3</code></li>
+ *                              <li><code>/src/main/java</code></li>
+ *                              </ul>
+ *                              But value of this field will be just <code>/src/main</code>.
+ *                              It is needed to identify ContentRootData#rootPath in the Scala plugin.
+ *
  */
-case class ProjectData(id: String,
-                       buildURI: URI,
-                       name: String,
-                       organization: String,
-                       version: String,
-                       base: File,
-                       packagePrefix: Option[String],
-                       basePackages: Seq[String],
-                       target: File,
-                       configurations: Seq[ConfigurationData],
-                       java: Option[JavaData],
-                       scala: Option[ScalaData],
-                       compileOrder: String,
-                       dependencies: DependencyData,
-                       resolvers: Set[ResolverData],
-                       play2: Option[Play2Data],
-                       settings: Seq[SettingData],
-                       tasks: Seq[TaskData],
-                       commands: Seq[CommandData]
-                      )
+case class ProjectData(
+  id: String,
+  buildURI: URI,
+  name: String,
+  organization: String,
+  version: String,
+  base: File,
+  packagePrefix: Option[String],
+  basePackages: Seq[String],
+  target: File,
+  configurations: Seq[ConfigurationData],
+  java: Option[JavaData],
+  scala: Option[ScalaData],
+  compileOrder: String,
+  dependencies: DependencyData,
+  resolvers: Set[ResolverData],
+  play2: Option[Play2Data],
+  settings: Seq[SettingData],
+  tasks: Seq[TaskData],
+  commands: Seq[CommandData],
+  mainSourceDirectories: Seq[File],
+  testSourceDirectories: Seq[File]
+)
 
 case class SettingData(label: String, description: Option[String], rank: Int, stringValue: Option[String])
 case class TaskData(label: String, description: Option[String], rank: Int)
@@ -94,6 +112,7 @@ object BuildData {
 
 /**
  * Lists of directories in specified configuration
+ *
  * @param id Name of configuration, usually "compile" or "test"
  * @param sources List of source directories
  * @param resources List of resource directories
@@ -108,7 +127,9 @@ case class ConfigurationData(id: String,
 
 case class DirectoryData(file: File, managed: Boolean)
 
-case class JavaData(home: Option[File], options: Seq[String])
+case class CompilerOptions(configuration: Configuration, options: Seq[String])
+
+case class JavaData(home: Option[File], options: Seq[CompilerOptions])
 
 /**
  * Analog of `sbt.internal.inc.ScalaInstance`
@@ -126,36 +147,48 @@ case class ScalaData(
   compilerJars: Seq[File],
   extraJars: Seq[File],
   compilerBridgeBinaryJar: Option[File],
-  options: Seq[String]
+  options: Seq[CompilerOptions]
 ) {
   def allJars: Seq[File] = libraryJars ++ compilerJars ++ extraJars
   def allCompilerJars: Seq[File] = libraryJars ++ compilerJars
 }
 
-case class DependencyData(projects: Seq[ProjectDependencyData],
-                          modules: Seq[ModuleDependencyData],
-                          jars: Seq[JarDependencyData])
+case class DependencyData(projects: Dependencies[ProjectDependencyData],
+                          modules: Dependencies[ModuleDependencyData],
+                          jars: Dependencies[JarDependencyData])
+
+/**
+ * @param forProduction dependencies that should go to the main module.
+ *                      If separate modules for production/test sources are disabled, then all dependencies are put in this field.
+ * @param forTest dependencies that should go to the test module.
+ *                If separate modules for production/test sources are disabled, then this field contains en empty Seq.
+ */
+case class Dependencies[T](forProduction: Seq[T], forTest: Seq[T])
 
 /**
  * Inter-project dependency
+ *
  * @param project What project to depend on
  */
 case class ProjectDependencyData(project: String, buildURI: Option[URI], configurations: Seq[Configuration])
 
 /**
  * External library dependency
+ *
  * @param id Library identifier
  */
 case class ModuleDependencyData(id: ModuleIdentifier, configurations: Seq[Configuration])
 
 /**
  * Unmanaged dependency
+ *
  * @param file File to depend on
  */
 case class JarDependencyData(file: File, configurations: Seq[Configuration])
 
 /**
  * Library identifier
+ *
  * @param revision AKA version
  */
 case class ModuleIdentifier(organization: String,
@@ -168,6 +201,7 @@ case class ModuleIdentifier(organization: String,
 
 /**
  * External library data. Corresponds to a project-level library in IDEA.
+ *
  * @param id Library identifier
  * @param binaries List of binary jars
  * @param docs List of javadoc jars
@@ -185,6 +219,7 @@ case class RepositoryData(modules: Seq[ModuleData])
 
 /**
  * Repository used to resolve external library dependencies
+ *
  * @param root URL or local path to a repo
  */
 case class ResolverData(name: String, root: String)

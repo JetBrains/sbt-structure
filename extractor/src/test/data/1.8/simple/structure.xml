@@ -222,7 +222,20 @@
       <classes>$BASE/target/scala-2.13/test-classes</classes>
     </configuration>
     <dependencies>
-      <module configurations="compile" organization="org.scala-lang" name="scala-library" revision="2.13.10" artifactType="jar" classifier=""/>
+      <projects>
+        <forTest/>
+        <forProduction/>
+      </projects>
+      <modules>
+        <forTest/>
+        <forProduction>
+          <module configurations="compile" organization="org.scala-lang" name="scala-library" revision="2.13.10" artifactType="jar" classifier=""/>
+        </forProduction>
+      </modules>
+      <jars>
+        <forTest/>
+        <forProduction/>
+      </jars>
     </dependencies>
     <resolver name="public" root="https://repo1.maven.org/maven2/"/>
     <resolver name="local-preloaded" root="file:$HOME/.sbt-structure-global/1.8/preloaded"/>
@@ -1825,6 +1838,8 @@
     <command>
       <name>bspReload</name>
     </command>
+    <testSourceDir>$BASE/src/test</testSourceDir>
+    <mainSourceDir>$BASE/src/main</mainSourceDir>
   </project>
   <repository>
     <module organization="org.scala-lang" name="scala-library" revision="2.13.10" artifactType="jar" classifier="">

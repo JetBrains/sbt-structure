@@ -138,9 +138,21 @@
       <classes>$BASE/target/scala-2.10/test-classes</classes>
     </configuration>
     <dependencies>
-      <module configurations="test" organization="junit" name="junit" revision="4.13.2" artifactType="jar" classifier=""/>
-      <module configurations="test" organization="org.hamcrest" name="hamcrest-core" revision="1.3" artifactType="jar" classifier=""/>
-      <module configurations="compile" organization="org.scala-lang" name="scala-library" revision="2.10.1" artifactType="jar" classifier=""/>
+      <projects>
+        <forTest/>
+        <forProduction/>
+      </projects>
+      <modules>
+        <forTest/>
+        <forProduction>
+          <module configurations="test" organization="org.hamcrest" name="hamcrest-core" revision="1.3" artifactType="jar" classifier=""/>
+          <module configurations="test" organization="junit" name="junit" revision="4.13.2" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="org.scala-lang" name="scala-library" revision="2.10.1" artifactType="jar" classifier=""/>      </forProduction>
+      </modules>
+      <jars>
+        <forTest/>
+        <forProduction/>
+      </jars>
     </dependencies>
     <resolver name="public" root="https://repo1.maven.org/maven2/"/>
     <resolver name="local-preloaded" root="file:$HOME/.sbt-structure-global/1.9/preloaded"/>
@@ -1760,6 +1772,8 @@
     <command>
       <name>bspReload</name>
     </command>
+    <testSourceDir>$BASE/src/test</testSourceDir>
+    <mainSourceDir>$BASE/src/main</mainSourceDir>
   </project>
   <repository>
     <module organization="junit" name="junit" revision="4.13.2" artifactType="jar" classifier="">

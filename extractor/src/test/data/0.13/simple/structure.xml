@@ -120,8 +120,16 @@
     <target>$BASE/target</target>
     <java>
       <home>$BASE/some/home</home>
-      <option>-javacOption1</option>
-      <option>-javacOption2</option>
+      <compilerOptions>
+        <configuration>compile</configuration>
+        <option>-javacOption1</option>
+        <option>-javacOption2</option>
+      </compilerOptions>
+      <compilerOptions>
+        <configuration>test</configuration>
+        <option>-javacOption1</option>
+        <option>-javacOption2</option>
+      </compilerOptions>
     </java>
     <scala>
       <version>2.13.6</version>
@@ -135,8 +143,16 @@
         <jar>$IVY2/cache/org.scala-lang/scala-reflect/jars/scala-reflect-2.13.6.jar</jar>
       </compilerJars>
       <extraJars/>
-      <option>-scalaсOption1</option>
-      <option>-scalaсOption2</option>
+      <compilerOptions>
+        <configuration>compile</configuration>
+        <option>-scalaсOption1</option>
+        <option>-scalaсOption2</option>
+      </compilerOptions>
+      <compilerOptions>
+        <configuration>test</configuration>
+        <option>-scalaсOption1</option>
+        <option>-scalaсOption2</option>
+      </compilerOptions>
     </scala>
     <compileOrder>Mixed</compileOrder>
     <configuration id="compile">
@@ -158,7 +174,20 @@
       <classes>$BASE/target/scala-2.13/test-classes</classes>
     </configuration>
     <dependencies>
-      <module configurations="compile" organization="org.scala-lang" name="scala-library" revision="2.13.6" artifactType="jar" classifier=""/>
+      <projects>
+        <forTest/>
+        <forProduction/>
+      </projects>
+      <modules>
+        <forTest/>
+        <forProduction>
+          <module configurations="compile" organization="org.scala-lang" name="scala-library" revision="2.13.6" artifactType="jar" classifier=""/>
+        </forProduction>
+      </modules>
+      <jars>
+        <forTest/>
+        <forProduction/>
+      </jars>
     </dependencies>
     <resolver name="public" root="https://repo1.maven.org/maven2/"/>
     <resolver name="local-preloaded" root="file:$HOME/.sbt-structure-global/0.13/preloaded"/>
@@ -1672,6 +1701,8 @@
     <command>
       <name>---</name>
     </command>
+    <testSourceDir>$BASE/src/test</testSourceDir>
+    <mainSourceDir>$BASE/src/main</mainSourceDir>
   </project>
   <repository>
     <module organization="org.scala-lang" name="scala-library" revision="2.13.6" artifactType="jar" classifier="">

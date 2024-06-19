@@ -1,0 +1,3355 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<structure sbt="0.13.18">
+  <build>
+    <uri>$URI_BASE</uri>
+    <import>import _root_.com.typesafe.sbteclipse.plugin.EclipsePlugin._, _root_.org.sbtidea.SbtIdeaPlugin._, _root_.com.typesafe.sbt.SbtNativePackager._, MyBuild._</import>
+    <import>import _root_.play.Play.autoImport._, _root_.play.twirl.sbt.SbtTwirl.autoImport._, _root_.com.typesafe.sbt.jse.SbtJsEngine.autoImport._, _root_.com.typesafe.sbt.jse.SbtJsTask.autoImport._, _root_.com.typesafe.sbt.web.SbtWeb.autoImport._, _root_.com.typesafe.sbt.webdriver.SbtWebDriver.autoImport._</import>
+    <import>import _root_.sbt.plugins.IvyPlugin, _root_.sbt.plugins.JvmPlugin, _root_.sbt.plugins.CorePlugin, _root_.sbt.plugins.JUnitXmlReportPlugin, _root_.sbt.plugins.Giter8TemplatePlugin, _root_.play.Play, _root_.play.PlayJava, _root_.play.PlayScala, _root_.play.twirl.sbt.SbtTwirl, _root_.com.typesafe.sbt.jse.SbtJsEngine, _root_.com.typesafe.sbt.jse.SbtJsTask, _root_.com.typesafe.sbt.web.SbtWeb, _root_.com.typesafe.sbt.webdriver.SbtWebDriver</import>
+    <import>import sbt._, Keys._, dsl._</import>
+    <classes>$SBT_BOOT/scala-2.10.7/lib/jansi.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.7/lib/jline.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.7/lib/scala-compiler.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.7/lib/scala-library.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.7/lib/scala-reflect.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.7/org.scala-sbt/sbt/0.13.18/actions-0.13.18.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.7/org.scala-sbt/sbt/0.13.18/api-0.13.18.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.7/org.scala-sbt/sbt/0.13.18/apply-macro-0.13.18.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.7/org.scala-sbt/sbt/0.13.18/cache-0.13.18.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.7/org.scala-sbt/sbt/0.13.18/classfile-0.13.18.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.7/org.scala-sbt/sbt/0.13.18/classpath-0.13.18.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.7/org.scala-sbt/sbt/0.13.18/collections-0.13.18.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.7/org.scala-sbt/sbt/0.13.18/command-0.13.18.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.7/org.scala-sbt/sbt/0.13.18/compile-0.13.18.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.7/org.scala-sbt/sbt/0.13.18/compiler-integration-0.13.18.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.7/org.scala-sbt/sbt/0.13.18/compiler-interface-0.13.18.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.7/org.scala-sbt/sbt/0.13.18/compiler-ivy-integration-0.13.18.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.7/org.scala-sbt/sbt/0.13.18/completion-0.13.18.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.7/org.scala-sbt/sbt/0.13.18/control-0.13.18.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.7/org.scala-sbt/sbt/0.13.18/cross-0.13.18.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.7/org.scala-sbt/sbt/0.13.18/incremental-compiler-0.13.18.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.7/org.scala-sbt/sbt/0.13.18/io-0.13.18.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.7/org.scala-sbt/sbt/0.13.18/ivy-0.13.18.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.7/org.scala-sbt/sbt/0.13.18/ivy-2.3.0-sbt-b18f59ea3bc914a297bb6f1a4f7fb0ace399e310.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.7/org.scala-sbt/sbt/0.13.18/jawn-parser_2.10-0.6.0.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.7/org.scala-sbt/sbt/0.13.18/jline-2.14.5.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.7/org.scala-sbt/sbt/0.13.18/jsch-0.1.50.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.7/org.scala-sbt/sbt/0.13.18/json4s-ast_2.10-3.2.10.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.7/org.scala-sbt/sbt/0.13.18/json4s-core_2.10-3.2.10.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.7/org.scala-sbt/sbt/0.13.18/json4s-support_2.10-0.6.0.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.7/org.scala-sbt/sbt/0.13.18/launcher-interface-1.0.1.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.7/org.scala-sbt/sbt/0.13.18/logging-0.13.18.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.7/org.scala-sbt/sbt/0.13.18/logic-0.13.18.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.7/org.scala-sbt/sbt/0.13.18/main-0.13.18.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.7/org.scala-sbt/sbt/0.13.18/main-settings-0.13.18.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.7/org.scala-sbt/sbt/0.13.18/paranamer-2.6.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.7/org.scala-sbt/sbt/0.13.18/persist-0.13.18.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.7/org.scala-sbt/sbt/0.13.18/process-0.13.18.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.7/org.scala-sbt/sbt/0.13.18/quasiquotes_2.10-2.0.1.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.7/org.scala-sbt/sbt/0.13.18/relation-0.13.18.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.7/org.scala-sbt/sbt/0.13.18/run-0.13.18.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.7/org.scala-sbt/sbt/0.13.18/sbinary_2.10-0.4.2.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.7/org.scala-sbt/sbt/0.13.18/sbt-0.13.18.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.7/org.scala-sbt/sbt/0.13.18/scala-pickling_2.10-0.10.1.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.7/org.scala-sbt/sbt/0.13.18/scala-reflect-2.10.7.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.7/org.scala-sbt/sbt/0.13.18/serialization_2.10-0.1.2.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.7/org.scala-sbt/sbt/0.13.18/task-system-0.13.18.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.7/org.scala-sbt/sbt/0.13.18/tasks-0.13.18.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.7/org.scala-sbt/sbt/0.13.18/template-resolver-0.1.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.7/org.scala-sbt/sbt/0.13.18/test-agent-0.13.18.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.7/org.scala-sbt/sbt/0.13.18/test-interface-1.0.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.7/org.scala-sbt/sbt/0.13.18/testing-0.13.18.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.7/org.scala-sbt/sbt/0.13.18/tracking-0.13.18.jar</classes>
+    <classes>$SBT_BOOT/scala-2.10.7/org.scala-sbt/sbt/0.13.18/xsbti/interface-0.13.18.jar</classes>
+    <classes>$IVY2/cache/aopalliance/aopalliance/jars/aopalliance-1.0.jar</classes>
+    <classes>$IVY2/cache/com.fasterxml.jackson.core/jackson-annotations/bundles/jackson-annotations-2.3.0.jar</classes>
+    <classes>$IVY2/cache/com.fasterxml.jackson.core/jackson-core/bundles/jackson-core-2.3.3.jar</classes>
+    <classes>$IVY2/cache/com.fasterxml.jackson.core/jackson-databind/bundles/jackson-databind-2.3.3.jar</classes>
+    <classes>$IVY2/cache/com.google.guava/guava/bundles/guava-16.0.1.jar</classes>
+    <classes>$IVY2/cache/com.google.javascript/closure-compiler/jars/closure-compiler-v20130603.jar</classes>
+    <classes>$IVY2/cache/com.google.protobuf/protobuf-java/bundles/protobuf-java-2.5.0.jar</classes>
+    <classes>$IVY2/cache/com.h2database/h2/jars/h2-1.3.175.jar</classes>
+    <classes>$IVY2/cache/com.typesafe.akka/akka-actor_2.10/jars/akka-actor_2.10-2.3.2.jar</classes>
+    <classes>$IVY2/cache/com.typesafe.akka/akka-cluster_2.10/jars/akka-cluster_2.10-2.3.2.jar</classes>
+    <classes>$IVY2/cache/com.typesafe.akka/akka-contrib_2.10/jars/akka-contrib_2.10-2.3.2.jar</classes>
+    <classes>$IVY2/cache/com.typesafe.akka/akka-persistence-experimental_2.10/jars/akka-persistence-experimental_2.10-2.3.2.jar</classes>
+    <classes>$IVY2/cache/com.typesafe.akka/akka-remote_2.10/jars/akka-remote_2.10-2.3.2.jar</classes>
+    <classes>$IVY2/cache/com.typesafe.play/build-link/jars/build-link-2.3.7.jar</classes>
+    <classes>$IVY2/cache/com.typesafe.play/play-exceptions/jars/play-exceptions-2.3.7.jar</classes>
+    <classes>$IVY2/cache/com.typesafe.play/routes-compiler_2.10/jars/routes-compiler_2.10-2.3.7.jar</classes>
+    <classes>$IVY2/cache/com.typesafe.play/sbt-run-support_2.10/jars/sbt-run-support_2.10-2.3.7.jar</classes>
+    <classes>$IVY2/cache/com.typesafe.play/twirl-api_2.10/jars/twirl-api_2.10-1.0.2.jar</classes>
+    <classes>$IVY2/cache/com.typesafe.play/twirl-compiler_2.10/jars/twirl-compiler_2.10-1.0.2.jar</classes>
+    <classes>$IVY2/cache/com.typesafe.play/twirl-parser_2.10/jars/twirl-parser_2.10-1.0.2.jar</classes>
+    <classes>$IVY2/cache/com.typesafe/config/bundles/config-1.2.1.jar</classes>
+    <classes>$IVY2/cache/com.typesafe/jse_2.10/jars/jse_2.10-1.0.0.jar</classes>
+    <classes>$IVY2/cache/com.typesafe/npm_2.10/jars/npm_2.10-1.0.0.jar</classes>
+    <classes>$IVY2/cache/com.typesafe/webdriver_2.10/jars/webdriver_2.10-1.0.0.jar</classes>
+    <classes>$IVY2/cache/commons-codec/commons-codec/jars/commons-codec-1.9.jar</classes>
+    <classes>$IVY2/cache/commons-collections/commons-collections/jars/commons-collections-3.2.1.jar</classes>
+    <classes>$IVY2/cache/commons-io/commons-io/jars/commons-io-2.4.jar</classes>
+    <classes>$IVY2/cache/commons-logging/commons-logging/jars/commons-logging-1.1.3.jar</classes>
+    <classes>$IVY2/cache/io.apigee.trireme/trireme-core/jars/trireme-core-0.7.5.jar</classes>
+    <classes>$IVY2/cache/io.apigee.trireme/trireme-node10src/jars/trireme-node10src-0.7.5.jar</classes>
+    <classes>$IVY2/cache/io.netty/netty/bundles/netty-3.8.0.Final.jar</classes>
+    <classes>$IVY2/cache/io.spray/spray-can/bundles/spray-can-1.3.1.jar</classes>
+    <classes>$IVY2/cache/io.spray/spray-client/bundles/spray-client-1.3.1.jar</classes>
+    <classes>$IVY2/cache/io.spray/spray-http/bundles/spray-http-1.3.1.jar</classes>
+    <classes>$IVY2/cache/io.spray/spray-httpx/bundles/spray-httpx-1.3.1.jar</classes>
+    <classes>$IVY2/cache/io.spray/spray-io/bundles/spray-io-1.3.1.jar</classes>
+    <classes>$IVY2/cache/io.spray/spray-json_2.10/bundles/spray-json_2.10-1.2.6.jar</classes>
+    <classes>$IVY2/cache/io.spray/spray-util/bundles/spray-util-1.3.1.jar</classes>
+    <classes>$IVY2/cache/javax.annotation/jsr250-api/jars/jsr250-api-1.0.jar</classes>
+    <classes>$IVY2/cache/javax.enterprise/cdi-api/jars/cdi-api-1.0.jar</classes>
+    <classes>$IVY2/cache/javax.inject/javax.inject/jars/javax.inject-1.jar</classes>
+    <classes>$IVY2/cache/net.contentobjects.jnotify/jnotify/jars/jnotify-0.94.jar</classes>
+    <classes>$IVY2/cache/net.sourceforge.cssparser/cssparser/jars/cssparser-0.9.13.jar</classes>
+    <classes>$IVY2/cache/net.sourceforge.htmlunit/htmlunit-core-js/jars/htmlunit-core-js-2.14.jar</classes>
+    <classes>$IVY2/cache/net.sourceforge.htmlunit/htmlunit/jars/htmlunit-2.14.jar</classes>
+    <classes>$IVY2/cache/net.sourceforge.nekohtml/nekohtml/jars/nekohtml-1.9.20.jar</classes>
+    <classes>$IVY2/cache/org.apache.ant/ant-launcher/jars/ant-launcher-1.9.3.jar</classes>
+    <classes>$IVY2/cache/org.apache.ant/ant/jars/ant-1.9.3.jar</classes>
+    <classes>$IVY2/cache/org.apache.commons/commons-compress/jars/commons-compress-1.7.jar</classes>
+    <classes>$IVY2/cache/org.apache.commons/commons-lang3/jars/commons-lang3-3.2.1.jar</classes>
+    <classes>$IVY2/cache/org.apache.httpcomponents/httpclient/jars/httpclient-4.3.2.jar</classes>
+    <classes>$IVY2/cache/org.apache.httpcomponents/httpcore/jars/httpcore-4.3.1.jar</classes>
+    <classes>$IVY2/cache/org.apache.httpcomponents/httpmime/jars/httpmime-4.3.2.jar</classes>
+    <classes>$IVY2/cache/org.apache.maven/maven-aether-provider/jars/maven-aether-provider-3.2.2.jar</classes>
+    <classes>$IVY2/cache/org.apache.maven/maven-artifact/jars/maven-artifact-3.2.2.jar</classes>
+    <classes>$IVY2/cache/org.apache.maven/maven-core/jars/maven-core-3.2.2.jar</classes>
+    <classes>$IVY2/cache/org.apache.maven/maven-model-builder/jars/maven-model-builder-3.2.2.jar</classes>
+    <classes>$IVY2/cache/org.apache.maven/maven-model/jars/maven-model-3.2.2.jar</classes>
+    <classes>$IVY2/cache/org.apache.maven/maven-plugin-api/jars/maven-plugin-api-3.2.2.jar</classes>
+    <classes>$IVY2/cache/org.apache.maven/maven-repository-metadata/jars/maven-repository-metadata-3.2.2.jar</classes>
+    <classes>$IVY2/cache/org.apache.maven/maven-settings-builder/jars/maven-settings-builder-3.2.2.jar</classes>
+    <classes>$IVY2/cache/org.apache.maven/maven-settings/jars/maven-settings-3.2.2.jar</classes>
+    <classes>$IVY2/cache/org.avaje.ebeanorm/avaje-ebeanorm-agent/jars/avaje-ebeanorm-agent-3.2.2.jar</classes>
+    <classes>$IVY2/cache/org.bouncycastle/bcpg-jdk15on/jars/bcpg-jdk15on-1.51.jar</classes>
+    <classes>$IVY2/cache/org.bouncycastle/bcprov-jdk15on/jars/bcprov-jdk15on-1.51.jar</classes>
+    <classes>$IVY2/cache/org.codehaus.plexus/plexus-classworlds/bundles/plexus-classworlds-2.5.1.jar</classes>
+    <classes>$IVY2/cache/org.codehaus.plexus/plexus-component-annotations/jars/plexus-component-annotations-1.5.5.jar</classes>
+    <classes>$IVY2/cache/org.codehaus.plexus/plexus-interpolation/jars/plexus-interpolation-1.19.jar</classes>
+    <classes>$IVY2/cache/org.codehaus.plexus/plexus-utils/jars/plexus-utils-3.0.17.jar</classes>
+    <classes>$IVY2/cache/org.eclipse.aether/aether-api/jars/aether-api-0.9.0.M2.jar</classes>
+    <classes>$IVY2/cache/org.eclipse.aether/aether-impl/jars/aether-impl-0.9.0.M2.jar</classes>
+    <classes>$IVY2/cache/org.eclipse.aether/aether-spi/jars/aether-spi-0.9.0.M2.jar</classes>
+    <classes>$IVY2/cache/org.eclipse.aether/aether-util/jars/aether-util-0.9.0.M2.jar</classes>
+    <classes>$IVY2/cache/org.eclipse.jetty/jetty-http/jars/jetty-http-8.1.14.v20131031.jar</classes>
+    <classes>$IVY2/cache/org.eclipse.jetty/jetty-io/jars/jetty-io-8.1.14.v20131031.jar</classes>
+    <classes>$IVY2/cache/org.eclipse.jetty/jetty-util/jars/jetty-util-8.1.14.v20131031.jar</classes>
+    <classes>$IVY2/cache/org.eclipse.jetty/jetty-websocket/jars/jetty-websocket-8.1.14.v20131031.jar</classes>
+    <classes>$IVY2/cache/org.eclipse.sisu/org.eclipse.sisu.inject/eclipse-plugins/org.eclipse.sisu.inject-0.0.0.M5.jar</classes>
+    <classes>$IVY2/cache/org.eclipse.sisu/org.eclipse.sisu.plexus/eclipse-plugins/org.eclipse.sisu.plexus-0.0.0.M5.jar</classes>
+    <classes>$IVY2/cache/org.fusesource.hawtjni/hawtjni-runtime/jars/hawtjni-runtime-1.8.jar</classes>
+    <classes>$IVY2/cache/org.fusesource.leveldbjni/leveldbjni-all/bundles/leveldbjni-all-1.7.jar</classes>
+    <classes>$IVY2/cache/org.fusesource.leveldbjni/leveldbjni-linux32/jars/leveldbjni-linux32-1.5.jar</classes>
+    <classes>$IVY2/cache/org.fusesource.leveldbjni/leveldbjni-linux64/jars/leveldbjni-linux64-1.5.jar</classes>
+    <classes>$IVY2/cache/org.fusesource.leveldbjni/leveldbjni-osx/jars/leveldbjni-osx-1.5.jar</classes>
+    <classes>$IVY2/cache/org.fusesource.leveldbjni/leveldbjni-win32/jars/leveldbjni-win32-1.5.jar</classes>
+    <classes>$IVY2/cache/org.fusesource.leveldbjni/leveldbjni-win64/jars/leveldbjni-win64-1.5.jar</classes>
+    <classes>$IVY2/cache/org.fusesource.leveldbjni/leveldbjni/jars/leveldbjni-1.7.jar</classes>
+    <classes>$IVY2/cache/org.iq80.leveldb/leveldb-api/jars/leveldb-api-0.5.jar</classes>
+    <classes>$IVY2/cache/org.iq80.leveldb/leveldb/jars/leveldb-0.5.jar</classes>
+    <classes>$IVY2/cache/org.javassist/javassist/bundles/javassist-3.18.2-GA.jar</classes>
+    <classes>$IVY2/cache/org.json/json/jars/json-20090211.jar</classes>
+    <classes>$IVY2/cache/org.jvnet.mimepull/mimepull/jars/mimepull-1.9.4.jar</classes>
+    <classes>$IVY2/cache/org.mozilla/rhino/jars/rhino-1.7R4.jar</classes>
+    <classes>$IVY2/cache/org.parboiled/parboiled-core/bundles/parboiled-core-1.1.6.jar</classes>
+    <classes>$IVY2/cache/org.parboiled/parboiled-scala_2.10/bundles/parboiled-scala_2.10-1.1.6.jar</classes>
+    <classes>$IVY2/cache/org.scala-sbt/control/jars/control-0.13.5.jar</classes>
+    <classes>$IVY2/cache/org.scala-sbt/io/jars/io-0.13.5.jar</classes>
+    <classes>$IVY2/cache/org.scalaz/scalaz-core_2.10/bundles/scalaz-core_2.10-7.0.2.jar</classes>
+    <classes>$IVY2/cache/org.scalaz/scalaz-effect_2.10/bundles/scalaz-effect_2.10-7.0.2.jar</classes>
+    <classes>$IVY2/cache/org.slf4j/slf4j-api/jars/slf4j-api-1.7.7.jar</classes>
+    <classes>$IVY2/cache/org.slf4j/slf4j-simple/jars/slf4j-simple-1.7.7.jar</classes>
+    <classes>$IVY2/cache/org.sonatype.plexus/plexus-cipher/jars/plexus-cipher-1.4.jar</classes>
+    <classes>$IVY2/cache/org.sonatype.plexus/plexus-sec-dispatcher/jars/plexus-sec-dispatcher-1.3.jar</classes>
+    <classes>$IVY2/cache/org.sonatype.sisu/sisu-guice/jars/sisu-guice-3.1.0-no_aop.jar</classes>
+    <classes>$IVY2/cache/org.tukaani/xz/jars/xz-1.4.jar</classes>
+    <classes>$IVY2/cache/org.uncommons.maths/uncommons-maths/jars/uncommons-maths-1.2.2a.jar</classes>
+    <classes>$IVY2/cache/org.vafer/jdeb/jars/jdeb-1.3.jar</classes>
+    <classes>$IVY2/cache/org.w3c.css/sac/jars/sac-1.3.jar</classes>
+    <classes>$IVY2/cache/org.webjars/npm/jars/npm-1.3.26.jar</classes>
+    <classes>$IVY2/cache/org.webjars/webjars-locator/jars/webjars-locator-0.14.jar</classes>
+    <classes>$IVY2/cache/scala_2.10/sbt_0.13/com.github.mpeltonen/sbt-idea/jars/sbt-idea-1.5.1.jar</classes>
+    <classes>$IVY2/cache/scala_2.10/sbt_0.13/com.typesafe.play/sbt-plugin/jars/sbt-plugin-2.3.7.jar</classes>
+    <classes>$IVY2/cache/scala_2.10/sbt_0.13/com.typesafe.sbt/sbt-js-engine/jars/sbt-js-engine-1.0.1.jar</classes>
+    <classes>$IVY2/cache/scala_2.10/sbt_0.13/com.typesafe.sbt/sbt-native-packager/jars/sbt-native-packager-0.7.4.jar</classes>
+    <classes>$IVY2/cache/scala_2.10/sbt_0.13/com.typesafe.sbt/sbt-twirl/jars/sbt-twirl-1.0.2.jar</classes>
+    <classes>$IVY2/cache/scala_2.10/sbt_0.13/com.typesafe.sbt/sbt-web/jars/sbt-web-1.0.2.jar</classes>
+    <classes>$IVY2/cache/scala_2.10/sbt_0.13/com.typesafe.sbt/sbt-webdriver/jars/sbt-webdriver-1.0.0.jar</classes>
+    <classes>$IVY2/cache/scala_2.10/sbt_0.13/com.typesafe.sbteclipse/sbteclipse-core/jars/sbteclipse-core-2.4.0.jar</classes>
+    <classes>$IVY2/cache/scala_2.10/sbt_0.13/com.typesafe.sbteclipse/sbteclipse-plugin/jars/sbteclipse-plugin-2.4.0.jar</classes>
+    <classes>$IVY2/cache/xalan/serializer/jars/serializer-2.7.1.jar</classes>
+    <classes>$IVY2/cache/xalan/xalan/jars/xalan-2.7.1.jar</classes>
+    <classes>$IVY2/cache/xerces/xercesImpl/jars/xercesImpl-2.11.0.jar</classes>
+    <classes>$IVY2/cache/xml-apis/xml-apis/jars/xml-apis-1.4.01.jar</classes>
+  </build>
+  <project>
+    <id>root</id>
+    <buildURI>$URI_BASE</buildURI>
+    <name>my-first-app</name>
+    <organization>my-first-app</organization>
+    <version>1.0.0-SNAPSHOT</version>
+    <base>$BASE</base>
+    <target>$BASE/target</target>
+    <java>
+      <compilerOptions>
+        <configuration>compile</configuration>
+        <option>-encoding</option>
+        <option>utf8</option>
+        <option>-g</option>
+      </compilerOptions>
+      <compilerOptions>
+        <configuration>test</configuration>
+        <option>-encoding</option>
+        <option>utf8</option>
+        <option>-g</option>
+      </compilerOptions>
+    </java>
+    <scala>
+      <version>2.10.7</version>
+      <libraryJars>
+        <jar>$SBT_BOOT/scala-2.10.7/lib/scala-library.jar</jar>
+      </libraryJars>
+      <compilerJars>
+        <jar>$SBT_BOOT/scala-2.10.7/lib/jansi.jar</jar>
+        <jar>$SBT_BOOT/scala-2.10.7/lib/jline.jar</jar>
+        <jar>$SBT_BOOT/scala-2.10.7/lib/scala-compiler.jar</jar>
+        <jar>$SBT_BOOT/scala-2.10.7/lib/scala-reflect.jar</jar>
+      </compilerJars>
+      <extraJars/>
+      <compilerOptions>
+        <configuration>compile</configuration>
+        <option>-deprecation</option>
+        <option>-unchecked</option>
+        <option>-encoding</option>
+        <option>utf8</option>
+      </compilerOptions>
+      <compilerOptions>
+        <configuration>test</configuration>
+        <option>-deprecation</option>
+        <option>-unchecked</option>
+        <option>-encoding</option>
+        <option>utf8</option>
+      </compilerOptions>
+    </scala>
+    <compileOrder>Mixed</compileOrder>
+    <configuration id="compile">
+      <sources>$BASE/app</sources>
+      <sources>$BASE/app-2.10</sources>
+      <sources managed="true">$BASE/target/scala-2.10/src_managed/main</sources>
+      <sources managed="true">$BASE/target/scala-2.10/twirl/main</sources>
+      <resources>$BASE/conf</resources>
+      <resources managed="true">$BASE/target/scala-2.10/resource_managed/main</resources>
+      <classes>$BASE/target/scala-2.10/classes</classes>
+    </configuration>
+    <configuration id="test">
+      <sources>$BASE/test</sources>
+      <sources>$BASE/test-2.10</sources>
+      <sources managed="true">$BASE/target/scala-2.10/src_managed/test</sources>
+      <sources managed="true">$BASE/target/scala-2.10/twirl/test</sources>
+      <resources>$BASE/test/resources</resources>
+      <resources managed="true">$BASE/target/scala-2.10/resource_managed/test</resources>
+      <classes>$BASE/target/scala-2.10/test-classes</classes>
+    </configuration>
+    <dependencies>
+      <projects>
+        <forTest>
+          <project buildURI="$URI_BASE" configurations="compile">root:main</project>
+        </forTest>
+        <forProduction/>
+      </projects>
+      <modules>
+        <forTest>
+          <module configurations="compile" organization="com.typesafe.akka" name="akka-actor_2.10" revision="2.3.4" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="com.typesafe.akka" name="akka-slf4j_2.10" revision="2.3.4" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="com.typesafe.play" name="anorm_2.10" revision="2.3.7" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="com.jolbox" name="bonecp" revision="0.8.0.RELEASE" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="com.typesafe.play" name="build-link" revision="2.3.7" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="cglib" name="cglib-nodep" revision="2.1_3" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="org.specs2" name="classycle" revision="1.4.3" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="commons-codec" name="commons-codec" revision="1.9" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="commons-collections" name="commons-collections" revision="3.2.1" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="org.apache.commons" name="commons-exec" revision="1.1" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="commons-io" name="commons-io" revision="2.4" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="org.apache.commons" name="commons-lang3" revision="3.1" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="commons-logging" name="commons-logging" revision="1.1.3" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="com.typesafe" name="config" revision="1.2.1" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="net.sourceforge.cssparser" name="cssparser" revision="0.9.11" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="org.easytesting" name="fest-assert" revision="1.4" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="org.easytesting" name="fest-util" revision="1.1.6" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="org.fluentlenium" name="fluentlenium-core" revision="0.9.2" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="org.fluentlenium" name="fluentlenium-festassert" revision="0.9.2" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="com.google.guava" name="guava" revision="16.0.1" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="com.h2database" name="h2" revision="1.3.175" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="org.hamcrest" name="hamcrest-core" revision="1.3" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="net.sourceforge.htmlunit" name="htmlunit" revision="2.13" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="net.sourceforge.htmlunit" name="htmlunit-core-js" revision="2.13" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="org.apache.httpcomponents" name="httpclient" revision="4.3.1" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="org.apache.httpcomponents" name="httpcore" revision="4.3" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="org.apache.httpcomponents" name="httpmime" revision="4.3.1" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="com.fasterxml.jackson.core" name="jackson-annotations" revision="2.3.2" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="com.fasterxml.jackson.core" name="jackson-core" revision="2.3.2" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="com.fasterxml.jackson.core" name="jackson-databind" revision="2.3.2" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="org.javassist" name="javassist" revision="3.18.2-GA" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="org.slf4j" name="jcl-over-slf4j" revision="1.7.6" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="org.eclipse.jetty" name="jetty-http" revision="8.1.12.v20130726" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="org.eclipse.jetty" name="jetty-io" revision="8.1.12.v20130726" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="org.eclipse.jetty" name="jetty-util" revision="8.1.12.v20130726" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="org.eclipse.jetty" name="jetty-websocket" revision="8.1.12.v20130726" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="net.java.dev.jna" name="jna" revision="3.4.0" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="org.joda" name="joda-convert" revision="1.6" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="joda-time" name="joda-time" revision="2.3" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="org.json" name="json" revision="20080701" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="com.google.code.findbugs" name="jsr305" revision="2.0.3" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="javax.transaction" name="jta" revision="1.1" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="org.slf4j" name="jul-to-slf4j" revision="1.7.6" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="junit" name="junit" revision="4.11" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="com.novocode" name="junit-interface" revision="0.11-RC1" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="ch.qos.logback" name="logback-classic" revision="1.1.1" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="ch.qos.logback" name="logback-core" revision="1.1.1" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="org.mockito" name="mockito-core" revision="1.9.5" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="net.sourceforge.nekohtml" name="nekohtml" revision="1.9.19" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="io.netty" name="netty" revision="3.9.3.Final" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="com.typesafe.netty" name="netty-http-pipelining" revision="1.1.2" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="org.objenesis" name="objenesis" revision="1.0" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="net.java.dev.jna" name="platform" revision="3.4.0" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="com.typesafe.play" name="play-datacommons_2.10" revision="2.3.7" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="com.typesafe.play" name="play-exceptions" revision="2.3.7" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="com.typesafe.play" name="play-functional_2.10" revision="2.3.7" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="com.typesafe.play" name="play-iteratees_2.10" revision="2.3.7" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="com.typesafe.play" name="play-jdbc_2.10" revision="2.3.7" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="com.typesafe.play" name="play-json_2.10" revision="2.3.7" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="com.typesafe.play" name="play-test_2.10" revision="2.3.7" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="com.typesafe.play" name="play_2.10" revision="2.3.7" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="org.scalamacros" name="quasiquotes_2.10" revision="2.0.0-M7" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="org.w3c.css" name="sac" revision="1.3" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="com.jsuereth" name="scala-arm_2.10" revision="1.4" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="org.scala-lang" name="scala-compiler" revision="2.10.7" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="org.scala-lang" name="scala-library" revision="2.10.7" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="org.scala-lang" name="scala-reflect" revision="2.10.7" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="org.scala-stm" name="scala-stm_2.10" revision="0.7" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="org.scalaz" name="scalaz-concurrent_2.10" revision="7.0.6" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="org.scalaz" name="scalaz-core_2.10" revision="7.0.6" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="org.scalaz" name="scalaz-effect_2.10" revision="7.0.6" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="org.seleniumhq.selenium" name="selenium-android-driver" revision="2.39.0" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="org.seleniumhq.selenium" name="selenium-api" revision="2.39.0" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="org.seleniumhq.selenium" name="selenium-chrome-driver" revision="2.39.0" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="org.seleniumhq.selenium" name="selenium-firefox-driver" revision="2.39.0" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="org.seleniumhq.selenium" name="selenium-htmlunit-driver" revision="2.39.0" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="org.seleniumhq.selenium" name="selenium-ie-driver" revision="2.39.0" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="org.seleniumhq.selenium" name="selenium-iphone-driver" revision="2.39.0" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="org.seleniumhq.selenium" name="selenium-java" revision="2.39.0" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="org.seleniumhq.selenium" name="selenium-remote-driver" revision="2.39.0" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="org.seleniumhq.selenium" name="selenium-safari-driver" revision="2.39.0" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="org.seleniumhq.selenium" name="selenium-support" revision="2.39.0" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="xalan" name="serializer" revision="2.7.1" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="org.slf4j" name="slf4j-api" revision="1.7.6" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="org.specs2" name="specs2-analysis_2.10" revision="2.3.12" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="org.specs2" name="specs2-common_2.10" revision="2.3.12" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="org.specs2" name="specs2-core_2.10" revision="2.3.12" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="org.specs2" name="specs2-junit_2.10" revision="2.3.12" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="org.specs2" name="specs2-matcher-extra_2.10" revision="2.3.12" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="org.specs2" name="specs2-matcher_2.10" revision="2.3.12" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="org.specs2" name="specs2-mock_2.10" revision="2.3.12" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="org.scala-sbt" name="test-interface" revision="1.0" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="com.typesafe.play" name="twirl-api_2.10" revision="1.0.2" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="tyrex" name="tyrex" revision="1.0.1" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="org.webbitserver" name="webbit" revision="0.4.14" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="xalan" name="xalan" revision="2.7.1" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="xerces" name="xercesImpl" revision="2.11.0" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="xml-apis" name="xml-apis" revision="1.4.01" artifactType="jar" classifier=""/>
+        </forTest>
+        <forProduction>
+          <module configurations="compile" organization="com.typesafe.akka" name="akka-actor_2.10" revision="2.3.4" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="com.typesafe.akka" name="akka-slf4j_2.10" revision="2.3.4" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="com.typesafe.play" name="anorm_2.10" revision="2.3.7" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="com.jolbox" name="bonecp" revision="0.8.0.RELEASE" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="com.typesafe.play" name="build-link" revision="2.3.7" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="commons-codec" name="commons-codec" revision="1.9" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="org.apache.commons" name="commons-lang3" revision="3.1" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="com.typesafe" name="config" revision="1.2.1" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="com.google.guava" name="guava" revision="15.0" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="com.h2database" name="h2" revision="1.3.175" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="com.fasterxml.jackson.core" name="jackson-annotations" revision="2.3.2" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="com.fasterxml.jackson.core" name="jackson-core" revision="2.3.2" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="com.fasterxml.jackson.core" name="jackson-databind" revision="2.3.2" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="org.javassist" name="javassist" revision="3.18.2-GA" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="org.slf4j" name="jcl-over-slf4j" revision="1.7.6" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="org.joda" name="joda-convert" revision="1.6" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="joda-time" name="joda-time" revision="2.3" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="javax.transaction" name="jta" revision="1.1" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="org.slf4j" name="jul-to-slf4j" revision="1.7.6" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="ch.qos.logback" name="logback-classic" revision="1.1.1" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="ch.qos.logback" name="logback-core" revision="1.1.1" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="io.netty" name="netty" revision="3.9.3.Final" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="com.typesafe.netty" name="netty-http-pipelining" revision="1.1.2" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="com.typesafe.play" name="play-datacommons_2.10" revision="2.3.7" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="com.typesafe.play" name="play-exceptions" revision="2.3.7" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="com.typesafe.play" name="play-functional_2.10" revision="2.3.7" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="com.typesafe.play" name="play-iteratees_2.10" revision="2.3.7" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="com.typesafe.play" name="play-jdbc_2.10" revision="2.3.7" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="com.typesafe.play" name="play-json_2.10" revision="2.3.7" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="com.typesafe.play" name="play_2.10" revision="2.3.7" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="com.jsuereth" name="scala-arm_2.10" revision="1.4" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="org.scala-lang" name="scala-library" revision="2.10.7" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="org.scala-lang" name="scala-reflect" revision="2.10.7" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="org.scala-stm" name="scala-stm_2.10" revision="0.7" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="org.slf4j" name="slf4j-api" revision="1.7.6" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="com.typesafe.play" name="twirl-api_2.10" revision="1.0.2" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="tyrex" name="tyrex" revision="1.0.1" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="xerces" name="xercesImpl" revision="2.11.0" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="xml-apis" name="xml-apis" revision="1.4.01" artifactType="jar" classifier=""/>
+        </forProduction>
+      </modules>
+      <jars>
+        <forTest/>
+        <forProduction/>
+      </jars>
+    </dependencies>
+    <resolver name="public" root="https://repo1.maven.org/maven2/"/>
+    <resolver name="local-preloaded" root="file:$HOME/.sbt-structure-global/0.13/preloaded"/>
+    <resolver name="Typesafe Releases Repository" root="https://repo.typesafe.com/typesafe/releases/"/>
+    <play2>
+      <version>2.3.7</version>
+      <templatesImports>
+        <import>play.api.templates.PlayMagic._</import>
+        <import>models._</import>
+        <import>controllers._</import>
+        <import>play.api.i18n._</import>
+        <import>play.api.mvc._</import>
+        <import>play.api.data._</import>
+        <import>views.xml._</import>
+      </templatesImports>
+      <routesImports>
+        <import>controllers.Assets.Asset</import>
+      </routesImports>
+      <confDirectory>$BASE/conf</confDirectory>
+      <sourceDirectory>$BASE/app</sourceDirectory>
+    </play2>
+    <setting>
+      <label>dependencyOverrides</label>
+      <description>Declares managed dependency overrides.</description>
+      <rank>40</rank>
+    </setting>
+    <setting>
+      <label>scalaOrganization</label>
+      <description>Organization/group ID of the Scala used in the project. Default value is 'org.scala-lang'. This is an advanced setting used for clones of the Scala Language. It should be disregarded in standard use cases.</description>
+      <rank>100</rank>
+    </setting>
+    <setting>
+      <label>webNodeModuleDirectories</label>
+      <description>The list of directories that node modules are to expand into.</description>
+      <rank>25</rank>
+    </setting>
+    <setting>
+      <label>sourceManaged</label>
+      <description>Default directory for sources generated by the build.</description>
+      <rank>39</rank>
+    </setting>
+    <setting>
+      <label>ideaExcludeFolders</label>
+      <description/>
+      <rank>25</rank>
+    </setting>
+    <setting>
+      <label>maxErrors</label>
+      <description>The maximum number of errors, such as compile errors, to list.</description>
+      <rank>10</rank>
+    </setting>
+    <setting>
+      <label>ideaIncludeScalaFacet</label>
+      <description/>
+      <rank>25</rank>
+    </setting>
+    <setting>
+      <label>cleanupCommands</label>
+      <description>Commands to execute before the Scala interpreter exits.</description>
+      <rank>41</rank>
+    </setting>
+    <setting>
+      <label>ivyXml</label>
+      <description>Defines inline Ivy XML for configuring dependency management.</description>
+      <rank>40</rank>
+    </setting>
+    <setting>
+      <label>pomAllRepositories</label>
+      <description>If true, includes repositories used in module configurations in the pom repositories section. If false, only the common repositories are included.</description>
+      <rank>41</rank>
+    </setting>
+    <setting>
+      <label>licenses</label>
+      <description>Project licenses as (name, url) pairs.</description>
+      <rank>41</rank>
+    </setting>
+    <setting>
+      <label>rpmGroup</label>
+      <description>Group to associate with the RPM.</description>
+      <rank>25</rank>
+    </setting>
+    <setting>
+      <label>artifacts</label>
+      <description>The artifact definitions for the current module. Must be consistent with packagedArtifacts.</description>
+      <rank>40</rank>
+    </setting>
+    <setting>
+      <label>retrievePattern</label>
+      <description>Pattern used to retrieve managed dependencies to the current build.</description>
+      <rank>10000</rank>
+    </setting>
+    <setting>
+      <label>crossScalaVersions</label>
+      <description>The versions of Scala used when cross-building.</description>
+      <rank>39</rank>
+    </setting>
+    <setting>
+      <label>organization</label>
+      <description>Organization/group ID.</description>
+      <rank>9</rank>
+    </setting>
+    <setting>
+      <label>sbtResolver</label>
+      <description>Provides a resolver for obtaining sbt as a dependency.</description>
+      <rank>41</rank>
+    </setting>
+    <setting>
+      <label>requiredStartFacilities</label>
+      <description>Names of system services that should be provided at application start</description>
+      <rank>25</rank>
+    </setting>
+    <setting>
+      <label>classpathOptions</label>
+      <description>Configures handling of Scala classpaths.</description>
+      <rank>10000</rank>
+    </setting>
+    <setting>
+      <label>rpmVerifyscript</label>
+      <description>%verifyscript scriptlet</description>
+      <rank>25</rank>
+    </setting>
+    <setting>
+      <label>rpmProvides</label>
+      <description>Packages this RPM provides.</description>
+      <rank>25</rank>
+    </setting>
+    <setting>
+      <label>playGenerateReverseRouter</label>
+      <description>Whether the reverse router should be generated. Setting to false may reduce compile times if it's not needed.</description>
+      <rank>25</rank>
+    </setting>
+    <setting>
+      <label>daemonGroup</label>
+      <description>Group to start application daemon</description>
+      <rank>25</rank>
+    </setting>
+    <setting>
+      <label>daemonUser</label>
+      <description>User to start application daemon</description>
+      <rank>25</rank>
+    </setting>
+    <setting>
+      <label>rpmAutoreq</label>
+      <description>enable/deactivating auto requiering.</description>
+      <rank>25</rank>
+    </setting>
+    <setting>
+      <label>rpmPackger</label>
+      <description>Person who packaged this rpm.</description>
+      <rank>25</rank>
+    </setting>
+    <setting>
+      <label>testResultLogger</label>
+      <description>Logs results after a test task completes.</description>
+      <rank>20000</rank>
+    </setting>
+    <setting>
+      <label>loadedBuild</label>
+      <description>Provides access to the loaded project structure. This is the information available before settings are evaluated.</description>
+      <rank>10000</rank>
+    </setting>
+    <setting>
+      <label>twirlUseOldParser</label>
+      <description>Use the original Play template parser</description>
+      <rank>25</rank>
+    </setting>
+    <setting>
+      <label>playDevSettings</label>
+      <description/>
+      <rank>25</rank>
+    </setting>
+    <setting>
+      <label>dockerRepository</label>
+      <description>Repository for published Docker image</description>
+      <rank>25</rank>
+    </setting>
+    <setting>
+      <label>jstaskTimeoutPerSource</label>
+      <description>The maximum number of seconds to wait per source file processed by the JS task.</description>
+      <rank>25</rank>
+    </setting>
+    <setting>
+      <label>name</label>
+      <description>Project name.</description>
+      <rank>9</rank>
+    </setting>
+    <setting>
+      <label>webJarsDirectory</label>
+      <description>The path to extract WebJars to</description>
+      <rank>25</rank>
+    </setting>
+    <setting>
+      <label>useJcenter</label>
+      <description>Use JCenter as the default repository.</description>
+      <rank>40</rank>
+    </setting>
+    <setting>
+      <label>retrieveConfiguration</label>
+      <description>Configures retrieving dependencies to the current build.</description>
+      <rank>10000</rank>
+    </setting>
+    <setting>
+      <label>startYear</label>
+      <description>Year in which the project started.</description>
+      <rank>41</rank>
+    </setting>
+    <setting>
+      <label>scalaSource</label>
+      <description>Default Scala source directory.</description>
+      <rank>10</rank>
+    </setting>
+    <setting>
+      <label>compileOrder</label>
+      <description>Configures the order in which Java and sources within a single compilation are compiled. Valid values are: JavaThenScala, ScalaThenJava, or Mixed.</description>
+      <rank>39</rank>
+    </setting>
+    <setting>
+      <label>stopRunlevels</label>
+      <description>Sequence of runlevels on which application will stop</description>
+      <rank>25</rank>
+    </setting>
+    <setting>
+      <label>jseNpmTimeout</label>
+      <description>The maximum number of seconds to for npm to do its thing.</description>
+      <rank>25</rank>
+    </setting>
+    <setting>
+      <label>conflictManager</label>
+      <description>Selects the conflict manager to use for dependency management.</description>
+      <rank>100</rank>
+    </setting>
+    <setting>
+      <label>wdParallelism</label>
+      <description>The number of parallel tasks for the webdriver host. Defaults to the # of available processors + 1 to keep things busy.</description>
+      <rank>25</rank>
+    </setting>
+    <setting>
+      <label>excludeDependencies</label>
+      <description>Declares managed dependency exclusions.</description>
+      <rank>40</rank>
+    </setting>
+    <setting>
+      <label>isSnapshot</label>
+      <description>True if the the version of the project is a snapshot version.</description>
+      <rank>39</rank>
+    </setting>
+    <setting>
+      <label>unmanagedResourceDirectories</label>
+      <description>Unmanaged resource directories, containing resources manually created by the user.</description>
+      <rank>11</rank>
+    </setting>
+    <setting>
+      <label>rpmObsoletes</label>
+      <description>Packages this RPM makes obsolete.</description>
+      <rank>25</rank>
+    </setting>
+    <setting>
+      <label>debianPackageDependencies</label>
+      <description>Packages that this debian package depends on.</description>
+      <rank>25</rank>
+    </setting>
+    <setting>
+      <label>parallelExecution</label>
+      <description>Enables (true) or disables (false) parallel execution of tasks.</description>
+      <rank>41</rank>
+    </setting>
+    <setting>
+      <label>playCoffeescriptOptions</label>
+      <description/>
+      <rank>25</rank>
+    </setting>
+    <setting>
+      <label>autoScalaLibrary</label>
+      <description>Adds a dependency on scala-library if true.</description>
+      <rank>10</rank>
+    </setting>
+    <setting>
+      <label>makePomConfiguration</label>
+      <description>Configuration for generating a pom.</description>
+      <rank>10000</rank>
+    </setting>
+    <setting>
+      <label>wixProductUpgradeId</label>
+      <description>The uuid associated with upgrades for this package.</description>
+      <rank>25</rank>
+    </setting>
+    <setting>
+      <label>debianSection</label>
+      <description>The section category for this deb file.</description>
+      <rank>25</rank>
+    </setting>
+    <setting>
+      <label>playVersion</label>
+      <description/>
+      <rank>25</rank>
+    </setting>
+    <setting>
+      <label>artifactClassifier</label>
+      <description>Sets the classifier used by the default artifact definition.</description>
+      <rank>40</rank>
+    </setting>
+    <setting>
+      <label>assetsPrefix</label>
+      <description/>
+      <rank>25</rank>
+    </setting>
+    <setting>
+      <label>ivyPaths</label>
+      <description>Configures paths used by Ivy for dependency management.</description>
+      <rank>10000</rank>
+    </setting>
+    <setting>
+      <label>projectInfo</label>
+      <description>Addition project information like formal name, homepage, licenses etc.</description>
+      <rank>100</rank>
+    </setting>
+    <setting>
+      <label>debianPackageInfo</label>
+      <description>Information (name, version, etc.) about a debian package.</description>
+      <rank>25</rank>
+    </setting>
+    <setting>
+      <label>webJarsNodeModulesDirectory</label>
+      <description>The path to extract WebJar node modules to</description>
+      <rank>25</rank>
+    </setting>
+    <setting>
+      <label>connectInput</label>
+      <description>If true, connects standard input when running a main class forked.</description>
+      <rank>100</rank>
+    </setting>
+    <setting>
+      <label>rpmIcon</label>
+      <description>name of the icon to use with this RPM.</description>
+      <rank>25</rank>
+    </setting>
+    <setting>
+      <label>sbtDependency</label>
+      <description>Provides a definition for declaring the current version of sbt.</description>
+      <rank>41</rank>
+    </setting>
+    <setting>
+      <label>eclipsePreTasks</label>
+      <description>The tasks to be evaluated prior to creating the Eclipse project definition.</description>
+      <rank>25</rank>
+    </setting>
+    <setting>
+      <label>ideaExtraFacets</label>
+      <description/>
+      <rank>25</rank>
+    </setting>
+    <setting>
+      <label>resourceDirectories</label>
+      <description>List of all resource directories, both managed and unmanaged.</description>
+      <rank>39</rank>
+    </setting>
+    <setting>
+      <label>rpmLicense</label>
+      <description>License of the code within the RPM.</description>
+      <rank>25</rank>
+    </setting>
+    <setting>
+      <label>moduleConfigurations</label>
+      <description>Defines module configurations, which override resolvers on a per-module basis.</description>
+      <rank>41</rank>
+    </setting>
+    <setting>
+      <label>cacheDirectory</label>
+      <description>Directory used for caching task data.</description>
+      <rank>41</rank>
+    </setting>
+    <setting>
+      <label>scalaBinaryVersion</label>
+      <description>The Scala version substring describing binary compatibility.</description>
+      <rank>39</rank>
+    </setting>
+    <setting>
+      <label>excludeFilter</label>
+      <description>Filter for excluding sources and resources files from default directories.</description>
+      <rank>100</rank>
+    </setting>
+    <setting>
+      <label>onLoadMessage</label>
+      <description>Message to display when the project is loaded.</description>
+      <rank>10000</rank>
+    </setting>
+    <setting>
+      <label>webPublic</label>
+      <description>The location of files intended for publishing to the web.</description>
+      <rank>25</rank>
+    </setting>
+    <setting>
+      <label>webModuleDirectory</label>
+      <description>Default web modules directory, used for web browser based resources.</description>
+      <rank>25</rank>
+    </setting>
+    <setting>
+      <label>history</label>
+      <description>The location where command line history is persisted.</description>
+      <rank>40</rank>
+    </setting>
+    <setting>
+      <label>pomPostProcess</label>
+      <description>Transforms the generated POM.</description>
+      <rank>100</rank>
+    </setting>
+    <setting>
+      <label>logLevel</label>
+      <description>The amount of logging sent to the screen.</description>
+      <rank>10</rank>
+    </setting>
+    <setting>
+      <label>daemonShell</label>
+      <description>Shell provided for the daemon user</description>
+      <rank>25</rank>
+    </setting>
+    <setting>
+      <label>playAggregateAssets</label>
+      <description>Determines whether assets from project dependencies are included.</description>
+      <rank>25</rank>
+    </setting>
+    <setting>
+      <label>sbtVersion</label>
+      <description>Provides the version of sbt. This setting should be not be modified.</description>
+      <rank>11</rank>
+    </setting>
+    <setting>
+      <label>cleanKeepFiles</label>
+      <description>Files or directories to keep during a clean. Must be direct children of target.</description>
+      <rank>100</rank>
+    </setting>
+    <setting>
+      <label>normalizedName</label>
+      <description>Project name transformed from mixed case and spaces to lowercase and dash-separated.</description>
+      <rank>40</rank>
+    </setting>
+    <setting>
+      <label>extraLoggers</label>
+      <description>A function that provides additional loggers for a given setting.</description>
+      <rank>10000</rank>
+    </setting>
+    <setting>
+      <label>managedScalaInstance</label>
+      <description>Automatically obtains Scala tools as managed dependencies if true.</description>
+      <rank>40</rank>
+    </setting>
+    <setting>
+      <label>triggeredMessage</label>
+      <description>The message to show before triggered execution executes an action after sources change.</description>
+      <rank>10000</rank>
+    </setting>
+    <setting>
+      <label>logBuffered</label>
+      <description>True if logging should be buffered until work completes.</description>
+      <rank>100</rank>
+    </setting>
+    <setting>
+      <label>transitiveClassifiers</label>
+      <description>List of classifiers used for transitively obtaining extra artifacts for sbt or declared dependencies.</description>
+      <rank>40</rank>
+    </setting>
+    <setting>
+      <label>wixProductId</label>
+      <description>The uuid of the windows package.</description>
+      <rank>25</rank>
+    </setting>
+    <setting>
+      <label>exportToInternal</label>
+      <description>The level of tracking for this project by the internal callers.</description>
+      <rank>40</rank>
+    </setting>
+    <setting>
+      <label>scmInfo</label>
+      <description>Basic SCM information for the project.</description>
+      <rank>41</rank>
+    </setting>
+    <setting>
+      <label>debianPackageRecommends</label>
+      <description>Packages recommended to use with the currently packaged one.</description>
+      <rank>25</rank>
+    </setting>
+    <setting>
+      <label>managedDirectory</label>
+      <description>Directory to which managed dependencies are retrieved.</description>
+      <rank>40</rank>
+    </setting>
+    <setting>
+      <label>unmanagedBase</label>
+      <description>The default directory for manually managed libraries.</description>
+      <rank>10</rank>
+    </setting>
+    <setting>
+      <label>sbtBinaryVersion</label>
+      <description>Defines the binary compatibility version substring.</description>
+      <rank>39</rank>
+    </setting>
+    <setting>
+      <label>projectId</label>
+      <description>The dependency management descriptor for the current module.</description>
+      <rank>41</rank>
+    </setting>
+    <setting>
+      <label>configurationsToRetrieve</label>
+      <description>An optional set of configurations from which to retrieve dependencies if retrieveManaged is set to true</description>
+      <rank>40</rank>
+    </setting>
+    <setting>
+      <label>rpmMetadata</label>
+      <description>Metadata associated with the generated RPM.</description>
+      <rank>25</rank>
+    </setting>
+    <setting>
+      <label>rpmConflicts</label>
+      <description>Packages this RPM conflicts with.</description>
+      <rank>25</rank>
+    </setting>
+    <setting>
+      <label>description</label>
+      <description>Project description.</description>
+      <rank>40</rank>
+    </setting>
+    <setting>
+      <label>webModulesLib</label>
+      <description>The sub folder of the path to extract web browser modules to</description>
+      <rank>25</rank>
+    </setting>
+    <setting>
+      <label>rpmPost</label>
+      <description>%post scriptlet</description>
+      <rank>25</rank>
+    </setting>
+    <setting>
+      <label>baseDirectory</label>
+      <description>The base directory. Depending on the scope, this is the base directory for the build, project, configuration, or task.</description>
+      <rank>11</rank>
+    </setting>
+    <setting>
+      <label>scalaHome</label>
+      <description>If Some, defines the local Scala installation to use for compilation, running, and testing.</description>
+      <rank>10</rank>
+    </setting>
+    <setting>
+      <label>ivyScala</label>
+      <description>Configures how Scala dependencies are checked, filtered, and injected.</description>
+      <rank>100</rank>
+    </setting>
+    <setting>
+      <label>webJsFilter</label>
+      <description>The file extension of js files.</description>
+      <rank>25</rank>
+    </setting>
+    <setting>
+      <label>webNodeModuleGenerators</label>
+      <description>List of tasks that generate node modules.</description>
+      <rank>25</rank>
+    </setting>
+    <setting>
+      <label>rpmPreun</label>
+      <description>%preun scriptlet</description>
+      <rank>25</rank>
+    </setting>
+    <setting>
+      <label>scalaCompilerBridgeSource</label>
+      <description>Configures the module ID of the sources of the compiler bridge.</description>
+      <rank>100</rank>
+    </setting>
+    <setting>
+      <label>publishTo</label>
+      <description>The resolver to publish to.</description>
+      <rank>10</rank>
+    </setting>
+    <setting>
+      <label>rpmRequirements</label>
+      <description>Packages this RPM requires.</description>
+      <rank>25</rank>
+    </setting>
+    <setting>
+      <label>rpmOs</label>
+      <description>Name of the os for this RPM.</description>
+      <rank>25</rank>
+    </setting>
+    <setting>
+      <label>rpmRelease</label>
+      <description>Special release number for this rpm (vs. the software).</description>
+      <rank>25</rank>
+    </setting>
+    <setting>
+      <label>tags</label>
+      <description>tags</description>
+      <rank>40</rank>
+    </setting>
+    <setting>
+      <label>playInteractionMode</label>
+      <description/>
+      <rank>25</rank>
+    </setting>
+    <setting>
+      <label>rpmDescription</label>
+      <description>Description of this rpm.</description>
+      <rank>25</rank>
+    </setting>
+    <setting>
+      <label>artifactPath</label>
+      <description>The location of a generated artifact.</description>
+      <rank>39</rank>
+    </setting>
+    <setting>
+      <label>sourceDirectory</label>
+      <description>Default directory containing sources.</description>
+      <rank>11</rank>
+    </setting>
+    <setting>
+      <label>organizationHomepage</label>
+      <description>Organization homepage.</description>
+      <rank>41</rank>
+    </setting>
+    <setting>
+      <label>debianControlScriptsDirectory</label>
+      <description>Directory where all debian control scripts reside. Default is 'src/debian/DEBIAN'</description>
+      <rank>25</rank>
+    </setting>
+    <setting>
+      <label>jseParallelism</label>
+      <description>The number of parallel tasks for the JavaScript engine. Defaults to the # of available processors + 1 to keep things busy.</description>
+      <rank>25</rank>
+    </setting>
+    <setting>
+      <label>ideaProjectName</label>
+      <description/>
+      <rank>25</rank>
+    </setting>
+    <setting>
+      <label>pomIncludeRepository</label>
+      <description>Selects repositories to include in the generated POM.</description>
+      <rank>100</rank>
+    </setting>
+    <setting>
+      <label>includeFilter</label>
+      <description>Filter for including sources and resources files from default directories.</description>
+      <rank>100</rank>
+    </setting>
+    <setting>
+      <label>sourceDirectories</label>
+      <description>List of all source directories, both managed and unmanaged.</description>
+      <rank>11</rank>
+    </setting>
+    <setting>
+      <label>trapExit</label>
+      <description>If true, enables exit trapping and thread management for 'run'-like tasks. This is currently only suitable for serially-executed 'run'-like tasks.</description>
+      <rank>100</rank>
+    </setting>
+    <setting>
+      <label>rpmPosttrans</label>
+      <description>%posttrans scriptlet</description>
+      <rank>25</rank>
+    </setting>
+    <setting>
+      <label>appResolvers</label>
+      <description>The resolvers configured for this application by the sbt launcher.</description>
+      <rank>41</rank>
+    </setting>
+    <setting>
+      <label>retrieveManaged</label>
+      <description>If true, enables retrieving dependencies to the current build. Otherwise, dependencies are used directly from the cache.</description>
+      <rank>40</rank>
+    </setting>
+    <setting>
+      <label>updateOptions</label>
+      <description>Options for resolving managed dependencies.</description>
+      <rank>10000</rank>
+    </setting>
+    <setting>
+      <label>organizationName</label>
+      <description>Organization full/formal name.</description>
+      <rank>41</rank>
+    </setting>
+    <setting>
+      <label>shellPrompt</label>
+      <description>The function that constructs the command prompt from the current build state.</description>
+      <rank>10000</rank>
+    </setting>
+    <setting>
+      <label>debianPackageMetadata</label>
+      <description>Meta data used when constructing a debian package.</description>
+      <rank>25</rank>
+    </setting>
+    <setting>
+      <label>rpmScriptletsDirectory</label>
+      <description>Directory where all debian control scripts reside. Default is 'src/rpm/scriptlets'</description>
+      <rank>25</rank>
+    </setting>
+    <setting>
+      <label>wixPackageInfo</label>
+      <description>The configuration for this package.</description>
+      <rank>25</rank>
+    </setting>
+    <setting>
+      <label>autoCompilerPlugins</label>
+      <description>If true, enables automatically generating -Xplugin arguments to the compiler based on the classpath for the plugin configuration.</description>
+      <rank>11</rank>
+    </setting>
+    <setting>
+      <label>debianPriority</label>
+      <description/>
+      <rank>25</rank>
+    </setting>
+    <setting>
+      <label>jseEngineType</label>
+      <description>The type of engine to use.</description>
+      <rank>25</rank>
+    </setting>
+    <setting>
+      <label>debianChangelog</label>
+      <description>The changelog for this deb file</description>
+      <rank>25</rank>
+    </setting>
+    <setting>
+      <label>debianSignRole</label>
+      <description>The role to use when signing a debian file (defaults to 'builder').</description>
+      <rank>25</rank>
+    </setting>
+    <setting>
+      <label>outputStrategy</label>
+      <description>Selects how to log output when running a main class.</description>
+      <rank>10000</rank>
+    </setting>
+    <setting>
+      <label>twirlTemplateImports</label>
+      <description>Extra imports for twirl templates</description>
+      <rank>25</rank>
+    </setting>
+    <setting>
+      <label>thisProjectRef</label>
+      <description>Provides a fully-resolved reference to the current project for the referencing scope.</description>
+      <rank>100</rank>
+    </setting>
+    <setting>
+      <label>playWatchService</label>
+      <description>The watch service Play uses to watch for file changes</description>
+      <rank>25</rank>
+    </setting>
+    <setting>
+      <label>unmanagedSourceDirectories</label>
+      <description>Unmanaged source directories, which contain manually created sources.</description>
+      <rank>10</rank>
+    </setting>
+    <setting>
+      <label>rpmPretrans</label>
+      <description>%pretrans scriptlet</description>
+      <rank>25</rank>
+    </setting>
+    <setting>
+      <label>watch</label>
+      <description>Continuous execution configuration.</description>
+      <rank>1000</rank>
+    </setting>
+    <setting>
+      <label>settingLogger</label>
+      <description>Logger usable by settings during project loading.</description>
+      <rank>100</rank>
+    </setting>
+    <setting>
+      <label>rpmAutoprov</label>
+      <description>enable/deactivating auto provisioning.</description>
+      <rank>25</rank>
+    </setting>
+    <setting>
+      <label>ideaPackagePrefix</label>
+      <description>The package prefix for source directories.</description>
+      <rank>25</rank>
+    </setting>
+    <setting>
+      <label>playDefaultPort</label>
+      <description/>
+      <rank>25</rank>
+    </setting>
+    <setting>
+      <label>overrideBuildResolvers</label>
+      <description>Whether or not all the build resolvers should be overridden with what's defined from the launcher.</description>
+      <rank>41</rank>
+    </setting>
+    <setting>
+      <label>resolvers</label>
+      <description>The user-defined additional resolvers for automatically managed dependencies.</description>
+      <rank>31</rank>
+    </setting>
+    <setting>
+      <label>maintainer</label>
+      <description>The name/email address of a maintainer for the native package.</description>
+      <rank>25</rank>
+    </setting>
+    <setting>
+      <label>publishMavenStyle</label>
+      <description>Configures whether to generate and publish a pom (true) or Ivy file (false).</description>
+      <rank>40</rank>
+    </setting>
+    <setting>
+      <label>startRunlevels</label>
+      <description>Sequence of runlevels on which application will start up</description>
+      <rank>25</rank>
+    </setting>
+    <setting>
+      <label>requiredStopFacilities</label>
+      <description>Names of system services that should be provided at application stop</description>
+      <rank>25</rank>
+    </setting>
+    <setting>
+      <label>linuxJavaAppStartScriptBuilder</label>
+      <description>Responsible for loading the start scripts. Only used with archetype.java_server</description>
+      <rank>25</rank>
+    </setting>
+    <setting>
+      <label>pomExtra</label>
+      <description>Extra XML to insert into the generated POM.</description>
+      <rank>40</rank>
+    </setting>
+    <setting>
+      <label>testFrameworks</label>
+      <description>Registered, although not necessarily present, test frameworks.</description>
+      <rank>200</rank>
+    </setting>
+    <setting>
+      <label>apiUrl</label>
+      <description>Base URL for API documentation.</description>
+      <rank>41</rank>
+    </setting>
+    <setting>
+      <label>webJarsCache</label>
+      <description>The path for the webjars extraction cache file</description>
+      <rank>25</rank>
+    </setting>
+    <setting>
+      <label>exportJars</label>
+      <description>Determines whether the exported classpath for this project contains classes (false) or a packaged jar (true).</description>
+      <rank>40</rank>
+    </setting>
+    <setting>
+      <label>serverLoader</label>
+      <description>Loading system to be used for application start script</description>
+      <rank>25</rank>
+    </setting>
+    <setting>
+      <label>playRoutesImports</label>
+      <description/>
+      <rank>25</rank>
+    </setting>
+    <setting>
+      <label>eclipseClasspathTransformerFactory</label>
+      <description>Factories for a rewrite rule for the .classpath file.</description>
+      <rank>25</rank>
+    </setting>
+    <setting>
+      <label>scalaVersion</label>
+      <description>The version of Scala used for building.</description>
+      <rank>9</rank>
+    </setting>
+    <setting>
+      <label>playClosureCompilerOptions</label>
+      <description/>
+      <rank>25</rank>
+    </setting>
+    <setting>
+      <label>moduleName</label>
+      <description>The name of the current module, used for dependency management.</description>
+      <rank>40</rank>
+    </setting>
+    <setting>
+      <label>conflictWarning</label>
+      <description>Configures warnings for conflicts in dependency management.</description>
+      <rank>100</rank>
+    </setting>
+    <setting>
+      <label>dockerExposedVolumes</label>
+      <description>Volumes exposed by Docker image</description>
+      <rank>25</rank>
+    </setting>
+    <setting>
+      <label>internalConfigurationMap</label>
+      <description>Maps configurations to the actual configuration used to define the classpath.</description>
+      <rank>100</rank>
+    </setting>
+    <setting>
+      <label>ivyLoggingLevel</label>
+      <description>The logging level for updating.</description>
+      <rank>40</rank>
+    </setting>
+    <setting>
+      <label>candleOptions</label>
+      <description>Options to pass to the candle.exe program.</description>
+      <rank>25</rank>
+    </setting>
+    <setting>
+      <label>sbtPlugin</label>
+      <description>If true, enables adding sbt as a dependency and auto-generation of the plugin descriptor file.</description>
+      <rank>41</rank>
+    </setting>
+    <setting>
+      <label>otherResolvers</label>
+      <description>Resolvers not included in the main resolver chain, such as those in module configurations.</description>
+      <rank>100</rank>
+    </setting>
+    <setting>
+      <label>ivyValidate</label>
+      <description>Enables/disables Ivy validation of module metadata.</description>
+      <rank>40</rank>
+    </setting>
+    <setting>
+      <label>packageSummary</label>
+      <description>Summary of the contents of a linux package.</description>
+      <rank>25</rank>
+    </setting>
+    <setting>
+      <label>testForkedParallel</label>
+      <description>Whether forked tests should be executed in parallel</description>
+      <rank>200</rank>
+    </setting>
+    <setting>
+      <label>packageArchitecture</label>
+      <description>The architecture used for this linux package.</description>
+      <rank>25</rank>
+    </setting>
+    <setting>
+      <label>appConfiguration</label>
+      <description>Provides access to the launched sbt configuration, including the ScalaProvider, Launcher, and GlobalLock.</description>
+      <rank>10000</rank>
+    </setting>
+    <setting>
+      <label>publishArtifact</label>
+      <description>Enables (true) or disables (false) publishing an artifact.</description>
+      <rank>11</rank>
+    </setting>
+    <setting>
+      <label>artifactName</label>
+      <description>Function that produces the artifact name from its definition.</description>
+      <rank>100</rank>
+    </setting>
+    <setting>
+      <label>lightOptions</label>
+      <description>Options to pass to the light.exe program.</description>
+      <rank>25</rank>
+    </setting>
+    <setting>
+      <label>eclipseProjectFlavor</label>
+      <description>The flavor of project (Scala or Java) to build.</description>
+      <rank>25</rank>
+    </setting>
+    <setting>
+      <label>crossPaths</label>
+      <description>If true, enables cross paths, which distinguish input and output directories for cross-building.</description>
+      <rank>10</rank>
+    </setting>
+    <setting>
+      <label>playRequireNativePath</label>
+      <description/>
+      <rank>25</rank>
+    </setting>
+    <setting>
+      <label>autoApiMappings</label>
+      <description>If true, automatically manages mappings to the API doc URL.</description>
+      <rank>41</rank>
+    </setting>
+    <setting>
+      <label>playLessEntryPoints</label>
+      <description/>
+      <rank>25</rank>
+    </setting>
+    <setting>
+      <label>dockerBaseImage</label>
+      <description>Base image for Dockerfile.</description>
+      <rank>25</rank>
+    </setting>
+    <setting>
+      <label>ivyConfigurations</label>
+      <description>The defined configurations for dependency management. This may be different from the configurations for Project settings.</description>
+      <rank>40</rank>
+    </setting>
+    <setting>
+      <label>ideaJavadocsClassifiers</label>
+      <description/>
+      <rank>25</rank>
+    </setting>
+    <setting>
+      <label>rpmScripts</label>
+      <description>Configuration of pre- and post-integration scripts.</description>
+      <rank>25</rank>
+    </setting>
+    <setting>
+      <label>retrieveManagedSync</label>
+      <description>If true, enables synchronizing the dependencies retrieved to the current build by removed unneeded files.</description>
+      <rank>40</rank>
+    </setting>
+    <setting>
+      <label>rpmPostun</label>
+      <description>%postun scriptlet</description>
+      <rank>25</rank>
+    </setting>
+    <setting>
+      <label>playJavascriptEntryPoints</label>
+      <description/>
+      <rank>25</rank>
+    </setting>
+    <setting>
+      <label>fileInputOptions</label>
+      <description>Options that take file input, which may invalidate the cache.</description>
+      <rank>100</rank>
+    </setting>
+    <setting>
+      <label>crossVersion</label>
+      <description>Configures handling of the Scala version when cross-building.</description>
+      <rank>100</rank>
+    </setting>
+    <setting>
+      <label>jseCommand</label>
+      <description>An optional path to the command used to invoke the engine.</description>
+      <rank>25</rank>
+    </setting>
+    <setting>
+      <label>fork</label>
+      <description>If true, forks a new JVM when running. If false, runs in the same JVM as the build.</description>
+      <rank>10</rank>
+    </setting>
+    <setting>
+      <label>rpmDistribution</label>
+      <description/>
+      <rank>25</rank>
+    </setting>
+    <setting>
+      <label>playNamespaceReverseRouter</label>
+      <description>Whether the reverse router should be namespaced. Useful if you have many routers that use the same actions.</description>
+      <rank>25</rank>
+    </setting>
+    <setting>
+      <label>ideaBasePackage</label>
+      <description>The base package configured in the Scala Facet, used by IDEA to generated nested package clauses. For example, com.acme.wibble</description>
+      <rank>25</rank>
+    </setting>
+    <setting>
+      <label>playPlugin</label>
+      <description/>
+      <rank>25</rank>
+    </setting>
+    <setting>
+      <label>playGenerateRefReverseRouter</label>
+      <description>Whether the ref reverse router should be generated along with reverse router. Setting to false will make it easy to export routes to other projects and improve compile time.</description>
+      <rank>25</rank>
+    </setting>
+    <setting>
+      <label>rpmPre</label>
+      <description>%pre scriptlet</description>
+      <rank>25</rank>
+    </setting>
+    <setting>
+      <label>updateConfiguration</label>
+      <description>Configuration for resolving and retrieving managed dependencies.</description>
+      <rank>10000</rank>
+    </setting>
+    <setting>
+      <label>crossTarget</label>
+      <description>Main directory for files generated by the build that are cross-built.</description>
+      <rank>40</rank>
+    </setting>
+    <setting>
+      <label>defaultLinuxInstallLocation</label>
+      <description>The location where we will install generic linux packages.</description>
+      <rank>25</rank>
+    </setting>
+    <setting>
+      <label>version</label>
+      <description>The version/revision of the current module.</description>
+      <rank>9</rank>
+    </setting>
+    <setting>
+      <label>playConf</label>
+      <description/>
+      <rank>25</rank>
+    </setting>
+    <setting>
+      <label>trackInternalDependencies</label>
+      <description>The level of tracking for the internal (inter-project) dependency.</description>
+      <rank>40</rank>
+    </setting>
+    <setting>
+      <label>dockerExposedPorts</label>
+      <description>Ports exposed by Docker image</description>
+      <rank>25</rank>
+    </setting>
+    <setting>
+      <label>buildDependencies</label>
+      <description>Definitive source of inter-project dependencies for compilation and dependency management. This is populated by default by the dependencies declared on Project instances, but may be modified. The main restriction is that new builds may not be introduced.</description>
+      <rank>10000</rank>
+    </setting>
+    <setting>
+      <label>resourceManaged</label>
+      <description>Default managed resource directory, used when generating resources.</description>
+      <rank>40</rank>
+    </setting>
+    <setting>
+      <label>resourceGenerators</label>
+      <description>List of tasks that generate resources.</description>
+      <rank>100</rank>
+    </setting>
+    <setting>
+      <label>rpmVendor</label>
+      <description>Name of the vendor for this RPM.</description>
+      <rank>25</rank>
+    </setting>
+    <setting>
+      <label>sourcesInBase</label>
+      <description>If true, sources from the project's base directory are included as main sources.</description>
+      <rank>25</rank>
+    </setting>
+    <setting>
+      <label>stagingDirectory</label>
+      <description>Directory where we stage distributions/releases.</description>
+      <rank>25</rank>
+    </setting>
+    <setting>
+      <label>webNodeModuleDirectory</label>
+      <description>Default node modules directory, used for node based resources.</description>
+      <rank>25</rank>
+    </setting>
+    <setting>
+      <label>resourceDirectory</label>
+      <description>Default unmanaged resource directory, used for user-defined resources.</description>
+      <rank>10</rank>
+    </setting>
+    <setting>
+      <label>defaultLinuxLogsLocation</label>
+      <description>The location where application logs will be stored.</description>
+      <rank>25</rank>
+    </setting>
+    <setting>
+      <label>webModuleDirectories</label>
+      <description>The list of directories that web browser modules are to expand into.</description>
+      <rank>25</rank>
+    </setting>
+    <setting>
+      <label>logManager</label>
+      <description>The log manager, which creates Loggers for different contexts.</description>
+      <rank>10000</rank>
+    </setting>
+    <setting>
+      <label>brpJavaRepackJars</label>
+      <description>Overrides the __os_post_install scriplet http://swaeku.github.io/blog/2013/08/05/how-to-disable-brp-java-repack-jars-during-rpm-build/ for details</description>
+      <rank>25</rank>
+    </setting>
+    <setting>
+      <label>forceUpdatePeriod</label>
+      <description>Duration after which to force a full update to occur</description>
+      <rank>100</rank>
+    </setting>
+    <setting>
+      <label>javaSource</label>
+      <description>Default Java source directory.</description>
+      <rank>10</rank>
+    </setting>
+    <setting>
+      <label>defaultLinuxConfigLocation</label>
+      <description>The location where application config files will be stored</description>
+      <rank>25</rank>
+    </setting>
+    <setting>
+      <label>assetsTarget</label>
+      <description>The target directory for assets</description>
+      <rank>25</rank>
+    </setting>
+    <setting>
+      <label>defaultConfiguration</label>
+      <description>Defines the configuration used when none is specified for a dependency in ivyXML.</description>
+      <rank>100</rank>
+    </setting>
+    <setting>
+      <label>classpathTypes</label>
+      <description>Artifact types that are included on the classpath.</description>
+      <rank>40</rank>
+    </setting>
+    <setting>
+      <label>webStagingDirectory</label>
+      <description>Directory where we stage distributions/releases.</description>
+      <rank>25</rank>
+    </setting>
+    <setting>
+      <label>playRequireJsFolder</label>
+      <description/>
+      <rank>25</rank>
+    </setting>
+    <setting>
+      <label>eclipseCommandName</label>
+      <description>The name of the command.</description>
+      <rank>25</rank>
+    </setting>
+    <setting>
+      <label>rpmUrl</label>
+      <description>Url to include in the RPM.</description>
+      <rank>25</rank>
+    </setting>
+    <setting>
+      <label>playLessOptions</label>
+      <description/>
+      <rank>25</rank>
+    </setting>
+    <setting>
+      <label>twirlVersion</label>
+      <description>Twirl version used for twirl-api dependency</description>
+      <rank>25</rank>
+    </setting>
+    <setting>
+      <label>cleanFiles</label>
+      <description>The files to recursively delete during a clean.</description>
+      <rank>40</rank>
+    </setting>
+    <setting>
+      <label>classDirectory</label>
+      <description>Directory for compiled classes and copied resources.</description>
+      <rank>11</rank>
+    </setting>
+    <setting>
+      <label>homepage</label>
+      <description>Project homepage.</description>
+      <rank>40</rank>
+    </setting>
+    <setting>
+      <label>initialCommands</label>
+      <description>Initial commands to execute when starting up the Scala interpreter.</description>
+      <rank>11</rank>
+    </setting>
+    <setting>
+      <label>taskTemporaryDirectory</label>
+      <description>Directory used for temporary files for tasks that is deleted after each task execution.</description>
+      <rank>10000</rank>
+    </setting>
+    <setting>
+      <label>configuration</label>
+      <description>Provides the current configuration of the referencing scope.</description>
+      <rank>100</rank>
+    </setting>
+    <setting>
+      <label>packageDescription</label>
+      <description>The description of the package. Used when searching.</description>
+      <rank>25</rank>
+    </setting>
+    <setting>
+      <label>linuxScriptReplacements</label>
+      <description>Replacements of template parameters used in linux scripts. Default supported templates: execScript - name of the script in /usr/bin author - author of this project descr - short description chdir - execution path of the script retries - on fail, how often should a restart be tried retryTimeout - pause between retries appName - name of application appClasspath - application classpath appMainClass - main class to start daemonUser - daemon user</description>
+      <rank>25</rank>
+    </setting>
+    <setting>
+      <label>rpmPrefix</label>
+      <description>File system prefix for relocatable package.</description>
+      <rank>25</rank>
+    </setting>
+    <setting>
+      <label>thisProject</label>
+      <description>Provides the current project for the referencing scope.</description>
+      <rank>100</rank>
+    </setting>
+    <setting>
+      <label>watchingMessage</label>
+      <description>The message to show when triggered execution waits for sources to change.</description>
+      <rank>10000</rank>
+    </setting>
+    <setting>
+      <label>defaultLinuxStartScriptLocation</label>
+      <description>The location where start script for server application will be stored</description>
+      <rank>25</rank>
+    </setting>
+    <setting>
+      <label>ssOptions</label>
+      <description>options for dumpStructure task</description>
+      <rank>10000</rank>
+    </setting>
+    <setting>
+      <label>rpmDependencies</label>
+      <description>Configuration of dependency info for this RPM.</description>
+      <rank>25</rank>
+    </setting>
+    <setting>
+      <label>managedResourceDirectories</label>
+      <description>List of managed resource directories.</description>
+      <rank>11</rank>
+    </setting>
+    <setting>
+      <label>managedSourceDirectories</label>
+      <description>Managed source directories, which contain sources generated by the build.</description>
+      <rank>40</rank>
+    </setting>
+    <setting>
+      <label>developers</label>
+      <description>List of developers implicated in the project</description>
+      <rank>41</rank>
+    </setting>
+    <setting>
+      <label>ideaSourcesClassifiers</label>
+      <description/>
+      <rank>25</rank>
+    </setting>
+    <setting>
+      <label>target</label>
+      <description>Main directory for files generated by the build.</description>
+      <rank>11</rank>
+    </setting>
+    <setting>
+      <label>crossSbtVersions</label>
+      <description>The versions of Sbt used when cross-building an sbt plugin.</description>
+      <rank>25</rank>
+    </setting>
+    <setting>
+      <label>javaHome</label>
+      <description>Selects the Java installation used for compiling and forking. If None, uses the Java installation running the build.</description>
+      <rank>10</rank>
+    </setting>
+    <setting>
+      <label>evictionWarningOptions</label>
+      <description>Options on eviction warnings after resolving managed dependencies.</description>
+      <rank>10000</rank>
+    </setting>
+    <setting>
+      <label>webPipelineStages</label>
+      <description>Sequence of tasks for the asset pipeline stages.</description>
+      <rank>25</rank>
+    </setting>
+    <setting>
+      <label>compatibilityWarning</label>
+      <description>Configures warnings around Maven incompatibility.</description>
+      <rank>100</rank>
+    </setting>
+    <setting>
+      <label>playRequireJs</label>
+      <description/>
+      <rank>25</rank>
+    </setting>
+    <setting>
+      <label>rpmPrerequisites</label>
+      <description>Packages this RPM need *before* installation.</description>
+      <rank>25</rank>
+    </setting>
+    <setting>
+      <label>playRequireJsShim</label>
+      <description/>
+      <rank>25</rank>
+    </setting>
+    <setting>
+      <label>libraryDependencies</label>
+      <description>Declares managed dependencies.</description>
+      <rank>9</rank>
+    </setting>
+    <setting>
+      <label>checksums</label>
+      <description>The list of checksums to generate and to verify for dependencies.</description>
+      <rank>40</rank>
+    </setting>
+    <setting>
+      <label>twirlTemplateFormats</label>
+      <description>Defined twirl template formats</description>
+      <rank>25</rank>
+    </setting>
+    <setting>
+      <label>sourceGenerators</label>
+      <description>List of tasks that generate sources.</description>
+      <rank>100</rank>
+    </setting>
+    <setting>
+      <label>commands</label>
+      <description>Defines commands to be registered when this project or build is the current selected one.</description>
+      <rank>100</rank>
+    </setting>
+    <setting>
+      <label>webModuleGenerators</label>
+      <description>List of tasks that generate web browser modules.</description>
+      <rank>25</rank>
+    </setting>
+    <setting>
+      <label>playCoffeescriptEntryPoints</label>
+      <description/>
+      <rank>25</rank>
+    </setting>
+    <setting>
+      <label>offline</label>
+      <description>Configures sbt to work without a network connection where possible.</description>
+      <rank>10</rank>
+    </setting>
+    <setting>
+      <label>pollInterval</label>
+      <description>Interval between checks for modified sources by the continuous execution command.</description>
+      <rank>41</rank>
+    </setting>
+    <setting>
+      <label>artifact</label>
+      <description>Describes an artifact.</description>
+      <rank>41</rank>
+    </setting>
+    <task>
+      <label>scriptClasspath</label>
+      <description>A list of relative filenames (to the lib/ folder in the distribution) of what to include on the classpath.</description>
+      <rank>17</rank>
+    </task>
+    <task>
+      <label>copyResources</label>
+      <description>Copies resources to the output directory.</description>
+      <rank>6</rank>
+    </task>
+    <task>
+      <label>packageOsxDmg</label>
+      <description>Creates a dmg package for OSX (only on osx).</description>
+      <rank>17</rank>
+    </task>
+    <task>
+      <label>managedSources</label>
+      <description>Sources generated by the build.</description>
+      <rank>30</rank>
+    </task>
+    <task>
+      <label>dependencyPositions</label>
+      <description>Source positions where the dependencies are defined.</description>
+      <rank>20000</rank>
+    </task>
+    <task>
+      <label>debianExplodedPackage</label>
+      <description>makes an exploded debian package</description>
+      <rank>17</rank>
+    </task>
+    <task>
+      <label>ivyConfiguration</label>
+      <description>General dependency management (Ivy) settings, such as the resolvers and paths to use.</description>
+      <rank>20000</rank>
+    </task>
+    <task>
+      <label>globalPluginUpdate</label>
+      <description>A hook to get the UpdateReport of the global plugin.</description>
+      <rank>20000</rank>
+    </task>
+    <task>
+      <label>debianPackagingJdeb</label>
+      <description>Builds the debian package with jdeb (java-based)</description>
+      <rank>17</rank>
+    </task>
+    <task>
+      <label>ivyDependencies</label>
+      <description/>
+      <rank>17</rank>
+    </task>
+    <task>
+      <label>manipulateBytecode</label>
+      <description>Manipulates generated bytecode</description>
+      <rank>30</rank>
+    </task>
+    <task>
+      <label>playPackageAssets</label>
+      <description/>
+      <rank>17</rank>
+    </task>
+    <task>
+      <label>updateClassifiers</label>
+      <description>Resolves and optionally retrieves classified artifacts, such as javadocs and sources, for dependency definitions, transitively.</description>
+      <rank>29</rank>
+    </task>
+    <task>
+      <label>playAssetsWithCompilation</label>
+      <description/>
+      <rank>17</rank>
+    </task>
+    <task>
+      <label>classifiersModule</label>
+      <description/>
+      <rank>200</rank>
+    </task>
+    <task>
+      <label>wixXml</label>
+      <description>The WIX XML configuration for this package.</description>
+      <rank>17</rank>
+    </task>
+    <task>
+      <label>test</label>
+      <description>Executes all tests.</description>
+      <rank>4</rank>
+    </task>
+    <task>
+      <label>makePrermScript</label>
+      <description>Creates or discovers the prerm script used by this project</description>
+      <rank>17</rank>
+    </task>
+    <task>
+      <label>playRunHooks</label>
+      <description/>
+      <rank>17</rank>
+    </task>
+    <task>
+      <label>mappings</label>
+      <description>Defines the mappings from a file to a path, used by packaging, for example.</description>
+      <rank>30</rank>
+    </task>
+    <task>
+      <label>webJarsClassloader</label>
+      <description>The classloader to extract WebJars from</description>
+      <rank>17</rank>
+    </task>
+    <task>
+      <label>package</label>
+      <description>Produces the main artifact, such as a binary jar. This is typically an alias for the task that actually does the packaging.</description>
+      <rank>4</rank>
+    </task>
+    <task>
+      <label>watchSources</label>
+      <description>Defines the sources in this project for continuous execution to watch for changes.</description>
+      <rank>41</rank>
+    </task>
+    <task>
+      <label>apiMappings</label>
+      <description>Mappings from classpath entry to API documentation base URL.</description>
+      <rank>41</rank>
+    </task>
+    <task>
+      <label>settingsData</label>
+      <description>Provides access to the project data for the build.</description>
+      <rank>20000</rank>
+    </task>
+    <task>
+      <label>stage</label>
+      <description>Create a local directory with all the files laid out as they would be in the final distribution.</description>
+      <rank>17</rank>
+    </task>
+    <task>
+      <label>wdWebBrowser</label>
+      <description>An actor representing the webdriver browser.</description>
+      <rank>17</rank>
+    </task>
+    <task>
+      <label>deliverLocal</label>
+      <description>Generates the Ivy file for publishing to the local repository.</description>
+      <rank>30</rank>
+    </task>
+    <task>
+      <label>ivySbt</label>
+      <description>Provides the sbt interface to Ivy.</description>
+      <rank>200</rank>
+    </task>
+    <task>
+      <label>classpathConfiguration</label>
+      <description>The configuration used to define the classpath.</description>
+      <rank>200</rank>
+    </task>
+    <task>
+      <label>allDependencies</label>
+      <description>Inter-project and library dependencies.</description>
+      <rank>200</rank>
+    </task>
+    <task>
+      <label>testFilter</label>
+      <description>Filter controlling whether the test is executed</description>
+      <rank>20000</rank>
+    </task>
+    <task>
+      <label>productDirectories</label>
+      <description>Base directories of build products.</description>
+      <rank>200</rank>
+    </task>
+    <task>
+      <label>dependencyCacheDirectory</label>
+      <description>The base directory for cached dependencies.</description>
+      <rank>20000</rank>
+    </task>
+    <task>
+      <label>externalDependencyClasspath</label>
+      <description>The classpath consisting of library dependencies, both managed and unmanaged.</description>
+      <rank>31</rank>
+    </task>
+    <task>
+      <label>unmanagedClasspath</label>
+      <description>Classpath entries (deep) that are manually managed.</description>
+      <rank>29</rank>
+    </task>
+    <task>
+      <label>dependencyClasspath</label>
+      <description>The classpath consisting of internal and external, managed and unmanaged dependencies.</description>
+      <rank>29</rank>
+    </task>
+    <task>
+      <label>loadedTestFrameworks</label>
+      <description>Loads Framework definitions from the test loader.</description>
+      <rank>20000</rank>
+    </task>
+    <task>
+      <label>incCompileSetup</label>
+      <description>Configures aspects of incremental compilation.</description>
+      <rank>20000</rank>
+    </task>
+    <task>
+      <label>playPackageAssetsMappings</label>
+      <description/>
+      <rank>17</rank>
+    </task>
+    <task>
+      <label>packagedArtifact</label>
+      <description>Generates a packaged artifact, returning the Artifact and the produced File.</description>
+      <rank>200</rank>
+    </task>
+    <task>
+      <label>debianInstalledSize</label>
+      <description/>
+      <rank>17</rank>
+    </task>
+    <task>
+      <label>assets</label>
+      <description>All of the web assets.</description>
+      <rank>17</rank>
+    </task>
+    <task>
+      <label>moduleSettings</label>
+      <description>Module settings, which configure dependency management for a specific module, such as a project.</description>
+      <rank>20000</rank>
+    </task>
+    <task>
+      <label>rpmSpecConfig</label>
+      <description>All the configuration for an RPM .spec file.</description>
+      <rank>17</rank>
+    </task>
+    <task>
+      <label>dockerGenerateContext</label>
+      <description>Generates context directory for Docker.</description>
+      <rank>17</rank>
+    </task>
+    <task>
+      <label>playStop</label>
+      <description>Stop Play, if it has been started in non blocking mode</description>
+      <rank>17</rank>
+    </task>
+    <task>
+      <label>deliverConfiguration</label>
+      <description>Configuration for generating the finished Ivy file for publishing.</description>
+      <rank>20000</rank>
+    </task>
+    <task>
+      <label>webPipeline</label>
+      <description>Run all stages of the asset pipeline.</description>
+      <rank>17</rank>
+    </task>
+    <task>
+      <label>playDependencyClassloader</label>
+      <description/>
+      <rank>17</rank>
+    </task>
+    <task>
+      <label>linuxEtcDefaultTemplate</label>
+      <description>The location of the /etc/default/&lt;pkg&gt; template script.</description>
+      <rank>17</rank>
+    </task>
+    <task>
+      <label>generateManPages</label>
+      <description>Shows all the man files in the current project</description>
+      <rank>17</rank>
+    </task>
+    <task>
+      <label>cleanFilesTask</label>
+      <description>The files to recursively delete during a clean.</description>
+      <rank>40</rank>
+    </task>
+    <task>
+      <label>playGenerateSecret</label>
+      <description>Generate a new application secret</description>
+      <rank>30</rank>
+    </task>
+    <task>
+      <label>playPrefixAndPipeline</label>
+      <description/>
+      <rank>17</rank>
+    </task>
+    <task>
+      <label>consoleProject</label>
+      <description>Starts the Scala interpreter with the sbt and the build definition on the classpath and useful imports.</description>
+      <rank>6</rank>
+    </task>
+    <task>
+      <label>wixProductXml</label>
+      <description>The WIX XML configuration for a product (nested in Wix/Product elements).</description>
+      <rank>17</rank>
+    </task>
+    <task>
+      <label>webJarsNodeModules</label>
+      <description>Produce the WebJar based node modules.</description>
+      <rank>17</rank>
+    </task>
+    <task>
+      <label>webAllPipelineStages</label>
+      <description>All asset pipeline stages chained together.</description>
+      <rank>17</rank>
+    </task>
+    <task>
+      <label>state</label>
+      <description>Current build state.</description>
+      <rank>20000</rank>
+    </task>
+    <task>
+      <label>buildStructure</label>
+      <description>Provides access to the build structure, settings, and streams manager.</description>
+      <rank>20000</rank>
+    </task>
+    <task>
+      <label>debianControlFile</label>
+      <description>Makes the debian package control file.</description>
+      <rank>17</rank>
+    </task>
+    <task>
+      <label>makeBashScript</label>
+      <description>Creates or discovers the bash script used by this project.</description>
+      <rank>17</rank>
+    </task>
+    <task>
+      <label>projectDependencyArtifacts</label>
+      <description>The set of exported artifacts from our dependent projects.</description>
+      <rank>17</rank>
+    </task>
+    <task>
+      <label>discoveredMainClasses</label>
+      <description>Auto-detects main classes.</description>
+      <rank>31</rank>
+    </task>
+    <task>
+      <label>dockerTarget</label>
+      <description>Defines target used when building and publishing Docker image</description>
+      <rank>17</rank>
+    </task>
+    <task>
+      <label>testLoader</label>
+      <description>Provides the class loader used for testing.</description>
+      <rank>20000</rank>
+    </task>
+    <task>
+      <label>externalResolvers</label>
+      <description>The external resolvers for automatically managed dependencies.</description>
+      <rank>41</rank>
+    </task>
+    <task>
+      <label>bashScriptConfigLocation</label>
+      <description>The location where the bash script will load default argument configuration from.</description>
+      <rank>17</rank>
+    </task>
+    <task>
+      <label>deliver</label>
+      <description>Generates the Ivy file for publishing to a repository.</description>
+      <rank>30</rank>
+    </task>
+    <task>
+      <label>playCommonClassloader</label>
+      <description/>
+      <rank>17</rank>
+    </task>
+    <task>
+      <label>packageBin</label>
+      <description>Produces a main artifact, such as a binary jar.</description>
+      <rank>5</rank>
+    </task>
+    <task>
+      <label>projectResolver</label>
+      <description>Resolver that handles inter-project dependencies.</description>
+      <rank>20000</rank>
+    </task>
+    <task>
+      <label>scalacOptions</label>
+      <description>Options for the Scala compiler.</description>
+      <rank>29</rank>
+    </task>
+    <task>
+      <label>unmanagedSources</label>
+      <description>Unmanaged sources, which are manually created.</description>
+      <rank>29</rank>
+    </task>
+    <task>
+      <label>incOptions</label>
+      <description>Options for the incremental compiler.</description>
+      <rank>30</rank>
+    </task>
+    <task>
+      <label>webModules</label>
+      <description>All web browser module files.</description>
+      <rank>17</rank>
+    </task>
+    <task>
+      <label>twirlCompileTemplates</label>
+      <description>Compile twirl templates into scala source files</description>
+      <rank>17</rank>
+    </task>
+    <task>
+      <label>playReloaderClassloader</label>
+      <description/>
+      <rank>17</rank>
+    </task>
+    <task>
+      <label>mainClass</label>
+      <description>Defines the main class for packaging or running.</description>
+      <rank>29</rank>
+    </task>
+    <task>
+      <label>packageDoc</label>
+      <description>Produces a documentation artifact, such as a jar containing API documentation.</description>
+      <rank>6</rank>
+    </task>
+    <task>
+      <label>managedResources</label>
+      <description>Resources generated by the build.</description>
+      <rank>30</rank>
+    </task>
+    <task>
+      <label>run</label>
+      <description>Runs a main class, passing along arguments provided on the command line.</description>
+      <rank>4</rank>
+    </task>
+    <task>
+      <label>playPrefixAndAssets</label>
+      <description/>
+      <rank>17</rank>
+    </task>
+    <task>
+      <label>consoleQuick</label>
+      <description>Starts the Scala interpreter with the project dependencies on the classpath.</description>
+      <rank>5</rank>
+    </task>
+    <task>
+      <label>playUpdateSecret</label>
+      <description>Update the application conf to generate an application secret</description>
+      <rank>30</rank>
+    </task>
+    <task>
+      <label>wixFile</label>
+      <description>The WIX XML file to package with.</description>
+      <rank>17</rank>
+    </task>
+    <task>
+      <label>packageMsi</label>
+      <description>creates a new windows CAB file containing everything for the installation.</description>
+      <rank>17</rank>
+    </task>
+    <task>
+      <label>javacOptions</label>
+      <description>Options for the Java compiler.</description>
+      <rank>29</rank>
+    </task>
+    <task>
+      <label>webJars</label>
+      <description>Produce the WebJars</description>
+      <rank>17</rank>
+    </task>
+    <task>
+      <label>clean</label>
+      <description>Deletes files produced by the build, such as generated sources, compiled classes, and task caches.</description>
+      <rank>4</rank>
+    </task>
+    <task>
+      <label>lintian</label>
+      <description>runs the debian lintian tool on the current package.</description>
+      <rank>17</rank>
+    </task>
+    <task>
+      <label>playDependencyClasspath</label>
+      <description/>
+      <rank>17</rank>
+    </task>
+    <task>
+      <label>playReload</label>
+      <description/>
+      <rank>17</rank>
+    </task>
+    <task>
+      <label>webDeduplicators</label>
+      <description>Functions that select from duplicate asset mappings</description>
+      <rank>17</rank>
+    </task>
+    <task>
+      <label>streamsManager</label>
+      <description>Streams manager, which provides streams for different contexts.</description>
+      <rank>20000</rank>
+    </task>
+    <task>
+      <label>javaOptions</label>
+      <description>Options passed to a new JVM when forking.</description>
+      <rank>29</rank>
+    </task>
+    <task>
+      <label>printWarnings</label>
+      <description>Shows warnings from compilation, including ones that weren't printed initially.</description>
+      <rank>29</rank>
+    </task>
+    <task>
+      <label>bashScriptExtraDefines</label>
+      <description>A list of extra definitions that should be written to the bash file template.</description>
+      <rank>17</rank>
+    </task>
+    <task>
+      <label>jstaskJsOptions</label>
+      <description>The JSON options to be passed to the task.</description>
+      <rank>17</rank>
+    </task>
+    <task>
+      <label>exportedProductsIfMissing</label>
+      <description>Build products that go on the exported classpath if missing.</description>
+      <rank>200</rank>
+    </task>
+    <task>
+      <label>wixFeatures</label>
+      <description>Configuration of the windows installable features for this package.</description>
+      <rank>17</rank>
+    </task>
+    <task>
+      <label>projectDependencies</label>
+      <description>Inter-project dependencies.</description>
+      <rank>20000</rank>
+    </task>
+    <task>
+      <label>testOnly</label>
+      <description>Executes the tests provided as arguments or all tests if no arguments are provided.</description>
+      <rank>5</rank>
+    </task>
+    <task>
+      <label>compileInputs</label>
+      <description>Collects all inputs needed for compilation.</description>
+      <rank>20000</rank>
+    </task>
+    <task>
+      <label>debianMd5sumsFile</label>
+      <description>Makes the debian package md5sums file.</description>
+      <rank>17</rank>
+    </task>
+    <task>
+      <label>publishLocal</label>
+      <description>Publishes artifacts to the local Ivy repository.</description>
+      <rank>4</rank>
+    </task>
+    <task>
+      <label>unresolvedWarningConfiguration</label>
+      <description>Configuration for unresolved dependency warning.</description>
+      <rank>20000</rank>
+    </task>
+    <task>
+      <label>twirlSourceEncoding</label>
+      <description>Source encoding for template files and generated scala files</description>
+      <rank>17</rank>
+    </task>
+    <task>
+      <label>publishLocalConfiguration</label>
+      <description>Configuration for publishing to the local Ivy repository.</description>
+      <rank>20000</rank>
+    </task>
+    <task>
+      <label>packageConfiguration</label>
+      <description>Collects all inputs needed for packaging.</description>
+      <rank>20000</rank>
+    </task>
+    <task>
+      <label>executionRoots</label>
+      <description>The list of root tasks for this task execution. Roots are the top-level tasks that were directly requested to be run.</description>
+      <rank>20000</rank>
+    </task>
+    <task>
+      <label>makePostInstScript</label>
+      <description>Creates or discovers the postinst script used by this project</description>
+      <rank>17</rank>
+    </task>
+    <task>
+      <label>packageOptions</label>
+      <description>Options for packaging.</description>
+      <rank>30</rank>
+    </task>
+    <task>
+      <label>projectDescriptors</label>
+      <description>Project dependency map for the inter-project resolver.</description>
+      <rank>20000</rank>
+    </task>
+    <task>
+      <label>compileAnalysisFilename</label>
+      <description>Defines the filename used to store the incremental compiler analysis file (inside the streams cacheDirectory).</description>
+      <rank>20000</rank>
+    </task>
+    <task>
+      <label>fullResolvers</label>
+      <description>Combines the project resolver, default resolvers, and user-defined resolvers.</description>
+      <rank>200</rank>
+    </task>
+    <task>
+      <label>webReporter</label>
+      <description>The reporter to use for conveying processing results.</description>
+      <rank>17</rank>
+    </task>
+    <task>
+      <label>exportedProducts</label>
+      <description>Build products that go on the exported classpath.</description>
+      <rank>200</rank>
+    </task>
+    <task>
+      <label>envVars</label>
+      <description>Environment variables used when forking a new JVM</description>
+      <rank>30</rank>
+    </task>
+    <task>
+      <label>wixProductLicense</label>
+      <description>The RTF file to display with licensing.</description>
+      <rank>17</rank>
+    </task>
+    <task>
+      <label>runner</label>
+      <description>Implementation used to run a main class.</description>
+      <rank>20000</rank>
+    </task>
+    <task>
+      <label>skip</label>
+      <description>For tasks that support it (currently only 'compile' and 'update'), setting skip to true will force the task to not to do its work. This exact semantics may vary by task.</description>
+      <rank>40</rank>
+    </task>
+    <task>
+      <label>scalaInstance</label>
+      <description>Defines the Scala instance to use for compilation, running, and testing.</description>
+      <rank>20000</rank>
+    </task>
+    <task>
+      <label>linuxPackageMappings</label>
+      <description>File to install location mappings including owner and privileges.</description>
+      <rank>17</rank>
+    </task>
+    <task>
+      <label>products</label>
+      <description>Build products that get packaged.</description>
+      <rank>31</rank>
+    </task>
+    <task>
+      <label>testExecution</label>
+      <description>Settings controlling test execution</description>
+      <rank>20000</rank>
+    </task>
+    <task>
+      <label>compilerReporter</label>
+      <description>Experimental hook to listen (or send) compilation failure messages.</description>
+      <rank>20000</rank>
+    </task>
+    <task>
+      <label>sourcePositionMappers</label>
+      <description>Maps positions in generated source files to the original source it was generated from</description>
+      <rank>20000</rank>
+    </task>
+    <task>
+      <label>compilers</label>
+      <description>Defines the Scala and Java compilers to use for compilation.</description>
+      <rank>20000</rank>
+    </task>
+    <task>
+      <label>batScriptExtraDefines</label>
+      <description>A list of extra definitions that should be written to the bat file template.</description>
+      <rank>17</rank>
+    </task>
+    <task>
+      <label>linuxPackageSymlinks</label>
+      <description>Symlinks we should produce in the underlying package.</description>
+      <rank>17</rank>
+    </task>
+    <task>
+      <label>playAllAssets</label>
+      <description/>
+      <rank>17</rank>
+    </task>
+    <task>
+      <label>playMonitoredFiles</label>
+      <description/>
+      <rank>17</rank>
+    </task>
+    <task>
+      <label>updateSbtClassifiers</label>
+      <description>Resolves and optionally retrieves classifiers, such as javadocs and sources, for sbt, transitively.</description>
+      <rank>29</rank>
+    </task>
+    <task>
+      <label>compile</label>
+      <description>Compiles sources.</description>
+      <rank>4</rank>
+    </task>
+    <task>
+      <label>publishConfiguration</label>
+      <description>Configuration for publishing to a repository.</description>
+      <rank>20000</rank>
+    </task>
+    <task>
+      <label>runMain</label>
+      <description>Runs the main class selected by the first argument, passing the remaining arguments to the main method.</description>
+      <rank>5</rank>
+    </task>
+    <task>
+      <label>testResultReporterReset</label>
+      <description/>
+      <rank>17</rank>
+    </task>
+    <task>
+      <label>deliverLocalConfiguration</label>
+      <description>Configuration for generating the finished Ivy file for local publishing.</description>
+      <rank>20000</rank>
+    </task>
+    <task>
+      <label>packageZipTarball</label>
+      <description>Creates a tgz package.</description>
+      <rank>17</rank>
+    </task>
+    <task>
+      <label>publishM2</label>
+      <description>Publishes artifacts to the local Maven repository.</description>
+      <rank>5</rank>
+    </task>
+    <task>
+      <label>unmanagedResources</label>
+      <description>Unmanaged resources, which are manually created.</description>
+      <rank>29</rank>
+    </task>
+    <task>
+      <label>jseNpmNodeModules</label>
+      <description>Node module files generated by NPM.</description>
+      <rank>17</rank>
+    </task>
+    <task>
+      <label>makePom</label>
+      <description>Generates a pom for publishing when publishing Maven-style.</description>
+      <rank>29</rank>
+    </task>
+    <task>
+      <label>dockerPackageMappings</label>
+      <description>Generates location mappings for Docker build.</description>
+      <rank>17</rank>
+    </task>
+    <task>
+      <label>definedTestNames</label>
+      <description>Provides the set of defined test names.</description>
+      <rank>31</rank>
+    </task>
+    <task>
+      <label>doc</label>
+      <description>Generates API documentation.</description>
+      <rank>6</rank>
+    </task>
+    <task>
+      <label>playAssetsClassloader</label>
+      <description/>
+      <rank>17</rank>
+    </task>
+    <task>
+      <label>packageSrc</label>
+      <description>Produces a source artifact, such as a jar containing sources and resources.</description>
+      <rank>6</rank>
+    </task>
+    <task>
+      <label>unmanagedJars</label>
+      <description>Classpath entries for the current project (shallow) that are manually managed.</description>
+      <rank>29</rank>
+    </task>
+    <task>
+      <label>dockerGenerateConfig</label>
+      <description>Generates configuration file for Docker.</description>
+      <rank>17</rank>
+    </task>
+    <task>
+      <label>publishM2Configuration</label>
+      <description>Configuration for publishing to the local Maven repository.</description>
+      <rank>20000</rank>
+    </task>
+    <task>
+      <label>evicted</label>
+      <description>Display detailed eviction warnings.</description>
+      <rank>200</rank>
+    </task>
+    <task>
+      <label>managedClasspath</label>
+      <description>The classpath consisting of external, managed library dependencies.</description>
+      <rank>31</rank>
+    </task>
+    <task>
+      <label>testResultReporter</label>
+      <description/>
+      <rank>17</rank>
+    </task>
+    <task>
+      <label>playReloaderClasspath</label>
+      <description/>
+      <rank>17</rank>
+    </task>
+    <task>
+      <label>publish</label>
+      <description>Publishes artifacts to a repository.</description>
+      <rank>4</rank>
+    </task>
+    <task>
+      <label>dist</label>
+      <description>Creates the distribution packages.</description>
+      <rank>17</rank>
+    </task>
+    <task>
+      <label>genChanges</label>
+      <description>runs the dpkg-genchanges command to generate the .changes file.</description>
+      <rank>17</rank>
+    </task>
+    <task>
+      <label>discoveredSbtPlugins</label>
+      <description>The names of sbt plugin-related modules (modules that extend Build, Plugin, AutoPlugin) defined by this project.</description>
+      <rank>200</rank>
+    </task>
+    <task>
+      <label>fullClasspath</label>
+      <description>The exported classpath, consisting of build products and unmanaged and managed, internal and external dependencies.</description>
+      <rank>29</rank>
+    </task>
+    <task>
+      <label>transitiveUpdate</label>
+      <description>UpdateReports for the internal dependencies of this project.</description>
+      <rank>20000</rank>
+    </task>
+    <task>
+      <label>readAnalysis</label>
+      <description>Read the incremental compiler analysis from disk</description>
+      <rank>20000</rank>
+    </task>
+    <task>
+      <label>definedTests</label>
+      <description>Provides the list of defined tests.</description>
+      <rank>31</rank>
+    </task>
+    <task>
+      <label>testGrouping</label>
+      <description>Collects discovered tests into groups. Whether to fork and the options for forking are configurable on a per-group basis.</description>
+      <rank>31</rank>
+    </task>
+    <task>
+      <label>selectMainClass</label>
+      <description>Selects the main class to run.</description>
+      <rank>31</rank>
+    </task>
+    <task>
+      <label>webNodeModules</label>
+      <description>All node module files.</description>
+      <rank>17</rank>
+    </task>
+    <task>
+      <label>compileIncremental</label>
+      <description>Actually runs the incremental compilation</description>
+      <rank>20000</rank>
+    </task>
+    <task>
+      <label>streams</label>
+      <description>Provides streams for logging and persisting data.</description>
+      <rank>20000</rank>
+    </task>
+    <task>
+      <label>debianMaintainerScripts</label>
+      <description>Makes the debian maintainer scripts.</description>
+      <rank>17</rank>
+    </task>
+    <task>
+      <label>makeStartScript</label>
+      <description>Creates or discovers the start script used by this project</description>
+      <rank>17</rank>
+    </task>
+    <task>
+      <label>watchTransitiveSources</label>
+      <description>Defines the sources in all projects for continuous execution to watch.</description>
+      <rank>100</rank>
+    </task>
+    <task>
+      <label>exportedProductsNoTracking</label>
+      <description>Just the exported classpath without triggering the compilation.</description>
+      <rank>200</rank>
+    </task>
+    <task>
+      <label>testOptions</label>
+      <description>Options for running tests.</description>
+      <rank>29</rank>
+    </task>
+    <task>
+      <label>packagedArtifacts</label>
+      <description>Packages all artifacts for publishing and maps the Artifact definition to the generated file.</description>
+      <rank>200</rank>
+    </task>
+    <task>
+      <label>bootIvyConfiguration</label>
+      <description>General dependency management (Ivy) settings, configured to retrieve sbt's components.</description>
+      <rank>20000</rank>
+    </task>
+    <task>
+      <label>bashScriptDefines</label>
+      <description>A list of definitions that should be written to the bash file template.</description>
+      <rank>17</rank>
+    </task>
+    <task>
+      <label>updateCacheName</label>
+      <description>Defines the directory name used to store the update cache files (inside the streams cacheDirectory).</description>
+      <rank>20000</rank>
+    </task>
+    <task>
+      <label>rpmLint</label>
+      <description>Runs rpmlint program against the genreated RPM, if available.</description>
+      <rank>17</rank>
+    </task>
+    <task>
+      <label>testListeners</label>
+      <description>Defines test listeners.</description>
+      <rank>20000</rank>
+    </task>
+    <task>
+      <label>executeTests</label>
+      <description>Executes all tests, producing a report.</description>
+      <rank>200</rank>
+    </task>
+    <task>
+      <label>playCompileEverything</label>
+      <description/>
+      <rank>17</rank>
+    </task>
+    <task>
+      <label>webStage</label>
+      <description>Create a local directory with all the files laid out as they would be in the final distribution.</description>
+      <rank>17</rank>
+    </task>
+    <task>
+      <label>makeEtcDefault</label>
+      <description>Creates or discovers the /etc/default/ script</description>
+      <rank>17</rank>
+    </task>
+    <task>
+      <label>resources</label>
+      <description>All resource files, both managed and unmanaged.</description>
+      <rank>30</rank>
+    </task>
+    <task>
+      <label>internalDependencyClasspath</label>
+      <description>The internal (inter-project) classpath.</description>
+      <rank>200</rank>
+    </task>
+    <task>
+      <label>debianConffilesFile</label>
+      <description>Makes the debian package conffiles file.</description>
+      <rank>17</rank>
+    </task>
+    <task>
+      <label>makePreinstScript</label>
+      <description>Creates or discovers the preinst script used by this project</description>
+      <rank>17</rank>
+    </task>
+    <task>
+      <label>makePostrmScript</label>
+      <description>Creates or discovers the postrm script used by this project</description>
+      <rank>17</rank>
+    </task>
+    <task>
+      <label>debianSign</label>
+      <description>runs the dpkg-sig command to sign the generated deb file.</description>
+      <rank>17</rank>
+    </task>
+    <task>
+      <label>scriptClasspathOrdering</label>
+      <description>The order of the classpath used at runtime for the bat/bash scripts.</description>
+      <rank>17</rank>
+    </task>
+    <task>
+      <label>playBuildRequireAssets</label>
+      <description/>
+      <rank>17</rank>
+    </task>
+    <task>
+      <label>bootResolvers</label>
+      <description>The resolvers used by the sbt launcher.</description>
+      <rank>41</rank>
+    </task>
+    <task>
+      <label>debianPackagingNative</label>
+      <description>Builds the debian package with native cli tools</description>
+      <rank>17</rank>
+    </task>
+    <task>
+      <label>update</label>
+      <description>Resolves and optionally retrieves dependencies, producing a report.</description>
+      <rank>5</rank>
+    </task>
+    <task>
+      <label>batScriptReplacements</label>
+      <description>Replacements of template parameters used in the windows bat script. Default supported templates: APP_ENV_NAME - the name of the application for defining &lt;name&gt;_HOME variables APP_NAME - the name of the app APP_DEFINES - the defines to go into the app</description>
+      <rank>17</rank>
+    </task>
+    <task>
+      <label>sources</label>
+      <description>All sources, both managed and unmanaged.</description>
+      <rank>30</rank>
+    </task>
+    <task>
+      <label>console</label>
+      <description>Starts the Scala interpreter with the project classes on the classpath.</description>
+      <rank>4</rank>
+    </task>
+    <task>
+      <label>ivyModule</label>
+      <description>Provides the sbt interface to a configured Ivy module.</description>
+      <rank>200</rank>
+    </task>
+    <task>
+      <label>testQuick</label>
+      <description>Executes the tests that either failed before, were not run or whose transitive dependencies changed, among those provided as arguments.</description>
+      <rank>5</rank>
+    </task>
+    <task>
+      <label>linuxStartScriptTemplate</label>
+      <description>The location of the template start script file we use for debian (upstart or init.d</description>
+      <rank>17</rank>
+    </task>
+    <task>
+      <label>credentials</label>
+      <description>The credentials to use for updating and publishing.</description>
+      <rank>31</rank>
+    </task>
+    <task>
+      <label>compilerCache</label>
+      <description>Cache of scala.tools.nsc.Global instances. This should typically be cached so that it isn't recreated every task run.</description>
+      <rank>20000</rank>
+    </task>
+    <task>
+      <label>makeBatScript</label>
+      <description>Creates or discovers the bat script used by this project.</description>
+      <rank>17</rank>
+    </task>
+    <task>
+      <label>packageXzTarball</label>
+      <description>Creates a txz package.</description>
+      <rank>17</rank>
+    </task>
+    <command>
+      <name>preferScala2</name>
+    </command>
+    <command>
+      <name>sh</name>
+    </command>
+    <command>
+      <name>start</name>
+    </command>
+    <command>
+      <name>h2-browser</name>
+    </command>
+    <command>
+      <name>classpath</name>
+    </command>
+    <command>
+      <name>license</name>
+    </command>
+    <command>
+      <name>dependencies</name>
+    </command>
+    <command>
+      <name>gen-idea</name>
+    </command>
+    <command>
+      <name>idea</name>
+    </command>
+    <command>
+      <name>eclipse</name>
+    </command>
+    <command>
+      <name>resumeFromFailure</name>
+    </command>
+    <command>
+      <name>help</name>
+      <help>
+        <cmd>help</cmd>
+        <desc>Displays this help message or prints detailed help on requested commands (run 'help &lt;command&gt;').</desc>
+      </help>
+    </command>
+    <command>
+      <name>completions</name>
+      <help>
+        <cmd>completions</cmd>
+        <desc>Displays a list of completions for the given argument string (run 'completions &lt;string&gt;').</desc>
+      </help>
+    </command>
+    <command>
+      <name>about</name>
+      <help>
+        <cmd>about</cmd>
+        <desc>Displays basic information about sbt and the build.</desc>
+      </help>
+    </command>
+    <command>
+      <name>tasks</name>
+      <help>
+        <cmd>tasks</cmd>
+        <desc>Lists the tasks defined for the current project.</desc>
+      </help>
+    </command>
+    <command>
+      <name>settings</name>
+      <help>
+        <cmd>settings</cmd>
+        <desc>Lists the settings defined for the current project.</desc>
+      </help>
+    </command>
+    <command>
+      <name>reload</name>
+      <help>
+        <cmd>reload</cmd>
+        <desc>(Re)loads the current project or changes to plugins project or returns from it.</desc>
+      </help>
+    </command>
+    <command>
+      <name>new</name>
+      <help>
+        <cmd>new</cmd>
+        <desc>Creates a new sbt build.</desc>
+      </help>
+    </command>
+    <command>
+      <name>projects</name>
+      <help>
+        <cmd>projects</cmd>
+        <desc>Lists the names of available projects or temporarily adds/removes extra builds to the session.</desc>
+      </help>
+    </command>
+    <command>
+      <name>project</name>
+      <help>
+        <cmd>project</cmd>
+        <desc>Displays the current project or changes to the provided `project`.</desc>
+      </help>
+    </command>
+    <command>
+      <name>reboot</name>
+    </command>
+    <command>
+      <name>&lt;</name>
+    </command>
+    <command>
+      <name>set</name>
+      <help>
+        <cmd>set [every] &lt;setting&gt;</cmd>
+        <desc>Evaluates a Setting and applies it to the current project.</desc>
+      </help>
+    </command>
+    <command>
+      <name>session</name>
+      <help>
+        <cmd>session</cmd>
+        <desc>Manipulates session settings. For details, run 'help session'.</desc>
+      </help>
+    </command>
+    <command>
+      <name>inspect</name>
+      <help>
+        <cmd>inspect [uses|tree|definitions] &lt;key&gt;</cmd>
+        <desc>Prints the value for 'key', the defining scope, delegates, related definitions, and dependencies.</desc>
+      </help>
+    </command>
+    <command>
+      <name>loadp</name>
+    </command>
+    <command>
+      <name>load-failed</name>
+    </command>
+    <command>
+      <name>onFailure</name>
+    </command>
+    <command>
+      <name>sbtClearOnFailure</name>
+    </command>
+    <command>
+      <name>sbtStashOnFailure</name>
+    </command>
+    <command>
+      <name>sbtPopOnFailure</name>
+    </command>
+    <command>
+      <name>plugin</name>
+    </command>
+    <command>
+      <name>plugins</name>
+      <help>
+        <cmd>plugins</cmd>
+        <desc>Lists currently available plugins.</desc>
+      </help>
+    </command>
+    <command>
+      <name>write-sbt-version</name>
+    </command>
+    <command>
+      <name>notify-users-about-shell</name>
+    </command>
+    <command>
+      <name>iflast</name>
+    </command>
+    <command>
+      <name>shell</name>
+    </command>
+    <command>
+      <name>~</name>
+      <help>
+        <cmd>~ &lt;command&gt;</cmd>
+        <desc>Executes the specified command whenever source files change.</desc>
+      </help>
+    </command>
+    <command>
+      <name>eval</name>
+    </command>
+    <command>
+      <name>alias</name>
+    </command>
+    <command>
+      <name>append</name>
+    </command>
+    <command>
+      <name>last</name>
+      <help>
+        <cmd>last</cmd>
+        <desc>Displays output from a previous command or the output from a specific task.</desc>
+      </help>
+    </command>
+    <command>
+      <name>last-grep</name>
+      <help>
+        <cmd>last-grep</cmd>
+        <desc>Shows lines from the last output for 'key' that match 'pattern'.</desc>
+      </help>
+    </command>
+    <command>
+      <name>export</name>
+      <help>
+        <cmd>export &lt;tasks&gt;+</cmd>
+        <desc>Executes tasks and displays the equivalent command lines.</desc>
+      </help>
+    </command>
+    <command>
+      <name>boot</name>
+    </command>
+    <command>
+      <name>apply</name>
+    </command>
+    <command>
+      <name>exit</name>
+      <help>
+        <cmd>exit</cmd>
+        <desc>Terminates the build.</desc>
+      </help>
+    </command>
+    <command>
+      <name>initialize</name>
+    </command>
+    <command>
+      <name>--</name>
+    </command>
+    <command>
+      <name>---</name>
+    </command>
+    <testSourceDir>$BASE/test</testSourceDir>
+    <mainSourceDir>$BASE/app</mainSourceDir>
+  </project>
+  <repository>
+    <module organization="cglib" name="cglib-nodep" revision="2.1_3" artifactType="jar" classifier="">
+      <jar>$IVY2/cache/cglib/cglib-nodep/jars/cglib-nodep-2.1_3.jar</jar>
+    </module>
+    <module organization="ch.qos.logback" name="logback-classic" revision="1.1.1" artifactType="jar" classifier="">
+      <jar>$IVY2/cache/ch.qos.logback/logback-classic/jars/logback-classic-1.1.1.jar</jar>
+    </module>
+    <module organization="ch.qos.logback" name="logback-core" revision="1.1.1" artifactType="jar" classifier="">
+      <jar>$IVY2/cache/ch.qos.logback/logback-core/jars/logback-core-1.1.1.jar</jar>
+    </module>
+    <module organization="com.fasterxml.jackson.core" name="jackson-annotations" revision="2.3.2" artifactType="jar" classifier="">
+      <jar>$IVY2/cache/com.fasterxml.jackson.core/jackson-annotations/bundles/jackson-annotations-2.3.2.jar</jar>
+    </module>
+    <module organization="com.fasterxml.jackson.core" name="jackson-core" revision="2.3.2" artifactType="jar" classifier="">
+      <jar>$IVY2/cache/com.fasterxml.jackson.core/jackson-core/bundles/jackson-core-2.3.2.jar</jar>
+    </module>
+    <module organization="com.fasterxml.jackson.core" name="jackson-databind" revision="2.3.2" artifactType="jar" classifier="">
+      <jar>$IVY2/cache/com.fasterxml.jackson.core/jackson-databind/bundles/jackson-databind-2.3.2.jar</jar>
+    </module>
+    <module organization="com.google.code.findbugs" name="jsr305" revision="2.0.3" artifactType="jar" classifier="">
+      <jar>$IVY2/cache/com.google.code.findbugs/jsr305/jars/jsr305-2.0.3.jar</jar>
+    </module>
+    <module organization="com.google.guava" name="guava" revision="15.0" artifactType="jar" classifier="">
+      <jar>$IVY2/cache/com.google.guava/guava/bundles/guava-15.0.jar</jar>
+    </module>
+    <module organization="com.google.guava" name="guava" revision="16.0.1" artifactType="jar" classifier="">
+      <jar>$IVY2/cache/com.google.guava/guava/bundles/guava-16.0.1.jar</jar>
+    </module>
+    <module organization="com.h2database" name="h2" revision="1.3.175" artifactType="jar" classifier="">
+      <jar>$IVY2/cache/com.h2database/h2/jars/h2-1.3.175.jar</jar>
+    </module>
+    <module organization="com.jolbox" name="bonecp" revision="0.8.0.RELEASE" artifactType="jar" classifier="">
+      <jar>$IVY2/cache/com.jolbox/bonecp/bundles/bonecp-0.8.0.RELEASE.jar</jar>
+    </module>
+    <module organization="com.jsuereth" name="scala-arm_2.10" revision="1.4" artifactType="jar" classifier="">
+      <jar>$IVY2/cache/com.jsuereth/scala-arm_2.10/jars/scala-arm_2.10-1.4.jar</jar>
+    </module>
+    <module organization="com.novocode" name="junit-interface" revision="0.11-RC1" artifactType="jar" classifier="">
+      <jar>$IVY2/cache/com.novocode/junit-interface/jars/junit-interface-0.11-RC1.jar</jar>
+    </module>
+    <module organization="com.typesafe" name="config" revision="1.2.1" artifactType="jar" classifier="">
+      <jar>$IVY2/cache/com.typesafe/config/bundles/config-1.2.1.jar</jar>
+    </module>
+    <module organization="com.typesafe.akka" name="akka-actor_2.10" revision="2.3.4" artifactType="jar" classifier="">
+      <jar>$IVY2/cache/com.typesafe.akka/akka-actor_2.10/jars/akka-actor_2.10-2.3.4.jar</jar>
+    </module>
+    <module organization="com.typesafe.akka" name="akka-slf4j_2.10" revision="2.3.4" artifactType="jar" classifier="">
+      <jar>$IVY2/cache/com.typesafe.akka/akka-slf4j_2.10/jars/akka-slf4j_2.10-2.3.4.jar</jar>
+    </module>
+    <module organization="com.typesafe.netty" name="netty-http-pipelining" revision="1.1.2" artifactType="jar" classifier="">
+      <jar>$IVY2/cache/com.typesafe.netty/netty-http-pipelining/jars/netty-http-pipelining-1.1.2.jar</jar>
+    </module>
+    <module organization="com.typesafe.play" name="anorm_2.10" revision="2.3.7" artifactType="jar" classifier="">
+      <jar>$IVY2/cache/com.typesafe.play/anorm_2.10/jars/anorm_2.10-2.3.7.jar</jar>
+    </module>
+    <module organization="com.typesafe.play" name="build-link" revision="2.3.7" artifactType="jar" classifier="">
+      <jar>$IVY2/cache/com.typesafe.play/build-link/jars/build-link-2.3.7.jar</jar>
+    </module>
+    <module organization="com.typesafe.play" name="play-datacommons_2.10" revision="2.3.7" artifactType="jar" classifier="">
+      <jar>$IVY2/cache/com.typesafe.play/play-datacommons_2.10/jars/play-datacommons_2.10-2.3.7.jar</jar>
+    </module>
+    <module organization="com.typesafe.play" name="play-exceptions" revision="2.3.7" artifactType="jar" classifier="">
+      <jar>$IVY2/cache/com.typesafe.play/play-exceptions/jars/play-exceptions-2.3.7.jar</jar>
+    </module>
+    <module organization="com.typesafe.play" name="play-functional_2.10" revision="2.3.7" artifactType="jar" classifier="">
+      <jar>$IVY2/cache/com.typesafe.play/play-functional_2.10/jars/play-functional_2.10-2.3.7.jar</jar>
+    </module>
+    <module organization="com.typesafe.play" name="play-iteratees_2.10" revision="2.3.7" artifactType="jar" classifier="">
+      <jar>$IVY2/cache/com.typesafe.play/play-iteratees_2.10/jars/play-iteratees_2.10-2.3.7.jar</jar>
+    </module>
+    <module organization="com.typesafe.play" name="play-jdbc_2.10" revision="2.3.7" artifactType="jar" classifier="">
+      <jar>$IVY2/cache/com.typesafe.play/play-jdbc_2.10/jars/play-jdbc_2.10-2.3.7.jar</jar>
+    </module>
+    <module organization="com.typesafe.play" name="play-json_2.10" revision="2.3.7" artifactType="jar" classifier="">
+      <jar>$IVY2/cache/com.typesafe.play/play-json_2.10/jars/play-json_2.10-2.3.7.jar</jar>
+    </module>
+    <module organization="com.typesafe.play" name="play-test_2.10" revision="2.3.7" artifactType="jar" classifier="">
+      <jar>$IVY2/cache/com.typesafe.play/play-test_2.10/jars/play-test_2.10-2.3.7.jar</jar>
+    </module>
+    <module organization="com.typesafe.play" name="play_2.10" revision="2.3.7" artifactType="jar" classifier="">
+      <jar>$IVY2/cache/com.typesafe.play/play_2.10/jars/play_2.10-2.3.7.jar</jar>
+    </module>
+    <module organization="com.typesafe.play" name="twirl-api_2.10" revision="1.0.2" artifactType="jar" classifier="">
+      <jar>$IVY2/cache/com.typesafe.play/twirl-api_2.10/jars/twirl-api_2.10-1.0.2.jar</jar>
+    </module>
+    <module organization="commons-codec" name="commons-codec" revision="1.9" artifactType="jar" classifier="">
+      <jar>$IVY2/cache/commons-codec/commons-codec/jars/commons-codec-1.9.jar</jar>
+    </module>
+    <module organization="commons-collections" name="commons-collections" revision="3.2.1" artifactType="jar" classifier="">
+      <jar>$IVY2/cache/commons-collections/commons-collections/jars/commons-collections-3.2.1.jar</jar>
+    </module>
+    <module organization="commons-io" name="commons-io" revision="2.4" artifactType="jar" classifier="">
+      <jar>$IVY2/cache/commons-io/commons-io/jars/commons-io-2.4.jar</jar>
+    </module>
+    <module organization="commons-logging" name="commons-logging" revision="1.1.3" artifactType="jar" classifier="">
+      <jar>$IVY2/cache/commons-logging/commons-logging/jars/commons-logging-1.1.3.jar</jar>
+    </module>
+    <module organization="io.netty" name="netty" revision="3.9.3.Final" artifactType="jar" classifier="">
+      <jar>$IVY2/cache/io.netty/netty/bundles/netty-3.9.3.Final.jar</jar>
+    </module>
+    <module organization="javax.transaction" name="jta" revision="1.1" artifactType="jar" classifier="">
+      <jar>$IVY2/cache/javax.transaction/jta/jars/jta-1.1.jar</jar>
+    </module>
+    <module organization="joda-time" name="joda-time" revision="2.3" artifactType="jar" classifier="">
+      <jar>$IVY2/cache/joda-time/joda-time/jars/joda-time-2.3.jar</jar>
+    </module>
+    <module organization="junit" name="junit" revision="4.11" artifactType="jar" classifier="">
+      <jar>$IVY2/cache/junit/junit/jars/junit-4.11.jar</jar>
+    </module>
+    <module organization="net.java.dev.jna" name="jna" revision="3.4.0" artifactType="jar" classifier="">
+      <jar>$IVY2/cache/net.java.dev.jna/jna/jars/jna-3.4.0.jar</jar>
+    </module>
+    <module organization="net.java.dev.jna" name="platform" revision="3.4.0" artifactType="jar" classifier="">
+      <jar>$IVY2/cache/net.java.dev.jna/platform/jars/platform-3.4.0.jar</jar>
+    </module>
+    <module organization="net.sourceforge.cssparser" name="cssparser" revision="0.9.11" artifactType="jar" classifier="">
+      <jar>$IVY2/cache/net.sourceforge.cssparser/cssparser/jars/cssparser-0.9.11.jar</jar>
+    </module>
+    <module organization="net.sourceforge.htmlunit" name="htmlunit" revision="2.13" artifactType="jar" classifier="">
+      <jar>$IVY2/cache/net.sourceforge.htmlunit/htmlunit/jars/htmlunit-2.13.jar</jar>
+    </module>
+    <module organization="net.sourceforge.htmlunit" name="htmlunit-core-js" revision="2.13" artifactType="jar" classifier="">
+      <jar>$IVY2/cache/net.sourceforge.htmlunit/htmlunit-core-js/jars/htmlunit-core-js-2.13.jar</jar>
+    </module>
+    <module organization="net.sourceforge.nekohtml" name="nekohtml" revision="1.9.19" artifactType="jar" classifier="">
+      <jar>$IVY2/cache/net.sourceforge.nekohtml/nekohtml/jars/nekohtml-1.9.19.jar</jar>
+    </module>
+    <module organization="org.apache.commons" name="commons-exec" revision="1.1" artifactType="jar" classifier="">
+      <jar>$IVY2/cache/org.apache.commons/commons-exec/jars/commons-exec-1.1.jar</jar>
+    </module>
+    <module organization="org.apache.commons" name="commons-lang3" revision="3.1" artifactType="jar" classifier="">
+      <jar>$IVY2/cache/org.apache.commons/commons-lang3/jars/commons-lang3-3.1.jar</jar>
+    </module>
+    <module organization="org.apache.httpcomponents" name="httpclient" revision="4.3.1" artifactType="jar" classifier="">
+      <jar>$IVY2/cache/org.apache.httpcomponents/httpclient/jars/httpclient-4.3.1.jar</jar>
+    </module>
+    <module organization="org.apache.httpcomponents" name="httpcore" revision="4.3" artifactType="jar" classifier="">
+      <jar>$IVY2/cache/org.apache.httpcomponents/httpcore/jars/httpcore-4.3.jar</jar>
+    </module>
+    <module organization="org.apache.httpcomponents" name="httpmime" revision="4.3.1" artifactType="jar" classifier="">
+      <jar>$IVY2/cache/org.apache.httpcomponents/httpmime/jars/httpmime-4.3.1.jar</jar>
+    </module>
+    <module organization="org.easytesting" name="fest-assert" revision="1.4" artifactType="jar" classifier="">
+      <jar>$IVY2/cache/org.easytesting/fest-assert/jars/fest-assert-1.4.jar</jar>
+    </module>
+    <module organization="org.easytesting" name="fest-util" revision="1.1.6" artifactType="jar" classifier="">
+      <jar>$IVY2/cache/org.easytesting/fest-util/jars/fest-util-1.1.6.jar</jar>
+    </module>
+    <module organization="org.eclipse.jetty" name="jetty-http" revision="8.1.12.v20130726" artifactType="jar" classifier="">
+      <jar>$IVY2/cache/org.eclipse.jetty/jetty-http/jars/jetty-http-8.1.12.v20130726.jar</jar>
+    </module>
+    <module organization="org.eclipse.jetty" name="jetty-io" revision="8.1.12.v20130726" artifactType="jar" classifier="">
+      <jar>$IVY2/cache/org.eclipse.jetty/jetty-io/jars/jetty-io-8.1.12.v20130726.jar</jar>
+    </module>
+    <module organization="org.eclipse.jetty" name="jetty-util" revision="8.1.12.v20130726" artifactType="jar" classifier="">
+      <jar>$IVY2/cache/org.eclipse.jetty/jetty-util/jars/jetty-util-8.1.12.v20130726.jar</jar>
+    </module>
+    <module organization="org.eclipse.jetty" name="jetty-websocket" revision="8.1.12.v20130726" artifactType="jar" classifier="">
+      <jar>$IVY2/cache/org.eclipse.jetty/jetty-websocket/jars/jetty-websocket-8.1.12.v20130726.jar</jar>
+    </module>
+    <module organization="org.fluentlenium" name="fluentlenium-core" revision="0.9.2" artifactType="jar" classifier="">
+      <jar>$IVY2/cache/org.fluentlenium/fluentlenium-core/jars/fluentlenium-core-0.9.2.jar</jar>
+    </module>
+    <module organization="org.fluentlenium" name="fluentlenium-festassert" revision="0.9.2" artifactType="jar" classifier="">
+      <jar>$IVY2/cache/org.fluentlenium/fluentlenium-festassert/jars/fluentlenium-festassert-0.9.2.jar</jar>
+    </module>
+    <module organization="org.hamcrest" name="hamcrest-core" revision="1.3" artifactType="jar" classifier="">
+      <jar>$IVY2/cache/org.hamcrest/hamcrest-core/jars/hamcrest-core-1.3.jar</jar>
+    </module>
+    <module organization="org.javassist" name="javassist" revision="3.18.2-GA" artifactType="jar" classifier="">
+      <jar>$IVY2/cache/org.javassist/javassist/bundles/javassist-3.18.2-GA.jar</jar>
+    </module>
+    <module organization="org.joda" name="joda-convert" revision="1.6" artifactType="jar" classifier="">
+      <jar>$IVY2/cache/org.joda/joda-convert/jars/joda-convert-1.6.jar</jar>
+    </module>
+    <module organization="org.json" name="json" revision="20080701" artifactType="jar" classifier="">
+      <jar>$IVY2/cache/org.json/json/jars/json-20080701.jar</jar>
+    </module>
+    <module organization="org.mockito" name="mockito-core" revision="1.9.5" artifactType="jar" classifier="">
+      <jar>$IVY2/cache/org.mockito/mockito-core/jars/mockito-core-1.9.5.jar</jar>
+    </module>
+    <module organization="org.objenesis" name="objenesis" revision="1.0" artifactType="jar" classifier="">
+      <jar>$IVY2/cache/org.objenesis/objenesis/jars/objenesis-1.0.jar</jar>
+    </module>
+    <module organization="org.scala-lang" name="scala-compiler" revision="2.10.7" artifactType="jar" classifier="">
+      <jar>$SBT_BOOT/scala-2.10.7/lib/scala-compiler.jar</jar>
+    </module>
+    <module organization="org.scala-lang" name="scala-library" revision="2.10.7" artifactType="jar" classifier="">
+      <jar>$SBT_BOOT/scala-2.10.7/lib/scala-library.jar</jar>
+    </module>
+    <module organization="org.scala-lang" name="scala-reflect" revision="2.10.7" artifactType="jar" classifier="">
+      <jar>$SBT_BOOT/scala-2.10.7/lib/scala-reflect.jar</jar>
+    </module>
+    <module organization="org.scala-sbt" name="test-interface" revision="1.0" artifactType="jar" classifier="">
+      <jar>$IVY2/cache/org.scala-sbt/test-interface/jars/test-interface-1.0.jar</jar>
+    </module>
+    <module organization="org.scala-stm" name="scala-stm_2.10" revision="0.7" artifactType="jar" classifier="">
+      <jar>$IVY2/cache/org.scala-stm/scala-stm_2.10/jars/scala-stm_2.10-0.7.jar</jar>
+    </module>
+    <module organization="org.scalamacros" name="quasiquotes_2.10" revision="2.0.0-M7" artifactType="jar" classifier="">
+      <jar>$IVY2/cache/org.scalamacros/quasiquotes_2.10/jars/quasiquotes_2.10-2.0.0-M7.jar</jar>
+    </module>
+    <module organization="org.scalaz" name="scalaz-concurrent_2.10" revision="7.0.6" artifactType="jar" classifier="">
+      <jar>$IVY2/cache/org.scalaz/scalaz-concurrent_2.10/bundles/scalaz-concurrent_2.10-7.0.6.jar</jar>
+    </module>
+    <module organization="org.scalaz" name="scalaz-core_2.10" revision="7.0.6" artifactType="jar" classifier="">
+      <jar>$IVY2/cache/org.scalaz/scalaz-core_2.10/bundles/scalaz-core_2.10-7.0.6.jar</jar>
+    </module>
+    <module organization="org.scalaz" name="scalaz-effect_2.10" revision="7.0.6" artifactType="jar" classifier="">
+      <jar>$IVY2/cache/org.scalaz/scalaz-effect_2.10/bundles/scalaz-effect_2.10-7.0.6.jar</jar>
+    </module>
+    <module organization="org.seleniumhq.selenium" name="selenium-android-driver" revision="2.39.0" artifactType="jar" classifier="">
+      <jar>$IVY2/cache/org.seleniumhq.selenium/selenium-android-driver/jars/selenium-android-driver-2.39.0.jar</jar>
+    </module>
+    <module organization="org.seleniumhq.selenium" name="selenium-api" revision="2.39.0" artifactType="jar" classifier="">
+      <jar>$IVY2/cache/org.seleniumhq.selenium/selenium-api/jars/selenium-api-2.39.0.jar</jar>
+    </module>
+    <module organization="org.seleniumhq.selenium" name="selenium-chrome-driver" revision="2.39.0" artifactType="jar" classifier="">
+      <jar>$IVY2/cache/org.seleniumhq.selenium/selenium-chrome-driver/jars/selenium-chrome-driver-2.39.0.jar</jar>
+    </module>
+    <module organization="org.seleniumhq.selenium" name="selenium-firefox-driver" revision="2.39.0" artifactType="jar" classifier="">
+      <jar>$IVY2/cache/org.seleniumhq.selenium/selenium-firefox-driver/jars/selenium-firefox-driver-2.39.0.jar</jar>
+    </module>
+    <module organization="org.seleniumhq.selenium" name="selenium-htmlunit-driver" revision="2.39.0" artifactType="jar" classifier="">
+      <jar>$IVY2/cache/org.seleniumhq.selenium/selenium-htmlunit-driver/jars/selenium-htmlunit-driver-2.39.0.jar</jar>
+    </module>
+    <module organization="org.seleniumhq.selenium" name="selenium-ie-driver" revision="2.39.0" artifactType="jar" classifier="">
+      <jar>$IVY2/cache/org.seleniumhq.selenium/selenium-ie-driver/jars/selenium-ie-driver-2.39.0.jar</jar>
+    </module>
+    <module organization="org.seleniumhq.selenium" name="selenium-iphone-driver" revision="2.39.0" artifactType="jar" classifier="">
+      <jar>$IVY2/cache/org.seleniumhq.selenium/selenium-iphone-driver/jars/selenium-iphone-driver-2.39.0.jar</jar>
+    </module>
+    <module organization="org.seleniumhq.selenium" name="selenium-java" revision="2.39.0" artifactType="jar" classifier="">
+      <jar>$IVY2/cache/org.seleniumhq.selenium/selenium-java/jars/selenium-java-2.39.0.jar</jar>
+    </module>
+    <module organization="org.seleniumhq.selenium" name="selenium-remote-driver" revision="2.39.0" artifactType="jar" classifier="">
+      <jar>$IVY2/cache/org.seleniumhq.selenium/selenium-remote-driver/jars/selenium-remote-driver-2.39.0.jar</jar>
+    </module>
+    <module organization="org.seleniumhq.selenium" name="selenium-safari-driver" revision="2.39.0" artifactType="jar" classifier="">
+      <jar>$IVY2/cache/org.seleniumhq.selenium/selenium-safari-driver/jars/selenium-safari-driver-2.39.0.jar</jar>
+    </module>
+    <module organization="org.seleniumhq.selenium" name="selenium-support" revision="2.39.0" artifactType="jar" classifier="">
+      <jar>$IVY2/cache/org.seleniumhq.selenium/selenium-support/jars/selenium-support-2.39.0.jar</jar>
+    </module>
+    <module organization="org.slf4j" name="jcl-over-slf4j" revision="1.7.6" artifactType="jar" classifier="">
+      <jar>$IVY2/cache/org.slf4j/jcl-over-slf4j/jars/jcl-over-slf4j-1.7.6.jar</jar>
+    </module>
+    <module organization="org.slf4j" name="jul-to-slf4j" revision="1.7.6" artifactType="jar" classifier="">
+      <jar>$IVY2/cache/org.slf4j/jul-to-slf4j/jars/jul-to-slf4j-1.7.6.jar</jar>
+    </module>
+    <module organization="org.slf4j" name="slf4j-api" revision="1.7.6" artifactType="jar" classifier="">
+      <jar>$IVY2/cache/org.slf4j/slf4j-api/jars/slf4j-api-1.7.6.jar</jar>
+    </module>
+    <module organization="org.specs2" name="classycle" revision="1.4.3" artifactType="jar" classifier="">
+      <jar>$IVY2/cache/org.specs2/classycle/jars/classycle-1.4.3.jar</jar>
+    </module>
+    <module organization="org.specs2" name="specs2-analysis_2.10" revision="2.3.12" artifactType="jar" classifier="">
+      <jar>$IVY2/cache/org.specs2/specs2-analysis_2.10/jars/specs2-analysis_2.10-2.3.12.jar</jar>
+    </module>
+    <module organization="org.specs2" name="specs2-common_2.10" revision="2.3.12" artifactType="jar" classifier="">
+      <jar>$IVY2/cache/org.specs2/specs2-common_2.10/jars/specs2-common_2.10-2.3.12.jar</jar>
+    </module>
+    <module organization="org.specs2" name="specs2-core_2.10" revision="2.3.12" artifactType="jar" classifier="">
+      <jar>$IVY2/cache/org.specs2/specs2-core_2.10/jars/specs2-core_2.10-2.3.12.jar</jar>
+    </module>
+    <module organization="org.specs2" name="specs2-junit_2.10" revision="2.3.12" artifactType="jar" classifier="">
+      <jar>$IVY2/cache/org.specs2/specs2-junit_2.10/jars/specs2-junit_2.10-2.3.12.jar</jar>
+    </module>
+    <module organization="org.specs2" name="specs2-matcher-extra_2.10" revision="2.3.12" artifactType="jar" classifier="">
+      <jar>$IVY2/cache/org.specs2/specs2-matcher-extra_2.10/jars/specs2-matcher-extra_2.10-2.3.12.jar</jar>
+    </module>
+    <module organization="org.specs2" name="specs2-matcher_2.10" revision="2.3.12" artifactType="jar" classifier="">
+      <jar>$IVY2/cache/org.specs2/specs2-matcher_2.10/jars/specs2-matcher_2.10-2.3.12.jar</jar>
+    </module>
+    <module organization="org.specs2" name="specs2-mock_2.10" revision="2.3.12" artifactType="jar" classifier="">
+      <jar>$IVY2/cache/org.specs2/specs2-mock_2.10/jars/specs2-mock_2.10-2.3.12.jar</jar>
+    </module>
+    <module organization="org.w3c.css" name="sac" revision="1.3" artifactType="jar" classifier="">
+      <jar>$IVY2/cache/org.w3c.css/sac/jars/sac-1.3.jar</jar>
+    </module>
+    <module organization="org.webbitserver" name="webbit" revision="0.4.14" artifactType="jar" classifier="">
+      <jar>$IVY2/cache/org.webbitserver/webbit/jars/webbit-0.4.14.jar</jar>
+    </module>
+    <module organization="tyrex" name="tyrex" revision="1.0.1" artifactType="jar" classifier="">
+      <jar>$IVY2/cache/tyrex/tyrex/jars/tyrex-1.0.1.jar</jar>
+    </module>
+    <module organization="xalan" name="serializer" revision="2.7.1" artifactType="jar" classifier="">
+      <jar>$IVY2/cache/xalan/serializer/jars/serializer-2.7.1.jar</jar>
+    </module>
+    <module organization="xalan" name="xalan" revision="2.7.1" artifactType="jar" classifier="">
+      <jar>$IVY2/cache/xalan/xalan/jars/xalan-2.7.1.jar</jar>
+    </module>
+    <module organization="xerces" name="xercesImpl" revision="2.11.0" artifactType="jar" classifier="">
+      <jar>$IVY2/cache/xerces/xercesImpl/jars/xercesImpl-2.11.0.jar</jar>
+    </module>
+    <module organization="xml-apis" name="xml-apis" revision="1.4.01" artifactType="jar" classifier="">
+      <jar>$IVY2/cache/xml-apis/xml-apis/jars/xml-apis-1.4.01.jar</jar>
+    </module>
+  </repository>
+  <localCachePath>$IVY2</localCachePath>
+</structure>
