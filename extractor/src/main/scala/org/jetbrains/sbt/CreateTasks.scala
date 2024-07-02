@@ -2,13 +2,12 @@ package org.jetbrains.sbt
 
 import org.jetbrains.sbt.extractors._
 import sbt._
-import sbt.jetbrains.apiAdapter._
 
 /**
  * @author Nikolay Obedin
  */
 
-object CreateTasks extends (State => State) with SbtStateOps {
+object CreateTasks {
 
   lazy val globalSettings: Seq[Setting[_]] = Seq[Setting[_]](
     Keys.commands += UtilityTasks.preferScala2,
@@ -46,10 +45,4 @@ object CreateTasks extends (State => State) with SbtStateOps {
 
     StructureKeys.allConfigurationsWithSource := UtilityTasks.allConfigurationsWithSource.value
   )
-
-
-
-  def apply(state: State): State =
-    applySettings(state, globalSettings, projectSettings)
-
 }

@@ -3,8 +3,9 @@ package sbt.jetbrains
 import sbt._
 import org.jetbrains.sbt.SbtStateOps
 
-object LogDownloadArtifacts extends (State => State) with SbtStateOps {
+object LogDownloadArtifacts {
 
-  def apply(state: State): State =
-    applySettings(state, Seq[Setting[_]](), Seq[Setting[_]]())
+  lazy val globalSettings: Seq[Setting[_]] = Seq.empty
+
+  lazy val projectSettings: Seq[Setting[_]] = Seq.empty
 }

@@ -1,15 +1,13 @@
 package sbt.jetbrains
 
-import org.jetbrains.sbt.SbtStateOps
 import sbt.Keys.csrLogger
 import sbt._
 
-object LogDownloadArtifacts extends (State => State) with SbtStateOps {
+object LogDownloadArtifacts {
 
   lazy val globalSettings: Seq[Setting[_]] = Seq[Setting[_]](
     csrLogger := keysAdapterEx.artifactDownloadCsrLogger.value
   )
 
-  def apply(state: State): State =
-    applySettings(state, globalSettings, Seq[Setting[_]]())
+  lazy val projectSettings: Seq[Setting[_]] = Seq.empty
 }
