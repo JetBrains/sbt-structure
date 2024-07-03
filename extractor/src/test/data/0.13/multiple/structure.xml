@@ -155,7 +155,7 @@
       <projects>
         <forTest/>
         <forProduction>
-          <project buildURI="$URI_BASE" configurations="">bar</project>
+          <project buildURI="$URI_BASE" configurations="compile">bar</project>
         </forProduction>
       </projects>
       <modules>
