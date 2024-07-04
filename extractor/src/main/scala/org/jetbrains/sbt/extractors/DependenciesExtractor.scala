@@ -14,14 +14,11 @@ import scala.language.postfixOps
  * @since 4/10/15.
  */
 
-class DependenciesExtractor(projectRef: ProjectRef,
-                            buildDependencies: BuildDependencies,
-                            unmanagedClasspath: SbtConfiguration => Keys.Classpath,
+class DependenciesExtractor(unmanagedClasspath: SbtConfiguration => Keys.Classpath,
                             externalDependencyClasspath: Option[SbtConfiguration => Keys.Classpath],
                             dependencyConfigurations: Seq[SbtConfiguration],
                             testConfigurations: Seq[SbtConfiguration],
                             sourceConfigurations: Seq[SbtConfiguration],
-                            insertProjectTransitiveDependencies: Boolean,
                             separateProdTestSources: Boolean,
                             projectToConfigurations: Map[ProjectType, Seq[Configuration]])
   extends ModulesOps {
@@ -31,11 +28,9 @@ class DependenciesExtractor(projectRef: ProjectRef,
   private lazy val sourceConfigurationsNames = sourceConfigurations.map(_.name)
 
   private[extractors] def extract: DependencyData = {
-    val projectDependencies = (separateProdTestSources, insertProjectTransitiveDependencies) match {
-      case (true, _) => separatedSourcesProjectDependencies
-      case (_, true) => transitiveProjectDependencies
-      case _ => nonTransitiveProjectDependencies
-    }
+    val projectDependencies =
+      if (separateProdTestSources) separatedSourcesProjectDependencies
+      else transitiveProjectDependencies
     DependencyData(projectDependencies, moduleDependencies, jarDependencies)
   }
 
@@ -60,14 +55,6 @@ class DependenciesExtractor(projectRef: ProjectRef,
       val projectName = mapToProjectNameWithSourceTypeAppended(projectType)
       ProjectDependencyData(projectName, Option(project.build), configs)
     }
-  }
-
-  private def nonTransitiveProjectDependencies: Dependencies[ProjectDependencyData] = {
-    val dependencies = buildDependencies.classpath.getOrElse(projectRef, Seq.empty).map { it =>
-      val configurations = it.configuration.map(Configuration.fromString).getOrElse(Seq.empty)
-      ProjectDependencyData(it.project.id, Some(it.project.build), configurations)
-    }
-    Dependencies(dependencies, Seq.empty)
   }
 
   private def moduleDependencies: Dependencies[ModuleDependencyData] = {
@@ -289,7 +276,7 @@ object DependenciesExtractor extends SbtStateOps with TaskOps {
         externalDependencyClasspathOpt <- externalDependencyClasspathTask
         classpathConfiguration <- classpathConfigurationTask
       } yield {
-        val projectToTransitiveDependencies =
+        val projectDependencies =
           if (options.separateProdAndTestSources) {
             getTransitiveDependenciesForProjectProdTestSources(
               projectRef,
@@ -298,7 +285,7 @@ object DependenciesExtractor extends SbtStateOps with TaskOps {
               settings,
               buildDependencies
             )
-          } else if (options.insertProjectTransitiveDependencies) {
+          } else {
             getTransitiveDependenciesForProject(
               projectRef,
               projectToConfigurations,
@@ -306,21 +293,16 @@ object DependenciesExtractor extends SbtStateOps with TaskOps {
               settings,
               buildDependencies
             )
-          } else {
-            Map.empty[ProjectType, Seq[Configuration]]
           }
 
         val extractor = new DependenciesExtractor(
-          projectRef,
-          buildDependencies,
           unmanagedClasspath.getOrElse(_, Nil),
           externalDependencyClasspathOpt.map(it => it.getOrElse(_, Nil)),
           dependencyConfigurations,
           testConfigurations,
           sourceConfigurations,
-          options.insertProjectTransitiveDependencies,
           options.separateProdAndTestSources,
-          projectToTransitiveDependencies
+          projectDependencies
         )
         extractor.extract
       }).value
