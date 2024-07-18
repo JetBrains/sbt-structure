@@ -69,6 +69,16 @@ trait SbtStateOps {
       val tasks = configurations.flatMap(c => key.in(c).get(structure(state).data).map(_.map(it => (c, it))))
       std.TaskExtra.joinTasks(tasks).join.map(_.toMap)
     }
+
+    def forAllProjectsAndConfigurations(state: State, projects: Seq[ProjectRef], configurations: Map[ProjectRef, Seq[sbt.Configuration]]): Task[Seq[((ProjectRef, sbt.Configuration), T)]] = {
+      val tasks = for {
+        project <- projects
+        config <- configurations.getOrElse(project, Seq.empty)
+        task <- key.in(project, config).get(structure(state).data).map(_.map(it => ((project, config), it)))
+      } yield task
+
+      std.TaskExtra.joinTasks(tasks).join
+    }
   }
 }
 
