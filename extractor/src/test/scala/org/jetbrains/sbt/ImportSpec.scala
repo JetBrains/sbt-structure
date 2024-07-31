@@ -118,6 +118,8 @@ class ImportSpec extends AnyFreeSpecLike {
       "dependency_resolve_sbt_classifiers" in { testProject("dependency_resolve_sbt_classifiers", SbtVersion_1_9, options = ResolveSbtClassifiers) }
       "dependency_resolve_sources_and_javadocs_and_sbt_classifiers" in { testProject("dependency_resolve_sources_and_javadocs_and_sbt_classifiers", SbtVersion_1_9, options = ResolveSourcesAndJavaDocsAndSbtClassifiers) }
 
+      "internal_config" in { testProject("internal_config", SbtVersion_1_9, options = ResolveSources) }
+
       "dependency_resolve_sbt_classifiers_prod_test_sources_separated" in { testProject("dependency_resolve_sbt_classifiers_prod_test_sources_separated", SbtVersion_1_9, options = ResolveSbtClassifiersAndSeparateProdTestSources) }
     }
   }

@@ -11,6 +11,8 @@ class RepositoryExtractorSpec extends AnyFreeSpecLike {
 
   private val projects: Seq[ProjectRef] = Seq("project-1", "project-2").map(ProjectRef(file("/tmp/test-project"), _))
 
+  private val projectToConfigurationsName = projects.map(_ -> Seq(sbt.Compile.name)).toMap
+
   "RepositoryExtractor" - {
     "extract modules for all accepted projects when supplied" in {
       val moduleId = (name: String) => ModuleID("com.example", name, "SNAPSHOT")
@@ -33,7 +35,7 @@ class RepositoryExtractorSpec extends AnyFreeSpecLike {
         ).apply,
         updateClassifiersReports = None,
         classpathTypes = const(Set(Artifact.DefaultType)),
-        dependencyConfigurations = const(Seq(sbt.Compile))
+        projectToConfigurationsName = projectToConfigurationsName
       ).extract
 
       val expected = Seq(
@@ -78,7 +80,7 @@ class RepositoryExtractorSpec extends AnyFreeSpecLike {
           ))
         ).apply),
         classpathTypes = const(Set(Artifact.DefaultType)),
-        dependencyConfigurations = const(Seq(sbt.Compile))
+        projectToConfigurationsName = projectToConfigurationsName
       ).extract
 
       val expected = Seq(
@@ -105,7 +107,7 @@ class RepositoryExtractorSpec extends AnyFreeSpecLike {
         ).apply,
         updateClassifiersReports = None,
         classpathTypes = const(Set(Artifact.DefaultType)),
-        dependencyConfigurations = const(Seq(sbt.Compile))
+        projectToConfigurationsName = projectToConfigurationsName
       ).extract
 
       val expected = Seq(

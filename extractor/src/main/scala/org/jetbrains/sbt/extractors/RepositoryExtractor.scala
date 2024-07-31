@@ -9,12 +9,13 @@ import sbt.{Def, _}
  * @author Nikolay Obedin
  * @since 4/10/15.
  */
-class RepositoryExtractor(projects: Seq[ProjectRef],
-                          updateReports: ProjectRef => UpdateReportAdapter,
-                          updateClassifiersReports: Option[ProjectRef => UpdateReportAdapter],
-                          classpathTypes: ProjectRef => Set[String],
-                          dependencyConfigurations: ProjectRef => Seq[sbt.Configuration])
-  extends ModulesOps {
+class RepositoryExtractor(
+  projects: Seq[ProjectRef],
+  updateReports: ProjectRef => UpdateReportAdapter,
+  updateClassifiersReports: Option[ProjectRef => UpdateReportAdapter],
+  classpathTypes: ProjectRef => Set[String],
+  projectToConfigurationsName: Map[ProjectRef, Seq[String]]
+) extends ModulesOps {
 
   private[extractors] def extract: RepositoryData = {
     val moduleReports = fixModulesIdsToSupportClassifiers(allModulesWithDocs)
@@ -56,7 +57,7 @@ class RepositoryExtractor(projects: Seq[ProjectRef],
   }
 
   private def getModulesForProject(projectRef: ProjectRef, updateReportFn: ProjectRef => UpdateReportAdapter): Seq[ModuleReportAdapter] =
-    dependencyConfigurations(projectRef).map(_.name).flatMap(updateReportFn(projectRef).modulesFrom).filter(_.artifacts.nonEmpty)
+    projectToConfigurationsName(projectRef).flatMap(updateReportFn(projectRef).modulesFrom).filter(_.artifacts.nonEmpty)
 
   private def createModuleData(moduleId: ModuleIdentifier, moduleReports: Seq[ModuleReportAdapter]): ModuleData = {
     val allArtifacts = moduleReports.flatMap(_.artifacts)
@@ -90,8 +91,13 @@ object RepositoryExtractor extends SbtStateOps with TaskOps {
   private def extractRepositoryData(state: State, options: Options, acceptedProjects: Seq[ProjectRef]): Task[RepositoryData] = {
     def classpathTypes(projectRef: ProjectRef) =
       Keys.classpathTypes.in(projectRef).getOrElse(state, Set.empty)
-    def dependencyConfigurations(projectRef: ProjectRef) =
-      StructureKeys.dependencyConfigurations.in(projectRef).get(state)
+
+    val dependencyConfigurations = StructureKeys.dependencyConfigurations
+      .forAllProjects(state, acceptedProjects)
+      .toMap
+
+    val classpathConfigurationTask = sbt.Keys.classpathConfiguration
+      .forAllProjectsAndConfigurations(state, acceptedProjects, dependencyConfigurations)
 
     val updateAllTask: Task[Map[ProjectRef, UpdateReportAdapter]] =
       Keys.update
@@ -106,13 +112,27 @@ object RepositoryExtractor extends SbtStateOps with TaskOps {
     for {
       updateReports <- updateAllTask
       updateClassifiersReports <- updateAllClassifiersTask
+      classpathConfiguration <- classpathConfigurationTask
     } yield {
+
+      def extractClasspathConfigs(projectToConfigTuple: Seq[((ProjectRef, Configuration), Configuration)]): Seq[Configuration] =
+        projectToConfigTuple.map { case ((_, _), c2) => c2 }
+
+      val projectToClasspathConfig = classpathConfiguration.groupBy(_._1._1)
+        .mapValues(extractClasspathConfigs)
+
+      val classpathAndDependencyConfigs = projectToClasspathConfig.map { case (project, configs) =>
+        val projectDependencyConfigs = dependencyConfigurations.getOrElse(project, Seq.empty)
+        val uniqueConfigNames = (projectDependencyConfigs ++ configs).groupBy(_.name).keys.toSeq
+        project -> uniqueConfigNames
+      }
+
       val extractor = new RepositoryExtractor(
         acceptedProjects,
         updateReports.apply,
         updateClassifiersReports.map(_.apply),
         classpathTypes,
-        dependencyConfigurations
+        classpathAndDependencyConfigs
       )
       extractor.extract
     }
