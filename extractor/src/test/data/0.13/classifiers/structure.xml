@@ -3307,8 +3307,8 @@
         <forProduction>
           <module configurations="compile" organization="javax.activation" name="activation" revision="1.1.1" artifactType="jar" classifier=""/>
           <module configurations="compile" organization="org.apache.james" name="apache-mailet-api" revision="2.5.0" artifactType="jar" classifier=""/>
-          <module configurations="test" organization="org.apache.james" name="apache-mailet-base" revision="2.5.0" artifactType="jar" classifier="tests"/>
           <module configurations="compile" organization="org.apache.james" name="apache-mailet-base" revision="2.5.0" artifactType="jar" classifier=""/>
+          <module configurations="test" organization="org.apache.james" name="apache-mailet-base" revision="2.5.0" artifactType="jar" classifier="tests"/>
           <module configurations="compile" organization="javax.mail" name="mail" revision="1.4.4" artifactType="jar" classifier=""/>
           <module configurations="compile" organization="org.scala-lang" name="scala-library" revision="2.10.7" artifactType="jar" classifier=""/>
         </forProduction>
