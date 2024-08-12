@@ -311,9 +311,10 @@
       <modules>
         <forTest/>
         <forProduction>
-          <module configurations="test" organization="org.hamcrest" name="hamcrest-core" revision="1.3" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="org.scala-lang" name="scala-library" revision="2.10.1" artifactType="jar" classifier=""/>
           <module configurations="test" organization="junit" name="junit" revision="4.13.2" artifactType="jar" classifier=""/>
-          <module configurations="compile" organization="org.scala-lang" name="scala-library" revision="2.10.1" artifactType="jar" classifier=""/>     </forProduction>
+          <module configurations="test" organization="org.hamcrest" name="hamcrest-core" revision="1.3" artifactType="jar" classifier=""/>
+        </forProduction>
       </modules>
       <jars>
         <forTest/>
@@ -1942,6 +1943,11 @@
     <mainSourceDir>$BASE/src/main</mainSourceDir>
   </project>
   <repository>
+    <module organization="org.scala-lang" name="scala-library" revision="2.10.1" artifactType="jar" classifier="">
+      <jar>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-lang/scala-library/2.10.1/scala-library-2.10.1.jar</jar>
+      <doc>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-lang/scala-library/2.10.1/scala-library-2.10.1-javadoc.jar</doc>
+      <src>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-lang/scala-library/2.10.1/scala-library-2.10.1-sources.jar</src>
+    </module>
     <module organization="junit" name="junit" revision="4.13.2" artifactType="jar" classifier="">
       <jar>$COURSIER/cache/https/repo1.maven.org/maven2/junit/junit/4.13.2/junit-4.13.2.jar</jar>
       <doc>$COURSIER/cache/https/repo1.maven.org/maven2/junit/junit/4.13.2/junit-4.13.2-javadoc.jar</doc>
@@ -1951,11 +1957,6 @@
       <jar>$COURSIER/cache/https/repo1.maven.org/maven2/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar</jar>
       <doc>$COURSIER/cache/https/repo1.maven.org/maven2/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3-javadoc.jar</doc>
       <src>$COURSIER/cache/https/repo1.maven.org/maven2/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3-sources.jar</src>
-    </module>
-    <module organization="org.scala-lang" name="scala-library" revision="2.10.1" artifactType="jar" classifier="">
-      <jar>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-lang/scala-library/2.10.1/scala-library-2.10.1.jar</jar>
-      <doc>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-lang/scala-library/2.10.1/scala-library-2.10.1-javadoc.jar</doc>
-      <src>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-lang/scala-library/2.10.1/scala-library-2.10.1-sources.jar</src>
     </module>
   </repository>
   <localCachePath>$IVY2</localCachePath>

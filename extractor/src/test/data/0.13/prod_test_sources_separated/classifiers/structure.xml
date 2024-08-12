@@ -1736,17 +1736,17 @@
       <modules>
         <forTest>
           <module configurations="compile" organization="javax.activation" name="activation" revision="1.1.1" artifactType="jar" classifier=""/>
-          <module configurations="compile" organization="org.apache.james" name="apache-mailet-api" revision="2.5.0" artifactType="jar" classifier=""/>
-          <module configurations="compile" organization="org.apache.james" name="apache-mailet-base" revision="2.5.0" artifactType="jar" classifier=""/>
           <module configurations="compile" organization="javax.mail" name="mail" revision="1.4.4" artifactType="jar" classifier=""/>
           <module configurations="compile" organization="org.scala-lang" name="scala-library" revision="2.10.7" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="org.apache.james" name="apache-mailet-base" revision="2.5.0" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="org.apache.james" name="apache-mailet-api" revision="2.5.0" artifactType="jar" classifier=""/>
         </forTest>
         <forProduction>
           <module configurations="compile" organization="javax.activation" name="activation" revision="1.1.1" artifactType="jar" classifier=""/>
-          <module configurations="compile" organization="org.apache.james" name="apache-mailet-api" revision="2.5.0" artifactType="jar" classifier=""/>
-          <module configurations="compile" organization="org.apache.james" name="apache-mailet-base" revision="2.5.0" artifactType="jar" classifier=""/>
           <module configurations="compile" organization="javax.mail" name="mail" revision="1.4.4" artifactType="jar" classifier=""/>
           <module configurations="compile" organization="org.scala-lang" name="scala-library" revision="2.10.7" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="org.apache.james" name="apache-mailet-base" revision="2.5.0" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="org.apache.james" name="apache-mailet-api" revision="2.5.0" artifactType="jar" classifier=""/>
         </forProduction>
       </modules>
       <jars>
@@ -3319,18 +3319,18 @@
       <modules>
         <forTest>
           <module configurations="compile" organization="javax.activation" name="activation" revision="1.1.1" artifactType="jar" classifier=""/>
-          <module configurations="compile" organization="org.apache.james" name="apache-mailet-api" revision="2.5.0" artifactType="jar" classifier=""/>
-          <module configurations="compile" organization="org.apache.james" name="apache-mailet-base" revision="2.5.0" artifactType="jar" classifier="tests"/>
-          <module configurations="compile" organization="org.apache.james" name="apache-mailet-base" revision="2.5.0" artifactType="jar" classifier=""/>
           <module configurations="compile" organization="javax.mail" name="mail" revision="1.4.4" artifactType="jar" classifier=""/>
           <module configurations="compile" organization="org.scala-lang" name="scala-library" revision="2.10.7" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="org.apache.james" name="apache-mailet-base" revision="2.5.0" artifactType="jar" classifier="tests"/>
+          <module configurations="compile" organization="org.apache.james" name="apache-mailet-base" revision="2.5.0" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="org.apache.james" name="apache-mailet-api" revision="2.5.0" artifactType="jar" classifier=""/>
         </forTest>
         <forProduction>
           <module configurations="compile" organization="javax.activation" name="activation" revision="1.1.1" artifactType="jar" classifier=""/>
-          <module configurations="compile" organization="org.apache.james" name="apache-mailet-api" revision="2.5.0" artifactType="jar" classifier=""/>
-          <module configurations="compile" organization="org.apache.james" name="apache-mailet-base" revision="2.5.0" artifactType="jar" classifier=""/>
           <module configurations="compile" organization="javax.mail" name="mail" revision="1.4.4" artifactType="jar" classifier=""/>
           <module configurations="compile" organization="org.scala-lang" name="scala-library" revision="2.10.7" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="org.apache.james" name="apache-mailet-base" revision="2.5.0" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="org.apache.james" name="apache-mailet-api" revision="2.5.0" artifactType="jar" classifier=""/>
         </forProduction>
       </modules>
       <jars>
@@ -4854,29 +4854,29 @@
     <mainSourceDir>$BASE/foo/src/main</mainSourceDir>
   </project>
   <repository>
-    <module organization="javax.activation" name="activation" revision="1.1.1" artifactType="jar" classifier="">
-      <jar>$IVY2/cache/javax.activation/activation/jars/activation-1.1.1.jar</jar>
-      <src>$IVY2/cache/javax.activation/activation/srcs/activation-1.1.1-sources.jar</src>
-    </module>
-    <module organization="javax.mail" name="mail" revision="1.4.4" artifactType="jar" classifier="">
-      <jar>$IVY2/cache/javax.mail/mail/jars/mail-1.4.4.jar</jar>
-      <src>$IVY2/cache/javax.mail/mail/srcs/mail-1.4.4-sources.jar</src>
-    </module>
-    <module organization="org.apache.james" name="apache-mailet-api" revision="2.5.0" artifactType="jar" classifier="">
-      <jar>$IVY2/cache/org.apache.james/apache-mailet-api/bundles/apache-mailet-api-2.5.0.jar</jar>
-      <src>$IVY2/cache/org.apache.james/apache-mailet-api/srcs/apache-mailet-api-2.5.0-sources.jar</src>
+    <module organization="org.scala-lang" name="scala-library" revision="2.10.7" artifactType="jar" classifier="">
+      <jar>$SBT_BOOT/scala-2.10.7/lib/scala-library.jar</jar>
+      <src>$IVY2/cache/org.scala-lang/scala-library/srcs/scala-library-2.10.7-sources.jar</src>
     </module>
     <module organization="org.apache.james" name="apache-mailet-base" revision="2.5.0" artifactType="jar" classifier="">
       <jar>$IVY2/cache/org.apache.james/apache-mailet-base/bundles/apache-mailet-base-2.5.0.jar</jar>
       <jar>$IVY2/cache/org.apache.james/apache-mailet-base/jars/apache-mailet-base-2.5.0.jar</jar>
       <src>$IVY2/cache/org.apache.james/apache-mailet-base/srcs/apache-mailet-base-2.5.0-sources.jar</src>
     </module>
+    <module organization="javax.mail" name="mail" revision="1.4.4" artifactType="jar" classifier="">
+      <jar>$IVY2/cache/javax.mail/mail/jars/mail-1.4.4.jar</jar>
+      <src>$IVY2/cache/javax.mail/mail/srcs/mail-1.4.4-sources.jar</src>
+    </module>
+    <module organization="javax.activation" name="activation" revision="1.1.1" artifactType="jar" classifier="">
+      <jar>$IVY2/cache/javax.activation/activation/jars/activation-1.1.1.jar</jar>
+      <src>$IVY2/cache/javax.activation/activation/srcs/activation-1.1.1-sources.jar</src>
+    </module>
+    <module organization="org.apache.james" name="apache-mailet-api" revision="2.5.0" artifactType="jar" classifier="">
+      <jar>$IVY2/cache/org.apache.james/apache-mailet-api/bundles/apache-mailet-api-2.5.0.jar</jar>
+      <src>$IVY2/cache/org.apache.james/apache-mailet-api/srcs/apache-mailet-api-2.5.0-sources.jar</src>
+    </module>
     <module organization="org.apache.james" name="apache-mailet-base" revision="2.5.0" artifactType="jar" classifier="tests">
       <jar>$IVY2/cache/org.apache.james/apache-mailet-base/jars/apache-mailet-base-2.5.0-tests.jar</jar>
-    </module>
-    <module organization="org.scala-lang" name="scala-library" revision="2.10.7" artifactType="jar" classifier="">
-      <jar>$SBT_BOOT/scala-2.10.7/lib/scala-library.jar</jar>
-      <src>$IVY2/cache/org.scala-lang/scala-library/srcs/scala-library-2.10.7-sources.jar</src>
     </module>
   </repository>
   <localCachePath>$IVY2</localCachePath>

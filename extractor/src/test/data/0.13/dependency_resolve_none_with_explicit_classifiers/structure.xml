@@ -107,9 +107,9 @@
       <modules>
         <forTest/>
         <forProduction>
-          <module configurations="test" organization="org.hamcrest" name="hamcrest-core" revision="1.3" artifactType="jar" classifier=""/>
-          <module configurations="test" organization="junit" name="junit" revision="4.13.2" artifactType="jar" classifier=""/>
           <module configurations="compile" organization="org.scala-lang" name="scala-library" revision="2.10.1" artifactType="jar" classifier=""/>
+          <module configurations="test" organization="junit" name="junit" revision="4.13.2" artifactType="jar" classifier=""/>
+          <module configurations="test" organization="org.hamcrest" name="hamcrest-core" revision="1.3" artifactType="jar" classifier=""/>
         </forProduction>
       </modules>
       <jars>
@@ -1633,6 +1633,9 @@
     <mainSourceDir>$BASE/src/main</mainSourceDir>
   </project>
   <repository>
+    <module organization="org.scala-lang" name="scala-library" revision="2.10.1" artifactType="jar" classifier="">
+      <jar>$IVY2/cache/org.scala-lang/scala-library/jars/scala-library-2.10.1.jar</jar>
+    </module>
     <module organization="junit" name="junit" revision="4.13.2" artifactType="jar" classifier="">
       <jar>$IVY2/cache/junit/junit/jars/junit-4.13.2.jar</jar>
       <doc>$IVY2/cache/junit/junit/docs/junit-4.13.2-javadoc.jar</doc>
@@ -1640,9 +1643,6 @@
     </module>
     <module organization="org.hamcrest" name="hamcrest-core" revision="1.3" artifactType="jar" classifier="">
       <jar>$IVY2/cache/org.hamcrest/hamcrest-core/jars/hamcrest-core-1.3.jar</jar>
-    </module>
-    <module organization="org.scala-lang" name="scala-library" revision="2.10.1" artifactType="jar" classifier="">
-      <jar>$IVY2/cache/org.scala-lang/scala-library/jars/scala-library-2.10.1.jar</jar>
     </module>
   </repository>
   <localCachePath>$IVY2</localCachePath>

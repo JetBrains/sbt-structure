@@ -158,8 +158,8 @@
       <modules>
         <forTest/>
         <forProduction>
-          <module configurations="compile" organization="io.netty" name="netty" revision="3.6.6.Final" artifactType="jar" classifier=""/>
           <module configurations="compile" organization="org.scala-lang" name="scala-library" revision="2.10.7" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="io.netty" name="netty" revision="3.6.6.Final" artifactType="jar" classifier=""/>
         </forProduction>
       </modules>
       <jars>
@@ -1683,13 +1683,13 @@
     <mainSourceDir>$BASE/src/main</mainSourceDir>
   </project>
   <repository>
-    <module organization="io.netty" name="netty" revision="3.6.6.Final" artifactType="jar" classifier="">
-      <jar>$IVY2/cache/io.netty/netty/bundles/netty-3.6.6.Final.jar</jar>
-      <src>$IVY2/cache/io.netty/netty/srcs/netty-3.6.6.Final-sources.jar</src>
-    </module>
     <module organization="org.scala-lang" name="scala-library" revision="2.10.7" artifactType="jar" classifier="">
       <jar>$SBT_BOOT/scala-2.10.7/lib/scala-library.jar</jar>
       <src>$IVY2/cache/org.scala-lang/scala-library/srcs/scala-library-2.10.7-sources.jar</src>
+    </module>
+    <module organization="io.netty" name="netty" revision="3.6.6.Final" artifactType="jar" classifier="">
+      <jar>$IVY2/cache/io.netty/netty/bundles/netty-3.6.6.Final.jar</jar>
+      <src>$IVY2/cache/io.netty/netty/srcs/netty-3.6.6.Final-sources.jar</src>
     </module>
   </repository>
   <localCachePath>$IVY2</localCachePath>
