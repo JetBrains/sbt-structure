@@ -245,10 +245,10 @@ trait DataSerializers {
     override def serialize(what: Dependencies[ModuleDependencyData]): Elem =
       <modules>
         <forTest>
-          {what.forTest.sortBy(_.id.name).map(_.serialize)}
+          {what.forTest.map(_.serialize)}
         </forTest>
         <forProduction>
-          {what.forProduction.sortBy(_.id.name).map(_.serialize)}
+          {what.forProduction.map(_.serialize)}
         </forProduction>
       </modules>
 
@@ -277,10 +277,10 @@ trait DataSerializers {
     override def serialize(what: Dependencies[JarDependencyData]): Elem =
       <jars>
         <forTest>
-          {what.forTest.sortBy(_.file).map(_.serialize)}
+          {what.forTest.map(_.serialize)}
         </forTest>
         <forProduction>
-          {what.forProduction.sortBy(_.file).map(_.serialize)}
+          {what.forProduction.map(_.serialize)}
         </forProduction>
       </jars>
 
@@ -357,7 +357,7 @@ trait DataSerializers {
   implicit val repositoryDataSerializer: XmlSerializer[RepositoryData] = new XmlSerializer[RepositoryData] {
     override def serialize(what: RepositoryData): Elem =
       <repository>
-        {what.modules.sortBy(_.id.key).map(_.serialize)}
+        {what.modules.map(_.serialize)}
       </repository>
 
     override def deserialize(what: Node): Either[Throwable,RepositoryData] = {
