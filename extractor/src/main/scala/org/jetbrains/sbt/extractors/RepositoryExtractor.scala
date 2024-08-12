@@ -5,6 +5,8 @@ import org.jetbrains.sbt.{ModuleReportAdapter, ModulesOps, Options, SbtStateOps,
 import sbt.Def.Initialize
 import sbt.{Def, _}
 
+import scala.collection.mutable
+
 /**
  * @author Nikolay Obedin
  * @since 4/10/15.
@@ -49,11 +51,16 @@ class RepositoryExtractor(
   private def fixModulesIdsToSupportClassifiers(modules: Seq[ModuleReportAdapter]): Seq[ModuleReportAdapter] =
     modules.map(r => r.copy(moduleId = r.moduleId.artifacts(r.artifacts.map(_._1):_*)))
 
-  private def groupByModuleIdentifiers(modules: Seq[ModuleReportAdapter]): Map[ModuleIdentifier, Seq[ModuleReportAdapter]] = {
+  private def groupByModuleIdentifiers(modules: Seq[ModuleReportAdapter]): mutable.LinkedHashMap[ModuleIdentifier, Seq[ModuleReportAdapter]] = {
     val modulesWithIds = modules.flatMap { module =>
       createModuleIdentifiers(module.moduleId, module.artifacts.map(_._1)).map(id => (module, id))
     }
-    modulesWithIds.groupBy(_._2).mapValues(_.unzip._1)
+    val result = mutable.LinkedHashMap.empty[ModuleIdentifier, Seq[ModuleReportAdapter]]
+    modulesWithIds.foreach { case (adapter, identifier) =>
+      val adapters = result.getOrElse(identifier, Seq.empty)
+      result(identifier) = adapters :+ adapter
+    }
+    result
   }
 
   private def getModulesForProject(projectRef: ProjectRef, updateReportFn: ProjectRef => UpdateReportAdapter): Seq[ModuleReportAdapter] =
