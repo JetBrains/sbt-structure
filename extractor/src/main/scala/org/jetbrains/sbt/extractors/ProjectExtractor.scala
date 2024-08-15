@@ -11,10 +11,6 @@ import scala.util.{Failure, Success, Try}
 // don't remove this import: sbt.jetbrains.apiAdapter._ -- it shadows some symbols for sbt 1.0 compatibility
 import sbt.jetbrains.apiAdapter._
 
-/**
- * @author Nikolay Obedin
- * @since 4/10/15.
- */
 class ProjectExtractor(
   projectRef: ProjectRef,
   name: String,
@@ -43,6 +39,7 @@ class ProjectExtractor(
   testConfigurations: Seq[sbt.Configuration],
   dependencies: DependencyData,
   play2: Option[Play2Data],
+  twirl: Option[TwirlData],
   settingData: Seq[SettingData],
   taskData: Seq[TaskData],
   commandData: Seq[CommandData],
@@ -97,6 +94,7 @@ class ProjectExtractor(
       dependencies,
       resolvers,
       play2,
+      twirl,
       settingData,
       taskData,
       commandData,
@@ -401,6 +399,7 @@ object ProjectExtractor extends SbtStateOps with TaskOps {
         StructureKeys.testConfigurations.value,
         StructureKeys.extractDependencies.value,
         StructureKeys.extractPlay2.value,
+        StructureKeys.extractTwirl.value,
         StructureKeys.settingData.value,
         StructureKeys.taskData.value,
         StructureKeys.commandData.value.distinct,
