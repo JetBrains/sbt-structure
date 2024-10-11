@@ -61,7 +61,7 @@ class DependenciesExtractor(unmanagedClasspath: SbtConfiguration => Keys.Classpa
     val allModuleDependencies = forAllConfigurations(modulesIn)
     if (separateProdTestSources) {
       processDependencies(allModuleDependencies) { case(moduleId, configs) =>
-        ModuleDependencyData.apply(moduleId, configs)
+        ModuleDependencyData(moduleId, configs)
       }
     } else {
       val dependencies = allModuleDependencies.map { case(moduleId, configs) =>
@@ -141,18 +141,11 @@ class DependenciesExtractor(unmanagedClasspath: SbtConfiguration => Keys.Classpa
   }
 
   private def updateProductionConfigs(prodConfigs: Seq[Configuration], allConfigs: Set[Configuration]): Seq[Configuration] = {
-    def mergeProvidedAndRuntime(): Seq[Configuration] =
-      prodConfigs.map {
-        case Configuration.Provided | Configuration.Runtime => Configuration.Compile
-        case x => x
-      }.distinct
-
-    val shouldMergeProvidedAndRuntime = Seq(Configuration.Provided, Configuration.Runtime).forall(prodConfigs.contains)
+    val containsProvidedAndRuntime = Seq(Configuration.Provided, Configuration.Runtime).forall(prodConfigs.contains)
     val isCustomSourceConfigPresent = allConfigs.map(_.name).toSeq.intersect(sourceConfigurationsNames).nonEmpty
 
-    if (shouldMergeProvidedAndRuntime) {
-      mergeProvidedAndRuntime()
-    } else if (prodConfigs.isEmpty && isCustomSourceConfigPresent) {
+    val shouldBeCompileScope = containsProvidedAndRuntime || (prodConfigs.isEmpty && isCustomSourceConfigPresent)
+    if (shouldBeCompileScope) {
       Seq(Configuration.Compile)
     } else {
       prodConfigs
