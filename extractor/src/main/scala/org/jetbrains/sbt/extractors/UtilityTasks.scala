@@ -47,6 +47,26 @@ object UtilityTasks extends SbtStateOps {
     }
   }
 
+  lazy val preferScala3: Command = Command.command("preferScala3") { state =>
+    val (structure, data) = {
+      val extracted = Project.extract(state)
+      (extracted.structure, extracted.structure.data)
+    }
+
+    val crossScala3VersionsInScala3Projects = structure.allProjectRefs.flatMap { project =>
+      Keys.scalaVersion.in(project).get(data)
+        .filter(_.startsWith("2."))
+        .map(_ => Keys.crossScalaVersions.in(project).get(data).getOrElse(Seq.empty).filter(_.startsWith("3.")))
+        .getOrElse(Seq.empty)
+    }
+
+    if (crossScala3VersionsInScala3Projects.nonEmpty) {
+      "++" + crossScala3VersionsInScala3Projects.maxBy(numbersOf) :: state
+    } else {
+      state
+    }
+  }
+
   private def numbersOf(version: String): (Int, Int, Int) = {
     val prefix = version.split('.').filter(s => s.nonEmpty && s.forall(_.isDigit)).map(_.toInt).take(3)
     val xs = prefix ++ Seq.fill(3 - prefix.length)(0)
