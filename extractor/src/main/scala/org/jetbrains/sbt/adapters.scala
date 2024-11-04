@@ -17,7 +17,7 @@ case class LoadedBuildUnitAdapter(delegate: LoadedBuildUnit) {
 }
 
 case class UpdateReportAdapter(configurationToModule: Map[String, Seq[ModuleReportAdapter]]) {
-  def this(delegate: UpdateReport) {
+  def this(delegate: UpdateReport) = {
     this(delegate.configurations.map { report =>
       (configReportName(report), report.modules.map(new ModuleReportAdapter(_)))
     }.toMap)
@@ -31,7 +31,7 @@ case class UpdateReportAdapter(configurationToModule: Map[String, Seq[ModuleRepo
 }
 
 case class ModuleReportAdapter(moduleId: ModuleID, artifacts: Seq[(Artifact, File)]) {
-  def this(delegate: ModuleReport) {
+  def this(delegate: ModuleReport) = {
     this(delegate.module, delegate.artifacts)
   }
 }
