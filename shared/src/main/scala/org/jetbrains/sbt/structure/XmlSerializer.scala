@@ -1,6 +1,7 @@
 package org.jetbrains.sbt
 package structure
 
+import scala.reflect.ClassTag
 import scala.xml._
 
 /**
@@ -22,12 +23,12 @@ object XmlSerializer {
     def deserialize[T](implicit serializer: XmlSerializer[T]): Seq[T] =
       nodeSeq.flatMap(_.deserialize[T].fold(_ => None, x => Some(x)))
 
-    def deserializeOne[T](implicit serializer: XmlSerializer[T], manifest: Manifest[T]): Either[Throwable,T] = {
+    def deserializeOne[T](implicit serializer: XmlSerializer[T], manifest: ClassTag[T]): Either[Throwable,T] = {
       val ts = nodeSeq.map(_.deserialize[T]).collect { case Right(t) => t }
       if (ts.isEmpty)
-        Left(new Error("None of " + manifest.erasure.getSimpleName + " is found in " + nodeSeq))
+        Left(new Error("None of " + manifest.runtimeClass.getSimpleName + " is found in " + nodeSeq))
       else if (ts.length > 1)
-        Left(new Error("Multiple instances of " + manifest.erasure.getSimpleName + " are found in " + nodeSeq))
+        Left(new Error("Multiple instances of " + manifest.runtimeClass.getSimpleName + " are found in " + nodeSeq))
       else
         Right(ts.head)
     }
