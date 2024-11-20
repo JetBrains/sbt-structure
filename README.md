@@ -31,9 +31,7 @@ recognized by IDEA.
 Add to your `build.sbt`
 
 ```scala
-resolvers += Resolver.url("jb-bintray", url("https://dl.bintray.com/jetbrains/sbt-plugins"))(Resolver.ivyStylePatterns)
-
-libraryDependencies += "org.jetbrains" %% "sbt-structure-core" % "<version>"
+libraryDependencies += "org.jetbrains.scala" %% "sbt-structure-core" % "<version>"
 ```
 
 Then run extractor or get XML of the structure any other way and deserialize it:
@@ -55,7 +53,7 @@ Extractor can be run as a regular sbt plugin, or loaded into the build during an
 The quickest way to try out the extractor is by adding it to your build in `project/plugins.sbt` as an sbt plugin:
 
 ```scala
-addSbtPlugin("org.jetbrains" % "sbt-structure-extractor" % "<version>")
+addSbtPlugin("org.jetbrains.scala" % "sbt-structure-extractor" % "<version>", "1.3")
 ```
 
 Then from the sbt shell run:
