@@ -1,5 +1,5 @@
 [![official JetBrains project](http://jb.gg/badges/official.svg)](https://confluence.jetbrains.com/display/ALL/JetBrains+on+GitHub)
-[![Version](https://maven-badges.herokuapp.com/maven-central/org.jetbrains.scala/sbt-structure-extractor/badge.svg)](https://maven-badges.herokuapp.com/maven-central/org.jetbrains.scala/sbt-structure-extractor)
+[![sbt-structure-core Scala version support](https://index.scala-lang.org/jetbrains/sbt-structure/sbt-structure-extractor/latest.svg)](https://index.scala-lang.org/jetbrains/sbt-structure/sbt-structure-extractor)
 ![Build Status](https://github.com/jetbrains/sbt-structure/actions/workflows/build.yml/badge.svg)
 [![Discord](https://badgen.net/badge/icon/discord?icon=discord&label)](https://discord.gg/aUKpZzeHCK)
 [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/JetBrains/intellij-scala)
