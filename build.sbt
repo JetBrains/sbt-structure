@@ -25,7 +25,7 @@ val scala210: String = "2.10.7"
 //NOTE: extra scala 2.12 version is used just to distinguish between different sbt 1.x versions
 // when calculating pluginCrossBuild / sbtVersion
 val scala212_6: String = "2.12.6" //used for sbt < 1.3
-val scala212: String = "2.12.18" //used for sbt >= 1.3
+val scala212: String = "2.12.20" //used for sbt >= 1.3
 
 lazy val core = project.in(file("core"))
   .settings(
@@ -35,14 +35,14 @@ lazy val core = project.in(file("core"))
     libraryDependencies ++= {
       CrossVersion.partialVersion(scalaBinaryVersion.value) match {
         case Some((2, scalaMajor)) if scalaMajor >= 12 =>
-          Seq("org.scala-lang.modules" %% "scala-xml" % "2.1.0")
+          Seq("org.scala-lang.modules" %% "scala-xml" % "2.3.0")
         case Some((2, 11)) =>
-          Seq("org.scala-lang.modules" %% "scala-xml" % "1.3.0")
+          Seq("org.scala-lang.modules" %% "scala-xml" % "1.3.1")
         case _ =>
           Seq.empty
       }
     },
-    crossScalaVersions := Seq("2.13.10", scala212, "2.11.12", scala210),
+    crossScalaVersions := Seq("2.13.16", scala212, "2.11.12", scala210),
     sonatypeSettings
   )
 
@@ -58,7 +58,7 @@ lazy val extractor = project.in(file("extractor"))
       (ThisBuild / baseDirectory).value / "shared" / "src" / "main" / "scala",
     scalacOptions ++= Seq("-deprecation"),
     libraryDependencies ++= Seq(
-      "org.scalatest" %% "scalatest" % "3.2.15" % Test,
+      "org.scalatest" %% "scalatest" % "3.2.19" % Test,
       "org.dom4j" % "dom4j" % "2.1.4" % Test
     ),
     scalaVersion := scala212,
