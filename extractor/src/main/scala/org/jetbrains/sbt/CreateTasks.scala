@@ -4,6 +4,10 @@ import org.jetbrains.sbt.extractors._
 import sbt._
 import sbt.jetbrains.apiAdapter._
 
+/**
+ * @author Nikolay Obedin
+ */
+
 object CreateTasks extends (State => State) with SbtStateOps {
 
   lazy val globalSettings: Seq[Setting[_]] = Seq[Setting[_]](
@@ -31,7 +35,6 @@ object CreateTasks extends (State => State) with SbtStateOps {
     StructureKeys.sourceConfigurations := UtilityTasks.sourceConfigurations.value,
 
     StructureKeys.extractPlay2 := Play2Extractor.taskDef.value,
-    StructureKeys.extractTwirl := TwirlTemplatesDataExtractor.taskDef.value,
     StructureKeys.extractBuild := BuildExtractor.taskDef.value,
     StructureKeys.extractDependencies := DependenciesExtractor.taskDef.value,
     StructureKeys.extractProject := ProjectExtractor.taskDef.value,

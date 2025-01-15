@@ -74,7 +74,6 @@ case class ProjectData(
   dependencies: DependencyData,
   resolvers: Set[ResolverData],
   play2: Option[Play2Data],
-  twirl: Option[TwirlData],
   settings: Seq[SettingData],
   tasks: Seq[TaskData],
   commands: Seq[CommandData],
@@ -229,13 +228,7 @@ case class ResolverData(name: String, root: String)
  * List of parameters specific to Play projects
  */
 case class Play2Data(playVersion: Option[String],
+                     templatesImports: Seq[String],
                      routesImports: Seq[String],
                      confDirectory: Option[File],
                      sourceDirectory: File)
-
-/**
- * List of parameters specific to projects which have twirl templates set-up (even without the Play framework)
- */
-case class TwirlData(
-  templatesImports: Seq[String]
-)
