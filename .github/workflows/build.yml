@@ -8,15 +8,16 @@ on:
 
 jobs:
   build_and_test:
-
+    name: sbt-structure plugin Buld & Test
     runs-on: ubuntu-latest
-
     steps:
-    - uses: actions/checkout@v3
-    - uses: actions/setup-java@v3
+    - uses: actions/checkout@v4
+    - uses: actions/setup-java@v4
       with:
         distribution: temurin
         java-version: 11
         cache: sbt
-    - name: compile & test
+    - uses: sbt/setup-sbt@v1
+    - uses: coursier/cache-action@v6
+    - name: Compile & Test
       run: sbt '; + compile ; project extractor ; test'
