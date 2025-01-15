@@ -371,13 +371,6 @@
     <resolver name="Typesafe Releases Repository" root="https://repo.typesafe.com/typesafe/releases/"/>
     <play2>
       <version>2.3.7</version>
-      <routesImports>
-        <import>controllers.Assets.Asset</import>
-      </routesImports>
-      <confDirectory>$BASE/conf</confDirectory>
-      <sourceDirectory>$BASE/app</sourceDirectory>
-    </play2>
-    <twirl>
       <templatesImports>
         <import>play.api.templates.PlayMagic._</import>
         <import>models._</import>
@@ -387,7 +380,12 @@
         <import>play.api.data._</import>
         <import>views.xml._</import>
       </templatesImports>
-    </twirl>
+      <routesImports>
+        <import>controllers.Assets.Asset</import>
+      </routesImports>
+      <confDirectory>$BASE/conf</confDirectory>
+      <sourceDirectory>$BASE/app</sourceDirectory>
+    </play2>
     <setting>
       <label>dependencyOverrides</label>
       <description>Declares managed dependency overrides.</description>
