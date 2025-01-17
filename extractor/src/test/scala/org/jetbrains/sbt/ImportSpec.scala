@@ -122,6 +122,11 @@ class ImportSpec extends AnyFreeSpecLike {
 
       "dependency_resolve_sbt_classifiers_prod_test_sources_separated" in { testProject("dependency_resolve_sbt_classifiers_prod_test_sources_separated", SbtVersion_1_9, options = ResolveSbtClassifiersAndSeparateProdTestSources) }
     }
+    "1.10" - {
+      val SbtVersion_1_10 = "1.10.7"
+      "simple" in { testProject("simple", SbtVersion_1_10, ResolveSourcesAndSbtClassifiers) }
+      "prod_test_sources_separated" in { testProject("prod_test_sources_separated", SbtVersion_1_10, ResolveSourcesAndSbtClassifiersAndSeparateProdTestSources) }
+    }
   }
 
   private def sbtVersionBinary(sbtVersionFull: String) =
