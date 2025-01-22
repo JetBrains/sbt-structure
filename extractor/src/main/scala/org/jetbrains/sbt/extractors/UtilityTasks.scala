@@ -33,14 +33,15 @@ object UtilityTasks extends SbtStateOps {
       (extracted.structure, extracted.structure.data)
     }
 
-    val crossScala2VersionsInScala3Projects = structure.allProjectRefs.flatMap { project =>
-      Keys.scalaVersion.in(project).get(data)
-        .filter(_.startsWith("3."))
-        .map(_ => Keys.crossScalaVersions.in(project).get(data).getOrElse(Seq.empty).filter(_.startsWith("2.")))
-        .getOrElse(Seq.empty)
+    val scala3Projects = structure.allProjectRefs.filter { project =>
+      Keys.scalaVersion.in(project).get(data).exists(_.startsWith("3."))
     }
 
-    if (crossScala2VersionsInScala3Projects.nonEmpty) {
+    val crossScala2VersionsInScala3Projects = scala3Projects.flatMap { project =>
+      Keys.crossScalaVersions.in(project).get(data).getOrElse(Seq.empty).filter(_.startsWith("2."))
+    }
+
+    if (crossScala2VersionsInScala3Projects.nonEmpty && scala3Projects.length == crossScala2VersionsInScala3Projects.length) {
       "++" + crossScala2VersionsInScala3Projects.maxBy(numbersOf) :: state
     } else {
       state
