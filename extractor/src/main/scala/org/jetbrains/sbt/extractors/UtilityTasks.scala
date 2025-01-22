@@ -41,7 +41,11 @@ object UtilityTasks extends SbtStateOps {
       Keys.crossScalaVersions.in(project).get(data).getOrElse(Seq.empty).filter(_.startsWith("2."))
     }
 
-    if (crossScala2VersionsInScala3Projects.nonEmpty && scala3Projects.length == crossScala2VersionsInScala3Projects.length) {
+    // We can only do this when all sbt projects cross-compile to Scala 2 & Scala 3
+    // See https://youtrack.jetbrains.com/issue/SCL-22619/
+    val canSetScala2VersionGlobally = crossScala2VersionsInScala3Projects.nonEmpty &&
+      scala3Projects.length == crossScala2VersionsInScala3Projects.length
+    if (canSetScala2VersionGlobally) {
       "++" + crossScala2VersionsInScala3Projects.maxBy(numbersOf) :: state
     } else {
       state
