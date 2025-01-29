@@ -36,16 +36,13 @@ lazy val core = project.in(file("core"))
     Compile / unmanagedSourceDirectories +=
       (ThisBuild / baseDirectory).value / "shared" / "src" / "main" / "scala",
     libraryDependencies ++= {
-      CrossVersion.partialVersion(scalaBinaryVersion.value) match {
-        case Some((2, scalaMajor)) if scalaMajor >= 12 =>
-          Seq("org.scala-lang.modules" %% "scala-xml" % "2.3.0")
-        case Some((2, 11)) =>
-          Seq("org.scala-lang.modules" %% "scala-xml" % "1.3.1")
-        case _ =>
-          Seq.empty
-      }
+      val scalaVersion = Version(scalaBinaryVersion.value)
+      if (scalaVersion >= Version("2.12"))
+        Seq("org.scala-lang.modules" %% "scala-xml" % "2.3.0")
+      else
+        Nil
     },
-    crossScalaVersions := Seq("2.13.16", scala212, "2.11.12"),
+    crossScalaVersions := Seq("2.13.16", scala212),
     sonatypeSettings
   )
 
