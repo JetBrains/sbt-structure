@@ -99,7 +99,7 @@ object RepositoryExtractor extends SbtStateOps with TaskOps {
 
   private def extractRepositoryData(state: State, options: Options, acceptedProjects: scala.collection.immutable.Seq[ProjectRef]): Task[RepositoryData] = {
     def classpathTypes(projectRef: ProjectRef): Set[String] =
-      Keys.classpathTypes.in(projectRef).getValueOrElse(state, Set.empty)
+      (projectRef / Keys.classpathTypes).getValueOrElse(state, Set.empty)
 
     val dependencyConfigurations = StructureKeys.dependencyConfigurations
       .forAllProjects(state, acceptedProjects)

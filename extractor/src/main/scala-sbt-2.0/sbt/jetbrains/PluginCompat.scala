@@ -3,7 +3,6 @@ package sbt.jetbrains
 import sbt.*
 
 object PluginCompat extends AnyRef
-  with ScopeOpsCompat
   with SeqOpsCompat
   with ClassathOpsCompat:
 

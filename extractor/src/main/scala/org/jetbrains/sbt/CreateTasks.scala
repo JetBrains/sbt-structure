@@ -21,8 +21,8 @@ object CreateTasks extends (State => State) with SbtStateOps {
   )
 
   lazy val projectSettings: Seq[Setting[_]] = Seq[Setting[_]](
-    Keys.transitiveClassifiers.in(Keys.updateClassifiers) := {
-      val oldValue = Keys.transitiveClassifiers.in(Keys.updateClassifiers).value
+    Keys.updateClassifiers / Keys.transitiveClassifiers := {
+      val oldValue = (Keys.updateClassifiers / Keys.transitiveClassifiers).value
       val classifiers = UtilityTasks.librariesClassifiers(StructureKeys.sbtStructureOpts.value)
       //when we don't resolve sources and javadocs `updateClassifiers` won't be called
       //but `transitiveClassifiers` value can't be empty anyway

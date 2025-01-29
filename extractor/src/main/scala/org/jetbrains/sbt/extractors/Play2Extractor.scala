@@ -12,20 +12,20 @@ object Play2Extractor extends SbtStateOps with TaskOps {
     val projectRef = sbt.Keys.thisProjectRef.value
 
     for {
-      _ <- Keys.playPlugin.in(projectRef).find(state)
-        .orElse(Keys.playPlugin_prior_to_2_4_0.in(projectRef).find(state))
-      sourceDirectory <- sbt.Keys.sourceDirectory.in(projectRef, Compile).find(state)
+      _ <- (projectRef / Keys.playPlugin).find(state)
+        .orElse((projectRef / Keys.playPlugin_prior_to_2_4_0).find(state))
+      sourceDirectory <- (projectRef / Compile / sbt.Keys.sourceDirectory).find(state)
     } yield {
       val playVersion =
-        Keys.playVersion.in(projectRef).find(state)
+        (projectRef / Keys.playVersion).find(state)
       val templateImports =
-        Keys.templateImports.in(projectRef).getValueOrElse(state, Seq.empty)
+        (projectRef / Keys.templateImports).getValueOrElse(state, Seq.empty)
       val routesImports =
-        Keys.routesImports.in(projectRef).find(state)
-          .orElse(Keys.routesImports_prior_to_2_4_0.in(projectRef).find(state))
+        (projectRef / Keys.routesImports).find(state)
+          .orElse((projectRef / Keys.routesImports_prior_to_2_4_0).find(state))
           .getOrElse(Seq.empty)
       val confDirectory =
-        Keys.confDirectory.in(projectRef).find(state)
+        (projectRef / Keys.confDirectory).find(state)
 
       Play2Data(playVersion, fixTemplateImports(templateImports),
         routesImports, confDirectory, sourceDirectory)

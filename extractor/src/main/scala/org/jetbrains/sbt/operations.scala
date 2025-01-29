@@ -41,10 +41,10 @@ trait SbtStateOps {
       find(state).getOrElse(default)
 
     def forAllProjects(state: State, projects: Seq[ProjectRef]): Seq[(ProjectRef, T)] =
-      projects.flatMap(p => key.in(p).find(state).map(it => (p, it)))
+      projects.flatMap(p => (p / key).find(state).map(it => (p, it)))
 
     def forAllConfigurations(state: State, configurations: Seq[sbt.Configuration]): Seq[(sbt.Configuration, T)] =
-      configurations.flatMap(c => key.in(c).get(structure(state).data).map(it => (c, it)))
+      configurations.flatMap(c => (c / key).get(structure(state).data).map(it => (c, it)))
   }
 
   implicit final class TaskKeyOps[T](key: TaskKey[T]) {
@@ -58,12 +58,12 @@ trait SbtStateOps {
       find(state).getOrElse(default)
 
     def forAllProjects(state: State, projects: Seq[ProjectRef]): Task[Map[ProjectRef, T]] = {
-      val tasks = projects.flatMap(p => key.in(p).get(structure(state).data).map(_.map(it => (p, it))))
+      val tasks = projects.flatMap(p => (p / key).get(structure(state).data).map(_.map(it => (p, it))))
       std.TaskExtra.joinTasks(tasks.toSbtSeqType).join.map(_.toMap)
     }
 
     def forAllConfigurations(state: State, configurations: Seq[sbt.Configuration]): Task[Map[sbt.Configuration, T]] = {
-      val tasks = configurations.flatMap(c => key.in(c).get(structure(state).data).map(_.map(it => (c, it))))
+      val tasks = configurations.flatMap(c => (c / key).get(structure(state).data).map(_.map(it => (c, it))))
       std.TaskExtra.joinTasks(tasks.toSbtSeqType).join.map(_.toMap)
     }
 
@@ -71,7 +71,7 @@ trait SbtStateOps {
       val tasks = for {
         project <- projects
         config <- configurations.getOrElse(project, Seq.empty)
-        task <- key.in(project, config).get(structure(state).data).map(_.map(it => ((project, config), it)))
+        task <- (project / config / key).get(structure(state).data).map(_.map(it => ((project, config), it)))
       } yield task
 
       std.TaskExtra.joinTasks(tasks.toSbtSeqType).join

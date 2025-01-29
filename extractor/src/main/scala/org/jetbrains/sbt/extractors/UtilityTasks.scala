@@ -35,11 +35,11 @@ object UtilityTasks extends SbtStateOps {
     }
 
     val scala3Projects = structure.allProjectRefs.filter { project =>
-      Keys.scalaVersion.in(project).get(data).exists(_.startsWith("3."))
+      (project / Keys.scalaVersion).get(data).exists(_.startsWith("3."))
     }
 
     val crossScala2VersionsInScala3Projects = scala3Projects.flatMap { project =>
-      Keys.crossScalaVersions.in(project).get(data).getOrElse(Seq.empty).filter(_.startsWith("2."))
+      (project / Keys.crossScalaVersions).get(data).getOrElse(Seq.empty).filter(_.startsWith("2."))
     }
 
     // We can only do this when all sbt projects cross-compile to Scala 2 & Scala 3
@@ -91,8 +91,8 @@ object UtilityTasks extends SbtStateOps {
     structure(state).allProjectRefs.filter { case ref@ProjectRef(_, id) =>
       val isProjectAccepted = structure(state).allProjects.find(_.id == id).exists(areNecessaryPluginsLoaded)
       val shouldSkipProject =
-        SettingKeys.ideSkipProject.in(ref).getValueOrElse(state, false) ||
-          SettingKeys.sbtIdeaIgnoreModule.in(ref).getValueOrElse(state, false)
+        (ref / SettingKeys.ideSkipProject).getValueOrElse(state, false) ||
+          (ref / SettingKeys.sbtIdeaIgnoreModule).getValueOrElse(state, false)
       isProjectAccepted && !shouldSkipProject
     }
   }
@@ -132,7 +132,7 @@ object UtilityTasks extends SbtStateOps {
   def allConfigurationsWithSource: Def.Initialize[Seq[Configuration]] = Def.settingDyn {
     val cs = for {
       c <- Keys.ivyConfigurations.value
-    } yield (Keys.sourceDirectories.in(c)).?.apply { filesOpt => filesOpt.flatMap(f => f.nonEmpty.option(c))}
+    } yield (c / Keys.sourceDirectories).?.apply { filesOpt => filesOpt.flatMap(f => f.nonEmpty.option(c))}
 
     cs.foldLeft(Def.setting(Seq.empty[Configuration])) { (accDef, initOptConf) =>
       accDef.zipWith(initOptConf) {(acc, optConf) => acc ++ optConf.toSeq }

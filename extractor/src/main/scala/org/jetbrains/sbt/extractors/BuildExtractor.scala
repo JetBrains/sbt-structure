@@ -30,7 +30,7 @@ object BuildExtractor extends SbtStateOps with TaskOps {
     val unit = LoadedBuildUnitAdapter(structure(state).units(projectRef.build))
 
     Def.task {
-      Keys.updateSbtClassifiers.in(projectRef).get(state)
+      (projectRef / Keys.updateSbtClassifiers).get(state)
         .onlyIf(options.download && options.resolveSbtClassifiers)
         .map { updateClassifiersOpt =>
           new BuildExtractor(unit, updateClassifiersOpt.map(new UpdateReportAdapter(_))).extract

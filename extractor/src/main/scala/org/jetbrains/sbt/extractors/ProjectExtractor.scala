@@ -14,6 +14,7 @@ import sbt.jetbrains.PluginCompat._
 
 import scala.collection.Seq
 
+
 class ProjectExtractor(
   projectRef: ProjectRef,
   name: String,
@@ -269,57 +270,54 @@ object ProjectExtractor extends SbtStateOps with TaskOps {
     key: SettingKey[scala.collection.immutable.Seq[T]]
   )(implicit projectRef: ProjectRef, state: State): SbtConfiguration => scala.collection.immutable.Seq[T] =
     (conf: sbt.Configuration) =>
-      key.in(projectRef, conf).getValueOrElse(state, scala.collection.immutable.Seq.empty)
+      (projectRef / conf / key).getValueOrElse(state, scala.collection.immutable.Seq.empty)
 
   private def settingInConfiguration[T](
     key: SettingKey[scala.collection.Seq[T]]
   )(implicit projectRef: ProjectRef, state: State, d: DummyImplicit): SbtConfiguration => scala.collection.Seq[T] =
     (conf: sbt.Configuration) =>
-      key.in(projectRef, conf).getValueOrElse(state, scala.collection.Seq.empty)
+      (projectRef / conf / key).getValueOrElse(state, scala.collection.Seq.empty)
 
-  private def taskInCompile[T](key: TaskKey[T])(implicit projectRef: ProjectRef,
-                                                state: State) =
-    key.in(projectRef, Compile).get(state)
+  private def taskInCompile[T](key: TaskKey[T])(implicit projectRef: ProjectRef, state: State) =
+    (projectRef / Compile / key).get(state)
 
   private def taskInConfig[T](key: TaskKey[T], config: SbtConfiguration)
     (implicit projectRef: ProjectRef, state: State) =
-    key.in(projectRef, config).get(state)
+    (projectRef / config / key).get(state)
 
 
+  
   def taskDef: Initialize[Task[ProjectData]] = Def.taskDyn {
 
     implicit val state: State = Keys.state.value
     implicit val projectRef: ProjectRef = sbt.Keys.thisProjectRef.value
 
     val idePackagePrefix =
-      SettingKeys.idePackagePrefix.in(projectRef).find(state).flatten
+      (projectRef / SettingKeys.idePackagePrefix).find(state).flatten
 
     val basePackages =
-      SettingKeys.ideBasePackages
-        .in(projectRef)
+      (projectRef / SettingKeys.ideBasePackages)
         .find(state)
         .orElse(
-          SettingKeys.sbtIdeaBasePackage.in(projectRef).find(state).map(_.toSeq)
+          (projectRef / SettingKeys.sbtIdeaBasePackage).find(state).map(_.toSeq)
         )
         .getOrElse(Seq.empty)
 
     def classDirectory(conf: sbt.Configuration) =
-      Keys.classDirectory.in(projectRef, conf).find(state)
+      (projectRef / conf / Keys.classDirectory).find(state)
 
     val excludedDirectories =
-      SettingKeys.ideExcludedDirectories
-        .in(projectRef)
+      (projectRef / SettingKeys.ideExcludedDirectories)
         .find(state)
         .orElse(
-          SettingKeys.sbtIdeaExcludeFolders
-            .in(projectRef)
+          (projectRef / SettingKeys.sbtIdeaExcludeFolders)
             .find(state)
             .map(_.map(file))
         )
         .getOrElse(Seq.empty)
 
     def ideOutputDirectory(conf: sbt.Configuration) =
-      SettingKeys.ideOutputDirectory.in(projectRef, conf).find(state).flatten
+      (projectRef / conf / SettingKeys.ideOutputDirectory).find(state).flatten
 
     val options = StructureKeys.sbtStructureOpts.value
 
@@ -334,7 +332,7 @@ object ProjectExtractor extends SbtStateOps with TaskOps {
 
     Def.task {
       val scalaOrganization =
-        Keys.scalaOrganization.in(projectRef, Compile).value
+        (projectRef / Compile / Keys.scalaOrganization).value
       val scalaInstance =
         taskInCompile(Keys.scalaInstance).onlyIf(options.download).value
       val scalaCompilerBridgeBinaryJar =
@@ -360,21 +358,21 @@ object ProjectExtractor extends SbtStateOps with TaskOps {
         )
       )
 
-      val name = Keys.name.in(projectRef, Compile).value
-      val organization = Keys.organization.in(projectRef, Compile).value
-      val version = Keys.version.in(projectRef, Compile).value
-      val base = Keys.baseDirectory.in(projectRef, Compile).value
-      val target = Keys.target.in(projectRef, Compile).value
-      val javaHome = Keys.javaHome.in(projectRef, Compile).value
-      val compileOrder = Keys.compileOrder.in(projectRef, Compile).value
+      val name = (projectRef / Compile / Keys.name).value
+      val organization = (projectRef / Compile / Keys.organization).value
+      val version = (projectRef / Compile / Keys.version).value
+      val base = (projectRef / Compile / Keys.baseDirectory).value
+      val target = (projectRef / Compile / Keys.target).value
+      val javaHome = (projectRef / Compile / Keys.javaHome).value
+      val compileOrder = (projectRef / Compile / Keys.compileOrder).value
 
       val sourceConfigurations = StructureKeys.sourceConfigurations.value
       val testConfigurations = StructureKeys.testConfigurations.value
 
-      val mainSourceDirectories = Keys.sourceDirectory.in(projectRef)
+      val mainSourceDirectories = (projectRef / Keys.sourceDirectory)
         .forAllConfigurations(state, sourceConfigurations)
         .map(_._2).distinct
-      val testSourceDirectories = Keys.sourceDirectory.in(projectRef)
+      val testSourceDirectories = (projectRef / Keys.sourceDirectory)
         .forAllConfigurations(state, testConfigurations)
         .map(_._2).distinct
 
