@@ -1,19 +1,16 @@
 package org.jetbrains.sbt
 package extractors
 
-import org.jetbrains.sbt.structure._
+import org.jetbrains.sbt.structure.*
 import sbt.Def.Initialize
+import sbt.internal.inc.ScalaInstance
 import sbt.jetbrains.keysAdapterEx
-import sbt.{Def, File, Configuration => SbtConfiguration, _}
-
-import scala.reflect.ClassTag
-import scala.util.{Failure, Success, Try}
-// don't remove this import: sbt.jetbrains.apiAdapter._ -- it shadows some symbols for sbt 1.0 compatibility
-import sbt.jetbrains.apiAdapter._
-import sbt.jetbrains.PluginCompat._
+import sbt.{Def, File, Configuration as SbtConfiguration, *}
+import sbt.jetbrains.SeqOpsCompat._
 
 import scala.collection.Seq
-
+import scala.reflect.ClassTag
+import scala.util.{Failure, Success, Try}
 
 class ProjectExtractor(
   projectRef: ProjectRef,

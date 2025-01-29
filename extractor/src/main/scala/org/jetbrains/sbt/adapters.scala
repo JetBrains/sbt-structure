@@ -1,8 +1,9 @@
 package org.jetbrains.sbt
 
-import sbt._
-import sbt.jetbrains.apiAdapter._
-import sbt.jetbrains.PluginCompat._
+import sbt.*
+import sbt.internal.LoadedBuildUnit
+import sbt.jetbrains.PluginCompat.*
+
 import scala.collection.Seq
 
 case class LoadedBuildUnitAdapter(delegate: LoadedBuildUnit) {
@@ -20,7 +21,7 @@ case class LoadedBuildUnitAdapter(delegate: LoadedBuildUnit) {
 case class UpdateReportAdapter(configurationToModule: Map[String, Seq[ModuleReportAdapter]]) {
   def this(delegate: UpdateReport) = {
     this(delegate.configurations.map { report =>
-      (configReportName(report), report.modules.map(new ModuleReportAdapter(_)))
+      (report.configuration.name, report.modules.map(new ModuleReportAdapter(_)))
     }.toMap)
   }
 

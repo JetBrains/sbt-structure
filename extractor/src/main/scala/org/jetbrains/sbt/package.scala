@@ -1,20 +1,16 @@
 package org.jetbrains
 
-import _root_.sbt.{Configuration, ProjectRef}
+import _root_.sbt.{Configuration, ProjectRef, Reference, Scope, Select, Zero}
 
 import scala.language.implicitConversions
 import scala.xml.{Elem, NamespaceBinding, Node, PrettyPrinter}
 
-/**
- * @author Pavel Fatin
- * @author Nikolay Obedin
- */
 package object sbt {
   var MaxXmlWidthInTests: Option[Int] = None
 
   def newXmlPrettyPrinter: PrettyPrinter = new PrettyPrinter(MaxXmlWidthInTests.getOrElse(180), 2) {
     override protected def traverse(node: Node, pscope: NamespaceBinding, ind: Int): Unit = {
-      import org.jetbrains.sbt.structure.DataSerializers._
+      import org.jetbrains.sbt.structure.DataSerializers.*
 
       node match {
         case _: Elem =>
@@ -58,4 +54,9 @@ package object sbt {
     if (extended.map(_.name) == configs.map(_.name)) extended
     else transitiveExtends(extended)
   }
+
+
+  // copied from sbt.internal.Load
+  def projectScope(project: Reference): Scope =
+    Scope(Select(project), Zero, Zero, Zero)
 }

@@ -21,12 +21,12 @@ object Loader {
     val launcher = new File("sbt-launcher/sbt-launch.jar")
 
     if (!launcher.exists())
-      Using.urlInputStream(
+      sbt.io.Using.urlInputStream(
         new URL(
           "https://repo1.maven.org/maven2/org/scala-sbt/sbt-launch/1.3.10/sbt-launch-1.3.10.jar"
         )
       ) { in =>
-        IO.transfer(in, launcher)
+        sbt.io.IO.transfer(in, launcher)
       }
 
     path(launcher)

@@ -1,9 +1,9 @@
 package org.jetbrains.sbt
 
-import org.jetbrains.sbt.extractors._
-import sbt._
-import sbt.jetbrains.apiAdapter._
-import sbt.jetbrains.PluginCompat._
+import org.jetbrains.sbt.extractors.*
+import sbt.*
+import sbt.jetbrains.PluginCompat.*
+
 import scala.collection.Seq
 
 object CreateTasks extends (State => State) with SbtStateOps {

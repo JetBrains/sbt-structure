@@ -1,9 +1,9 @@
 package org.jetbrains.sbt
 
 import org.jetbrains.sbt.structure.ModuleIdentifier
-import sbt._
-import sbt.jetbrains.apiAdapter._
-import sbt.jetbrains.PluginCompat._
+import sbt.*
+import sbt.internal.{BuildStructure, SessionSettings}
+import sbt.jetbrains.PluginCompat.*
 
 import scala.collection.Seq
 
@@ -11,7 +11,7 @@ trait SbtStateOps {
 
   def applySettings(state: State, globalSettings: Seq[Setting[_]], projectSettings: Seq[Setting[_]]): State = {
     val extracted = Project.extract(state)
-    import extracted.{structure => extractedStructure, _}
+    import extracted.{structure as extractedStructure, *}
     val transformedGlobalSettings = Project.transform(_ => GlobalScope, globalSettings.toSbtSeqType)
     val transformedProjectSettings = extractedStructure.allProjectRefs.flatMap { projectRef =>
       transformSettings(projectScope(projectRef), projectRef.build, rootProject, projectSettings)

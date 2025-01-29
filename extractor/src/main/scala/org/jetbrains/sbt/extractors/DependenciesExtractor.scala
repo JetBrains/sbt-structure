@@ -3,8 +3,8 @@ package org.jetbrains.sbt.extractors
 import org.jetbrains.sbt.extractors.DependenciesExtractor.{ProductionType, ProjectType, TestType}
 import org.jetbrains.sbt.structure.*
 import org.jetbrains.sbt.{ModulesOps, ProjectRefOps, SbtStateOps, StructureKeys, TaskOps}
+import sbt.internal.BuildDependencies
 import sbt.jetbrains.PluginCompat.*
-import sbt.jetbrains.apiAdapter.*
 import sbt.{Configuration as SbtConfiguration, *}
 
 import scala.collection.{Seq, mutable}
