@@ -6,7 +6,7 @@ import org.jetbrains.sbt.structure.structureDataSerializer
 import sbt.*
 import sbt.complete.DefaultParsers
 
-private object pluginOnlyTasks {
+private object PluginOnlyTasksCompat {
 
   private val targetFileParser = DefaultParsers.fileParser(file("/"))
 

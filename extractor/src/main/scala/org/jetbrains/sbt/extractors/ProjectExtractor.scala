@@ -4,9 +4,10 @@ package extractors
 import org.jetbrains.sbt.structure.*
 import sbt.Def.Initialize
 import sbt.internal.inc.ScalaInstance
-import sbt.jetbrains.keysAdapterEx
-import sbt.{Def, File, Configuration as SbtConfiguration, *}
+import sbt.jetbrains.PluginCompat
+import sbt.jetbrains.PluginCompat._
 import sbt.jetbrains.SeqOpsCompat._
+import sbt.{Def, File, Configuration as SbtConfiguration, *}
 
 import scala.collection.Seq
 import scala.reflect.ClassTag
@@ -333,7 +334,7 @@ object ProjectExtractor extends SbtStateOps with TaskOps {
       val scalaInstance =
         taskInCompile(Keys.scalaInstance).onlyIf(options.download).value
       val scalaCompilerBridgeBinaryJar =
-        keysAdapterEx.myScalaCompilerBridgeBinaryJar.value
+        PluginCompat.myScalaCompilerBridgeBinaryJar.value
 
       def mapToCompilerOptions(configToOptions: Seq[(Configuration, Seq[String])]) = {
         configToOptions.collect { case(config, options) if options.nonEmpty =>

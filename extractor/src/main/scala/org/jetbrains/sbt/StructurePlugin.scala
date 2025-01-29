@@ -1,12 +1,9 @@
 package org.jetbrains.sbt
 
-import org.jetbrains.sbt.extractors.UtilityTasks.writeToFile
-import org.jetbrains.sbt.structure.XmlSerializer._
-import sbt._
-import sbt.complete.DefaultParsers
+import sbt.*
+import sbt.jetbrains.PluginCompat
+import sbt.jetbrains.PluginCompat.*
 import sbt.plugins.JvmPlugin
-import sbt.jetbrains.keysAdapterEx
-import sbt.jetbrains.PluginCompat._
 
 object StructurePlugin extends AutoPlugin {
 
@@ -16,9 +13,8 @@ object StructurePlugin extends AutoPlugin {
   override lazy val globalSettings: Seq[Setting[_]] = Seq(
     StructureKeys.sbtStructureOutputFile := None,
     StructureKeys.sbtStructureOptions := "prettyPrint download",
-    StructureKeys.dumpStructureTo := pluginOnlyTasks.dumpStructureTo.evaluated
-  ) ++ keysAdapterEx.artifactDownload ++ CreateTasks.globalSettings
+    StructureKeys.dumpStructureTo := PluginOnlyTasksCompat.dumpStructureTo.evaluated
+  ) ++ PluginCompat.artifactDownloadLoggerSettings ++ CreateTasks.globalSettings
 
   override lazy val projectSettings: Seq[Setting[_]] = CreateTasks.projectSettings.toSbtSeqType
-
 }

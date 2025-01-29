@@ -4,24 +4,26 @@ import lmcoursier.definitions.CacheLogger
 import sbt.Keys.useSuperShell
 import sbt.{Def, File, Keys, Logger, Setting, Task, ThisBuild}
 
-object keysAdapterEx {
-  //NOTE: sbt.Keys.scalaCompilerBridgeBinaryJar exists since SBT 1.2.3, so we detect it only since 1.3.0
+/**
+ * The class contains wrapper definitions for keys/settings that exist only since sbt 1.3
+ */
+trait PluginCompat_SinceSbt_1_3 {
   val myScalaCompilerBridgeBinaryJar: Def.Initialize[Task[Option[File]]] = Def.taskDyn {
     sbt.Keys.scalaCompilerBridgeBinaryJar
   }
-  lazy val artifactDownloadCsrLogger: Def.Initialize[Task[Option[CacheLogger]]] = Def.task {
+
+  lazy val artifactDownloadLoggerSettings: Seq[Setting[_]] = Seq(
+    Keys.csrLogger := artifactDownloadCsrLogger.value
+  )
+
+  private lazy val artifactDownloadCsrLogger: Def.Initialize[Task[Option[CacheLogger]]] = Def.task {
     val st = Keys.streams.value
     val progress = (ThisBuild / useSuperShell).value
     if (progress) None
-    else Some(new CoursierLogger(st.log))
-
+    else Some(new MyCoursierLogger(st.log))
   }
 
-  val artifactDownload: Seq[Setting[_]] = Seq(
-    Keys.csrLogger := keysAdapterEx.artifactDownloadCsrLogger.value
-  )
-
-  class CoursierLogger(logger: Logger) extends CacheLogger {
+  private class MyCoursierLogger(logger: Logger) extends CacheLogger {
     override def downloadedArtifact(url: String, success: Boolean): Unit = {
       logger.info(s"downloaded $url")
     }

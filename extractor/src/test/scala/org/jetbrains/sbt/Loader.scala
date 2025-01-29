@@ -1,16 +1,10 @@
 package org.jetbrains.sbt
 
-import sbt.jetbrains.apiAdapter._
-
 import java.io.{File, FileWriter, PrintWriter}
 import java.net.URL
 import scala.io.Source
 import scala.util.Try
 
-/**
-  * @author Pavel Fatin
-  * @author Nikolay Obedin
-  */
 object Loader {
   private val JavaVM = path(
     new File(new File(new File(System.getProperty("java.home")), "bin"), "java")

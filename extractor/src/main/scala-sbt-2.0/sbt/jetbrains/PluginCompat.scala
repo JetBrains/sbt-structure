@@ -4,7 +4,8 @@ import sbt.*
 
 object PluginCompat extends AnyRef
   with SeqOpsCompat
-  with ClassathOpsCompat:
+  with ClassathOpsCompat
+  with PluginCompat_SinceSbt_1_3:
 
   type SbtSettings = Settings
 

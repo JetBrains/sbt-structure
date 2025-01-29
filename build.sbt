@@ -1,4 +1,7 @@
+import lmcoursier.internal.shaded.coursier.core.Version
 import xerial.sbt.Sonatype.GitHubHosting
+
+import scala.collection.mutable
 
 ThisBuild / organization := "org.jetbrains.scala"
 ThisBuild / homepage := Some(url("https://github.com/JetBrains/sbt-structure"))
@@ -21,7 +24,6 @@ lazy val sbtStructure = project.in(file("."))
     sonatypeSettings
   )
 
-val scala210: String = "2.10.7"
 //NOTE: extra scala 2.12 version is used just to distinguish between different sbt 1.x versions
 // when calculating pluginCrossBuild / sbtVersion
 val scala212_Earlier: String = "2.12.19" //used for sbt < 1.3
@@ -47,7 +49,7 @@ lazy val core = project.in(file("core"))
     sonatypeSettings
   )
 
-val SbtVersion_1_2 = "1.2.1"
+val SbtVersion_1_0 = "1.0.0"
 val SbtVersion_1_3 = "1.3.0"
 val SbtVersion_2 = "2.0.0-M3"
 
@@ -80,15 +82,15 @@ lazy val extractor = project.in(file("extractor"))
       "org.scalatest" %% "scalatest" % "3.2.19" % Test,
       "org.dom4j" % "dom4j" % "2.1.4" % Test
     ),
-//    scalaVersion := scala212,
-    scalaVersion := scala3,
+    scalaVersion := scala212,
+//    scalaVersion := scala3,
     crossScalaVersions := Seq(
       scala212_Earlier,
       scala212,
       scala3,
     ),
     crossSbtVersions := Seq(
-      SbtVersion_1_2,
+      SbtVersion_1_0,
       SbtVersion_1_3,
       SbtVersion_2
     ),
@@ -96,7 +98,7 @@ lazy val extractor = project.in(file("extractor"))
       // keep this as low as possible to avoid running into binary incompatibility such as https://github.com/sbt/sbt/issues/5049
       val scalaVer = scalaVersion.value
       if (scalaVer == scala212_Earlier)
-        SbtVersion_1_2
+        SbtVersion_1_0
       else if (scalaVer == scala212)
         SbtVersion_1_3
       else if (scalaVer == scala3)
@@ -114,18 +116,20 @@ lazy val extractor = project.in(file("extractor"))
       sbtVersion2Digits
     },
     Compile / unmanagedSourceDirectories ++= {
-      val sbtBinVer = (pluginCrossBuild / sbtBinaryVersion).value
+      val sbtVersion = Version((pluginCrossBuild / sbtBinaryVersion).value)
       val baseDir = (Compile / sourceDirectory).value
-      //shared source dir for all sbt 1.x
-      val shared1 = if (sbtBinVer.startsWith("1")) Seq(baseDir / "scala-sbt-1.x") else Nil
-      //shared source dir for all sbt 1.x and sbt 2.x
-      val shared1and2 = Seq(baseDir / "scala-sbt-1&2")
-      shared1  ++ shared1and2
+
+      val result = mutable.Buffer[File]()
+      if (sbtVersion.repr.startsWith("1"))
+        result += baseDir / "scala-sbt-1.0-1.x"
+      if (sbtVersion >= Version("1.3"))
+        result += baseDir / "scala-sbt-1.3+"
+      result.toSeq
     },
-    // Only run tests in the latest Scala 2
+    // Only run tests in scala 2
     // TODO: ensure CI is updated (TeamCity & GitHub)
     Test / unmanagedSourceDirectories := {
-      if (scalaVersion.value == scala212)
+      if (scalaVersion.value.startsWith("2"))
         (Test / unmanagedSourceDirectories).value
       else
         Nil

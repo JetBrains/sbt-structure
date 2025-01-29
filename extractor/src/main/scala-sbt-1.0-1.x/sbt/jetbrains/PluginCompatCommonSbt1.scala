@@ -2,7 +2,7 @@ package sbt.jetbrains
 
 import sbt.{AttributeKey, Incomplete, InputTask, Keys, Result, Scope, Settings, Task}
 
-object PluginCompat extends AnyRef
+trait PluginCompatCommonSbt1 extends AnyRef
   with SeqOpsCompat
   with ClassathOpsCompat {
 
