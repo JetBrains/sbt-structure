@@ -1,15 +1,8 @@
-package org.jetbrains.sbt
-package structure
+package org.jetbrains.sbt.structure
 
 import java.io.File
 
 import java.net.URI
-
-
-/**
- * @author Pavel Fatin
- * @author Nikolay Obedin
- */
 
 case class Configuration(name: String) {
   override def toString: String = name
@@ -22,7 +15,13 @@ object Configuration {
   val Provided: Configuration = Configuration("provided")
 
   def fromString(confStr: String): Seq[Configuration] =
-    if (confStr.isEmpty) Seq.empty else confStr.split(";").map(c => Configuration(c))
+    if (confStr.isEmpty) Seq.empty
+    else {
+      val parts = confStr.split(";")
+      val builder = scala.collection.immutable.Seq.newBuilder[String]
+      builder ++= parts
+      builder.result().map(Configuration(_))
+    }
 }
 
 /**

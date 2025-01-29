@@ -3,11 +3,8 @@ package org.jetbrains.sbt.extractors
 import org.jetbrains.sbt.{SbtStateOps, TaskOps}
 import org.jetbrains.sbt.structure._
 import sbt._
+import sbt.jetbrains.PluginCompat._
 
-/**
-  * @author Dmitry Naydanov
-  * @author Nikolay Obedin
-  */
 object Play2Extractor extends SbtStateOps with TaskOps {
 
   def taskDef: Def.Initialize[Task[Option[Play2Data]]] = Def.task {
@@ -22,7 +19,7 @@ object Play2Extractor extends SbtStateOps with TaskOps {
       val playVersion =
         Keys.playVersion.in(projectRef).find(state)
       val templateImports =
-        Keys.templateImports.in(projectRef).getOrElse(state, Seq.empty)
+        Keys.templateImports.in(projectRef).getValueOrElse(state, Seq.empty)
       val routesImports =
         Keys.routesImports.in(projectRef).find(state)
           .orElse(Keys.routesImports_prior_to_2_4_0.in(projectRef).find(state))

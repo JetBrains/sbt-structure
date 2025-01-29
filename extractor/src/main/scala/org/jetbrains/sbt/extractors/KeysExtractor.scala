@@ -3,10 +3,11 @@ package org.jetbrains.sbt.extractors
 import org.jetbrains.sbt.StructureKeys
 import org.jetbrains.sbt.structure.{CommandData, SettingData, TaskData}
 import sbt.jetbrains.BadCitizen
-import sbt.{AttributeKey, BuiltinCommands, Def, Extracted, KeyRanks, Keys, Logger, Project, SettingKey, Task}
+import sbt.jetbrains.PluginCompat.*
+import sbt.{AttributeKey, BuiltinCommands, Def, Extracted, KeyRanks, Keys, Logger, SettingKey, Task}
 
+import scala.collection.Seq
 import scala.util.control.NonFatal
-
 
 /**
   * Extract setting and task keys.
@@ -32,12 +33,12 @@ object KeysExtractor {
 
   val settingData: Def.Initialize[Task[Seq[SettingData]]] = Def.task {
     val state = Keys.state.value
-    val extracted = Project.extract(state)
+    val extracted = extractProject(state)
 
     guarded(Keys.state.value.log, Seq.empty[SettingData]) {
       for {
         key <- StructureKeys.allKeys.value
-        if key != null && ! BuiltinCommands.isTask(key.manifest)
+        if key != null && ! isTaskOrInputTask(key)
       } yield {
         val displayString = settingStringValue(extracted,key)
         SettingData(key.label, key.description, key.rank, displayString)
@@ -50,7 +51,7 @@ object KeysExtractor {
     guarded(Keys.state.value.log, Seq.empty[TaskData]) {
       for {
         key <- StructureKeys.allKeys.value
-        if key != null && BuiltinCommands.isTask(key.manifest)
+        if key != null && isTaskOrInputTask(key)
       } yield
         TaskData(key.label, key.description, key.rank)
     }
@@ -88,7 +89,7 @@ object KeysExtractor {
       case NonFatal(x) =>
         log.warn(
           s"Unable to import some setting or task data. Is your project configured correctly?\n" +
-            s"Error was: ${x.getMessage}\n${x.getStackTraceString}")
+            s"Error was: ${x.getMessage}\n${x.getStackTrace.mkString("", "\n", "\n")}")
         default
     }
   }

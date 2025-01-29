@@ -15,7 +15,7 @@ object Options {
    * @param optionsString comma-separated or space-separated list of options, example
    */
   def readFromString(optionsString: String): Options = {
-    val options = ComaOrSpacesRegex.split(optionsString).map(_.trim).filter(_.nonEmpty)
+    val options = ComaOrSpacesRegex.split(optionsString).toSeq.map(_.trim).filter(_.nonEmpty)
     readFromSeq(options)
   }
 

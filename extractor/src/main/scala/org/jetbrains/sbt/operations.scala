@@ -3,17 +3,16 @@ package org.jetbrains.sbt
 import org.jetbrains.sbt.structure.ModuleIdentifier
 import sbt._
 import sbt.jetbrains.apiAdapter._
+import sbt.jetbrains.PluginCompat._
 
-/**
- * @author Nikolay Obedin
- * @since 4/10/15.
- */
+import scala.collection.Seq
+
 trait SbtStateOps {
 
   def applySettings(state: State, globalSettings: Seq[Setting[_]], projectSettings: Seq[Setting[_]]): State = {
     val extracted = Project.extract(state)
     import extracted.{structure => extractedStructure, _}
-    val transformedGlobalSettings = Project.transform(_ => GlobalScope, globalSettings)
+    val transformedGlobalSettings = Project.transform(_ => GlobalScope, globalSettings.toSbtSeqType)
     val transformedProjectSettings = extractedStructure.allProjectRefs.flatMap { projectRef =>
       transformSettings(projectScope(projectRef), projectRef.build, rootProject, projectSettings)
     }
@@ -22,7 +21,7 @@ trait SbtStateOps {
 
   // copied from sbt.internal.Load
   private def transformSettings(thisScope: Scope, uri: URI, rootProject: URI => String, settings: Seq[Setting[_]]): Seq[Setting[_]] =
-    Project.transform(Scope.resolveScope(thisScope, uri, rootProject), settings)
+    Project.transform(Scope.resolveScope(thisScope, uri, rootProject), settings.toSbtSeqType)
 
   // copied from sbt.internal.SessionSettings
   private def reapply(session: SessionSettings, s: State): State =
@@ -31,26 +30,24 @@ trait SbtStateOps {
   def structure(state: State): BuildStructure =
     sbt.Project.structure(state)
 
-  implicit class `enrich SettingKey`[T](key: SettingKey[T]) {
+  implicit final class SettingKeyOps[T](key: SettingKey[T]) {
     def find(state: State): Option[T] =
       key.get(structure(state).data)
 
     def get(state: State): T =
       find(state).get
 
-    def getOrElse(state: State, default: => T): T =
+    def getValueOrElse(state: State, default: => T): T =
       find(state).getOrElse(default)
 
     def forAllProjects(state: State, projects: Seq[ProjectRef]): Seq[(ProjectRef, T)] =
       projects.flatMap(p => key.in(p).find(state).map(it => (p, it)))
 
-    def forAllConfigurations(state: State, configurations: Seq[sbt.Configuration]): Seq[(sbt.Configuration, T)] = {
+    def forAllConfigurations(state: State, configurations: Seq[sbt.Configuration]): Seq[(sbt.Configuration, T)] =
       configurations.flatMap(c => key.in(c).get(structure(state).data).map(it => (c, it)))
-    }
-
   }
 
-  implicit class `enrich TaskKey`[T](key: TaskKey[T]) {
+  implicit final class TaskKeyOps[T](key: TaskKey[T]) {
     def find(state: State): Option[Task[T]] =
       key.get(structure(state).data)
 
@@ -62,12 +59,12 @@ trait SbtStateOps {
 
     def forAllProjects(state: State, projects: Seq[ProjectRef]): Task[Map[ProjectRef, T]] = {
       val tasks = projects.flatMap(p => key.in(p).get(structure(state).data).map(_.map(it => (p, it))))
-      std.TaskExtra.joinTasks(tasks).join.map(_.toMap)
+      std.TaskExtra.joinTasks(tasks.toSbtSeqType).join.map(_.toMap)
     }
 
     def forAllConfigurations(state: State, configurations: Seq[sbt.Configuration]): Task[Map[sbt.Configuration, T]] = {
       val tasks = configurations.flatMap(c => key.in(c).get(structure(state).data).map(_.map(it => (c, it))))
-      std.TaskExtra.joinTasks(tasks).join.map(_.toMap)
+      std.TaskExtra.joinTasks(tasks.toSbtSeqType).join.map(_.toMap)
     }
 
     def forAllProjectsAndConfigurations(state: State, projects: Seq[ProjectRef], configurations: Map[ProjectRef, Seq[sbt.Configuration]]): Task[Seq[((ProjectRef, sbt.Configuration), T)]] = {
@@ -77,7 +74,7 @@ trait SbtStateOps {
         task <- key.in(project, config).get(structure(state).data).map(_.map(it => ((project, config), it)))
       } yield task
 
-      std.TaskExtra.joinTasks(tasks).join
+      std.TaskExtra.joinTasks(tasks.toSbtSeqType).join
     }
   }
 }

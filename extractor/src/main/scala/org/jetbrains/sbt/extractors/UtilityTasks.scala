@@ -1,7 +1,7 @@
 package org.jetbrains.sbt.extractors
 
 import org.jetbrains.sbt._
-import org.jetbrains.sbt.structure.ProjectData
+import org.jetbrains.sbt.structure.{BuildData, ProjectData}
 import org.jetbrains.sbt.structure.XmlSerializer._
 import sbt.Def.Initialize
 import sbt.{Def, _}
@@ -10,10 +10,11 @@ import java.io.{BufferedWriter, FileOutputStream, OutputStreamWriter}
 import scala.collection.mutable.ArrayBuffer
 // don't remove this import: sbt.jetbrains.apiAdapter._ -- it shadows some symbols for sbt 1.0 compatibility
 import scala.language.reflectiveCalls
+import sbt.jetbrains.PluginCompat._
+import org.jetbrains.sbt.structure.structureDataSerializer
 
-/**
- * @author Nikolay Obedin
- */
+import scala.collection.Seq
+
 object UtilityTasks extends SbtStateOps {
 
   /*
@@ -90,8 +91,8 @@ object UtilityTasks extends SbtStateOps {
     structure(state).allProjectRefs.filter { case ref@ProjectRef(_, id) =>
       val isProjectAccepted = structure(state).allProjects.find(_.id == id).exists(areNecessaryPluginsLoaded)
       val shouldSkipProject =
-        SettingKeys.ideSkipProject.in(ref).getOrElse(state, false) ||
-          SettingKeys.sbtIdeaIgnoreModule.in(ref).getOrElse(state, false)
+        SettingKeys.ideSkipProject.in(ref).getValueOrElse(state, false) ||
+          SettingKeys.sbtIdeaIgnoreModule.in(ref).getValueOrElse(state, false)
       isProjectAccepted && !shouldSkipProject
     }
   }
@@ -99,7 +100,7 @@ object UtilityTasks extends SbtStateOps {
   /**
     * The build needs to be extracted for only one project per build, as it is shared among subprojects.
     */
-  lazy val extractBuilds = Def.taskDyn {
+  lazy val extractBuilds: Initialize[Task[Seq[BuildData]]] = Def.taskDyn {
     val state = Keys.state.value
 
     val buildProjects = StructureKeys.acceptedProjects.value
@@ -131,7 +132,7 @@ object UtilityTasks extends SbtStateOps {
   def allConfigurationsWithSource: Def.Initialize[Seq[Configuration]] = Def.settingDyn {
     val cs = for {
       c <- Keys.ivyConfigurations.value
-    } yield (Keys.sourceDirectories in c).?.apply { filesOpt => filesOpt.flatMap(f => f.nonEmpty.option(c))}
+    } yield (Keys.sourceDirectories.in(c)).?.apply { filesOpt => filesOpt.flatMap(f => f.nonEmpty.option(c))}
 
     cs.foldLeft(Def.setting(Seq.empty[Configuration])) { (accDef, initOptConf) =>
       accDef.zipWith(initOptConf) {(acc, optConf) => acc ++ optConf.toSeq }
@@ -169,7 +170,7 @@ object UtilityTasks extends SbtStateOps {
       buffer += Artifact.SourceClassifier
     if (options.resolveJavadocClassifiers)
       buffer += Artifact.DocClassifier
-    buffer
+    buffer.toSeq
   }
 
   private def areNecessaryPluginsLoaded(project: ResolvedProject): Boolean = {

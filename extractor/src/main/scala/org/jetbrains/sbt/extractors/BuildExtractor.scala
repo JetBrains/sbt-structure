@@ -5,11 +5,9 @@ import java.io.File
 import org.jetbrains.sbt.{LoadedBuildUnitAdapter, SbtStateOps, StructureKeys, TaskOps, UpdateReportAdapter}
 import org.jetbrains.sbt.structure.BuildData
 import sbt._
+import sbt.jetbrains.PluginCompat._
+import scala.collection.Seq
 
-/**
- * @author Nikolay Obedin
- * @since 4/10/15.
- */
 class BuildExtractor(unit: LoadedBuildUnitAdapter, updateSbtClassifiers: Option[UpdateReportAdapter]) {
   private[extractors] def extract: BuildData = {
     val (docs, sources) = extractSbtClassifiers

@@ -1,6 +1,6 @@
 package org.jetbrains.sbt.extractors
 
-import org.jetbrains.sbt.`enrich ProjectRef`
+import org.jetbrains.sbt.ProjectRefOps
 import org.jetbrains.sbt.extractors.DependenciesExtractor.ProductionType
 import org.jetbrains.sbt.structure.*
 import org.scalatest.freespec.AnyFreeSpecLike

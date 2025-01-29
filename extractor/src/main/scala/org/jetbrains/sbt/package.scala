@@ -2,6 +2,7 @@ package org.jetbrains
 
 import _root_.sbt.{Configuration, ProjectRef}
 
+import scala.language.implicitConversions
 import scala.xml.{Elem, NamespaceBinding, Node, PrettyPrinter}
 
 /**
@@ -38,15 +39,15 @@ package object sbt {
     }
   }
 
-  implicit def `enrich Boolean`(b: Boolean) = new {
-    def option[A](a: => A): Option[A] = if(b) Some(a) else None
+  final implicit class BooleanOps(val b: Boolean) extends AnyVal {
+    def option[A](a: => A): Option[A] = if (b) Some(a) else None
   }
 
-  implicit def `Fix Option.flatten on Scala 2.9.2`[T](option: Option[Option[T]]) = new {
+  final implicit class OptionOps[T](val option: Option[Option[T]]) extends AnyVal {
     def flatten: Option[T] = option.flatMap(identity)
   }
 
-  implicit def `enrich ProjectRef`(projectRef: ProjectRef) = new {
+  final implicit class ProjectRefOps(val projectRef: ProjectRef) extends AnyVal {
     def id: String = projectRef.project // TODO: append build url when IDEA-145101 is fixed
   }
 

@@ -7,11 +7,8 @@ import org.jetbrains.sbt.structure.DataSerializers._
 import org.jetbrains.sbt.structure.XmlSerializer._
 
 import scala.xml._
+import scala.language.implicitConversions
 
-/**
-  * @author Nikolay Obedin
-  * @since 12/15/15.
-  */
 //noinspection LanguageFeature
 private object Helpers {
   class RichFile(file: File) {
@@ -50,6 +47,12 @@ private object Helpers {
 
   implicit def string2RicherString(string: String): RicherString =
     new RicherString(string)
+
+  implicit def seqToImmutableSeq[T](seq: scala.collection.Seq[T]): scala.collection.immutable.Seq[T] = {
+    val builder = scala.collection.immutable.Seq.newBuilder[T]
+    builder ++= seq
+    builder.result
+  }
 
   // sbt provides bad uris with spaces for local resolvers
   // https://youtrack.jetbrains.com/issue/SCL-12292

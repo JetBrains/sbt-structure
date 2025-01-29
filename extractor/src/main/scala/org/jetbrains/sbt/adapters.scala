@@ -2,7 +2,8 @@ package org.jetbrains.sbt
 
 import sbt._
 import sbt.jetbrains.apiAdapter._
-
+import sbt.jetbrains.PluginCompat._
+import scala.collection.Seq
 
 case class LoadedBuildUnitAdapter(delegate: LoadedBuildUnit) {
 
@@ -10,10 +11,10 @@ case class LoadedBuildUnitAdapter(delegate: LoadedBuildUnit) {
     delegate.unit.uri
 
   def imports: Seq[String] =
-    delegate.imports
+    delegate.imports.toImmutableSeq
 
   def pluginsClasspath: Seq[Attributed[File]] =
-    delegate.unit.plugins.pluginData.dependencyClasspath
+    toAttributedFiles(delegate.unit.plugins.pluginData.dependencyClasspath).toImmutableSeq
 }
 
 case class UpdateReportAdapter(configurationToModule: Map[String, Seq[ModuleReportAdapter]]) {
@@ -24,7 +25,7 @@ case class UpdateReportAdapter(configurationToModule: Map[String, Seq[ModuleRepo
   }
 
   def allModules: Seq[ModuleReportAdapter] =
-    configurationToModule.values.toSeq.flatten
+    configurationToModule.values.toSeq.flatten.toImmutableSeq
 
   def modulesFrom(configuration: String): Seq[ModuleReportAdapter] =
     configurationToModule.getOrElse(configuration, Seq.empty)

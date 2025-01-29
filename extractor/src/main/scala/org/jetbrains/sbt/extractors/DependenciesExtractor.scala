@@ -1,18 +1,14 @@
-package org.jetbrains.sbt
-package extractors
+package org.jetbrains.sbt.extractors
 
 import org.jetbrains.sbt.extractors.DependenciesExtractor.{ProductionType, ProjectType, TestType}
-import org.jetbrains.sbt.structure._
-import sbt.{Configuration => SbtConfiguration, _}
-import sbt.jetbrains.apiAdapter._
+import org.jetbrains.sbt.structure.*
+import org.jetbrains.sbt.{ModulesOps, ProjectRefOps, SbtStateOps, StructureKeys, TaskOps}
+import sbt.jetbrains.PluginCompat.*
+import sbt.jetbrains.apiAdapter.*
+import sbt.{Configuration as SbtConfiguration, *}
 
 import scala.collection.{Seq, mutable}
 import scala.language.postfixOps
-
-/**
- * @author Nikolay Obedin
- * @since 4/10/15.
- */
 
 class DependenciesExtractor(unmanagedClasspath: SbtConfiguration => Keys.Classpath,
                             externalDependencyClasspath: Option[SbtConfiguration => Keys.Classpath],
@@ -35,7 +31,7 @@ class DependenciesExtractor(unmanagedClasspath: SbtConfiguration => Keys.Classpa
   }
 
   private def transitiveProjectDependencies: Dependencies[ProjectDependencyData] = {
-    val dependencies = projectToConfigurations.map { case(ProjectType(project), configurations) =>
+    val dependencies = projectToConfigurations.toSeq.map { case (ProjectType(project), configurations) =>
       val transformedConfigurations = mapConfigurations(configurations).map(mapCustomSourceConfigurationIfApplicable)
       ProjectDependencyData(project.id, Some(project.build), transformedConfigurations)
     }.toSeq
@@ -58,7 +54,7 @@ class DependenciesExtractor(unmanagedClasspath: SbtConfiguration => Keys.Classpa
   }
 
   private def moduleDependencies: Dependencies[ModuleDependencyData] = {
-    val allModuleDependencies = forAllConfigurations(modulesIn)
+    val allModuleDependencies = forAllConfigurations(DependenciesExtractorCompat.modulesIn(_, externalDependencyClasspath))
     if (separateProdTestSources) {
       processDependencies(allModuleDependencies) { case(moduleId, configs) =>
         ModuleDependencyData(moduleId, configs)
@@ -86,18 +82,7 @@ class DependenciesExtractor(unmanagedClasspath: SbtConfiguration => Keys.Classpa
   }
 
   private def jarsIn(configuration: SbtConfiguration): Seq[File] =
-    unmanagedClasspath(configuration).map(_.data)
-
-  private def modulesIn(configuration: SbtConfiguration): Seq[ModuleIdentifier] =
-    for {
-      classpathFn <- externalDependencyClasspath.toSeq
-      entry       <- classpathFn(configuration)
-      moduleId    <- entry.get(Keys.moduleID.key).toSeq
-      artifact    <- entry.get(Keys.artifact.key).toSeq
-      identifier  <- createModuleIdentifiers(moduleId, Seq(artifact))
-    } yield {
-      identifier
-    }
+    toFiles(unmanagedClasspath(configuration))
 
   private def forAllConfigurations[T](fn: SbtConfiguration => Seq[T]): Seq[(T, Seq[Configuration])] = {
     val result = mutable.LinkedHashMap.empty[T, Seq[Configuration]]
@@ -256,7 +241,7 @@ object DependenciesExtractor extends SbtStateOps with TaskOps {
     val allAcceptedProjects = StructureKeys.acceptedProjects.value
 
     def getProjectToConfigurations(key: SettingKey[Seq[SbtConfiguration]]) =
-      key.forAllProjects(state, allAcceptedProjects).toMap.mapValues(_.map(_.name)).withDefaultValue(Seq.empty)
+      key.forAllProjects(state, allAcceptedProjects).toMap.mapValues(_.map(_.name)).toMap.withDefaultValue(Seq.empty)
 
     val projectToSourceConfigurations = getProjectToConfigurations(StructureKeys.sourceConfigurations)
     val projectToTestConfigurations = getProjectToConfigurations(StructureKeys.testConfigurations)
@@ -332,7 +317,7 @@ object DependenciesExtractor extends SbtStateOps with TaskOps {
     projectRef: ProjectRef,
     projectToConfigurations: Map[ProjectRef, ProjectConfigurations],
     classPathConfiguration: Map[SbtConfiguration, SbtConfiguration],
-    settings: Settings[Scope],
+    settings: SbtSettings,
     buildDependencies: BuildDependencies
   ): Map[ProjectType, Seq[Configuration]] = {
     val dependencyToConfigurations = retrieveTransitiveProjectToConfigsDependencies(
@@ -361,13 +346,13 @@ object DependenciesExtractor extends SbtStateOps with TaskOps {
   private[extractors] case class TestType(override val project: ProjectRef) extends ProjectType(project)
 
   object ProjectType {
-    def unapply(projectType: ProjectType): Option[ProjectRef] = Some(projectType.project)
+    def unapply(projectType: ProjectType): Some[ProjectRef] = Some(projectType.project)
   }
 
   private def retrieveTransitiveProjectToConfigsDependencies(
     projectRef: ProjectRef,
     classPathConfiguration: Map[SbtConfiguration, SbtConfiguration],
-    settings: Settings[Scope],
+    settings: SbtSettings,
     buildDependencies: BuildDependencies,
     projectToConfigurations: Map[ProjectRef, ProjectConfigurations]
   ): Map[ProjectDependency, Seq[Configuration]] = {
@@ -382,7 +367,7 @@ object DependenciesExtractor extends SbtStateOps with TaskOps {
     projectRef: ProjectRef,
     projectToConfigurations: Map[ProjectRef, ProjectConfigurations],
     classPathConfiguration: Map[SbtConfiguration, SbtConfiguration],
-    settings: Settings[Scope],
+    settings: SbtSettings,
     buildDependencies: BuildDependencies
   ): Map[ProjectType, Seq[Configuration]] = {
     val dependencyToConfigurations = retrieveTransitiveProjectToConfigsDependencies(
@@ -422,7 +407,7 @@ object DependenciesExtractor extends SbtStateOps with TaskOps {
   private def retrieveTransitiveProjectDependencies(
     projectRef: ProjectRef,
     config: sbt.Configuration,
-    settings: Settings[Scope],
+    settings: SbtSettings,
     buildDependencies: BuildDependencies,
     projectToConfigurations: Map[ProjectRef, ProjectConfigurations]
   ): Seq[ProjectDependency] = {
@@ -458,14 +443,4 @@ object DependenciesExtractor extends SbtStateOps with TaskOps {
     projectToConfigurations.get(project)
       .fold(Seq.empty[String])(t => t.source ++ t.test)
       .contains(configuration)
-
-  private def throwExceptionIfUpdateFailed(result: Result[Map[sbt.Configuration,Keys.Classpath]]): Map[sbt.Configuration, Keys.Classpath] =
-    result match {
-      case Value(classpath) =>
-        classpath
-      case Inc(incomplete) =>
-        val cause = Incomplete.allExceptions(incomplete).headOption
-        cause.foreach(c => throw c)
-        Map.empty
-    }
 }

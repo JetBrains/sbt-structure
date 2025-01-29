@@ -1,6 +1,7 @@
 package sbt.jetbrains
 
-import sbt.{ConfigurationReport, Reference, Scope, Select, Zero}
+import sbt.internal.BuildDependencies.DependencyMap
+import sbt.{ClasspathDep, ConfigurationReport, ProjectRef, Reference, Scope, Select, Zero}
 
 /**
   * Hacky workaround for some types having been moved to internal in sbt 1.0.
@@ -19,7 +20,8 @@ object apiAdapter {
   val Using = sbt.io.Using
   val IO = sbt.io.IO
 
-  val buildDependencies = sbt.internal.BuildDependencies.apply _
+  val buildDependencies: (DependencyMap[ClasspathDep[ProjectRef]], DependencyMap[ProjectRef]) => BuildDependencies =
+    sbt.internal.BuildDependencies.apply
 
   // copied from sbt.internal.Load
   def projectScope(project: Reference): Scope =

@@ -4,13 +4,11 @@ import org.jetbrains.sbt.structure.{ModuleData, ModuleIdentifier, RepositoryData
 import org.jetbrains.sbt.{ModuleReportAdapter, ModulesOps, Options, SbtStateOps, StructureKeys, TaskOps, UpdateReportAdapter}
 import sbt.Def.Initialize
 import sbt.{Def, _}
+import sbt.jetbrains.PluginCompat._
 
 import scala.collection.mutable
+import scala.collection.Seq
 
-/**
- * @author Nikolay Obedin
- * @since 4/10/15.
- */
 class RepositoryExtractor(
   projects: Seq[ProjectRef],
   updateReports: ProjectRef => UpdateReportAdapter,
@@ -22,7 +20,7 @@ class RepositoryExtractor(
   private[extractors] def extract: RepositoryData = {
     val moduleReports = fixModulesIdsToSupportClassifiers(allModulesWithDocs)
     val modulesReportsByIdentifier = groupByModuleIdentifiers(moduleReports)
-    val modulesData = modulesReportsByIdentifier.toSeq.map((createModuleData _).tupled)
+    val modulesData = modulesReportsByIdentifier.toSeq.map { case (a, b) => createModuleData(a, b) }
     RepositoryData(modulesData)
   }
 
@@ -49,7 +47,7 @@ class RepositoryExtractor(
   private def allClasspathTypes: Set[String] = projects.map(classpathTypes).reduce((a, b) => a.union(b))
 
   private def fixModulesIdsToSupportClassifiers(modules: Seq[ModuleReportAdapter]): Seq[ModuleReportAdapter] =
-    modules.map(r => r.copy(moduleId = r.moduleId.artifacts(r.artifacts.map(_._1):_*)))
+    modules.map(r => r.copy(moduleId = r.moduleId.artifacts(r.artifacts.map(_._1): _*)))
 
   private def groupByModuleIdentifiers(modules: Seq[ModuleReportAdapter]): mutable.LinkedHashMap[ModuleIdentifier, Seq[ModuleReportAdapter]] = {
     val modulesWithIds = modules.flatMap { module =>
@@ -95,9 +93,13 @@ object RepositoryExtractor extends SbtStateOps with TaskOps {
     }
   }
 
-  private def extractRepositoryData(state: State, options: Options, acceptedProjects: Seq[ProjectRef]): Task[RepositoryData] = {
-    def classpathTypes(projectRef: ProjectRef) =
-      Keys.classpathTypes.in(projectRef).getOrElse(state, Set.empty)
+  private def extractRepositoryData(state: State, options: Options, acceptedProjects: scala.collection.Seq[ProjectRef]): Task[RepositoryData] = {
+    extractRepositoryData(state, options, acceptedProjects.toImmutableSeq)
+  }
+
+  private def extractRepositoryData(state: State, options: Options, acceptedProjects: scala.collection.immutable.Seq[ProjectRef]): Task[RepositoryData] = {
+    def classpathTypes(projectRef: ProjectRef): Set[String] =
+      Keys.classpathTypes.in(projectRef).getValueOrElse(state, Set.empty)
 
     val dependencyConfigurations = StructureKeys.dependencyConfigurations
       .forAllProjects(state, acceptedProjects)
@@ -109,7 +111,7 @@ object RepositoryExtractor extends SbtStateOps with TaskOps {
     val updateAllTask: Task[Map[ProjectRef, UpdateReportAdapter]] =
       Keys.update
         .forAllProjects(state, acceptedProjects)
-        .map(_.mapValues(new UpdateReportAdapter(_)))
+        .map(_.mapValues(new UpdateReportAdapter(_)).toMap)
     val updateAllClassifiersTask =
       Keys.updateClassifiers
         .forAllProjects(state, acceptedProjects)
@@ -122,11 +124,10 @@ object RepositoryExtractor extends SbtStateOps with TaskOps {
       classpathConfiguration <- classpathConfigurationTask
     } yield {
 
-      def extractClasspathConfigs(projectToConfigTuple: Seq[((ProjectRef, Configuration), Configuration)]): Seq[Configuration] =
-        projectToConfigTuple.map { case ((_, _), c2) => c2 }
-
-      val projectToClasspathConfig = classpathConfiguration.groupBy(_._1._1)
-        .mapValues(extractClasspathConfigs)
+      val projectToClasspathConfig: Map[ProjectRef, Seq[Configuration]] =
+        classpathConfiguration.groupBy(_._1._1)
+          .mapValues(_.map { case ((_, _), c2) => c2 })
+          .toMap
 
       val classpathAndDependencyConfigs = projectToClasspathConfig.map { case (project, configs) =>
         val projectDependencyConfigs = dependencyConfigurations.getOrElse(project, Seq.empty)
@@ -138,7 +139,7 @@ object RepositoryExtractor extends SbtStateOps with TaskOps {
         acceptedProjects,
         updateReports.apply,
         updateClassifiersReports.map(_.apply),
-        classpathTypes,
+        ref => classpathTypes(ref),
         classpathAndDependencyConfigs
       )
       extractor.extract

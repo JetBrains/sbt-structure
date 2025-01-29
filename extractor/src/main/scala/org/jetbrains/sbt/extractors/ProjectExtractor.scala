@@ -10,11 +10,10 @@ import scala.reflect.ClassTag
 import scala.util.{Failure, Success, Try}
 // don't remove this import: sbt.jetbrains.apiAdapter._ -- it shadows some symbols for sbt 1.0 compatibility
 import sbt.jetbrains.apiAdapter._
+import sbt.jetbrains.PluginCompat._
 
-/**
- * @author Nikolay Obedin
- * @since 4/10/15.
- */
+import scala.collection.Seq
+
 class ProjectExtractor(
   projectRef: ProjectRef,
   name: String,
@@ -267,10 +266,16 @@ class ProjectExtractor(
 object ProjectExtractor extends SbtStateOps with TaskOps {
 
   private def settingInConfiguration[T](
-    key: SettingKey[Seq[T]]
-  )(implicit projectRef: ProjectRef, state: State) =
+    key: SettingKey[scala.collection.immutable.Seq[T]]
+  )(implicit projectRef: ProjectRef, state: State): SbtConfiguration => scala.collection.immutable.Seq[T] =
     (conf: sbt.Configuration) =>
-      key.in(projectRef, conf).getOrElse(state, Seq.empty)
+      key.in(projectRef, conf).getValueOrElse(state, scala.collection.immutable.Seq.empty)
+
+  private def settingInConfiguration[T](
+    key: SettingKey[scala.collection.Seq[T]]
+  )(implicit projectRef: ProjectRef, state: State, d: DummyImplicit): SbtConfiguration => scala.collection.Seq[T] =
+    (conf: sbt.Configuration) =>
+      key.in(projectRef, conf).getValueOrElse(state, scala.collection.Seq.empty)
 
   private def taskInCompile[T](key: TaskKey[T])(implicit projectRef: ProjectRef,
                                                 state: State) =

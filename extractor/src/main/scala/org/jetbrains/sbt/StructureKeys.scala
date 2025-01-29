@@ -4,31 +4,31 @@ import org.jetbrains.sbt.structure._
 import sbt.KeyRanks._
 import sbt.{Configuration, _}
 
-/**
-  * @author Nikolay Obedin
-  * @since 11/10/15.
-  */
+import scala.collection.Seq
+
+//Note a more idiomatic way to define keys is to use the low-case names so we might consider rewriting it
+// https://github.com/sbt/sbt/pull/8016#issuecomment-2612955340
 object StructureKeys {
-  val dependencyConfigurations: SettingKey[Seq[Configuration]] = SettingKey("ssDependencyConfigurations", rank = Invisible)
-  val sourceConfigurations: SettingKey[Seq[Configuration]] = SettingKey("ssSourceConfigurations", rank = Invisible)
-  val testConfigurations: SettingKey[Seq[Configuration]] = SettingKey("ssTestConfigurations", rank = Invisible)
-  val acceptedProjects: TaskKey[Seq[ProjectRef]] = TaskKey("ssAcceptedProjects", rank = Invisible)
+  val dependencyConfigurations: SettingKey[Seq[Configuration]] = SettingKey("ssDependencyConfigurations", description = "", rank = Invisible)
+  val sourceConfigurations: SettingKey[Seq[Configuration]] = SettingKey("ssSourceConfigurations", description = "", rank = Invisible)
+  val testConfigurations: SettingKey[Seq[Configuration]] = SettingKey("ssTestConfigurations", description = "", rank = Invisible)
+  val acceptedProjects: TaskKey[Seq[ProjectRef]] = TaskKey("ssAcceptedProjects", description = "", rank = Invisible)
 
-  val extractPlay2: TaskKey[Option[Play2Data]] = TaskKey("ssExtractPlay2", rank = Invisible)
-  val extractBuild: TaskKey[BuildData] = TaskKey("ssExtractBuild", rank = Invisible)
-  val extractBuilds: TaskKey[Seq[BuildData]] = TaskKey("ssExtractBuilds", rank = Invisible)
-  val extractDependencies: TaskKey[DependencyData] = TaskKey("ssExtractDependencies", rank = Invisible)
-  val extractProject: TaskKey[ProjectData] = TaskKey("ssExtractProject", rank = Invisible)
-  val extractProjects: TaskKey[Seq[ProjectData]] = TaskKey("ssExtractProjects", rank = Invisible)
-  val extractRepository: TaskKey[Option[RepositoryData]] = TaskKey("ssExtractRepository", rank = Invisible)
-  val extractStructure: TaskKey[StructureData] = TaskKey("extractStructure", rank = Invisible)
+  val extractPlay2: TaskKey[Option[Play2Data]] = TaskKey("ssExtractPlay2", description = "", rank = Invisible)
+  val extractBuild: TaskKey[BuildData] = TaskKey("ssExtractBuild", description = "", rank = Invisible)
+  val extractBuilds: TaskKey[Seq[BuildData]] = TaskKey("ssExtractBuilds", description = "", rank = Invisible)
+  val extractDependencies: TaskKey[DependencyData] = TaskKey("ssExtractDependencies", description = "", rank = Invisible)
+  val extractProject: TaskKey[ProjectData] = TaskKey("ssExtractProject", description = "", rank = Invisible)
+  val extractProjects: TaskKey[Seq[ProjectData]] = TaskKey("ssExtractProjects", description = "", rank = Invisible)
+  val extractRepository: TaskKey[Option[RepositoryData]] = TaskKey("ssExtractRepository", description = "", rank = Invisible)
+  val extractStructure: TaskKey[StructureData] = TaskKey("extractStructure", description = "", rank = Invisible)
 
-  val settingData: TaskKey[Seq[SettingData]] = TaskKey("settingData", rank = Invisible)
-  val taskData: TaskKey[Seq[TaskData]] = TaskKey("taskData", rank = Invisible)
-  val commandData: TaskKey[Seq[CommandData]] = TaskKey("commandData", rank = Invisible)
-  val localCachePath: TaskKey[Option[File]] = TaskKey("localCachePath", rank = Invisible)
-  val allKeys:TaskKey[Seq[AttributeKey[_]]] = TaskKey("allKeys", rank = Invisible)
-  val allConfigurationsWithSource: SettingKey[Seq[Configuration]] = SettingKey("allConfigurationsWithSource", rank = Invisible)
+  val settingData: TaskKey[Seq[SettingData]] = TaskKey("settingData", description = "", rank = Invisible)
+  val taskData: TaskKey[Seq[TaskData]] = TaskKey("taskData", description = "", rank = Invisible)
+  val commandData: TaskKey[Seq[CommandData]] = TaskKey("commandData", description = "", rank = Invisible)
+  val localCachePath: TaskKey[Option[File]] = TaskKey("localCachePath", description = "", rank = Invisible)
+  val allKeys: TaskKey[Seq[AttributeKey[_]]] = TaskKey("allKeys", description = "", rank = Invisible)
+  val allConfigurationsWithSource: SettingKey[Seq[Configuration]] = SettingKey("allConfigurationsWithSource", description = "", rank = Invisible)
 
   val sbtStructureOpts: SettingKey[Options] = SettingKey("ssOptions", "options for dumpStructure task", rank = DSetting)
   val sbtStructureOptions: SettingKey[String] = SettingKey("sbtStructureOptions", "options for dumpStructure task as string", rank = DSetting)

@@ -1,6 +1,7 @@
 package org.jetbrains.sbt
 package structure
 
+import scala.language.implicitConversions
 import scala.reflect.ClassTag
 import scala.xml._
 

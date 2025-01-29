@@ -24,8 +24,9 @@ lazy val sbtStructure = project.in(file("."))
 val scala210: String = "2.10.7"
 //NOTE: extra scala 2.12 version is used just to distinguish between different sbt 1.x versions
 // when calculating pluginCrossBuild / sbtVersion
-val scala212_6: String = "2.12.6" //used for sbt < 1.3
+val scala212_Earlier: String = "2.12.19" //used for sbt < 1.3
 val scala212: String = "2.12.20" //used for sbt >= 1.3
+val scala3: String = "3.6.2" //used for sbt 2
 
 lazy val core = project.in(file("core"))
   .settings(
@@ -42,13 +43,13 @@ lazy val core = project.in(file("core"))
           Seq.empty
       }
     },
-    crossScalaVersions := Seq("2.13.16", scala212, "2.11.12", scala210),
+    crossScalaVersions := Seq("2.13.16", scala212, "2.11.12"),
     sonatypeSettings
   )
 
-val SbtVersion_0_13 = "0.13.17"
 val SbtVersion_1_2 = "1.2.1"
 val SbtVersion_1_3 = "1.3.0"
+val SbtVersion_2 = "2.0.0-M3"
 
 lazy val extractor = project.in(file("extractor"))
   .enablePlugins(SbtPlugin)
@@ -56,37 +57,57 @@ lazy val extractor = project.in(file("extractor"))
     name := "sbt-structure-extractor",
     Compile / unmanagedSourceDirectories +=
       (ThisBuild / baseDirectory).value / "shared" / "src" / "main" / "scala",
-    scalacOptions ++= Seq("-deprecation"),
+    scalacOptions ++= Seq("-deprecation", "-feature") ++ {
+      // Mute some warnings
+      // We have to use some deprecated things because we cross-compile for 2.10, 2.12 and 3.x
+      if (scalaBinaryVersion.value.startsWith("3")) {
+        val patterns = Seq(
+          """msg=(?s)`_` is deprecated for wildcard arguments of types. use `\?` instead.*:silent""",
+          """msg=(?s)method mapValues in trait MapOps is deprecated since 2.13.0.*:silent""",
+          """msg=.*is no longer supported for vararg splices.*:silent""",
+          """msg=method toIterable in class IterableOnceExtensionMethods is deprecated since 2.13.0.*:silent""",
+          """msg=method right in class Either is deprecated since 2.13.0.*:silent""",
+          """msg=method get in class RightProjection is deprecated since 2.13.0.*:silent""",
+          """msg=object JavaConverters in package scala.collection is deprecated since 2.13.0.*:silent""",
+          // We have to use IntegrationTest to support older sbt versions
+          """msg=value IntegrationTest in trait LibraryManagementSyntax is deprecated since 1.9.0.*:silent""",
+        )
+        Seq(s"-Wconf:${patterns.mkString(",")}")
+      } else
+        Seq.empty
+    },
     libraryDependencies ++= Seq(
       "org.scalatest" %% "scalatest" % "3.2.19" % Test,
       "org.dom4j" % "dom4j" % "2.1.4" % Test
     ),
-    scalaVersion := scala212,
+//    scalaVersion := scala212,
+    scalaVersion := scala3,
     crossScalaVersions := Seq(
+      scala212_Earlier,
       scala212,
-      scala212_6,
-      scala210
+      scala3,
     ),
     crossSbtVersions := Seq(
-      SbtVersion_0_13,
       SbtVersion_1_2,
       SbtVersion_1_3,
+      SbtVersion_2
     ),
     pluginCrossBuild / sbtVersion := {
       // keep this as low as possible to avoid running into binary incompatibility such as https://github.com/sbt/sbt/issues/5049
       val scalaVer = scalaVersion.value
-      if (scalaBinaryVersion.value == "2.10")
-        SbtVersion_0_13
-      else if (scalaVer == scala212_6)
+      if (scalaVer == scala212_Earlier)
         SbtVersion_1_2
       else if (scalaVer == scala212)
         SbtVersion_1_3
+      else if (scalaVer == scala3)
+        SbtVersion_2
       else
         throw new AssertionError(s"Unexpected scala version $scalaVer")
     },
-    //By default when you crosscompile sbt plugin for multiple sbt 1.x versions it will use same binary version 1.0 for all of them
-    //It will use the same source directory `scala-sbt-1.0`, same target dirs, same artifact names
-    //But we need different directories because some code compiles in sbt 1.x but not in sbt 1.y
+    // By default, when you crosscompile sbt plugin for multiple sbt 1.x versions,
+    // it will use the same binary version 1.0 for all of them
+    // It will use the same source directory `scala-sbt-1.0`, same target dirs and same artifact names.
+    // But we need different directories because some code compiles in sbt 1.x but not in sbt 1.y
     pluginCrossBuild / sbtBinaryVersion := {
       val sbtVersion3Digits = (pluginCrossBuild / sbtVersion).value
       val sbtVersion2Digits = sbtVersion3Digits.substring(0, sbtVersion3Digits.lastIndexOf("."))
@@ -94,10 +115,20 @@ lazy val extractor = project.in(file("extractor"))
     },
     Compile / unmanagedSourceDirectories ++= {
       val sbtBinVer = (pluginCrossBuild / sbtBinaryVersion).value
-      if (sbtBinVer.startsWith("0")) Nil else {
-        val baseDir = (Compile / sourceDirectory).value
-        Seq(baseDir / "scala-sbt-1.x") //shared source dir for all sbt 1.x
-      }
+      val baseDir = (Compile / sourceDirectory).value
+      //shared source dir for all sbt 1.x
+      val shared1 = if (sbtBinVer.startsWith("1")) Seq(baseDir / "scala-sbt-1.x") else Nil
+      //shared source dir for all sbt 1.x and sbt 2.x
+      val shared1and2 = Seq(baseDir / "scala-sbt-1&2")
+      shared1  ++ shared1and2
+    },
+    // Only run tests in the latest Scala 2
+    // TODO: ensure CI is updated (TeamCity & GitHub)
+    Test / unmanagedSourceDirectories := {
+      if (scalaVersion.value == scala212)
+        (Test / unmanagedSourceDirectories).value
+      else
+        Nil
     },
     sonatypeSettings
   )

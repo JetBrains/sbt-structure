@@ -3,10 +3,8 @@ package org.jetbrains.sbt
 import org.jetbrains.sbt.extractors._
 import sbt._
 import sbt.jetbrains.apiAdapter._
-
-/**
- * @author Nikolay Obedin
- */
+import sbt.jetbrains.PluginCompat._
+import scala.collection.Seq
 
 object CreateTasks extends (State => State) with SbtStateOps {
 
@@ -28,7 +26,7 @@ object CreateTasks extends (State => State) with SbtStateOps {
       val classifiers = UtilityTasks.librariesClassifiers(StructureKeys.sbtStructureOpts.value)
       //when we don't resolve sources and javadocs `updateClassifiers` won't be called
       //but `transitiveClassifiers` value can't be empty anyway
-      if (classifiers.nonEmpty) classifiers else oldValue
+      (if (classifiers.nonEmpty) classifiers else oldValue).toSbtSeqType
     },
     StructureKeys.dependencyConfigurations := UtilityTasks.dependencyConfigurations.value,
     StructureKeys.testConfigurations := UtilityTasks.testConfigurations.value,
