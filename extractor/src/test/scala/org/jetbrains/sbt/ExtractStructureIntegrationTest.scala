@@ -9,6 +9,7 @@ import org.scalatest.matchers.must.Matchers.*
 
 import java.io.{File, PrintWriter}
 import scala.collection.JavaConverters.asScalaIteratorConverter
+import scala.collection.mutable
 import scala.xml.*
 
 class ExtractStructureIntegrationTest extends AnyFreeSpecLike {
@@ -31,16 +32,35 @@ class ExtractStructureIntegrationTest extends AnyFreeSpecLike {
 
   private val TestDataRoot = new File("extractor/src/test/data/").getCanonicalFile
 
+  private class SbtOptionsBuilder {
+    private val options = mutable.ListBuffer[String]()
+
+    private def add(option: String): this.type = {
+      options += option
+      this
+    }
+
+    def sources: this.type = add(Keys.ResolveSourceClassifiers)
+    def javadocs: this.type = add(Keys.ResolveJavadocClassifiers)
+    def sbtClassifiers: this.type = add(Keys.ResolveSbtClassifiers)
+    def separateProdTestSources: this.type = add(Keys.SeparateProdAndTestSources)
+
+    def result: String = options.mkString(" ")
+  }
+  private object SbtOptionsBuilder {
+    def apply(): SbtOptionsBuilder = new SbtOptionsBuilder()
+  }
+  private def sb: SbtOptionsBuilder = SbtOptionsBuilder()
+
   private val ResolveNone = ""
-  private val ResolveNoneAndSeparateProdTestSources = Keys.SeparateProdAndTestSources
-  private val ResolveSources = s"${Keys.ResolveSourceClassifiers}"
-  private val ResolveJavadocs = s"${Keys.ResolveJavadocClassifiers}"
-  private val ResolveSbtClassifiers = s"${Keys.ResolveSbtClassifiers}"
-  private val ResolveSbtClassifiersAndSeparateProdTestSources = s"${Keys.ResolveSbtClassifiers} ${Keys.SeparateProdAndTestSources}"
-  private val ResolveSourcesAndSbtClassifiers = s"${Keys.ResolveSourceClassifiers} ${Keys.ResolveSbtClassifiers}"
-  private val ResolveSourcesAndSbtClassifiersAndSeparateProdTestSources =
-    s"${Keys.ResolveSourceClassifiers} ${Keys.ResolveSbtClassifiers} ${Keys.SeparateProdAndTestSources}"
-  private val ResolveSourcesAndJavaDocsAndSbtClassifiers = s"${Keys.ResolveSourceClassifiers}, ${Keys.ResolveJavadocClassifiers}, ${Keys.ResolveSbtClassifiers}"
+  private val ResolveNoneAndSeparateProdTestSources = sb.separateProdTestSources.result
+  private val ResolveSources = sb.sources.result
+  private val ResolveJavadocs = sb.javadocs.result
+  private val ResolveSbtClassifiers = sb.sbtClassifiers.result
+  private val ResolveSbtClassifiersAndSeparateProdTestSources = sb.sbtClassifiers.separateProdTestSources.result
+  private val ResolveSourcesAndSbtClassifiers = sb.sources.sbtClassifiers.result
+  private val ResolveSourcesAndSbtClassifiersAndSeparateProdTestSources = sb.sources.sbtClassifiers.separateProdTestSources.result
+  private val ResolveSourcesAndJavaDocsAndSbtClassifiers = sb.sources.javadocs.sbtClassifiers.result
 
   "extracted structure should equal to expected structure" - {
     "sbt 0.13.18" - {
@@ -126,17 +146,30 @@ class ExtractStructureIntegrationTest extends AnyFreeSpecLike {
       "simple" in { testProject("simple", SbtVersion_1_10, ResolveSourcesAndSbtClassifiers) }
       "prod_test_sources_separated" in { testProject("prod_test_sources_separated", SbtVersion_1_10, ResolveSourcesAndSbtClassifiersAndSeparateProdTestSources) }
     }
+
+    "2.0" - {
+      val SbtVersion = "2.0.0-M3"
+      // TODO: uncomment sbtClassifiers when https://github.com/sbt/sbt/pull/8024 is uploaded
+      // (and update sbt version)
+      val options = sb.sources/*.sbtClassifiers*/.separateProdTestSources.result
+      "simple" in {
+        testProject("simple", SbtVersion, options)
+      }
+    }
   }
 
-  private def sbtVersionBinary(sbtVersionFull: String) =
+  private def sbtVersionBinary(sbtVersionFull: String) = {
+    //2.0.0-M3
     sbtVersionFull.split('.') match {
       case Array(a, b, _) => s"$a.$b" // e.g. 0.13, 1.0, 1.5
     }
+  }
 
-  private def sbtScalaVersion(sbtVersion: String) =
+  private def scalaVersionUsedBySbt(sbtVersion: String): String =
     sbtVersion.split('.') match {
       case Array("0", "13") => "2.10"
       case Array("1", _)    => "2.12"
+      case Array("2", _)    => "3.6.2"
       case _                => throw new IllegalArgumentException(s"sbt version not supported by this test: $sbtVersion")
     }
 
@@ -149,13 +182,17 @@ class ExtractStructureIntegrationTest extends AnyFreeSpecLike {
     options
   )
 
+  /**
+   * @param sbtVersionFull version of sbt which will be used to run the tests.<br>
+   *                       It's later passed to the sbt launcher process via `-Dsbt.version` VM option
+   */
   private def testProject(
     project: String,
     sbtVersionFull: String,
     options: String
   ): Unit = {
     val sbtVersionShort = sbtVersionBinary(sbtVersionFull)
-    val scalaVersion = sbtScalaVersion(sbtVersionShort)
+    val scalaVersion = scalaVersionUsedBySbt(sbtVersionShort)
 
     val sbtGlobalBase = new File(SbtGlobalRoot, sbtVersionShort).getCanonicalFile
     val sbtBootDir = new File(SbtGlobalRoot, "boot/").getCanonicalFile
@@ -178,8 +215,10 @@ class ExtractStructureIntegrationTest extends AnyFreeSpecLike {
         s"extractor-legacy-0.13/target/scala-$scalaVersion/sbt-0.13/classes/"
       else if (isBefore1_3)
         s"extractor/target/scala-$scalaVersion/sbt-1.0/classes/"
-      else
+      else if (sbtVersionShort.startsWith("1"))
         s"extractor/target/scala-$scalaVersion/sbt-1.3/classes/"
+      else
+        s"extractor/target/scala-$scalaVersion/sbt-2.0/classes/"
       val file = new File(filePath).getCanonicalFile
       file.ensuring(_.exists(), s"Plugin file does not exist: $file.\nEnsure to build the plugin fist by running 'sbt +compile'")
     }

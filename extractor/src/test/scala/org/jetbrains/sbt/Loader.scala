@@ -40,11 +40,19 @@ object Loader {
 
     val opts = "download prettyPrint " + options
 
-    val commandsText =
+    val sbtVersionSupportsSlashSyntax = sbtVersion.startsWith("2") || sbtVersion.startsWith("1") &&
+      !sbtVersion.startsWith("1.0")
+    val commandsText = if (sbtVersionSupportsSlashSyntax)
+      s"""set Global / SettingKey[Option[File]]("sbtStructureOutputFile") := Some(file("${path(structureFile)}"))
+         |set Global/  SettingKey[String]("sbtStructureOptions") := "$opts"
+         |apply -cp ${path(pluginFile)} org.jetbrains.sbt.CreateTasks
+         |dumpStructure
+         |""".stripMargin.trim
+    else
       s"""set SettingKey[Option[File]]("sbtStructureOutputFile") in Global := Some(file("${path(structureFile)}"))
          |set SettingKey[String]("sbtStructureOptions") in Global := "$opts"
          |apply -cp ${path(pluginFile)} org.jetbrains.sbt.CreateTasks
-         |*/*:dumpStructure
+         |dumpStructure
          |""".stripMargin.trim
 
     writeLinesTo(
