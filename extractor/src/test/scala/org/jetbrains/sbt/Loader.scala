@@ -57,7 +57,7 @@ object Loader {
 
     writeLinesTo(
       commandsFile,
-      commandsText.linesIterator.toSeq: _*
+      commandsText.linesIterator.toSeq *
     )
 
     val commands = Seq(
@@ -157,14 +157,12 @@ object Loader {
       }
     }
 
-    Runtime.getRuntime.addShutdownHook(new Thread(new Runnable {
-      override def run(): Unit = {
-        if (process.isAlive) {
-          System.err.print("Destroying dangling sbt process")
-          Try(process.destroy())
-        }
+    Runtime.getRuntime.addShutdownHook(new Thread((() => {
+      if (process.isAlive) {
+        System.err.print("Destroying dangling sbt process")
+        Try(process.destroy())
       }
-    }, "terminate sbt process"))
+    }): Runnable, "terminate sbt process"))
 
     println(s"SBT process pid: ${process.pid()}")
     process.waitFor()

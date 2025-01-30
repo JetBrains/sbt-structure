@@ -9,6 +9,6 @@ import sbt.jetbrains.PluginCompat.*
 object LogDownloadArtifacts extends (State => State) with SbtStateOps {
   def apply(state: State): State = {
     val settings = sbt.jetbrains.PluginCompat.artifactDownloadLoggerSettings.toImmutableSeq
-    applySettings(state, settings, Seq[Setting[_]]())
+    applySettings(state, settings, Seq[Setting[?]]())
   }
 }

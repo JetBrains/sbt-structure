@@ -76,7 +76,7 @@ object KeysExtractor {
     if value != null && (value.getClass.getMethod("toString").getDeclaringClass ne classOf[Any])
     stringValue <- Option(value.toString) // some zany settings might return a null toString
   } yield {
-    val trimmed = stringValue.toString.trim
+    val trimmed = stringValue.trim
     if (trimmed.length > maxValueStringLength)
       trimmed.substring(0, maxValueStringLength - 3) + "..."
     else trimmed
