@@ -8,3 +8,5 @@ expected.txt
 sbt-global
 structure-*-actual.xml
 !.idea/vcs.xml
+.bloop
+.bsp

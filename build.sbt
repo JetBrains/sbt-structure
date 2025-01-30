@@ -5,36 +5,46 @@ import scala.collection.mutable
 
 ThisBuild / organization := "org.jetbrains.scala"
 ThisBuild / homepage := Some(url("https://github.com/JetBrains/sbt-structure"))
-ThisBuild / licenses += ("Apache-2.0", url("http://www.apache.org/licenses/LICENSE-2.0"))
+ThisBuild / licenses += ("Apache-2.0", url("https://www.apache.org/licenses/LICENSE-2.0"))
 
-lazy val sonatypeSettings = Seq(
+lazy val CommonSonatypeSettings = Seq(
   sonatypeProfileName := "org.jetbrains",
   sonatypeProjectHosting := Some(GitHubHosting("JetBrains", "sbt-structure", "scala-developers@jetbrains.com"))
 )
 
 lazy val sbtStructure = project.in(file("."))
-  .aggregate(core, extractor)
+  .aggregate(core, extractor, extractorLegacy_013)
   .settings(
     name := "sbt-structure",
-    // disable publishing in root project
+    CommonSonatypeSettings,
+    // disable publishing in the root project
     publish / skip := true,
     crossScalaVersions := List.empty,
     crossSbtVersions := List.empty,
-    sonatypePublishTo := None,
-    sonatypeSettings
+    sonatypePublishTo := None
   )
 
-//NOTE: extra scala 2.12 version is used just to distinguish between different sbt 1.x versions
+//NOTE: an extra scala 2.12 version is used just to distinguish between different sbt 1.x versions
 // when calculating pluginCrossBuild / sbtVersion
 val scala212_Earlier: String = "2.12.19" //used for sbt < 1.3
 val scala212: String = "2.12.20" //used for sbt >= 1.3
 val scala3: String = "3.6.2" //used for sbt 2
+val Scala_2_10_Legacy = "2.10.7"
+
+val SbtVersion_1_0 = "1.0.0"
+val SbtVersion_1_3 = "1.3.0"
+val SbtVersion_2 = "2.0.0-M3"
+val SbtVersion_0_13_Legacy = "0.13.17"
+
+val CommonSharedCoreDataSourcesSettings: Seq[Def.Setting[Seq[File]]] = Seq(
+  Compile / unmanagedSourceDirectories +=
+    (ThisBuild / baseDirectory).value / "shared" / "src" / "main" / "scala",
+)
 
 lazy val core = project.in(file("core"))
   .settings(
     name := "sbt-structure-core",
-    Compile / unmanagedSourceDirectories +=
-      (ThisBuild / baseDirectory).value / "shared" / "src" / "main" / "scala",
+    CommonSonatypeSettings,
     libraryDependencies ++= {
       val scalaVersion = Version(scalaBinaryVersion.value)
       if (scalaVersion >= Version("2.12"))
@@ -43,19 +53,14 @@ lazy val core = project.in(file("core"))
         Nil
     },
     crossScalaVersions := Seq("2.13.16", scala212),
-    sonatypeSettings
+    CommonSharedCoreDataSourcesSettings,
   )
-
-val SbtVersion_1_0 = "1.0.0"
-val SbtVersion_1_3 = "1.3.0"
-val SbtVersion_2 = "2.0.0-M3"
 
 lazy val extractor = project.in(file("extractor"))
   .enablePlugins(SbtPlugin)
   .settings(
     name := "sbt-structure-extractor",
-    Compile / unmanagedSourceDirectories +=
-      (ThisBuild / baseDirectory).value / "shared" / "src" / "main" / "scala",
+    CommonSonatypeSettings,
     scalacOptions ++= Seq("-deprecation", "-feature") ++ {
       // Mute some warnings
       // We have to use some deprecated things because we cross-compile for 2.10, 2.12 and 3.x
@@ -121,8 +126,10 @@ lazy val extractor = project.in(file("extractor"))
         result += baseDir / "scala-sbt-1.0-1.x"
       if (sbtVersion >= Version("1.3"))
         result += baseDir / "scala-sbt-1.3+"
-      result.toSeq
+
+      result
     },
+    CommonSharedCoreDataSourcesSettings,
     // Only run tests in scala 2
     // TODO: ensure CI is updated (TeamCity & GitHub)
     Test / unmanagedSourceDirectories := {
@@ -131,20 +138,33 @@ lazy val extractor = project.in(file("extractor"))
       else
         Nil
     },
-    sonatypeSettings
+  )
+
+// We use separate module for 0.13 with many sources duplicated as an alternative to cross-compilation.
+// Such an approach should be easier than cross-compiling against 0.13, 1.0, 1.2, 2.x.
+// Trying to cross-compile between 3 major versions of sbt (and thus scala 2.10, 2.12, 3.x) is very fragile
+lazy val extractorLegacy_013 = project.in(file("extractor-legacy-0.13"))
+  .enablePlugins(SbtPlugin)
+  .settings(
+    name := "sbt-structure-extractor-legacy-0.13",
+    // NOTE: use the same module name for 0.13 when publishing.
+    // We have to do this explicitly because we extracted the 0.13 code to a separate project with a different name
+    // which is used as the module name by default.
+    moduleName := (extractor / Keys.moduleName).value,
+    CommonSonatypeSettings,
+
+    scalaVersion := Scala_2_10_Legacy,
+    crossScalaVersions := Seq(Scala_2_10_Legacy),
+    crossSbtVersions := Seq(SbtVersion_0_13_Legacy),
+    pluginCrossBuild / sbtVersion := SbtVersion_0_13_Legacy,
+    CommonSharedCoreDataSourcesSettings,
   )
 
 val publishCoreCommand =
   "; project core ; ci-release"
 val publishExtractorCommand =
-  "; project extractor ; ci-release"
-val publishAllCommand =
-  "; reload ; project core ; ci-release ; project extractor ; ci-release "
-val publishAllLocalCommand =
-  "; reload ; project core ; + publishLocal ; project extractor ; + publishLocal"
+  "; project extractor ; ci-release ; project extractorLegacy_013 ; ci-release"
 
 // the ^ sbt-cross operator doesn't work that well for publishing, so we need to be more explicit about the command chain
 addCommandAlias("publishCore", publishCoreCommand)
 addCommandAlias("publishExtractor", publishExtractorCommand)
-addCommandAlias("publishAll", publishAllCommand)
-addCommandAlias("publishAllLocal", publishAllLocalCommand)

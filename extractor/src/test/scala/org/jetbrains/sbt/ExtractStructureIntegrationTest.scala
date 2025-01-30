@@ -1,15 +1,15 @@
 package org.jetbrains.sbt
 
 import org.jetbrains.sbt.Options.Keys
-import org.jetbrains.sbt.structure.XmlSerializer._
-import org.jetbrains.sbt.structure._
+import org.jetbrains.sbt.structure.XmlSerializer.*
+import org.jetbrains.sbt.structure.*
 import org.scalatest.StreamlinedXml
 import org.scalatest.freespec.AnyFreeSpecLike
-import org.scalatest.matchers.must.Matchers._
+import org.scalatest.matchers.must.Matchers.*
 
 import java.io.{File, PrintWriter}
 import scala.collection.JavaConverters.asScalaIteratorConverter
-import scala.xml._
+import scala.xml.*
 
 class ExtractStructureIntegrationTest extends AnyFreeSpecLike {
 
@@ -169,16 +169,18 @@ class ExtractStructureIntegrationTest extends AnyFreeSpecLike {
       base must exist
     }
 
+    //See `build.sbt` to better understand the logic
     val pluginClassesDir: File = {
-      //See `build.sbt` to better understand the logic
-      val isBefore1_3 = sbtVersionShort.startsWith("1.0") || sbtVersionShort.startsWith("1.1") || sbtVersionShort.startsWith("1.2")
-      val crossBuiltSbtVersion: String = if (sbtVersionShort.startsWith("0."))
-        sbtVersionShort
+      val isBefore1_3 = sbtVersionShort.startsWith("1.0") ||
+        sbtVersionShort.startsWith("1.1") ||
+        sbtVersionShort.startsWith("1.2")
+      val filePath: String = if (sbtVersionShort.startsWith("0."))
+        s"extractor-legacy-0.13/target/scala-$scalaVersion/sbt-0.13/classes/"
       else if (isBefore1_3)
-        "1.0"
+        s"extractor/target/scala-$scalaVersion/sbt-1.0/classes/"
       else
-        "1.3"
-      val file = new File(s"extractor/target/scala-$scalaVersion/sbt-$crossBuiltSbtVersion/classes/").getCanonicalFile
+        s"extractor/target/scala-$scalaVersion/sbt-1.3/classes/"
+      val file = new File(filePath).getCanonicalFile
       file.ensuring(_.exists(), s"Plugin file does not exist: $file.\nEnsure to build the plugin fist by running 'sbt +compile'")
     }
 

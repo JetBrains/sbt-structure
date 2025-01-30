@@ -5,6 +5,8 @@ import sbt.jetbrains.PluginCompat
 import sbt.jetbrains.PluginCompat.*
 import sbt.plugins.JvmPlugin
 
+//The class is used indirectly by Scala Plugin (see also SCL-20353)
+//noinspection ScalaUnusedSymbol
 object StructurePlugin extends AutoPlugin {
 
   override def requires: Plugins = JvmPlugin
