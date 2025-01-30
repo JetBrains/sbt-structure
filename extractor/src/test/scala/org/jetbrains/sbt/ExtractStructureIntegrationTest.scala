@@ -1,7 +1,8 @@
 package org.jetbrains.sbt
 
-import org.jetbrains.sbt.structure._
+import org.jetbrains.sbt.Options.Keys
 import org.jetbrains.sbt.structure.XmlSerializer._
+import org.jetbrains.sbt.structure._
 import org.scalatest.StreamlinedXml
 import org.scalatest.freespec.AnyFreeSpecLike
 import org.scalatest.matchers.must.Matchers._
@@ -10,7 +11,7 @@ import java.io.{File, PrintWriter}
 import scala.collection.JavaConverters.asScalaIteratorConverter
 import scala.xml._
 
-class ImportSpec extends AnyFreeSpecLike {
+class ExtractStructureIntegrationTest extends AnyFreeSpecLike {
 
   //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
   // Set this value to `true` to copy structure to expected
@@ -29,8 +30,6 @@ class ImportSpec extends AnyFreeSpecLike {
   )
 
   private val TestDataRoot = new File("extractor/src/test/data/").getCanonicalFile
-
-  import Options.Keys
 
   private val ResolveNone = ""
   private val ResolveNoneAndSeparateProdTestSources = Keys.SeparateProdAndTestSources
@@ -176,11 +175,11 @@ class ImportSpec extends AnyFreeSpecLike {
       val crossBuiltSbtVersion: String = if (sbtVersionShort.startsWith("0."))
         sbtVersionShort
       else if (isBefore1_3)
-        "1.2"
+        "1.0"
       else
         "1.3"
       val file = new File(s"extractor/target/scala-$scalaVersion/sbt-$crossBuiltSbtVersion/classes/").getCanonicalFile
-      file.ensuring(_.exists(), s"Plugin file does not exist: $file")
+      file.ensuring(_.exists(), s"Plugin file does not exist: $file.\nEnsure to build the plugin fist by running 'sbt +compile'")
     }
 
     // support different versions of expected structure file name
