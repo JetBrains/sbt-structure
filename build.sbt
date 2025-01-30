@@ -130,7 +130,8 @@ lazy val extractor = project.in(file("extractor"))
       result
     },
     CommonSharedCoreDataSourcesSettings,
-    // Only run tests in scala 2
+    // We only run tests in Scala 2.
+    // This is done to avoid cross-compilation for test sources, which would introduce some redundant burden.
     // TODO: ensure CI is updated (TeamCity & GitHub)
     Test / unmanagedSourceDirectories := {
       if (scalaVersion.value.startsWith("2"))
@@ -168,3 +169,6 @@ val publishExtractorCommand =
 // the ^ sbt-cross operator doesn't work that well for publishing, so we need to be more explicit about the command chain
 addCommandAlias("publishCore", publishCoreCommand)
 addCommandAlias("publishExtractor", publishExtractorCommand)
+
+// note: we can only run tests for Scala 2 (see comments in extractor module)
+addCommandAlias("crossCompileAndRunTests", s"""; +compile ; project extractor ; set scalaVersion := "$scala212" ; test""")
