@@ -25,7 +25,10 @@ trait PluginCompat_SinceSbt_1_3 {
 
   private class MyCoursierLogger(logger: Logger) extends CacheLogger {
     override def downloadedArtifact(url: String, success: Boolean): Unit = {
-      logger.info(s"downloaded $url")
+      if (success)
+        logger.info(s"downloaded $url")
+      else
+        logger.info(s"downloading failed $url")
     }
 
     override def downloadingArtifact(url: String): Unit = {
