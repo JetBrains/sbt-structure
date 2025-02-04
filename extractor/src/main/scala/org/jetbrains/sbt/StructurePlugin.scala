@@ -1,7 +1,6 @@
 package org.jetbrains.sbt
 
 import sbt.*
-import sbt.jetbrains.PluginCompat
 import sbt.jetbrains.PluginCompat.*
 import sbt.plugins.JvmPlugin
 
@@ -16,7 +15,7 @@ object StructurePlugin extends AutoPlugin {
     StructureKeys.sbtStructureOutputFile := None,
     StructureKeys.sbtStructureOptions := "prettyPrint download",
     StructureKeys.dumpStructureTo := PluginOnlyTasksCompat.dumpStructureTo.evaluated
-  ) ++ PluginCompat.artifactDownloadLoggerSettings ++ CreateTasks.globalSettings
+  ) ++ CreateTasks.globalSettings
 
   override lazy val projectSettings: Seq[Setting[?]] = CreateTasks.projectSettings.toSbtSeqType
 }

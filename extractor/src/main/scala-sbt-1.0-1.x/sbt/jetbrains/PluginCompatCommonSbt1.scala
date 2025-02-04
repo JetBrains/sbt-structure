@@ -1,6 +1,6 @@
 package sbt.jetbrains
 
-import sbt.{AttributeKey, Incomplete, InputTask, Keys, Result, Scope, Settings, Task}
+import sbt.{AttributeKey, Incomplete, InputTask, Keys, Result, Scope, Setting, Settings, Task}
 
 trait PluginCompatCommonSbt1 extends AnyRef
   with SeqOpsCompat
@@ -27,4 +27,6 @@ trait PluginCompatCommonSbt1 extends AnyRef
         cause.foreach(c => throw c)
         Map.empty
     }
+
+    val globalSettingsSbtSpecific: Seq[Setting[?]] = Nil
 }

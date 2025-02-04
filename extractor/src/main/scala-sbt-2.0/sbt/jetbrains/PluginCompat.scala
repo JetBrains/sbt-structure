@@ -26,4 +26,12 @@ object PluginCompat extends AnyRef
         cause.foreach(c => throw c)
         Map.empty
     }
+
+  val globalSettingsSbtSpecific: Seq[Setting[?]] = Seq(
+    /**
+     * This is required to mute working for the unused key defined in<br>
+     * [[org.jetbrains.sbt.CreateTasks.projectSettings]]
+     */
+    Keys.excludeLintKeys += Keys.updateClassifiers / Keys.transitiveClassifiers,
+  )
 end PluginCompat

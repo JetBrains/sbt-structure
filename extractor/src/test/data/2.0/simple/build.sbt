@@ -1,8 +1,8 @@
 import sbt.ThisBuild
 
-ThisBuild / name := "some-name"
-ThisBuild / organization := "some-organization"
-ThisBuild / version := "1.2.3"
+name := "some-name"
+organization := "some-organization"
+version := "1.2.3"
 
 val root = (project in file("."))
   .settings(
