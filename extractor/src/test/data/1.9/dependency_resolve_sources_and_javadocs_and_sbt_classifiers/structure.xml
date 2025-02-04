@@ -8,11 +8,10 @@
     <import>import _root_.sbt.nio.Keys._</import>
     <import>import _root_.sbt.plugins.IvyPlugin, _root_.sbt.plugins.JvmPlugin, _root_.sbt.plugins.CorePlugin, _root_.sbt.ScriptedPlugin, _root_.sbt.plugins.SbtPlugin, _root_.sbt.plugins.SemanticdbPlugin, _root_.sbt.plugins.JUnitXmlReportPlugin, _root_.sbt.plugins.Giter8TemplatePlugin, _root_.sbt.plugins.MiniDependencyTreePlugin</import>
     <import>import _root_.scala.xml.{TopScope=&gt;$scope}</import>
-    <classes>$SBT_BOOT/scala-2.12.18/lib/jline.jar</classes>
     <classes>$SBT_BOOT/scala-2.12.18/lib/scala-compiler.jar</classes>
     <classes>$SBT_BOOT/scala-2.12.18/lib/scala-library.jar</classes>
     <classes>$SBT_BOOT/scala-2.12.18/lib/scala-reflect.jar</classes>
-    <classes>$SBT_BOOT/scala-2.12.18/lib/scala-xml_2.12.jar</classes>
+    <classes>$SBT_BOOT/scala-2.12.18/lib/scala-xml_2.12-2.1.0.jar</classes>
     <classes>$SBT_BOOT/scala-2.12.18/org.scala-sbt/sbt/1.9.6/actions_2.12-1.9.6.jar</classes>
     <classes>$SBT_BOOT/scala-2.12.18/org.scala-sbt/sbt/1.9.6/caffeine-2.8.5.jar</classes>
     <classes>$SBT_BOOT/scala-2.12.18/org.scala-sbt/sbt/1.9.6/checker-qual-3.4.1.jar</classes>
@@ -58,9 +57,11 @@
     <classes>$SBT_BOOT/scala-2.12.18/org.scala-sbt/sbt/1.9.6/sbinary_2.12-0.5.1.jar</classes>
     <classes>$SBT_BOOT/scala-2.12.18/org.scala-sbt/sbt/1.9.6/sbt-1.9.6.jar</classes>
     <classes>$SBT_BOOT/scala-2.12.18/org.scala-sbt/sbt/1.9.6/scala-collection-compat_2.12-2.10.0.jar</classes>
+    <classes>$SBT_BOOT/scala-2.12.18/org.scala-sbt/sbt/1.9.6/scala-compiler-2.12.18.jar</classes>
+    <classes>$SBT_BOOT/scala-2.12.18/org.scala-sbt/sbt/1.9.6/scala-library-2.12.18.jar</classes>
     <classes>$SBT_BOOT/scala-2.12.18/org.scala-sbt/sbt/1.9.6/scala-parser-combinators_2.12-1.1.2.jar</classes>
     <classes>$SBT_BOOT/scala-2.12.18/org.scala-sbt/sbt/1.9.6/scala-reflect-2.12.18.jar</classes>
-    <classes>$SBT_BOOT/scala-2.12.18/org.scala-sbt/sbt/1.9.6/scala-xml_2.12-2.1.0.jar</classes>
+    <classes>$SBT_BOOT/scala-2.12.18/org.scala-sbt/sbt/1.9.6/scala-xml_2.12-2.2.0.jar</classes>
     <classes>$SBT_BOOT/scala-2.12.18/org.scala-sbt/sbt/1.9.6/scripted-plugin_2.12-1.9.6.jar</classes>
     <classes>$SBT_BOOT/scala-2.12.18/org.scala-sbt/sbt/1.9.6/shaded-apache-httpasyncclient-0.7.0.jar</classes>
     <classes>$SBT_BOOT/scala-2.12.18/org.scala-sbt/sbt/1.9.6/shaded-jawn-parser_2.12-0.9.1.jar</classes>
@@ -305,11 +306,11 @@
     </configuration>
     <dependencies>
       <projects>
-        <forTest/>
-        <forProduction/>
+        <forTest></forTest>
+        <forProduction></forProduction>
       </projects>
       <modules>
-        <forTest/>
+        <forTest></forTest>
         <forProduction>
           <module configurations="compile" organization="org.scala-lang" name="scala-library" revision="2.10.1" artifactType="jar" classifier=""/>
           <module configurations="test" organization="junit" name="junit" revision="4.13.2" artifactType="jar" classifier=""/>
@@ -317,12 +318,11 @@
         </forProduction>
       </modules>
       <jars>
-        <forTest/>
-        <forProduction/>
+        <forTest></forTest>
+        <forProduction></forProduction>
       </jars>
     </dependencies>
     <resolver name="public" root="https://repo1.maven.org/maven2/"/>
-    <resolver name="local-preloaded" root="file:$HOME/.sbt-structure-global/1.9/preloaded"/>
     <setting>
       <label>artifacts</label>
       <description>The artifact definitions for the current module. Must be consistent with packagedArtifacts.</description>

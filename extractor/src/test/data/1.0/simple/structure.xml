@@ -6,11 +6,10 @@
     <import>import _root_.sbt._</import>
     <import>import _root_.sbt.plugins.IvyPlugin, _root_.sbt.plugins.JvmPlugin, _root_.sbt.plugins.CorePlugin, _root_.sbt.plugins.JUnitXmlReportPlugin, _root_.sbt.plugins.Giter8TemplatePlugin</import>
     <import>import _root_.scala.xml.{TopScope=&gt;$scope}</import>
-    <classes>$SBT_BOOT/scala-2.12.4/lib/jline.jar</classes>
     <classes>$SBT_BOOT/scala-2.12.4/lib/scala-compiler.jar</classes>
     <classes>$SBT_BOOT/scala-2.12.4/lib/scala-library.jar</classes>
     <classes>$SBT_BOOT/scala-2.12.4/lib/scala-reflect.jar</classes>
-    <classes>$SBT_BOOT/scala-2.12.4/lib/scala-xml_2.12.jar</classes>
+    <classes>$SBT_BOOT/scala-2.12.4/lib/scala-xml_2.12-1.0.6.jar</classes>
     <classes>$SBT_BOOT/scala-2.12.4/org.scala-sbt/sbt/1.0.4/actions_2.12-1.0.4.jar</classes>
     <classes>$SBT_BOOT/scala-2.12.4/org.scala-sbt/sbt/1.0.4/collections_2.12-1.0.4.jar</classes>
     <classes>$SBT_BOOT/scala-2.12.4/org.scala-sbt/sbt/1.0.4/command_2.12-1.0.4.jar</classes>
@@ -47,6 +46,8 @@
     <classes>$SBT_BOOT/scala-2.12.4/org.scala-sbt/sbt/1.0.4/run_2.12-1.0.4.jar</classes>
     <classes>$SBT_BOOT/scala-2.12.4/org.scala-sbt/sbt/1.0.4/sbinary_2.12-0.4.4.jar</classes>
     <classes>$SBT_BOOT/scala-2.12.4/org.scala-sbt/sbt/1.0.4/sbt-1.0.4.jar</classes>
+    <classes>$SBT_BOOT/scala-2.12.4/org.scala-sbt/sbt/1.0.4/scala-compiler-2.12.4.jar</classes>
+    <classes>$SBT_BOOT/scala-2.12.4/org.scala-sbt/sbt/1.0.4/scala-library-2.12.4.jar</classes>
     <classes>$SBT_BOOT/scala-2.12.4/org.scala-sbt/sbt/1.0.4/scala-parser-combinators_2.12-1.0.5.jar</classes>
     <classes>$SBT_BOOT/scala-2.12.4/org.scala-sbt/sbt/1.0.4/scala-reflect-2.12.4.jar</classes>
     <classes>$SBT_BOOT/scala-2.12.4/org.scala-sbt/sbt/1.0.4/scala-xml_2.12-1.0.6.jar</classes>
@@ -194,22 +195,21 @@
     </configuration>
     <dependencies>
       <projects>
-        <forTest/>
-        <forProduction/>
+        <forTest></forTest>
+        <forProduction></forProduction>
       </projects>
       <modules>
-        <forTest/>
+        <forTest></forTest>
         <forProduction>
           <module configurations="compile" organization="org.scala-lang" name="scala-library" revision="2.13.6" artifactType="jar" classifier=""/>
         </forProduction>
       </modules>
       <jars>
-        <forTest/>
-        <forProduction/>
+        <forTest></forTest>
+        <forProduction></forProduction>
       </jars>
     </dependencies>
     <resolver name="public" root="https://repo1.maven.org/maven2/"/>
-    <resolver name="local-preloaded" root="file:$HOME/.sbt-structure-global/1.0/preloaded"/>
     <setting>
       <label>cleanupCommands</label>
       <description>Commands to execute before the Scala interpreter exits.</description>

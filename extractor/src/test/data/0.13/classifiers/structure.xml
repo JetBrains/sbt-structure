@@ -5,8 +5,6 @@
     <import>import Test._</import>
     <import>import _root_.sbt.plugins.IvyPlugin, _root_.sbt.plugins.JvmPlugin, _root_.sbt.plugins.CorePlugin, _root_.sbt.plugins.JUnitXmlReportPlugin, _root_.sbt.plugins.Giter8TemplatePlugin</import>
     <import>import sbt._, Keys._, dsl._</import>
-    <classes>$SBT_BOOT/scala-2.10.7/lib/jansi.jar</classes>
-    <classes>$SBT_BOOT/scala-2.10.7/lib/jline.jar</classes>
     <classes>$SBT_BOOT/scala-2.10.7/lib/scala-compiler.jar</classes>
     <classes>$SBT_BOOT/scala-2.10.7/lib/scala-library.jar</classes>
     <classes>$SBT_BOOT/scala-2.10.7/lib/scala-reflect.jar</classes>
@@ -125,8 +123,6 @@
         <jar>$SBT_BOOT/scala-2.10.7/lib/scala-library.jar</jar>
       </libraryJars>
       <compilerJars>
-        <jar>$SBT_BOOT/scala-2.10.7/lib/jansi.jar</jar>
-        <jar>$SBT_BOOT/scala-2.10.7/lib/jline.jar</jar>
         <jar>$SBT_BOOT/scala-2.10.7/lib/scala-compiler.jar</jar>
         <jar>$SBT_BOOT/scala-2.10.7/lib/scala-reflect.jar</jar>
       </compilerJars>
@@ -153,22 +149,21 @@
     </configuration>
     <dependencies>
       <projects>
-        <forTest/>
-        <forProduction/>
+        <forTest></forTest>
+        <forProduction></forProduction>
       </projects>
       <modules>
-        <forTest/>
+        <forTest></forTest>
         <forProduction>
           <module configurations="compile" organization="org.scala-lang" name="scala-library" revision="2.10.7" artifactType="jar" classifier=""/>
         </forProduction>
       </modules>
       <jars>
-        <forTest/>
-        <forProduction/>
+        <forTest></forTest>
+        <forProduction></forProduction>
       </jars>
     </dependencies>
     <resolver name="public" root="https://repo1.maven.org/maven2/"/>
-    <resolver name="local-preloaded" root="file:$HOME/.sbt-structure-global/0.13/preloaded"/>
     <setting>
       <label>dependencyOverrides</label>
       <description>Declares managed dependency overrides.</description>
@@ -1696,8 +1691,6 @@
         <jar>$SBT_BOOT/scala-2.10.7/lib/scala-library.jar</jar>
       </libraryJars>
       <compilerJars>
-        <jar>$SBT_BOOT/scala-2.10.7/lib/jansi.jar</jar>
-        <jar>$SBT_BOOT/scala-2.10.7/lib/jline.jar</jar>
         <jar>$SBT_BOOT/scala-2.10.7/lib/scala-compiler.jar</jar>
         <jar>$SBT_BOOT/scala-2.10.7/lib/scala-reflect.jar</jar>
       </compilerJars>
@@ -1724,11 +1717,11 @@
     </configuration>
     <dependencies>
       <projects>
-        <forTest/>
-        <forProduction/>
+        <forTest></forTest>
+        <forProduction></forProduction>
       </projects>
       <modules>
-        <forTest/>
+        <forTest></forTest>
         <forProduction>
           <module configurations="compile" organization="org.scala-lang" name="scala-library" revision="2.10.7" artifactType="jar" classifier=""/>
           <module configurations="compile" organization="org.apache.james" name="apache-mailet-base" revision="2.5.0" artifactType="jar" classifier=""/>
@@ -1738,12 +1731,11 @@
         </forProduction>
       </modules>
       <jars>
-        <forTest/>
-        <forProduction/>
+        <forTest></forTest>
+        <forProduction></forProduction>
       </jars>
     </dependencies>
     <resolver name="public" root="https://repo1.maven.org/maven2/"/>
-    <resolver name="local-preloaded" root="file:$HOME/.sbt-structure-global/0.13/preloaded"/>
     <setting>
       <label>dependencyOverrides</label>
       <description>Declares managed dependency overrides.</description>
@@ -3271,8 +3263,6 @@
         <jar>$SBT_BOOT/scala-2.10.7/lib/scala-library.jar</jar>
       </libraryJars>
       <compilerJars>
-        <jar>$SBT_BOOT/scala-2.10.7/lib/jansi.jar</jar>
-        <jar>$SBT_BOOT/scala-2.10.7/lib/jline.jar</jar>
         <jar>$SBT_BOOT/scala-2.10.7/lib/scala-compiler.jar</jar>
         <jar>$SBT_BOOT/scala-2.10.7/lib/scala-reflect.jar</jar>
       </compilerJars>
@@ -3299,11 +3289,11 @@
     </configuration>
     <dependencies>
       <projects>
-        <forTest/>
-        <forProduction/>
+        <forTest></forTest>
+        <forProduction></forProduction>
       </projects>
       <modules>
-        <forTest/>
+        <forTest></forTest>
         <forProduction>
           <module configurations="compile" organization="org.scala-lang" name="scala-library" revision="2.10.7" artifactType="jar" classifier=""/>
           <module configurations="compile" organization="org.apache.james" name="apache-mailet-base" revision="2.5.0" artifactType="jar" classifier=""/>
@@ -3314,12 +3304,11 @@
         </forProduction>
       </modules>
       <jars>
-        <forTest/>
-        <forProduction/>
+        <forTest></forTest>
+        <forProduction></forProduction>
       </jars>
     </dependencies>
     <resolver name="public" root="https://repo1.maven.org/maven2/"/>
-    <resolver name="local-preloaded" root="file:$HOME/.sbt-structure-global/0.13/preloaded"/>
     <setting>
       <label>dependencyOverrides</label>
       <description>Declares managed dependency overrides.</description>

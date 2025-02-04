@@ -20,7 +20,7 @@ class ExtractStructureIntegrationTest extends AnyFreeSpecLike {
   //       then rerun the test with this flag set to "true"
   // ATTENTION: carefully review the changes in expected data manually
   //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-  private val CopyActualStructureToExpected = true //TODO: revert !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  private val CopyActualStructureToExpected = false
 
   private val TestDataRoot = new File("extractor/src/test/data/").getCanonicalFile
 

@@ -6,8 +6,6 @@
     <import>import _root_.play.Play.autoImport._, _root_.play.twirl.sbt.SbtTwirl.autoImport._, _root_.com.typesafe.sbt.jse.SbtJsEngine.autoImport._, _root_.com.typesafe.sbt.jse.SbtJsTask.autoImport._, _root_.com.typesafe.sbt.web.SbtWeb.autoImport._, _root_.com.typesafe.sbt.webdriver.SbtWebDriver.autoImport._</import>
     <import>import _root_.sbt.plugins.IvyPlugin, _root_.sbt.plugins.JvmPlugin, _root_.sbt.plugins.CorePlugin, _root_.sbt.plugins.JUnitXmlReportPlugin, _root_.sbt.plugins.Giter8TemplatePlugin, _root_.play.Play, _root_.play.PlayJava, _root_.play.PlayScala, _root_.play.twirl.sbt.SbtTwirl, _root_.com.typesafe.sbt.jse.SbtJsEngine, _root_.com.typesafe.sbt.jse.SbtJsTask, _root_.com.typesafe.sbt.web.SbtWeb, _root_.com.typesafe.sbt.webdriver.SbtWebDriver</import>
     <import>import sbt._, Keys._, dsl._</import>
-    <classes>$SBT_BOOT/scala-2.10.7/lib/jansi.jar</classes>
-    <classes>$SBT_BOOT/scala-2.10.7/lib/jline.jar</classes>
     <classes>$SBT_BOOT/scala-2.10.7/lib/scala-compiler.jar</classes>
     <classes>$SBT_BOOT/scala-2.10.7/lib/scala-library.jar</classes>
     <classes>$SBT_BOOT/scala-2.10.7/lib/scala-reflect.jar</classes>
@@ -212,8 +210,6 @@
         <jar>$SBT_BOOT/scala-2.10.7/lib/scala-library.jar</jar>
       </libraryJars>
       <compilerJars>
-        <jar>$SBT_BOOT/scala-2.10.7/lib/jansi.jar</jar>
-        <jar>$SBT_BOOT/scala-2.10.7/lib/jline.jar</jar>
         <jar>$SBT_BOOT/scala-2.10.7/lib/scala-compiler.jar</jar>
         <jar>$SBT_BOOT/scala-2.10.7/lib/scala-reflect.jar</jar>
       </compilerJars>
@@ -254,11 +250,11 @@
     </configuration>
     <dependencies>
       <projects>
-        <forTest/>
-        <forProduction/>
+        <forTest></forTest>
+        <forProduction></forProduction>
       </projects>
       <modules>
-        <forTest/>
+        <forTest></forTest>
         <forProduction>
           <module configurations="compile" organization="org.scala-lang" name="scala-library" revision="2.10.7" artifactType="jar" classifier=""/>
           <module configurations="compile" organization="com.typesafe.play" name="twirl-api_2.10" revision="1.0.2" artifactType="jar" classifier=""/>
@@ -362,12 +358,11 @@
         </forProduction>
       </modules>
       <jars>
-        <forTest/>
-        <forProduction/>
+        <forTest></forTest>
+        <forProduction></forProduction>
       </jars>
     </dependencies>
     <resolver name="public" root="https://repo1.maven.org/maven2/"/>
-    <resolver name="local-preloaded" root="file:$HOME/.sbt-structure-global/0.13/preloaded"/>
     <resolver name="Typesafe Releases Repository" root="https://repo.typesafe.com/typesafe/releases/"/>
     <play2>
       <version>2.3.7</version>

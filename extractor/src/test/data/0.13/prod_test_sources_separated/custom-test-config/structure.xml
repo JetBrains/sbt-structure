@@ -5,8 +5,6 @@
     <import>import MyBuild._</import>
     <import>import _root_.sbt.plugins.IvyPlugin, _root_.sbt.plugins.JvmPlugin, _root_.sbt.plugins.CorePlugin, _root_.sbt.plugins.JUnitXmlReportPlugin, _root_.sbt.plugins.Giter8TemplatePlugin</import>
     <import>import sbt._, Keys._, dsl._</import>
-    <classes>$SBT_BOOT/scala-2.10.7/lib/jansi.jar</classes>
-    <classes>$SBT_BOOT/scala-2.10.7/lib/jline.jar</classes>
     <classes>$SBT_BOOT/scala-2.10.7/lib/scala-compiler.jar</classes>
     <classes>$SBT_BOOT/scala-2.10.7/lib/scala-library.jar</classes>
     <classes>$SBT_BOOT/scala-2.10.7/lib/scala-reflect.jar</classes>
@@ -162,7 +160,7 @@
         <forTest>
           <project buildURI="$URI_BASE" configurations="compile">bare:main</project>
         </forTest>
-        <forProduction/>
+        <forProduction></forProduction>
       </projects>
       <modules>
         <forTest>
@@ -180,12 +178,11 @@
         </forProduction>
       </modules>
       <jars>
-        <forTest/>
-        <forProduction/>
+        <forTest></forTest>
+        <forProduction></forProduction>
       </jars>
     </dependencies>
     <resolver name="public" root="https://repo1.maven.org/maven2/"/>
-    <resolver name="local-preloaded" root="file:$HOME/.sbt-structure-global/0.13/preloaded"/>
     <resolver name="java.net Maven2 Repository" root="https://maven.java.net/content/repositories/public/"/>
     <setting>
       <label>dependencyOverrides</label>
