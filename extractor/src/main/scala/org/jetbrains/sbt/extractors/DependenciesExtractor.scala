@@ -34,7 +34,7 @@ class DependenciesExtractor(unmanagedClasspath: SbtConfiguration => Keys.Classpa
     val dependencies = projectToConfigurations.toSeq.map { case (ProjectType(project), configurations) =>
       val transformedConfigurations = mapConfigurations(configurations).map(mapCustomSourceConfigurationIfApplicable)
       ProjectDependencyData(project.id, Some(project.build), transformedConfigurations)
-    }.toSeq
+    }
     Dependencies(dependencies, Seq.empty)
   }
 
@@ -47,116 +47,105 @@ class DependenciesExtractor(unmanagedClasspath: SbtConfiguration => Keys.Classpa
   }
 
   private def separatedSourcesProjectDependencies: Dependencies[ProjectDependencyData] = {
-    processDependencies(projectToConfigurations.toSeq) { case (projectType @ ProjectType(project), configs) =>
-      val projectName = mapToProjectNameWithSourceTypeAppended(projectType)
-      ProjectDependencyData(projectName, Option(project.build), configs)
-    }
+   val (productionDependencies, testDependencies) =
+     projectToConfigurations.foldLeft((Map.empty[ProjectType, Seq[Configuration]], Map.empty[ProjectType, Seq[Configuration]])) {
+       case ((prodDeps, testDeps), (projectType, configurations)) =>
+         val (testConfigs, prodConfigs) = configurations.partition(config => testConfigurationNames.contains(config.name))
+
+         val mappedProdConfigs = mapProductionConfigurations(prodConfigs)
+         val updatedProdDeps =
+           if (mappedProdConfigs.nonEmpty) prodDeps.updated(projectType, prodDeps.getOrElse(projectType, Seq.empty) ++ mappedProdConfigs)
+           else prodDeps
+
+         val updatedTestDeps =
+           // If a dependency is present in any test configuration, we can immediately set its configuration to compile.
+           //This is because, in test scopes, sbt does not recognize other scopes, such as `Runtime` or `Provided`.
+           if (testConfigs.nonEmpty) testDeps.updated(projectType, testDeps.getOrElse(projectType, Seq.empty) ++ Seq(Configuration.Compile))
+           else testDeps
+
+         (updatedProdDeps, updatedTestDeps)
+     }
+
+   def toProjectDependenciesData(dependencies: Map[ProjectType, Seq[Configuration]]): Seq[ProjectDependencyData] =
+     dependencies.toSeq.map { case (projectType @ ProjectType(project), configs) =>
+       val projectName = mapToProjectNameWithSourceTypeAppended(projectType)
+       ProjectDependencyData(projectName, Option(project.build), configs)
+     }
+
+    Dependencies(toProjectDependenciesData(productionDependencies), toProjectDependenciesData(testDependencies))
   }
 
-  private def moduleDependencies: Dependencies[ModuleDependencyData] = {
+  private def moduleDependencies: Dependencies[ModuleDependencyData] =
+   if (separateProdTestSources) {
+     getDependencies(DependenciesExtractorCompat.modulesIn(_, externalDependencyClasspath)) { case (moduleId, configs) =>
+       ModuleDependencyData(moduleId, configs)
+     }
+   } else {
     val allModuleDependencies = forAllConfigurations(DependenciesExtractorCompat.modulesIn(_, externalDependencyClasspath))
-    if (separateProdTestSources) {
-      processDependencies(allModuleDependencies) { case(moduleId, configs) =>
-        ModuleDependencyData(moduleId, configs)
-      }
-    } else {
-      val dependencies = allModuleDependencies.map { case(moduleId, configs) =>
-        ModuleDependencyData(moduleId, mapConfigurations(configs))
-      }
-      Dependencies(dependencies, Seq.empty)
-    }
-  }
+    val dependencies = allModuleDependencies.map { case(moduleId, configs) =>
+       ModuleDependencyData(moduleId, mapConfigurations(configs))
+     }
+     Dependencies(dependencies, Seq.empty)
+   }
 
-  private def jarDependencies: Dependencies[JarDependencyData] = {
-    val allJarDependencies = forAllConfigurations(jarsIn)
+  private def jarDependencies: Dependencies[JarDependencyData] =
     if (separateProdTestSources) {
-      processDependencies(allJarDependencies) { case (file, configs) =>
+      getDependencies(jarsIn) { case (file, configs) =>
         JarDependencyData(file, configs)
       }
     } else {
+     val allJarDependencies = forAllConfigurations(jarsIn)
       val dependencies = allJarDependencies.map { case (file, configs) =>
         JarDependencyData(file, mapConfigurations(configs))
       }
       Dependencies(dependencies, Seq.empty)
     }
-  }
 
   private def jarsIn(configuration: SbtConfiguration): Seq[File] =
     toFiles(unmanagedClasspath(configuration))
 
-  private def forAllConfigurations[T](fn: SbtConfiguration => Seq[T]): Seq[(T, Seq[Configuration])] = {
-    val result = mutable.LinkedHashMap.empty[T, Seq[Configuration]]
-    dependencyConfigurations.flatMap(conf => fn(conf).map(it => (it, Configuration(conf.name)))).foreach {
-      case (t, conf) =>
-        val confs = result.getOrElse(t, Seq.empty)
-        result(t) = confs :+ conf
-    }
-    result.toSeq
+  private def forAllConfigurations[T](fn: SbtConfiguration => Seq[T]): Seq[(T, Seq[Configuration])] =
+    forConfigurations(dependencyConfigurations, fn)
+
+  private def forTestConfigurations[T](fn: SbtConfiguration => Seq[T]): Seq[(T, Seq[Configuration])] =
+    forConfigurations(testConfigurations, fn)
+
+  private def forProductionConfigurations[T](fn: SbtConfiguration => Seq[T]): Seq[(T, Seq[Configuration])] = {
+    val productionConfigs = dependencyConfigurations.filterNot(testConfigurations.contains)
+    forConfigurations(productionConfigs, fn)
+  }
+
+  private def forConfigurations[T](configurations: Seq[SbtConfiguration], fn: SbtConfiguration => Seq[T]): Seq[(T, Seq[Configuration])] = {
+   val result = mutable.LinkedHashMap.empty[T, Seq[Configuration]]
+   configurations.flatMap(conf => fn(conf).map(it => (it, Configuration(conf.name)))).foreach {
+    case (t, conf) =>
+     val confs = result.getOrElse(t, Seq.empty)
+     result(t) = confs :+ conf
+   }
+   result.toSeq
   }
 
   /**
-   *  Configurations passed in a parameter indicate in what configurations some dependency (project, module, jar) is present. Based on that
-   *  we can infer where (prod/test modules) and in what scope this dependency should be added.
+   * Extracts dependencies based on a provided function `fn`.
+   * This method processes dependencies separately for test and non-test (production) configurations, ensuring
+   * that dependencies are appropriately split between the main and test module.
    */
-  private def splitConfigurationsToDifferentSourceSets(configurations: Seq[Configuration]): Dependencies[Configuration] = {
-    val cs = mergeAllTestConfigurations(configurations)
-    val (prodConfigs, testConfigs) = {
-      if (Seq(Configuration.Compile, Configuration.Test, Configuration.Runtime).forall(cs.contains)) { // compile configuration
-        (Seq(Configuration.Compile), Seq(Configuration.Compile))
-      } else {
-        Seq(
-          // 1. The downside of this logic is that if cs contains only some custom source configuration (not one that is available in sbt by default),
-          // then prodConfigs will be empty. It is fixed in #updateProductionConfigs.
-          // Mapping custom source configurations to Compile, couldn't be done at the same place as
-          // #mergeAllTestConfigurations, because then Compile would be converted into Provided and it is not the purpose.
-          // 2. These 3 conditions are also suitable for -internal configurations because when e.g. compile-internal configuration
-          // is used cs contains only compile configuration and this will cause the dependency to be added to the production module
-          // with the provided scope
-          (cs.contains(Configuration.Test), Nil, Seq(Configuration.Compile)),
-          (cs.contains(Configuration.Compile), Seq(Configuration.Provided), Nil),
-          (cs.contains(Configuration.Runtime), Seq(Configuration.Runtime), Nil)
-        ).foldLeft((Seq.empty[Configuration], Seq.empty[Configuration])) { case((productionSoFar, testSoFar), (condition, productionUpdate, testUpdate)) =>
-          if (condition) (productionSoFar ++ productionUpdate, testSoFar ++ testUpdate)
-          else (productionSoFar, testSoFar)
-        }
-      }
-    }
-    val updatedProdConfigs = updateProductionConfigs(prodConfigs, cs)
-    Dependencies(updatedProdConfigs, testConfigs)
-  }
+  private def getDependencies[T, F](fn: SbtConfiguration => Seq[T])(mapToTargetType: ((T, Seq[Configuration])) => F): Dependencies[F] = {
+    val prodDependencyToConfigs = forProductionConfigurations(fn)
+    val testDependencyToConfigs = forTestConfigurations(fn)
 
-  private def updateProductionConfigs(prodConfigs: Seq[Configuration], allConfigs: Set[Configuration]): Seq[Configuration] = {
-    val containsProvidedAndRuntime = Seq(Configuration.Provided, Configuration.Runtime).forall(prodConfigs.contains)
-    val isCustomSourceConfigPresent = allConfigs.map(_.name).toSeq.intersect(sourceConfigurationsNames).nonEmpty
-
-    val shouldBeCompileScope = containsProvidedAndRuntime || (prodConfigs.isEmpty && isCustomSourceConfigPresent)
-    if (shouldBeCompileScope) {
-      Seq(Configuration.Compile)
-    } else {
-      prodConfigs
-    }
-  }
-
-  private def processDependencies[D, F](
-    dependencies: Seq[(D, Seq[Configuration])]
-  )(mapToTargetType: ((D, Seq[Configuration])) => F): Dependencies[F] = {
-    val productionDependencies = mutable.Map.empty[D, Seq[Configuration]]
-    val testDependencies = mutable.Map.empty[D, Seq[Configuration]]
-
-    def updateDependenciesInProductionAndTest(project: D, configsForProduction: Seq[Configuration], configsForTest: Seq[Configuration]): Unit = {
-      Seq((productionDependencies, configsForProduction), (testDependencies, configsForTest))
-        .filterNot(_._2.isEmpty)
-        .foreach { case(dependencies, configs) =>
-          val existingConfigurations = dependencies.getOrElse(project, Seq.empty)
-          dependencies.update(project, existingConfigurations ++ configs)
-        }
+    val testDependencies = testDependencyToConfigs.map { case (dependency, _) =>
+      // If a dependency is present in any test configuration, we can immediately set its configuration to compile.
+      //This is because, in test scopes, sbt does not recognize other scopes, such as `Runtime` or `Provided`.
+      mapToTargetType(dependency, Seq(Configuration.Compile))
     }
 
-    dependencies.foreach { case(dependency, configurations) =>
-      val cs = splitConfigurationsToDifferentSourceSets(configurations)
-      updateDependenciesInProductionAndTest(dependency, cs.forProduction, cs.forTest)
+    val productionDependencies = prodDependencyToConfigs.map { case (dependency, configs) =>
+      val mapped = mapProductionConfigurations(configs)
+      mapToTargetType(dependency, mapped)
     }
-    Dependencies(productionDependencies.toSeq.map(mapToTargetType), testDependencies.toSeq.map(mapToTargetType))
+
+    Dependencies(productionDependencies, testDependencies)
   }
 
   // We have to perform this configurations mapping because we're using externalDependencyClasspath
@@ -171,6 +160,32 @@ class DependenciesExtractor(unmanagedClasspath: SbtConfiguration => Keys.Classpa
     } else {
       cs.toSeq
     }
+  }
+
+  /**
+   * Maps production (non-test) configurations to the corresponding IntelliJ IDEA scopes.
+   * For instance, if a dependency is present only in the `compile` configuration, it is mapped to the `provided` scope.
+   * Additionally, it checks whether there are custom source configurations, and if such exist, it maps them to the `compile` scope.
+   *
+   * This mapping is necessary because the configurations we receive represent only the sbt scopes in which a dependency is defined.
+   * However, there is no direct 1:1 correspondence between sbt scopes and IDEA scopes.
+   */
+  private def mapProductionConfigurations(configurations: Seq[Configuration]): Seq[Configuration] = {
+    val prodConfigs = configurations.collect {
+      // These conditions also apply to internal configurations. For example, when a compile-internal configuration
+      // is used, only the compile configuration will be present, and it will be mapped to the provided scope.
+      case config if config == Configuration.Compile => Configuration.Provided
+      case config if config == Configuration.Runtime => Configuration.Runtime
+    }
+
+    val containsProvidedAndRuntime = Seq(Configuration.Provided, Configuration.Runtime).forall(prodConfigs.contains)
+    val hasCustomSourceConfig = configurations.map(_.name).distinct.intersect(sourceConfigurationsNames).nonEmpty
+
+    val needCompileScope = containsProvidedAndRuntime || (prodConfigs.isEmpty && hasCustomSourceConfig)
+    if (needCompileScope)
+      Seq(Configuration.Compile)
+    else
+      prodConfigs
   }
 
   /**
