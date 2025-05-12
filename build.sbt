@@ -1,15 +1,17 @@
 import lmcoursier.internal.shaded.coursier.core.Version
-import xerial.sbt.Sonatype.GitHubHosting
+import xerial.sbt.Sonatype.{GitHubHosting, sonatypeCentralHost}
 
 import scala.collection.mutable
 
 ThisBuild / organization := "org.jetbrains.scala"
 ThisBuild / homepage := Some(url("https://github.com/JetBrains/sbt-structure"))
-ThisBuild / licenses += ("Apache-2.0", url("https://www.apache.org/licenses/LICENSE-2.0"))
+ThisBuild / licenses  += ("Apache-2.0", url("https://www.apache.org/licenses/LICENSE-2.0"))
 
 lazy val CommonSonatypeSettings = Seq(
   sonatypeProfileName := "org.jetbrains",
-  sonatypeProjectHosting := Some(GitHubHosting("JetBrains", "sbt-structure", "scala-developers@jetbrains.com"))
+  sonatypeProjectHosting := Some(GitHubHosting("JetBrains", "sbt-structure", "scala-developers@jetbrains.com")),
+  sonatypeCredentialHost := sonatypeCentralHost,
+  sbtPluginPublishLegacyMavenStyle := false,
 )
 
 lazy val sbtStructure = project.in(file("."))
