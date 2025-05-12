@@ -115,6 +115,11 @@ class DependenciesExtractor(unmanagedClasspath: SbtConfiguration => Keys.Classpa
     forConfigurations(productionConfigs, fn)
   }
 
+  /*
+  Another idea for preserving the order of dependencies is to assign indexes to them when they are retrieved from this method
+  and use these indexes after any operations are performed on the dependencies.
+  This way, the order will always be maintained. Consider this approach if any additional logic needs to be applied to the dependencies.
+   */
   private def forConfigurations[T](configurations: Seq[SbtConfiguration], fn: SbtConfiguration => Seq[T]): Seq[(T, Seq[Configuration])] = {
    val result = mutable.LinkedHashMap.empty[T, Seq[Configuration]]
    configurations.flatMap(conf => fn(conf).map(it => (it, Configuration(conf.name)))).foreach {
