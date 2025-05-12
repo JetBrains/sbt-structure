@@ -217,9 +217,10 @@ class DependenciesExtractorSpec_ProdTestSourcesSeparatedEnabled extends AnyFreeS
               Artifact("foo", "tests")
             )
           ),
+          sbt.Test -> Seq.empty
         )),
-        dependencyConfigurations = Seq(sbt.Compile),
-        testConfigurations = Seq.empty,
+        dependencyConfigurations = Seq(sbt.Compile, sbt.Test),
+        testConfigurations = Seq(sbt.Test),
         sourceConfigurations = Seq(sbt.Compile, sbt.Runtime),
         separateProdTestSources = true,
         projectToConfigurations = Map(
@@ -282,7 +283,7 @@ class DependenciesExtractorSpec_ProdTestSourcesSeparatedEnabled extends AnyFreeS
           ).apply
         ),
         dependencyConfigurations = Seq(sbt.Compile, sbt.Test, sbt.Runtime),
-        testConfigurations = Seq.empty,
+        testConfigurations = Seq(sbt.Test),
         sourceConfigurations = Seq(sbt.Compile, sbt.Runtime),
         separateProdTestSources = true,
         projectToConfigurations = Map(
@@ -366,7 +367,7 @@ class DependenciesExtractorSpec_ProdTestSourcesSeparatedEnabled extends AnyFreeS
           ).apply
         ),
         dependencyConfigurations = Seq(sbt.Compile, sbt.Test, sbt.Runtime),
-        testConfigurations = Seq.empty,
+        testConfigurations = Seq(sbt.Test),
         sourceConfigurations = Seq(sbt.Compile, sbt.Runtime),
         separateProdTestSources = true,
         projectToConfigurations = Map(
