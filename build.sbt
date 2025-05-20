@@ -7,11 +7,30 @@ ThisBuild / organization := "org.jetbrains.scala"
 ThisBuild / homepage := Some(url("https://github.com/JetBrains/sbt-structure"))
 ThisBuild / licenses  += ("Apache-2.0", url("https://www.apache.org/licenses/LICENSE-2.0"))
 
+val SonatypeRepoName = "Sonatype Nexus Repository Manager"
+
 lazy val CommonSonatypeSettings = Seq(
   sonatypeProfileName := "org.jetbrains",
   sonatypeProjectHosting := Some(GitHubHosting("JetBrains", "sbt-structure", "scala-developers@jetbrains.com")),
   sonatypeCredentialHost := sonatypeCentralHost,
   sbtPluginPublishLegacyMavenStyle := false,
+
+  // Overwrite existing credentials from xerial.sbt.Sonatype.sonatypeSettings
+  credentials := credentials.value.filter {
+    case c: DirectCredentials => c.realm != SonatypeRepoName
+    case _ => true
+  } ++ {
+    val env = sys.env.get(_)
+    (for {
+      username <- env("SONATYPE_USERNAME_NEW")
+      password <- env("SONATYPE_PASSWORD_NEW")
+    } yield Credentials(
+      SonatypeRepoName,
+      sonatypeCredentialHost.value,
+      username,
+      password
+    )).toSeq
+  },
 )
 
 lazy val sbtStructure = project.in(file("."))
