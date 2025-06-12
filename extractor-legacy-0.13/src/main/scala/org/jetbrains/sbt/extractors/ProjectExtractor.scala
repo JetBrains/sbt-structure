@@ -273,6 +273,27 @@ object ProjectExtractor extends SbtStateOps with TaskOps {
     (implicit projectRef: ProjectRef, state: State) =
     key.in(projectRef, config).get(state)
 
+  private def generateManagedSourcesTaskDef: Initialize[Task[Seq[File]]] = Def.taskDyn {
+    val generate = StructureKeys.generateManagedSourcesDuringStructureDump.value
+    if (generate) {
+      Def.taskDyn {
+        val name = Keys.name.in(Compile).value
+        val log = Keys.streams.value.log
+        val hasGenerators = (Keys.sourceGenerators.in(Compile).value ++ Keys.sourceGenerators.in(Test).value).nonEmpty
+        if (hasGenerators) {
+          // Only log when there are known registered source generators to keep log spam to a minimum.
+          log.info(s"Generating managed sources in $name / Compile, $name / Test...")
+        }
+        Def.task {
+          val inCompile = Keys.managedSources.in(Compile).value
+          val inTest = Keys.managedSources.in(Test).value
+          inCompile ++ inTest
+        }
+      }
+    } else {
+      Def.task[Seq[File]](Seq.empty)
+    }
+  }
 
   def taskDef: Initialize[Task[ProjectData]] = Def.taskDyn {
 
@@ -321,6 +342,8 @@ object ProjectExtractor extends SbtStateOps with TaskOps {
       settingInConfiguration(Keys.unmanagedResourceDirectories)
 
     Def.task {
+      val _ = generateManagedSourcesTaskDef.value
+
       val scalaOrganization =
         Keys.scalaOrganization.in(projectRef, Compile).value
       val scalaInstance =
