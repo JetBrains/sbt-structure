@@ -29,6 +29,7 @@ object StructureKeys {
   val sbtStructureOpts: SettingKey[Options] = SettingKey("ssOptions", "options for dumpStructure task", rank = DSetting)
   val sbtStructureOptions: SettingKey[String] = SettingKey("sbtStructureOptions", "options for dumpStructure task as string", rank = DSetting)
   val sbtStructureOutputFile: SettingKey[Option[File]] = SettingKey("sbtStructureOutputFile", "output file for dumpStructure task",rank = DSetting)
+  val generateManagedSourcesDuringStructureDump: SettingKey[Boolean] = SettingKey("generateManagedSourcesDuringStructureDump", "generate managed sources during dumpStructure task", rank = DSetting)
 
   val loadOptions: TaskKey[Options] = TaskKey("ssLoadOptions", "load options from ssOptionsFile if available", rank = Invisible)
   val dumpStructure: TaskKey[Unit] = TaskKey("dumpStructure", "dump project structure to XML readable by IntelliJ", rank = DTask)
