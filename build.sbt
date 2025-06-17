@@ -1,6 +1,5 @@
 import lmcoursier.internal.shaded.coursier.core.Version
 import sbt.Def
-import sbt.Keys.localStaging
 import sbt.internal.sona
 import sbt.librarymanagement.ivy.Credentials
 
@@ -26,13 +25,24 @@ ThisBuild / scmInfo := Some(
 
 val SonatypeRepoName = "Sonatype Nexus Repository Manager"
 
+//enablePlugins(SbtPgp)
+useGpg := true
+ThisBuild / useGpgPinentry := false // allow loopback pinentry
+ThisBuild / pgpSigningKey := Some("3E23E22FE70A538559D2E689D8AD1D840A79B5F4") // your key ID
+//ThisBuild / pgpSigningKey := Some("D8AD1D840A79B5F") // your key ID
+
 lazy val CommonSonatypeSettings: Seq[Def.Setting[?]] = Seq(
   // new setting for the Central Portal
-  ThisBuild / publishTo := {
-    val centralSnapshots = "https://central.sonatype.com/repository/maven-snapshots/"
-    if (isSnapshot.value) Some("central-snapshots" at centralSnapshots)
-    else localStaging.value
-  },
+//  ThisBuild / publishTo := {
+//    val centralSnapshots = "https://central.sonatype.com/repository/maven-snapshots/"
+//    if (isSnapshot.value) Some("central-snapshots" at centralSnapshots)
+//    else localStaging.value
+//  },
+
+  ThisBuild / publishTo := Some(Resolver.file(
+    "file-repo",
+    new File(Path.userHome.absolutePath + "/.m2Custom/repository")
+  )(Resolver.mavenStylePatterns)),
 
 //  sonatypeProfileName := "org.jetbrains",
 
@@ -44,8 +54,8 @@ lazy val CommonSonatypeSettings: Seq[Def.Setting[?]] = Seq(
   } ++ {
     val env = sys.env.get(_)
     for {
-      username <- env("SONATYPE_USERNAME_NEW")
-      password <- env("SONATYPE_PASSWORD_NEW")
+      username <- Option("dummy_username") //env("SONATYPE_USERNAME_NEW")
+      password <- Option("dummy_password") //env("SONATYPE_PASSWORD_NEW")
     } yield Credentials(
       SonatypeRepoName,
       sona.Sona.host,
