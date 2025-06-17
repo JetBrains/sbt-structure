@@ -1,35 +1,57 @@
 import lmcoursier.internal.shaded.coursier.core.Version
-import xerial.sbt.Sonatype.{GitHubHosting, sonatypeCentralHost}
+import sbt.Def
+import sbt.Keys.localStaging
+import sbt.internal.sona
+import sbt.librarymanagement.ivy.Credentials
 
 import scala.collection.mutable
 
 ThisBuild / organization := "org.jetbrains.scala"
-ThisBuild / homepage := Some(url("https://github.com/JetBrains/sbt-structure"))
+
+// Optional but nice-to-have
+ThisBuild / organizationName     := "JetBrains"
+ThisBuild / organizationHomepage := Some(url("https://www.jetbrains.com/"))
+
 ThisBuild / licenses  += ("Apache-2.0", url("https://www.apache.org/licenses/LICENSE-2.0"))
+
+ThisBuild / homepage := Some(url("https://github.com/JetBrains/sbt-structure"))
+
+// Source-control coordinates
+ThisBuild / scmInfo := Some(
+  ScmInfo(
+    url("https://github.com/JetBrains/sbt-structure"),
+    "git@github.com:JetBrains/sbt-structure.git"
+  )
+)
 
 val SonatypeRepoName = "Sonatype Nexus Repository Manager"
 
-lazy val CommonSonatypeSettings = Seq(
-  sonatypeProfileName := "org.jetbrains",
-  sonatypeProjectHosting := Some(GitHubHosting("JetBrains", "sbt-structure", "scala-developers@jetbrains.com")),
-  sonatypeCredentialHost := sonatypeCentralHost,
-  sbtPluginPublishLegacyMavenStyle := false,
+lazy val CommonSonatypeSettings: Seq[Def.Setting[?]] = Seq(
+  // new setting for the Central Portal
+  ThisBuild / publishTo := {
+    val centralSnapshots = "https://central.sonatype.com/repository/maven-snapshots/"
+    if (isSnapshot.value) Some("central-snapshots" at centralSnapshots)
+    else localStaging.value
+  },
 
-  // Overwrite existing credentials from xerial.sbt.Sonatype.sonatypeSettings
+//  sonatypeProfileName := "org.jetbrains",
+
+  // Overwrite/filter-out existing credentials
+  // Use copy of `sbt.internal.SysProp.sonatypeCredentalsEnv` but with custom environment variables
   credentials := credentials.value.filter {
     case c: DirectCredentials => c.realm != SonatypeRepoName
     case _ => true
   } ++ {
     val env = sys.env.get(_)
-    (for {
+    for {
       username <- env("SONATYPE_USERNAME_NEW")
       password <- env("SONATYPE_PASSWORD_NEW")
     } yield Credentials(
       SonatypeRepoName,
-      sonatypeCredentialHost.value,
+      sona.Sona.host,
       username,
       password
-    )).toSeq
+    )
   },
 )
 
@@ -42,7 +64,7 @@ lazy val sbtStructure = project.in(file("."))
     publish / skip := true,
     crossScalaVersions := List.empty,
     crossSbtVersions := List.empty,
-    sonatypePublishTo := None
+    publishTo := None,
   )
 
 //NOTE: an extra scala 2.12 version is used just to distinguish between different sbt 1.x versions
