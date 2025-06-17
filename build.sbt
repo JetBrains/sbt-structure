@@ -24,6 +24,15 @@ ThisBuild / scmInfo := Some(
   )
 )
 
+ThisBuild / developers := List(
+  Developer(
+    id    = "JetBrains",
+    name  = "JetBrains",
+    email = "scala-developers@jetbrains.com",
+    url   = url("https://github.com/JetBrains")
+  )
+)
+
 val SonatypeRepoName = "Sonatype Nexus Repository Manager"
 
 lazy val CommonSonatypeSettings: Seq[Def.Setting[?]] = Seq(
