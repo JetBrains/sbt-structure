@@ -6,6 +6,10 @@ import sbt.{Artifact, Def, File, IO, Keys, Task, *}
 // and mostly copies the code from sbt.Classpaths
 // TODO: delete it once the GitHub issue ^ is fixed
 object PublishingWorkaround {
+
+  lazy val publishSbtPluginMavenStyle: Def.Initialize[Task[Boolean]] =
+    Def.task(sbtPlugin.value && publishMavenStyle.value)
+
   /**
    * Produces the Maven-compatible artifacts of an sbt plugin.
    * It adds the sbt-cross version suffix into the artifact names, and it generates a
@@ -39,7 +43,7 @@ object PublishingWorkaround {
     else Map.empty[Artifact, File]
   }
 
-  private lazy val packagedDefaultArtifacts = packaged(defaultArtifactTasks)
+  lazy val packagedDefaultArtifacts = packaged(defaultArtifactTasks)
 
   private def pomConsistentArtifactsForLegacySbt: Def.Initialize[Task[Map[Artifact, File]]] =
     Def.task {
