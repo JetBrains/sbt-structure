@@ -43,8 +43,6 @@ lazy val CommonSonatypeSettings: Seq[Def.Setting[?]] = Seq(
     else localStaging.value
   },
 
-//  sonatypeProfileName := "org.jetbrains",
-
   // Overwrite/filter-out existing credentials
   // Use copy of `sbt.internal.SysProp.sonatypeCredentalsEnv` but with custom environment variables
   credentials := credentials.value.filter {
@@ -62,6 +60,8 @@ lazy val CommonSonatypeSettings: Seq[Def.Setting[?]] = Seq(
       password
     )
   },
+  //TODO: delete this and the workaround utiulity once this issue is fixed: https://github.com/sbt/sbt/issues/8166
+  packagedArtifacts := PublishingWorkaround.mavenArtifactsOfSbtPlugin.value,
 )
 
 lazy val sbtStructure = project.in(file("."))
