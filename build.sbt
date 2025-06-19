@@ -1,3 +1,4 @@
+import PublishingWorkaround.*
 import lmcoursier.internal.shaded.coursier.core.Version
 import sbt.Def
 import sbt.Keys.localStaging
@@ -61,7 +62,9 @@ lazy val CommonSonatypeSettings: Seq[Def.Setting[?]] = Seq(
     )
   },
   //TODO: delete this and the workaround utiulity once this issue is fixed: https://github.com/sbt/sbt/issues/8166
-  packagedArtifacts := PublishingWorkaround.mavenArtifactsOfSbtPlugin.value,
+  packagedArtifacts := Def
+    .ifS(publishSbtPluginMavenStyle)(mavenArtifactsOfSbtPlugin)(packagedDefaultArtifacts)
+    .value,
 )
 
 lazy val sbtStructure = project.in(file("."))
