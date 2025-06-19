@@ -216,12 +216,17 @@ lazy val extractorLegacy_013 = project.in(file("extractor-legacy-0.13"))
     CommonSharedCoreDataSourcesSettings,
   )
 
+// just running "ci-release" in the root will run it for all aggregated projects
+// Running extra "clean" to ensure that there is no unexpected files cached
+// in sonatype-staging or sonatype-bundle local directories in target directory
+val publishAll =
+  "; clean ; ci-release"
 val publishCoreCommand =
-  "; project core ; ci-release"
+  "; clean ; project core ; ci-release"
 val publishExtractorCommand =
-  "; project extractor ; ci-release ; project extractorLegacy_013 ; ci-release"
+  "; clean ; project extractor ; ci-release ; project extractorLegacy_013 ; ci-release"
 
-// the ^ sbt-cross operator doesn't work that well for publishing, so we need to be more explicit about the command chain
+addCommandAlias("publishAll", publishAll)
 addCommandAlias("publishCore", publishCoreCommand)
 addCommandAlias("publishExtractor", publishExtractorCommand)
 
