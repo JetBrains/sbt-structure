@@ -8,7 +8,7 @@ on:
 
 jobs:
   build_and_test:
-    name: sbt-structure plugin Buld & Test
+    name: sbt-structure plugin Build & Test
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
@@ -20,4 +20,4 @@ jobs:
     - uses: sbt/setup-sbt@v1
     - uses: coursier/cache-action@v6
     - name: Compile & Test
-      run: sbt '; + compile ; project extractor ; test'
+      run: sbt '; clean; crossCompileAndRunTests'
