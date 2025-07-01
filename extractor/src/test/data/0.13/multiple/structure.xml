@@ -1675,6 +1675,7 @@
     </command>
     <testSourceDir>$BASE/src/test</testSourceDir>
     <mainSourceDir>$BASE/src/main</mainSourceDir>
+    <generatedManagedSources>false</generatedManagedSources>
   </project>
   <project>
     <id>bar</id>
@@ -3240,6 +3241,7 @@
     </command>
     <testSourceDir>$BASE/bar/src/test</testSourceDir>
     <mainSourceDir>$BASE/bar/src/main</mainSourceDir>
+    <generatedManagedSources>false</generatedManagedSources>
   </project>
   <project>
     <id>foo</id>
@@ -4804,6 +4806,7 @@
     </command>
     <testSourceDir>$BASE/foo/src/test</testSourceDir>
     <mainSourceDir>$BASE/foo/src/main</mainSourceDir>
+    <generatedManagedSources>false</generatedManagedSources>
   </project>
   <repository>
     <module organization="org.scala-lang" name="scala-library" revision="2.10.1" artifactType="jar" classifier="">

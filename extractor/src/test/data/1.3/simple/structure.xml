@@ -1557,6 +1557,7 @@
     </command>
     <testSourceDir>$BASE/src/test</testSourceDir>
     <mainSourceDir>$BASE/src/main</mainSourceDir>
+    <generatedManagedSources>false</generatedManagedSources>
   </project>
   <repository>
     <module organization="org.scala-lang" name="scala-library" revision="2.13.6" artifactType="jar" classifier="">
