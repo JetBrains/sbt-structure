@@ -2,7 +2,7 @@
 <structure sbt="1.11.2">
   <build>
     <uri>$URI_BASE</uri>
-    <import>import $ec6faf63f32461ee0004.`buildinfo`</import>
+    <import>import $28445a2db397ce8b191d.`buildinfo`</import>
     <import>import _root_.sbt.Keys._</import>
     <import>import _root_.sbt.ScriptedPlugin.autoImport._, _root_.sbt.plugins.JUnitXmlReportPlugin.autoImport._, _root_.sbt.plugins.MiniDependencyTreePlugin.autoImport._, _root_.sbtbuildinfo.BuildInfoPlugin.autoImport._</import>
     <import>import _root_.sbt._</import>

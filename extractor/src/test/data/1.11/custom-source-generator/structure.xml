@@ -2,11 +2,11 @@
 <structure sbt="1.11.2">
   <build>
     <uri>$URI_BASE</uri>
-    <import>import $341d10a8e0cdf50e00c1.`module1`</import>
-    <import>import $341d10a8e0cdf50e00c1.`module2`</import>
-    <import>import $341d10a8e0cdf50e00c1.`module3`</import>
-    <import>import $341d10a8e0cdf50e00c1.`module4`</import>
-    <import>import $341d10a8e0cdf50e00c1.`root`</import>
+    <import>import $e74fcc480ea8a70ab5ff.`module1`</import>
+    <import>import $e74fcc480ea8a70ab5ff.`module2`</import>
+    <import>import $e74fcc480ea8a70ab5ff.`module3`</import>
+    <import>import $e74fcc480ea8a70ab5ff.`module4`</import>
+    <import>import $e74fcc480ea8a70ab5ff.`root`</import>
     <import>import _root_.sbt.Keys._</import>
     <import>import _root_.sbt.ScriptedPlugin.autoImport._, _root_.sbt.plugins.JUnitXmlReportPlugin.autoImport._, _root_.sbt.plugins.MiniDependencyTreePlugin.autoImport._</import>
     <import>import _root_.sbt._</import>
