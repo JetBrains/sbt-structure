@@ -22,6 +22,7 @@ class RunSbtWithPluginIntegrationTest extends AnyFreeSpecLike {
     "1.8" in runBlankSbtProcessWithPluginOutputTest(SbtVersion_1_8)
     "1.9" in runBlankSbtProcessWithPluginOutputTest(SbtVersion_1_9)
     "1.10" in runBlankSbtProcessWithPluginOutputTest(SbtVersion_1_10)
+    "1.11" in runBlankSbtProcessWithPluginOutputTest(SbtVersion_1_11)
     "2.0" in runBlankSbtProcessWithPluginOutputTest(SbtVersion_2)
   }
 
