@@ -2,11 +2,11 @@
 <structure sbt="0.13.18">
   <build>
     <uri>$URI_BASE</uri>
-    <import>import $a97b1e91a1c8ec3b0df5.module1</import>
-    <import>import $a97b1e91a1c8ec3b0df5.module2</import>
-    <import>import $a97b1e91a1c8ec3b0df5.module3</import>
-    <import>import $a97b1e91a1c8ec3b0df5.module4</import>
-    <import>import $a97b1e91a1c8ec3b0df5.root</import>
+    <import>import $3867872772344b2ce049.module1</import>
+    <import>import $3867872772344b2ce049.module2</import>
+    <import>import $3867872772344b2ce049.module3</import>
+    <import>import $3867872772344b2ce049.module4</import>
+    <import>import $3867872772344b2ce049.root</import>
     <import>import _root_.sbt.plugins.IvyPlugin, _root_.sbt.plugins.JvmPlugin, _root_.sbt.plugins.CorePlugin, _root_.sbt.plugins.JUnitXmlReportPlugin, _root_.sbt.plugins.Giter8TemplatePlugin</import>
     <import>import sbt._, Keys._, dsl._</import>
     <classes>$SBT_BOOT/scala-2.10.7/lib/scala-compiler.jar</classes>

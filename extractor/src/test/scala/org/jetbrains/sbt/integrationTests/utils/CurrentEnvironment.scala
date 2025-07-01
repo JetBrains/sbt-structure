@@ -31,8 +31,8 @@ object CurrentEnvironment {
       throw new UnsupportedOperationException("Unknown operating system.")
 
   val JavaOldHome: File = findJvmInstallation("1.8")
-    .orElse(findJvmInstallation("11"))
     .orElse(findJvmInstallation("8"))
+    .orElse(findJvmInstallation("11"))
     .getOrElse {
       throw new IllegalStateException(s"Java 1.8 or 11 not found in default locations:\n${PossibleJvmLocations.mkString("\n")}")
     }

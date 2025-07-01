@@ -2,11 +2,11 @@
 <structure sbt="1.2.8">
   <build>
     <uri>$URI_BASE</uri>
-    <import>import $1986c1902ed1f89945cb.`module1`</import>
-    <import>import $1986c1902ed1f89945cb.`module2`</import>
-    <import>import $1986c1902ed1f89945cb.`module3`</import>
-    <import>import $1986c1902ed1f89945cb.`module4`</import>
-    <import>import $1986c1902ed1f89945cb.`root`</import>
+    <import>import $987e8f5328ca7ed0c8bc.`module1`</import>
+    <import>import $987e8f5328ca7ed0c8bc.`module2`</import>
+    <import>import $987e8f5328ca7ed0c8bc.`module3`</import>
+    <import>import $987e8f5328ca7ed0c8bc.`module4`</import>
+    <import>import $987e8f5328ca7ed0c8bc.`root`</import>
     <import>import _root_.sbt.Keys._</import>
     <import>import _root_.sbt.ScriptedPlugin.autoImport._</import>
     <import>import _root_.sbt._</import>
