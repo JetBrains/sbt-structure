@@ -2,11 +2,11 @@
 <structure sbt="2.0.0-M3">
   <build>
     <uri>$URI_BASE</uri>
-    <import>import $Wrap27f5432da4.`module1`</import>
-    <import>import $Wrap27f5432da4.`module2`</import>
-    <import>import $Wrap27f5432da4.`module3`</import>
-    <import>import $Wrap27f5432da4.`module4`</import>
-    <import>import $Wrap27f5432da4.`root`</import>
+    <import>import $MachineSpecificHexString.`module1`</import>
+    <import>import $MachineSpecificHexString.`module2`</import>
+    <import>import $MachineSpecificHexString.`module3`</import>
+    <import>import $MachineSpecificHexString.`module4`</import>
+    <import>import $MachineSpecificHexString.`root`</import>
     <import>import _root_.sbt.*</import>
     <import>import _root_.sbt.BareBuildSyntax.*</import>
     <import>import _root_.sbt.Keys.*</import>
