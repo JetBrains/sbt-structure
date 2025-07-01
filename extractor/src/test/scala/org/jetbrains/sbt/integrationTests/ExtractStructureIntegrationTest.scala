@@ -209,7 +209,10 @@ class ExtractStructureIntegrationTest extends AnyFreeSpecLike {
     )
     val actualXmlStringNotSanitized = loadResult.structure.normalizeFilePathSeparatorsInXml
 
-    val actualXmlSanitizedAndFormatted = XmlUtils.readXmlStringSanitizedAndFormatted(actualXmlStringNotSanitized)
+    val actualXmlSanitizedAndFormatted = {
+      val sanitized = XmlUtils.readXmlStringSanitizedAndFormatted(actualXmlStringNotSanitized)
+      RegexSubstitutor.replaceMachineSpecificObjectImports(sanitized)
+    }
     val expectedXmlSanitizedAndFormatted = XmlUtils.readXmlStringSanitizedAndFormatted(expectedXmlStrNormalized)
 
     val actualXml = XML.loadString(actualXmlSanitizedAndFormatted)
