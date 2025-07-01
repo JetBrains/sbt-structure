@@ -2,11 +2,11 @@
 <structure sbt="1.2.8">
   <build>
     <uri>$URI_BASE</uri>
-    <import>import $aa671eac5ded0a1692fb.`module1`</import>
-    <import>import $aa671eac5ded0a1692fb.`module2`</import>
-    <import>import $aa671eac5ded0a1692fb.`module3`</import>
-    <import>import $aa671eac5ded0a1692fb.`module4`</import>
-    <import>import $aa671eac5ded0a1692fb.`root`</import>
+    <import>import $MachineSpecificHexString.`module1`</import>
+    <import>import $MachineSpecificHexString.`module2`</import>
+    <import>import $MachineSpecificHexString.`module3`</import>
+    <import>import $MachineSpecificHexString.`module4`</import>
+    <import>import $MachineSpecificHexString.`root`</import>
     <import>import _root_.sbt.Keys._</import>
     <import>import _root_.sbt.ScriptedPlugin.autoImport._</import>
     <import>import _root_.sbt._</import>
