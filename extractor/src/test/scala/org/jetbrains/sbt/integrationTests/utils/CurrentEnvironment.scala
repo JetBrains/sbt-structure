@@ -32,6 +32,7 @@ object CurrentEnvironment {
 
   val JavaOldHome: File = findJvmInstallation("1.8")
     .orElse(findJvmInstallation("11"))
+    .orElse(findJvmInstallation("8"))
     .getOrElse {
       throw new IllegalStateException(s"Java 1.8 or 11 not found in default locations:\n${PossibleJvmLocations.mkString("\n")}")
     }
@@ -63,7 +64,7 @@ object CurrentEnvironment {
     jvmFolder.filter(_.exists())
   }
 
-  def buildSbtRunCommonOptions(sbtVersionFull: Version): RunCommonOptions = {
+  def buildSbtRunCommonOptions(sbtVersionFull: Version, errorsExpected: Boolean = false): RunCommonOptions = {
     val sbtVersionShort = Version(PluginArtifactsUtils.sbtVersionBinary(sbtVersionFull.presentation))
 
     val sbtGlobalBase = SbtGlobalRoot / sbtVersionShort.presentation
@@ -78,6 +79,7 @@ object CurrentEnvironment {
       sbtBootDir = sbtBootDir,
       sbtIvyHome = sbtIvyHome,
       sbtCoursierHome = sbtCoursierHome,
+      errorsExpected = errorsExpected
     )
   }
 }

@@ -16,7 +16,8 @@ object SbtProcessRunner {
     sbtIvyHome: File,
     // note, since 1.3 the coursier is used by default instead of Ivy
     sbtCoursierHome: File,
-    verbose: Boolean = true
+    verbose: Boolean = true,
+    errorsExpected: Boolean = false
   )
 
   /**
@@ -84,7 +85,7 @@ object SbtProcessRunner {
          |""".stripMargin
     )
 
-    runProcess(commandLine, projectDir, envVars, runOptions.verbose)
+    runProcess(commandLine, projectDir, envVars, runOptions.verbose, runOptions.errorsExpected)
   }
 
   /**
@@ -94,7 +95,8 @@ object SbtProcessRunner {
     commands: Seq[String],
     directory: File,
     envVars: Seq[String],
-    verbose: Boolean
+    verbose: Boolean,
+    errorsExpected: Boolean
   ): ProcessRunResult = {
     val process = Runtime.getRuntime.exec(commands.toArray, envVars.toArray, directory)
 
@@ -107,7 +109,7 @@ object SbtProcessRunner {
         }
 
         val hasError = line.startsWith("[error]")
-        if (hasError) {
+        if (hasError && !errorsExpected) {
           System.err.println(line)
           process.destroy()
         }

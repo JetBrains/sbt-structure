@@ -2,12 +2,12 @@ package org.jetbrains.sbt.structure
 
 import java.io.File
 import java.net.URI
-
 import org.jetbrains.sbt.structure.DataSerializers._
 import org.jetbrains.sbt.structure.XmlSerializer._
 
 import scala.xml._
 import scala.language.implicitConversions
+import scala.util.Try
 
 //noinspection LanguageFeature
 private object Helpers {
@@ -495,6 +495,7 @@ trait DataSerializers {
         {what.commands.map(_.serialize)}
         {what.testSourceDirectories.map(dir => <testSourceDir>{dir.path}</testSourceDir>)}
         {what.mainSourceDirectories.map(dir => <mainSourceDir>{dir.path}</mainSourceDir>)}
+        <generatedManagedSources>{what.generatedManagedSources}</generatedManagedSources>
       </project>
 
     override def deserialize(what: Node): Either[Throwable,ProjectData] = {
@@ -521,11 +522,15 @@ trait DataSerializers {
       val tasks = (what \ "task").deserialize[TaskData]
       val commands = (what \ "command").deserialize[CommandData]
 
+      val generatedManagedSources = (what \ "generatedManagedSources").headOption.map(_.text).flatMap { text =>
+        Try(text.toBoolean).toOption
+      }.getOrElse(false)
+
       val tryDeps = (what \ "dependencies").deserializeOne[DependencyData]
       tryDeps.right.map { dependencies =>
         ProjectData(id, buildURI, name, organization, version, base, packagePrefix, basePackages,
           target, configurations, java, scala, compileOrder,
-          dependencies, resolvers, play2, settings, tasks, commands, mainSourceDirectories, testSourceDirectories)
+          dependencies, resolvers, play2, settings, tasks, commands, mainSourceDirectories, testSourceDirectories, generatedManagedSources)
       }
 
     }

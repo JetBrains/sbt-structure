@@ -37,7 +37,9 @@ class ExtractStructureIntegrationTest extends AnyFreeSpecLike {
       "play" in { testProject_013("play", options = ResolveNone) }
       "ide-settings" in { testProject_013("ide-settings", options = ResolveSourcesAndSbtClassifiers) }
       "sbt-idea" in { testProject_013("sbt-idea", options = ResolveSourcesAndSbtClassifiers) }
+      "custom-source-generator" in { testProject_013("custom-source-generator", options = ResolveSourcesAndSbtClassifiers) }
       "custom-test-config" in { testProject_013("custom-test-config", options = ResolveSourcesAndSbtClassifiers) }
+      "source-generator-failure" in { testProject_013("source-generator-failure", options = ResolveSourcesAndSbtClassifiers) }
 
       "dependency_resolve_none" in { testProject_013("dependency_resolve_none", options = ResolveNone) }
       "dependency_resolve_none_with_explicit_classifiers" in { testProject_013("dependency_resolve_none_with_explicit_classifiers", options = ResolveNone) }
@@ -63,8 +65,10 @@ class ExtractStructureIntegrationTest extends AnyFreeSpecLike {
       "prod_test_sources_separated" in { testProject("prod_test_sources_separated", SbtVersion_1_1, ResolveSourcesAndSbtClassifiersAndSeparateProdTestSources) }
     }
     "1.2" - {
+      "custom-source-generator" in { testProject("custom-source-generator", SbtVersion_1_2, ResolveSourcesAndSbtClassifiersAndSeparateProdTestSources) }
       "simple" in { testProject("simple", SbtVersion_1_2, ResolveSourcesAndSbtClassifiers) }
       "prod_test_sources_separated" in { testProject("prod_test_sources_separated", SbtVersion_1_2, ResolveSourcesAndSbtClassifiersAndSeparateProdTestSources) }
+      "source-generator-failure" in { testProject("source-generator-failure", SbtVersion_1_2, ResolveSourcesAndSbtClassifiersAndSeparateProdTestSources, errorsExpected = true) }
     }
     "1.3" - {
       "simple" in { testProject("simple", SbtVersion_1_3, ResolveSourcesAndSbtClassifiers) }
@@ -105,8 +109,15 @@ class ExtractStructureIntegrationTest extends AnyFreeSpecLike {
       "dependency_resolve_sbt_classifiers_prod_test_sources_separated" in { testProject("dependency_resolve_sbt_classifiers_prod_test_sources_separated", SbtVersion_1_9, options = ResolveSbtClassifiersAndSeparateProdTestSources) }
     }
     "1.10" - {
+      "custom-source-generator" in { testProject("custom-source-generator", SbtVersion_1_10, ResolveSourcesAndSbtClassifiers) }
       "simple" in { testProject("simple", SbtVersion_1_10, ResolveSourcesAndSbtClassifiers) }
       "prod_test_sources_separated" in { testProject("prod_test_sources_separated", SbtVersion_1_10, ResolveSourcesAndSbtClassifiersAndSeparateProdTestSources) }
+      "source-generator-failure" in { testProject("source-generator-failure", SbtVersion_1_10, ResolveSourcesAndSbtClassifiers, errorsExpected = true) }
+    }
+    "1.11" - {
+      "buildinfo" in { testProject("buildinfo", SbtVersion_1_11, ResolveSourcesAndSbtClassifiersAndSeparateProdTestSources) }
+      "custom-source-generator" in { testProject("custom-source-generator", SbtVersion_1_11, ResolveSourcesAndSbtClassifiersAndSeparateProdTestSources) }
+      "source-generator-failure" in { testProject("source-generator-failure", SbtVersion_1_11, ResolveSourcesAndSbtClassifiersAndSeparateProdTestSources, errorsExpected = true) }
     }
 
     "2.0" - {
@@ -114,6 +125,9 @@ class ExtractStructureIntegrationTest extends AnyFreeSpecLike {
       // (and update sbt version)
       val options = SbtOptionsBuilder().sources /*.sbtClassifiers*/.separateProdTestSources.result
       "simple" in { testProject("simple", SbtVersion_2, options) }
+      "buildinfo" in { testProject("buildinfo", SbtVersion_2, options) }
+      "custom-source-generator" in { testProject("custom-source-generator", SbtVersion_2, options) }
+      "source-generator-failure" in { testProject("source-generator-failure", SbtVersion_2, options, errorsExpected = true) }
     }
   }
 
@@ -134,9 +148,10 @@ class ExtractStructureIntegrationTest extends AnyFreeSpecLike {
   private def testProject(
     projectDirName: String,
     sbtVersionFull: Version,
-    options: String
+    options: String,
+    errorsExpected: Boolean = false
   ): Unit = {
-    val runOptions = CurrentEnvironment.buildSbtRunCommonOptions(sbtVersionFull)
+    val runOptions = CurrentEnvironment.buildSbtRunCommonOptions(sbtVersionFull, errorsExpected)
     import runOptions.sbtVersionShort
 
     val projectDir = TestDataRoot / sbtVersionShort.presentation / projectDirName

@@ -77,7 +77,8 @@ case class ProjectData(
   tasks: Seq[TaskData],
   commands: Seq[CommandData],
   mainSourceDirectories: Seq[File],
-  testSourceDirectories: Seq[File]
+  testSourceDirectories: Seq[File],
+  generatedManagedSources: Boolean
 )
 
 case class SettingData(label: String, description: Option[String], rank: Int, stringValue: Option[String])

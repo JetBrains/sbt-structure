@@ -1867,6 +1867,7 @@
     </command>
     <testSourceDir>$BASE/src/test</testSourceDir>
     <mainSourceDir>$BASE/src/main</mainSourceDir>
+    <generatedManagedSources>false</generatedManagedSources>
   </project>
   <repository>
     <module organization="org.scala-lang" name="scala3-library_3" revision="3.0.2" artifactType="jar" classifier="">

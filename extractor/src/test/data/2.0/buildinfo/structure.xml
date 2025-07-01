@@ -1,0 +1,1586 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<structure sbt="2.0.0-M3">
+  <build>
+    <uri>$URI_BASE</uri>
+    <import>import $Wrapdbe0c59ed4.`buildinfo`</import>
+    <import>import _root_.sbt.*</import>
+    <import>import _root_.sbt.BareBuildSyntax.*</import>
+    <import>import _root_.sbt.Keys.*</import>
+    <import>import _root_.sbt.ScriptedPlugin.autoImport.*, _root_.sbt.ScriptedPlugin.autoImport.given, _root_.sbt.plugins.JUnitXmlReportPlugin.autoImport.*, _root_.sbt.plugins.JUnitXmlReportPlugin.autoImport.given, _root_.sbt.plugins.MiniDependencyTreePlugin.autoImport.*, _root_.sbt.plugins.MiniDependencyTreePlugin.autoImport.given, _root_.sbtbuildinfo.BuildInfoPlugin.autoImport.*, _root_.sbtbuildinfo.BuildInfoPlugin.autoImport.given</import>
+    <import>import _root_.sbt.given</import>
+    <import>import _root_.sbt.nio.Keys.*</import>
+    <import>import _root_.sbt.plugins.IvyPlugin, _root_.sbt.plugins.JvmPlugin, _root_.sbt.plugins.CorePlugin, _root_.sbt.ScriptedPlugin, _root_.sbt.plugins.SbtPlugin, _root_.sbt.plugins.SemanticdbPlugin, _root_.sbt.plugins.JUnitXmlReportPlugin, _root_.sbt.plugins.Giter8TemplatePlugin, _root_.sbt.plugins.MiniDependencyTreePlugin, _root_.sbtbuildinfo.BuildInfoPlugin</import>
+    <import>import _root_.scala.xml.{TopScope=&gt;$scope}</import>
+    <classes>$SBT_BOOT/scala-3.6.2/lib/jline-native-3.27.0.jar</classes>
+    <classes>$SBT_BOOT/scala-3.6.2/lib/jline-reader-3.27.0.jar</classes>
+    <classes>$SBT_BOOT/scala-3.6.2/lib/jline-terminal-3.27.0.jar</classes>
+    <classes>$SBT_BOOT/scala-3.6.2/lib/jline-terminal-jna-3.27.0.jar</classes>
+    <classes>$SBT_BOOT/scala-3.6.2/lib/jna-5.15.0.jar</classes>
+    <classes>$SBT_BOOT/scala-3.6.2/lib/scala-asm-9.7.0-scala-2.jar</classes>
+    <classes>$SBT_BOOT/scala-3.6.2/lib/scala-library.jar</classes>
+    <classes>$SBT_BOOT/scala-3.6.2/lib/scala3-compiler_3-3.6.2.jar</classes>
+    <classes>$SBT_BOOT/scala-3.6.2/lib/scala3-interfaces-3.6.2.jar</classes>
+    <classes>$SBT_BOOT/scala-3.6.2/lib/scala3-library_3-3.6.2.jar</classes>
+    <classes>$SBT_BOOT/scala-3.6.2/lib/tasty-core_3-3.6.2.jar</classes>
+    <classes>$SBT_BOOT/scala-3.6.2/org.scala-sbt/sbt/2.0.0-M3/actions_3-2.0.0-M3.jar</classes>
+    <classes>$SBT_BOOT/scala-3.6.2/org.scala-sbt/sbt/2.0.0-M3/build-file_3-2.0.0-M3.jar</classes>
+    <classes>$SBT_BOOT/scala-3.6.2/org.scala-sbt/sbt/2.0.0-M3/caffeine-2.8.5.jar</classes>
+    <classes>$SBT_BOOT/scala-3.6.2/org.scala-sbt/sbt/2.0.0-M3/checker-qual-3.4.1.jar</classes>
+    <classes>$SBT_BOOT/scala-3.6.2/org.scala-sbt/sbt/2.0.0-M3/collections_3-2.0.0-M3.jar</classes>
+    <classes>$SBT_BOOT/scala-3.6.2/org.scala-sbt/sbt/2.0.0-M3/command_3-2.0.0-M3.jar</classes>
+    <classes>$SBT_BOOT/scala-3.6.2/org.scala-sbt/sbt/2.0.0-M3/compiler-interface-2.0.0-M3.jar</classes>
+    <classes>$SBT_BOOT/scala-3.6.2/org.scala-sbt/sbt/2.0.0-M3/completion_3-2.0.0-M3.jar</classes>
+    <classes>$SBT_BOOT/scala-3.6.2/org.scala-sbt/sbt/2.0.0-M3/config-1.4.2.jar</classes>
+    <classes>$SBT_BOOT/scala-3.6.2/org.scala-sbt/sbt/2.0.0-M3/core-macros_3-2.0.0-M3.jar</classes>
+    <classes>$SBT_BOOT/scala-3.6.2/org.scala-sbt/sbt/2.0.0-M3/disruptor-3.4.2.jar</classes>
+    <classes>$SBT_BOOT/scala-3.6.2/org.scala-sbt/sbt/2.0.0-M3/error_prone_annotations-2.4.0.jar</classes>
+    <classes>$SBT_BOOT/scala-3.6.2/org.scala-sbt/sbt/2.0.0-M3/file-tree-views-2.1.12.jar</classes>
+    <classes>$SBT_BOOT/scala-3.6.2/org.scala-sbt/sbt/2.0.0-M3/gigahorse-apache-http_3-0.7.0.jar</classes>
+    <classes>$SBT_BOOT/scala-3.6.2/org.scala-sbt/sbt/2.0.0-M3/gigahorse-core_3-0.7.0.jar</classes>
+    <classes>$SBT_BOOT/scala-3.6.2/org.scala-sbt/sbt/2.0.0-M3/io_3-1.10.2.jar</classes>
+    <classes>$SBT_BOOT/scala-3.6.2/org.scala-sbt/sbt/2.0.0-M3/ipcsocket-1.6.3.jar</classes>
+    <classes>$SBT_BOOT/scala-3.6.2/org.scala-sbt/sbt/2.0.0-M3/ivy-2.3.0-sbt-396a783bba347016e7fe30dacc60d355be607fe2.jar</classes>
+    <classes>$SBT_BOOT/scala-3.6.2/org.scala-sbt/sbt/2.0.0-M3/jansi-2.4.0.jar</classes>
+    <classes>$SBT_BOOT/scala-3.6.2/org.scala-sbt/sbt/2.0.0-M3/jline-2.14.7-sbt-9c3b6aca11c57e339441442bbf58e550cdfecb79.jar</classes>
+    <classes>$SBT_BOOT/scala-3.6.2/org.scala-sbt/sbt/2.0.0-M3/jline-builtins-3.27.1.jar</classes>
+    <classes>$SBT_BOOT/scala-3.6.2/org.scala-sbt/sbt/2.0.0-M3/jline-native-3.27.1.jar</classes>
+    <classes>$SBT_BOOT/scala-3.6.2/org.scala-sbt/sbt/2.0.0-M3/jline-reader-3.27.1.jar</classes>
+    <classes>$SBT_BOOT/scala-3.6.2/org.scala-sbt/sbt/2.0.0-M3/jline-style-3.27.1.jar</classes>
+    <classes>$SBT_BOOT/scala-3.6.2/org.scala-sbt/sbt/2.0.0-M3/jline-terminal-3.27.1.jar</classes>
+    <classes>$SBT_BOOT/scala-3.6.2/org.scala-sbt/sbt/2.0.0-M3/jline-terminal-jna-3.27.0.jar</classes>
+    <classes>$SBT_BOOT/scala-3.6.2/org.scala-sbt/sbt/2.0.0-M3/jline-terminal-jni-3.27.1.jar</classes>
+    <classes>$SBT_BOOT/scala-3.6.2/org.scala-sbt/sbt/2.0.0-M3/jna-5.15.0.jar</classes>
+    <classes>$SBT_BOOT/scala-3.6.2/org.scala-sbt/sbt/2.0.0-M3/jna-platform-5.12.0.jar</classes>
+    <classes>$SBT_BOOT/scala-3.6.2/org.scala-sbt/sbt/2.0.0-M3/jsch-0.2.17.jar</classes>
+    <classes>$SBT_BOOT/scala-3.6.2/org.scala-sbt/sbt/2.0.0-M3/launcher-interface-1.4.4.jar</classes>
+    <classes>$SBT_BOOT/scala-3.6.2/org.scala-sbt/sbt/2.0.0-M3/librarymanagement-core_3-2.0.0-M3.jar</classes>
+    <classes>$SBT_BOOT/scala-3.6.2/org.scala-sbt/sbt/2.0.0-M3/librarymanagement-coursier_3-2.0.0-M3.jar</classes>
+    <classes>$SBT_BOOT/scala-3.6.2/org.scala-sbt/sbt/2.0.0-M3/librarymanagement-ivy_3-2.0.0-M3.jar</classes>
+    <classes>$SBT_BOOT/scala-3.6.2/org.scala-sbt/sbt/2.0.0-M3/log4j-api-2.17.1.jar</classes>
+    <classes>$SBT_BOOT/scala-3.6.2/org.scala-sbt/sbt/2.0.0-M3/log4j-core-2.17.1.jar</classes>
+    <classes>$SBT_BOOT/scala-3.6.2/org.scala-sbt/sbt/2.0.0-M3/log4j-slf4j-impl-2.17.1.jar</classes>
+    <classes>$SBT_BOOT/scala-3.6.2/org.scala-sbt/sbt/2.0.0-M3/logic_3-2.0.0-M3.jar</classes>
+    <classes>$SBT_BOOT/scala-3.6.2/org.scala-sbt/sbt/2.0.0-M3/main-settings_3-2.0.0-M3.jar</classes>
+    <classes>$SBT_BOOT/scala-3.6.2/org.scala-sbt/sbt/2.0.0-M3/main_3-2.0.0-M3.jar</classes>
+    <classes>$SBT_BOOT/scala-3.6.2/org.scala-sbt/sbt/2.0.0-M3/protocol_3-2.0.0-M3.jar</classes>
+    <classes>$SBT_BOOT/scala-3.6.2/org.scala-sbt/sbt/2.0.0-M3/reactive-streams-1.0.3.jar</classes>
+    <classes>$SBT_BOOT/scala-3.6.2/org.scala-sbt/sbt/2.0.0-M3/run_3-2.0.0-M3.jar</classes>
+    <classes>$SBT_BOOT/scala-3.6.2/org.scala-sbt/sbt/2.0.0-M3/sbinary_3-0.5.1.jar</classes>
+    <classes>$SBT_BOOT/scala-3.6.2/org.scala-sbt/sbt/2.0.0-M3/sbt-2.0.0-M3.jar</classes>
+    <classes>$SBT_BOOT/scala-3.6.2/org.scala-sbt/sbt/2.0.0-M3/scala-asm-9.7.0-scala-2.jar</classes>
+    <classes>$SBT_BOOT/scala-3.6.2/org.scala-sbt/sbt/2.0.0-M3/scala-library-2.13.15.jar</classes>
+    <classes>$SBT_BOOT/scala-3.6.2/org.scala-sbt/sbt/2.0.0-M3/scala-parallel-collections_3-1.0.4.jar</classes>
+    <classes>$SBT_BOOT/scala-3.6.2/org.scala-sbt/sbt/2.0.0-M3/scala-parser-combinators_3-2.1.0.jar</classes>
+    <classes>$SBT_BOOT/scala-3.6.2/org.scala-sbt/sbt/2.0.0-M3/scala-reflect-2.13.15.jar</classes>
+    <classes>$SBT_BOOT/scala-3.6.2/org.scala-sbt/sbt/2.0.0-M3/scala-xml_3-2.2.0.jar</classes>
+    <classes>$SBT_BOOT/scala-3.6.2/org.scala-sbt/sbt/2.0.0-M3/scala3-compiler_3-3.6.2.jar</classes>
+    <classes>$SBT_BOOT/scala-3.6.2/org.scala-sbt/sbt/2.0.0-M3/scala3-interfaces-3.6.2.jar</classes>
+    <classes>$SBT_BOOT/scala-3.6.2/org.scala-sbt/sbt/2.0.0-M3/scala3-library_3-3.6.2.jar</classes>
+    <classes>$SBT_BOOT/scala-3.6.2/org.scala-sbt/sbt/2.0.0-M3/shaded-apache-httpasyncclient-0.7.0.jar</classes>
+    <classes>$SBT_BOOT/scala-3.6.2/org.scala-sbt/sbt/2.0.0-M3/shaded-jawn-parser_3-1.3.2.jar</classes>
+    <classes>$SBT_BOOT/scala-3.6.2/org.scala-sbt/sbt/2.0.0-M3/shaded-scalajson_3-1.0.0-M4.jar</classes>
+    <classes>$SBT_BOOT/scala-3.6.2/org.scala-sbt/sbt/2.0.0-M3/sjson-new-core_3-0.14.0-M1.jar</classes>
+    <classes>$SBT_BOOT/scala-3.6.2/org.scala-sbt/sbt/2.0.0-M3/sjson-new-murmurhash_3-0.14.0-M1.jar</classes>
+    <classes>$SBT_BOOT/scala-3.6.2/org.scala-sbt/sbt/2.0.0-M3/sjson-new-scalajson_3-0.14.0-M1.jar</classes>
+    <classes>$SBT_BOOT/scala-3.6.2/org.scala-sbt/sbt/2.0.0-M3/slf4j-api-1.7.28.jar</classes>
+    <classes>$SBT_BOOT/scala-3.6.2/org.scala-sbt/sbt/2.0.0-M3/ssl-config-core_3-0.6.1.jar</classes>
+    <classes>$SBT_BOOT/scala-3.6.2/org.scala-sbt/sbt/2.0.0-M3/task-system_3-2.0.0-M3.jar</classes>
+    <classes>$SBT_BOOT/scala-3.6.2/org.scala-sbt/sbt/2.0.0-M3/tasks_3-2.0.0-M3.jar</classes>
+    <classes>$SBT_BOOT/scala-3.6.2/org.scala-sbt/sbt/2.0.0-M3/tasty-core_3-3.6.2.jar</classes>
+    <classes>$SBT_BOOT/scala-3.6.2/org.scala-sbt/sbt/2.0.0-M3/template-resolver-0.1.jar</classes>
+    <classes>$SBT_BOOT/scala-3.6.2/org.scala-sbt/sbt/2.0.0-M3/test-agent-2.0.0-M3.jar</classes>
+    <classes>$SBT_BOOT/scala-3.6.2/org.scala-sbt/sbt/2.0.0-M3/test-interface-1.0.jar</classes>
+    <classes>$SBT_BOOT/scala-3.6.2/org.scala-sbt/sbt/2.0.0-M3/testing_3-2.0.0-M3.jar</classes>
+    <classes>$SBT_BOOT/scala-3.6.2/org.scala-sbt/sbt/2.0.0-M3/util-cache_3-2.0.0-M3.jar</classes>
+    <classes>$SBT_BOOT/scala-3.6.2/org.scala-sbt/sbt/2.0.0-M3/util-control_3-2.0.0-M3.jar</classes>
+    <classes>$SBT_BOOT/scala-3.6.2/org.scala-sbt/sbt/2.0.0-M3/util-core_3-2.0.0-M3.jar</classes>
+    <classes>$SBT_BOOT/scala-3.6.2/org.scala-sbt/sbt/2.0.0-M3/util-interface-2.0.0-M3.jar</classes>
+    <classes>$SBT_BOOT/scala-3.6.2/org.scala-sbt/sbt/2.0.0-M3/util-logging_3-2.0.0-M3.jar</classes>
+    <classes>$SBT_BOOT/scala-3.6.2/org.scala-sbt/sbt/2.0.0-M3/util-position_3-2.0.0-M3.jar</classes>
+    <classes>$SBT_BOOT/scala-3.6.2/org.scala-sbt/sbt/2.0.0-M3/util-relation_3-2.0.0-M3.jar</classes>
+    <classes>$SBT_BOOT/scala-3.6.2/org.scala-sbt/sbt/2.0.0-M3/util-tracking_3-2.0.0-M3.jar</classes>
+    <classes>$SBT_BOOT/scala-3.6.2/org.scala-sbt/sbt/2.0.0-M3/zero-allocation-hashing-0.16.jar</classes>
+    <classes>$SBT_BOOT/scala-3.6.2/org.scala-sbt/sbt/2.0.0-M3/zinc-apiinfo_3-2.0.0-M3.jar</classes>
+    <classes>$SBT_BOOT/scala-3.6.2/org.scala-sbt/sbt/2.0.0-M3/zinc-classfile_3-2.0.0-M3.jar</classes>
+    <classes>$SBT_BOOT/scala-3.6.2/org.scala-sbt/sbt/2.0.0-M3/zinc-classpath_3-2.0.0-M3.jar</classes>
+    <classes>$SBT_BOOT/scala-3.6.2/org.scala-sbt/sbt/2.0.0-M3/zinc-compile-core_3-2.0.0-M3.jar</classes>
+    <classes>$SBT_BOOT/scala-3.6.2/org.scala-sbt/sbt/2.0.0-M3/zinc-core_3-2.0.0-M3.jar</classes>
+    <classes>$SBT_BOOT/scala-3.6.2/org.scala-sbt/sbt/2.0.0-M3/zinc-lm-integration_3-2.0.0-M3.jar</classes>
+    <classes>$SBT_BOOT/scala-3.6.2/org.scala-sbt/sbt/2.0.0-M3/zinc-persist_3-2.0.0-M3.jar</classes>
+    <classes>$SBT_BOOT/scala-3.6.2/org.scala-sbt/sbt/2.0.0-M3/zinc_3-2.0.0-M3.jar</classes>
+    <classes>$COURSIER/cache/https/repo1.maven.org/maven2/com/eed3si9n/manifesto/manifesto_3/0.1.1/manifesto_3-0.1.1.jar</classes>
+    <classes>$COURSIER/cache/https/repo1.maven.org/maven2/com/eed3si9n/sbt-buildinfo_sbt2.0.0-M3_3/0.13.1/sbt-buildinfo_sbt2.0.0-M3_3-0.13.1.jar</classes>
+    <classes>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-lang/scala-library/2.13.14/scala-library-2.13.14.jar</classes>
+    <classes>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-lang/scala3-library_3/3.3.4/scala3-library_3-3.3.4.jar</classes>
+  </build>
+  <project>
+    <id>buildinfo</id>
+    <buildURI>$URI_BASE</buildURI>
+    <name>buildinfo</name>
+    <organization>buildinfo</organization>
+    <version>0.1.0-SNAPSHOT</version>
+    <base>$BASE</base>
+    <target>$BASE/target/out/jvm/scala-3.6.2/buildinfo</target>
+    <scala>
+      <version>3.6.2</version>
+      <libraryJars>
+        <jar>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-lang/scala-library/2.13.15/scala-library-2.13.15.jar</jar>
+        <jar>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-lang/scala3-library_3/3.6.2/scala3-library_3-3.6.2.jar</jar>
+      </libraryJars>
+      <compilerJars>
+        <jar>$COURSIER/cache/https/repo1.maven.org/maven2/net/java/dev/jna/jna/5.15.0/jna-5.15.0.jar</jar>
+        <jar>$COURSIER/cache/https/repo1.maven.org/maven2/org/jline/jline-native/3.27.0/jline-native-3.27.0.jar</jar>
+        <jar>$COURSIER/cache/https/repo1.maven.org/maven2/org/jline/jline-reader/3.27.0/jline-reader-3.27.0.jar</jar>
+        <jar>$COURSIER/cache/https/repo1.maven.org/maven2/org/jline/jline-terminal-jna/3.27.0/jline-terminal-jna-3.27.0.jar</jar>
+        <jar>$COURSIER/cache/https/repo1.maven.org/maven2/org/jline/jline-terminal/3.27.0/jline-terminal-3.27.0.jar</jar>
+        <jar>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-lang/modules/scala-asm/9.7.0-scala-2/scala-asm-9.7.0-scala-2.jar</jar>
+        <jar>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-lang/scala3-compiler_3/3.6.2/scala3-compiler_3-3.6.2.jar</jar>
+        <jar>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-lang/scala3-interfaces/3.6.2/scala3-interfaces-3.6.2.jar</jar>
+        <jar>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-lang/tasty-core_3/3.6.2/tasty-core_3-3.6.2.jar</jar>
+        <jar>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/compiler-interface/1.9.6/compiler-interface-1.9.6.jar</jar>
+        <jar>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/util-interface/1.9.8/util-interface-1.9.8.jar</jar>
+      </compilerJars>
+      <extraJars>
+        <jar>$COURSIER/cache/https/repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-annotations/2.15.1/jackson-annotations-2.15.1.jar</jar>
+        <jar>$COURSIER/cache/https/repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-core/2.15.1/jackson-core-2.15.1.jar</jar>
+        <jar>$COURSIER/cache/https/repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-databind/2.15.1/jackson-databind-2.15.1.jar</jar>
+        <jar>$COURSIER/cache/https/repo1.maven.org/maven2/com/fasterxml/jackson/dataformat/jackson-dataformat-yaml/2.15.1/jackson-dataformat-yaml-2.15.1.jar</jar>
+        <jar>$COURSIER/cache/https/repo1.maven.org/maven2/com/fasterxml/jackson/datatype/jackson-datatype-jsr310/2.12.1/jackson-datatype-jsr310-2.12.1.jar</jar>
+        <jar>$COURSIER/cache/https/repo1.maven.org/maven2/com/vladsch/flexmark/flexmark-ext-anchorlink/0.62.2/flexmark-ext-anchorlink-0.62.2.jar</jar>
+        <jar>$COURSIER/cache/https/repo1.maven.org/maven2/com/vladsch/flexmark/flexmark-ext-autolink/0.62.2/flexmark-ext-autolink-0.62.2.jar</jar>
+        <jar>$COURSIER/cache/https/repo1.maven.org/maven2/com/vladsch/flexmark/flexmark-ext-emoji/0.62.2/flexmark-ext-emoji-0.62.2.jar</jar>
+        <jar>$COURSIER/cache/https/repo1.maven.org/maven2/com/vladsch/flexmark/flexmark-ext-gfm-strikethrough/0.62.2/flexmark-ext-gfm-strikethrough-0.62.2.jar</jar>
+        <jar>$COURSIER/cache/https/repo1.maven.org/maven2/com/vladsch/flexmark/flexmark-ext-gfm-tasklist/0.62.2/flexmark-ext-gfm-tasklist-0.62.2.jar</jar>
+        <jar>$COURSIER/cache/https/repo1.maven.org/maven2/com/vladsch/flexmark/flexmark-ext-ins/0.62.2/flexmark-ext-ins-0.62.2.jar</jar>
+        <jar>$COURSIER/cache/https/repo1.maven.org/maven2/com/vladsch/flexmark/flexmark-ext-superscript/0.62.2/flexmark-ext-superscript-0.62.2.jar</jar>
+        <jar>$COURSIER/cache/https/repo1.maven.org/maven2/com/vladsch/flexmark/flexmark-ext-tables/0.62.2/flexmark-ext-tables-0.62.2.jar</jar>
+        <jar>$COURSIER/cache/https/repo1.maven.org/maven2/com/vladsch/flexmark/flexmark-ext-wikilink/0.62.2/flexmark-ext-wikilink-0.62.2.jar</jar>
+        <jar>$COURSIER/cache/https/repo1.maven.org/maven2/com/vladsch/flexmark/flexmark-ext-yaml-front-matter/0.62.2/flexmark-ext-yaml-front-matter-0.62.2.jar</jar>
+        <jar>$COURSIER/cache/https/repo1.maven.org/maven2/com/vladsch/flexmark/flexmark-jira-converter/0.62.2/flexmark-jira-converter-0.62.2.jar</jar>
+        <jar>$COURSIER/cache/https/repo1.maven.org/maven2/com/vladsch/flexmark/flexmark-util-ast/0.62.2/flexmark-util-ast-0.62.2.jar</jar>
+        <jar>$COURSIER/cache/https/repo1.maven.org/maven2/com/vladsch/flexmark/flexmark-util-builder/0.62.2/flexmark-util-builder-0.62.2.jar</jar>
+        <jar>$COURSIER/cache/https/repo1.maven.org/maven2/com/vladsch/flexmark/flexmark-util-collection/0.62.2/flexmark-util-collection-0.62.2.jar</jar>
+        <jar>$COURSIER/cache/https/repo1.maven.org/maven2/com/vladsch/flexmark/flexmark-util-data/0.62.2/flexmark-util-data-0.62.2.jar</jar>
+        <jar>$COURSIER/cache/https/repo1.maven.org/maven2/com/vladsch/flexmark/flexmark-util-dependency/0.62.2/flexmark-util-dependency-0.62.2.jar</jar>
+        <jar>$COURSIER/cache/https/repo1.maven.org/maven2/com/vladsch/flexmark/flexmark-util-format/0.62.2/flexmark-util-format-0.62.2.jar</jar>
+        <jar>$COURSIER/cache/https/repo1.maven.org/maven2/com/vladsch/flexmark/flexmark-util-html/0.62.2/flexmark-util-html-0.62.2.jar</jar>
+        <jar>$COURSIER/cache/https/repo1.maven.org/maven2/com/vladsch/flexmark/flexmark-util-misc/0.62.2/flexmark-util-misc-0.62.2.jar</jar>
+        <jar>$COURSIER/cache/https/repo1.maven.org/maven2/com/vladsch/flexmark/flexmark-util-options/0.62.2/flexmark-util-options-0.62.2.jar</jar>
+        <jar>$COURSIER/cache/https/repo1.maven.org/maven2/com/vladsch/flexmark/flexmark-util-sequence/0.62.2/flexmark-util-sequence-0.62.2.jar</jar>
+        <jar>$COURSIER/cache/https/repo1.maven.org/maven2/com/vladsch/flexmark/flexmark-util-visitor/0.62.2/flexmark-util-visitor-0.62.2.jar</jar>
+        <jar>$COURSIER/cache/https/repo1.maven.org/maven2/com/vladsch/flexmark/flexmark-util/0.62.2/flexmark-util-0.62.2.jar</jar>
+        <jar>$COURSIER/cache/https/repo1.maven.org/maven2/com/vladsch/flexmark/flexmark/0.62.2/flexmark-0.62.2.jar</jar>
+        <jar>$COURSIER/cache/https/repo1.maven.org/maven2/nl/big-o/liqp/0.8.2/liqp-0.8.2.jar</jar>
+        <jar>$COURSIER/cache/https/repo1.maven.org/maven2/org/antlr/antlr4-runtime/4.7.2/antlr4-runtime-4.7.2.jar</jar>
+        <jar>$COURSIER/cache/https/repo1.maven.org/maven2/org/jetbrains/annotations/15.0/annotations-15.0.jar</jar>
+        <jar>$COURSIER/cache/https/repo1.maven.org/maven2/org/jsoup/jsoup/1.17.2/jsoup-1.17.2.jar</jar>
+        <jar>$COURSIER/cache/https/repo1.maven.org/maven2/org/nibor/autolink/autolink/0.6.0/autolink-0.6.0.jar</jar>
+        <jar>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-lang/scala3-tasty-inspector_3/3.6.2/scala3-tasty-inspector_3-3.6.2.jar</jar>
+        <jar>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-lang/scaladoc_3/3.6.2/scaladoc_3-3.6.2.jar</jar>
+        <jar>$COURSIER/cache/https/repo1.maven.org/maven2/org/yaml/snakeyaml/2.0/snakeyaml-2.0.jar</jar>
+        <jar>$COURSIER/cache/https/repo1.maven.org/maven2/ua/co/k/strftime4j/1.0.5/strftime4j-1.0.5.jar</jar>
+      </extraJars>
+      <compilerBridgeBinaryJar>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-lang/scala3-sbt-bridge/3.6.2/scala3-sbt-bridge-3.6.2.jar</compilerBridgeBinaryJar>
+    </scala>
+    <compileOrder>Mixed</compileOrder>
+    <configuration id="compile">
+      <sources>$BASE/src/main/java</sources>
+      <sources>$BASE/src/main/scala</sources>
+      <sources>$BASE/src/main/scala-3</sources>
+      <sources managed="true">$BASE/target/out/jvm/scala-3.6.2/buildinfo/src_managed/main</sources>
+      <resources>$BASE/src/main/resources</resources>
+      <resources managed="true">$BASE/target/out/jvm/scala-3.6.2/buildinfo/resource_managed/main</resources>
+      <classes>$BASE/target/out/jvm/scala-3.6.2/buildinfo/classes</classes>
+    </configuration>
+    <configuration id="test">
+      <sources>$BASE/src/test/java</sources>
+      <sources>$BASE/src/test/scala</sources>
+      <sources>$BASE/src/test/scala-3</sources>
+      <sources managed="true">$BASE/target/out/jvm/scala-3.6.2/buildinfo/src_managed/test</sources>
+      <resources>$BASE/src/test/resources</resources>
+      <resources managed="true">$BASE/target/out/jvm/scala-3.6.2/buildinfo/resource_managed/test</resources>
+      <classes>$BASE/target/out/jvm/scala-3.6.2/buildinfo/test-classes</classes>
+    </configuration>
+    <dependencies>
+      <projects>
+        <forTest>
+          <project buildURI="$URI_BASE" configurations="compile">buildinfo:main</project>
+        </forTest>
+        <forProduction></forProduction>
+      </projects>
+      <modules>
+        <forTest>
+          <module configurations="compile" organization="org.scala-lang" name="scala3-library_3" revision="3.6.2" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="org.scala-lang" name="scala-library" revision="2.13.15" artifactType="jar" classifier=""/>
+        </forTest>
+        <forProduction>
+          <module configurations="compile" organization="org.scala-lang" name="scala3-library_3" revision="3.6.2" artifactType="jar" classifier=""/>
+          <module configurations="compile" organization="org.scala-lang" name="scala-library" revision="2.13.15" artifactType="jar" classifier=""/>
+        </forProduction>
+      </modules>
+      <jars>
+        <forTest></forTest>
+        <forProduction></forProduction>
+      </jars>
+    </dependencies>
+    <resolver name="public" root="https://repo1.maven.org/maven2/"/>
+    <setting>
+      <label>artifacts</label>
+      <description>The artifact definitions for the current module. Must be consistent with packagedArtifacts.</description>
+      <rank>40</rank>
+    </setting>
+    <setting>
+      <label>organization</label>
+      <description>Organization/group ID.</description>
+      <rank>9</rank>
+    </setting>
+    <setting>
+      <label>compileAnalysisTargetRoot</label>
+      <description>The output directory to produce Zinc Analysis files</description>
+      <rank>10000</rank>
+    </setting>
+    <setting>
+      <label>testReportsDirectory</label>
+      <description>Directory for outputting junit test reports.</description>
+      <rank>11</rank>
+    </setting>
+    <setting>
+      <label>name</label>
+      <description>Project name.</description>
+      <rank>9</rank>
+    </setting>
+    <setting>
+      <label>retrieveConfiguration</label>
+      <description>Configures retrieving dependencies to the current build.</description>
+      <rank>10000</rank>
+    </setting>
+    <setting>
+      <label>ivyPaths</label>
+      <description>Configures paths used by Ivy for dependency management.</description>
+      <rank>10000</rank>
+    </setting>
+    <setting>
+      <label>projectInfo</label>
+      <description>Addition project information like formal name, homepage, licenses etc.</description>
+      <rank>100</rank>
+    </setting>
+    <setting>
+      <label>makePomConfiguration</label>
+      <description>Configuration for generating a pom.</description>
+      <rank>10000</rank>
+    </setting>
+    <setting>
+      <label>resourceDirectories</label>
+      <description>List of all resource directories, both managed and unmanaged.</description>
+      <rank>39</rank>
+    </setting>
+    <setting>
+      <label>scalaBinaryVersion</label>
+      <description>The Scala version substring describing binary compatibility.</description>
+      <rank>39</rank>
+    </setting>
+    <setting>
+      <label>csrCacheDirectory</label>
+      <description>Coursier cache directory. Uses -Dsbt.coursier.home or Coursier's default.</description>
+      <rank>100</rank>
+    </setting>
+    <setting>
+      <label>history</label>
+      <description>The location where command line history is persisted.</description>
+      <rank>40</rank>
+    </setting>
+    <setting>
+      <label>normalizedName</label>
+      <description>Project name transformed from mixed case and spaces to lowercase and dash-separated.</description>
+      <rank>40</rank>
+    </setting>
+    <setting>
+      <label>scalaSource</label>
+      <description>Default Scala source directory.</description>
+      <rank>10</rank>
+    </setting>
+    <setting>
+      <label>description</label>
+      <description>Project description.</description>
+      <rank>40</rank>
+    </setting>
+    <setting>
+      <label>scalaCompilerBridgeSource</label>
+      <description>Configures the module ID of the sources of the compiler bridge when scalaCompilerBridgeBinaryJar is None</description>
+      <rank>100</rank>
+    </setting>
+    <setting>
+      <label>unmanagedBase</label>
+      <description>The default directory for manually managed libraries.</description>
+      <rank>10</rank>
+    </setting>
+    <setting>
+      <label>organizationHomepage</label>
+      <description>Organization homepage.</description>
+      <rank>41</rank>
+    </setting>
+    <setting>
+      <label>sourceDirectories</label>
+      <description>List of all source directories, both managed and unmanaged.</description>
+      <rank>11</rank>
+    </setting>
+    <setting>
+      <label>sbtBinaryVersion</label>
+      <description>Defines the binary compatibility version substring.</description>
+      <rank>39</rank>
+    </setting>
+    <setting>
+      <label>thisProjectRef</label>
+      <description>Provides a fully-resolved reference to the current project for the referencing scope.</description>
+      <rank>100</rank>
+    </setting>
+    <setting>
+      <label>semanticdbCompilerPlugin</label>
+      <description>SemanticDB Scalac plugin</description>
+      <rank>100</rank>
+    </setting>
+    <setting>
+      <label>sourceManaged</label>
+      <description>Default directory for sources generated by the build.</description>
+      <rank>39</rank>
+    </setting>
+    <setting>
+      <label>moduleName</label>
+      <description>The name of the current module, used for dependency management.</description>
+      <rank>40</rank>
+    </setting>
+    <setting>
+      <label>organizationName</label>
+      <description>Organization full/formal name.</description>
+      <rank>41</rank>
+    </setting>
+    <setting>
+      <label>conflictWarning</label>
+      <description>Configures warnings for conflicts in dependency management.</description>
+      <rank>100</rank>
+    </setting>
+    <setting>
+      <label>appResolvers</label>
+      <description>The resolvers configured for this application by the sbt launcher.</description>
+      <rank>41</rank>
+    </setting>
+    <setting>
+      <label>publishArtifact</label>
+      <description>Enables (true) or disables (false) publishing an artifact.</description>
+      <rank>11</rank>
+    </setting>
+    <setting>
+      <label>scalaVersion</label>
+      <description>The version of Scala used for building.</description>
+      <rank>9</rank>
+    </setting>
+    <setting>
+      <label>allExcludeDependencies</label>
+      <description>User-defined dependency exclusions and sbt itself in the case of metabuild.</description>
+      <rank>200</rank>
+    </setting>
+    <setting>
+      <label>crossVersion</label>
+      <description>Configures handling of the Scala version when cross-building.</description>
+      <rank>100</rank>
+    </setting>
+    <setting>
+      <label>earlyCompileAnalysisTargetRoot</label>
+      <description>The output directory to produce Zinc Analysis files</description>
+      <rank>10000</rank>
+    </setting>
+    <setting>
+      <label>ivyConfigurations</label>
+      <description>The defined configurations for dependency management. This may be different from the configurations for Project settings.</description>
+      <rank>40</rank>
+    </setting>
+    <setting>
+      <label>sbtDependency</label>
+      <description>Provides a definition for declaring the current version of sbt.</description>
+      <rank>41</rank>
+    </setting>
+    <setting>
+      <label>transitiveClassifiers</label>
+      <description>List of classifiers used for transitively obtaining extra artifacts for sbt or declared dependencies.</description>
+      <rank>40</rank>
+    </setting>
+    <setting>
+      <label>updateConfiguration</label>
+      <description>Configuration for resolving and retrieving managed dependencies.</description>
+      <rank>10000</rank>
+    </setting>
+    <setting>
+      <label>crossTarget</label>
+      <description>Main directory for files generated by the build that are cross-built.</description>
+      <rank>40</rank>
+    </setting>
+    <setting>
+      <label>resourceManaged</label>
+      <description>Default managed resource directory, used when generating resources.</description>
+      <rank>40</rank>
+    </setting>
+    <setting>
+      <label>resourceGenerators</label>
+      <description>List of tasks that generate resources.</description>
+      <rank>100</rank>
+    </setting>
+    <setting>
+      <label>testResultLogger</label>
+      <description>Logs results after a test task completes.</description>
+      <rank>20000</rank>
+    </setting>
+    <setting>
+      <label>resourceDirectory</label>
+      <description>Default unmanaged resource directory, used for user-defined resources.</description>
+      <rank>10</rank>
+    </setting>
+    <setting>
+      <label>unmanagedSourceDirectories</label>
+      <description>Unmanaged source directories, which contain manually created sources.</description>
+      <rank>10</rank>
+    </setting>
+    <setting>
+      <label>logManager</label>
+      <description>The log manager, which creates Loggers for different contexts.</description>
+      <rank>10000</rank>
+    </setting>
+    <setting>
+      <label>javaSource</label>
+      <description>Default Java source directory.</description>
+      <rank>10</rank>
+    </setting>
+    <setting>
+      <label>zincCompilationListeners</label>
+      <description>Listeners that receive information about incremental compiler decisions.</description>
+      <rank>10000</rank>
+    </setting>
+    <setting>
+      <label>overrideBuildResolvers</label>
+      <description>Whether or not all the build resolvers should be overridden with what's defined from the launcher.</description>
+      <rank>41</rank>
+    </setting>
+    <setting>
+      <label>watchForceTriggerOnAnyChange</label>
+      <description>Force the watch process to rerun the current task(s) if any relevant source change is detected regardless of whether or not the underlying file has actually changed.</description>
+      <rank>10000</rank>
+    </setting>
+    <setting>
+      <label>outputPath</label>
+      <description>Path of the output directory relative from the rootOutputDirectory.</description>
+      <rank>10000</rank>
+    </setting>
+    <setting>
+      <label>classpathOptions</label>
+      <description>Configures handling of Scala classpaths.</description>
+      <rank>10000</rank>
+    </setting>
+    <setting>
+      <label>baseDirectory</label>
+      <description>The base directory. Depending on the scope, this is the base directory for the build, project, configuration, or task.</description>
+      <rank>11</rank>
+    </setting>
+    <setting>
+      <label>classDirectory</label>
+      <description>Directory for compiled classes and copied resources.</description>
+      <rank>11</rank>
+    </setting>
+    <setting>
+      <label>artifactPath</label>
+      <description>The location of a generated artifact.</description>
+      <rank>39</rank>
+    </setting>
+    <setting>
+      <label>cleanKeepGlobs</label>
+      <description>Globs to keep during a clean. Must be direct children of target.</description>
+      <rank>100</rank>
+    </setting>
+    <setting>
+      <label>cleanKeepFiles</label>
+      <description>Files or directories to keep during a clean. Must be direct children of target.</description>
+      <rank>100</rank>
+    </setting>
+    <setting>
+      <label>configuration</label>
+      <description>Provides the current configuration of the referencing scope.</description>
+      <rank>100</rank>
+    </setting>
+    <setting>
+      <label>onLoadMessage</label>
+      <description>Message to display when the project is loaded.</description>
+      <rank>10000</rank>
+    </setting>
+    <setting>
+      <label>semanticdbTargetRoot</label>
+      <description>The output directory to produce META-INF/semanticdb/**/*.semanticdb files</description>
+      <rank>100</rank>
+    </setting>
+    <setting>
+      <label>sourceDirectory</label>
+      <description>Default directory containing sources.</description>
+      <rank>11</rank>
+    </setting>
+    <setting>
+      <label>managedSourceDirectories</label>
+      <description>Managed source directories, which contain sources generated by the build.</description>
+      <rank>40</rank>
+    </setting>
+    <setting>
+      <label>thisProject</label>
+      <description>Provides the current project for the referencing scope.</description>
+      <rank>100</rank>
+    </setting>
+    <setting>
+      <label>isSnapshot</label>
+      <description>True if the version of the project is a snapshot version.</description>
+      <rank>39</rank>
+    </setting>
+    <setting>
+      <label>target</label>
+      <description>Main directory for files generated by the build.</description>
+      <rank>11</rank>
+    </setting>
+    <setting>
+      <label>evictionWarningOptions</label>
+      <description>Options on eviction warnings after resolving managed dependencies.</description>
+      <rank>10000</rank>
+    </setting>
+    <setting>
+      <label>managedResourceDirectories</label>
+      <description>List of managed resource directories.</description>
+      <rank>11</rank>
+    </setting>
+    <setting>
+      <label>crossScalaVersions</label>
+      <description>The versions of Scala used when cross-building.</description>
+      <rank>39</rank>
+    </setting>
+    <setting>
+      <label>bspInternalDependencyConfigurations</label>
+      <description>The project configurations that this configuration depends on, possibly transitively</description>
+      <rank>10000</rank>
+    </setting>
+    <setting>
+      <label>libraryDependencies</label>
+      <description>Declares managed dependencies.</description>
+      <rank>9</rank>
+    </setting>
+    <setting>
+      <label>projectID</label>
+      <description>The dependency management descriptor for the current module.</description>
+      <rank>41</rank>
+    </setting>
+    <setting>
+      <label>fileInputOptions</label>
+      <description>Options that take file input, which may invalidate the cache.</description>
+      <rank>100</rank>
+    </setting>
+    <setting>
+      <label>bspTargetIdentifier</label>
+      <description>Build target identifier of a project and configuration.</description>
+      <rank>10000</rank>
+    </setting>
+    <setting>
+      <label>dependencyOverrides</label>
+      <description>Declares managed dependency overrides.</description>
+      <rank>40</rank>
+    </setting>
+    <setting>
+      <label>publishMavenStyle</label>
+      <description>Configures whether to generate and publish a pom (true) or Ivy file (false).</description>
+      <rank>40</rank>
+    </setting>
+    <setting>
+      <label>scalaModuleInfo</label>
+      <description>Configures how Scala dependencies are checked, filtered, and injected.</description>
+      <rank>100</rank>
+    </setting>
+    <setting>
+      <label>scalaOrganization</label>
+      <description>Organization/group ID of the Scala used in the project. Default value is 'org.scala-lang'. This is an advanced setting used for clones of the Scala Language. It should be disregarded in standard use cases.</description>
+      <rank>100</rank>
+    </setting>
+    <setting>
+      <label>updateOptions</label>
+      <description>Options for resolving managed dependencies.</description>
+      <rank>10000</rank>
+    </setting>
+    <setting>
+      <label>artifact</label>
+      <description>Describes an artifact.</description>
+      <rank>41</rank>
+    </setting>
+    <setting>
+      <label>semanticdbOptions</label>
+      <description>The Scalac options introduced for SemanticDB</description>
+      <rank>100</rank>
+    </setting>
+    <setting>
+      <label>sourceGenerators</label>
+      <description>List of tasks that generate sources.</description>
+      <rank>100</rank>
+    </setting>
+    <setting>
+      <label>unmanagedResourceDirectories</label>
+      <description>Unmanaged resource directories, containing resources manually created by the user.</description>
+      <rank>11</rank>
+    </setting>
+    <task>
+      <label>bspBuildTargetJVMTestEnvironment</label>
+      <description>Implementation of buildTarget/jvmTestEnvironment</description>
+      <rank>20000</rank>
+    </task>
+    <task>
+      <label>dependencyPositions</label>
+      <description>Source positions where the dependencies are defined.</description>
+      <rank>20000</rank>
+    </task>
+    <task>
+      <label>allCredentials</label>
+      <description>Aggregated credentials across current and root subprojects. Do not rewire this task.</description>
+      <rank>20000</rank>
+    </task>
+    <task>
+      <label>test</label>
+      <description>Executes the tests that either failed before, were not run or whose transitive dependencies changed, among those provided as arguments.</description>
+      <rank>5</rank>
+    </task>
+    <task>
+      <label>mappings</label>
+      <description>Defines the mappings from a file to a path, used by packaging, for example.</description>
+      <rank>30</rank>
+    </task>
+    <task>
+      <label>package</label>
+      <description>Produces the main artifact, such as a binary jar. This is typically an alias for the task that actually does the packaging.</description>
+      <rank>4</rank>
+    </task>
+    <task>
+      <label>manipulateBytecode</label>
+      <description>Manipulates generated bytecode</description>
+      <rank>30</rank>
+    </task>
+    <task>
+      <label>bspCompileTask</label>
+      <description/>
+      <rank>20000</rank>
+    </task>
+    <task>
+      <label>classpathConfiguration</label>
+      <description>The configuration used to define the classpath.</description>
+      <rank>200</rank>
+    </task>
+    <task>
+      <label>productDirectories</label>
+      <description>Base directories of build products.</description>
+      <rank>200</rank>
+    </task>
+    <task>
+      <label>externalDependencyClasspath</label>
+      <description>The classpath consisting of library dependencies, both managed and unmanaged.</description>
+      <rank>31</rank>
+    </task>
+    <task>
+      <label>loadedTestFrameworks</label>
+      <description>Loads Framework definitions from the test loader.</description>
+      <rank>20000</rank>
+    </task>
+    <task>
+      <label>unmanagedClasspath</label>
+      <description>Classpath entries (deep) that are manually managed.</description>
+      <rank>29</rank>
+    </task>
+    <task>
+      <label>testOptionDigests</label>
+      <description>Digest for testOptions</description>
+      <rank>20000</rank>
+    </task>
+    <task>
+      <label>deliverLocal</label>
+      <description>Generates the Ivy file for publishing to the local repository.</description>
+      <rank>30</rank>
+    </task>
+    <task>
+      <label>testFilter</label>
+      <description>Filter controlling whether the test is executed</description>
+      <rank>20000</rank>
+    </task>
+    <task>
+      <label>moduleSettings</label>
+      <description>Module settings, which configure dependency management for a specific module, such as a project.</description>
+      <rank>20000</rank>
+    </task>
+    <task>
+      <label>definedTestDigests</label>
+      <description>Provides a unique digest of defined tests.</description>
+      <rank>20000</rank>
+    </task>
+    <task>
+      <label>consoleProject</label>
+      <description>Starts the Scala interpreter with the sbt and the build definition on the classpath and useful imports.</description>
+      <rank>6</rank>
+    </task>
+    <task>
+      <label>compileIncSetup</label>
+      <description>Configures aspects of incremental compilation.</description>
+      <rank>20000</rank>
+    </task>
+    <task>
+      <label>allDependencies</label>
+      <description>Inter-project and library dependencies.</description>
+      <rank>200</rank>
+    </task>
+    <task>
+      <label>discoveredMainClasses</label>
+      <description>Auto-detects main classes.</description>
+      <rank>31</rank>
+    </task>
+    <task>
+      <label>testFull</label>
+      <description>Executes all tests.</description>
+      <rank>4</rank>
+    </task>
+    <task>
+      <label>externalResolvers</label>
+      <description>The external resolvers for automatically managed dependencies.</description>
+      <rank>41</rank>
+    </task>
+    <task>
+      <label>deliver</label>
+      <description>Generates the Ivy file for publishing to a repository.</description>
+      <rank>30</rank>
+    </task>
+    <task>
+      <label>classifiersModule</label>
+      <description>classifiers-module</description>
+      <rank>200</rank>
+    </task>
+    <task>
+      <label>ivySbt</label>
+      <description>Provides the sbt interface to Ivy.</description>
+      <rank>200</rank>
+    </task>
+    <task>
+      <label>apiMappings</label>
+      <description>Mappings from classpath entry to API documentation base URL.</description>
+      <rank>41</rank>
+    </task>
+    <task>
+      <label>dependencyClasspath</label>
+      <description>The classpath consisting of internal and external, managed and unmanaged dependencies.</description>
+      <rank>29</rank>
+    </task>
+    <task>
+      <label>bspScalaTestClassesItem</label>
+      <description/>
+      <rank>20000</rank>
+    </task>
+    <task>
+      <label>packageDoc</label>
+      <description>Produces a documentation artifact, such as a jar containing API documentation.</description>
+      <rank>6</rank>
+    </task>
+    <task>
+      <label>scalaCompilerBridgeBinaryJar</label>
+      <description>Optionally, the jar of the compiler bridge. When not None, this takes precedence over scalaCompilerBridgeSource</description>
+      <rank>100</rank>
+    </task>
+    <task>
+      <label>earlyCompileAnalysisFile</label>
+      <description>Zinc analysis storage for early compilation</description>
+      <rank>10000</rank>
+    </task>
+    <task>
+      <label>run</label>
+      <description>Runs a main class, passing along arguments provided on the command line.</description>
+      <rank>4</rank>
+    </task>
+    <task>
+      <label>bootDependencyResolution</label>
+      <description>Dependency resolution to retrieve sbt's components.</description>
+      <rank>200</rank>
+    </task>
+    <task>
+      <label>clean</label>
+      <description>Deletes files produced by the build, such as generated sources, compiled classes, and task caches.</description>
+      <rank>4</rank>
+    </task>
+    <task>
+      <label>dependencyCacheDirectory</label>
+      <description>The base directory for cached dependencies.</description>
+      <rank>20000</rank>
+    </task>
+    <task>
+      <label>csrConfiguration</label>
+      <description>General dependency management (Coursier) settings, such as the resolvers and options to use.</description>
+      <rank>20000</rank>
+    </task>
+    <task>
+      <label>forkOptions</label>
+      <description>Configures JVM forking.</description>
+      <rank>10000</rank>
+    </task>
+    <task>
+      <label>printWarnings</label>
+      <description>Shows warnings from compilation, including ones that weren't printed initially.</description>
+      <rank>29</rank>
+    </task>
+    <task>
+      <label>bspBuildTargetResourcesItem</label>
+      <description/>
+      <rank>20000</rank>
+    </task>
+    <task>
+      <label>projectDependencies</label>
+      <description>Inter-project dependencies.</description>
+      <rank>20000</rank>
+    </task>
+    <task>
+      <label>testOnly</label>
+      <description>Executes the tests provided as arguments or all tests if no arguments are provided.</description>
+      <rank>5</rank>
+    </task>
+    <task>
+      <label>publishLocal</label>
+      <description>Publishes artifacts to the local Ivy repository.</description>
+      <rank>4</rank>
+    </task>
+    <task>
+      <label>unresolvedWarningConfiguration</label>
+      <description>Configuration for unresolved dependency warning.</description>
+      <rank>20000</rank>
+    </task>
+    <task>
+      <label>exportedProductsIfMissing</label>
+      <description>Build products that go on the exported classpath if missing.</description>
+      <rank>200</rank>
+    </task>
+    <task>
+      <label>projectResolver</label>
+      <description>Resolver that handles inter-project dependencies.</description>
+      <rank>20000</rank>
+    </task>
+    <task>
+      <label>ivyConfiguration</label>
+      <description>General dependency management (Ivy) settings, such as the resolvers and paths to use.</description>
+      <rank>20000</rank>
+    </task>
+    <task>
+      <label>publishLocalConfiguration</label>
+      <description>Configuration for publishing to the local Ivy repository.</description>
+      <rank>20000</rank>
+    </task>
+    <task>
+      <label>packageConfiguration</label>
+      <description>Collects all inputs needed for packaging.</description>
+      <rank>20000</rank>
+    </task>
+    <task>
+      <label>packageOptions</label>
+      <description>Options for packaging.</description>
+      <rank>30</rank>
+    </task>
+    <task>
+      <label>compileAnalysisFilename</label>
+      <description>Defines the filename used for compileAnalysisFile.</description>
+      <rank>20000</rank>
+    </task>
+    <task>
+      <label>bspBuildTargetJavacOptionsItem</label>
+      <description>Item of buildTarget/javacOptions</description>
+      <rank>20000</rank>
+    </task>
+    <task>
+      <label>bspBuildTargetJVMRunEnvironment</label>
+      <description>Implementation of buildTarget/jvmRunEnvironment</description>
+      <rank>20000</rank>
+    </task>
+    <task>
+      <label>fullResolvers</label>
+      <description>Combines the project resolver, default resolvers, and user-defined resolvers.</description>
+      <rank>200</rank>
+    </task>
+    <task>
+      <label>exportedProducts</label>
+      <description>Build products that go on the exported classpath.</description>
+      <rank>200</rank>
+    </task>
+    <task>
+      <label>otherResolvers</label>
+      <description>Resolvers not included in the main resolver chain, such as those in module configurations.</description>
+      <rank>100</rank>
+    </task>
+    <task>
+      <label>testExecution</label>
+      <description>Settings controlling test execution</description>
+      <rank>20000</rank>
+    </task>
+    <task>
+      <label>runner</label>
+      <description>Implementation used to run a main class.</description>
+      <rank>20000</rank>
+    </task>
+    <task>
+      <label>skip</label>
+      <description>For tasks that support it (currently only 'compile', 'update', 'publish' and 'publishLocal'), setting skip to true will force the task to not to do its work. The exact semantics may vary depending on the task.</description>
+      <rank>40</rank>
+    </task>
+    <task>
+      <label>scalaInstance</label>
+      <description>Defines the Scala instance to use for compilation, running, and testing.</description>
+      <rank>20000</rank>
+    </task>
+    <task>
+      <label>compileInputs</label>
+      <description>Collects all inputs needed for compilation.</description>
+      <rank>20000</rank>
+    </task>
+    <task>
+      <label>products</label>
+      <description>Build products that get packaged.</description>
+      <rank>31</rank>
+    </task>
+    <task>
+      <label>compilerReporter</label>
+      <description>Experimental hook to listen (or send) compilation failure messages.</description>
+      <rank>20000</rank>
+    </task>
+    <task>
+      <label>compilers</label>
+      <description>Defines the Scala and Java compilers to use for compilation.</description>
+      <rank>20000</rank>
+    </task>
+    <task>
+      <label>packagedArtifact</label>
+      <description>Generates a packaged artifact, returning the Artifact and the produced File.</description>
+      <rank>200</rank>
+    </task>
+    <task>
+      <label>updateSbtClassifiers</label>
+      <description>Resolves and optionally retrieves classifiers, such as javadocs and sources, for sbt, transitively.</description>
+      <rank>29</rank>
+    </task>
+    <task>
+      <label>compile</label>
+      <description>Compiles sources.</description>
+      <rank>4</rank>
+    </task>
+    <task>
+      <label>publishM2</label>
+      <description>Publishes artifacts to the local Maven repository.</description>
+      <rank>5</rank>
+    </task>
+    <task>
+      <label>unmanagedResources</label>
+      <description>Unmanaged resources, which are manually created.</description>
+      <rank>29</rank>
+    </task>
+    <task>
+      <label>mainClass</label>
+      <description>Defines the main class for packaging or running.</description>
+      <rank>29</rank>
+    </task>
+    <task>
+      <label>makePom</label>
+      <description>Generates a pom for publishing when publishing Maven-style.</description>
+      <rank>29</rank>
+    </task>
+    <task>
+      <label>definedTestNames</label>
+      <description>Provides the set of defined test names.</description>
+      <rank>31</rank>
+    </task>
+    <task>
+      <label>doc</label>
+      <description>Generates API documentation.</description>
+      <rank>6</rank>
+    </task>
+    <task>
+      <label>scalacOptions</label>
+      <description>Options for the Scala compiler.</description>
+      <rank>29</rank>
+    </task>
+    <task>
+      <label>makeIvyXmlLocalConfiguration</label>
+      <description>Configuration for generating ivy.xml.</description>
+      <rank>10000</rank>
+    </task>
+    <task>
+      <label>extraTestDigests</label>
+      <description>Extra digests that would invalidate test caching</description>
+      <rank>20000</rank>
+    </task>
+    <task>
+      <label>packageSrc</label>
+      <description>Produces a source artifact, such as a jar containing sources and resources.</description>
+      <rank>6</rank>
+    </task>
+    <task>
+      <label>runMain</label>
+      <description>Runs the main class selected by the first argument, passing the remaining arguments to the main method.</description>
+      <rank>5</rank>
+    </task>
+    <task>
+      <label>incOptions</label>
+      <description>Options for the incremental compiler.</description>
+      <rank>30</rank>
+    </task>
+    <task>
+      <label>unmanagedJars</label>
+      <description>Classpath entries for the current project (shallow) that are manually managed.</description>
+      <rank>29</rank>
+    </task>
+    <task>
+      <label>evicted</label>
+      <description>Display detailed eviction warnings.</description>
+      <rank>200</rank>
+    </task>
+    <task>
+      <label>publish</label>
+      <description>Publishes artifacts to a repository.</description>
+      <rank>4</rank>
+    </task>
+    <task>
+      <label>projectDescriptors</label>
+      <description>Project dependency map for the inter-project resolver.</description>
+      <rank>20000</rank>
+    </task>
+    <task>
+      <label>bspBuildTargetDependencySourcesItem</label>
+      <description/>
+      <rank>20000</rank>
+    </task>
+    <task>
+      <label>testGrouping</label>
+      <description>Collects discovered tests into groups. Whether to fork and the options for forking are configurable on a per-group basis.</description>
+      <rank>31</rank>
+    </task>
+    <task>
+      <label>publishM2Configuration</label>
+      <description>Configuration for publishing to the local Maven repository.</description>
+      <rank>20000</rank>
+    </task>
+    <task>
+      <label>selectMainClass</label>
+      <description>Selects the main class to run.</description>
+      <rank>31</rank>
+    </task>
+    <task>
+      <label>compileIncremental</label>
+      <description>Actually runs the incremental compilation</description>
+      <rank>20000</rank>
+    </task>
+    <task>
+      <label>managedResources</label>
+      <description>Resources generated by the build.</description>
+      <rank>30</rank>
+    </task>
+    <task>
+      <label>exportedProductsNoTracking</label>
+      <description>Just the exported classpath without triggering the compilation.</description>
+      <rank>200</rank>
+    </task>
+    <task>
+      <label>streams</label>
+      <description>Provides streams for logging and persisting data.</description>
+      <rank>20000</rank>
+    </task>
+    <task>
+      <label>resourceDigests</label>
+      <description>All resource files, both managed and unmanaged.</description>
+      <rank>30</rank>
+    </task>
+    <task>
+      <label>testOptions</label>
+      <description>Options for running tests.</description>
+      <rank>29</rank>
+    </task>
+    <task>
+      <label>packagedArtifacts</label>
+      <description>Packages all artifacts for publishing and maps the Artifact definition to the generated file.</description>
+      <rank>200</rank>
+    </task>
+    <task>
+      <label>bspBuildTargetScalacOptionsItem</label>
+      <description/>
+      <rank>20000</rank>
+    </task>
+    <task>
+      <label>updateCacheName</label>
+      <description>Defines the directory name used to store the update cache files (inside the streams cacheDirectory).</description>
+      <rank>20000</rank>
+    </task>
+    <task>
+      <label>managedSources</label>
+      <description>Sources generated by the build.</description>
+      <rank>30</rank>
+    </task>
+    <task>
+      <label>bspBuildTargetOutputPathsItem</label>
+      <description/>
+      <rank>20000</rank>
+    </task>
+    <task>
+      <label>cleanFiles</label>
+      <description>The files to recursively delete during a clean.</description>
+      <rank>40</rank>
+    </task>
+    <task>
+      <label>transitiveUpdate</label>
+      <description>UpdateReports for the internal dependencies of this project.</description>
+      <rank>20000</rank>
+    </task>
+    <task>
+      <label>testListeners</label>
+      <description>Defines test listeners.</description>
+      <rank>20000</rank>
+    </task>
+    <task>
+      <label>consoleQuick</label>
+      <description>Starts the Scala interpreter with the project dependencies on the classpath.</description>
+      <rank>5</rank>
+    </task>
+    <task>
+      <label>csrExtraProjects</label>
+      <description/>
+      <rank>200</rank>
+    </task>
+    <task>
+      <label>publishConfiguration</label>
+      <description>Configuration for publishing to a repository.</description>
+      <rank>20000</rank>
+    </task>
+    <task>
+      <label>executeTests</label>
+      <description>Executes all tests, producing a report.</description>
+      <rank>200</rank>
+    </task>
+    <task>
+      <label>resources</label>
+      <description>All resource files, both managed and unmanaged.</description>
+      <rank>30</rank>
+    </task>
+    <task>
+      <label>discoveredSbtPlugins</label>
+      <description>The names of sbt plugin-related modules (modules that extend Build, Plugin, AutoPlugin) defined by this project.</description>
+      <rank>200</rank>
+    </task>
+    <task>
+      <label>compileOptions</label>
+      <description>Collects basic options to configure compilers</description>
+      <rank>20000</rank>
+    </task>
+    <task>
+      <label>bspBuildTargetSourcesItem</label>
+      <description/>
+      <rank>20000</rank>
+    </task>
+    <task>
+      <label>bspBuildTargetCompileItem</label>
+      <description/>
+      <rank>20000</rank>
+    </task>
+    <task>
+      <label>scalaCompilerBridgeResolvers</label>
+      <description>Resolvers used to resolve compiler bridges.</description>
+      <rank>100</rank>
+    </task>
+    <task>
+      <label>compileAnalysisFile</label>
+      <description>Zinc analysis storage.</description>
+      <rank>10000</rank>
+    </task>
+    <task>
+      <label>testLoader</label>
+      <description>Provides the class loader used for testing.</description>
+      <rank>20000</rank>
+    </task>
+    <task>
+      <label>pickleProducts</label>
+      <description>Pickle JARs</description>
+      <rank>20000</rank>
+    </task>
+    <task>
+      <label>dependencyResolution</label>
+      <description>Provides the sbt interface to dependency resolution.</description>
+      <rank>200</rank>
+    </task>
+    <task>
+      <label>bootResolvers</label>
+      <description>The resolvers used by the sbt launcher.</description>
+      <rank>41</rank>
+    </task>
+    <task>
+      <label>updateFull</label>
+      <description>Resolves and optionally retrieves dependencies, producing a full report with callers.</description>
+      <rank>200</rank>
+    </task>
+    <task>
+      <label>update</label>
+      <description>Resolves and optionally retrieves dependencies, producing a report.</description>
+      <rank>5</rank>
+    </task>
+    <task>
+      <label>packageBin</label>
+      <description>Produces a main artifact, such as a binary jar.</description>
+      <rank>5</rank>
+    </task>
+    <task>
+      <label>makeIvyXmlConfiguration</label>
+      <description>Configuration for generating ivy.xml.</description>
+      <rank>10000</rank>
+    </task>
+    <task>
+      <label>exportedPickles</label>
+      <description>Build products that go on the exported compilation classpath as JARs. Note this is promise-blocked.</description>
+      <rank>20000</rank>
+    </task>
+    <task>
+      <label>bspBuildTargetJvmEnvironmentItem</label>
+      <description>Computes JVM environment item</description>
+      <rank>20000</rank>
+    </task>
+    <task>
+      <label>internalDependencyClasspath</label>
+      <description>The internal (inter-project) classpath.</description>
+      <rank>200</rank>
+    </task>
+    <task>
+      <label>previousCompile</label>
+      <description>Read the incremental compiler analysis from disk</description>
+      <rank>20000</rank>
+    </task>
+    <task>
+      <label>sources</label>
+      <description>All sources, both managed and unmanaged.</description>
+      <rank>30</rank>
+    </task>
+    <task>
+      <label>console</label>
+      <description>Starts the Scala interpreter with the project classes on the classpath.</description>
+      <rank>4</rank>
+    </task>
+    <task>
+      <label>unmanagedSources</label>
+      <description>Unmanaged sources, which are manually created.</description>
+      <rank>29</rank>
+    </task>
+    <task>
+      <label>bspBuildTargetRun</label>
+      <description>Corresponds to buildTarget/run request</description>
+      <rank>20000</rank>
+    </task>
+    <task>
+      <label>ivyModule</label>
+      <description>Provides the sbt interface to a configured Ivy module.</description>
+      <rank>200</rank>
+    </task>
+    <task>
+      <label>bspReporter</label>
+      <description/>
+      <rank>20000</rank>
+    </task>
+    <task>
+      <label>copyResources</label>
+      <description>Copies resources to the output directory.</description>
+      <rank>6</rank>
+    </task>
+    <task>
+      <label>tastyFiles</label>
+      <description>Returns the TASTy files produced by compilation</description>
+      <rank>20000</rank>
+    </task>
+    <task>
+      <label>bspBuildTarget</label>
+      <description>Description of the BSP build targets</description>
+      <rank>20000</rank>
+    </task>
+    <task>
+      <label>scalaCompilerBridgeDependencyResolution</label>
+      <description>Dependency resolution to retrieve the compiler bridge.</description>
+      <rank>200</rank>
+    </task>
+    <task>
+      <label>bspScalaMainClassesItem</label>
+      <description/>
+      <rank>20000</rank>
+    </task>
+    <task>
+      <label>managedClasspath</label>
+      <description>The classpath consisting of external, managed library dependencies.</description>
+      <rank>31</rank>
+    </task>
+    <task>
+      <label>makeIvyXml</label>
+      <description>Generates the Ivy file for publishing to a repository.</description>
+      <rank>30</rank>
+    </task>
+    <task>
+      <label>testQuick</label>
+      <description>Alias for test.</description>
+      <rank>200</rank>
+    </task>
+    <task>
+      <label>runBlock</label>
+      <description>Runs a main class, and blocks until it's done.</description>
+      <rank>20000</rank>
+    </task>
+    <task>
+      <label>updateClassifiers</label>
+      <description>Resolves and optionally retrieves classified artifacts, such as javadocs and sources, for dependency definitions, transitively.</description>
+      <rank>29</rank>
+    </task>
+    <task>
+      <label>bootIvyConfiguration</label>
+      <description>General dependency management (Ivy) settings, configured to retrieve sbt's components.</description>
+      <rank>20000</rank>
+    </task>
+    <task>
+      <label>fullClasspath</label>
+      <description>The exported classpath, consisting of build products and unmanaged and managed, internal and external dependencies.</description>
+      <rank>29</rank>
+    </task>
+    <task>
+      <label>definedTests</label>
+      <description>Provides the list of defined tests.</description>
+      <rank>31</rank>
+    </task>
+    <command>
+      <name>preferScala2</name>
+    </command>
+    <command>
+      <name>about</name>
+      <help>
+        <cmd>about</cmd>
+        <desc>Displays basic information about sbt and the build.</desc>
+      </help>
+    </command>
+    <command>
+      <name>tasks</name>
+      <help>
+        <cmd>tasks</cmd>
+        <desc>Lists the tasks defined for the current project.</desc>
+      </help>
+    </command>
+    <command>
+      <name>settings</name>
+      <help>
+        <cmd>settings</cmd>
+        <desc>Lists the settings defined for the current project.</desc>
+      </help>
+    </command>
+    <command>
+      <name>reload</name>
+      <help>
+        <cmd>reload</cmd>
+        <desc>(Re)loads the current project or changes to plugins project or returns from it.</desc>
+      </help>
+    </command>
+    <command>
+      <name>new</name>
+      <help>
+        <cmd>new</cmd>
+        <desc>Creates a new sbt build.</desc>
+      </help>
+    </command>
+    <command>
+      <name>init</name>
+      <help>
+        <cmd>new</cmd>
+        <desc>Creates a new sbt build.</desc>
+      </help>
+    </command>
+    <command>
+      <name>projects</name>
+      <help>
+        <cmd>projects</cmd>
+        <desc>Lists the names of available projects or temporarily adds/removes extra builds to the session.</desc>
+      </help>
+    </command>
+    <command>
+      <name>project</name>
+      <help>
+        <cmd>project</cmd>
+        <desc>Displays the current project or changes to the provided `project`.</desc>
+      </help>
+    </command>
+    <command>
+      <name>set</name>
+      <help>
+        <cmd>set [every] &lt;setting&gt;</cmd>
+        <desc>Evaluates a Setting and applies it to the current project.</desc>
+      </help>
+    </command>
+    <command>
+      <name>session</name>
+      <help>
+        <cmd>session</cmd>
+        <desc>Manipulates session settings. For details, run 'help session'.</desc>
+      </help>
+    </command>
+    <command>
+      <name>inspect</name>
+      <help>
+        <cmd>inspect [tree|uses|definitions|actual] &lt;key&gt;</cmd>
+        <desc>Prints the value for 'key', the defining scope, delegates, related definitions, and dependencies.</desc>
+      </help>
+    </command>
+    <command>
+      <name>loadp</name>
+    </command>
+    <command>
+      <name>loadFailed</name>
+    </command>
+    <command>
+      <name>load-failed</name>
+    </command>
+    <command>
+      <name>plugin</name>
+    </command>
+    <command>
+      <name>plugins</name>
+      <help>
+        <cmd>plugins</cmd>
+        <desc>Lists currently available plugins.</desc>
+      </help>
+    </command>
+    <command>
+      <name>writeSbtVersion</name>
+    </command>
+    <command>
+      <name>skipBanner</name>
+    </command>
+    <command>
+      <name>notifyUsersAboutShell</name>
+    </command>
+    <command>
+      <name>shell</name>
+    </command>
+    <command>
+      <name>startServer</name>
+    </command>
+    <command>
+      <name>eval</name>
+    </command>
+    <command>
+      <name>last</name>
+      <help>
+        <cmd>last</cmd>
+        <desc>Displays output from a previous command or the output from a specific task.</desc>
+      </help>
+    </command>
+    <command>
+      <name>lastGrep</name>
+      <help>
+        <cmd>lastGrep</cmd>
+        <desc>Shows lines from the last output for 'key' that match 'pattern'.</desc>
+      </help>
+    </command>
+    <command>
+      <name>export</name>
+      <help>
+        <cmd>export &lt;tasks&gt;+</cmd>
+        <desc>Executes tasks and displays the equivalent command lines.</desc>
+      </help>
+    </command>
+    <command>
+      <name>boot</name>
+    </command>
+    <command>
+      <name>initialize</name>
+    </command>
+    <command>
+      <name>~</name>
+      <help>
+        <cmd>~ &lt;command&gt;</cmd>
+        <desc>Executes the specified command whenever source files change.</desc>
+      </help>
+    </command>
+    <command>
+      <name>clearCaches</name>
+    </command>
+    <command>
+      <name>resumeFromFailure</name>
+    </command>
+    <command>
+      <name>help</name>
+      <help>
+        <cmd>help</cmd>
+        <desc>Displays this help message or prints detailed help on requested commands (run 'help &lt;command&gt;').</desc>
+      </help>
+    </command>
+    <command>
+      <name>completions</name>
+      <help>
+        <cmd>completions</cmd>
+        <desc>Displays a list of completions for the given argument string (run 'completions &lt;string&gt;').</desc>
+      </help>
+    </command>
+    <command>
+      <name>iflast</name>
+    </command>
+    <command>
+      <name>append</name>
+    </command>
+    <command>
+      <name>onFailure</name>
+    </command>
+    <command>
+      <name>sbtClearOnFailure</name>
+    </command>
+    <command>
+      <name>sbtStashOnFailure</name>
+    </command>
+    <command>
+      <name>sbtPopOnFailure</name>
+    </command>
+    <command>
+      <name>reboot</name>
+    </command>
+    <command>
+      <name>apply</name>
+    </command>
+    <command>
+      <name>exit</name>
+      <help>
+        <cmd>exit</cmd>
+        <desc>Terminates the remote client or the build when called from the console.</desc>
+      </help>
+    </command>
+    <command>
+      <name>shutdown</name>
+      <help>
+        <cmd>shutdown</cmd>
+        <desc>Terminates the build.</desc>
+      </help>
+    </command>
+    <command>
+      <name>oldshell</name>
+    </command>
+    <command>
+      <name>client</name>
+    </command>
+    <command>
+      <name>&lt;</name>
+    </command>
+    <command>
+      <name>alias</name>
+    </command>
+    <command>
+      <name>bspReload</name>
+    </command>
+    <testSourceDir>$BASE/src/test</testSourceDir>
+    <mainSourceDir>$BASE/src/main</mainSourceDir>
+    <generatedManagedSources>true</generatedManagedSources>
+  </project>
+  <repository>
+    <module organization="org.scala-lang" name="scala3-library_3" revision="3.6.2" artifactType="jar" classifier="">
+      <jar>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-lang/scala3-library_3/3.6.2/scala3-library_3-3.6.2.jar</jar>
+      <src>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-lang/scala3-library_3/3.6.2/scala3-library_3-3.6.2-sources.jar</src>
+    </module>
+    <module organization="org.scala-lang" name="scala-library" revision="2.13.15" artifactType="jar" classifier="">
+      <jar>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-lang/scala-library/2.13.15/scala-library-2.13.15.jar</jar>
+      <src>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-lang/scala-library/2.13.15/scala-library-2.13.15-sources.jar</src>
+    </module>
+  </repository>
+  <localCachePath>$IVY2</localCachePath>
+</structure>
