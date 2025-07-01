@@ -225,7 +225,12 @@ class ExtractStructureIntegrationTest extends AnyFreeSpecLike {
       FileUtils.writeStringToFile(new File(projectDir, "class-structure-actual.txt"), actualDataPretty)
       FileUtils.writeStringToFile(new File(projectDir, "class-structure-expected.txt"), expectedDataPretty)
 
-      val actualStrForTestData: String = pathVarsSubstitutor.replacePathsWithVars(actualXmlSanitizedAndFormatted).normalizeFilePathSeparatorsInXml
+      val actualStrForTestData: String = {
+        val pathsVars = pathVarsSubstitutor.replacePathsWithVars(actualXmlSanitizedAndFormatted)
+        val regexes = RegexSubstitutor.replaceMachineSpecificObjectImports(pathsVars)
+        regexes.normalizeFilePathSeparatorsInXml
+      }
+
       FileUtils.writeStringToFile(new File(projectDir, s"actual-structure-$sbtVersionFull-original.xml"), actualXmlStringNotSanitized)
       FileUtils.writeStringToFile(new File(projectDir, s"actual-structure-$sbtVersionFull-for-test-data.xml"), actualStrForTestData)
     }
