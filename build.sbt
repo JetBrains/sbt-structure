@@ -194,6 +194,7 @@ lazy val extractor = project.in(file("extractor"))
       else
         Nil
     },
+    Test / parallelExecution := false
   )
 
 // We use separate module for 0.13 with many sources duplicated as an alternative to cross-compilation.
