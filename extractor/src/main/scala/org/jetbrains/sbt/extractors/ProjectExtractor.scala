@@ -430,10 +430,11 @@ object ProjectExtractor extends SbtStateOps with TaskOps {
         Def.task {
           val log = Keys.streams.value.log
           // Need to use `.toEither` because Result, Inc and Value are top level definitions in
-          // sbt 1/Scala 2 and an enum in sbt 2/Scala 3 (Inc and Value are defined inside the Result companion object).
+          // sbt 1/Scala 2 and an enum in sbt 2/Scala 3 (Inc and Value are defined inside the Result companion object),
+          // and are therefore not source compatible.
           val managedSources = generateManagedSourcesTaskDef.result.value.toEither match {
             case Left(cause) =>
-              log.warn(s"Generating managed sources failed in $name. Continuing with the project import...")
+              log.warn(s"Generating managed sources failed in $name. Continuing with the project import. The stack trace of the failure is printed below:")
               log.trace(cause)
               Seq.empty
             case Right(sources) => sources

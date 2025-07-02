@@ -422,7 +422,7 @@ object ProjectExtractor extends SbtStateOps with TaskOps {
           val log = Keys.streams.value.log
           val managedSources = generateManagedSourcesTaskDef.result.value match {
             case Inc(cause: Incomplete) =>
-              log.warn(s"Generating managed sources failed in $name. Continuing with the project import...")
+              log.warn(s"Generating managed sources failed in $name. Continuing with the project import. The stack trace of the failure is printed below:")
               log.trace(cause)
               Seq.empty
             case Value(sources) => sources
