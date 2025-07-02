@@ -435,7 +435,8 @@ object ProjectExtractor extends SbtStateOps with TaskOps {
           val managedSources = generateManagedSourcesTaskDef.result.value.toEither match {
             case Left(cause) =>
               log.warn(s"Generating managed sources failed in $name. Continuing with the project import. The stack trace of the failure is printed below:")
-              log.trace(cause)
+              val trace = stackTraceAsString(cause)
+              log.error(trace)
               Seq.empty
             case Right(sources) => sources
           }
@@ -445,5 +446,17 @@ object ProjectExtractor extends SbtStateOps with TaskOps {
         Def.task(projectData)
       }
     }
+  }
+
+  private def stackTraceAsString(throwable: Throwable): String = {
+    import java.io.{PrintWriter, StringWriter}
+    val stringWriter = new StringWriter()
+    val printWriter = new PrintWriter(stringWriter)
+    try throwable.printStackTrace(printWriter)
+    finally {
+      printWriter.flush()
+      printWriter.close()
+    }
+    stringWriter.toString
   }
 }
