@@ -32,7 +32,7 @@ class DependenciesExtractorSpec extends AnyFreeSpecLike {
         testConfigurations = Seq(sbt.Test),
         sourceConfigurations = Seq(sbt.Compile, sbt.Runtime),
         separateProdTestSources = false,
-        projectToConfigurations = Map(
+        projectToConfigurations = Seq(
           ProductionType(projects(1)) -> Seq(Configuration.Compile, Configuration.Runtime, Configuration.Test)
         )
       ).extract
@@ -79,7 +79,7 @@ class DependenciesExtractorSpec extends AnyFreeSpecLike {
         testConfigurations = Seq(sbt.Test),
         sourceConfigurations = Seq(sbt.Compile, sbt.Runtime),
         separateProdTestSources = false,
-        projectToConfigurations = Map(
+        projectToConfigurations = Seq(
           ProductionType(projects(1)) -> Seq(Configuration.Compile, Configuration.Test, Configuration.Runtime)
         )
       ).extract
@@ -138,7 +138,7 @@ class DependenciesExtractorSpec extends AnyFreeSpecLike {
         testConfigurations = Seq(sbt.Test, CustomConf),
         sourceConfigurations = Seq(sbt.Compile, sbt.Runtime),
         separateProdTestSources = false,
-        projectToConfigurations = Map(
+        projectToConfigurations = Seq(
           ProductionType(projects(1)) -> Seq(Configuration.Compile, Configuration.Test, Configuration.Runtime)
         )
       ).extract
@@ -196,7 +196,7 @@ class DependenciesExtractorSpec extends AnyFreeSpecLike {
         testConfigurations = Seq.empty,
         sourceConfigurations = Seq(sbt.Compile, sbt.Runtime),
         separateProdTestSources = false,
-        projectToConfigurations = Map(
+        projectToConfigurations = Seq(
           ProductionType(projects(1)) -> Seq(Configuration.Compile, Configuration.Test, Configuration.Runtime)
         )
       ).extract
@@ -246,7 +246,7 @@ class DependenciesExtractorSpec extends AnyFreeSpecLike {
         testConfigurations = Seq.empty,
         sourceConfigurations = Seq(sbt.Compile, sbt.Runtime),
         separateProdTestSources = false,
-        projectToConfigurations = Map(
+        projectToConfigurations = Seq(
           ProductionType(projects(1)) -> Seq(Configuration.Compile, Configuration.Test, Configuration.Runtime)
         )
       ).extract
@@ -296,7 +296,7 @@ class DependenciesExtractorSpec extends AnyFreeSpecLike {
         testConfigurations = Seq.empty,
         sourceConfigurations = Seq(sbt.Compile, sbt.Runtime),
         separateProdTestSources = false,
-        projectToConfigurations = Map(
+        projectToConfigurations = Seq(
           ProductionType(projects(1)) -> Seq(Configuration.Compile, Configuration.Test, Configuration.Runtime)
         )
       ).extract
@@ -335,7 +335,7 @@ class DependenciesExtractorSpec extends AnyFreeSpecLike {
         testConfigurations = Nil,
         sourceConfigurations = Seq(sbt.Compile, sbt.Runtime),
         separateProdTestSources = false,
-        projectToConfigurations = Map(
+        projectToConfigurations = Seq(
           ProductionType(projects(1)) -> Seq(Configuration.Compile, Configuration.Test, Configuration.Runtime)
         )
       ).extract
@@ -359,7 +359,7 @@ class DependenciesExtractorSpec extends AnyFreeSpecLike {
         testConfigurations = Nil,
         sourceConfigurations = Seq(sbt.Compile, sbt.Runtime),
         separateProdTestSources = false,
-        projectToConfigurations = Map(
+        projectToConfigurations = Seq(
           ProductionType(projects(1)) -> Seq(Configuration.Compile, Configuration.Test)
         )
       ).extract
@@ -382,8 +382,8 @@ class DependenciesExtractorSpec extends AnyFreeSpecLike {
         testConfigurations = Seq(sbt.Test, CustomConf),
         sourceConfigurations = Seq(sbt.Compile, sbt.Runtime),
         separateProdTestSources = false,
-        projectToConfigurations = Map(
-          ProductionType(projects(1)) -> Seq(Configuration.Compile, Configuration(CustomConf.name))
+        projectToConfigurations = Seq(
+          (ProductionType(projects(1)), Seq(Configuration.Compile, Configuration(CustomConf.name)))
         )
       ).extract
 

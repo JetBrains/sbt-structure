@@ -33,7 +33,7 @@ class DependenciesExtractorSpec_ProdTestSourcesSeparatedEnabled extends AnyFreeS
         testConfigurations = Seq(sbt.Test),
         sourceConfigurations = Seq(sbt.Compile, sbt.Runtime),
         separateProdTestSources = true,
-        projectToConfigurations = Map(
+        projectToConfigurations = Seq(
           ProductionType(projects(1)) -> Seq(Configuration.Test),
           ProductionType(projects.head) -> Seq(Configuration.Test),
         )
@@ -89,7 +89,7 @@ class DependenciesExtractorSpec_ProdTestSourcesSeparatedEnabled extends AnyFreeS
         testConfigurations = Seq(sbt.Test),
         sourceConfigurations = Seq(sbt.Compile, sbt.Runtime),
         separateProdTestSources = true,
-        projectToConfigurations = Map(
+        projectToConfigurations = Seq(
           ProductionType(projects(1)) -> Seq(Configuration.Test),
           ProductionType(projects.head) -> Seq(Configuration.Test)
         )
@@ -157,7 +157,7 @@ class DependenciesExtractorSpec_ProdTestSourcesSeparatedEnabled extends AnyFreeS
         testConfigurations = Seq(sbt.Test, CustomConf),
         sourceConfigurations = Seq(sbt.Compile, sbt.Runtime),
         separateProdTestSources = true,
-        projectToConfigurations = Map(
+        projectToConfigurations = Seq(
           ProductionType(projects(1)) -> Seq(Configuration.Test),
           ProductionType(projects.head) -> Seq(Configuration.Test)
         )
@@ -223,7 +223,7 @@ class DependenciesExtractorSpec_ProdTestSourcesSeparatedEnabled extends AnyFreeS
         testConfigurations = Seq(sbt.Test),
         sourceConfigurations = Seq(sbt.Compile, sbt.Runtime),
         separateProdTestSources = true,
-        projectToConfigurations = Map(
+        projectToConfigurations = Seq(
           ProductionType(projects(1)) -> Seq(Configuration.Test),
           ProductionType(projects.head) -> Seq(Configuration.Test)
 
@@ -286,7 +286,7 @@ class DependenciesExtractorSpec_ProdTestSourcesSeparatedEnabled extends AnyFreeS
         testConfigurations = Seq(sbt.Test),
         sourceConfigurations = Seq(sbt.Compile, sbt.Runtime),
         separateProdTestSources = true,
-        projectToConfigurations = Map(
+        projectToConfigurations = Seq(
           ProductionType(projects(1)) -> Seq(Configuration.Compile, Configuration.Test, Configuration.Runtime),
           ProductionType(projects.head) -> Seq(Configuration.Test)
         )
@@ -370,7 +370,7 @@ class DependenciesExtractorSpec_ProdTestSourcesSeparatedEnabled extends AnyFreeS
         testConfigurations = Seq(sbt.Test),
         sourceConfigurations = Seq(sbt.Compile, sbt.Runtime),
         separateProdTestSources = true,
-        projectToConfigurations = Map(
+        projectToConfigurations = Seq(
           ProductionType(projects(1)) -> Seq(Configuration.Test, Configuration.Compile),
           ProductionType(projects.head) -> Seq(Configuration.Test)
         )
@@ -456,7 +456,7 @@ class DependenciesExtractorSpec_ProdTestSourcesSeparatedEnabled extends AnyFreeS
         testConfigurations = Seq(sbt.Test, CustomConf),
         sourceConfigurations = Seq(sbt.Compile, sbt.Runtime),
         separateProdTestSources = true,
-        projectToConfigurations = Map(
+        projectToConfigurations = Seq(
           ProductionType(projects(1)) -> Seq(Configuration.Compile, Configuration(CustomConf.name)),
           ProductionType(projects.head) -> Seq(Configuration.Test)
         )
