@@ -152,8 +152,8 @@
     <dependencies>
       <projects>
         <forTest>
-          <project buildURI="$URI_BASE" configurations="compile">bar:main</project>
           <project buildURI="$URI_BASE" configurations="compile">root:main</project>
+          <project buildURI="$URI_BASE" configurations="compile">bar:main</project>
         </forTest>
         <forProduction>
           <project buildURI="$URI_BASE" configurations="compile">bar:main</project>
