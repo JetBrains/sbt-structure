@@ -194,10 +194,10 @@ trait DataSerializers {
     override def serialize(what: Dependencies[ProjectDependencyData]): Elem =
       <projects>
         <forTest>
-          {what.forTest.sortBy(_.project).map(_.serialize)}
+          {what.forTest.map(_.serialize)}
         </forTest>
         <forProduction>
-          {what.forProduction.sortBy(_.project).map(_.serialize)}
+          {what.forProduction.map(_.serialize)}
         </forProduction>
       </projects>
 
