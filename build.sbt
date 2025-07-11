@@ -1,4 +1,3 @@
-import PublishingWorkaround.*
 import lmcoursier.internal.shaded.coursier.core.Version
 import sbt.Def
 import sbt.Keys.localStaging
@@ -61,10 +60,6 @@ lazy val CommonSonatypeSettings: Seq[Def.Setting[?]] = Seq(
       password
     )
   },
-  //TODO: delete this and the workaround utiulity once this issue is fixed: https://github.com/sbt/sbt/issues/8166
-  packagedArtifacts := Def
-    .ifS(publishSbtPluginMavenStyle)(mavenArtifactsOfSbtPlugin)(packagedDefaultArtifacts)
-    .value,
 )
 
 lazy val sbtStructure = project.in(file("."))
@@ -88,7 +83,7 @@ val Scala_2_10_Legacy = "2.10.7"
 
 val SbtVersion_1_0 = "1.0.0"
 val SbtVersion_1_3 = "1.3.0"
-val SbtVersion_2 = "2.0.0-M3"
+val SbtVersion_2 = "2.0.0-M3" //TODO: update to the latest?
 val SbtVersion_0_13_Legacy = "0.13.17"
 
 val CommonSharedCoreDataSourcesSettings: Seq[Def.Setting[Seq[File]]] = Seq(
