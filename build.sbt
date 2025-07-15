@@ -1,72 +1,43 @@
 import lmcoursier.internal.shaded.coursier.core.Version
-import sbt.Def
-import sbt.Keys.{localStaging, sbtPluginPublishLegacyMavenStyle}
-import sbt.internal.sona
-import sbt.librarymanagement.ivy.Credentials
+import sbt.{Def, ThisBuild, url}
 
-import scala.collection.mutable
+import scala.collection.{Seq, mutable}
 
-ThisBuild / organization := "org.jetbrains.scala"
+lazy val PublishingSettings: Seq[Def.Setting[?]] = Seq(
+  organization := "org.jetbrains.scala",
 
-// Optional but nice-to-have
-ThisBuild / organizationName     := "JetBrains"
-ThisBuild / organizationHomepage := Some(url("https://www.jetbrains.com/"))
+  // Optional but nice-to-have
+  organizationName := "JetBrains",
+  organizationHomepage := Some(url("https://www.jetbrains.com/")),
 
-ThisBuild / licenses  += ("Apache-2.0", url("https://www.apache.org/licenses/LICENSE-2.0"))
+  licenses += ("Apache-2.0", url("https://www.apache.org/licenses/LICENSE-2.0")),
 
-ThisBuild / homepage := Some(url("https://github.com/JetBrains/sbt-structure"))
+  homepage := Some(url("https://github.com/JetBrains/sbt-structure")),
 
-// Source-control coordinates
-ThisBuild / scmInfo := Some(
-  ScmInfo(
-    url("https://github.com/JetBrains/sbt-structure"),
-    "git@github.com:JetBrains/sbt-structure.git"
-  )
-)
-
-ThisBuild / developers := List(
-  Developer(
-    id    = "JetBrains",
-    name  = "JetBrains",
-    email = "scala-developers@jetbrains.com",
-    url   = url("https://github.com/JetBrains")
-  )
-)
-
-val SonatypeRepoName = "Sonatype Nexus Repository Manager"
-
-lazy val CommonSonatypeSettings: Seq[Def.Setting[?]] = Seq(
-  // new setting for the Central Portal
-  publishTo := {
-    val centralSnapshots = "https://central.sonatype.com/repository/maven-snapshots/"
-    if (isSnapshot.value) Some("central-snapshots" at centralSnapshots)
-    else localStaging.value
-  },
-
-  // Overwrite/filter-out existing credentials
-  // Use copy of `sbt.internal.SysProp.sonatypeCredentalsEnv` but with custom environment variables
-  credentials := credentials.value.filter {
-    case c: DirectCredentials => c.realm != SonatypeRepoName
-    case _ => true
-  } ++ {
-    val env = sys.env.get(_)
-    for {
-      username <- env("SONATYPE_USERNAME_NEW")
-      password <- env("SONATYPE_PASSWORD_NEW")
-    } yield Credentials(
-      SonatypeRepoName,
-      sona.Sona.host,
-      username,
-      password
+  // Source-control coordinates
+  scmInfo := Some(
+    ScmInfo(
+      url("https://github.com/JetBrains/sbt-structure"),
+      "git@github.com:JetBrains/sbt-structure.git"
     )
-  },
+  ),
+
+  // Required by Sonatype for publishing
+  developers := List(
+    Developer(
+      id = "JetBrains",
+      name = "JetBrains",
+      email = "scala-developers@jetbrains.com",
+      url = url("https://github.com/JetBrains")
+    )
+  ),
 )
 
 lazy val sbtStructure = project.in(file("."))
   .aggregate(core, extractor, extractorLegacy_013)
+  .settings(PublishingSettings)
   .settings(
     name := "sbt-structure",
-    CommonSonatypeSettings,
     // disable publishing in the root project
     publish / skip := true,
     crossScalaVersions := List.empty,
@@ -92,9 +63,9 @@ val CommonSharedCoreDataSourcesSettings: Seq[Def.Setting[Seq[File]]] = Seq(
 )
 
 lazy val core = project.in(file("core"))
+  .settings(PublishingSettings)
   .settings(
     name := "sbt-structure-core",
-    CommonSonatypeSettings,
     libraryDependencies ++= {
       val scalaVersion = Version(scalaBinaryVersion.value)
       if (scalaVersion >= Version("2.12"))
@@ -109,11 +80,13 @@ lazy val core = project.in(file("core"))
 lazy val extractor = project.in(file("extractor"))
   .enablePlugins(SbtPlugin)
   .settings(
-    name := "sbt-structure-extractor",
-    CommonSonatypeSettings,
+    PublishingSettings,
     // We need to publish the plugin with both legacy and modern maven style.
     // Otherwise, sbt < 1.9 will not be able to resolve it.
     sbtPluginPublishLegacyMavenStyle := true,
+  )
+  .settings(
+    name := "sbt-structure-extractor",
     scalacOptions ++= Seq("-deprecation", "-feature") ++ {
       // Mute some warnings
       // We have to use some deprecated things because we cross-compile for 2.10, 2.12 and 3.x
@@ -138,7 +111,7 @@ lazy val extractor = project.in(file("extractor"))
       "org.dom4j" % "dom4j" % "2.1.4" % Test
     ),
     scalaVersion := scala212,
-//    scalaVersion := scala3,
+    //    scalaVersion := scala3,
     crossScalaVersions := Seq(
       scala212_Earlier,
       scala212,
@@ -201,15 +174,17 @@ lazy val extractor = project.in(file("extractor"))
 lazy val extractorLegacy_013 = project.in(file("extractor-legacy-0.13"))
   .enablePlugins(SbtPlugin)
   .settings(
+    PublishingSettings,
+    // We need to publish the plugin with both legacy and modern maven style.
+    // Otherwise, sbt < 1.9 will not be able to resolve it.
+    sbtPluginPublishLegacyMavenStyle := true,
+  )
+  .settings(
     name := "sbt-structure-extractor-legacy-0.13",
     // NOTE: use the same module name for 0.13 when publishing.
     // We have to do this explicitly because we extracted the 0.13 code to a separate project with a different name
     // which is used as the module name by default.
     moduleName := (extractor / Keys.moduleName).value,
-    CommonSonatypeSettings,
-    // We need to publish the plugin with both legacy and modern maven style.
-    // Otherwise, sbt < 1.9 will not be able to resolve it.
-    sbtPluginPublishLegacyMavenStyle := true,
 
     scalaVersion := Scala_2_10_Legacy,
     crossScalaVersions := Seq(Scala_2_10_Legacy),
