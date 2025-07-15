@@ -1,6 +1,6 @@
 import lmcoursier.internal.shaded.coursier.core.Version
 import sbt.Def
-import sbt.Keys.localStaging
+import sbt.Keys.{localStaging, sbtPluginPublishLegacyMavenStyle}
 import sbt.internal.sona
 import sbt.librarymanagement.ivy.Credentials
 
@@ -111,6 +111,9 @@ lazy val extractor = project.in(file("extractor"))
   .settings(
     name := "sbt-structure-extractor",
     CommonSonatypeSettings,
+    // We need to publish the plugin with both legacy and modern maven style.
+    // Otherwise, sbt < 1.9 will not be able to resolve it.
+    sbtPluginPublishLegacyMavenStyle := true,
     scalacOptions ++= Seq("-deprecation", "-feature") ++ {
       // Mute some warnings
       // We have to use some deprecated things because we cross-compile for 2.10, 2.12 and 3.x
@@ -204,6 +207,9 @@ lazy val extractorLegacy_013 = project.in(file("extractor-legacy-0.13"))
     // which is used as the module name by default.
     moduleName := (extractor / Keys.moduleName).value,
     CommonSonatypeSettings,
+    // We need to publish the plugin with both legacy and modern maven style.
+    // Otherwise, sbt < 1.9 will not be able to resolve it.
+    sbtPluginPublishLegacyMavenStyle := true,
 
     scalaVersion := Scala_2_10_Legacy,
     crossScalaVersions := Seq(Scala_2_10_Legacy),
