@@ -38,16 +38,18 @@ object UtilityTasks extends SbtStateOps {
       (project / Keys.scalaVersion).get(data).exists(_.startsWith("3."))
     }
 
-    val crossScala2VersionsInScala3Projects = scala3Projects.flatMap { project =>
-      (project / Keys.crossScalaVersions).get(data).getOrElse(Seq.empty).filter(_.startsWith("2."))
+    val (scala2Versions, crossScala2And3ProjectsCount) = scala3Projects.foldLeft((Set.empty[String], 0)) {
+      case ((scala2Versions, crossCount), project) =>
+        val projectScala2Versions = (project / Keys.crossScalaVersions).get(data).getOrElse(Seq.empty).filter(_.startsWith("2."))
+        (scala2Versions ++ projectScala2Versions, crossCount + (if (projectScala2Versions.nonEmpty) 1 else 0))
     }
 
     // We can only do this when all sbt projects cross-compile to Scala 2 & Scala 3
     // See https://youtrack.jetbrains.com/issue/SCL-22619/
-    val canSetScala2VersionGlobally = crossScala2VersionsInScala3Projects.nonEmpty &&
-      scala3Projects.length == crossScala2VersionsInScala3Projects.length
+    val canSetScala2VersionGlobally = crossScala2And3ProjectsCount > 0 &&
+      scala3Projects.length == crossScala2And3ProjectsCount
     if (canSetScala2VersionGlobally) {
-      "++" + crossScala2VersionsInScala3Projects.maxBy(numbersOf) :: state
+      "++" + scala2Versions.maxBy(numbersOf) :: state
     } else {
       state
     }
