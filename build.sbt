@@ -79,12 +79,7 @@ lazy val core = project.in(file("core"))
 
 lazy val extractor = project.in(file("extractor"))
   .enablePlugins(SbtPlugin)
-  .settings(
-    PublishingSettings,
-    // We need to publish the plugin with both legacy and modern maven style.
-    // Otherwise, sbt < 1.9 will not be able to resolve it.
-    sbtPluginPublishLegacyMavenStyle := true,
-  )
+  .settings(PublishingSettings)
   .settings(
     name := "sbt-structure-extractor",
     scalacOptions ++= Seq("-deprecation", "-feature") ++ {
@@ -173,12 +168,7 @@ lazy val extractor = project.in(file("extractor"))
 // Trying to cross-compile between 3 major versions of sbt (and thus scala 2.10, 2.12, 3.x) is very fragile
 lazy val extractorLegacy_013 = project.in(file("extractor-legacy-0.13"))
   .enablePlugins(SbtPlugin)
-  .settings(
-    PublishingSettings,
-    // We need to publish the plugin with both legacy and modern maven style.
-    // Otherwise, sbt < 1.9 will not be able to resolve it.
-    sbtPluginPublishLegacyMavenStyle := true,
-  )
+  .settings(PublishingSettings)
   .settings(
     name := "sbt-structure-extractor-legacy-0.13",
     // NOTE: use the same module name for 0.13 when publishing.
