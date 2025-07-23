@@ -20,20 +20,24 @@ class DependenciesExtractorSpec extends AnyFreeSpecLike {
 
     "always extract unmanaged dependencies" in {
       val actual = new DependenciesExtractor(
+        project = projects.head,
         unmanagedClasspath = Map(
           sbt.Compile -> Seq(
             attributed(file("foo.jar")),
             attributed(file("bar.jar"))
           ),
-          sbt.Test -> Seq(attributed(file("baz.jar")))
+          sbt.Test -> Seq(attributed(file("baz.jar"))),
+          sbt.Runtime -> Nil,
         ).apply,
         externalDependencyClasspath = None,
-        dependencyConfigurations = Seq(sbt.Compile, sbt.Test),
+        dependencyConfigurations = Seq(sbt.Compile, sbt.Test, sbt.Runtime),
         testConfigurations = Seq(sbt.Test),
         sourceConfigurations = Seq(sbt.Compile, sbt.Runtime),
         separateProdTestSources = false,
-        projectToConfigurations = Seq(
-          ProductionType(projects(1)) -> Seq(Configuration.Compile, Configuration.Runtime, Configuration.Test)
+        configurationToProjectDeps = Map(
+          sbt.Compile -> Seq(ProductionType(projects(1))),
+          sbt.Runtime -> Seq(ProductionType(projects(1))),
+          sbt.Test -> Seq(ProductionType(projects(1))),
         )
       ).extract
 
@@ -63,6 +67,7 @@ class DependenciesExtractorSpec extends AnyFreeSpecLike {
       val moduleId = (name: String) => ModuleID("com.example", name, "SNAPSHOT")
 
       val actual = new DependenciesExtractor(
+        project = projects.head,
         unmanagedClasspath = emptyClasspath,
         externalDependencyClasspath = Some(
           Map(
@@ -72,15 +77,18 @@ class DependenciesExtractorSpec extends AnyFreeSpecLike {
             ),
             sbt.Test -> Seq(
               attributedWith(file("baz.jar"))(moduleId("baz"), Artifact("baz"))
-            )
+            ),
+            sbt.Runtime -> Nil
           ).apply
         ),
-        dependencyConfigurations = Seq(sbt.Compile, sbt.Test),
+        dependencyConfigurations = Seq(sbt.Compile, sbt.Test, sbt.Runtime),
         testConfigurations = Seq(sbt.Test),
         sourceConfigurations = Seq(sbt.Compile, sbt.Runtime),
         separateProdTestSources = false,
-        projectToConfigurations = Seq(
-          ProductionType(projects(1)) -> Seq(Configuration.Compile, Configuration.Test, Configuration.Runtime)
+        configurationToProjectDeps = Map(
+          sbt.Compile -> Seq(ProductionType(projects(1))),
+          sbt.Runtime -> Seq(ProductionType(projects(1))),
+          sbt.Test -> Seq(ProductionType(projects(1))),
         )
       ).extract
 
@@ -120,9 +128,12 @@ class DependenciesExtractorSpec extends AnyFreeSpecLike {
       val moduleId = (name: String) => ModuleID("com.example", name, "SNAPSHOT")
 
       val actual = new DependenciesExtractor(
+        project = projects.head,
         unmanagedClasspath = Map(
           sbt.Test -> Seq(attributed(file("foo.jar"))),
-          CustomConf -> Seq(attributed(file("bar.jar")))
+          CustomConf -> Seq(attributed(file("bar.jar"))),
+          sbt.Runtime -> Nil,
+          sbt.Compile -> Nil,
         ).apply,
         externalDependencyClasspath = Some(
           Map(
@@ -131,15 +142,20 @@ class DependenciesExtractorSpec extends AnyFreeSpecLike {
             ),
             CustomConf -> Seq(
               attributedWith(file("qux.jar"))(moduleId("qux"), Artifact("qux"))
-            )
+            ),
+            sbt.Runtime -> Nil,
+            sbt.Compile -> Nil
           ).apply
         ),
-        dependencyConfigurations = Seq(sbt.Test, CustomConf),
+        dependencyConfigurations = Seq(sbt.Test, CustomConf, sbt.Runtime, sbt.Compile),
         testConfigurations = Seq(sbt.Test, CustomConf),
         sourceConfigurations = Seq(sbt.Compile, sbt.Runtime),
         separateProdTestSources = false,
-        projectToConfigurations = Seq(
-          ProductionType(projects(1)) -> Seq(Configuration.Compile, Configuration.Test, Configuration.Runtime)
+        configurationToProjectDeps = Map(
+          sbt.Compile -> Seq(ProductionType(projects(1))),
+          sbt.Runtime -> Seq(ProductionType(projects(1))),
+          sbt.Test -> Seq(ProductionType(projects(1))),
+          CustomConf -> Nil,
         )
       ).extract
 
@@ -180,6 +196,7 @@ class DependenciesExtractorSpec extends AnyFreeSpecLike {
       val moduleId = "com.example" % "foo" % "SNAPSHOT"
 
       val actual = new DependenciesExtractor(
+        project = projects.head,
         unmanagedClasspath = emptyClasspath,
         externalDependencyClasspath = Some(
           Map(
@@ -189,15 +206,19 @@ class DependenciesExtractorSpec extends AnyFreeSpecLike {
                 moduleId,
                 Artifact("foo", "tests")
               )
-            )
+            ),
+            sbt.Runtime -> Nil,
+            sbt.Test -> Nil
           ).apply
         ),
-        dependencyConfigurations = Seq(sbt.Compile),
+        dependencyConfigurations = Seq(sbt.Compile, sbt.Runtime, sbt.Test),
         testConfigurations = Seq.empty,
         sourceConfigurations = Seq(sbt.Compile, sbt.Runtime),
         separateProdTestSources = false,
-        projectToConfigurations = Seq(
-          ProductionType(projects(1)) -> Seq(Configuration.Compile, Configuration.Test, Configuration.Runtime)
+        configurationToProjectDeps = Map(
+          sbt.Compile -> Seq(ProductionType(projects(1))),
+          sbt.Runtime -> Seq(ProductionType(projects(1))),
+          sbt.Test -> Seq(ProductionType(projects(1)))
         )
       ).extract
 
@@ -224,6 +245,7 @@ class DependenciesExtractorSpec extends AnyFreeSpecLike {
       val moduleId = "com.example" % "foo" % "SNAPSHOT"
 
       val actual = new DependenciesExtractor(
+        project = projects.head,
         unmanagedClasspath = Map(
           sbt.Compile -> Seq(attributed(file("bar.jar"))),
           sbt.Test -> Seq(attributed(file("bar.jar"))),
@@ -246,8 +268,10 @@ class DependenciesExtractorSpec extends AnyFreeSpecLike {
         testConfigurations = Seq.empty,
         sourceConfigurations = Seq(sbt.Compile, sbt.Runtime),
         separateProdTestSources = false,
-        projectToConfigurations = Seq(
-          ProductionType(projects(1)) -> Seq(Configuration.Compile, Configuration.Test, Configuration.Runtime)
+        configurationToProjectDeps = Map(
+          sbt.Compile -> Seq(ProductionType(projects(1))),
+          sbt.Runtime -> Seq(ProductionType(projects(1))),
+          sbt.Test -> Seq(ProductionType(projects(1))),
         )
       ).extract
 
@@ -278,9 +302,11 @@ class DependenciesExtractorSpec extends AnyFreeSpecLike {
       val moduleId = "com.example" % "foo" % "SNAPSHOT"
 
       val actual = new DependenciesExtractor(
+        project = projects.head,
         unmanagedClasspath = Map(
           sbt.Compile -> Seq(attributed(file("bar.jar"))),
-          sbt.Test -> Seq(attributed(file("bar.jar")))
+          sbt.Test -> Seq(attributed(file("bar.jar"))),
+          sbt.Runtime -> Nil
         ).apply,
         externalDependencyClasspath = Some(
           Map(
@@ -289,15 +315,18 @@ class DependenciesExtractorSpec extends AnyFreeSpecLike {
             ),
             sbt.Test -> Seq(
               attributedWith(file("foo.jar"))(moduleId, Artifact("foo"))
-            )
+            ),
+            sbt.Runtime -> Nil
           ).apply
         ),
-        dependencyConfigurations = Seq(sbt.Compile, sbt.Test),
+        dependencyConfigurations = Seq(sbt.Compile, sbt.Test, sbt.Runtime),
         testConfigurations = Seq.empty,
         sourceConfigurations = Seq(sbt.Compile, sbt.Runtime),
         separateProdTestSources = false,
-        projectToConfigurations = Seq(
-          ProductionType(projects(1)) -> Seq(Configuration.Compile, Configuration.Test, Configuration.Runtime)
+        configurationToProjectDeps = Map(
+          sbt.Compile -> Seq(ProductionType(projects(1))),
+          sbt.Runtime -> Seq(ProductionType(projects(1))),
+          sbt.Test -> Seq(ProductionType(projects(1))),
         )
       ).extract
 
@@ -329,14 +358,17 @@ class DependenciesExtractorSpec extends AnyFreeSpecLike {
 
     "merge (compile, test, runtime) -> compile in transitive project dependencies to match IDEA scopes" in {
       val actual =  new DependenciesExtractor(
+        project = projects.head,
         unmanagedClasspath = emptyClasspath,
         externalDependencyClasspath = None,
         dependencyConfigurations = Seq(sbt.Compile, sbt.Test, sbt.Runtime),
         testConfigurations = Nil,
         sourceConfigurations = Seq(sbt.Compile, sbt.Runtime),
         separateProdTestSources = false,
-        projectToConfigurations = Seq(
-          ProductionType(projects(1)) -> Seq(Configuration.Compile, Configuration.Test, Configuration.Runtime)
+        configurationToProjectDeps = Map(
+          sbt.Compile -> Seq(ProductionType(projects(1))),
+          sbt.Runtime -> Seq(ProductionType(projects(1))),
+          sbt.Test -> Seq(ProductionType(projects(1))),
         )
       ).extract
 
@@ -353,14 +385,17 @@ class DependenciesExtractorSpec extends AnyFreeSpecLike {
 
     "merge (compile, test) -> provided in transitive project dependencies to match IDEA scopes" in {
       val actual =  new DependenciesExtractor(
+        project = projects.head,
         unmanagedClasspath = emptyClasspath,
         externalDependencyClasspath = None,
         dependencyConfigurations = Seq(sbt.Compile, sbt.Test, sbt.Runtime),
         testConfigurations = Nil,
         sourceConfigurations = Seq(sbt.Compile, sbt.Runtime),
         separateProdTestSources = false,
-        projectToConfigurations = Seq(
-          ProductionType(projects(1)) -> Seq(Configuration.Compile, Configuration.Test)
+        configurationToProjectDeps = Map(
+          sbt.Compile -> Seq(ProductionType(projects(1))),
+          sbt.Test -> Seq(ProductionType(projects(1))),
+          sbt.Runtime -> Nil,
         )
       ).extract
 
@@ -376,14 +411,18 @@ class DependenciesExtractorSpec extends AnyFreeSpecLike {
 
     "merge (custom test configurations, compile) -> provided in transitive project dependencies to match IDEA scopes" in {
       val actual =  new DependenciesExtractor(
+        project = projects.head,
         unmanagedClasspath = emptyClasspath,
         externalDependencyClasspath = None,
         dependencyConfigurations = Seq(sbt.Compile, sbt.Test, sbt.Runtime, CustomConf),
         testConfigurations = Seq(sbt.Test, CustomConf),
         sourceConfigurations = Seq(sbt.Compile, sbt.Runtime),
         separateProdTestSources = false,
-        projectToConfigurations = Seq(
-          (ProductionType(projects(1)), Seq(Configuration.Compile, Configuration(CustomConf.name)))
+        configurationToProjectDeps = Map(
+          sbt.Compile -> Seq(ProductionType(projects(1))),
+          sbt.Test -> Seq(ProductionType(projects(1))),
+          sbt.Runtime -> Nil,
+          CustomConf -> Nil,
         )
       ).extract
 
