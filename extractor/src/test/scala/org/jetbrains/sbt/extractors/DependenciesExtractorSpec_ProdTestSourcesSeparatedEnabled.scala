@@ -21,6 +21,7 @@ class DependenciesExtractorSpec_ProdTestSourcesSeparatedEnabled extends AnyFreeS
 
     "always extract unmanaged dependencies" in {
       val actual = new DependenciesExtractor(
+        project = projects.head,
         unmanagedClasspath = Map(
           sbt.Compile -> Seq(
             attributed(file("foo.jar")),
@@ -33,9 +34,9 @@ class DependenciesExtractorSpec_ProdTestSourcesSeparatedEnabled extends AnyFreeS
         testConfigurations = Seq(sbt.Test),
         sourceConfigurations = Seq(sbt.Compile, sbt.Runtime),
         separateProdTestSources = true,
-        projectToConfigurations = Seq(
-          ProductionType(projects(1)) -> Seq(Configuration.Test),
-          ProductionType(projects.head) -> Seq(Configuration.Test),
+        configurationToProjectDeps = Map(
+          sbt.Test -> Seq(ProductionType(projects(1))),
+          sbt.Compile -> Nil
         )
       ).extract
 
@@ -44,13 +45,13 @@ class DependenciesExtractorSpec_ProdTestSourcesSeparatedEnabled extends AnyFreeS
           forProduction = Seq.empty,
           forTest = Seq(
             ProjectDependencyData(
-              s"${projects(1).id}:main",
-              Some(projects(1).build),
+              s"${projects.head.id}:main",
+              Some(projects.head.build),
               Seq(Configuration.Compile)
             ),
             ProjectDependencyData(
-              s"${projects.head.id}:main",
-              Some(projects.head.build),
+              s"${projects(1).id}:main",
+              Some(projects(1).build),
               Seq(Configuration.Compile)
             )
           ),
@@ -73,6 +74,7 @@ class DependenciesExtractorSpec_ProdTestSourcesSeparatedEnabled extends AnyFreeS
       val moduleId = (name: String) => ModuleID("com.example", name, "SNAPSHOT")
 
       val actual = new DependenciesExtractor(
+        project = projects.head,
         unmanagedClasspath = emptyClasspath,
         externalDependencyClasspath = Some(
           Map(
@@ -89,9 +91,9 @@ class DependenciesExtractorSpec_ProdTestSourcesSeparatedEnabled extends AnyFreeS
         testConfigurations = Seq(sbt.Test),
         sourceConfigurations = Seq(sbt.Compile, sbt.Runtime),
         separateProdTestSources = true,
-        projectToConfigurations = Seq(
-          ProductionType(projects(1)) -> Seq(Configuration.Test),
-          ProductionType(projects.head) -> Seq(Configuration.Test)
+        configurationToProjectDeps = Map(
+          sbt.Test -> Seq(ProductionType(projects(1))),
+          sbt.Compile -> Nil,
         )
       ).extract
 
@@ -100,13 +102,13 @@ class DependenciesExtractorSpec_ProdTestSourcesSeparatedEnabled extends AnyFreeS
           forProduction = Seq.empty,
           forTest = Seq(
             ProjectDependencyData(
-              s"${projects(1).id}:main",
-              Some(projects(1).build),
+              s"${projects.head.id}:main",
+              Some(projects.head.build),
               Seq(Configuration.Compile)
             ),
             ProjectDependencyData(
-              s"${projects.head.id}:main",
-              Some(projects.head.build),
+              s"${projects(1).id}:main",
+              Some(projects(1).build),
               Seq(Configuration.Compile)
             )
           ),
@@ -139,6 +141,7 @@ class DependenciesExtractorSpec_ProdTestSourcesSeparatedEnabled extends AnyFreeS
       val moduleId = (name: String) => ModuleID("com.example", name, "SNAPSHOT")
 
       val actual = new DependenciesExtractor(
+        project = projects.head,
         unmanagedClasspath = Map(
           sbt.Test -> Seq(attributed(file("foo.jar"))),
           CustomConf -> Seq(attributed(file("bar.jar")))
@@ -157,9 +160,9 @@ class DependenciesExtractorSpec_ProdTestSourcesSeparatedEnabled extends AnyFreeS
         testConfigurations = Seq(sbt.Test, CustomConf),
         sourceConfigurations = Seq(sbt.Compile, sbt.Runtime),
         separateProdTestSources = true,
-        projectToConfigurations = Seq(
-          ProductionType(projects(1)) -> Seq(Configuration.Test),
-          ProductionType(projects.head) -> Seq(Configuration.Test)
+        configurationToProjectDeps = Map(
+          sbt.Test -> Seq(ProductionType(projects(1))),
+          CustomConf -> Nil
         )
       ).extract
 
@@ -168,13 +171,13 @@ class DependenciesExtractorSpec_ProdTestSourcesSeparatedEnabled extends AnyFreeS
           forProduction = Seq.empty,
           forTest = Seq(
             ProjectDependencyData(
-              s"${projects(1).id}:main",
-              Some(projects(1).build),
+              s"${projects.head.id}:main",
+              Some(projects.head.build),
               Seq(Configuration.Compile)
             ),
             ProjectDependencyData(
-              s"${projects.head.id}:main",
-              Some(projects.head.build),
+              s"${projects(1).id}:main",
+              Some(projects(1).build),
               Seq(Configuration.Compile)
             )
           ),
@@ -208,6 +211,7 @@ class DependenciesExtractorSpec_ProdTestSourcesSeparatedEnabled extends AnyFreeS
       val moduleId = "com.example" % "foo" % "SNAPSHOT"
 
       val actual = new DependenciesExtractor(
+        project = projects.head,
         unmanagedClasspath = emptyClasspath,
         externalDependencyClasspath = Some(Map(
           sbt.Compile -> Seq(
@@ -223,10 +227,9 @@ class DependenciesExtractorSpec_ProdTestSourcesSeparatedEnabled extends AnyFreeS
         testConfigurations = Seq(sbt.Test),
         sourceConfigurations = Seq(sbt.Compile, sbt.Runtime),
         separateProdTestSources = true,
-        projectToConfigurations = Seq(
-          ProductionType(projects(1)) -> Seq(Configuration.Test),
-          ProductionType(projects.head) -> Seq(Configuration.Test)
-
+        configurationToProjectDeps = Map(
+          sbt.Test -> Seq(ProductionType(projects(1))),
+          sbt.Compile -> Nil
         )
       ).extract
 
@@ -238,13 +241,13 @@ class DependenciesExtractorSpec_ProdTestSourcesSeparatedEnabled extends AnyFreeS
           forProduction = Seq.empty,
           forTest = Seq(
             ProjectDependencyData(
-              s"${projects(1).id}:main",
-              Some(projects(1).build),
+              s"${projects.head.id}:main",
+              Some(projects.head.build),
               Seq(Configuration.Compile)
             ),
             ProjectDependencyData(
-              s"${projects.head.id}:main",
-              Some(projects.head.build),
+              s"${projects(1).id}:main",
+              Some(projects(1).build),
               Seq(Configuration.Compile)
             )
           ),
@@ -264,6 +267,7 @@ class DependenciesExtractorSpec_ProdTestSourcesSeparatedEnabled extends AnyFreeS
       val moduleId = "com.example" % "foo" % "SNAPSHOT"
 
       val actual = new DependenciesExtractor(
+        project = projects.head,
         unmanagedClasspath = Map(
           sbt.Compile -> Seq(attributed(file("bar.jar"))),
           sbt.Test -> Seq(attributed(file("bar.jar"))),
@@ -286,9 +290,10 @@ class DependenciesExtractorSpec_ProdTestSourcesSeparatedEnabled extends AnyFreeS
         testConfigurations = Seq(sbt.Test),
         sourceConfigurations = Seq(sbt.Compile, sbt.Runtime),
         separateProdTestSources = true,
-        projectToConfigurations = Seq(
-          ProductionType(projects(1)) -> Seq(Configuration.Compile, Configuration.Test, Configuration.Runtime),
-          ProductionType(projects.head) -> Seq(Configuration.Test)
+        configurationToProjectDeps = Map(
+          sbt.Test -> Seq(ProductionType(projects(1))),
+          sbt.Runtime -> Seq(ProductionType(projects(1))),
+          sbt.Compile -> Seq(ProductionType(projects(1))),
         )
       ).extract
 
@@ -350,6 +355,7 @@ class DependenciesExtractorSpec_ProdTestSourcesSeparatedEnabled extends AnyFreeS
       val moduleId = "com.example" % "foo" % "SNAPSHOT"
 
       val actual = new DependenciesExtractor(
+        project = projects.head,
         unmanagedClasspath = Map(
           sbt.Compile -> Seq(attributed(file("bar.jar"))),
           sbt.Test -> Seq(attributed(file("bar.jar"))),
@@ -370,9 +376,10 @@ class DependenciesExtractorSpec_ProdTestSourcesSeparatedEnabled extends AnyFreeS
         testConfigurations = Seq(sbt.Test),
         sourceConfigurations = Seq(sbt.Compile, sbt.Runtime),
         separateProdTestSources = true,
-        projectToConfigurations = Seq(
-          ProductionType(projects(1)) -> Seq(Configuration.Test, Configuration.Compile),
-          ProductionType(projects.head) -> Seq(Configuration.Test)
+        configurationToProjectDeps = Map(
+          sbt.Test -> Seq(ProductionType(projects(1))),
+          sbt.Compile -> Seq(ProductionType(projects(1))),
+          sbt.Runtime -> Nil
         )
       ).extract
 
@@ -434,6 +441,7 @@ class DependenciesExtractorSpec_ProdTestSourcesSeparatedEnabled extends AnyFreeS
       val moduleId = "com.example" % "foo" % "SNAPSHOT"
 
       val actual =  new DependenciesExtractor(
+        project = projects.head,
         unmanagedClasspath = Map(
           sbt.Compile -> Seq(attributed(file("bar.jar"))),
           CustomConf -> Seq(attributed(file("bar.jar"))),
@@ -456,9 +464,11 @@ class DependenciesExtractorSpec_ProdTestSourcesSeparatedEnabled extends AnyFreeS
         testConfigurations = Seq(sbt.Test, CustomConf),
         sourceConfigurations = Seq(sbt.Compile, sbt.Runtime),
         separateProdTestSources = true,
-        projectToConfigurations = Seq(
-          ProductionType(projects(1)) -> Seq(Configuration.Compile, Configuration(CustomConf.name)),
-          ProductionType(projects.head) -> Seq(Configuration.Test)
+        configurationToProjectDeps = Map(
+          sbt.Compile -> Seq(ProductionType(projects(1))),
+          sbt.Test -> Nil,
+          sbt.Runtime -> Nil,
+          CustomConf -> Seq(ProductionType(projects(1)))
         )
       ).extract
 
@@ -473,15 +483,15 @@ class DependenciesExtractorSpec_ProdTestSourcesSeparatedEnabled extends AnyFreeS
           ),
           forTest = Seq(
             ProjectDependencyData(
-              s"${projects(1).id}:main",
-              Some(projects(1).build),
-              Seq(Configuration.Compile)
-            ),
-            ProjectDependencyData(
               s"${projects.head.id}:main",
               Some(projects.head.build),
               Seq(Configuration.Compile)
             ),
+            ProjectDependencyData(
+              s"${projects(1).id}:main",
+              Some(projects(1).build),
+              Seq(Configuration.Compile)
+            )
           )
         ),
         modules = Dependencies(
@@ -518,8 +528,8 @@ class DependenciesExtractorSpec_ProdTestSourcesSeparatedEnabled extends AnyFreeS
   }
 
   def assertIdentical(expected: DependencyData, actual: DependencyData): Unit = {
-    actual.projects.forProduction must contain theSameElementsAs expected.projects.forProduction
-    actual.projects.forTest must contain theSameElementsAs expected.projects.forTest
+    actual.projects.forProduction must contain theSameElementsInOrderAs expected.projects.forProduction
+    actual.projects.forTest must contain theSameElementsInOrderAs expected.projects.forTest
     actual.jars.forProduction must contain theSameElementsAs expected.jars.forProduction
     actual.jars.forTest must contain theSameElementsAs expected.jars.forTest
     actual.modules.forProduction must contain theSameElementsAs expected.modules.forProduction
