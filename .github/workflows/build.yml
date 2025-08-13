@@ -11,13 +11,12 @@ jobs:
     name: sbt-structure plugin Build & Test
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v5
     - uses: actions/setup-java@v4
       with:
         distribution: temurin
         java-version: 11
         cache: sbt
     - uses: sbt/setup-sbt@v1
-    - uses: coursier/cache-action@v6
     - name: Compile & Test
-      run: sbt '; clean; crossCompileAndRunTests'
+      run: sbt clean crossCompileAndRunTests
