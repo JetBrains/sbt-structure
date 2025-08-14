@@ -1,6 +1,7 @@
 package org.jetbrains.sbt
 
 import sbt.Keys.managedSources
+import sbt.util.cacheLevel
 //noinspection scala2InSource3
 import sbt._
 
@@ -15,7 +16,7 @@ object GenerateAllManagedSourcesPlugin extends AutoPlugin {
   override def trigger = allRequirements
 
   object autoImport {
-    val ideaGenerateAllManagedSources = taskKey[Seq[File]]("Generate managed sources in all subprojects")
+    @cacheLevel(include = Array.empty) val ideaGenerateAllManagedSources = taskKey[Seq[File]]("Generate managed sources in all subprojects")
   }
 
   import autoImport.ideaGenerateAllManagedSources
