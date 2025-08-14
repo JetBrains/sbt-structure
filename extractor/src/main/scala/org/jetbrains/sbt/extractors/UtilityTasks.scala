@@ -144,7 +144,7 @@ object UtilityTasks extends SbtStateOps {
   def testConfigurations: Def.Initialize[Seq[Configuration]] =
     StructureKeys.allConfigurationsWithSource.apply { cs =>
       import sbt._
-      val predefinedTest = Set(Test, IntegrationTest)
+      val predefinedTest = UtilityTasksCompat.predefinedTestConfigurations
       val transitiveTest = cs.filter(c =>
         transitiveExtends(c.extendsConfigs)
           .toSet

@@ -49,12 +49,12 @@ lazy val sbtStructure = project.in(file("."))
 // when calculating pluginCrossBuild / sbtVersion
 val scala212_Earlier: String = "2.12.19" //used for sbt < 1.3
 val scala212: String = "2.12.20" //used for sbt >= 1.3
-val scala3: String = "3.6.2" //used for sbt 2
+val scala3: String = "3.7.2" //used for sbt 2
 val Scala_2_10_Legacy = "2.10.7"
 
 val SbtVersion_1_0 = "1.0.0"
 val SbtVersion_1_3 = "1.3.0"
-val SbtVersion_2 = "2.0.0-M3" //TODO: update to the latest?
+val SbtVersion_2 = "2.0.0-RC2" //TODO: update to the latest?
 val SbtVersion_0_13_Legacy = "0.13.17"
 
 val CommonSharedCoreDataSourcesSettings: Seq[Def.Setting[Seq[File]]] = Seq(
@@ -120,31 +120,47 @@ lazy val extractor = project.in(file("extractor"))
     pluginCrossBuild / sbtVersion := {
       // keep this as low as possible to avoid running into binary incompatibility such as https://github.com/sbt/sbt/issues/5049
       val scalaVer = scalaVersion.value
-      if (scalaVer == scala212_Earlier)
-        SbtVersion_1_0
-      else if (scalaVer == scala212)
-        SbtVersion_1_3
-      else if (scalaVer == scala3)
-        SbtVersion_2
-      else
-        throw new AssertionError(s"Unexpected scala version $scalaVer")
+      scalaVer match {
+        case `scala212_Earlier` => SbtVersion_1_0
+        case `scala212` => SbtVersion_1_3
+        case `scala3` => SbtVersion_2
+        case _ =>
+          throw new AssertionError(s"Unexpected scala version $scalaVer")
+      }
     },
     // By default, when you crosscompile sbt plugin for multiple sbt 1.x versions,
     // it will use the same binary version 1.0 for all of them
     // It will use the same source directory `scala-sbt-1.0`, same target dirs and same artifact names.
     // But we need different directories because some code compiles in sbt 1.x but not in sbt 1.y
     pluginCrossBuild / sbtBinaryVersion := {
+      val originalBinaryVersion = (pluginCrossBuild / sbtBinaryVersion).value
       val sbtVersion3Digits = (pluginCrossBuild / sbtVersion).value
-      val sbtVersion2Digits = sbtVersion3Digits.substring(0, sbtVersion3Digits.lastIndexOf("."))
-      sbtVersion2Digits
+      sbtVersion3Digits match {
+        case SbtVersion_2 =>
+          // For sbt 2, the binary version has been changed to a simple "2".
+          // https://github.com/sbt/librarymanagement/pull/437
+          originalBinaryVersion
+        case SbtVersion_1_3 =>
+          // For sbt [1.3.x, 2.x) we set our own custom binary version.
+          // This is because we offer the sbt-structure-extractor as a specially compiled binary for sbt 1.3.x and above.
+          "1.3"
+        case SbtVersion_1_0 =>
+          // For sbt [1.0.x, 1.2.x], we use the default sbt 1 binary version "1.0".
+          originalBinaryVersion
+      }
     },
     Compile / unmanagedSourceDirectories ++= {
-      val sbtVersion = Version((pluginCrossBuild / sbtBinaryVersion).value)
+      val sbtVersion = Version((pluginCrossBuild / Keys.sbtVersion).value)
       val baseDir = (Compile / sourceDirectory).value
 
       val result = mutable.Buffer[File]()
-      if (sbtVersion.repr.startsWith("1"))
+      if (sbtVersion.repr.startsWith("1")) {
         result += baseDir / "scala-sbt-1.0-1.x"
+
+        if (sbtVersion >= Version("1.3")) {
+          result += baseDir / "scala-sbt-1.3-1.x"
+        }
+      }
       if (sbtVersion >= Version("1.3"))
         result += baseDir / "scala-sbt-1.3+"
 

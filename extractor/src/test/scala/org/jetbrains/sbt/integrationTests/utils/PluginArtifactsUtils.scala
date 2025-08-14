@@ -56,7 +56,7 @@ object PluginArtifactsUtils {
     if (sbtVersion < Version("1.0")) "0.13"
     else if (sbtVersion < Version("1.3")) "1.0"
     else if (sbtVersion.presentation.startsWith("1")) "1.3"
-    else "2.0"
+    else "2"
 
   def getPluginUnpublishedClassesDirectory(sbtVersionShort: Version): File = {
     val scalaVersion = scalaVersionUsedBySbt(sbtVersionShort)
@@ -72,7 +72,7 @@ object PluginArtifactsUtils {
     sbtVersion.presentation.split('.') match {
       case Array("0", "13") => "2.10"
       case Array("1", _) => "2.12"
-      case Array("2", _) => "3.6.2"
+      case Array("2", _) => "3.7.2"
       case _ => throw new IllegalArgumentException(s"sbt version not supported by this test: $sbtVersion")
     }
 }
