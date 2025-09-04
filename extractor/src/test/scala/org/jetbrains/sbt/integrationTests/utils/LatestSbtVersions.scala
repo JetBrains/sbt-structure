@@ -14,5 +14,5 @@ object LatestSbtVersions {
   val SbtVersion_1_9: Version = Version("1.9.6")
   val SbtVersion_1_10: Version = Version("1.10.7")
   val SbtVersion_1_11: Version = Version("1.11.2")
-  val SbtVersion_2: Version = Version("2.0.0-RC3")
+  val SbtVersion_2: Version = Version("2.0.0-RC4")
 }
