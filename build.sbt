@@ -54,7 +54,7 @@ val Scala_2_10_Legacy = "2.10.7"
 
 val SbtVersion_1_0 = "1.0.0"
 val SbtVersion_1_3 = "1.3.0"
-val SbtVersion_2 = "2.0.0-RC3" //TODO: update to the latest?
+val SbtVersion_2 = "2.0.0-RC4" //TODO: update to the latest?
 val SbtVersion_0_13_Legacy = "0.13.17"
 
 val CommonSharedCoreDataSourcesSettings: Seq[Def.Setting[Seq[File]]] = Seq(
