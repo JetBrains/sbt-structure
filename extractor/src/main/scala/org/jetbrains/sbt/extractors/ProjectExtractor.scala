@@ -347,8 +347,14 @@ object ProjectExtractor extends SbtStateOps with TaskOps {
     Def.taskDyn {
       val scalaOrganization =
         (projectRef / Compile / Keys.scalaOrganization).value
-      val scalaInstance =
-        taskInCompile(Keys.scalaInstance).onlyIf(options.download).value
+      val scalaInstanceResult: Result[Option[ScalaInstance]] =
+        taskInCompile(Keys.scalaInstance).onlyIf(options.download).result.value
+
+      // In some peculiar setups there might be no scala instance configured (for example in Scala 3 repository)
+      // In this case we still shouldn't fail the import process
+      val scalaInstance: Option[ScalaInstance] =
+        scalaInstanceResult.toEither.toOption.flatten
+
       val scalaCompilerBridgeBinaryJar =
         PluginCompat.myScalaCompilerBridgeBinaryJar.value
 
