@@ -103,7 +103,7 @@ lazy val extractor = project.in(file("extractor"))
     },
     libraryDependencies ++= Seq(
       "org.scalatest" %% "scalatest" % "3.2.19" % Test,
-      "org.dom4j" % "dom4j" % "2.1.4" % Test
+      "org.dom4j" % "dom4j" % "2.2.0" % Test
     ),
     scalaVersion := scala212,
     //    scalaVersion := scala3,
