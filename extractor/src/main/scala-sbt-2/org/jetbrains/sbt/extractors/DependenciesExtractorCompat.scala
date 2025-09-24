@@ -31,7 +31,7 @@ object DependenciesExtractorCompat extends ModulesOps {
    *       We have moduleIdJsonKeyFormat but not for Artifact, why?
    */
   private def artifactFromStr(artJsonStr: String): Artifact = {
-    import sbt.librarymanagement.LibraryManagementCodec.*
+    import sbt.librarymanagement.LibraryManagementCodec.given
     import sjsonnew.support.scalajson.unsafe.*
     val format: JsonFormat[Artifact] = summon[JsonFormat[Artifact]]
     val artJson = Parser.parseFromString(artJsonStr).get
