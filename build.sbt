@@ -69,7 +69,7 @@ lazy val core = project.in(file("core"))
     libraryDependencies ++= {
       val scalaVersion = Version(scalaBinaryVersion.value)
       if (scalaVersion >= Version("2.12"))
-        Seq("org.scala-lang.modules" %% "scala-xml" % "2.3.0")
+        Seq("org.scala-lang.modules" %% "scala-xml" % "2.4.0")
       else
         Nil
     },
