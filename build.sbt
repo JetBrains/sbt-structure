@@ -49,7 +49,7 @@ lazy val sbtStructure = project.in(file("."))
 // when calculating pluginCrossBuild / sbtVersion
 val scala212_Earlier: String = "2.12.19" //used for sbt < 1.3
 val scala212: String = "2.12.20" //used for sbt >= 1.3
-val scala3: String = "3.7.2" //used for sbt 2
+val scala3: String = "3.7.3" //used for sbt 2
 val Scala_2_10_Legacy = "2.10.7"
 
 val SbtVersion_1_0 = "1.0.0"
