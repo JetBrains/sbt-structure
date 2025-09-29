@@ -66,13 +66,7 @@ lazy val core = project.in(file("core"))
   .settings(PublishingSettings)
   .settings(
     name := "sbt-structure-core",
-    libraryDependencies ++= {
-      val scalaVersion = Version(scalaBinaryVersion.value)
-      if (scalaVersion >= Version("2.12"))
-        Seq("org.scala-lang.modules" %% "scala-xml" % "2.4.0")
-      else
-        Nil
-    },
+    libraryDependencies += "org.scala-lang.modules" %% "scala-xml" % "2.4.0",
     crossScalaVersions := Seq(scala3, "2.13.16", scala212),
     CommonSharedCoreDataSourcesSettings,
   )
