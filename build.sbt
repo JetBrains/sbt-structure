@@ -73,7 +73,7 @@ lazy val core = project.in(file("core"))
       else
         Nil
     },
-    crossScalaVersions := Seq("2.13.16", scala212),
+    crossScalaVersions := Seq(scala3, "2.13.16", scala212),
     CommonSharedCoreDataSourcesSettings,
   )
 
