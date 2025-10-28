@@ -91,7 +91,7 @@ object UtilityTasks extends SbtStateOps {
 
   lazy val acceptedProjects: Initialize[Task[Seq[ProjectRef]]] = Keys.state.map { state =>
     structure(state).allProjectRefs.filter { case ref@ProjectRef(_, id) =>
-      val isProjectAccepted = structure(state).allProjects.find(_.id == id).exists(areNecessaryPluginsLoaded)
+      val isProjectAccepted = structure(state).allProjects.find(_.id == id).exists(isJvmPluginLoaded)
       val shouldSkipProject =
         (ref / SettingKeys.ideSkipProject).getValueOrElse(state, false) ||
           (ref / SettingKeys.sbtIdeaIgnoreModule).getValueOrElse(state, false)
@@ -175,23 +175,33 @@ object UtilityTasks extends SbtStateOps {
     buffer.toSeq
   }
 
-  private def areNecessaryPluginsLoaded(project: ResolvedProject): Boolean = {
-    // Here is a hackish way to test whether project has JvmPlugin enabled.
-    // Prior to 0.13.8 SBT had this one enabled by default for all projects.
-    // Now there may exist projects with IvyPlugin (and thus JvmPlugin) disabled
-    // lacking all the settings we need to extract in order to import project in IDEA.
-    // These projects are filtered out by checking `autoPlugins` field.
-    // But earlier versions of SBT 0.13.x had no `autoPlugins` field so
-    // structural typing is used to get the data.
+  /**
+   * Detect whether the JvmPlugin is enabled for the given project.
+   * Prior to 0.13.8 SBT had this one enabled by default for all projects.
+   * Now there may exist projects with IvyPlugin (and thus JvmPlugin) disabled
+   * lacking all the settings we need to extract to import a project in IDEA.
+   */
+  private def isJvmPluginLoaded(project: ResolvedProject): Boolean =
+    isPluginLoaded(project, "sbt.plugins.JvmPlugin", defaultValue = true)
+
+  /**
+    * Checks whether a plugin is enabled in a given project.
+    *
+    * Implementation details:
+    *  - reads `project.autoPlugins` and matches plugin label.
+    *  - earlier versions of SBT 0.13.x had no `autoPlugins` field, so structural typing is used to get the data.
+    *
+    * @return true if `pluginId` is listed among `autoPlugins`, or `defaultValue` when not inspectable
+    */
+  def isPluginLoaded(project: ResolvedProject, pluginId: String, defaultValue: Boolean): Boolean =
     try {
       type ResolvedProject_0_13_7 = {def autoPlugins: Seq[{ def label: String}]}
       val resolvedProject_0_13_7 = project.asInstanceOf[ResolvedProject_0_13_7]
       val labels = resolvedProject_0_13_7.autoPlugins.map(_.label)
-      labels.contains("sbt.plugins.JvmPlugin")
+      labels.contains(pluginId)
     } catch {
-      case _ : NoSuchMethodException => true
+      case _ : NoSuchMethodException => defaultValue
     }
-  }
 
   def writeToFile(file: File, xml: String): Unit = {
     val writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), "UTF-8"))

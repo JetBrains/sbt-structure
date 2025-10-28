@@ -17,6 +17,13 @@ object SettingKeys {
   val sbtIdeaBasePackage: SettingKey[Option[String]] = SettingKey[Option[String]]("idea-base-package")
   val sbtIdeaExcludeFolders: SettingKey[Seq[String]] = SettingKey[Seq[String]]("idea-exclude-folders")
   val sbtIdeaIgnoreModule: SettingKey[Boolean] = SettingKey[Boolean]("idea-ignore-module")
+
+  /**
+   * Mirrors the `monitoredScalaJSDirectories` sbt setting from `sbt-web-scalajs` plugin.
+   *
+   * @see SCL-24518
+   */
+  val monitoredScalaJSDirectories: SettingKey[Seq[File]] = SettingKey[Seq[File]]("monitoredScalaJSDirectories")
 }
 
 
