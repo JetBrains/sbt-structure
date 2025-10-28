@@ -1,6 +1,8 @@
 package org.jetbrains.sbt
 package extractors
 
+import org.jetbrains.sbt.extractors.UtilityTasks.isPluginLoaded
+import org.jetbrains.sbt.CreateTasks.SettingKeyOps
 import org.jetbrains.sbt.structure.*
 import sbt.Def.Initialize
 import sbt.internal.inc.ScalaInstance
@@ -15,6 +17,7 @@ import scala.util.{Failure, Success, Try}
 
 class ProjectExtractor(
   projectRef: ProjectRef,
+  resolvedProject: ResolvedProject,
   name: String,
   organization: String,
   version: String,
@@ -45,10 +48,11 @@ class ProjectExtractor(
   taskData: Seq[TaskData],
   commandData: Seq[CommandData],
   mainSourceDirectories: Seq[File],
-  testSourceDirectories: Seq[File]
+  testSourceDirectories: Seq[File],
+  isMainTestEnabled: Boolean
 ) {
 
-  private[extractors] def extract: ProjectData = {
+  private[extractors] def extract(implicit state: State): ProjectData = {
 
     val resolvers = allResolvers.collect {
       case repo: MavenRepository => ResolverData(repo.name, repo.root)
@@ -73,7 +77,33 @@ class ProjectExtractor(
     def isJmhConfiguration(config: sbt.Configuration): Boolean =
       config.name.toLowerCase == "jmh"
 
-    val compileConfigurationsData = sourceConfigurations.flatMap(extractConfiguration(Compile.name))
+    /*
+    This is a workaround for https://youtrack.jetbrains.com/issue/SCL-24518.
+    The `sbt-web-scalajs-bundler` plugin internally uses the `sbt-web-scalajs` plugin, which modifies
+    unmanagedSourceDirectories in the Assets configuration (`Assets` configuration comes from the https://github.com/sbt/sbt-web).
+    Specifically, it extends `Assets/unmanagedSourceDirectories` with source directories from all Scala.js modules and their dependencies
+    (see more info: https://github.com/vmunier/sbt-web-scalajs/blob/a3cf9ecc01506264929c463fe297ef2e11a3d439/src/main/scala/webscalajs/WebScalaJS.scala#L45).
+    All these tracked directories are saved in the monitoredScalaJSDirectories setting.
+
+    Why is this exclusion necessary?
+    When a module has WebScalaJS enabled, its `Assets/unmanagedSourceDirectories` includes source directories from all
+    Scala.js modules and their dependencies. This creates a situation where its source directories overlap
+    with source directories from other modules (e.g., the Scala.js modules whose directories were used to populate the monitoredScalaJSDirectories setting).
+    When this overlap occurs, the Scala plugin creates shared source modules for these directories, which are unnecessary and cause problems (e.g., the wrong representative project is picked).
+    Excluding monitoredScalaJSDirectories from unmanagedSourceDirectories prevents this problem.
+    */
+    val shouldExcludeWebAssets = isMainTestEnabled && isPluginLoaded(resolvedProject, pluginId = "webscalajs.WebScalaJS", defaultValue = false)
+    val dirsToExclude =
+      if (shouldExcludeWebAssets) {
+        val assetsConfig = sourceConfigurations.find(_.name == "web-assets") // the name of Assets config comes from https://github.com/sbt/sbt-web/blob/1c400a3fb863e57a0475f71419d43f4055b7ec45/src/main/scala/com/typesafe/sbt/web/SbtWeb.scala#L19
+        assetsConfig.fold(Seq.empty[File]) { config =>
+          (projectRef / config / SettingKeys.monitoredScalaJSDirectories).getValueOrElse(state, Nil)
+        }
+      } else {
+        Nil
+      }
+
+    val compileConfigurationsData = sourceConfigurations.flatMap(extractConfiguration(Compile.name, dirsToExclude))
     val testConfigurationData = testConfigurations
       .filterNot(isJmhConfiguration)
       .flatMap(extractConfiguration(Test.name))
@@ -106,21 +136,27 @@ class ProjectExtractor(
   }
 
   private def extractConfiguration(
-    ideConfig: String
+    ideConfig: String,
+    toExclude: Seq[File] = Nil
   )(configuration: sbt.Configuration): Option[ConfigurationData] =
     classDirectory(configuration).map { sbtOutput =>
+      def filterAndMap(dirs: Seq[File], managed: Boolean): Seq[DirectoryData] =
+        dirs
+          .filterNot(toExclude.contains)
+          .map(DirectoryData(_, managed = managed))
+
       val sources = {
         val managed = managedSourceDirectories(configuration)
         val unmanaged = unmanagedSourceDirectories(configuration)
-        managed.map(DirectoryData(_, managed = true)) ++
-          unmanaged.map(DirectoryData(_, managed = false))
+        filterAndMap(managed, managed = true) ++
+          filterAndMap(unmanaged, managed = false)
       }
 
       val resources = {
         val managed = managedResourceDirectories(configuration)
         val unmanaged = unmanagedResourceDirectories(configuration)
-        managed.map(DirectoryData(_, managed = true)) ++
-          unmanaged.map(DirectoryData(_, managed = false))
+        filterAndMap(managed, managed = true)  ++
+          filterAndMap(unmanaged, managed = false)
       }
 
       val output = ideOutputDirectory(configuration).getOrElse(sbtOutput)
@@ -396,8 +432,11 @@ object ProjectExtractor extends SbtStateOps with TaskOps {
         .forAllConfigurations(state, testConfigurations)
         .map(_._2).distinct
 
+      val resolvedProject = Keys.thisProject.value
+
       val projectData = new ProjectExtractor(
         projectRef,
+        resolvedProject,
         name,
         organization,
         version,
@@ -428,7 +467,8 @@ object ProjectExtractor extends SbtStateOps with TaskOps {
         StructureKeys.taskData.value,
         StructureKeys.commandData.value.distinct,
         mainSourceDirectories,
-        testSourceDirectories
+        testSourceDirectories,
+        options.separateProdAndTestSources
       ).extract
 
       val runGeneratedManagedSourcesTask = StructureKeys.generateManagedSourcesDuringStructureDump.value
