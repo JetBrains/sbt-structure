@@ -21,7 +21,7 @@ object SettingKeys {
   /**
    * Mirrors the `monitoredScalaJSDirectories` sbt setting from `sbt-web-scalajs` plugin.
    *
-   * @see https://github.com/vmunier/sbt-web-scalajs/blob/a3cf9ecc01506264929c463fe297ef2e11a3d439/src/main/scala/webscalajs/WebScalaJS.scala#L30
+   * @see SCL-24518
    */
   val monitoredScalaJSDirectories: SettingKey[Seq[File]] = SettingKey[Seq[File]]("monitoredScalaJSDirectories")
 }

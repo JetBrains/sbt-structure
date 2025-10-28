@@ -77,33 +77,7 @@ class ProjectExtractor(
     def isJmhConfiguration(config: sbt.Configuration): Boolean =
       config.name.toLowerCase == "jmh"
 
-    /*
-    This is a workaround for https://youtrack.jetbrains.com/issue/SCL-24518.
-    The `sbt-web-scalajs-bundler` plugin internally uses the `sbt-web-scalajs` plugin, which modifies
-    unmanagedSourceDirectories in the Assets configuration (`Assets` configuration comes from the https://github.com/sbt/sbt-web).
-    Specifically, it extends `Assets/unmanagedSourceDirectories` with source directories from all Scala.js modules and their dependencies
-    (see more info: https://github.com/vmunier/sbt-web-scalajs/blob/a3cf9ecc01506264929c463fe297ef2e11a3d439/src/main/scala/webscalajs/WebScalaJS.scala#L45).
-    All these tracked directories are saved in the monitoredScalaJSDirectories setting.
-
-    Why is this exclusion necessary?
-    When a module has WebScalaJS enabled, its `Assets/unmanagedSourceDirectories` includes source directories from all
-    Scala.js modules and their dependencies. This creates a situation where its source directories overlap
-    with source directories from other modules (e.g., the Scala.js modules whose directories were used to populate the monitoredScalaJSDirectories setting).
-    When this overlap occurs, the Scala plugin creates shared source modules for these directories, which are unnecessary and cause problems (e.g., the wrong representative project is picked).
-    Excluding monitoredScalaJSDirectories from unmanagedSourceDirectories prevents this problem.
-    */
-    val shouldExcludeWebAssets = isMainTestEnabled && isPluginLoaded(resolvedProject, pluginId = "webscalajs.WebScalaJS", defaultValue = false)
-    val dirsToExclude =
-      if (shouldExcludeWebAssets) {
-        val assetsConfig = sourceConfigurations.find(_.name == "web-assets") // the name of Assets config comes from https://github.com/sbt/sbt-web/blob/1c400a3fb863e57a0475f71419d43f4055b7ec45/src/main/scala/com/typesafe/sbt/web/SbtWeb.scala#L19
-        assetsConfig.fold(Seq.empty[File]) { config =>
-          (projectRef / config / SettingKeys.monitoredScalaJSDirectories).getValueOrElse(state, Nil)
-        }
-      } else {
-        Nil
-      }
-
-    val compileConfigurationsData = sourceConfigurations.flatMap(extractConfiguration(Compile.name, dirsToExclude))
+    val compileConfigurationsData = sourceConfigurations.flatMap(extractConfiguration(Compile.name, webAssetsDirsToExclude))
     val testConfigurationData = testConfigurations
       .filterNot(isJmhConfiguration)
       .flatMap(extractConfiguration(Test.name))
@@ -133,6 +107,38 @@ class ProjectExtractor(
       // This is a default value and will be changed later, when sources are generated.
       generatedManagedSources = false
     )
+  }
+
+  /**
+   * This is a workaround for SCL-24518.
+   *
+   * The `sbt-web-scalajs-bundler` plugin internally uses the `sbt-web-scalajs` plugin, which modifies
+   * `unmanagedSourceDirectories`` in the `Assets`` configuration (`Assets` configuration comes from the https://github.com/sbt/sbt-web).
+   * Specifically, it extends `Assets/unmanagedSourceDirectories` with source directories from all Scala.js modules and their dependencies
+   * (see more info: https://github.com/vmunier/sbt-web-scalajs/blob/a3cf9ecc01506264929c463fe297ef2e11a3d439/src/main/scala/webscalajs/WebScalaJS.scala#L45).
+   * All these tracked directories are saved in the `monitoredScalaJSDirectories`` setting.
+   *
+   * '''Why is this exclusion necessary?'''
+   *
+   * When a module has WebScalaJS enabled, its `Assets/unmanagedSourceDirectories` includes source directories from all
+   * Scala.js modules and their dependencies. This creates a situation where its source directories overlap
+   * with source directories from other modules (e.g., the Scala.js modules whose directories were used to populate the `monitoredScalaJSDirectories` setting).
+   * When this overlap occurs, the Scala plugin creates shared source modules for these directories, which are unnecessary and cause problems (e.g., the wrong representative project is picked).
+   * Excluding `monitoredScalaJSDirectories`` from `unmanagedSourceDirectories` prevents this problem.
+   *
+   */
+  private def webAssetsDirsToExclude(implicit state: State): Seq[File] = {
+    val shouldExcludeWebAssets =
+      isMainTestEnabled && isPluginLoaded(resolvedProject, pluginId = "webscalajs.WebScalaJS", defaultValue = false)
+
+    if (shouldExcludeWebAssets) {
+      val assetsConfig = sourceConfigurations.find(_.name == "web-assets") // the name of Assets config comes from https://github.com/sbt/sbt-web/blob/1c400a3fb863e57a0475f71419d43f4055b7ec45/src/main/scala/com/typesafe/sbt/web/SbtWeb.scala#L19
+      assetsConfig.fold(Seq.empty[File]) { config =>
+        (projectRef / config / SettingKeys.monitoredScalaJSDirectories).getValueOrElse(state, Nil)
+      }
+    } else {
+      Nil
+    }
   }
 
   private def extractConfiguration(
