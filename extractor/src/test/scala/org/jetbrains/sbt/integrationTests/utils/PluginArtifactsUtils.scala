@@ -72,7 +72,7 @@ object PluginArtifactsUtils {
     sbtVersion.presentation.split('.') match {
       case Array("0", "13") => "2.10"
       case Array("1", _) => "2.12"
-      case Array("2", _) => "3.7.3"
+      case Array("2", _) => "3.7.4"
       case _ => throw new IllegalArgumentException(s"sbt version not supported by this test: $sbtVersion")
     }
 }
