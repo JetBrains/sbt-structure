@@ -121,6 +121,21 @@ class ExtractStructureIntegrationTest extends AnyFreeSpecLike {
       "source-generator-failure" in { testProject("source-generator-failure", SbtVersion_1_11, ResolveSourcesAndSbtClassifiersAndSeparateProdTestSources, errorsExpected = true) }
     }
 
+    // In sbt 2.0.0-RC7, a binary compatibility breaking change was made which removed the
+    // scalaCompilerBridgeBinaryJar key which we rely on.
+    // We have put a compatibility task in place which makes sure that project imports can still be done
+    // using sbt pre 2.0.0-RC7.
+    // https://github.com/sbt/sbt/commit/68b2b7d0251d9bf352739f904d64590e9e9e8396
+    "2.0.0-RC6" - {
+      // TODO: uncomment sbtClassifiers when https://github.com/sbt/sbt/pull/8024 is uploaded
+      // (and update sbt version)
+      val options = SbtOptionsBuilder().sources /*.sbtClassifiers*/.separateProdTestSources.result
+      "simple" in { testProject("simple", SbtVersion_2_legacy, options) }
+      "buildinfo" in { testProject("buildinfo", SbtVersion_2_legacy, options) }
+      "custom-source-generator" in { testProject("custom-source-generator", SbtVersion_2_legacy, options) }
+      "source-generator-failure" in { testProject("source-generator-failure", SbtVersion_2_legacy, options, errorsExpected = true) }
+    }
+
     "2.0" - {
       // TODO: uncomment sbtClassifiers when https://github.com/sbt/sbt/pull/8024 is uploaded
       // (and update sbt version)
@@ -155,7 +170,12 @@ class ExtractStructureIntegrationTest extends AnyFreeSpecLike {
     val runOptions = CurrentEnvironment.buildSbtRunCommonOptions(sbtVersionFull, errorsExpected)
     import runOptions.sbtVersionShort
 
-    val projectDir = TestDataRoot / sbtVersionShort.presentation / projectDirName
+    val projectDir =
+      if (sbtVersionFull == SbtVersion_2_legacy)
+        TestDataRoot / SbtVersion_2_legacy.presentation / projectDirName
+      else
+        TestDataRoot / sbtVersionShort.presentation / projectDirName
+
     println(s"Running test: $projectDirName, sbtVersion: $sbtVersionFull, path: $projectDir")
 
     withClue(s"Test data folder doesn't exist: $projectDir") {

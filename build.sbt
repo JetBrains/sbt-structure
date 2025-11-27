@@ -49,12 +49,12 @@ lazy val sbtStructure = project.in(file("."))
 // when calculating pluginCrossBuild / sbtVersion
 val scala212_Earlier: String = "2.12.19" //used for sbt < 1.3
 val scala212: String = "2.12.20" //used for sbt >= 1.3
-val scala3: String = "3.7.3" //used for sbt 2
+val scala3: String = "3.7.4" //used for sbt 2
 val Scala_2_10_Legacy = "2.10.7"
 
 val SbtVersion_1_0 = "1.0.0"
 val SbtVersion_1_3 = "1.3.0"
-val SbtVersion_2 = "2.0.0-RC6" //TODO: update to the latest?
+val SbtVersion_2 = "2.0.0-RC7" //TODO: update to the latest?
 val SbtVersion_0_13_Legacy = "0.13.17"
 
 val CommonSharedCoreDataSourcesSettings: Seq[Def.Setting[Seq[File]]] = Seq(
@@ -150,10 +150,6 @@ lazy val extractor = project.in(file("extractor"))
       val result = mutable.Buffer[File]()
       if (sbtVersion.repr.startsWith("1")) {
         result += baseDir / "scala-sbt-1.0-1.x"
-
-        if (sbtVersion >= Version("1.3")) {
-          result += baseDir / "scala-sbt-1.3-1.x"
-        }
       }
       if (sbtVersion >= Version("1.3"))
         result += baseDir / "scala-sbt-1.3+"
