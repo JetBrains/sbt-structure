@@ -10,5 +10,7 @@ object PluginCompat extends PluginCompatCommonSbt1
   val myScalaCompilerBridgeBinaryJar: Def.Initialize[Task[Option[File]]] =
     Def.task(None)
 
+  val isFailedReload: Def.Initialize[Task[Boolean]] = Def.task { false }
+
   val artifactDownloadLoggerSettings: Seq[Setting[_]] = Seq.empty
 }
