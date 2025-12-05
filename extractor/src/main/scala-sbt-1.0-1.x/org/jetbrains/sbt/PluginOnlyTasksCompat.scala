@@ -5,6 +5,7 @@ import org.jetbrains.sbt.structure.XmlSerializer.*
 import org.jetbrains.sbt.structure.structureDataSerializer
 import sbt.*
 import sbt.complete.DefaultParsers
+import sbt.jetbrains.PluginCompat
 
 private object PluginOnlyTasksCompat {
 
@@ -17,18 +18,23 @@ private object PluginOnlyTasksCompat {
     val log = Keys.streams.value.log
     val extractStructure = extractors.extractStructure
 
-    Def.task {
-      val structure = extractStructure.value.serialize
-      val outputText = {
-        if (options.prettyPrint) newXmlPrettyPrinter.format(structure)
-        else xml.Utility.trim(structure).mkString
-      }
+    val isFailedReload = PluginCompat.isFailedReload.value
+    if (!isFailedReload) {
+      Def.task {
+        val structure = extractStructure.value.serialize
+        val outputText = {
+          if (options.prettyPrint) newXmlPrettyPrinter.format(structure)
+          else xml.Utility.trim(structure).mkString
+        }
 
-      log.info("Writing structure to " + outputFile.getPath + "...")
-      // noinspection UnitInMap
-      writeToFile(outputFile, outputText)
-      log.info("Done.")
-      outputFile
+        log.info("Writing structure to " + outputFile.getPath + "...")
+        // noinspection UnitInMap
+        writeToFile(outputFile, outputText)
+        log.info("Done.")
+        outputFile
+      }
+    } else {
+      Def.task { outputFile }
     }
   }
 }
