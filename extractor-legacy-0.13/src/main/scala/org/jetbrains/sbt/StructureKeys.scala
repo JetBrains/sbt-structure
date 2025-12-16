@@ -27,8 +27,20 @@ object StructureKeys {
   val allConfigurationsWithSource: SettingKey[Seq[Configuration]] = SettingKey("allConfigurationsWithSource", rank = Invisible)
 
   val sbtStructureOpts: SettingKey[Options] = SettingKey("ssOptions", "options for dumpStructure task", rank = DSetting)
+  /**
+   * Options for `dumpStructure` task as a single string.
+   * May be initialized from the `sbt.structure.options` system property.
+   */
   val sbtStructureOptions: SettingKey[String] = SettingKey("sbtStructureOptions", "options for dumpStructure task as string", rank = DSetting)
+  /**
+   * Output file for the `dumpStructure` task.
+   * May be initialized from the `sbt.structure.outputFile` system property.
+   */
   val sbtStructureOutputFile: SettingKey[Option[File]] = SettingKey("sbtStructureOutputFile", "output file for dumpStructure task",rank = DSetting)
+  /**
+   * Whether to generate managed sources during the `dumpStructure` task.
+   * May be initialized from the boolean system property `sbt.structure.generateManagedSources`.
+   */
   val generateManagedSourcesDuringStructureDump: SettingKey[Boolean] = SettingKey("generateManagedSourcesDuringStructureDump", "generate managed sources during dumpStructure task", rank = DSetting)
 
   val loadOptions: TaskKey[Options] = TaskKey("ssLoadOptions", "load options from ssOptionsFile if available", rank = Invisible)
