@@ -20,8 +20,10 @@ jobs:
     - name: Cache sbt-structure specific test dependency directories
       uses: actions/cache@v5
       with:
-        path: ~/.sbt-structure-global
-        key: ${{ runner.os }}-sbt-structure-global
+        path: |
+          ~/.sbt-structure-global/coursier
+          ~/.sbt-structure-global/ivy2
+        key: ${{ runner.os }}-sbt-structure-global-coursier-ivy-home
     - uses: sbt/setup-sbt@v1
     - name: Compile & Test
       run: sbt clean crossCompileAndRunTests
