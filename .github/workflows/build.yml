@@ -11,12 +11,19 @@ jobs:
     name: sbt-structure plugin Build & Test
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v5
-    - uses: actions/setup-java@v4
+    - uses: actions/checkout@v6
+    - uses: actions/setup-java@v5
       with:
         distribution: temurin
         java-version: 11
         cache: sbt
+    - name: Cache sbt-structure specific test dependency directories
+      uses: actions/cache@v5
+      with:
+        path: |
+          ~/.sbt-structure-global/coursier
+          ~/.sbt-structure-global/ivy2
+        key: ${{ runner.os }}-sbt-structure-global-coursier-ivy-home
     - uses: sbt/setup-sbt@v1
     - name: Compile & Test
       run: sbt clean crossCompileAndRunTests

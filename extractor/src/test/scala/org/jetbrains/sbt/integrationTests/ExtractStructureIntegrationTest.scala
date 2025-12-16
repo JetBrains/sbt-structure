@@ -120,6 +120,11 @@ class ExtractStructureIntegrationTest extends AnyFreeSpecLike {
       "custom-source-generator" in { testProject("custom-source-generator", SbtVersion_1_11, ResolveSourcesAndSbtClassifiersAndSeparateProdTestSources) }
       "source-generator-failure" in { testProject("source-generator-failure", SbtVersion_1_11, ResolveSourcesAndSbtClassifiersAndSeparateProdTestSources, errorsExpected = true) }
     }
+    "1.12" - {
+      "buildinfo" in { testProject("buildinfo", SbtVersion_1_12, ResolveSourcesAndSbtClassifiersAndSeparateProdTestSources) }
+      "custom-source-generator" in { testProject("custom-source-generator", SbtVersion_1_12, ResolveSourcesAndSbtClassifiersAndSeparateProdTestSources) }
+      "source-generator-failure" in { testProject("source-generator-failure", SbtVersion_1_12, ResolveSourcesAndSbtClassifiersAndSeparateProdTestSources, errorsExpected = true) }
+    }
 
     // In sbt 2.0.0-RC7, a binary compatibility breaking change was made which removed the
     // scalaCompilerBridgeBinaryJar key which we rely on.
