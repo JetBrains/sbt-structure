@@ -47,8 +47,8 @@ lazy val sbtStructure = project.in(file("."))
 
 //NOTE: an extra scala 2.12 version is used just to distinguish between different sbt 1.x versions
 // when calculating pluginCrossBuild / sbtVersion
-val scala212_Earlier: String = "2.12.19" //used for sbt < 1.3
-val scala212: String = "2.12.20" //used for sbt >= 1.3
+val scala212_Earlier: String = "2.12.20" //used for sbt < 1.3
+val scala212: String = "2.12.21" //used for sbt >= 1.3
 val scala3: String = "3.7.4" //used for sbt 2
 val Scala_2_10_Legacy = "2.10.7"
 
@@ -67,6 +67,7 @@ lazy val core = project.in(file("core"))
   .settings(
     name := "sbt-structure-core",
     libraryDependencies += "org.scala-lang.modules" %% "scala-xml" % "2.4.0",
+    scalaVersion := scala212,
     crossScalaVersions := Seq(scala3, "2.13.16", scala212),
     CommonSharedCoreDataSourcesSettings,
   )
