@@ -132,6 +132,7 @@ class ExtractStructureIntegrationTest extends AnyFreeSpecLike {
     // using sbt pre 2.0.0-RC7.
     // https://github.com/sbt/sbt/commit/68b2b7d0251d9bf352739f904d64590e9e9e8396
     "2.0.0-RC6" - {
+
       // TODO: uncomment sbtClassifiers when https://github.com/sbt/sbt/pull/8024 is uploaded
       // (and update sbt version)
       val options = SbtOptionsBuilder().sources /*.sbtClassifiers*/.separateProdTestSources.result
