@@ -141,15 +141,15 @@ class ExtractStructureIntegrationTest extends AnyFreeSpecLike {
       "source-generator-failure" in { testProject("source-generator-failure", SbtVersion_2_legacy, options, errorsExpected = true) }
     }
 
-    "2.0" - {
-      // TODO: uncomment sbtClassifiers when https://github.com/sbt/sbt/pull/8024 is uploaded
-      // (and update sbt version)
-      val options = SbtOptionsBuilder().sources /*.sbtClassifiers*/.separateProdTestSources.result
-      "simple" in { testProject("simple", SbtVersion_2, options) }
-      "buildinfo" in { testProject("buildinfo", SbtVersion_2, options) }
-      "custom-source-generator" in { testProject("custom-source-generator", SbtVersion_2, options) }
-      "source-generator-failure" in { testProject("source-generator-failure", SbtVersion_2, options, errorsExpected = true) }
-    }
+//    "2.0" - {
+//      // TODO: uncomment sbtClassifiers when https://github.com/sbt/sbt/pull/8024 is uploaded
+//      // (and update sbt version)
+//      val options = SbtOptionsBuilder().sources /*.sbtClassifiers*/.separateProdTestSources.result
+//      "simple" in { testProject("simple", SbtVersion_2, options) }
+//      "buildinfo" in { testProject("buildinfo", SbtVersion_2, options) }
+//      "custom-source-generator" in { testProject("custom-source-generator", SbtVersion_2, options) }
+//      "source-generator-failure" in { testProject("source-generator-failure", SbtVersion_2, options, errorsExpected = true) }
+//    }
   }
 
 

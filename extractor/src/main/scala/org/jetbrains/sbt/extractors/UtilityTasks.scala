@@ -61,28 +61,32 @@ object UtilityTasks extends SbtStateOps {
     (xs(0), xs(1), xs(2))
   }
 
-  lazy val dumpStructure: Initialize[Task[Unit]] = Def.task {
-    val structure = StructureKeys.extractStructure.value
-    val options = StructureKeys.sbtStructureOpts.value
-    val outputFile = StructureKeys.sbtStructureOutputFile.value
+  lazy val dumpStructure: Initialize[Task[Unit]] = Def.taskDyn {
     val log = Keys.streams.value.log
+    log.info("Extracting sbt project structure...")
 
-    val outputText = {
-      if (options.prettyPrint)
-        newXmlPrettyPrinter.format(structure.serialize)
-      else
-        xml.Utility.trim(structure.serialize).mkString
-    }
+    Def.task {
+      val structure = StructureKeys.extractStructure.value
+      val options = StructureKeys.sbtStructureOpts.value
+      val outputFile = StructureKeys.sbtStructureOutputFile.value
 
-    outputFile.map { file =>
-      log.info("Writing structure to " + file.getPath + "...")
-      // noinspection UnitInMap
-      writeToFile(file, outputText)
-    } getOrElse {
-      log.info("Writing structure to console:")
-      println(outputText)
+      val outputText = {
+        if (options.prettyPrint)
+          newXmlPrettyPrinter.format(structure.serialize)
+        else
+          xml.Utility.trim(structure.serialize).mkString
+      }
+
+      outputFile.map { file =>
+        log.info("Writing structure to " + file.getPath + "...")
+        // noinspection UnitInMap
+        writeToFile(file, outputText)
+      } getOrElse {
+        log.info("Writing structure to console:")
+        println(outputText)
+      }
+      log.info("Done.")
     }
-    log.info("Done.")
   }
 
   lazy val localCachePath: Def.Initialize[Task[Option[File]]] = Def.task {

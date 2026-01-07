@@ -35,8 +35,15 @@ class RepositoryExtractor(
         artifacts.collect { case (a, f) if a.`type` == Artifact.DocType || a.`type` == Artifact.SourceType => (a, f) }
 
       val docModules = getModulesForProject(projectRef, updateClassifiersReportsFn)
+
+      val docModulesByModuleId = docModules
+        .groupBy(_.moduleId)
+        .map { case (moduleId, reports) =>
+          moduleId -> reports.flatMap(r => onlySourcesAndDocs(r.artifacts))
+        }
+
       modulesWithoutDocs.map { report =>
-        val matchingDocs = docModules.filter(_.moduleId == report.moduleId).flatMap(r => onlySourcesAndDocs(r.artifacts))
+        val matchingDocs = docModulesByModuleId.getOrElse(report.moduleId, Seq.empty)
         ModuleReportAdapter(report.moduleId, report.artifacts ++ matchingDocs)
       }
     }
@@ -44,7 +51,7 @@ class RepositoryExtractor(
     modulesWithDocs.getOrElse(modulesWithoutDocs)
   }
 
-  private def allClasspathTypes: Set[String] = projects.map(classpathTypes).reduce((a, b) => a.union(b))
+  private lazy val allClasspathTypes: Set[String] = projects.map(classpathTypes).reduce((a, b) => a.union(b))
 
   private def fixModulesIdsToSupportClassifiers(modules: Seq[ModuleReportAdapter]): Seq[ModuleReportAdapter] =
     modules.map(r => r.copy(moduleId = r.moduleId.artifacts(r.artifacts.map(_._1): _*)))
@@ -53,12 +60,11 @@ class RepositoryExtractor(
     val modulesWithIds = modules.flatMap { module =>
       createModuleIdentifiers(module.moduleId, module.artifacts.map(_._1)).map(id => (module, id))
     }
-    val result = mutable.LinkedHashMap.empty[ModuleIdentifier, Seq[ModuleReportAdapter]]
+    val result = mutable.LinkedHashMap.empty[ModuleIdentifier, mutable.ListBuffer[ModuleReportAdapter]]
     modulesWithIds.foreach { case (adapter, identifier) =>
-      val adapters = result.getOrElse(identifier, Seq.empty)
-      result(identifier) = adapters :+ adapter
+      result.getOrElseUpdate(identifier, mutable.ListBuffer.empty) += adapter
     }
-    result
+    result.map { case (id, buffer) => id -> buffer }
   }
 
   private def getModulesForProject(projectRef: ProjectRef, updateReportFn: ProjectRef => UpdateReportAdapter): Seq[ModuleReportAdapter] =
@@ -67,15 +73,30 @@ class RepositoryExtractor(
   private def createModuleData(moduleId: ModuleIdentifier, moduleReports: Seq[ModuleReportAdapter]): ModuleData = {
     val allArtifacts = moduleReports.flatMap(_.artifacts)
 
-    def artifacts(kinds: Set[String]) = allArtifacts.collect {
-      case (a, f) if moduleId.classifier == fuseClassifier(a) && kinds.contains(a.`type`) => f
-    }.toSet
+    val classpathArtifacts = mutable.Set.empty[File]
+    val docArtifacts = mutable.Set.empty[File]
+    val sourceArtifacts = mutable.Set.empty[File]
+
+    allArtifacts
+      .filter { case (a, _) => moduleId.classifier == fuseClassifier(a) }
+      .foreach { case (a, f) =>
+        val artifactType = a.`type`
+        if (allClasspathTypes.contains(artifactType)) {
+          classpathArtifacts += f
+        }
+        if (artifactType == Artifact.DocType) {
+          docArtifacts += f
+        }
+        if (artifactType == Artifact.SourceType) {
+          sourceArtifacts += f
+        }
+      }
 
     ModuleData(
       moduleId,
-      artifacts(allClasspathTypes),
-      artifacts(Set(Artifact.DocType)),
-      artifacts(Set(Artifact.SourceType))
+      classpathArtifacts.toSet,
+      docArtifacts.toSet,
+      sourceArtifacts.toSet
     )
   }
 }
@@ -88,13 +109,9 @@ object RepositoryExtractor extends SbtStateOps with TaskOps {
     val acceptedProjects = StructureKeys.acceptedProjects.value
 
     Def.task {
-      extractRepositoryData(state, options, acceptedProjects)
+      extractRepositoryData(state, options, acceptedProjects.toImmutableSeq)
         .onlyIf(options.download).value
     }
-  }
-
-  private def extractRepositoryData(state: State, options: Options, acceptedProjects: scala.collection.Seq[ProjectRef]): Task[RepositoryData] = {
-    extractRepositoryData(state, options, acceptedProjects.toImmutableSeq)
   }
 
   private def extractRepositoryData(state: State, options: Options, acceptedProjects: scala.collection.immutable.Seq[ProjectRef]): Task[RepositoryData] = {
