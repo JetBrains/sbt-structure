@@ -29,7 +29,7 @@ class DependenciesExtractorSpec extends AnyFreeSpecLike {
           sbt.Test -> Seq(attributed(file("baz.jar"))),
           sbt.Runtime -> Nil,
         ).apply,
-        managedClasspath = None,
+        externalDependencyClasspath = None,
         dependencyConfigurations = Seq(sbt.Compile, sbt.Test, sbt.Runtime),
         testConfigurations = Seq(sbt.Test),
         sourceConfigurations = Seq(sbt.Compile, sbt.Runtime),
@@ -69,7 +69,7 @@ class DependenciesExtractorSpec extends AnyFreeSpecLike {
       val actual = new DependenciesExtractor(
         project = projects.head,
         unmanagedClasspath = emptyClasspath,
-        managedClasspath = Some(
+        externalDependencyClasspath = Some(
           Map(
             sbt.Compile -> Seq(
               attributedWith(file("foo.jar"))(moduleId("foo"), Artifact("foo")),
@@ -135,7 +135,7 @@ class DependenciesExtractorSpec extends AnyFreeSpecLike {
           sbt.Runtime -> Nil,
           sbt.Compile -> Nil,
         ).apply,
-        managedClasspath = Some(
+        externalDependencyClasspath = Some(
           Map(
             sbt.Test -> Seq(
               attributedWith(file("baz.jar"))(moduleId("baz"), Artifact("baz"))
@@ -198,7 +198,7 @@ class DependenciesExtractorSpec extends AnyFreeSpecLike {
       val actual = new DependenciesExtractor(
         project = projects.head,
         unmanagedClasspath = emptyClasspath,
-        managedClasspath = Some(
+        externalDependencyClasspath = Some(
           Map(
             sbt.Compile -> Seq(
               attributedWith(file("foo.jar"))(moduleId, Artifact("foo")),
@@ -251,7 +251,7 @@ class DependenciesExtractorSpec extends AnyFreeSpecLike {
           sbt.Test -> Seq(attributed(file("bar.jar"))),
           sbt.Runtime -> Seq(attributed(file("bar.jar")))
         ).apply,
-        managedClasspath = Some(
+        externalDependencyClasspath = Some(
           Map(
             sbt.Compile -> Seq(
               attributedWith(file("foo.jar"))(moduleId, Artifact("foo"))
@@ -308,7 +308,7 @@ class DependenciesExtractorSpec extends AnyFreeSpecLike {
           sbt.Test -> Seq(attributed(file("bar.jar"))),
           sbt.Runtime -> Nil
         ).apply,
-        managedClasspath = Some(
+        externalDependencyClasspath = Some(
           Map(
             sbt.Compile -> Seq(
               attributedWith(file("foo.jar"))(moduleId, Artifact("foo"))
@@ -360,7 +360,7 @@ class DependenciesExtractorSpec extends AnyFreeSpecLike {
       val actual =  new DependenciesExtractor(
         project = projects.head,
         unmanagedClasspath = emptyClasspath,
-        managedClasspath = None,
+        externalDependencyClasspath = None,
         dependencyConfigurations = Seq(sbt.Compile, sbt.Test, sbt.Runtime),
         testConfigurations = Nil,
         sourceConfigurations = Seq(sbt.Compile, sbt.Runtime),
@@ -387,7 +387,7 @@ class DependenciesExtractorSpec extends AnyFreeSpecLike {
       val actual =  new DependenciesExtractor(
         project = projects.head,
         unmanagedClasspath = emptyClasspath,
-        managedClasspath = None,
+        externalDependencyClasspath = None,
         dependencyConfigurations = Seq(sbt.Compile, sbt.Test, sbt.Runtime),
         testConfigurations = Nil,
         sourceConfigurations = Seq(sbt.Compile, sbt.Runtime),
@@ -413,7 +413,7 @@ class DependenciesExtractorSpec extends AnyFreeSpecLike {
       val actual =  new DependenciesExtractor(
         project = projects.head,
         unmanagedClasspath = emptyClasspath,
-        managedClasspath = None,
+        externalDependencyClasspath = None,
         dependencyConfigurations = Seq(sbt.Compile, sbt.Test, sbt.Runtime, CustomConf),
         testConfigurations = Seq(sbt.Test, CustomConf),
         sourceConfigurations = Seq(sbt.Compile, sbt.Runtime),

@@ -29,7 +29,7 @@ class DependenciesExtractorSpec_ProdTestSourcesSeparatedEnabled extends AnyFreeS
           ),
           sbt.Test -> Seq(attributed(file("foo.jar")))
         ).apply,
-        managedClasspath = None,
+        externalDependencyClasspath = None,
         dependencyConfigurations = Seq(sbt.Compile, sbt.Test),
         testConfigurations = Seq(sbt.Test),
         sourceConfigurations = Seq(sbt.Compile, sbt.Runtime),
@@ -76,7 +76,7 @@ class DependenciesExtractorSpec_ProdTestSourcesSeparatedEnabled extends AnyFreeS
       val actual = new DependenciesExtractor(
         project = projects.head,
         unmanagedClasspath = emptyClasspath,
-        managedClasspath = Some(
+        externalDependencyClasspath = Some(
           Map(
             sbt.Compile -> Seq(
               attributedWith(file("foo.jar"))(moduleId("foo"), Artifact("foo")),
@@ -146,7 +146,7 @@ class DependenciesExtractorSpec_ProdTestSourcesSeparatedEnabled extends AnyFreeS
           sbt.Test -> Seq(attributed(file("foo.jar"))),
           CustomConf -> Seq(attributed(file("bar.jar")))
         ).apply,
-        managedClasspath = Some(
+        externalDependencyClasspath = Some(
           Map(
             sbt.Test -> Seq(
               attributedWith(file("baz.jar"))(moduleId("baz"), Artifact("baz"))
@@ -213,7 +213,7 @@ class DependenciesExtractorSpec_ProdTestSourcesSeparatedEnabled extends AnyFreeS
       val actual = new DependenciesExtractor(
         project = projects.head,
         unmanagedClasspath = emptyClasspath,
-        managedClasspath = Some(Map(
+        externalDependencyClasspath = Some(Map(
           sbt.Compile -> Seq(
             attributedWith(file("foo.jar"))(moduleId, Artifact("foo")),
             attributedWith(file("foo-tests.jar"))(
@@ -273,7 +273,7 @@ class DependenciesExtractorSpec_ProdTestSourcesSeparatedEnabled extends AnyFreeS
           sbt.Test -> Seq(attributed(file("bar.jar"))),
           sbt.Runtime -> Seq(attributed(file("bar.jar")))
         ).apply,
-        managedClasspath = Some(
+        externalDependencyClasspath = Some(
           Map(
             sbt.Compile -> Seq(
               attributedWith(file("foo.jar"))(moduleId, Artifact("foo"))
@@ -361,7 +361,7 @@ class DependenciesExtractorSpec_ProdTestSourcesSeparatedEnabled extends AnyFreeS
           sbt.Test -> Seq(attributed(file("bar.jar"))),
           sbt.Runtime -> Seq.empty
         ).apply,
-        managedClasspath = Some(
+        externalDependencyClasspath = Some(
           Map(
             sbt.Compile -> Seq(
               attributedWith(file("foo.jar"))(moduleId, Artifact("foo"))
@@ -448,7 +448,7 @@ class DependenciesExtractorSpec_ProdTestSourcesSeparatedEnabled extends AnyFreeS
           sbt.Runtime -> Seq.empty,
           sbt.Test -> Seq.empty,
         ).apply,
-        managedClasspath = Some(
+        externalDependencyClasspath = Some(
           Map(
             sbt.Compile -> Seq(
               attributedWith(file("foo.jar"))(moduleId, Artifact("foo"))
