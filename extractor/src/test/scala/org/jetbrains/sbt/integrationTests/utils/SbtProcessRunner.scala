@@ -137,7 +137,6 @@ object SbtProcessRunner {
       }
     }): Runnable, "terminate sbt process"))
 
-    println(s"SBT process pid: ${process.pid()}")
     process.waitFor()
 
     stdinThread.join()

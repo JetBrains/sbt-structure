@@ -62,6 +62,19 @@ val CommonSharedCoreDataSourcesSettings: Seq[Def.Setting[Seq[File]]] = Seq(
     (ThisBuild / baseDirectory).value / "shared" / "src" / "main" / "scala",
 )
 
+lazy val javaReleaseSettings: Seq[Setting[?]] = Seq(
+  scalacOptions ++= {
+    scalaVersion.value match {
+      // Scala 2.10 has no support for the -release flag
+      case `Scala_2_10_Legacy` => Seq.empty
+      // TODO: Use --release 17 for Scala 3 after we start compiling the plugin against Scala 3.8+ and sbt 2.0.0-RC9+.
+      case _ => Seq("--release", "8")
+    }
+  },
+  // TODO: Use --release 17 fort Scala 3 after we start compiling the plugin against Scala 3.8+ and sbt 2.0.0-RC9+.
+  javacOptions ++= Seq("--release", "8")
+)
+
 lazy val core = project.in(file("core"))
   .settings(PublishingSettings)
   .settings(
@@ -71,6 +84,7 @@ lazy val core = project.in(file("core"))
     crossScalaVersions := Seq(scala3, "2.13.18", scala212),
     CommonSharedCoreDataSourcesSettings,
   )
+  .settings(javaReleaseSettings)
 
 lazy val extractor = project.in(file("extractor"))
   .enablePlugins(SbtPlugin)
@@ -169,6 +183,7 @@ lazy val extractor = project.in(file("extractor"))
     },
     Test / parallelExecution := false
   )
+  .settings(javaReleaseSettings)
 
 // We use separate module for 0.13 with many sources duplicated as an alternative to cross-compilation.
 // Such an approach should be easier than cross-compiling against 0.13, 1.0, 1.2, 2.x.
@@ -189,6 +204,7 @@ lazy val extractorLegacy_013 = project.in(file("extractor-legacy-0.13"))
     pluginCrossBuild / sbtVersion := SbtVersion_0_13_Legacy,
     CommonSharedCoreDataSourcesSettings,
   )
+  .settings(javaReleaseSettings)
 
 // just running "ci-release" in the root will run it for all aggregated projects
 // Running extra "clean" to ensure that there is no unexpected files cached

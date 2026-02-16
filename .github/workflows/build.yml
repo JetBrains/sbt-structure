@@ -15,7 +15,7 @@ jobs:
     - uses: actions/setup-java@v5
       with:
         distribution: temurin
-        java-version: 11
+        java-version: 17
         cache: sbt
     - name: Cache sbt-structure specific test dependency directories
       uses: actions/cache@v5
