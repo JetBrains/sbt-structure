@@ -117,7 +117,8 @@ Available options to set in `sbt-structure-options`:
 
 ## Development notes
 
-- The plugin is cross-built for sbt 0.13 and 1.x  
+- The plugin is cross-built for sbt 0.13, 1.x and 2.
+- JDK 17 is required for building the plugin. The plugin is correctly compiled for JDK 8 compatibility.
 (see https://www.scala-sbt.org/1.x/docs/Cross-Build-Plugins.html) \
 The project is not imported correctly in IntelliJ (some source folders are not detected, etc...) 
 This is a known issue, see [correctly handle cross-projects
@@ -134,6 +135,6 @@ publishAllLocal
    
 ## Compatibility
 
-sbt-structure is built and published for sbt 0.13.x and 1.x
+sbt-structure is built and published for sbt 0.13.x, 1.x and 2.
 
 sbt-structure-core is built and published for Scala 2.10, 2.11, 2.12, 2.13
