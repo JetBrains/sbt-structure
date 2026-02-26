@@ -5,12 +5,10 @@ import sbt.*
 import sbt.jetbrains.PluginCompat
 import sbt.jetbrains.PluginCompat.*
 
-import scala.collection.Seq
-
 object CreateTasks extends (State => State) with SbtStateOps {
 
   lazy val globalSettings: Seq[Setting[?]] = Seq[Setting[?]](
-    Keys.commands += UtilityTasks.preferScala2,
+    Keys.commands ++= Seq(UtilityTasks.preferScala2, UtilityTasks.setSbtStructureOptionsProperty),
     StructureKeys.sbtStructureOpts := StructureKeys.sbtStructureOptions.apply(Options.readFromString).value,
     StructureKeys.dumpStructure := UtilityTasks.dumpStructure.value,
     StructureKeys.acceptedProjects := UtilityTasks.acceptedProjects.value,
