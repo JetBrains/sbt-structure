@@ -477,8 +477,7 @@ object ProjectExtractor extends SbtStateOps with TaskOps {
         options.separateProdAndTestSources
       ).extract
 
-      val runGeneratedManagedSourcesTask = StructureKeys.generateManagedSourcesDuringStructureDump.value
-      if (runGeneratedManagedSourcesTask) {
+      if (options.generateManagedSources) {
         Def.task {
           val log = Keys.streams.value.log
           // Need to use `.toEither` because Result, Inc and Value are top level definitions in

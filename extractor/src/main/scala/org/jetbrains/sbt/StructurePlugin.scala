@@ -17,7 +17,6 @@ object StructurePlugin extends AutoPlugin {
     StructureKeys.sbtStructureOutputFile := retrieveOutputFile.orElse(None),
     StructureKeys.sbtStructureOptions := retrieveOptions.getOrElse("prettyPrint download"),
     StructureKeys.dumpStructureTo := PluginOnlyTasksCompat.dumpStructureTo.evaluated,
-    StructureKeys.generateManagedSourcesDuringStructureDump := retrieveGenerateManagedSources.getOrElse(true)
   ) ++ CreateTasks.globalSettings
 
   /**
@@ -46,13 +45,6 @@ object StructurePlugin extends AutoPlugin {
    */
   private def retrieveOptions: Option[String] =
     getSysProp("sbt.structure.options")
-
-  /**
-   * Whether to generate managed sources during `dumpStructure`, taken from the
-   * `sbt.structure.generateManagedSources` system property (boolean) if defined.
-   */
-  private def retrieveGenerateManagedSources: Option[Boolean] =
-    getSysProp("sbt.structure.generateManagedSources").flatMap(s => Try(s.toBoolean).toOption)
 
   override lazy val projectSettings: Seq[Setting[?]] = CreateTasks.projectSettings.toSbtSeqType
 }

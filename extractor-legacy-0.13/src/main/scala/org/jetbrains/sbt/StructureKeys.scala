@@ -37,11 +37,6 @@ object StructureKeys {
    * May be initialized from the `sbt.structure.outputFile` system property.
    */
   val sbtStructureOutputFile: SettingKey[Option[File]] = SettingKey("sbtStructureOutputFile", "output file for dumpStructure task",rank = DSetting)
-  /**
-   * Whether to generate managed sources during the `dumpStructure` task.
-   * May be initialized from the boolean system property `sbt.structure.generateManagedSources`.
-   */
-  val generateManagedSourcesDuringStructureDump: SettingKey[Boolean] = SettingKey("generateManagedSourcesDuringStructureDump", "generate managed sources during dumpStructure task", rank = DSetting)
 
   val loadOptions: TaskKey[Options] = TaskKey("ssLoadOptions", "load options from ssOptionsFile if available", rank = Invisible)
   val dumpStructure: TaskKey[Unit] = TaskKey("dumpStructure", "dump project structure to XML readable by IntelliJ", rank = DTask)
