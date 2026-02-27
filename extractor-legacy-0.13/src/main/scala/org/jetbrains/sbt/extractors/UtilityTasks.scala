@@ -45,6 +45,13 @@ object UtilityTasks extends SbtStateOps {
     }
   }
 
+  // It's a command, not a task, because a task would produce a log like `[success] Total time: 0 s`.
+  // This could be misleading if it were displayed as the first log in the sbt shell after the import command.
+  lazy val setSbtStructureOptionsProperty = Command.single("setSbtStructureOptionsProperty") { (state, input) =>
+    System.setProperty("sbt.structure.options", input)
+    state
+  }
+
   private def numbersOf(version: String): (Int, Int, Int) = {
     val prefix = version.split('.').filter(s => s.nonEmpty && s.forall(_.isDigit)).map(_.toInt).take(3)
     val xs = prefix ++ Seq.fill(3 - prefix.length)(0)

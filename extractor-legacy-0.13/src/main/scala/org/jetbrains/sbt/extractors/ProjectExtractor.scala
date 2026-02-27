@@ -416,8 +416,7 @@ object ProjectExtractor extends SbtStateOps with TaskOps {
         testSourceDirectories
       ).extract
 
-      val runGeneratedManagedSourcesTask = StructureKeys.generateManagedSourcesDuringStructureDump.value
-      if (runGeneratedManagedSourcesTask) {
+      if (options.generateManagedSources) {
         Def.task {
           val log = Keys.streams.value.log
           val managedSources = generateManagedSourcesTaskDef.result.value match {

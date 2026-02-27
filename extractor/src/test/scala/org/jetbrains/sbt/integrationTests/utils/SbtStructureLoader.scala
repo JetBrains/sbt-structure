@@ -15,12 +15,11 @@ object SbtStructureLoader {
     runOptions: RunCommonOptions,
   ): LoadResult = {
     val structureFile = FileUtils.createTempFile("sbt-structure", ".xml")
-    val sbtStructureOptionsPatched = s"download prettyPrint $sbtStructureOptions"
+    val sbtStructureOptionsPatched = s"download prettyPrint generateManagedSources $sbtStructureOptions"
     val sbtVersion = runOptions.sbtVersion
     val sbtCommands: Seq[String] = Seq(
       s"""set ${scopedSbtSetting("""SettingKey[Option[File]]("sbtStructureOutputFile")""", "Global", sbtVersion)} := Some(file("${path(structureFile)}"))""",
       s"""set ${scopedSbtSetting("""SettingKey[String]("sbtStructureOptions")""", "Global", sbtVersion)} := "$sbtStructureOptionsPatched"""",
-      s"""set ${scopedSbtSetting("""SettingKey[Boolean]("generateManagedSourcesDuringStructureDump")""", "Global", sbtVersion)} := true""",
       s"""apply -cp ${path(pluginFile)} org.jetbrains.sbt.CreateTasks""",
       s"""dumpStructure"""
     )

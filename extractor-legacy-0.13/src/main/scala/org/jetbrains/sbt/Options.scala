@@ -5,7 +5,8 @@ final case class Options(download: Boolean = false,
                          resolveJavadocClassifiers: Boolean = false,
                          resolveSbtClassifiers: Boolean = false,
                          prettyPrint: Boolean = false,
-                         separateProdAndTestSources: Boolean = false)
+                         separateProdAndTestSources: Boolean = false,
+                         generateManagedSources: Boolean = true)
 
 object Options {
 
@@ -26,7 +27,8 @@ object Options {
     resolveJavadocClassifiers = options.contains(Keys.ResolveJavadocClassifiers),
     resolveSbtClassifiers = options.contains(Keys.ResolveSbtClassifiers),
     prettyPrint = options.contains(Keys.PrettyPrint),
-    separateProdAndTestSources = options.contains(Keys.SeparateProdAndTestSources)
+    separateProdAndTestSources = options.contains(Keys.SeparateProdAndTestSources),
+    generateManagedSources = options.contains(Keys.GenerateManagedSources)
   )
 
   object Keys {
@@ -36,6 +38,7 @@ object Options {
     val ResolveSbtClassifiers = "resolveSbtClassifiers"
     val PrettyPrint = "prettyPrint"
     val SeparateProdAndTestSources = "separateProdAndTestSources"
+    val GenerateManagedSources = "generateManagedSources"
   }
 }
 

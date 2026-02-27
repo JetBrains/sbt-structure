@@ -13,7 +13,6 @@ import scala.language.reflectiveCalls
 import sbt.jetbrains.PluginCompat._
 import org.jetbrains.sbt.structure.structureDataSerializer
 
-import scala.collection.Seq
 
 object UtilityTasks extends SbtStateOps {
 
@@ -53,6 +52,13 @@ object UtilityTasks extends SbtStateOps {
     } else {
       state
     }
+  }
+
+  // It's a command, not a task, because a task would produce a log like `[success] Total time: 0 s`.
+  // This could be misleading if it were displayed as the first log in the sbt shell after the import command.
+  lazy val setSbtStructureOptionsProperty = Command.single("setSbtStructureOptionsProperty") { (state, input) =>
+    System.setProperty("sbt.structure.options", input)
+    state
   }
 
   private def numbersOf(version: String): (Int, Int, Int) = {

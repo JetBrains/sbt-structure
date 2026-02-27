@@ -1619,6 +1619,9 @@
       <name>preferScala2</name>
     </command>
     <command>
+     <name>setSbtStructureOptionsProperty</name>
+    </command>
+    <command>
       <name>resumeFromFailure</name>
     </command>
     <command>
