@@ -1670,6 +1670,9 @@
       <name>preferScala2</name>
     </command>
     <command>
+     <name>setSbtStructureOptionsProperty</name>
+    </command>
+    <command>
       <name>about</name>
       <help>
         <cmd>about</cmd>
@@ -3365,6 +3368,9 @@
     </task>
     <command>
       <name>preferScala2</name>
+    </command>
+    <command>
+     <name>setSbtStructureOptionsProperty</name>
     </command>
     <command>
       <name>about</name>
@@ -5064,6 +5070,9 @@
       <name>preferScala2</name>
     </command>
     <command>
+     <name>setSbtStructureOptionsProperty</name>
+    </command>
+    <command>
       <name>about</name>
       <help>
         <cmd>about</cmd>
@@ -6761,6 +6770,9 @@
       <name>preferScala2</name>
     </command>
     <command>
+     <name>setSbtStructureOptionsProperty</name>
+    </command>
+    <command>
       <name>about</name>
       <help>
         <cmd>about</cmd>
@@ -8456,6 +8468,9 @@
     </task>
     <command>
       <name>preferScala2</name>
+    </command>
+    <command>
+     <name>setSbtStructureOptionsProperty</name>
     </command>
     <command>
       <name>about</name>

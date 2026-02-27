@@ -2826,6 +2826,9 @@
       <name>preferScala2</name>
     </command>
     <command>
+     <name>setSbtStructureOptionsProperty</name>
+    </command>
+    <command>
       <name>sh</name>
     </command>
     <command>
