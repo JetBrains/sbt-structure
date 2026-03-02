@@ -1487,7 +1487,7 @@
       <name>preferScala2</name>
     </command>
     <command>
-     <name>setSbtStructureOptionsProperty</name>
+      <name>setSbtStructureOptionsProperty</name>
     </command>
     <command>
       <name>resumeFromFailure</name>
@@ -3071,7 +3071,7 @@
       <name>preferScala2</name>
     </command>
     <command>
-     <name>setSbtStructureOptionsProperty</name>
+      <name>setSbtStructureOptionsProperty</name>
     </command>
     <command>
       <name>resumeFromFailure</name>
@@ -4656,7 +4656,7 @@
       <name>preferScala2</name>
     </command>
     <command>
-     <name>setSbtStructureOptionsProperty</name>
+      <name>setSbtStructureOptionsProperty</name>
     </command>
     <command>
       <name>resumeFromFailure</name>
