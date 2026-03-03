@@ -59,6 +59,11 @@ class ProjectExtractor(
     }.toSet
 
     /**
+     * TODO
+     *  In sbt-jmh plugin version 0.4.4 (released in 2023), they added bspEnabled := false to the Jmh configuration,
+     *  so for plugins using this version or newer, this workaround is no longer required.
+     *  I kept it only to support plugin versions below 0.4.4, but it could be removed in a year or two.
+     *
      * Ignore "jmh" configuration.<br>
      * This is a dirty WORKAROUND for https://youtrack.jetbrains.com/issue/SCL-13127<br>
      * "jmh" configuration is defined in some strange way:<br>
