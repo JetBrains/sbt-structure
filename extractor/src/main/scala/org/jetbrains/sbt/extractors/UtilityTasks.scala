@@ -104,7 +104,8 @@ object UtilityTasks extends SbtStateOps {
       val isProjectAccepted = structure(state).allProjects.find(_.id == id).exists(isJvmPluginLoaded)
       val shouldSkipProject =
         (ref / SettingKeys.ideSkipProject).getValueOrElse(state, false) ||
-          (ref / SettingKeys.sbtIdeaIgnoreModule).getValueOrElse(state, false)
+          (ref / SettingKeys.sbtIdeaIgnoreModule).getValueOrElse(state, false) ||
+            !(ref / SettingKeys.bspEnabled).getValueOrElse(state, true) // checks `bspEnabled` value at project level
       isProjectAccepted && !shouldSkipProject
     }
   }
@@ -141,17 +142,38 @@ object UtilityTasks extends SbtStateOps {
     }
   }
 
+  private def sequenceAndFlatten[T](inits: Seq[Initialize[Option[T]]]): Initialize[Seq[T]] =
+    inits.joinWith(_.flatten)
+
+  /**
+   * Filters out configurations where `bspEnabled := false` is set.
+   */
+  private def filterByBspEnabled(configs: Def.Initialize[Seq[Configuration]]): Def.Initialize[Seq[Configuration]] =
+    Def.settingDyn {
+      val cs = configs.value.map { c =>
+        (c / SettingKeys.bspEnabled).?.apply {
+          case Some(false) => None
+          case _ => Option(c)
+        }
+      }
+      sequenceAndFlatten(cs)
+    }
+
+  /**
+   * Returns all configurations that have non-empty source directories.
+   *
+   * Does not filter by the `bspEnabled` setting.
+   * If you use this, remember to apply the filtering with [[filterByBspEnabled]].
+   */
   def allConfigurationsWithSource: Def.Initialize[Seq[Configuration]] = Def.settingDyn {
     val cs = for {
       c <- Keys.ivyConfigurations.value
     } yield (c / Keys.sourceDirectories).?.apply { filesOpt => filesOpt.flatMap(f => f.nonEmpty.option(c))}
 
-    cs.foldLeft(Def.setting(Seq.empty[Configuration])) { (accDef, initOptConf) =>
-      accDef.zipWith(initOptConf) {(acc, optConf) => acc ++ optConf.toSeq }
-    }
+    sequenceAndFlatten(cs)
   }
 
-  def testConfigurations: Def.Initialize[Seq[Configuration]] =
+  def testConfigurations: Def.Initialize[Seq[Configuration]] = filterByBspEnabled(
     StructureKeys.allConfigurationsWithSource.apply { cs =>
       import sbt._
       val predefinedTest = UtilityTasksCompat.predefinedTestConfigurations
@@ -165,13 +187,14 @@ object UtilityTasks extends SbtStateOps {
       val predefinedAvailableTest = predefinedTest.filter(cs.contains).toSeq
       (transitiveTest ++ predefinedAvailableTest).distinct
     }
+  )
 
-  def sourceConfigurations: Def.Initialize[Seq[Configuration]] = Def.setting {
+  def sourceConfigurations: Def.Initialize[Seq[Configuration]] = filterByBspEnabled(Def.setting {
     import sbt._
     (allConfigurationsWithSource.value.diff(StructureKeys.testConfigurations.value) ++ Seq(Compile)).distinct
-  }
+  })
 
-  def dependencyConfigurations: Def.Initialize[Seq[Configuration]] = {
+  def dependencyConfigurations: Def.Initialize[Seq[Configuration]] = filterByBspEnabled {
     import sbt._
     allConfigurationsWithSource.apply(cs => (cs ++ Seq(Runtime, Provided, Optional)).distinct)
   }
