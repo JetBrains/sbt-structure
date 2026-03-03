@@ -27,6 +27,13 @@ class ExtractStructureIntegrationTest extends AnyFreeSpecLike {
   import org.jetbrains.sbt.integrationTests.utils.LatestSbtVersions.*
   import org.jetbrains.sbt.integrationTests.utils.SbtOptionsBuilder.*
 
+  /*
+  The description of some tests, if needed:
+  - `bsp-disabled-project` - checks that disabling the entire project with bspEnabled := true works
+  - `scalafix-config-disabled` - checks that sbt-scalafix `ScalafixConfig / bspEnabled := false` from
+      https://github.com/scalacenter/sbt-scalafix works, and  e.g., source directories for ScalafixConfig are not included
+   */
+
   "extracted structure should equal to expected structure" - {
     "sbt 0.13" - {
       "bare" in { testProject_013("bare", options = ResolveSourcesAndSbtClassifiers) }
@@ -73,10 +80,16 @@ class ExtractStructureIntegrationTest extends AnyFreeSpecLike {
     "1.3" - {
       "simple" in { testProject("simple", SbtVersion_1_3, ResolveSourcesAndSbtClassifiers) }
       "prod_test_sources_separated" in { testProject("prod_test_sources_separated", SbtVersion_1_3, ResolveSourcesAndSbtClassifiersAndSeparateProdTestSources) }
+      // scalafix sources are not present even in sbt 1.3 (`bspEnabled` key was introduced in sbt 1.4), because for versions < 1.4 they
+      // had its local copy of `bspEnabled` https://github.com/scalacenter/sbt-scalafix/commit/140ccb81c21b5eeca25763135acce1ac7ca3fb44.
+      // The same as we have in org.jetbrains.sbt.extractors.SettingKeys.bspEnabled
+      "scalafix-config-disabled" in { testProject("scalafix-config-disabled", SbtVersion_1_3, ResolveSourcesAndSbtClassifiers) }
     }
     "1.4" - {
       "simple" in { testProject("simple", SbtVersion_1_4, ResolveSourcesAndSbtClassifiers) }
       "prod_test_sources_separated" in { testProject("prod_test_sources_separated", SbtVersion_1_4, ResolveSourcesAndSbtClassifiersAndSeparateProdTestSources) }
+      "bsp-disabled-project" in { testProject("bsp-disabled-project", SbtVersion_1_4, ResolveSourcesAndSbtClassifiersAndSeparateProdTestSources) }
+      "scalafix-config-disabled" in { testProject("scalafix-config-disabled", SbtVersion_1_4, ResolveSourcesAndSbtClassifiersAndSeparateProdTestSources) }
     }
 
     "1.5" - {
@@ -96,6 +109,9 @@ class ExtractStructureIntegrationTest extends AnyFreeSpecLike {
     "1.8" - {
       "simple" in { testProject("simple", SbtVersion_1_8, ResolveSourcesAndSbtClassifiers) }
       "prod_test_sources_separated" in { testProject("prod_test_sources_separated", SbtVersion_1_8, ResolveSourcesAndSbtClassifiersAndSeparateProdTestSources) }
+      "bsp-disabled-project" in { testProject("bsp-disabled-project", SbtVersion_1_8, ResolveSourcesAndSbtClassifiersAndSeparateProdTestSources) }
+      "bsp-disabled-test-config" in { testProject("bsp-disabled-test-config", SbtVersion_1_8, ResolveSourcesAndSbtClassifiersAndSeparateProdTestSources) }
+      "scalafix-config-disabled" in { testProject("scalafix-config-disabled", SbtVersion_1_8, ResolveSourcesAndSbtClassifiersAndSeparateProdTestSources) }
     }
 
     "1.9" - {
@@ -149,6 +165,9 @@ class ExtractStructureIntegrationTest extends AnyFreeSpecLike {
       "buildinfo" in { testProject("buildinfo", SbtVersion_2, options) }
       "custom-source-generator" in { testProject("custom-source-generator", SbtVersion_2, options) }
       "source-generator-failure" in { testProject("source-generator-failure", SbtVersion_2, options, errorsExpected = true) }
+      "bsp-disabled-project" in { testProject("bsp-disabled-project", SbtVersion_2, options) }
+      "bsp-disabled-test-config" in { testProject("bsp-disabled-test-config", SbtVersion_2, options) }
+      "scalafix-config-disabled" in { testProject("scalafix-config-disabled", SbtVersion_2, options) }
     }
   }
 

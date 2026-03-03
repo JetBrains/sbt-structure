@@ -24,6 +24,16 @@ object SettingKeys {
    * @see SCL-24518
    */
   val monitoredScalaJSDirectories: SettingKey[Seq[File]] = SettingKey[Seq[File]]("monitoredScalaJSDirectories")
+
+  /**
+   * The `bspEnabled` key is available in sbt 1.4+.
+   * We don't have separate sources for 1.4+ compilation,
+   * so this is just a mirror of the original sbt setting that allows us to check its value in all sbt 1 & 2 projects (if it is not available, it will be `true`).
+   *
+   * @see https://youtrack.jetbrains.com/issue/SCL-24744
+   * @see the same trick is used e.g., in https://github.com/sbt/sbt-jmh/blob/d85545d85a448fd89c8a6355e682c236f6d76705/plugin/src/main/scala/pl/project13/scala/sbt/JmhPlugin.scala#L77
+   */
+  val bspEnabled: SettingKey[Boolean] = SettingKey[Boolean]("bspEnabled")
 }
 
 

@@ -68,7 +68,10 @@ class RepositoryExtractor(
   }
 
   private def getModulesForProject(projectRef: ProjectRef, updateReportFn: ProjectRef => UpdateReportAdapter): Seq[ModuleReportAdapter] =
-    projectToConfigurationsName(projectRef).flatMap(updateReportFn(projectRef).modulesFrom).filter(_.artifacts.nonEmpty)
+    projectToConfigurationsName.get(projectRef) match {
+      case Some(configs) => configs.flatMap(updateReportFn(projectRef).modulesFrom).filter(_.artifacts.nonEmpty)
+      case None => Seq.empty
+    }
 
   private def createModuleData(moduleId: ModuleIdentifier, moduleReports: Seq[ModuleReportAdapter]): ModuleData = {
     val allArtifacts = moduleReports.flatMap(_.artifacts)
