@@ -3594,7 +3594,7 @@
     </command>
     <testSourceDir>$BASE/has-generator1/src/test</testSourceDir>
     <mainSourceDir>$BASE/has-generator1/src/main</mainSourceDir>
-    <generatedManagedSources>false</generatedManagedSources>
+    <generatedManagedSources>true</generatedManagedSources>
   </project>
   <project>
     <id>module3</id>
