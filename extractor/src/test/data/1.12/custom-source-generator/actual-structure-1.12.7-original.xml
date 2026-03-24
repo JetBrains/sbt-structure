@@ -1,236 +1,236 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <structure sbt="1.12.7">
   <build>
-    <uri>$URI_BASE</uri>
-    <import>import $MachineSpecificHexString.`module1`</import>
-    <import>import $MachineSpecificHexString.`module2`</import>
-    <import>import $MachineSpecificHexString.`module3`</import>
-    <import>import $MachineSpecificHexString.`module4`</import>
-    <import>import $MachineSpecificHexString.`root`</import>
+    <uri>file:/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator/</uri>
+    <import>import $226844a1b82dbd91219b.`module1`</import>
+    <import>import $226844a1b82dbd91219b.`module2`</import>
+    <import>import $226844a1b82dbd91219b.`module3`</import>
+    <import>import $226844a1b82dbd91219b.`module4`</import>
+    <import>import $226844a1b82dbd91219b.`root`</import>
     <import>import _root_.sbt.Keys._</import>
     <import>import _root_.sbt.ScriptedPlugin.autoImport._, _root_.sbt.plugins.JUnitXmlReportPlugin.autoImport._, _root_.sbt.plugins.MiniDependencyTreePlugin.autoImport._</import>
     <import>import _root_.sbt._</import>
     <import>import _root_.sbt.nio.Keys._</import>
     <import>import _root_.sbt.plugins.IvyPlugin, _root_.sbt.plugins.JvmPlugin, _root_.sbt.plugins.CorePlugin, _root_.sbt.ScriptedPlugin, _root_.sbt.plugins.SbtPlugin, _root_.sbt.plugins.SemanticdbPlugin, _root_.sbt.plugins.JUnitXmlReportPlugin, _root_.sbt.plugins.Giter8TemplatePlugin, _root_.sbt.plugins.MiniDependencyTreePlugin</import>
     <import>import _root_.scala.xml.{TopScope=&gt;$scope}</import>
-    <classes>$SBT_BOOT/scala-2.12.21/lib/scala-compiler.jar</classes>
-    <classes>$SBT_BOOT/scala-2.12.21/lib/scala-library.jar</classes>
-    <classes>$SBT_BOOT/scala-2.12.21/lib/scala-reflect.jar</classes>
-    <classes>$SBT_BOOT/scala-2.12.21/lib/scala-xml_2.12-2.3.0.jar</classes>
-    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.7/actions_2.12-1.12.7.jar</classes>
-    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.7/caffeine-2.8.5.jar</classes>
-    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.7/checker-qual-3.4.1.jar</classes>
-    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.7/collections_2.12-1.12.7.jar</classes>
-    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.7/command_2.12-1.12.7.jar</classes>
-    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.7/compiler-bridge_2.12-1.12.0.jar</classes>
-    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.7/compiler-interface-1.12.0.jar</classes>
-    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.7/completion_2.12-1.12.7.jar</classes>
-    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.7/config-1.4.2.jar</classes>
-    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.7/core-macros_2.12-1.12.7.jar</classes>
-    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.7/disruptor-3.4.2.jar</classes>
-    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.7/error_prone_annotations-2.4.0.jar</classes>
-    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.7/file-tree-views-2.1.12.jar</classes>
-    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.7/gigahorse-apache-http_2.12-0.9.3.jar</classes>
-    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.7/gigahorse-core_2.12-0.9.3.jar</classes>
-    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.7/io_2.12-1.10.5.jar</classes>
-    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.7/ipcsocket-1.6.3.jar</classes>
-    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.7/ivy-2.3.0-sbt-77cc781d727b367d3761f097d89f5a4762771d41.jar</classes>
-    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.7/jansi-2.4.1.jar</classes>
-    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.7/jline-2.14.7-sbt-9a88bc413e2b34a4580c001c654d1a7f4f65bf18.jar</classes>
-    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.7/jline-builtins-3.27.1.jar</classes>
-    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.7/jline-native-3.27.1.jar</classes>
-    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.7/jline-reader-3.27.1.jar</classes>
-    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.7/jline-style-3.27.1.jar</classes>
-    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.7/jline-terminal-3.27.1.jar</classes>
-    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.7/jline-terminal-jni-3.27.1.jar</classes>
-    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.7/jna-5.12.0.jar</classes>
-    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.7/jna-platform-5.12.0.jar</classes>
-    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.7/jsch-2.27.5.jar</classes>
-    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.7/launcher-interface-1.5.2.jar</classes>
-    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.7/librarymanagement-core_2.12-1.12.0.jar</classes>
-    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.7/librarymanagement-ivy_2.12-1.12.0.jar</classes>
-    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.7/lm-coursier-shaded_2.12-2.1.10.jar</classes>
-    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.7/log4j-api-2.25.3.jar</classes>
-    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.7/log4j-core-2.25.3.jar</classes>
-    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.7/log4j-slf4j-impl-2.25.3.jar</classes>
-    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.7/logic_2.12-1.12.7.jar</classes>
-    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.7/main-settings_2.12-1.12.7.jar</classes>
-    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.7/main_2.12-1.12.7.jar</classes>
-    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.7/protocol_2.12-1.12.7.jar</classes>
-    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.7/reactive-streams-1.0.3.jar</classes>
-    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.7/run_2.12-1.12.7.jar</classes>
-    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.7/sbinary_2.12-0.5.1.jar</classes>
-    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.7/sbt-1.12.7.jar</classes>
-    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.7/scala-collection-compat_2.12-2.13.0.jar</classes>
-    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.7/scala-compiler-2.12.21.jar</classes>
-    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.7/scala-library-2.12.21.jar</classes>
-    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.7/scala-parser-combinators_2.12-1.1.2.jar</classes>
-    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.7/scala-reflect-2.12.21.jar</classes>
-    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.7/scala-xml_2.12-2.3.0.jar</classes>
-    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.7/scripted-plugin_2.12-1.12.7.jar</classes>
-    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.7/shaded-apache-httpclient5-0.9.3.jar</classes>
-    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.7/shaded-jawn-parser_2.12-1.3.2.jar</classes>
-    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.7/shaded-scalajson_2.12-1.0.0-M4.jar</classes>
-    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.7/sjson-new-core_2.12-0.10.1.jar</classes>
-    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.7/sjson-new-murmurhash_2.12-0.10.1.jar</classes>
-    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.7/sjson-new-scalajson_2.12-0.10.1.jar</classes>
-    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.7/slf4j-api-1.7.36.jar</classes>
-    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.7/ssl-config-core_2.12-0.6.1.jar</classes>
-    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.7/task-system_2.12-1.12.7.jar</classes>
-    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.7/tasks_2.12-1.12.7.jar</classes>
-    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.7/template-resolver-0.1.jar</classes>
-    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.7/test-agent-1.12.7.jar</classes>
-    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.7/test-interface-1.0.jar</classes>
-    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.7/testing_2.12-1.12.7.jar</classes>
-    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.7/util-cache_2.12-1.12.7.jar</classes>
-    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.7/util-control_2.12-1.12.7.jar</classes>
-    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.7/util-interface-1.12.7.jar</classes>
-    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.7/util-logging_2.12-1.12.7.jar</classes>
-    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.7/util-position_2.12-1.12.7.jar</classes>
-    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.7/util-relation_2.12-1.12.7.jar</classes>
-    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.7/util-tracking_2.12-1.12.7.jar</classes>
-    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.7/zero-allocation-hashing-0.16.jar</classes>
-    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.7/zinc-apiinfo_2.12-1.12.0.jar</classes>
-    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.7/zinc-classfile_2.12-1.12.0.jar</classes>
-    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.7/zinc-classpath_2.12-1.12.0.jar</classes>
-    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.7/zinc-compile-core_2.12-1.12.0.jar</classes>
-    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.7/zinc-compile_2.12-1.12.0.jar</classes>
-    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.7/zinc-core_2.12-1.12.0.jar</classes>
-    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.7/zinc-lm-integration_2.12-1.12.7.jar</classes>
-    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.7/zinc-persist-core-assembly-1.12.0.jar</classes>
-    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.7/zinc-persist_2.12-1.12.0.jar</classes>
-    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.7/zinc_2.12-1.12.0.jar</classes>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/com/eed3si9n/gigahorse-apache-http_2.12/0.9.3/gigahorse-apache-http_2.12-0.9.3-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/com/eed3si9n/gigahorse-core_2.12/0.9.3/gigahorse-core_2.12-0.9.3-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/com/eed3si9n/shaded-apache-httpclient5/0.9.3/shaded-apache-httpclient5-0.9.3-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/com/eed3si9n/shaded-jawn-parser_2.12/1.3.2/shaded-jawn-parser_2.12-1.3.2-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/com/eed3si9n/shaded-scalajson_2.12/1.0.0-M4/shaded-scalajson_2.12-1.0.0-M4-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/com/eed3si9n/sjson-new-core_2.12/0.10.1/sjson-new-core_2.12-0.10.1-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/com/eed3si9n/sjson-new-murmurhash_2.12/0.10.1/sjson-new-murmurhash_2.12-0.10.1-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/com/eed3si9n/sjson-new-scalajson_2.12/0.10.1/sjson-new-scalajson_2.12-0.10.1-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/com/github/ben-manes/caffeine/caffeine/2.8.5/caffeine-2.8.5-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/com/github/mwiede/jsch/2.27.5/jsch-2.27.5-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/com/google/errorprone/error_prone_annotations/2.4.0/error_prone_annotations-2.4.0-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/com/lmax/disruptor/3.4.2/disruptor-3.4.2-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/com/swoval/file-tree-views/2.1.12/file-tree-views-2.1.12-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/com/typesafe/config/1.4.2/config-1.4.2-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/com/typesafe/ssl-config-core_2.12/0.6.1/ssl-config-core_2.12-0.6.1-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/io/get-coursier/lm-coursier-shaded_2.12/2.1.10/lm-coursier-shaded_2.12-2.1.10-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/net/java/dev/jna/jna-platform/5.12.0/jna-platform-5.12.0-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/net/java/dev/jna/jna/5.12.0/jna-5.12.0-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/net/openhft/zero-allocation-hashing/0.16/zero-allocation-hashing-0.16-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/apache/logging/log4j/log4j-api/2.25.3/log4j-api-2.25.3-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/apache/logging/log4j/log4j-core/2.25.3/log4j-core-2.25.3-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/apache/logging/log4j/log4j-slf4j-impl/2.25.3/log4j-slf4j-impl-2.25.3-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/checkerframework/checker-qual/3.4.1/checker-qual-3.4.1-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/fusesource/jansi/jansi/2.4.1/jansi-2.4.1-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/jline/jline-builtins/3.27.1/jline-builtins-3.27.1-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/jline/jline-native/3.27.1/jline-native-3.27.1-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/jline/jline-reader/3.27.1/jline-reader-3.27.1-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/jline/jline-style/3.27.1/jline-style-3.27.1-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/jline/jline-terminal-jni/3.27.1/jline-terminal-jni-3.27.1-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/jline/jline-terminal/3.27.1/jline-terminal-3.27.1-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/reactivestreams/reactive-streams/1.0.3/reactive-streams-1.0.3-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-lang/modules/scala-collection-compat_2.12/2.13.0/scala-collection-compat_2.12-2.13.0-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-lang/modules/scala-parser-combinators_2.12/1.1.2/scala-parser-combinators_2.12-1.1.2-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-lang/modules/scala-xml_2.12/2.3.0/scala-xml_2.12-2.3.0-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-lang/scala-compiler/2.12.21/scala-compiler-2.12.21-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-lang/scala-library/2.12.21/scala-library-2.12.21-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-lang/scala-reflect/2.12.21/scala-reflect-2.12.21-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/actions_2.12/1.12.7/actions_2.12-1.12.7-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/collections_2.12/1.12.7/collections_2.12-1.12.7-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/command_2.12/1.12.7/command_2.12-1.12.7-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/compiler-bridge_2.12/1.12.0/compiler-bridge_2.12-1.12.0-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/compiler-interface/1.12.0/compiler-interface-1.12.0-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/completion_2.12/1.12.7/completion_2.12-1.12.7-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/core-macros_2.12/1.12.7/core-macros_2.12-1.12.7-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/io_2.12/1.10.5/io_2.12-1.10.5-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/ipcsocket/ipcsocket/1.6.3/ipcsocket-1.6.3-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/ivy/ivy/2.3.0-sbt-77cc781d727b367d3761f097d89f5a4762771d41/ivy-2.3.0-sbt-77cc781d727b367d3761f097d89f5a4762771d41-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/jline/jline/2.14.7-sbt-9a88bc413e2b34a4580c001c654d1a7f4f65bf18/jline-2.14.7-sbt-9a88bc413e2b34a4580c001c654d1a7f4f65bf18-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/launcher-interface/1.5.2/launcher-interface-1.5.2-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/librarymanagement-core_2.12/1.12.0/librarymanagement-core_2.12-1.12.0-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/librarymanagement-ivy_2.12/1.12.0/librarymanagement-ivy_2.12-1.12.0-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/logic_2.12/1.12.7/logic_2.12-1.12.7-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/main-settings_2.12/1.12.7/main-settings_2.12-1.12.7-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/main_2.12/1.12.7/main_2.12-1.12.7-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/protocol_2.12/1.12.7/protocol_2.12-1.12.7-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/run_2.12/1.12.7/run_2.12-1.12.7-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/sbinary_2.12/0.5.1/sbinary_2.12-0.5.1-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/sbt/1.12.7/sbt-1.12.7-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/scripted-plugin_2.12/1.12.7/scripted-plugin_2.12-1.12.7-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/task-system_2.12/1.12.7/task-system_2.12-1.12.7-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/tasks_2.12/1.12.7/tasks_2.12-1.12.7-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/template-resolver/0.1/template-resolver-0.1-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/test-agent/1.12.7/test-agent-1.12.7-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/test-interface/1.0/test-interface-1.0-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/testing_2.12/1.12.7/testing_2.12-1.12.7-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/util-cache_2.12/1.12.7/util-cache_2.12-1.12.7-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/util-control_2.12/1.12.7/util-control_2.12-1.12.7-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/util-interface/1.12.7/util-interface-1.12.7-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/util-logging_2.12/1.12.7/util-logging_2.12-1.12.7-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/util-position_2.12/1.12.7/util-position_2.12-1.12.7-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/util-relation_2.12/1.12.7/util-relation_2.12-1.12.7-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/util-tracking_2.12/1.12.7/util-tracking_2.12-1.12.7-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/zinc-apiinfo_2.12/1.12.0/zinc-apiinfo_2.12-1.12.0-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/zinc-classfile_2.12/1.12.0/zinc-classfile_2.12-1.12.0-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/zinc-classpath_2.12/1.12.0/zinc-classpath_2.12-1.12.0-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/zinc-compile-core_2.12/1.12.0/zinc-compile-core_2.12-1.12.0-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/zinc-compile_2.12/1.12.0/zinc-compile_2.12-1.12.0-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/zinc-core_2.12/1.12.0/zinc-core_2.12-1.12.0-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/zinc-lm-integration_2.12/1.12.7/zinc-lm-integration_2.12-1.12.7-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/zinc-persist-core-assembly/1.12.0/zinc-persist-core-assembly-1.12.0-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/zinc-persist_2.12/1.12.0/zinc-persist_2.12-1.12.0-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/zinc_2.12/1.12.0/zinc_2.12-1.12.0-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/slf4j/slf4j-api/1.7.36/slf4j-api-1.7.36-sources.jar</sources>
+    <classes>/Users/vasil/.sbt-structure-global/boot/scala-2.12.21/lib/scala-compiler.jar</classes>
+    <classes>/Users/vasil/.sbt-structure-global/boot/scala-2.12.21/lib/scala-library.jar</classes>
+    <classes>/Users/vasil/.sbt-structure-global/boot/scala-2.12.21/lib/scala-reflect.jar</classes>
+    <classes>/Users/vasil/.sbt-structure-global/boot/scala-2.12.21/lib/scala-xml_2.12-2.3.0.jar</classes>
+    <classes>/Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/actions_2.12-1.12.7.jar</classes>
+    <classes>/Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/caffeine-2.8.5.jar</classes>
+    <classes>/Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/checker-qual-3.4.1.jar</classes>
+    <classes>/Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/collections_2.12-1.12.7.jar</classes>
+    <classes>/Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/command_2.12-1.12.7.jar</classes>
+    <classes>/Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/compiler-bridge_2.12-1.12.0.jar</classes>
+    <classes>/Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/compiler-interface-1.12.0.jar</classes>
+    <classes>/Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/completion_2.12-1.12.7.jar</classes>
+    <classes>/Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/config-1.4.2.jar</classes>
+    <classes>/Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/core-macros_2.12-1.12.7.jar</classes>
+    <classes>/Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/disruptor-3.4.2.jar</classes>
+    <classes>/Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/error_prone_annotations-2.4.0.jar</classes>
+    <classes>/Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/file-tree-views-2.1.12.jar</classes>
+    <classes>/Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/gigahorse-apache-http_2.12-0.9.3.jar</classes>
+    <classes>/Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/gigahorse-core_2.12-0.9.3.jar</classes>
+    <classes>/Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/io_2.12-1.10.5.jar</classes>
+    <classes>/Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/ipcsocket-1.6.3.jar</classes>
+    <classes>/Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/ivy-2.3.0-sbt-77cc781d727b367d3761f097d89f5a4762771d41.jar</classes>
+    <classes>/Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/jansi-2.4.1.jar</classes>
+    <classes>/Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/jline-2.14.7-sbt-9a88bc413e2b34a4580c001c654d1a7f4f65bf18.jar</classes>
+    <classes>/Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/jline-builtins-3.27.1.jar</classes>
+    <classes>/Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/jline-native-3.27.1.jar</classes>
+    <classes>/Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/jline-reader-3.27.1.jar</classes>
+    <classes>/Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/jline-style-3.27.1.jar</classes>
+    <classes>/Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/jline-terminal-3.27.1.jar</classes>
+    <classes>/Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/jline-terminal-jni-3.27.1.jar</classes>
+    <classes>/Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/jna-5.12.0.jar</classes>
+    <classes>/Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/jna-platform-5.12.0.jar</classes>
+    <classes>/Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/jsch-2.27.5.jar</classes>
+    <classes>/Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/launcher-interface-1.5.2.jar</classes>
+    <classes>/Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/librarymanagement-core_2.12-1.12.0.jar</classes>
+    <classes>/Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/librarymanagement-ivy_2.12-1.12.0.jar</classes>
+    <classes>/Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/lm-coursier-shaded_2.12-2.1.10.jar</classes>
+    <classes>/Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/log4j-api-2.25.3.jar</classes>
+    <classes>/Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/log4j-core-2.25.3.jar</classes>
+    <classes>/Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/log4j-slf4j-impl-2.25.3.jar</classes>
+    <classes>/Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/logic_2.12-1.12.7.jar</classes>
+    <classes>/Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/main-settings_2.12-1.12.7.jar</classes>
+    <classes>/Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/main_2.12-1.12.7.jar</classes>
+    <classes>/Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/protocol_2.12-1.12.7.jar</classes>
+    <classes>/Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/reactive-streams-1.0.3.jar</classes>
+    <classes>/Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/run_2.12-1.12.7.jar</classes>
+    <classes>/Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/sbinary_2.12-0.5.1.jar</classes>
+    <classes>/Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/sbt-1.12.7.jar</classes>
+    <classes>/Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/scala-collection-compat_2.12-2.13.0.jar</classes>
+    <classes>/Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/scala-compiler-2.12.21.jar</classes>
+    <classes>/Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/scala-library-2.12.21.jar</classes>
+    <classes>/Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/scala-parser-combinators_2.12-1.1.2.jar</classes>
+    <classes>/Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/scala-reflect-2.12.21.jar</classes>
+    <classes>/Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/scala-xml_2.12-2.3.0.jar</classes>
+    <classes>/Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/scripted-plugin_2.12-1.12.7.jar</classes>
+    <classes>/Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/shaded-apache-httpclient5-0.9.3.jar</classes>
+    <classes>/Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/shaded-jawn-parser_2.12-1.3.2.jar</classes>
+    <classes>/Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/shaded-scalajson_2.12-1.0.0-M4.jar</classes>
+    <classes>/Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/sjson-new-core_2.12-0.10.1.jar</classes>
+    <classes>/Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/sjson-new-murmurhash_2.12-0.10.1.jar</classes>
+    <classes>/Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/sjson-new-scalajson_2.12-0.10.1.jar</classes>
+    <classes>/Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/slf4j-api-1.7.36.jar</classes>
+    <classes>/Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/ssl-config-core_2.12-0.6.1.jar</classes>
+    <classes>/Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/task-system_2.12-1.12.7.jar</classes>
+    <classes>/Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/tasks_2.12-1.12.7.jar</classes>
+    <classes>/Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/template-resolver-0.1.jar</classes>
+    <classes>/Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/test-agent-1.12.7.jar</classes>
+    <classes>/Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/test-interface-1.0.jar</classes>
+    <classes>/Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/testing_2.12-1.12.7.jar</classes>
+    <classes>/Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/util-cache_2.12-1.12.7.jar</classes>
+    <classes>/Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/util-control_2.12-1.12.7.jar</classes>
+    <classes>/Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/util-interface-1.12.7.jar</classes>
+    <classes>/Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/util-logging_2.12-1.12.7.jar</classes>
+    <classes>/Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/util-position_2.12-1.12.7.jar</classes>
+    <classes>/Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/util-relation_2.12-1.12.7.jar</classes>
+    <classes>/Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/util-tracking_2.12-1.12.7.jar</classes>
+    <classes>/Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/zero-allocation-hashing-0.16.jar</classes>
+    <classes>/Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/zinc-apiinfo_2.12-1.12.0.jar</classes>
+    <classes>/Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/zinc-classfile_2.12-1.12.0.jar</classes>
+    <classes>/Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/zinc-classpath_2.12-1.12.0.jar</classes>
+    <classes>/Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/zinc-compile-core_2.12-1.12.0.jar</classes>
+    <classes>/Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/zinc-compile_2.12-1.12.0.jar</classes>
+    <classes>/Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/zinc-core_2.12-1.12.0.jar</classes>
+    <classes>/Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/zinc-lm-integration_2.12-1.12.7.jar</classes>
+    <classes>/Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/zinc-persist-core-assembly-1.12.0.jar</classes>
+    <classes>/Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/zinc-persist_2.12-1.12.0.jar</classes>
+    <classes>/Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/zinc_2.12-1.12.0.jar</classes>
+    <sources>/Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/com/eed3si9n/gigahorse-apache-http_2.12/0.9.3/gigahorse-apache-http_2.12-0.9.3-sources.jar</sources>
+    <sources>/Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/com/eed3si9n/gigahorse-core_2.12/0.9.3/gigahorse-core_2.12-0.9.3-sources.jar</sources>
+    <sources>/Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/com/eed3si9n/shaded-apache-httpclient5/0.9.3/shaded-apache-httpclient5-0.9.3-sources.jar</sources>
+    <sources>/Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/com/eed3si9n/shaded-jawn-parser_2.12/1.3.2/shaded-jawn-parser_2.12-1.3.2-sources.jar</sources>
+    <sources>/Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/com/eed3si9n/shaded-scalajson_2.12/1.0.0-M4/shaded-scalajson_2.12-1.0.0-M4-sources.jar</sources>
+    <sources>/Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/com/eed3si9n/sjson-new-core_2.12/0.10.1/sjson-new-core_2.12-0.10.1-sources.jar</sources>
+    <sources>/Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/com/eed3si9n/sjson-new-murmurhash_2.12/0.10.1/sjson-new-murmurhash_2.12-0.10.1-sources.jar</sources>
+    <sources>/Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/com/eed3si9n/sjson-new-scalajson_2.12/0.10.1/sjson-new-scalajson_2.12-0.10.1-sources.jar</sources>
+    <sources>/Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/com/github/ben-manes/caffeine/caffeine/2.8.5/caffeine-2.8.5-sources.jar</sources>
+    <sources>/Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/com/github/mwiede/jsch/2.27.5/jsch-2.27.5-sources.jar</sources>
+    <sources>/Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/com/google/errorprone/error_prone_annotations/2.4.0/error_prone_annotations-2.4.0-sources.jar</sources>
+    <sources>/Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/com/lmax/disruptor/3.4.2/disruptor-3.4.2-sources.jar</sources>
+    <sources>/Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/com/swoval/file-tree-views/2.1.12/file-tree-views-2.1.12-sources.jar</sources>
+    <sources>/Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/com/typesafe/config/1.4.2/config-1.4.2-sources.jar</sources>
+    <sources>/Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/com/typesafe/ssl-config-core_2.12/0.6.1/ssl-config-core_2.12-0.6.1-sources.jar</sources>
+    <sources>/Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/io/get-coursier/lm-coursier-shaded_2.12/2.1.10/lm-coursier-shaded_2.12-2.1.10-sources.jar</sources>
+    <sources>/Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/net/java/dev/jna/jna-platform/5.12.0/jna-platform-5.12.0-sources.jar</sources>
+    <sources>/Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/net/java/dev/jna/jna/5.12.0/jna-5.12.0-sources.jar</sources>
+    <sources>/Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/net/openhft/zero-allocation-hashing/0.16/zero-allocation-hashing-0.16-sources.jar</sources>
+    <sources>/Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/org/apache/logging/log4j/log4j-api/2.25.3/log4j-api-2.25.3-sources.jar</sources>
+    <sources>/Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/org/apache/logging/log4j/log4j-core/2.25.3/log4j-core-2.25.3-sources.jar</sources>
+    <sources>/Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/org/apache/logging/log4j/log4j-slf4j-impl/2.25.3/log4j-slf4j-impl-2.25.3-sources.jar</sources>
+    <sources>/Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/org/checkerframework/checker-qual/3.4.1/checker-qual-3.4.1-sources.jar</sources>
+    <sources>/Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/org/fusesource/jansi/jansi/2.4.1/jansi-2.4.1-sources.jar</sources>
+    <sources>/Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/org/jline/jline-builtins/3.27.1/jline-builtins-3.27.1-sources.jar</sources>
+    <sources>/Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/org/jline/jline-native/3.27.1/jline-native-3.27.1-sources.jar</sources>
+    <sources>/Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/org/jline/jline-reader/3.27.1/jline-reader-3.27.1-sources.jar</sources>
+    <sources>/Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/org/jline/jline-style/3.27.1/jline-style-3.27.1-sources.jar</sources>
+    <sources>/Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/org/jline/jline-terminal-jni/3.27.1/jline-terminal-jni-3.27.1-sources.jar</sources>
+    <sources>/Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/org/jline/jline-terminal/3.27.1/jline-terminal-3.27.1-sources.jar</sources>
+    <sources>/Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/org/reactivestreams/reactive-streams/1.0.3/reactive-streams-1.0.3-sources.jar</sources>
+    <sources>/Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/org/scala-lang/modules/scala-collection-compat_2.12/2.13.0/scala-collection-compat_2.12-2.13.0-sources.jar</sources>
+    <sources>/Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/org/scala-lang/modules/scala-parser-combinators_2.12/1.1.2/scala-parser-combinators_2.12-1.1.2-sources.jar</sources>
+    <sources>/Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/org/scala-lang/modules/scala-xml_2.12/2.3.0/scala-xml_2.12-2.3.0-sources.jar</sources>
+    <sources>/Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/org/scala-lang/scala-compiler/2.12.21/scala-compiler-2.12.21-sources.jar</sources>
+    <sources>/Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/org/scala-lang/scala-library/2.12.21/scala-library-2.12.21-sources.jar</sources>
+    <sources>/Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/org/scala-lang/scala-reflect/2.12.21/scala-reflect-2.12.21-sources.jar</sources>
+    <sources>/Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/org/scala-sbt/actions_2.12/1.12.7/actions_2.12-1.12.7-sources.jar</sources>
+    <sources>/Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/org/scala-sbt/collections_2.12/1.12.7/collections_2.12-1.12.7-sources.jar</sources>
+    <sources>/Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/org/scala-sbt/command_2.12/1.12.7/command_2.12-1.12.7-sources.jar</sources>
+    <sources>/Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/org/scala-sbt/compiler-bridge_2.12/1.12.0/compiler-bridge_2.12-1.12.0-sources.jar</sources>
+    <sources>/Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/org/scala-sbt/compiler-interface/1.12.0/compiler-interface-1.12.0-sources.jar</sources>
+    <sources>/Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/org/scala-sbt/completion_2.12/1.12.7/completion_2.12-1.12.7-sources.jar</sources>
+    <sources>/Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/org/scala-sbt/core-macros_2.12/1.12.7/core-macros_2.12-1.12.7-sources.jar</sources>
+    <sources>/Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/org/scala-sbt/io_2.12/1.10.5/io_2.12-1.10.5-sources.jar</sources>
+    <sources>/Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/org/scala-sbt/ipcsocket/ipcsocket/1.6.3/ipcsocket-1.6.3-sources.jar</sources>
+    <sources>/Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/org/scala-sbt/ivy/ivy/2.3.0-sbt-77cc781d727b367d3761f097d89f5a4762771d41/ivy-2.3.0-sbt-77cc781d727b367d3761f097d89f5a4762771d41-sources.jar</sources>
+    <sources>/Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/org/scala-sbt/jline/jline/2.14.7-sbt-9a88bc413e2b34a4580c001c654d1a7f4f65bf18/jline-2.14.7-sbt-9a88bc413e2b34a4580c001c654d1a7f4f65bf18-sources.jar</sources>
+    <sources>/Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/org/scala-sbt/launcher-interface/1.5.2/launcher-interface-1.5.2-sources.jar</sources>
+    <sources>/Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/org/scala-sbt/librarymanagement-core_2.12/1.12.0/librarymanagement-core_2.12-1.12.0-sources.jar</sources>
+    <sources>/Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/org/scala-sbt/librarymanagement-ivy_2.12/1.12.0/librarymanagement-ivy_2.12-1.12.0-sources.jar</sources>
+    <sources>/Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/org/scala-sbt/logic_2.12/1.12.7/logic_2.12-1.12.7-sources.jar</sources>
+    <sources>/Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/org/scala-sbt/main-settings_2.12/1.12.7/main-settings_2.12-1.12.7-sources.jar</sources>
+    <sources>/Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/org/scala-sbt/main_2.12/1.12.7/main_2.12-1.12.7-sources.jar</sources>
+    <sources>/Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/org/scala-sbt/protocol_2.12/1.12.7/protocol_2.12-1.12.7-sources.jar</sources>
+    <sources>/Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/org/scala-sbt/run_2.12/1.12.7/run_2.12-1.12.7-sources.jar</sources>
+    <sources>/Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/org/scala-sbt/sbinary_2.12/0.5.1/sbinary_2.12-0.5.1-sources.jar</sources>
+    <sources>/Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/org/scala-sbt/sbt/1.12.7/sbt-1.12.7-sources.jar</sources>
+    <sources>/Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/org/scala-sbt/scripted-plugin_2.12/1.12.7/scripted-plugin_2.12-1.12.7-sources.jar</sources>
+    <sources>/Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/org/scala-sbt/task-system_2.12/1.12.7/task-system_2.12-1.12.7-sources.jar</sources>
+    <sources>/Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/org/scala-sbt/tasks_2.12/1.12.7/tasks_2.12-1.12.7-sources.jar</sources>
+    <sources>/Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/org/scala-sbt/template-resolver/0.1/template-resolver-0.1-sources.jar</sources>
+    <sources>/Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/org/scala-sbt/test-agent/1.12.7/test-agent-1.12.7-sources.jar</sources>
+    <sources>/Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/org/scala-sbt/test-interface/1.0/test-interface-1.0-sources.jar</sources>
+    <sources>/Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/org/scala-sbt/testing_2.12/1.12.7/testing_2.12-1.12.7-sources.jar</sources>
+    <sources>/Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/org/scala-sbt/util-cache_2.12/1.12.7/util-cache_2.12-1.12.7-sources.jar</sources>
+    <sources>/Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/org/scala-sbt/util-control_2.12/1.12.7/util-control_2.12-1.12.7-sources.jar</sources>
+    <sources>/Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/org/scala-sbt/util-interface/1.12.7/util-interface-1.12.7-sources.jar</sources>
+    <sources>/Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/org/scala-sbt/util-logging_2.12/1.12.7/util-logging_2.12-1.12.7-sources.jar</sources>
+    <sources>/Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/org/scala-sbt/util-position_2.12/1.12.7/util-position_2.12-1.12.7-sources.jar</sources>
+    <sources>/Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/org/scala-sbt/util-relation_2.12/1.12.7/util-relation_2.12-1.12.7-sources.jar</sources>
+    <sources>/Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/org/scala-sbt/util-tracking_2.12/1.12.7/util-tracking_2.12-1.12.7-sources.jar</sources>
+    <sources>/Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/org/scala-sbt/zinc-apiinfo_2.12/1.12.0/zinc-apiinfo_2.12-1.12.0-sources.jar</sources>
+    <sources>/Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/org/scala-sbt/zinc-classfile_2.12/1.12.0/zinc-classfile_2.12-1.12.0-sources.jar</sources>
+    <sources>/Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/org/scala-sbt/zinc-classpath_2.12/1.12.0/zinc-classpath_2.12-1.12.0-sources.jar</sources>
+    <sources>/Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/org/scala-sbt/zinc-compile-core_2.12/1.12.0/zinc-compile-core_2.12-1.12.0-sources.jar</sources>
+    <sources>/Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/org/scala-sbt/zinc-compile_2.12/1.12.0/zinc-compile_2.12-1.12.0-sources.jar</sources>
+    <sources>/Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/org/scala-sbt/zinc-core_2.12/1.12.0/zinc-core_2.12-1.12.0-sources.jar</sources>
+    <sources>/Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/org/scala-sbt/zinc-lm-integration_2.12/1.12.7/zinc-lm-integration_2.12-1.12.7-sources.jar</sources>
+    <sources>/Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/org/scala-sbt/zinc-persist-core-assembly/1.12.0/zinc-persist-core-assembly-1.12.0-sources.jar</sources>
+    <sources>/Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/org/scala-sbt/zinc-persist_2.12/1.12.0/zinc-persist_2.12-1.12.0-sources.jar</sources>
+    <sources>/Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/org/scala-sbt/zinc_2.12/1.12.0/zinc_2.12-1.12.0-sources.jar</sources>
+    <sources>/Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/org/slf4j/slf4j-api/1.7.36/slf4j-api-1.7.36-sources.jar</sources>
   </build>
   <project>
     <id>root</id>
-    <buildURI>$URI_BASE</buildURI>
+    <buildURI>file:/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator/</buildURI>
     <name>root</name>
     <organization>root</organization>
     <version>0.1.0-SNAPSHOT</version>
-    <base>$BASE</base>
-    <target>$BASE/target</target>
+    <base>/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator</base>
+    <target>/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator/target</target>
     <scala>
       <version>2.12.21</version>
       <libraryJars>
-        <jar>$SBT_BOOT/scala-2.12.21/lib/scala-library.jar</jar>
+        <jar>/Users/vasil/.sbt-structure-global/boot/scala-2.12.21/lib/scala-library.jar</jar>
       </libraryJars>
       <compilerJars>
-        <jar>$SBT_BOOT/scala-2.12.21/lib/scala-compiler.jar</jar>
-        <jar>$SBT_BOOT/scala-2.12.21/lib/scala-reflect.jar</jar>
-        <jar>$SBT_BOOT/scala-2.12.21/lib/scala-xml_2.12-2.3.0.jar</jar>
+        <jar>/Users/vasil/.sbt-structure-global/boot/scala-2.12.21/lib/scala-compiler.jar</jar>
+        <jar>/Users/vasil/.sbt-structure-global/boot/scala-2.12.21/lib/scala-reflect.jar</jar>
+        <jar>/Users/vasil/.sbt-structure-global/boot/scala-2.12.21/lib/scala-xml_2.12-2.3.0.jar</jar>
       </compilerJars>
-      <extraJars/>
+      <extraJars></extraJars>
     </scala>
     <compileOrder>Mixed</compileOrder>
     <configuration id="compile">
-      <sources>$BASE/src/main/java</sources>
-      <sources>$BASE/src/main/scala</sources>
-      <sources>$BASE/src/main/scala-2</sources>
-      <sources>$BASE/src/main/scala-2.12</sources>
-      <sources managed="true">$BASE/target/scala-2.12/src_managed/main</sources>
-      <resources>$BASE/src/main/resources</resources>
-      <resources managed="true">$BASE/target/scala-2.12/resource_managed/main</resources>
-      <classes>$BASE/target/scala-2.12/classes</classes>
+      <sources>/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator/src/main/java</sources>
+      <sources>/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator/src/main/scala</sources>
+      <sources>/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator/src/main/scala-2</sources>
+      <sources>/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator/src/main/scala-2.12</sources>
+      <sources managed="true">/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator/target/scala-2.12/src_managed/main</sources>
+      <resources>/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator/src/main/resources</resources>
+      <resources managed="true">/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator/target/scala-2.12/resource_managed/main</resources>
+      <classes>/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator/target/scala-2.12/classes</classes>
     </configuration>
     <configuration id="test">
-      <sources>$BASE/src/test/java</sources>
-      <sources>$BASE/src/test/scala</sources>
-      <sources>$BASE/src/test/scala-2</sources>
-      <sources>$BASE/src/test/scala-2.12</sources>
-      <sources managed="true">$BASE/target/scala-2.12/src_managed/test</sources>
-      <resources>$BASE/src/test/resources</resources>
-      <resources managed="true">$BASE/target/scala-2.12/resource_managed/test</resources>
-      <classes>$BASE/target/scala-2.12/test-classes</classes>
+      <sources>/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator/src/test/java</sources>
+      <sources>/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator/src/test/scala</sources>
+      <sources>/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator/src/test/scala-2</sources>
+      <sources>/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator/src/test/scala-2.12</sources>
+      <sources managed="true">/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator/target/scala-2.12/src_managed/test</sources>
+      <resources>/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator/src/test/resources</resources>
+      <resources managed="true">/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator/target/scala-2.12/resource_managed/test</resources>
+      <classes>/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator/target/scala-2.12/test-classes</classes>
     </configuration>
     <dependencies>
       <projects>
         <forTest>
-          <project buildURI="$URI_BASE" configurations="compile">root:main</project>
+          <project buildURI="file:/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator/" configurations="compile">root:main</project>
         </forTest>
-        <forProduction></forProduction>
+        <forProduction> </forProduction>
       </projects>
       <modules>
         <forTest>
@@ -241,8 +241,8 @@
         </forProduction>
       </modules>
       <jars>
-        <forTest></forTest>
-        <forProduction></forProduction>
+        <forTest> </forTest>
+        <forProduction> </forProduction>
       </jars>
     </dependencies>
     <resolver name="public" root="https://repo1.maven.org/maven2/"/>
@@ -250,11 +250,13 @@
       <label>artifacts</label>
       <description>The artifact definitions for the current module. Must be consistent with packagedArtifacts.</description>
       <rank>40</rank>
+      <value>List(Artifact(root, pom, pom, None, Vector(pom), None, Map(), None, false), Artifact(root, jar, jar,...</value>
     </setting>
     <setting>
       <label>organization</label>
       <description>Organization/group ID.</description>
       <rank>9</rank>
+      <value>root</value>
     </setting>
     <setting>
       <label>testReportsDirectory</label>
@@ -265,6 +267,7 @@
       <label>classLoaderLayeringStrategy</label>
       <description>Creates the classloader layering strategy for the particular configuration.</description>
       <rank>25</rank>
+      <value>ScalaLibrary</value>
     </setting>
     <setting>
       <label>compileAnalysisTargetRoot</label>
@@ -275,11 +278,13 @@
       <label>name</label>
       <description>Project name.</description>
       <rank>9</rank>
+      <value>root</value>
     </setting>
     <setting>
       <label>retrieveConfiguration</label>
       <description>Configures retrieving dependencies to the current build.</description>
       <rank>10000</rank>
+      <value>None</value>
     </setting>
     <setting>
       <label>pushRemoteCacheArtifact</label>
@@ -290,16 +295,19 @@
       <label>makePomConfiguration</label>
       <description>Configuration for generating a pom.</description>
       <rank>10000</rank>
+      <value>MakePomConfiguration(Some(/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source...</value>
     </setting>
     <setting>
       <label>ivyPaths</label>
       <description>Configures paths used by Ivy for dependency management.</description>
       <rank>10000</rank>
+      <value>IvyPaths(/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator, Some(...</value>
     </setting>
     <setting>
       <label>projectInfo</label>
       <description>Addition project information like formal name, homepage, licenses etc.</description>
       <rank>100</rank>
+      <value>ModuleInfo(root, root, None, None, Vector(), root, None, None, Vector())</value>
     </setting>
     <setting>
       <label>resourceDirectories</label>
@@ -310,11 +318,13 @@
       <label>scalaBinaryVersion</label>
       <description>The Scala version substring describing binary compatibility.</description>
       <rank>39</rank>
+      <value>2.12</value>
     </setting>
     <setting>
       <label>csrCacheDirectory</label>
       <description>Coursier cache directory. Uses -Dsbt.coursier.home or Coursier's default.</description>
       <rank>100</rank>
+      <value>/Users/vasil/.sbt-structure-global/coursier/cache</value>
     </setting>
     <setting>
       <label>internalDependencyConfigurations</label>
@@ -325,11 +335,13 @@
       <label>history</label>
       <description>The location where command line history is persisted.</description>
       <rank>40</rank>
+      <value>Some(/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator/target/.hi...</value>
     </setting>
     <setting>
       <label>normalizedName</label>
       <description>Project name transformed from mixed case and spaces to lowercase and dash-separated.</description>
       <rank>40</rank>
+      <value>root</value>
     </setting>
     <setting>
       <label>scalaSource</label>
@@ -338,28 +350,32 @@
     </setting>
     <setting>
       <label>dependencyTreeCrossProjectId</label>
-      <description/>
+      <description></description>
       <rank>25</rank>
     </setting>
     <setting>
       <label>description</label>
       <description>Project description.</description>
       <rank>40</rank>
+      <value>root</value>
     </setting>
     <setting>
       <label>scalaCompilerBridgeSource</label>
       <description>Configures the module ID of the sources of the compiler bridge when scalaCompilerBridgeBinaryJar is None</description>
       <rank>100</rank>
+      <value>org.scala-sbt:compiler-bridge_2.12:1.12.0:compile</value>
     </setting>
     <setting>
       <label>unmanagedBase</label>
       <description>The default directory for manually managed libraries.</description>
       <rank>10</rank>
+      <value>/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator/lib</value>
     </setting>
     <setting>
       <label>organizationHomepage</label>
       <description>Organization homepage.</description>
       <rank>41</rank>
+      <value>None</value>
     </setting>
     <setting>
       <label>sourceDirectories</label>
@@ -370,51 +386,61 @@
       <label>sbtBinaryVersion</label>
       <description>Defines the binary compatibility version substring.</description>
       <rank>39</rank>
+      <value>1.0</value>
     </setting>
     <setting>
       <label>thisProjectRef</label>
       <description>Provides a fully-resolved reference to the current project for the referencing scope.</description>
       <rank>100</rank>
+      <value>ProjectRef(file:/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator...</value>
     </setting>
     <setting>
       <label>outputFileStamper</label>
       <description>Toggles the file stamping implementation used to determine whether or not a file has been modified.</description>
       <rank>25</rank>
+      <value>LastModified</value>
     </setting>
     <setting>
       <label>semanticdbCompilerPlugin</label>
       <description>SemanticDB Scalac plugin</description>
       <rank>100</rank>
+      <value>org.scalameta:semanticdb-scalac:4.15.2</value>
     </setting>
     <setting>
       <label>sourceManaged</label>
       <description>Default directory for sources generated by the build.</description>
       <rank>39</rank>
+      <value>/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator/target/scala-2....</value>
     </setting>
     <setting>
       <label>moduleName</label>
       <description>The name of the current module, used for dependency management.</description>
       <rank>40</rank>
+      <value>root</value>
     </setting>
     <setting>
       <label>organizationName</label>
       <description>Organization full/formal name.</description>
       <rank>41</rank>
+      <value>root</value>
     </setting>
     <setting>
       <label>conflictWarning</label>
       <description>Configures warnings for conflicts in dependency management.</description>
       <rank>100</rank>
+      <value>ConflictWarning(ProjectRef(uri(&quot;file:/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/cu...</value>
     </setting>
     <setting>
       <label>appResolvers</label>
       <description>The resolvers configured for this application by the sbt launcher.</description>
       <rank>41</rank>
+      <value>Some(Vector(FileRepository(local, Patterns(ivyPatterns=Vector(${ivy.home}/local/[organisation]/[modu...</value>
     </setting>
     <setting>
       <label>publishArtifact</label>
       <description>Enables (true) or disables (false) publishing an artifact.</description>
       <rank>11</rank>
+      <value>true</value>
     </setting>
     <setting>
       <label>persistJarClasspath</label>
@@ -425,16 +451,19 @@
       <label>scalaVersion</label>
       <description>The version of Scala used for building.</description>
       <rank>9</rank>
+      <value>2.12.21</value>
     </setting>
     <setting>
       <label>allExcludeDependencies</label>
       <description>User-defined dependency exclusions and sbt itself in the case of metabuild.</description>
       <rank>200</rank>
+      <value>List()</value>
     </setting>
     <setting>
       <label>ivyConfigurations</label>
       <description>The defined configurations for dependency management. This may be different from the configurations for Project settings.</description>
       <rank>40</rank>
+      <value>List(compile, runtime, test, provided, optional, compile-internal, runtime-internal, test-internal, ...</value>
     </setting>
     <setting>
       <label>earlyOutput</label>
@@ -445,11 +474,13 @@
       <label>sbtDependency</label>
       <description>Provides a definition for declaring the current version of sbt.</description>
       <rank>41</rank>
+      <value>org.scala-sbt:sbt:1.12.7</value>
     </setting>
     <setting>
       <label>crossVersion</label>
       <description>Configures handling of the Scala version when cross-building.</description>
       <rank>100</rank>
+      <value>Binary(, )</value>
     </setting>
     <setting>
       <label>earlyCompileAnalysisTargetRoot</label>
@@ -460,31 +491,37 @@
       <label>transitiveClassifiers</label>
       <description>List of classifiers used for transitively obtaining extra artifacts for sbt or declared dependencies.</description>
       <rank>40</rank>
+      <value>List(sources, javadoc)</value>
     </setting>
     <setting>
       <label>bgHashClasspath</label>
       <description>Toggles whether to use a hash or the last modified time to stamp the classpath jars</description>
       <rank>25</rank>
+      <value>true</value>
     </setting>
     <setting>
       <label>updateConfiguration</label>
       <description>Configuration for resolving and retrieving managed dependencies.</description>
       <rank>10000</rank>
+      <value>UpdateConfiguration(None, false, Default, unknown, None, Some(ArtifactTypeFilter(Set(source, javadoc...</value>
     </setting>
     <setting>
       <label>crossTarget</label>
       <description>Main directory for files generated by the build that are cross-built.</description>
       <rank>40</rank>
+      <value>/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator/target/scala-2.12</value>
     </setting>
     <setting>
       <label>testResultLogger</label>
       <description>Logs results after a test task completes.</description>
       <rank>20000</rank>
+      <value>Main(sbt.TestResultLogger$Defaults$$$Lambda$988/0x000000a001482888@2f95af66,sbt.TestResultLogger$$an...</value>
     </setting>
     <setting>
       <label>resourceManaged</label>
       <description>Default managed resource directory, used when generating resources.</description>
       <rank>40</rank>
+      <value>/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator/target/scala-2....</value>
     </setting>
     <setting>
       <label>resourceGenerators</label>
@@ -493,8 +530,11 @@
     </setting>
     <setting>
       <label>fileInputs</label>
-      <description>The file globs that are used by a task. This setting will generally be scoped per task. It will also be used to determine the sources to watch during continuous execution.</description>
+      <description>
+        The file globs that are used by a task. This setting will generally be scoped per task. It will also be used to determine the sources to watch during continuous execution.
+      </description>
       <rank>25</rank>
+      <value>List()</value>
     </setting>
     <setting>
       <label>resourceDirectory</label>
@@ -515,6 +555,7 @@
       <label>overrideBuildResolvers</label>
       <description>Whether or not all the build resolvers should be overridden with what's defined from the launcher.</description>
       <rank>41</rank>
+      <value>false</value>
     </setting>
     <setting>
       <label>javaSource</label>
@@ -530,26 +571,33 @@
       <label>remoteCacheResolvers</label>
       <description>Resolvers for remote cache.</description>
       <rank>25</rank>
+      <value>Vector()</value>
     </setting>
     <setting>
       <label>watchForceTriggerOnAnyChange</label>
-      <description>Force the watch process to rerun the current task(s) if any relevant source change is detected regardless of whether or not the underlying file has actually changed.</description>
+      <description>
+        Force the watch process to rerun the current task(s) if any relevant source change is detected regardless of whether or not the underlying file has actually changed.
+      </description>
       <rank>10000</rank>
+      <value>false</value>
     </setting>
     <setting>
       <label>classpathOptions</label>
       <description>Configures handling of Scala classpaths.</description>
       <rank>10000</rank>
+      <value>ClasspathOptions(bootLibrary: true, compiler: false, extra: false, autoBoot: true, filterLibrary: true)</value>
     </setting>
     <setting>
       <label>baseDirectory</label>
       <description>The base directory. Depending on the scope, this is the base directory for the build, project, configuration, or task.</description>
       <rank>11</rank>
+      <value>/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator</value>
     </setting>
     <setting>
       <label>csrSameVersions</label>
       <description>Modules to keep at the same version.</description>
       <rank>25</rank>
+      <value>List(Set(InclExclRule(org.scala-lang, scala-library, *, Vector(), Disabled()), InclExclRule(org.scal...</value>
     </setting>
     <setting>
       <label>classDirectory</label>
@@ -560,6 +608,7 @@
       <label>sonaDeploymentName</label>
       <description>The name used for deployment</description>
       <rank>10000</rank>
+      <value>root:root:0.1.0-SNAPSHOT:72c30557</value>
     </setting>
     <setting>
       <label>artifactPath</label>
@@ -570,11 +619,13 @@
       <label>cleanKeepGlobs</label>
       <description>Globs to keep during a clean. Must be direct children of target.</description>
       <rank>100</rank>
+      <value>List(/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator/target/glo...</value>
     </setting>
     <setting>
       <label>cleanKeepFiles</label>
       <description>Files or directories to keep during a clean. Must be direct children of target.</description>
       <rank>100</rank>
+      <value>Vector()</value>
     </setting>
     <setting>
       <label>configuration</label>
@@ -585,6 +636,7 @@
       <label>onLoadMessage</label>
       <description>Message to display when the project is loaded.</description>
       <rank>10000</rank>
+      <value>set current project to root (in build file:/Users/vasil/Code/sbt-structure/extractor/src/test/data/1...</value>
     </setting>
     <setting>
       <label>semanticdbTargetRoot</label>
@@ -595,11 +647,13 @@
       <label>thisProject</label>
       <description>Provides the current project for the referencing scope.</description>
       <rank>100</rank>
+      <value>Project(id root, base: /Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-ge...</value>
     </setting>
     <setting>
       <label>sourceDirectory</label>
       <description>Default directory containing sources.</description>
       <rank>11</rank>
+      <value>/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator/src</value>
     </setting>
     <setting>
       <label>managedSourceDirectories</label>
@@ -610,16 +664,19 @@
       <label>isSnapshot</label>
       <description>True if the version of the project is a snapshot version.</description>
       <rank>39</rank>
+      <value>true</value>
     </setting>
     <setting>
       <label>target</label>
       <description>Main directory for files generated by the build.</description>
       <rank>11</rank>
+      <value>/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator/target</value>
     </setting>
     <setting>
       <label>crossSbtVersions</label>
       <description>The versions of Sbt used when cross-building an sbt plugin.</description>
       <rank>25</rank>
+      <value>Vector(1.12.7)</value>
     </setting>
     <setting>
       <label>evictionWarningOptions</label>
@@ -645,16 +702,19 @@
       <label>crossScalaVersions</label>
       <description>The versions of Scala used when cross-building.</description>
       <rank>39</rank>
+      <value>List(2.12.21)</value>
     </setting>
     <setting>
       <label>libraryDependencies</label>
       <description>Declares managed dependencies.</description>
       <rank>9</rank>
+      <value>List(org.scala-lang:scala-library:2.12.21)</value>
     </setting>
     <setting>
       <label>projectID</label>
       <description>The dependency management descriptor for the current module.</description>
       <rank>41</rank>
+      <value>root:root:0.1.0-SNAPSHOT</value>
     </setting>
     <setting>
       <label>fileInputOptions</label>
@@ -670,21 +730,27 @@
       <label>dependencyOverrides</label>
       <description>Declares managed dependency overrides.</description>
       <rank>40</rank>
+      <value>Vector()</value>
     </setting>
     <setting>
       <label>publishMavenStyle</label>
       <description>Configures whether to generate and publish a pom (true) or Ivy file (false).</description>
       <rank>40</rank>
+      <value>true</value>
     </setting>
     <setting>
       <label>scalaModuleInfo</label>
       <description>Configures how Scala dependencies are checked, filtered, and injected.</description>
       <rank>100</rank>
+      <value>Some(ScalaModuleInfo(2.12.21, 2.12, Vector(), true, false, true, org.scala-lang, Vector(scala-librar...</value>
     </setting>
     <setting>
       <label>scalaOrganization</label>
-      <description>Organization/group ID of the Scala used in the project. Default value is 'org.scala-lang'. This is an advanced setting used for clones of the Scala Language. It should be disregarded in standard use cases.</description>
+      <description>
+        Organization/group ID of the Scala used in the project. Default value is 'org.scala-lang'. This is an advanced setting used for clones of the Scala Language. It should be disregarded in standard use cases.
+      </description>
       <rank>100</rank>
+      <value>org.scala-lang</value>
     </setting>
     <setting>
       <label>watched</label>
@@ -695,16 +761,19 @@
       <label>updateOptions</label>
       <description>Options for resolving managed dependencies.</description>
       <rank>10000</rank>
+      <value>UpdateOptions( circularDependencyLevel = warn, latestSnapshots = true, cachedResolution = false )</value>
     </setting>
     <setting>
       <label>artifact</label>
       <description>Describes an artifact.</description>
       <rank>41</rank>
+      <value>Artifact(root, jar, jar, None, Vector(), None, Map(), None, false)</value>
     </setting>
     <setting>
       <label>semanticdbOptions</label>
       <description>The Scalac options introduced for SemanticDB</description>
       <rank>100</rank>
+      <value>List(-Yrangepos)</value>
     </setting>
     <setting>
       <label>sourceGenerators</label>
@@ -733,7 +802,7 @@
     </task>
     <task>
       <label>csrResolvers</label>
-      <description/>
+      <description></description>
       <rank>17</rank>
     </task>
     <task>
@@ -898,7 +967,7 @@
     </task>
     <task>
       <label>bspScalaTestClassesItem</label>
-      <description/>
+      <description></description>
       <rank>20000</rank>
     </task>
     <task>
@@ -963,7 +1032,9 @@
     </task>
     <task>
       <label>watch</label>
-      <description>Watch a task (or multiple tasks) and rebuild when its file inputs change or user input is received. The semantics are more or less the same as the `~` command except that it cannot transform the state on exit. This means that it cannot be used to reload the build.</description>
+      <description>
+        Watch a task (or multiple tasks) and rebuild when its file inputs change or user input is received. The semantics are more or less the same as the `~` command except that it cannot transform the state on exit. This means that it cannot be used to reload the build.
+      </description>
       <rank>10000</rank>
     </task>
     <task>
@@ -978,7 +1049,7 @@
     </task>
     <task>
       <label>bspBuildTargetResourcesItem</label>
-      <description/>
+      <description></description>
       <rank>20000</rank>
     </task>
     <task>
@@ -1063,7 +1134,9 @@
     </task>
     <task>
       <label>skip</label>
-      <description>For tasks that support it (currently only 'compile', 'update', 'publish' and 'publishLocal'), setting skip to true will force the task to not to do its work. The exact semantics may vary depending on the task.</description>
+      <description>
+        For tasks that support it (currently only 'compile', 'update', 'publish' and 'publishLocal'), setting skip to true will force the task to not to do its work.  The exact semantics may vary depending on the task.
+      </description>
       <rank>40</rank>
     </task>
     <task>
@@ -1213,7 +1286,7 @@
     </task>
     <task>
       <label>bspBuildTargetDependencySourcesItem</label>
-      <description/>
+      <description></description>
       <rank>20000</rank>
     </task>
     <task>
@@ -1268,7 +1341,7 @@
     </task>
     <task>
       <label>csrProject</label>
-      <description/>
+      <description></description>
       <rank>17</rank>
     </task>
     <task>
@@ -1293,7 +1366,7 @@
     </task>
     <task>
       <label>pushRemoteCacheConfiguration</label>
-      <description/>
+      <description></description>
       <rank>17</rank>
     </task>
     <task>
@@ -1303,7 +1376,7 @@
     </task>
     <task>
       <label>bspBuildTargetScalacOptionsItem</label>
-      <description/>
+      <description></description>
       <rank>20000</rank>
     </task>
     <task>
@@ -1328,7 +1401,7 @@
     </task>
     <task>
       <label>bspBuildTargetOutputPathsItem</label>
-      <description/>
+      <description></description>
       <rank>20000</rank>
     </task>
     <task>
@@ -1353,7 +1426,7 @@
     </task>
     <task>
       <label>csrPublications</label>
-      <description/>
+      <description></description>
       <rank>17</rank>
     </task>
     <task>
@@ -1363,7 +1436,7 @@
     </task>
     <task>
       <label>csrExtraProjects</label>
-      <description/>
+      <description></description>
       <rank>200</rank>
     </task>
     <task>
@@ -1393,7 +1466,7 @@
     </task>
     <task>
       <label>csrFallbackDependencies</label>
-      <description/>
+      <description></description>
       <rank>17</rank>
     </task>
     <task>
@@ -1408,7 +1481,7 @@
     </task>
     <task>
       <label>bspBuildTargetCompileItem</label>
-      <description/>
+      <description></description>
       <rank>20000</rank>
     </task>
     <task>
@@ -1423,7 +1496,7 @@
     </task>
     <task>
       <label>bspBuildTargetSourcesItem</label>
-      <description/>
+      <description></description>
       <rank>20000</rank>
     </task>
     <task>
@@ -1558,7 +1631,7 @@
     </task>
     <task>
       <label>bspReporter</label>
-      <description/>
+      <description></description>
       <rank>20000</rank>
     </task>
     <task>
@@ -1593,7 +1666,7 @@
     </task>
     <task>
       <label>bspScalaMainClassesItem</label>
-      <description/>
+      <description></description>
       <rank>20000</rank>
     </task>
     <task>
@@ -1886,57 +1959,57 @@
     <command>
       <name>bspReload</name>
     </command>
-    <testSourceDir>$BASE/src/test</testSourceDir>
-    <mainSourceDir>$BASE/src/main</mainSourceDir>
+    <testSourceDir>/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator/src/test</testSourceDir>
+    <mainSourceDir>/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator/src/main</mainSourceDir>
     <generatedManagedSources>false</generatedManagedSources>
   </project>
   <project>
     <id>module1</id>
-    <buildURI>$URI_BASE</buildURI>
+    <buildURI>file:/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator/</buildURI>
     <name>has-generator1</name>
     <organization>has-generator1</organization>
     <version>0.1.0-SNAPSHOT</version>
-    <base>$BASE/has-generator1</base>
-    <target>$BASE/has-generator1/target</target>
+    <base>/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator/has-generator1</base>
+    <target>/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator/has-generator1/target</target>
     <scala>
       <version>2.12.21</version>
       <libraryJars>
-        <jar>$SBT_BOOT/scala-2.12.21/lib/scala-library.jar</jar>
+        <jar>/Users/vasil/.sbt-structure-global/boot/scala-2.12.21/lib/scala-library.jar</jar>
       </libraryJars>
       <compilerJars>
-        <jar>$SBT_BOOT/scala-2.12.21/lib/scala-compiler.jar</jar>
-        <jar>$SBT_BOOT/scala-2.12.21/lib/scala-reflect.jar</jar>
-        <jar>$SBT_BOOT/scala-2.12.21/lib/scala-xml_2.12-2.3.0.jar</jar>
+        <jar>/Users/vasil/.sbt-structure-global/boot/scala-2.12.21/lib/scala-compiler.jar</jar>
+        <jar>/Users/vasil/.sbt-structure-global/boot/scala-2.12.21/lib/scala-reflect.jar</jar>
+        <jar>/Users/vasil/.sbt-structure-global/boot/scala-2.12.21/lib/scala-xml_2.12-2.3.0.jar</jar>
       </compilerJars>
-      <extraJars/>
+      <extraJars></extraJars>
     </scala>
     <compileOrder>Mixed</compileOrder>
     <configuration id="compile">
-      <sources>$BASE/has-generator1/src/main/java</sources>
-      <sources>$BASE/has-generator1/src/main/scala</sources>
-      <sources>$BASE/has-generator1/src/main/scala-2</sources>
-      <sources>$BASE/has-generator1/src/main/scala-2.12</sources>
-      <sources managed="true">$BASE/has-generator1/target/scala-2.12/src_managed/main</sources>
-      <resources>$BASE/has-generator1/src/main/resources</resources>
-      <resources managed="true">$BASE/has-generator1/target/scala-2.12/resource_managed/main</resources>
-      <classes>$BASE/has-generator1/target/scala-2.12/classes</classes>
+      <sources>/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator/has-generator1/src/main/java</sources>
+      <sources>/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator/has-generator1/src/main/scala</sources>
+      <sources>/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator/has-generator1/src/main/scala-2</sources>
+      <sources>/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator/has-generator1/src/main/scala-2.12</sources>
+      <sources managed="true">/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator/has-generator1/target/scala-2.12/src_managed/main</sources>
+      <resources>/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator/has-generator1/src/main/resources</resources>
+      <resources managed="true">/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator/has-generator1/target/scala-2.12/resource_managed/main</resources>
+      <classes>/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator/has-generator1/target/scala-2.12/classes</classes>
     </configuration>
     <configuration id="test">
-      <sources>$BASE/has-generator1/src/test/java</sources>
-      <sources>$BASE/has-generator1/src/test/scala</sources>
-      <sources>$BASE/has-generator1/src/test/scala-2</sources>
-      <sources>$BASE/has-generator1/src/test/scala-2.12</sources>
-      <sources managed="true">$BASE/has-generator1/target/scala-2.12/src_managed/test</sources>
-      <resources>$BASE/has-generator1/src/test/resources</resources>
-      <resources managed="true">$BASE/has-generator1/target/scala-2.12/resource_managed/test</resources>
-      <classes>$BASE/has-generator1/target/scala-2.12/test-classes</classes>
+      <sources>/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator/has-generator1/src/test/java</sources>
+      <sources>/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator/has-generator1/src/test/scala</sources>
+      <sources>/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator/has-generator1/src/test/scala-2</sources>
+      <sources>/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator/has-generator1/src/test/scala-2.12</sources>
+      <sources managed="true">/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator/has-generator1/target/scala-2.12/src_managed/test</sources>
+      <resources>/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator/has-generator1/src/test/resources</resources>
+      <resources managed="true">/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator/has-generator1/target/scala-2.12/resource_managed/test</resources>
+      <classes>/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator/has-generator1/target/scala-2.12/test-classes</classes>
     </configuration>
     <dependencies>
       <projects>
         <forTest>
-          <project buildURI="$URI_BASE" configurations="compile">module1:main</project>
+          <project buildURI="file:/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator/" configurations="compile">module1:main</project>
         </forTest>
-        <forProduction></forProduction>
+        <forProduction> </forProduction>
       </projects>
       <modules>
         <forTest>
@@ -1947,8 +2020,8 @@
         </forProduction>
       </modules>
       <jars>
-        <forTest></forTest>
-        <forProduction></forProduction>
+        <forTest> </forTest>
+        <forProduction> </forProduction>
       </jars>
     </dependencies>
     <resolver name="public" root="https://repo1.maven.org/maven2/"/>
@@ -1956,11 +2029,13 @@
       <label>artifacts</label>
       <description>The artifact definitions for the current module. Must be consistent with packagedArtifacts.</description>
       <rank>40</rank>
+      <value>List(Artifact(root, pom, pom, None, Vector(pom), None, Map(), None, false), Artifact(root, jar, jar,...</value>
     </setting>
     <setting>
       <label>organization</label>
       <description>Organization/group ID.</description>
       <rank>9</rank>
+      <value>root</value>
     </setting>
     <setting>
       <label>testReportsDirectory</label>
@@ -1971,6 +2046,7 @@
       <label>classLoaderLayeringStrategy</label>
       <description>Creates the classloader layering strategy for the particular configuration.</description>
       <rank>25</rank>
+      <value>ScalaLibrary</value>
     </setting>
     <setting>
       <label>compileAnalysisTargetRoot</label>
@@ -1981,11 +2057,13 @@
       <label>name</label>
       <description>Project name.</description>
       <rank>9</rank>
+      <value>root</value>
     </setting>
     <setting>
       <label>retrieveConfiguration</label>
       <description>Configures retrieving dependencies to the current build.</description>
       <rank>10000</rank>
+      <value>None</value>
     </setting>
     <setting>
       <label>pushRemoteCacheArtifact</label>
@@ -1996,16 +2074,19 @@
       <label>makePomConfiguration</label>
       <description>Configuration for generating a pom.</description>
       <rank>10000</rank>
+      <value>MakePomConfiguration(Some(/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source...</value>
     </setting>
     <setting>
       <label>ivyPaths</label>
       <description>Configures paths used by Ivy for dependency management.</description>
       <rank>10000</rank>
+      <value>IvyPaths(/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator, Some(...</value>
     </setting>
     <setting>
       <label>projectInfo</label>
       <description>Addition project information like formal name, homepage, licenses etc.</description>
       <rank>100</rank>
+      <value>ModuleInfo(root, root, None, None, Vector(), root, None, None, Vector())</value>
     </setting>
     <setting>
       <label>resourceDirectories</label>
@@ -2016,11 +2097,13 @@
       <label>scalaBinaryVersion</label>
       <description>The Scala version substring describing binary compatibility.</description>
       <rank>39</rank>
+      <value>2.12</value>
     </setting>
     <setting>
       <label>csrCacheDirectory</label>
       <description>Coursier cache directory. Uses -Dsbt.coursier.home or Coursier's default.</description>
       <rank>100</rank>
+      <value>/Users/vasil/.sbt-structure-global/coursier/cache</value>
     </setting>
     <setting>
       <label>internalDependencyConfigurations</label>
@@ -2031,11 +2114,13 @@
       <label>history</label>
       <description>The location where command line history is persisted.</description>
       <rank>40</rank>
+      <value>Some(/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator/target/.hi...</value>
     </setting>
     <setting>
       <label>normalizedName</label>
       <description>Project name transformed from mixed case and spaces to lowercase and dash-separated.</description>
       <rank>40</rank>
+      <value>root</value>
     </setting>
     <setting>
       <label>scalaSource</label>
@@ -2044,28 +2129,32 @@
     </setting>
     <setting>
       <label>dependencyTreeCrossProjectId</label>
-      <description/>
+      <description></description>
       <rank>25</rank>
     </setting>
     <setting>
       <label>description</label>
       <description>Project description.</description>
       <rank>40</rank>
+      <value>root</value>
     </setting>
     <setting>
       <label>scalaCompilerBridgeSource</label>
       <description>Configures the module ID of the sources of the compiler bridge when scalaCompilerBridgeBinaryJar is None</description>
       <rank>100</rank>
+      <value>org.scala-sbt:compiler-bridge_2.12:1.12.0:compile</value>
     </setting>
     <setting>
       <label>unmanagedBase</label>
       <description>The default directory for manually managed libraries.</description>
       <rank>10</rank>
+      <value>/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator/lib</value>
     </setting>
     <setting>
       <label>organizationHomepage</label>
       <description>Organization homepage.</description>
       <rank>41</rank>
+      <value>None</value>
     </setting>
     <setting>
       <label>sourceDirectories</label>
@@ -2076,51 +2165,61 @@
       <label>sbtBinaryVersion</label>
       <description>Defines the binary compatibility version substring.</description>
       <rank>39</rank>
+      <value>1.0</value>
     </setting>
     <setting>
       <label>thisProjectRef</label>
       <description>Provides a fully-resolved reference to the current project for the referencing scope.</description>
       <rank>100</rank>
+      <value>ProjectRef(file:/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator...</value>
     </setting>
     <setting>
       <label>outputFileStamper</label>
       <description>Toggles the file stamping implementation used to determine whether or not a file has been modified.</description>
       <rank>25</rank>
+      <value>LastModified</value>
     </setting>
     <setting>
       <label>semanticdbCompilerPlugin</label>
       <description>SemanticDB Scalac plugin</description>
       <rank>100</rank>
+      <value>org.scalameta:semanticdb-scalac:4.15.2</value>
     </setting>
     <setting>
       <label>sourceManaged</label>
       <description>Default directory for sources generated by the build.</description>
       <rank>39</rank>
+      <value>/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator/target/scala-2....</value>
     </setting>
     <setting>
       <label>moduleName</label>
       <description>The name of the current module, used for dependency management.</description>
       <rank>40</rank>
+      <value>root</value>
     </setting>
     <setting>
       <label>organizationName</label>
       <description>Organization full/formal name.</description>
       <rank>41</rank>
+      <value>root</value>
     </setting>
     <setting>
       <label>conflictWarning</label>
       <description>Configures warnings for conflicts in dependency management.</description>
       <rank>100</rank>
+      <value>ConflictWarning(ProjectRef(uri(&quot;file:/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/cu...</value>
     </setting>
     <setting>
       <label>appResolvers</label>
       <description>The resolvers configured for this application by the sbt launcher.</description>
       <rank>41</rank>
+      <value>Some(Vector(FileRepository(local, Patterns(ivyPatterns=Vector(${ivy.home}/local/[organisation]/[modu...</value>
     </setting>
     <setting>
       <label>publishArtifact</label>
       <description>Enables (true) or disables (false) publishing an artifact.</description>
       <rank>11</rank>
+      <value>true</value>
     </setting>
     <setting>
       <label>persistJarClasspath</label>
@@ -2131,16 +2230,19 @@
       <label>scalaVersion</label>
       <description>The version of Scala used for building.</description>
       <rank>9</rank>
+      <value>2.12.21</value>
     </setting>
     <setting>
       <label>allExcludeDependencies</label>
       <description>User-defined dependency exclusions and sbt itself in the case of metabuild.</description>
       <rank>200</rank>
+      <value>List()</value>
     </setting>
     <setting>
       <label>ivyConfigurations</label>
       <description>The defined configurations for dependency management. This may be different from the configurations for Project settings.</description>
       <rank>40</rank>
+      <value>List(compile, runtime, test, provided, optional, compile-internal, runtime-internal, test-internal, ...</value>
     </setting>
     <setting>
       <label>earlyOutput</label>
@@ -2151,11 +2253,13 @@
       <label>sbtDependency</label>
       <description>Provides a definition for declaring the current version of sbt.</description>
       <rank>41</rank>
+      <value>org.scala-sbt:sbt:1.12.7</value>
     </setting>
     <setting>
       <label>crossVersion</label>
       <description>Configures handling of the Scala version when cross-building.</description>
       <rank>100</rank>
+      <value>Binary(, )</value>
     </setting>
     <setting>
       <label>earlyCompileAnalysisTargetRoot</label>
@@ -2166,31 +2270,37 @@
       <label>transitiveClassifiers</label>
       <description>List of classifiers used for transitively obtaining extra artifacts for sbt or declared dependencies.</description>
       <rank>40</rank>
+      <value>List(sources, javadoc)</value>
     </setting>
     <setting>
       <label>bgHashClasspath</label>
       <description>Toggles whether to use a hash or the last modified time to stamp the classpath jars</description>
       <rank>25</rank>
+      <value>true</value>
     </setting>
     <setting>
       <label>updateConfiguration</label>
       <description>Configuration for resolving and retrieving managed dependencies.</description>
       <rank>10000</rank>
+      <value>UpdateConfiguration(None, false, Default, unknown, None, Some(ArtifactTypeFilter(Set(source, javadoc...</value>
     </setting>
     <setting>
       <label>crossTarget</label>
       <description>Main directory for files generated by the build that are cross-built.</description>
       <rank>40</rank>
+      <value>/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator/target/scala-2.12</value>
     </setting>
     <setting>
       <label>testResultLogger</label>
       <description>Logs results after a test task completes.</description>
       <rank>20000</rank>
+      <value>Main(sbt.TestResultLogger$Defaults$$$Lambda$988/0x000000a001482888@2f95af66,sbt.TestResultLogger$$an...</value>
     </setting>
     <setting>
       <label>resourceManaged</label>
       <description>Default managed resource directory, used when generating resources.</description>
       <rank>40</rank>
+      <value>/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator/target/scala-2....</value>
     </setting>
     <setting>
       <label>resourceGenerators</label>
@@ -2199,8 +2309,11 @@
     </setting>
     <setting>
       <label>fileInputs</label>
-      <description>The file globs that are used by a task. This setting will generally be scoped per task. It will also be used to determine the sources to watch during continuous execution.</description>
+      <description>
+        The file globs that are used by a task. This setting will generally be scoped per task. It will also be used to determine the sources to watch during continuous execution.
+      </description>
       <rank>25</rank>
+      <value>List()</value>
     </setting>
     <setting>
       <label>resourceDirectory</label>
@@ -2221,6 +2334,7 @@
       <label>overrideBuildResolvers</label>
       <description>Whether or not all the build resolvers should be overridden with what's defined from the launcher.</description>
       <rank>41</rank>
+      <value>false</value>
     </setting>
     <setting>
       <label>javaSource</label>
@@ -2236,26 +2350,33 @@
       <label>remoteCacheResolvers</label>
       <description>Resolvers for remote cache.</description>
       <rank>25</rank>
+      <value>Vector()</value>
     </setting>
     <setting>
       <label>watchForceTriggerOnAnyChange</label>
-      <description>Force the watch process to rerun the current task(s) if any relevant source change is detected regardless of whether or not the underlying file has actually changed.</description>
+      <description>
+        Force the watch process to rerun the current task(s) if any relevant source change is detected regardless of whether or not the underlying file has actually changed.
+      </description>
       <rank>10000</rank>
+      <value>false</value>
     </setting>
     <setting>
       <label>classpathOptions</label>
       <description>Configures handling of Scala classpaths.</description>
       <rank>10000</rank>
+      <value>ClasspathOptions(bootLibrary: true, compiler: false, extra: false, autoBoot: true, filterLibrary: true)</value>
     </setting>
     <setting>
       <label>baseDirectory</label>
       <description>The base directory. Depending on the scope, this is the base directory for the build, project, configuration, or task.</description>
       <rank>11</rank>
+      <value>/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator</value>
     </setting>
     <setting>
       <label>csrSameVersions</label>
       <description>Modules to keep at the same version.</description>
       <rank>25</rank>
+      <value>List(Set(InclExclRule(org.scala-lang, scala-library, *, Vector(), Disabled()), InclExclRule(org.scal...</value>
     </setting>
     <setting>
       <label>classDirectory</label>
@@ -2266,6 +2387,7 @@
       <label>sonaDeploymentName</label>
       <description>The name used for deployment</description>
       <rank>10000</rank>
+      <value>root:root:0.1.0-SNAPSHOT:72c30557</value>
     </setting>
     <setting>
       <label>artifactPath</label>
@@ -2276,11 +2398,13 @@
       <label>cleanKeepGlobs</label>
       <description>Globs to keep during a clean. Must be direct children of target.</description>
       <rank>100</rank>
+      <value>List(/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator/target/glo...</value>
     </setting>
     <setting>
       <label>cleanKeepFiles</label>
       <description>Files or directories to keep during a clean. Must be direct children of target.</description>
       <rank>100</rank>
+      <value>Vector()</value>
     </setting>
     <setting>
       <label>configuration</label>
@@ -2291,6 +2415,7 @@
       <label>onLoadMessage</label>
       <description>Message to display when the project is loaded.</description>
       <rank>10000</rank>
+      <value>set current project to root (in build file:/Users/vasil/Code/sbt-structure/extractor/src/test/data/1...</value>
     </setting>
     <setting>
       <label>semanticdbTargetRoot</label>
@@ -2301,11 +2426,13 @@
       <label>thisProject</label>
       <description>Provides the current project for the referencing scope.</description>
       <rank>100</rank>
+      <value>Project(id root, base: /Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-ge...</value>
     </setting>
     <setting>
       <label>sourceDirectory</label>
       <description>Default directory containing sources.</description>
       <rank>11</rank>
+      <value>/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator/src</value>
     </setting>
     <setting>
       <label>managedSourceDirectories</label>
@@ -2316,16 +2443,19 @@
       <label>isSnapshot</label>
       <description>True if the version of the project is a snapshot version.</description>
       <rank>39</rank>
+      <value>true</value>
     </setting>
     <setting>
       <label>target</label>
       <description>Main directory for files generated by the build.</description>
       <rank>11</rank>
+      <value>/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator/target</value>
     </setting>
     <setting>
       <label>crossSbtVersions</label>
       <description>The versions of Sbt used when cross-building an sbt plugin.</description>
       <rank>25</rank>
+      <value>Vector(1.12.7)</value>
     </setting>
     <setting>
       <label>evictionWarningOptions</label>
@@ -2351,16 +2481,19 @@
       <label>crossScalaVersions</label>
       <description>The versions of Scala used when cross-building.</description>
       <rank>39</rank>
+      <value>List(2.12.21)</value>
     </setting>
     <setting>
       <label>libraryDependencies</label>
       <description>Declares managed dependencies.</description>
       <rank>9</rank>
+      <value>List(org.scala-lang:scala-library:2.12.21)</value>
     </setting>
     <setting>
       <label>projectID</label>
       <description>The dependency management descriptor for the current module.</description>
       <rank>41</rank>
+      <value>root:root:0.1.0-SNAPSHOT</value>
     </setting>
     <setting>
       <label>fileInputOptions</label>
@@ -2376,21 +2509,27 @@
       <label>dependencyOverrides</label>
       <description>Declares managed dependency overrides.</description>
       <rank>40</rank>
+      <value>Vector()</value>
     </setting>
     <setting>
       <label>publishMavenStyle</label>
       <description>Configures whether to generate and publish a pom (true) or Ivy file (false).</description>
       <rank>40</rank>
+      <value>true</value>
     </setting>
     <setting>
       <label>scalaModuleInfo</label>
       <description>Configures how Scala dependencies are checked, filtered, and injected.</description>
       <rank>100</rank>
+      <value>Some(ScalaModuleInfo(2.12.21, 2.12, Vector(), true, false, true, org.scala-lang, Vector(scala-librar...</value>
     </setting>
     <setting>
       <label>scalaOrganization</label>
-      <description>Organization/group ID of the Scala used in the project. Default value is 'org.scala-lang'. This is an advanced setting used for clones of the Scala Language. It should be disregarded in standard use cases.</description>
+      <description>
+        Organization/group ID of the Scala used in the project. Default value is 'org.scala-lang'. This is an advanced setting used for clones of the Scala Language. It should be disregarded in standard use cases.
+      </description>
       <rank>100</rank>
+      <value>org.scala-lang</value>
     </setting>
     <setting>
       <label>watched</label>
@@ -2401,16 +2540,19 @@
       <label>updateOptions</label>
       <description>Options for resolving managed dependencies.</description>
       <rank>10000</rank>
+      <value>UpdateOptions( circularDependencyLevel = warn, latestSnapshots = true, cachedResolution = false )</value>
     </setting>
     <setting>
       <label>artifact</label>
       <description>Describes an artifact.</description>
       <rank>41</rank>
+      <value>Artifact(root, jar, jar, None, Vector(), None, Map(), None, false)</value>
     </setting>
     <setting>
       <label>semanticdbOptions</label>
       <description>The Scalac options introduced for SemanticDB</description>
       <rank>100</rank>
+      <value>List(-Yrangepos)</value>
     </setting>
     <setting>
       <label>sourceGenerators</label>
@@ -2439,7 +2581,7 @@
     </task>
     <task>
       <label>csrResolvers</label>
-      <description/>
+      <description></description>
       <rank>17</rank>
     </task>
     <task>
@@ -2604,7 +2746,7 @@
     </task>
     <task>
       <label>bspScalaTestClassesItem</label>
-      <description/>
+      <description></description>
       <rank>20000</rank>
     </task>
     <task>
@@ -2669,7 +2811,9 @@
     </task>
     <task>
       <label>watch</label>
-      <description>Watch a task (or multiple tasks) and rebuild when its file inputs change or user input is received. The semantics are more or less the same as the `~` command except that it cannot transform the state on exit. This means that it cannot be used to reload the build.</description>
+      <description>
+        Watch a task (or multiple tasks) and rebuild when its file inputs change or user input is received. The semantics are more or less the same as the `~` command except that it cannot transform the state on exit. This means that it cannot be used to reload the build.
+      </description>
       <rank>10000</rank>
     </task>
     <task>
@@ -2684,7 +2828,7 @@
     </task>
     <task>
       <label>bspBuildTargetResourcesItem</label>
-      <description/>
+      <description></description>
       <rank>20000</rank>
     </task>
     <task>
@@ -2769,7 +2913,9 @@
     </task>
     <task>
       <label>skip</label>
-      <description>For tasks that support it (currently only 'compile', 'update', 'publish' and 'publishLocal'), setting skip to true will force the task to not to do its work. The exact semantics may vary depending on the task.</description>
+      <description>
+        For tasks that support it (currently only 'compile', 'update', 'publish' and 'publishLocal'), setting skip to true will force the task to not to do its work.  The exact semantics may vary depending on the task.
+      </description>
       <rank>40</rank>
     </task>
     <task>
@@ -2919,7 +3065,7 @@
     </task>
     <task>
       <label>bspBuildTargetDependencySourcesItem</label>
-      <description/>
+      <description></description>
       <rank>20000</rank>
     </task>
     <task>
@@ -2974,7 +3120,7 @@
     </task>
     <task>
       <label>csrProject</label>
-      <description/>
+      <description></description>
       <rank>17</rank>
     </task>
     <task>
@@ -2999,7 +3145,7 @@
     </task>
     <task>
       <label>pushRemoteCacheConfiguration</label>
-      <description/>
+      <description></description>
       <rank>17</rank>
     </task>
     <task>
@@ -3009,7 +3155,7 @@
     </task>
     <task>
       <label>bspBuildTargetScalacOptionsItem</label>
-      <description/>
+      <description></description>
       <rank>20000</rank>
     </task>
     <task>
@@ -3034,7 +3180,7 @@
     </task>
     <task>
       <label>bspBuildTargetOutputPathsItem</label>
-      <description/>
+      <description></description>
       <rank>20000</rank>
     </task>
     <task>
@@ -3059,7 +3205,7 @@
     </task>
     <task>
       <label>csrPublications</label>
-      <description/>
+      <description></description>
       <rank>17</rank>
     </task>
     <task>
@@ -3069,7 +3215,7 @@
     </task>
     <task>
       <label>csrExtraProjects</label>
-      <description/>
+      <description></description>
       <rank>200</rank>
     </task>
     <task>
@@ -3099,7 +3245,7 @@
     </task>
     <task>
       <label>csrFallbackDependencies</label>
-      <description/>
+      <description></description>
       <rank>17</rank>
     </task>
     <task>
@@ -3114,7 +3260,7 @@
     </task>
     <task>
       <label>bspBuildTargetCompileItem</label>
-      <description/>
+      <description></description>
       <rank>20000</rank>
     </task>
     <task>
@@ -3129,7 +3275,7 @@
     </task>
     <task>
       <label>bspBuildTargetSourcesItem</label>
-      <description/>
+      <description></description>
       <rank>20000</rank>
     </task>
     <task>
@@ -3264,7 +3410,7 @@
     </task>
     <task>
       <label>bspReporter</label>
-      <description/>
+      <description></description>
       <rank>20000</rank>
     </task>
     <task>
@@ -3299,7 +3445,7 @@
     </task>
     <task>
       <label>bspScalaMainClassesItem</label>
-      <description/>
+      <description></description>
       <rank>20000</rank>
     </task>
     <task>
@@ -3592,57 +3738,57 @@
     <command>
       <name>bspReload</name>
     </command>
-    <testSourceDir>$BASE/has-generator1/src/test</testSourceDir>
-    <mainSourceDir>$BASE/has-generator1/src/main</mainSourceDir>
+    <testSourceDir>/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator/has-generator1/src/test</testSourceDir>
+    <mainSourceDir>/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator/has-generator1/src/main</mainSourceDir>
     <generatedManagedSources>true</generatedManagedSources>
   </project>
   <project>
     <id>module3</id>
-    <buildURI>$URI_BASE</buildURI>
+    <buildURI>file:/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator/</buildURI>
     <name>has-generator2</name>
     <organization>has-generator2</organization>
     <version>0.1.0-SNAPSHOT</version>
-    <base>$BASE/has-generator2</base>
-    <target>$BASE/has-generator2/target</target>
+    <base>/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator/has-generator2</base>
+    <target>/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator/has-generator2/target</target>
     <scala>
       <version>2.12.21</version>
       <libraryJars>
-        <jar>$SBT_BOOT/scala-2.12.21/lib/scala-library.jar</jar>
+        <jar>/Users/vasil/.sbt-structure-global/boot/scala-2.12.21/lib/scala-library.jar</jar>
       </libraryJars>
       <compilerJars>
-        <jar>$SBT_BOOT/scala-2.12.21/lib/scala-compiler.jar</jar>
-        <jar>$SBT_BOOT/scala-2.12.21/lib/scala-reflect.jar</jar>
-        <jar>$SBT_BOOT/scala-2.12.21/lib/scala-xml_2.12-2.3.0.jar</jar>
+        <jar>/Users/vasil/.sbt-structure-global/boot/scala-2.12.21/lib/scala-compiler.jar</jar>
+        <jar>/Users/vasil/.sbt-structure-global/boot/scala-2.12.21/lib/scala-reflect.jar</jar>
+        <jar>/Users/vasil/.sbt-structure-global/boot/scala-2.12.21/lib/scala-xml_2.12-2.3.0.jar</jar>
       </compilerJars>
-      <extraJars/>
+      <extraJars></extraJars>
     </scala>
     <compileOrder>Mixed</compileOrder>
     <configuration id="compile">
-      <sources>$BASE/has-generator2/src/main/java</sources>
-      <sources>$BASE/has-generator2/src/main/scala</sources>
-      <sources>$BASE/has-generator2/src/main/scala-2</sources>
-      <sources>$BASE/has-generator2/src/main/scala-2.12</sources>
-      <sources managed="true">$BASE/has-generator2/target/scala-2.12/src_managed/main</sources>
-      <resources>$BASE/has-generator2/src/main/resources</resources>
-      <resources managed="true">$BASE/has-generator2/target/scala-2.12/resource_managed/main</resources>
-      <classes>$BASE/has-generator2/target/scala-2.12/classes</classes>
+      <sources>/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator/has-generator2/src/main/java</sources>
+      <sources>/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator/has-generator2/src/main/scala</sources>
+      <sources>/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator/has-generator2/src/main/scala-2</sources>
+      <sources>/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator/has-generator2/src/main/scala-2.12</sources>
+      <sources managed="true">/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator/has-generator2/target/scala-2.12/src_managed/main</sources>
+      <resources>/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator/has-generator2/src/main/resources</resources>
+      <resources managed="true">/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator/has-generator2/target/scala-2.12/resource_managed/main</resources>
+      <classes>/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator/has-generator2/target/scala-2.12/classes</classes>
     </configuration>
     <configuration id="test">
-      <sources>$BASE/has-generator2/src/test/java</sources>
-      <sources>$BASE/has-generator2/src/test/scala</sources>
-      <sources>$BASE/has-generator2/src/test/scala-2</sources>
-      <sources>$BASE/has-generator2/src/test/scala-2.12</sources>
-      <sources managed="true">$BASE/has-generator2/target/scala-2.12/src_managed/test</sources>
-      <resources>$BASE/has-generator2/src/test/resources</resources>
-      <resources managed="true">$BASE/has-generator2/target/scala-2.12/resource_managed/test</resources>
-      <classes>$BASE/has-generator2/target/scala-2.12/test-classes</classes>
+      <sources>/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator/has-generator2/src/test/java</sources>
+      <sources>/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator/has-generator2/src/test/scala</sources>
+      <sources>/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator/has-generator2/src/test/scala-2</sources>
+      <sources>/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator/has-generator2/src/test/scala-2.12</sources>
+      <sources managed="true">/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator/has-generator2/target/scala-2.12/src_managed/test</sources>
+      <resources>/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator/has-generator2/src/test/resources</resources>
+      <resources managed="true">/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator/has-generator2/target/scala-2.12/resource_managed/test</resources>
+      <classes>/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator/has-generator2/target/scala-2.12/test-classes</classes>
     </configuration>
     <dependencies>
       <projects>
         <forTest>
-          <project buildURI="$URI_BASE" configurations="compile">module3:main</project>
+          <project buildURI="file:/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator/" configurations="compile">module3:main</project>
         </forTest>
-        <forProduction></forProduction>
+        <forProduction> </forProduction>
       </projects>
       <modules>
         <forTest>
@@ -3653,8 +3799,8 @@
         </forProduction>
       </modules>
       <jars>
-        <forTest></forTest>
-        <forProduction></forProduction>
+        <forTest> </forTest>
+        <forProduction> </forProduction>
       </jars>
     </dependencies>
     <resolver name="public" root="https://repo1.maven.org/maven2/"/>
@@ -3662,11 +3808,13 @@
       <label>artifacts</label>
       <description>The artifact definitions for the current module. Must be consistent with packagedArtifacts.</description>
       <rank>40</rank>
+      <value>List(Artifact(root, pom, pom, None, Vector(pom), None, Map(), None, false), Artifact(root, jar, jar,...</value>
     </setting>
     <setting>
       <label>organization</label>
       <description>Organization/group ID.</description>
       <rank>9</rank>
+      <value>root</value>
     </setting>
     <setting>
       <label>testReportsDirectory</label>
@@ -3677,6 +3825,7 @@
       <label>classLoaderLayeringStrategy</label>
       <description>Creates the classloader layering strategy for the particular configuration.</description>
       <rank>25</rank>
+      <value>ScalaLibrary</value>
     </setting>
     <setting>
       <label>compileAnalysisTargetRoot</label>
@@ -3687,11 +3836,13 @@
       <label>name</label>
       <description>Project name.</description>
       <rank>9</rank>
+      <value>root</value>
     </setting>
     <setting>
       <label>retrieveConfiguration</label>
       <description>Configures retrieving dependencies to the current build.</description>
       <rank>10000</rank>
+      <value>None</value>
     </setting>
     <setting>
       <label>pushRemoteCacheArtifact</label>
@@ -3702,16 +3853,19 @@
       <label>makePomConfiguration</label>
       <description>Configuration for generating a pom.</description>
       <rank>10000</rank>
+      <value>MakePomConfiguration(Some(/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source...</value>
     </setting>
     <setting>
       <label>ivyPaths</label>
       <description>Configures paths used by Ivy for dependency management.</description>
       <rank>10000</rank>
+      <value>IvyPaths(/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator, Some(...</value>
     </setting>
     <setting>
       <label>projectInfo</label>
       <description>Addition project information like formal name, homepage, licenses etc.</description>
       <rank>100</rank>
+      <value>ModuleInfo(root, root, None, None, Vector(), root, None, None, Vector())</value>
     </setting>
     <setting>
       <label>resourceDirectories</label>
@@ -3722,11 +3876,13 @@
       <label>scalaBinaryVersion</label>
       <description>The Scala version substring describing binary compatibility.</description>
       <rank>39</rank>
+      <value>2.12</value>
     </setting>
     <setting>
       <label>csrCacheDirectory</label>
       <description>Coursier cache directory. Uses -Dsbt.coursier.home or Coursier's default.</description>
       <rank>100</rank>
+      <value>/Users/vasil/.sbt-structure-global/coursier/cache</value>
     </setting>
     <setting>
       <label>internalDependencyConfigurations</label>
@@ -3737,11 +3893,13 @@
       <label>history</label>
       <description>The location where command line history is persisted.</description>
       <rank>40</rank>
+      <value>Some(/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator/target/.hi...</value>
     </setting>
     <setting>
       <label>normalizedName</label>
       <description>Project name transformed from mixed case and spaces to lowercase and dash-separated.</description>
       <rank>40</rank>
+      <value>root</value>
     </setting>
     <setting>
       <label>scalaSource</label>
@@ -3750,28 +3908,32 @@
     </setting>
     <setting>
       <label>dependencyTreeCrossProjectId</label>
-      <description/>
+      <description></description>
       <rank>25</rank>
     </setting>
     <setting>
       <label>description</label>
       <description>Project description.</description>
       <rank>40</rank>
+      <value>root</value>
     </setting>
     <setting>
       <label>scalaCompilerBridgeSource</label>
       <description>Configures the module ID of the sources of the compiler bridge when scalaCompilerBridgeBinaryJar is None</description>
       <rank>100</rank>
+      <value>org.scala-sbt:compiler-bridge_2.12:1.12.0:compile</value>
     </setting>
     <setting>
       <label>unmanagedBase</label>
       <description>The default directory for manually managed libraries.</description>
       <rank>10</rank>
+      <value>/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator/lib</value>
     </setting>
     <setting>
       <label>organizationHomepage</label>
       <description>Organization homepage.</description>
       <rank>41</rank>
+      <value>None</value>
     </setting>
     <setting>
       <label>sourceDirectories</label>
@@ -3782,51 +3944,61 @@
       <label>sbtBinaryVersion</label>
       <description>Defines the binary compatibility version substring.</description>
       <rank>39</rank>
+      <value>1.0</value>
     </setting>
     <setting>
       <label>thisProjectRef</label>
       <description>Provides a fully-resolved reference to the current project for the referencing scope.</description>
       <rank>100</rank>
+      <value>ProjectRef(file:/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator...</value>
     </setting>
     <setting>
       <label>outputFileStamper</label>
       <description>Toggles the file stamping implementation used to determine whether or not a file has been modified.</description>
       <rank>25</rank>
+      <value>LastModified</value>
     </setting>
     <setting>
       <label>semanticdbCompilerPlugin</label>
       <description>SemanticDB Scalac plugin</description>
       <rank>100</rank>
+      <value>org.scalameta:semanticdb-scalac:4.15.2</value>
     </setting>
     <setting>
       <label>sourceManaged</label>
       <description>Default directory for sources generated by the build.</description>
       <rank>39</rank>
+      <value>/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator/target/scala-2....</value>
     </setting>
     <setting>
       <label>moduleName</label>
       <description>The name of the current module, used for dependency management.</description>
       <rank>40</rank>
+      <value>root</value>
     </setting>
     <setting>
       <label>organizationName</label>
       <description>Organization full/formal name.</description>
       <rank>41</rank>
+      <value>root</value>
     </setting>
     <setting>
       <label>conflictWarning</label>
       <description>Configures warnings for conflicts in dependency management.</description>
       <rank>100</rank>
+      <value>ConflictWarning(ProjectRef(uri(&quot;file:/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/cu...</value>
     </setting>
     <setting>
       <label>appResolvers</label>
       <description>The resolvers configured for this application by the sbt launcher.</description>
       <rank>41</rank>
+      <value>Some(Vector(FileRepository(local, Patterns(ivyPatterns=Vector(${ivy.home}/local/[organisation]/[modu...</value>
     </setting>
     <setting>
       <label>publishArtifact</label>
       <description>Enables (true) or disables (false) publishing an artifact.</description>
       <rank>11</rank>
+      <value>true</value>
     </setting>
     <setting>
       <label>persistJarClasspath</label>
@@ -3837,16 +4009,19 @@
       <label>scalaVersion</label>
       <description>The version of Scala used for building.</description>
       <rank>9</rank>
+      <value>2.12.21</value>
     </setting>
     <setting>
       <label>allExcludeDependencies</label>
       <description>User-defined dependency exclusions and sbt itself in the case of metabuild.</description>
       <rank>200</rank>
+      <value>List()</value>
     </setting>
     <setting>
       <label>ivyConfigurations</label>
       <description>The defined configurations for dependency management. This may be different from the configurations for Project settings.</description>
       <rank>40</rank>
+      <value>List(compile, runtime, test, provided, optional, compile-internal, runtime-internal, test-internal, ...</value>
     </setting>
     <setting>
       <label>earlyOutput</label>
@@ -3857,11 +4032,13 @@
       <label>sbtDependency</label>
       <description>Provides a definition for declaring the current version of sbt.</description>
       <rank>41</rank>
+      <value>org.scala-sbt:sbt:1.12.7</value>
     </setting>
     <setting>
       <label>crossVersion</label>
       <description>Configures handling of the Scala version when cross-building.</description>
       <rank>100</rank>
+      <value>Binary(, )</value>
     </setting>
     <setting>
       <label>earlyCompileAnalysisTargetRoot</label>
@@ -3872,31 +4049,37 @@
       <label>transitiveClassifiers</label>
       <description>List of classifiers used for transitively obtaining extra artifacts for sbt or declared dependencies.</description>
       <rank>40</rank>
+      <value>List(sources, javadoc)</value>
     </setting>
     <setting>
       <label>bgHashClasspath</label>
       <description>Toggles whether to use a hash or the last modified time to stamp the classpath jars</description>
       <rank>25</rank>
+      <value>true</value>
     </setting>
     <setting>
       <label>updateConfiguration</label>
       <description>Configuration for resolving and retrieving managed dependencies.</description>
       <rank>10000</rank>
+      <value>UpdateConfiguration(None, false, Default, unknown, None, Some(ArtifactTypeFilter(Set(source, javadoc...</value>
     </setting>
     <setting>
       <label>crossTarget</label>
       <description>Main directory for files generated by the build that are cross-built.</description>
       <rank>40</rank>
+      <value>/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator/target/scala-2.12</value>
     </setting>
     <setting>
       <label>testResultLogger</label>
       <description>Logs results after a test task completes.</description>
       <rank>20000</rank>
+      <value>Main(sbt.TestResultLogger$Defaults$$$Lambda$988/0x000000a001482888@2f95af66,sbt.TestResultLogger$$an...</value>
     </setting>
     <setting>
       <label>resourceManaged</label>
       <description>Default managed resource directory, used when generating resources.</description>
       <rank>40</rank>
+      <value>/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator/target/scala-2....</value>
     </setting>
     <setting>
       <label>resourceGenerators</label>
@@ -3905,8 +4088,11 @@
     </setting>
     <setting>
       <label>fileInputs</label>
-      <description>The file globs that are used by a task. This setting will generally be scoped per task. It will also be used to determine the sources to watch during continuous execution.</description>
+      <description>
+        The file globs that are used by a task. This setting will generally be scoped per task. It will also be used to determine the sources to watch during continuous execution.
+      </description>
       <rank>25</rank>
+      <value>List()</value>
     </setting>
     <setting>
       <label>resourceDirectory</label>
@@ -3927,6 +4113,7 @@
       <label>overrideBuildResolvers</label>
       <description>Whether or not all the build resolvers should be overridden with what's defined from the launcher.</description>
       <rank>41</rank>
+      <value>false</value>
     </setting>
     <setting>
       <label>javaSource</label>
@@ -3942,26 +4129,33 @@
       <label>remoteCacheResolvers</label>
       <description>Resolvers for remote cache.</description>
       <rank>25</rank>
+      <value>Vector()</value>
     </setting>
     <setting>
       <label>watchForceTriggerOnAnyChange</label>
-      <description>Force the watch process to rerun the current task(s) if any relevant source change is detected regardless of whether or not the underlying file has actually changed.</description>
+      <description>
+        Force the watch process to rerun the current task(s) if any relevant source change is detected regardless of whether or not the underlying file has actually changed.
+      </description>
       <rank>10000</rank>
+      <value>false</value>
     </setting>
     <setting>
       <label>classpathOptions</label>
       <description>Configures handling of Scala classpaths.</description>
       <rank>10000</rank>
+      <value>ClasspathOptions(bootLibrary: true, compiler: false, extra: false, autoBoot: true, filterLibrary: true)</value>
     </setting>
     <setting>
       <label>baseDirectory</label>
       <description>The base directory. Depending on the scope, this is the base directory for the build, project, configuration, or task.</description>
       <rank>11</rank>
+      <value>/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator</value>
     </setting>
     <setting>
       <label>csrSameVersions</label>
       <description>Modules to keep at the same version.</description>
       <rank>25</rank>
+      <value>List(Set(InclExclRule(org.scala-lang, scala-library, *, Vector(), Disabled()), InclExclRule(org.scal...</value>
     </setting>
     <setting>
       <label>classDirectory</label>
@@ -3972,6 +4166,7 @@
       <label>sonaDeploymentName</label>
       <description>The name used for deployment</description>
       <rank>10000</rank>
+      <value>root:root:0.1.0-SNAPSHOT:72c30557</value>
     </setting>
     <setting>
       <label>artifactPath</label>
@@ -3982,11 +4177,13 @@
       <label>cleanKeepGlobs</label>
       <description>Globs to keep during a clean. Must be direct children of target.</description>
       <rank>100</rank>
+      <value>List(/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator/target/glo...</value>
     </setting>
     <setting>
       <label>cleanKeepFiles</label>
       <description>Files or directories to keep during a clean. Must be direct children of target.</description>
       <rank>100</rank>
+      <value>Vector()</value>
     </setting>
     <setting>
       <label>configuration</label>
@@ -3997,6 +4194,7 @@
       <label>onLoadMessage</label>
       <description>Message to display when the project is loaded.</description>
       <rank>10000</rank>
+      <value>set current project to root (in build file:/Users/vasil/Code/sbt-structure/extractor/src/test/data/1...</value>
     </setting>
     <setting>
       <label>semanticdbTargetRoot</label>
@@ -4007,11 +4205,13 @@
       <label>thisProject</label>
       <description>Provides the current project for the referencing scope.</description>
       <rank>100</rank>
+      <value>Project(id root, base: /Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-ge...</value>
     </setting>
     <setting>
       <label>sourceDirectory</label>
       <description>Default directory containing sources.</description>
       <rank>11</rank>
+      <value>/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator/src</value>
     </setting>
     <setting>
       <label>managedSourceDirectories</label>
@@ -4022,16 +4222,19 @@
       <label>isSnapshot</label>
       <description>True if the version of the project is a snapshot version.</description>
       <rank>39</rank>
+      <value>true</value>
     </setting>
     <setting>
       <label>target</label>
       <description>Main directory for files generated by the build.</description>
       <rank>11</rank>
+      <value>/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator/target</value>
     </setting>
     <setting>
       <label>crossSbtVersions</label>
       <description>The versions of Sbt used when cross-building an sbt plugin.</description>
       <rank>25</rank>
+      <value>Vector(1.12.7)</value>
     </setting>
     <setting>
       <label>evictionWarningOptions</label>
@@ -4057,16 +4260,19 @@
       <label>crossScalaVersions</label>
       <description>The versions of Scala used when cross-building.</description>
       <rank>39</rank>
+      <value>List(2.12.21)</value>
     </setting>
     <setting>
       <label>libraryDependencies</label>
       <description>Declares managed dependencies.</description>
       <rank>9</rank>
+      <value>List(org.scala-lang:scala-library:2.12.21)</value>
     </setting>
     <setting>
       <label>projectID</label>
       <description>The dependency management descriptor for the current module.</description>
       <rank>41</rank>
+      <value>root:root:0.1.0-SNAPSHOT</value>
     </setting>
     <setting>
       <label>fileInputOptions</label>
@@ -4082,21 +4288,27 @@
       <label>dependencyOverrides</label>
       <description>Declares managed dependency overrides.</description>
       <rank>40</rank>
+      <value>Vector()</value>
     </setting>
     <setting>
       <label>publishMavenStyle</label>
       <description>Configures whether to generate and publish a pom (true) or Ivy file (false).</description>
       <rank>40</rank>
+      <value>true</value>
     </setting>
     <setting>
       <label>scalaModuleInfo</label>
       <description>Configures how Scala dependencies are checked, filtered, and injected.</description>
       <rank>100</rank>
+      <value>Some(ScalaModuleInfo(2.12.21, 2.12, Vector(), true, false, true, org.scala-lang, Vector(scala-librar...</value>
     </setting>
     <setting>
       <label>scalaOrganization</label>
-      <description>Organization/group ID of the Scala used in the project. Default value is 'org.scala-lang'. This is an advanced setting used for clones of the Scala Language. It should be disregarded in standard use cases.</description>
+      <description>
+        Organization/group ID of the Scala used in the project. Default value is 'org.scala-lang'. This is an advanced setting used for clones of the Scala Language. It should be disregarded in standard use cases.
+      </description>
       <rank>100</rank>
+      <value>org.scala-lang</value>
     </setting>
     <setting>
       <label>watched</label>
@@ -4107,16 +4319,19 @@
       <label>updateOptions</label>
       <description>Options for resolving managed dependencies.</description>
       <rank>10000</rank>
+      <value>UpdateOptions( circularDependencyLevel = warn, latestSnapshots = true, cachedResolution = false )</value>
     </setting>
     <setting>
       <label>artifact</label>
       <description>Describes an artifact.</description>
       <rank>41</rank>
+      <value>Artifact(root, jar, jar, None, Vector(), None, Map(), None, false)</value>
     </setting>
     <setting>
       <label>semanticdbOptions</label>
       <description>The Scalac options introduced for SemanticDB</description>
       <rank>100</rank>
+      <value>List(-Yrangepos)</value>
     </setting>
     <setting>
       <label>sourceGenerators</label>
@@ -4145,7 +4360,7 @@
     </task>
     <task>
       <label>csrResolvers</label>
-      <description/>
+      <description></description>
       <rank>17</rank>
     </task>
     <task>
@@ -4310,7 +4525,7 @@
     </task>
     <task>
       <label>bspScalaTestClassesItem</label>
-      <description/>
+      <description></description>
       <rank>20000</rank>
     </task>
     <task>
@@ -4375,7 +4590,9 @@
     </task>
     <task>
       <label>watch</label>
-      <description>Watch a task (or multiple tasks) and rebuild when its file inputs change or user input is received. The semantics are more or less the same as the `~` command except that it cannot transform the state on exit. This means that it cannot be used to reload the build.</description>
+      <description>
+        Watch a task (or multiple tasks) and rebuild when its file inputs change or user input is received. The semantics are more or less the same as the `~` command except that it cannot transform the state on exit. This means that it cannot be used to reload the build.
+      </description>
       <rank>10000</rank>
     </task>
     <task>
@@ -4390,7 +4607,7 @@
     </task>
     <task>
       <label>bspBuildTargetResourcesItem</label>
-      <description/>
+      <description></description>
       <rank>20000</rank>
     </task>
     <task>
@@ -4475,7 +4692,9 @@
     </task>
     <task>
       <label>skip</label>
-      <description>For tasks that support it (currently only 'compile', 'update', 'publish' and 'publishLocal'), setting skip to true will force the task to not to do its work. The exact semantics may vary depending on the task.</description>
+      <description>
+        For tasks that support it (currently only 'compile', 'update', 'publish' and 'publishLocal'), setting skip to true will force the task to not to do its work.  The exact semantics may vary depending on the task.
+      </description>
       <rank>40</rank>
     </task>
     <task>
@@ -4625,7 +4844,7 @@
     </task>
     <task>
       <label>bspBuildTargetDependencySourcesItem</label>
-      <description/>
+      <description></description>
       <rank>20000</rank>
     </task>
     <task>
@@ -4680,7 +4899,7 @@
     </task>
     <task>
       <label>csrProject</label>
-      <description/>
+      <description></description>
       <rank>17</rank>
     </task>
     <task>
@@ -4705,7 +4924,7 @@
     </task>
     <task>
       <label>pushRemoteCacheConfiguration</label>
-      <description/>
+      <description></description>
       <rank>17</rank>
     </task>
     <task>
@@ -4715,7 +4934,7 @@
     </task>
     <task>
       <label>bspBuildTargetScalacOptionsItem</label>
-      <description/>
+      <description></description>
       <rank>20000</rank>
     </task>
     <task>
@@ -4740,7 +4959,7 @@
     </task>
     <task>
       <label>bspBuildTargetOutputPathsItem</label>
-      <description/>
+      <description></description>
       <rank>20000</rank>
     </task>
     <task>
@@ -4765,7 +4984,7 @@
     </task>
     <task>
       <label>csrPublications</label>
-      <description/>
+      <description></description>
       <rank>17</rank>
     </task>
     <task>
@@ -4775,7 +4994,7 @@
     </task>
     <task>
       <label>csrExtraProjects</label>
-      <description/>
+      <description></description>
       <rank>200</rank>
     </task>
     <task>
@@ -4805,7 +5024,7 @@
     </task>
     <task>
       <label>csrFallbackDependencies</label>
-      <description/>
+      <description></description>
       <rank>17</rank>
     </task>
     <task>
@@ -4820,7 +5039,7 @@
     </task>
     <task>
       <label>bspBuildTargetCompileItem</label>
-      <description/>
+      <description></description>
       <rank>20000</rank>
     </task>
     <task>
@@ -4835,7 +5054,7 @@
     </task>
     <task>
       <label>bspBuildTargetSourcesItem</label>
-      <description/>
+      <description></description>
       <rank>20000</rank>
     </task>
     <task>
@@ -4970,7 +5189,7 @@
     </task>
     <task>
       <label>bspReporter</label>
-      <description/>
+      <description></description>
       <rank>20000</rank>
     </task>
     <task>
@@ -5005,7 +5224,7 @@
     </task>
     <task>
       <label>bspScalaMainClassesItem</label>
-      <description/>
+      <description></description>
       <rank>20000</rank>
     </task>
     <task>
@@ -5298,57 +5517,57 @@
     <command>
       <name>bspReload</name>
     </command>
-    <testSourceDir>$BASE/has-generator2/src/test</testSourceDir>
-    <mainSourceDir>$BASE/has-generator2/src/main</mainSourceDir>
+    <testSourceDir>/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator/has-generator2/src/test</testSourceDir>
+    <mainSourceDir>/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator/has-generator2/src/main</mainSourceDir>
     <generatedManagedSources>true</generatedManagedSources>
   </project>
   <project>
     <id>module2</id>
-    <buildURI>$URI_BASE</buildURI>
+    <buildURI>file:/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator/</buildURI>
     <name>no-generator1</name>
     <organization>no-generator1</organization>
     <version>0.1.0-SNAPSHOT</version>
-    <base>$BASE/no-generator1</base>
-    <target>$BASE/no-generator1/target</target>
+    <base>/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator/no-generator1</base>
+    <target>/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator/no-generator1/target</target>
     <scala>
       <version>2.12.21</version>
       <libraryJars>
-        <jar>$SBT_BOOT/scala-2.12.21/lib/scala-library.jar</jar>
+        <jar>/Users/vasil/.sbt-structure-global/boot/scala-2.12.21/lib/scala-library.jar</jar>
       </libraryJars>
       <compilerJars>
-        <jar>$SBT_BOOT/scala-2.12.21/lib/scala-compiler.jar</jar>
-        <jar>$SBT_BOOT/scala-2.12.21/lib/scala-reflect.jar</jar>
-        <jar>$SBT_BOOT/scala-2.12.21/lib/scala-xml_2.12-2.3.0.jar</jar>
+        <jar>/Users/vasil/.sbt-structure-global/boot/scala-2.12.21/lib/scala-compiler.jar</jar>
+        <jar>/Users/vasil/.sbt-structure-global/boot/scala-2.12.21/lib/scala-reflect.jar</jar>
+        <jar>/Users/vasil/.sbt-structure-global/boot/scala-2.12.21/lib/scala-xml_2.12-2.3.0.jar</jar>
       </compilerJars>
-      <extraJars/>
+      <extraJars></extraJars>
     </scala>
     <compileOrder>Mixed</compileOrder>
     <configuration id="compile">
-      <sources>$BASE/no-generator1/src/main/java</sources>
-      <sources>$BASE/no-generator1/src/main/scala</sources>
-      <sources>$BASE/no-generator1/src/main/scala-2</sources>
-      <sources>$BASE/no-generator1/src/main/scala-2.12</sources>
-      <sources managed="true">$BASE/no-generator1/target/scala-2.12/src_managed/main</sources>
-      <resources>$BASE/no-generator1/src/main/resources</resources>
-      <resources managed="true">$BASE/no-generator1/target/scala-2.12/resource_managed/main</resources>
-      <classes>$BASE/no-generator1/target/scala-2.12/classes</classes>
+      <sources>/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator/no-generator1/src/main/java</sources>
+      <sources>/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator/no-generator1/src/main/scala</sources>
+      <sources>/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator/no-generator1/src/main/scala-2</sources>
+      <sources>/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator/no-generator1/src/main/scala-2.12</sources>
+      <sources managed="true">/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator/no-generator1/target/scala-2.12/src_managed/main</sources>
+      <resources>/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator/no-generator1/src/main/resources</resources>
+      <resources managed="true">/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator/no-generator1/target/scala-2.12/resource_managed/main</resources>
+      <classes>/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator/no-generator1/target/scala-2.12/classes</classes>
     </configuration>
     <configuration id="test">
-      <sources>$BASE/no-generator1/src/test/java</sources>
-      <sources>$BASE/no-generator1/src/test/scala</sources>
-      <sources>$BASE/no-generator1/src/test/scala-2</sources>
-      <sources>$BASE/no-generator1/src/test/scala-2.12</sources>
-      <sources managed="true">$BASE/no-generator1/target/scala-2.12/src_managed/test</sources>
-      <resources>$BASE/no-generator1/src/test/resources</resources>
-      <resources managed="true">$BASE/no-generator1/target/scala-2.12/resource_managed/test</resources>
-      <classes>$BASE/no-generator1/target/scala-2.12/test-classes</classes>
+      <sources>/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator/no-generator1/src/test/java</sources>
+      <sources>/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator/no-generator1/src/test/scala</sources>
+      <sources>/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator/no-generator1/src/test/scala-2</sources>
+      <sources>/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator/no-generator1/src/test/scala-2.12</sources>
+      <sources managed="true">/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator/no-generator1/target/scala-2.12/src_managed/test</sources>
+      <resources>/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator/no-generator1/src/test/resources</resources>
+      <resources managed="true">/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator/no-generator1/target/scala-2.12/resource_managed/test</resources>
+      <classes>/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator/no-generator1/target/scala-2.12/test-classes</classes>
     </configuration>
     <dependencies>
       <projects>
         <forTest>
-          <project buildURI="$URI_BASE" configurations="compile">module2:main</project>
+          <project buildURI="file:/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator/" configurations="compile">module2:main</project>
         </forTest>
-        <forProduction></forProduction>
+        <forProduction> </forProduction>
       </projects>
       <modules>
         <forTest>
@@ -5359,8 +5578,8 @@
         </forProduction>
       </modules>
       <jars>
-        <forTest></forTest>
-        <forProduction></forProduction>
+        <forTest> </forTest>
+        <forProduction> </forProduction>
       </jars>
     </dependencies>
     <resolver name="public" root="https://repo1.maven.org/maven2/"/>
@@ -5368,11 +5587,13 @@
       <label>artifacts</label>
       <description>The artifact definitions for the current module. Must be consistent with packagedArtifacts.</description>
       <rank>40</rank>
+      <value>List(Artifact(root, pom, pom, None, Vector(pom), None, Map(), None, false), Artifact(root, jar, jar,...</value>
     </setting>
     <setting>
       <label>organization</label>
       <description>Organization/group ID.</description>
       <rank>9</rank>
+      <value>root</value>
     </setting>
     <setting>
       <label>testReportsDirectory</label>
@@ -5383,6 +5604,7 @@
       <label>classLoaderLayeringStrategy</label>
       <description>Creates the classloader layering strategy for the particular configuration.</description>
       <rank>25</rank>
+      <value>ScalaLibrary</value>
     </setting>
     <setting>
       <label>compileAnalysisTargetRoot</label>
@@ -5393,11 +5615,13 @@
       <label>name</label>
       <description>Project name.</description>
       <rank>9</rank>
+      <value>root</value>
     </setting>
     <setting>
       <label>retrieveConfiguration</label>
       <description>Configures retrieving dependencies to the current build.</description>
       <rank>10000</rank>
+      <value>None</value>
     </setting>
     <setting>
       <label>pushRemoteCacheArtifact</label>
@@ -5408,16 +5632,19 @@
       <label>makePomConfiguration</label>
       <description>Configuration for generating a pom.</description>
       <rank>10000</rank>
+      <value>MakePomConfiguration(Some(/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source...</value>
     </setting>
     <setting>
       <label>ivyPaths</label>
       <description>Configures paths used by Ivy for dependency management.</description>
       <rank>10000</rank>
+      <value>IvyPaths(/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator, Some(...</value>
     </setting>
     <setting>
       <label>projectInfo</label>
       <description>Addition project information like formal name, homepage, licenses etc.</description>
       <rank>100</rank>
+      <value>ModuleInfo(root, root, None, None, Vector(), root, None, None, Vector())</value>
     </setting>
     <setting>
       <label>resourceDirectories</label>
@@ -5428,11 +5655,13 @@
       <label>scalaBinaryVersion</label>
       <description>The Scala version substring describing binary compatibility.</description>
       <rank>39</rank>
+      <value>2.12</value>
     </setting>
     <setting>
       <label>csrCacheDirectory</label>
       <description>Coursier cache directory. Uses -Dsbt.coursier.home or Coursier's default.</description>
       <rank>100</rank>
+      <value>/Users/vasil/.sbt-structure-global/coursier/cache</value>
     </setting>
     <setting>
       <label>internalDependencyConfigurations</label>
@@ -5443,11 +5672,13 @@
       <label>history</label>
       <description>The location where command line history is persisted.</description>
       <rank>40</rank>
+      <value>Some(/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator/target/.hi...</value>
     </setting>
     <setting>
       <label>normalizedName</label>
       <description>Project name transformed from mixed case and spaces to lowercase and dash-separated.</description>
       <rank>40</rank>
+      <value>root</value>
     </setting>
     <setting>
       <label>scalaSource</label>
@@ -5456,28 +5687,32 @@
     </setting>
     <setting>
       <label>dependencyTreeCrossProjectId</label>
-      <description/>
+      <description></description>
       <rank>25</rank>
     </setting>
     <setting>
       <label>description</label>
       <description>Project description.</description>
       <rank>40</rank>
+      <value>root</value>
     </setting>
     <setting>
       <label>scalaCompilerBridgeSource</label>
       <description>Configures the module ID of the sources of the compiler bridge when scalaCompilerBridgeBinaryJar is None</description>
       <rank>100</rank>
+      <value>org.scala-sbt:compiler-bridge_2.12:1.12.0:compile</value>
     </setting>
     <setting>
       <label>unmanagedBase</label>
       <description>The default directory for manually managed libraries.</description>
       <rank>10</rank>
+      <value>/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator/lib</value>
     </setting>
     <setting>
       <label>organizationHomepage</label>
       <description>Organization homepage.</description>
       <rank>41</rank>
+      <value>None</value>
     </setting>
     <setting>
       <label>sourceDirectories</label>
@@ -5488,51 +5723,61 @@
       <label>sbtBinaryVersion</label>
       <description>Defines the binary compatibility version substring.</description>
       <rank>39</rank>
+      <value>1.0</value>
     </setting>
     <setting>
       <label>thisProjectRef</label>
       <description>Provides a fully-resolved reference to the current project for the referencing scope.</description>
       <rank>100</rank>
+      <value>ProjectRef(file:/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator...</value>
     </setting>
     <setting>
       <label>outputFileStamper</label>
       <description>Toggles the file stamping implementation used to determine whether or not a file has been modified.</description>
       <rank>25</rank>
+      <value>LastModified</value>
     </setting>
     <setting>
       <label>semanticdbCompilerPlugin</label>
       <description>SemanticDB Scalac plugin</description>
       <rank>100</rank>
+      <value>org.scalameta:semanticdb-scalac:4.15.2</value>
     </setting>
     <setting>
       <label>sourceManaged</label>
       <description>Default directory for sources generated by the build.</description>
       <rank>39</rank>
+      <value>/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator/target/scala-2....</value>
     </setting>
     <setting>
       <label>moduleName</label>
       <description>The name of the current module, used for dependency management.</description>
       <rank>40</rank>
+      <value>root</value>
     </setting>
     <setting>
       <label>organizationName</label>
       <description>Organization full/formal name.</description>
       <rank>41</rank>
+      <value>root</value>
     </setting>
     <setting>
       <label>conflictWarning</label>
       <description>Configures warnings for conflicts in dependency management.</description>
       <rank>100</rank>
+      <value>ConflictWarning(ProjectRef(uri(&quot;file:/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/cu...</value>
     </setting>
     <setting>
       <label>appResolvers</label>
       <description>The resolvers configured for this application by the sbt launcher.</description>
       <rank>41</rank>
+      <value>Some(Vector(FileRepository(local, Patterns(ivyPatterns=Vector(${ivy.home}/local/[organisation]/[modu...</value>
     </setting>
     <setting>
       <label>publishArtifact</label>
       <description>Enables (true) or disables (false) publishing an artifact.</description>
       <rank>11</rank>
+      <value>true</value>
     </setting>
     <setting>
       <label>persistJarClasspath</label>
@@ -5543,16 +5788,19 @@
       <label>scalaVersion</label>
       <description>The version of Scala used for building.</description>
       <rank>9</rank>
+      <value>2.12.21</value>
     </setting>
     <setting>
       <label>allExcludeDependencies</label>
       <description>User-defined dependency exclusions and sbt itself in the case of metabuild.</description>
       <rank>200</rank>
+      <value>List()</value>
     </setting>
     <setting>
       <label>ivyConfigurations</label>
       <description>The defined configurations for dependency management. This may be different from the configurations for Project settings.</description>
       <rank>40</rank>
+      <value>List(compile, runtime, test, provided, optional, compile-internal, runtime-internal, test-internal, ...</value>
     </setting>
     <setting>
       <label>earlyOutput</label>
@@ -5563,11 +5811,13 @@
       <label>sbtDependency</label>
       <description>Provides a definition for declaring the current version of sbt.</description>
       <rank>41</rank>
+      <value>org.scala-sbt:sbt:1.12.7</value>
     </setting>
     <setting>
       <label>crossVersion</label>
       <description>Configures handling of the Scala version when cross-building.</description>
       <rank>100</rank>
+      <value>Binary(, )</value>
     </setting>
     <setting>
       <label>earlyCompileAnalysisTargetRoot</label>
@@ -5578,31 +5828,37 @@
       <label>transitiveClassifiers</label>
       <description>List of classifiers used for transitively obtaining extra artifacts for sbt or declared dependencies.</description>
       <rank>40</rank>
+      <value>List(sources, javadoc)</value>
     </setting>
     <setting>
       <label>bgHashClasspath</label>
       <description>Toggles whether to use a hash or the last modified time to stamp the classpath jars</description>
       <rank>25</rank>
+      <value>true</value>
     </setting>
     <setting>
       <label>updateConfiguration</label>
       <description>Configuration for resolving and retrieving managed dependencies.</description>
       <rank>10000</rank>
+      <value>UpdateConfiguration(None, false, Default, unknown, None, Some(ArtifactTypeFilter(Set(source, javadoc...</value>
     </setting>
     <setting>
       <label>crossTarget</label>
       <description>Main directory for files generated by the build that are cross-built.</description>
       <rank>40</rank>
+      <value>/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator/target/scala-2.12</value>
     </setting>
     <setting>
       <label>testResultLogger</label>
       <description>Logs results after a test task completes.</description>
       <rank>20000</rank>
+      <value>Main(sbt.TestResultLogger$Defaults$$$Lambda$988/0x000000a001482888@2f95af66,sbt.TestResultLogger$$an...</value>
     </setting>
     <setting>
       <label>resourceManaged</label>
       <description>Default managed resource directory, used when generating resources.</description>
       <rank>40</rank>
+      <value>/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator/target/scala-2....</value>
     </setting>
     <setting>
       <label>resourceGenerators</label>
@@ -5611,8 +5867,11 @@
     </setting>
     <setting>
       <label>fileInputs</label>
-      <description>The file globs that are used by a task. This setting will generally be scoped per task. It will also be used to determine the sources to watch during continuous execution.</description>
+      <description>
+        The file globs that are used by a task. This setting will generally be scoped per task. It will also be used to determine the sources to watch during continuous execution.
+      </description>
       <rank>25</rank>
+      <value>List()</value>
     </setting>
     <setting>
       <label>resourceDirectory</label>
@@ -5633,6 +5892,7 @@
       <label>overrideBuildResolvers</label>
       <description>Whether or not all the build resolvers should be overridden with what's defined from the launcher.</description>
       <rank>41</rank>
+      <value>false</value>
     </setting>
     <setting>
       <label>javaSource</label>
@@ -5648,26 +5908,33 @@
       <label>remoteCacheResolvers</label>
       <description>Resolvers for remote cache.</description>
       <rank>25</rank>
+      <value>Vector()</value>
     </setting>
     <setting>
       <label>watchForceTriggerOnAnyChange</label>
-      <description>Force the watch process to rerun the current task(s) if any relevant source change is detected regardless of whether or not the underlying file has actually changed.</description>
+      <description>
+        Force the watch process to rerun the current task(s) if any relevant source change is detected regardless of whether or not the underlying file has actually changed.
+      </description>
       <rank>10000</rank>
+      <value>false</value>
     </setting>
     <setting>
       <label>classpathOptions</label>
       <description>Configures handling of Scala classpaths.</description>
       <rank>10000</rank>
+      <value>ClasspathOptions(bootLibrary: true, compiler: false, extra: false, autoBoot: true, filterLibrary: true)</value>
     </setting>
     <setting>
       <label>baseDirectory</label>
       <description>The base directory. Depending on the scope, this is the base directory for the build, project, configuration, or task.</description>
       <rank>11</rank>
+      <value>/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator</value>
     </setting>
     <setting>
       <label>csrSameVersions</label>
       <description>Modules to keep at the same version.</description>
       <rank>25</rank>
+      <value>List(Set(InclExclRule(org.scala-lang, scala-library, *, Vector(), Disabled()), InclExclRule(org.scal...</value>
     </setting>
     <setting>
       <label>classDirectory</label>
@@ -5678,6 +5945,7 @@
       <label>sonaDeploymentName</label>
       <description>The name used for deployment</description>
       <rank>10000</rank>
+      <value>root:root:0.1.0-SNAPSHOT:72c30557</value>
     </setting>
     <setting>
       <label>artifactPath</label>
@@ -5688,11 +5956,13 @@
       <label>cleanKeepGlobs</label>
       <description>Globs to keep during a clean. Must be direct children of target.</description>
       <rank>100</rank>
+      <value>List(/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator/target/glo...</value>
     </setting>
     <setting>
       <label>cleanKeepFiles</label>
       <description>Files or directories to keep during a clean. Must be direct children of target.</description>
       <rank>100</rank>
+      <value>Vector()</value>
     </setting>
     <setting>
       <label>configuration</label>
@@ -5703,6 +5973,7 @@
       <label>onLoadMessage</label>
       <description>Message to display when the project is loaded.</description>
       <rank>10000</rank>
+      <value>set current project to root (in build file:/Users/vasil/Code/sbt-structure/extractor/src/test/data/1...</value>
     </setting>
     <setting>
       <label>semanticdbTargetRoot</label>
@@ -5713,11 +5984,13 @@
       <label>thisProject</label>
       <description>Provides the current project for the referencing scope.</description>
       <rank>100</rank>
+      <value>Project(id root, base: /Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-ge...</value>
     </setting>
     <setting>
       <label>sourceDirectory</label>
       <description>Default directory containing sources.</description>
       <rank>11</rank>
+      <value>/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator/src</value>
     </setting>
     <setting>
       <label>managedSourceDirectories</label>
@@ -5728,16 +6001,19 @@
       <label>isSnapshot</label>
       <description>True if the version of the project is a snapshot version.</description>
       <rank>39</rank>
+      <value>true</value>
     </setting>
     <setting>
       <label>target</label>
       <description>Main directory for files generated by the build.</description>
       <rank>11</rank>
+      <value>/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator/target</value>
     </setting>
     <setting>
       <label>crossSbtVersions</label>
       <description>The versions of Sbt used when cross-building an sbt plugin.</description>
       <rank>25</rank>
+      <value>Vector(1.12.7)</value>
     </setting>
     <setting>
       <label>evictionWarningOptions</label>
@@ -5763,16 +6039,19 @@
       <label>crossScalaVersions</label>
       <description>The versions of Scala used when cross-building.</description>
       <rank>39</rank>
+      <value>List(2.12.21)</value>
     </setting>
     <setting>
       <label>libraryDependencies</label>
       <description>Declares managed dependencies.</description>
       <rank>9</rank>
+      <value>List(org.scala-lang:scala-library:2.12.21)</value>
     </setting>
     <setting>
       <label>projectID</label>
       <description>The dependency management descriptor for the current module.</description>
       <rank>41</rank>
+      <value>root:root:0.1.0-SNAPSHOT</value>
     </setting>
     <setting>
       <label>fileInputOptions</label>
@@ -5788,21 +6067,27 @@
       <label>dependencyOverrides</label>
       <description>Declares managed dependency overrides.</description>
       <rank>40</rank>
+      <value>Vector()</value>
     </setting>
     <setting>
       <label>publishMavenStyle</label>
       <description>Configures whether to generate and publish a pom (true) or Ivy file (false).</description>
       <rank>40</rank>
+      <value>true</value>
     </setting>
     <setting>
       <label>scalaModuleInfo</label>
       <description>Configures how Scala dependencies are checked, filtered, and injected.</description>
       <rank>100</rank>
+      <value>Some(ScalaModuleInfo(2.12.21, 2.12, Vector(), true, false, true, org.scala-lang, Vector(scala-librar...</value>
     </setting>
     <setting>
       <label>scalaOrganization</label>
-      <description>Organization/group ID of the Scala used in the project. Default value is 'org.scala-lang'. This is an advanced setting used for clones of the Scala Language. It should be disregarded in standard use cases.</description>
+      <description>
+        Organization/group ID of the Scala used in the project. Default value is 'org.scala-lang'. This is an advanced setting used for clones of the Scala Language. It should be disregarded in standard use cases.
+      </description>
       <rank>100</rank>
+      <value>org.scala-lang</value>
     </setting>
     <setting>
       <label>watched</label>
@@ -5813,16 +6098,19 @@
       <label>updateOptions</label>
       <description>Options for resolving managed dependencies.</description>
       <rank>10000</rank>
+      <value>UpdateOptions( circularDependencyLevel = warn, latestSnapshots = true, cachedResolution = false )</value>
     </setting>
     <setting>
       <label>artifact</label>
       <description>Describes an artifact.</description>
       <rank>41</rank>
+      <value>Artifact(root, jar, jar, None, Vector(), None, Map(), None, false)</value>
     </setting>
     <setting>
       <label>semanticdbOptions</label>
       <description>The Scalac options introduced for SemanticDB</description>
       <rank>100</rank>
+      <value>List(-Yrangepos)</value>
     </setting>
     <setting>
       <label>sourceGenerators</label>
@@ -5851,7 +6139,7 @@
     </task>
     <task>
       <label>csrResolvers</label>
-      <description/>
+      <description></description>
       <rank>17</rank>
     </task>
     <task>
@@ -6016,7 +6304,7 @@
     </task>
     <task>
       <label>bspScalaTestClassesItem</label>
-      <description/>
+      <description></description>
       <rank>20000</rank>
     </task>
     <task>
@@ -6081,7 +6369,9 @@
     </task>
     <task>
       <label>watch</label>
-      <description>Watch a task (or multiple tasks) and rebuild when its file inputs change or user input is received. The semantics are more or less the same as the `~` command except that it cannot transform the state on exit. This means that it cannot be used to reload the build.</description>
+      <description>
+        Watch a task (or multiple tasks) and rebuild when its file inputs change or user input is received. The semantics are more or less the same as the `~` command except that it cannot transform the state on exit. This means that it cannot be used to reload the build.
+      </description>
       <rank>10000</rank>
     </task>
     <task>
@@ -6096,7 +6386,7 @@
     </task>
     <task>
       <label>bspBuildTargetResourcesItem</label>
-      <description/>
+      <description></description>
       <rank>20000</rank>
     </task>
     <task>
@@ -6181,7 +6471,9 @@
     </task>
     <task>
       <label>skip</label>
-      <description>For tasks that support it (currently only 'compile', 'update', 'publish' and 'publishLocal'), setting skip to true will force the task to not to do its work. The exact semantics may vary depending on the task.</description>
+      <description>
+        For tasks that support it (currently only 'compile', 'update', 'publish' and 'publishLocal'), setting skip to true will force the task to not to do its work.  The exact semantics may vary depending on the task.
+      </description>
       <rank>40</rank>
     </task>
     <task>
@@ -6331,7 +6623,7 @@
     </task>
     <task>
       <label>bspBuildTargetDependencySourcesItem</label>
-      <description/>
+      <description></description>
       <rank>20000</rank>
     </task>
     <task>
@@ -6386,7 +6678,7 @@
     </task>
     <task>
       <label>csrProject</label>
-      <description/>
+      <description></description>
       <rank>17</rank>
     </task>
     <task>
@@ -6411,7 +6703,7 @@
     </task>
     <task>
       <label>pushRemoteCacheConfiguration</label>
-      <description/>
+      <description></description>
       <rank>17</rank>
     </task>
     <task>
@@ -6421,7 +6713,7 @@
     </task>
     <task>
       <label>bspBuildTargetScalacOptionsItem</label>
-      <description/>
+      <description></description>
       <rank>20000</rank>
     </task>
     <task>
@@ -6446,7 +6738,7 @@
     </task>
     <task>
       <label>bspBuildTargetOutputPathsItem</label>
-      <description/>
+      <description></description>
       <rank>20000</rank>
     </task>
     <task>
@@ -6471,7 +6763,7 @@
     </task>
     <task>
       <label>csrPublications</label>
-      <description/>
+      <description></description>
       <rank>17</rank>
     </task>
     <task>
@@ -6481,7 +6773,7 @@
     </task>
     <task>
       <label>csrExtraProjects</label>
-      <description/>
+      <description></description>
       <rank>200</rank>
     </task>
     <task>
@@ -6511,7 +6803,7 @@
     </task>
     <task>
       <label>csrFallbackDependencies</label>
-      <description/>
+      <description></description>
       <rank>17</rank>
     </task>
     <task>
@@ -6526,7 +6818,7 @@
     </task>
     <task>
       <label>bspBuildTargetCompileItem</label>
-      <description/>
+      <description></description>
       <rank>20000</rank>
     </task>
     <task>
@@ -6541,7 +6833,7 @@
     </task>
     <task>
       <label>bspBuildTargetSourcesItem</label>
-      <description/>
+      <description></description>
       <rank>20000</rank>
     </task>
     <task>
@@ -6676,7 +6968,7 @@
     </task>
     <task>
       <label>bspReporter</label>
-      <description/>
+      <description></description>
       <rank>20000</rank>
     </task>
     <task>
@@ -6711,7 +7003,7 @@
     </task>
     <task>
       <label>bspScalaMainClassesItem</label>
-      <description/>
+      <description></description>
       <rank>20000</rank>
     </task>
     <task>
@@ -7004,57 +7296,57 @@
     <command>
       <name>bspReload</name>
     </command>
-    <testSourceDir>$BASE/no-generator1/src/test</testSourceDir>
-    <mainSourceDir>$BASE/no-generator1/src/main</mainSourceDir>
+    <testSourceDir>/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator/no-generator1/src/test</testSourceDir>
+    <mainSourceDir>/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator/no-generator1/src/main</mainSourceDir>
     <generatedManagedSources>false</generatedManagedSources>
   </project>
   <project>
     <id>module4</id>
-    <buildURI>$URI_BASE</buildURI>
+    <buildURI>file:/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator/</buildURI>
     <name>no-generator2</name>
     <organization>no-generator2</organization>
     <version>0.1.0-SNAPSHOT</version>
-    <base>$BASE/no-generator2</base>
-    <target>$BASE/no-generator2/target</target>
+    <base>/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator/no-generator2</base>
+    <target>/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator/no-generator2/target</target>
     <scala>
       <version>2.12.21</version>
       <libraryJars>
-        <jar>$SBT_BOOT/scala-2.12.21/lib/scala-library.jar</jar>
+        <jar>/Users/vasil/.sbt-structure-global/boot/scala-2.12.21/lib/scala-library.jar</jar>
       </libraryJars>
       <compilerJars>
-        <jar>$SBT_BOOT/scala-2.12.21/lib/scala-compiler.jar</jar>
-        <jar>$SBT_BOOT/scala-2.12.21/lib/scala-reflect.jar</jar>
-        <jar>$SBT_BOOT/scala-2.12.21/lib/scala-xml_2.12-2.3.0.jar</jar>
+        <jar>/Users/vasil/.sbt-structure-global/boot/scala-2.12.21/lib/scala-compiler.jar</jar>
+        <jar>/Users/vasil/.sbt-structure-global/boot/scala-2.12.21/lib/scala-reflect.jar</jar>
+        <jar>/Users/vasil/.sbt-structure-global/boot/scala-2.12.21/lib/scala-xml_2.12-2.3.0.jar</jar>
       </compilerJars>
-      <extraJars/>
+      <extraJars></extraJars>
     </scala>
     <compileOrder>Mixed</compileOrder>
     <configuration id="compile">
-      <sources>$BASE/no-generator2/src/main/java</sources>
-      <sources>$BASE/no-generator2/src/main/scala</sources>
-      <sources>$BASE/no-generator2/src/main/scala-2</sources>
-      <sources>$BASE/no-generator2/src/main/scala-2.12</sources>
-      <sources managed="true">$BASE/no-generator2/target/scala-2.12/src_managed/main</sources>
-      <resources>$BASE/no-generator2/src/main/resources</resources>
-      <resources managed="true">$BASE/no-generator2/target/scala-2.12/resource_managed/main</resources>
-      <classes>$BASE/no-generator2/target/scala-2.12/classes</classes>
+      <sources>/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator/no-generator2/src/main/java</sources>
+      <sources>/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator/no-generator2/src/main/scala</sources>
+      <sources>/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator/no-generator2/src/main/scala-2</sources>
+      <sources>/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator/no-generator2/src/main/scala-2.12</sources>
+      <sources managed="true">/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator/no-generator2/target/scala-2.12/src_managed/main</sources>
+      <resources>/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator/no-generator2/src/main/resources</resources>
+      <resources managed="true">/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator/no-generator2/target/scala-2.12/resource_managed/main</resources>
+      <classes>/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator/no-generator2/target/scala-2.12/classes</classes>
     </configuration>
     <configuration id="test">
-      <sources>$BASE/no-generator2/src/test/java</sources>
-      <sources>$BASE/no-generator2/src/test/scala</sources>
-      <sources>$BASE/no-generator2/src/test/scala-2</sources>
-      <sources>$BASE/no-generator2/src/test/scala-2.12</sources>
-      <sources managed="true">$BASE/no-generator2/target/scala-2.12/src_managed/test</sources>
-      <resources>$BASE/no-generator2/src/test/resources</resources>
-      <resources managed="true">$BASE/no-generator2/target/scala-2.12/resource_managed/test</resources>
-      <classes>$BASE/no-generator2/target/scala-2.12/test-classes</classes>
+      <sources>/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator/no-generator2/src/test/java</sources>
+      <sources>/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator/no-generator2/src/test/scala</sources>
+      <sources>/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator/no-generator2/src/test/scala-2</sources>
+      <sources>/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator/no-generator2/src/test/scala-2.12</sources>
+      <sources managed="true">/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator/no-generator2/target/scala-2.12/src_managed/test</sources>
+      <resources>/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator/no-generator2/src/test/resources</resources>
+      <resources managed="true">/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator/no-generator2/target/scala-2.12/resource_managed/test</resources>
+      <classes>/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator/no-generator2/target/scala-2.12/test-classes</classes>
     </configuration>
     <dependencies>
       <projects>
         <forTest>
-          <project buildURI="$URI_BASE" configurations="compile">module4:main</project>
+          <project buildURI="file:/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator/" configurations="compile">module4:main</project>
         </forTest>
-        <forProduction></forProduction>
+        <forProduction> </forProduction>
       </projects>
       <modules>
         <forTest>
@@ -7065,8 +7357,8 @@
         </forProduction>
       </modules>
       <jars>
-        <forTest></forTest>
-        <forProduction></forProduction>
+        <forTest> </forTest>
+        <forProduction> </forProduction>
       </jars>
     </dependencies>
     <resolver name="public" root="https://repo1.maven.org/maven2/"/>
@@ -7074,11 +7366,13 @@
       <label>artifacts</label>
       <description>The artifact definitions for the current module. Must be consistent with packagedArtifacts.</description>
       <rank>40</rank>
+      <value>List(Artifact(root, pom, pom, None, Vector(pom), None, Map(), None, false), Artifact(root, jar, jar,...</value>
     </setting>
     <setting>
       <label>organization</label>
       <description>Organization/group ID.</description>
       <rank>9</rank>
+      <value>root</value>
     </setting>
     <setting>
       <label>testReportsDirectory</label>
@@ -7089,6 +7383,7 @@
       <label>classLoaderLayeringStrategy</label>
       <description>Creates the classloader layering strategy for the particular configuration.</description>
       <rank>25</rank>
+      <value>ScalaLibrary</value>
     </setting>
     <setting>
       <label>compileAnalysisTargetRoot</label>
@@ -7099,11 +7394,13 @@
       <label>name</label>
       <description>Project name.</description>
       <rank>9</rank>
+      <value>root</value>
     </setting>
     <setting>
       <label>retrieveConfiguration</label>
       <description>Configures retrieving dependencies to the current build.</description>
       <rank>10000</rank>
+      <value>None</value>
     </setting>
     <setting>
       <label>pushRemoteCacheArtifact</label>
@@ -7114,16 +7411,19 @@
       <label>makePomConfiguration</label>
       <description>Configuration for generating a pom.</description>
       <rank>10000</rank>
+      <value>MakePomConfiguration(Some(/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source...</value>
     </setting>
     <setting>
       <label>ivyPaths</label>
       <description>Configures paths used by Ivy for dependency management.</description>
       <rank>10000</rank>
+      <value>IvyPaths(/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator, Some(...</value>
     </setting>
     <setting>
       <label>projectInfo</label>
       <description>Addition project information like formal name, homepage, licenses etc.</description>
       <rank>100</rank>
+      <value>ModuleInfo(root, root, None, None, Vector(), root, None, None, Vector())</value>
     </setting>
     <setting>
       <label>resourceDirectories</label>
@@ -7134,11 +7434,13 @@
       <label>scalaBinaryVersion</label>
       <description>The Scala version substring describing binary compatibility.</description>
       <rank>39</rank>
+      <value>2.12</value>
     </setting>
     <setting>
       <label>csrCacheDirectory</label>
       <description>Coursier cache directory. Uses -Dsbt.coursier.home or Coursier's default.</description>
       <rank>100</rank>
+      <value>/Users/vasil/.sbt-structure-global/coursier/cache</value>
     </setting>
     <setting>
       <label>internalDependencyConfigurations</label>
@@ -7149,11 +7451,13 @@
       <label>history</label>
       <description>The location where command line history is persisted.</description>
       <rank>40</rank>
+      <value>Some(/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator/target/.hi...</value>
     </setting>
     <setting>
       <label>normalizedName</label>
       <description>Project name transformed from mixed case and spaces to lowercase and dash-separated.</description>
       <rank>40</rank>
+      <value>root</value>
     </setting>
     <setting>
       <label>scalaSource</label>
@@ -7162,28 +7466,32 @@
     </setting>
     <setting>
       <label>dependencyTreeCrossProjectId</label>
-      <description/>
+      <description></description>
       <rank>25</rank>
     </setting>
     <setting>
       <label>description</label>
       <description>Project description.</description>
       <rank>40</rank>
+      <value>root</value>
     </setting>
     <setting>
       <label>scalaCompilerBridgeSource</label>
       <description>Configures the module ID of the sources of the compiler bridge when scalaCompilerBridgeBinaryJar is None</description>
       <rank>100</rank>
+      <value>org.scala-sbt:compiler-bridge_2.12:1.12.0:compile</value>
     </setting>
     <setting>
       <label>unmanagedBase</label>
       <description>The default directory for manually managed libraries.</description>
       <rank>10</rank>
+      <value>/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator/lib</value>
     </setting>
     <setting>
       <label>organizationHomepage</label>
       <description>Organization homepage.</description>
       <rank>41</rank>
+      <value>None</value>
     </setting>
     <setting>
       <label>sourceDirectories</label>
@@ -7194,51 +7502,61 @@
       <label>sbtBinaryVersion</label>
       <description>Defines the binary compatibility version substring.</description>
       <rank>39</rank>
+      <value>1.0</value>
     </setting>
     <setting>
       <label>thisProjectRef</label>
       <description>Provides a fully-resolved reference to the current project for the referencing scope.</description>
       <rank>100</rank>
+      <value>ProjectRef(file:/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator...</value>
     </setting>
     <setting>
       <label>outputFileStamper</label>
       <description>Toggles the file stamping implementation used to determine whether or not a file has been modified.</description>
       <rank>25</rank>
+      <value>LastModified</value>
     </setting>
     <setting>
       <label>semanticdbCompilerPlugin</label>
       <description>SemanticDB Scalac plugin</description>
       <rank>100</rank>
+      <value>org.scalameta:semanticdb-scalac:4.15.2</value>
     </setting>
     <setting>
       <label>sourceManaged</label>
       <description>Default directory for sources generated by the build.</description>
       <rank>39</rank>
+      <value>/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator/target/scala-2....</value>
     </setting>
     <setting>
       <label>moduleName</label>
       <description>The name of the current module, used for dependency management.</description>
       <rank>40</rank>
+      <value>root</value>
     </setting>
     <setting>
       <label>organizationName</label>
       <description>Organization full/formal name.</description>
       <rank>41</rank>
+      <value>root</value>
     </setting>
     <setting>
       <label>conflictWarning</label>
       <description>Configures warnings for conflicts in dependency management.</description>
       <rank>100</rank>
+      <value>ConflictWarning(ProjectRef(uri(&quot;file:/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/cu...</value>
     </setting>
     <setting>
       <label>appResolvers</label>
       <description>The resolvers configured for this application by the sbt launcher.</description>
       <rank>41</rank>
+      <value>Some(Vector(FileRepository(local, Patterns(ivyPatterns=Vector(${ivy.home}/local/[organisation]/[modu...</value>
     </setting>
     <setting>
       <label>publishArtifact</label>
       <description>Enables (true) or disables (false) publishing an artifact.</description>
       <rank>11</rank>
+      <value>true</value>
     </setting>
     <setting>
       <label>persistJarClasspath</label>
@@ -7249,16 +7567,19 @@
       <label>scalaVersion</label>
       <description>The version of Scala used for building.</description>
       <rank>9</rank>
+      <value>2.12.21</value>
     </setting>
     <setting>
       <label>allExcludeDependencies</label>
       <description>User-defined dependency exclusions and sbt itself in the case of metabuild.</description>
       <rank>200</rank>
+      <value>List()</value>
     </setting>
     <setting>
       <label>ivyConfigurations</label>
       <description>The defined configurations for dependency management. This may be different from the configurations for Project settings.</description>
       <rank>40</rank>
+      <value>List(compile, runtime, test, provided, optional, compile-internal, runtime-internal, test-internal, ...</value>
     </setting>
     <setting>
       <label>earlyOutput</label>
@@ -7269,11 +7590,13 @@
       <label>sbtDependency</label>
       <description>Provides a definition for declaring the current version of sbt.</description>
       <rank>41</rank>
+      <value>org.scala-sbt:sbt:1.12.7</value>
     </setting>
     <setting>
       <label>crossVersion</label>
       <description>Configures handling of the Scala version when cross-building.</description>
       <rank>100</rank>
+      <value>Binary(, )</value>
     </setting>
     <setting>
       <label>earlyCompileAnalysisTargetRoot</label>
@@ -7284,31 +7607,37 @@
       <label>transitiveClassifiers</label>
       <description>List of classifiers used for transitively obtaining extra artifacts for sbt or declared dependencies.</description>
       <rank>40</rank>
+      <value>List(sources, javadoc)</value>
     </setting>
     <setting>
       <label>bgHashClasspath</label>
       <description>Toggles whether to use a hash or the last modified time to stamp the classpath jars</description>
       <rank>25</rank>
+      <value>true</value>
     </setting>
     <setting>
       <label>updateConfiguration</label>
       <description>Configuration for resolving and retrieving managed dependencies.</description>
       <rank>10000</rank>
+      <value>UpdateConfiguration(None, false, Default, unknown, None, Some(ArtifactTypeFilter(Set(source, javadoc...</value>
     </setting>
     <setting>
       <label>crossTarget</label>
       <description>Main directory for files generated by the build that are cross-built.</description>
       <rank>40</rank>
+      <value>/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator/target/scala-2.12</value>
     </setting>
     <setting>
       <label>testResultLogger</label>
       <description>Logs results after a test task completes.</description>
       <rank>20000</rank>
+      <value>Main(sbt.TestResultLogger$Defaults$$$Lambda$988/0x000000a001482888@2f95af66,sbt.TestResultLogger$$an...</value>
     </setting>
     <setting>
       <label>resourceManaged</label>
       <description>Default managed resource directory, used when generating resources.</description>
       <rank>40</rank>
+      <value>/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator/target/scala-2....</value>
     </setting>
     <setting>
       <label>resourceGenerators</label>
@@ -7317,8 +7646,11 @@
     </setting>
     <setting>
       <label>fileInputs</label>
-      <description>The file globs that are used by a task. This setting will generally be scoped per task. It will also be used to determine the sources to watch during continuous execution.</description>
+      <description>
+        The file globs that are used by a task. This setting will generally be scoped per task. It will also be used to determine the sources to watch during continuous execution.
+      </description>
       <rank>25</rank>
+      <value>List()</value>
     </setting>
     <setting>
       <label>resourceDirectory</label>
@@ -7339,6 +7671,7 @@
       <label>overrideBuildResolvers</label>
       <description>Whether or not all the build resolvers should be overridden with what's defined from the launcher.</description>
       <rank>41</rank>
+      <value>false</value>
     </setting>
     <setting>
       <label>javaSource</label>
@@ -7354,26 +7687,33 @@
       <label>remoteCacheResolvers</label>
       <description>Resolvers for remote cache.</description>
       <rank>25</rank>
+      <value>Vector()</value>
     </setting>
     <setting>
       <label>watchForceTriggerOnAnyChange</label>
-      <description>Force the watch process to rerun the current task(s) if any relevant source change is detected regardless of whether or not the underlying file has actually changed.</description>
+      <description>
+        Force the watch process to rerun the current task(s) if any relevant source change is detected regardless of whether or not the underlying file has actually changed.
+      </description>
       <rank>10000</rank>
+      <value>false</value>
     </setting>
     <setting>
       <label>classpathOptions</label>
       <description>Configures handling of Scala classpaths.</description>
       <rank>10000</rank>
+      <value>ClasspathOptions(bootLibrary: true, compiler: false, extra: false, autoBoot: true, filterLibrary: true)</value>
     </setting>
     <setting>
       <label>baseDirectory</label>
       <description>The base directory. Depending on the scope, this is the base directory for the build, project, configuration, or task.</description>
       <rank>11</rank>
+      <value>/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator</value>
     </setting>
     <setting>
       <label>csrSameVersions</label>
       <description>Modules to keep at the same version.</description>
       <rank>25</rank>
+      <value>List(Set(InclExclRule(org.scala-lang, scala-library, *, Vector(), Disabled()), InclExclRule(org.scal...</value>
     </setting>
     <setting>
       <label>classDirectory</label>
@@ -7384,6 +7724,7 @@
       <label>sonaDeploymentName</label>
       <description>The name used for deployment</description>
       <rank>10000</rank>
+      <value>root:root:0.1.0-SNAPSHOT:72c30557</value>
     </setting>
     <setting>
       <label>artifactPath</label>
@@ -7394,11 +7735,13 @@
       <label>cleanKeepGlobs</label>
       <description>Globs to keep during a clean. Must be direct children of target.</description>
       <rank>100</rank>
+      <value>List(/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator/target/glo...</value>
     </setting>
     <setting>
       <label>cleanKeepFiles</label>
       <description>Files or directories to keep during a clean. Must be direct children of target.</description>
       <rank>100</rank>
+      <value>Vector()</value>
     </setting>
     <setting>
       <label>configuration</label>
@@ -7409,6 +7752,7 @@
       <label>onLoadMessage</label>
       <description>Message to display when the project is loaded.</description>
       <rank>10000</rank>
+      <value>set current project to root (in build file:/Users/vasil/Code/sbt-structure/extractor/src/test/data/1...</value>
     </setting>
     <setting>
       <label>semanticdbTargetRoot</label>
@@ -7419,11 +7763,13 @@
       <label>thisProject</label>
       <description>Provides the current project for the referencing scope.</description>
       <rank>100</rank>
+      <value>Project(id root, base: /Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-ge...</value>
     </setting>
     <setting>
       <label>sourceDirectory</label>
       <description>Default directory containing sources.</description>
       <rank>11</rank>
+      <value>/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator/src</value>
     </setting>
     <setting>
       <label>managedSourceDirectories</label>
@@ -7434,16 +7780,19 @@
       <label>isSnapshot</label>
       <description>True if the version of the project is a snapshot version.</description>
       <rank>39</rank>
+      <value>true</value>
     </setting>
     <setting>
       <label>target</label>
       <description>Main directory for files generated by the build.</description>
       <rank>11</rank>
+      <value>/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator/target</value>
     </setting>
     <setting>
       <label>crossSbtVersions</label>
       <description>The versions of Sbt used when cross-building an sbt plugin.</description>
       <rank>25</rank>
+      <value>Vector(1.12.7)</value>
     </setting>
     <setting>
       <label>evictionWarningOptions</label>
@@ -7469,16 +7818,19 @@
       <label>crossScalaVersions</label>
       <description>The versions of Scala used when cross-building.</description>
       <rank>39</rank>
+      <value>List(2.12.21)</value>
     </setting>
     <setting>
       <label>libraryDependencies</label>
       <description>Declares managed dependencies.</description>
       <rank>9</rank>
+      <value>List(org.scala-lang:scala-library:2.12.21)</value>
     </setting>
     <setting>
       <label>projectID</label>
       <description>The dependency management descriptor for the current module.</description>
       <rank>41</rank>
+      <value>root:root:0.1.0-SNAPSHOT</value>
     </setting>
     <setting>
       <label>fileInputOptions</label>
@@ -7494,21 +7846,27 @@
       <label>dependencyOverrides</label>
       <description>Declares managed dependency overrides.</description>
       <rank>40</rank>
+      <value>Vector()</value>
     </setting>
     <setting>
       <label>publishMavenStyle</label>
       <description>Configures whether to generate and publish a pom (true) or Ivy file (false).</description>
       <rank>40</rank>
+      <value>true</value>
     </setting>
     <setting>
       <label>scalaModuleInfo</label>
       <description>Configures how Scala dependencies are checked, filtered, and injected.</description>
       <rank>100</rank>
+      <value>Some(ScalaModuleInfo(2.12.21, 2.12, Vector(), true, false, true, org.scala-lang, Vector(scala-librar...</value>
     </setting>
     <setting>
       <label>scalaOrganization</label>
-      <description>Organization/group ID of the Scala used in the project. Default value is 'org.scala-lang'. This is an advanced setting used for clones of the Scala Language. It should be disregarded in standard use cases.</description>
+      <description>
+        Organization/group ID of the Scala used in the project. Default value is 'org.scala-lang'. This is an advanced setting used for clones of the Scala Language. It should be disregarded in standard use cases.
+      </description>
       <rank>100</rank>
+      <value>org.scala-lang</value>
     </setting>
     <setting>
       <label>watched</label>
@@ -7519,16 +7877,19 @@
       <label>updateOptions</label>
       <description>Options for resolving managed dependencies.</description>
       <rank>10000</rank>
+      <value>UpdateOptions( circularDependencyLevel = warn, latestSnapshots = true, cachedResolution = false )</value>
     </setting>
     <setting>
       <label>artifact</label>
       <description>Describes an artifact.</description>
       <rank>41</rank>
+      <value>Artifact(root, jar, jar, None, Vector(), None, Map(), None, false)</value>
     </setting>
     <setting>
       <label>semanticdbOptions</label>
       <description>The Scalac options introduced for SemanticDB</description>
       <rank>100</rank>
+      <value>List(-Yrangepos)</value>
     </setting>
     <setting>
       <label>sourceGenerators</label>
@@ -7557,7 +7918,7 @@
     </task>
     <task>
       <label>csrResolvers</label>
-      <description/>
+      <description></description>
       <rank>17</rank>
     </task>
     <task>
@@ -7722,7 +8083,7 @@
     </task>
     <task>
       <label>bspScalaTestClassesItem</label>
-      <description/>
+      <description></description>
       <rank>20000</rank>
     </task>
     <task>
@@ -7787,7 +8148,9 @@
     </task>
     <task>
       <label>watch</label>
-      <description>Watch a task (or multiple tasks) and rebuild when its file inputs change or user input is received. The semantics are more or less the same as the `~` command except that it cannot transform the state on exit. This means that it cannot be used to reload the build.</description>
+      <description>
+        Watch a task (or multiple tasks) and rebuild when its file inputs change or user input is received. The semantics are more or less the same as the `~` command except that it cannot transform the state on exit. This means that it cannot be used to reload the build.
+      </description>
       <rank>10000</rank>
     </task>
     <task>
@@ -7802,7 +8165,7 @@
     </task>
     <task>
       <label>bspBuildTargetResourcesItem</label>
-      <description/>
+      <description></description>
       <rank>20000</rank>
     </task>
     <task>
@@ -7887,7 +8250,9 @@
     </task>
     <task>
       <label>skip</label>
-      <description>For tasks that support it (currently only 'compile', 'update', 'publish' and 'publishLocal'), setting skip to true will force the task to not to do its work. The exact semantics may vary depending on the task.</description>
+      <description>
+        For tasks that support it (currently only 'compile', 'update', 'publish' and 'publishLocal'), setting skip to true will force the task to not to do its work.  The exact semantics may vary depending on the task.
+      </description>
       <rank>40</rank>
     </task>
     <task>
@@ -8037,7 +8402,7 @@
     </task>
     <task>
       <label>bspBuildTargetDependencySourcesItem</label>
-      <description/>
+      <description></description>
       <rank>20000</rank>
     </task>
     <task>
@@ -8092,7 +8457,7 @@
     </task>
     <task>
       <label>csrProject</label>
-      <description/>
+      <description></description>
       <rank>17</rank>
     </task>
     <task>
@@ -8117,7 +8482,7 @@
     </task>
     <task>
       <label>pushRemoteCacheConfiguration</label>
-      <description/>
+      <description></description>
       <rank>17</rank>
     </task>
     <task>
@@ -8127,7 +8492,7 @@
     </task>
     <task>
       <label>bspBuildTargetScalacOptionsItem</label>
-      <description/>
+      <description></description>
       <rank>20000</rank>
     </task>
     <task>
@@ -8152,7 +8517,7 @@
     </task>
     <task>
       <label>bspBuildTargetOutputPathsItem</label>
-      <description/>
+      <description></description>
       <rank>20000</rank>
     </task>
     <task>
@@ -8177,7 +8542,7 @@
     </task>
     <task>
       <label>csrPublications</label>
-      <description/>
+      <description></description>
       <rank>17</rank>
     </task>
     <task>
@@ -8187,7 +8552,7 @@
     </task>
     <task>
       <label>csrExtraProjects</label>
-      <description/>
+      <description></description>
       <rank>200</rank>
     </task>
     <task>
@@ -8217,7 +8582,7 @@
     </task>
     <task>
       <label>csrFallbackDependencies</label>
-      <description/>
+      <description></description>
       <rank>17</rank>
     </task>
     <task>
@@ -8232,7 +8597,7 @@
     </task>
     <task>
       <label>bspBuildTargetCompileItem</label>
-      <description/>
+      <description></description>
       <rank>20000</rank>
     </task>
     <task>
@@ -8247,7 +8612,7 @@
     </task>
     <task>
       <label>bspBuildTargetSourcesItem</label>
-      <description/>
+      <description></description>
       <rank>20000</rank>
     </task>
     <task>
@@ -8382,7 +8747,7 @@
     </task>
     <task>
       <label>bspReporter</label>
-      <description/>
+      <description></description>
       <rank>20000</rank>
     </task>
     <task>
@@ -8417,7 +8782,7 @@
     </task>
     <task>
       <label>bspScalaMainClassesItem</label>
-      <description/>
+      <description></description>
       <rank>20000</rank>
     </task>
     <task>
@@ -8710,15 +9075,15 @@
     <command>
       <name>bspReload</name>
     </command>
-    <testSourceDir>$BASE/no-generator2/src/test</testSourceDir>
-    <mainSourceDir>$BASE/no-generator2/src/main</mainSourceDir>
+    <testSourceDir>/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator/no-generator2/src/test</testSourceDir>
+    <mainSourceDir>/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/custom-source-generator/no-generator2/src/main</mainSourceDir>
     <generatedManagedSources>false</generatedManagedSources>
   </project>
   <repository>
     <module organization="org.scala-lang" name="scala-library" revision="2.12.21" artifactType="jar" classifier="">
-      <jar>$SBT_BOOT/scala-2.12.21/lib/scala-library.jar</jar>
-      <src>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-lang/scala-library/2.12.21/scala-library-2.12.21-sources.jar</src>
+      <jar>/Users/vasil/.sbt-structure-global/boot/scala-2.12.21/lib/scala-library.jar</jar>
+      <src>/Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/org/scala-lang/scala-library/2.12.21/scala-library-2.12.21-sources.jar</src>
     </module>
   </repository>
-  <localCachePath>$IVY2</localCachePath>
+  <localCachePath>/Users/vasil/.sbt-structure-global/ivy2</localCachePath>
 </structure>
