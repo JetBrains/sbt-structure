@@ -1,5 +1,5 @@
   StructureData:
-    1.12.7
+    1.12.8
     BuildDataImpl:
       file:/Users/vasil/Code/sbt-structure/extractor/src/test/data/1.12/source-generator-failure/
       import $MachineSpecificHexString.`module1`
@@ -17,89 +17,89 @@
       /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/lib/scala-library.jar
       /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/lib/scala-reflect.jar
       /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/lib/scala-xml_2.12-2.3.0.jar
-      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/actions_2.12-1.12.7.jar
-      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/caffeine-2.8.5.jar
-      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/checker-qual-3.4.1.jar
-      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/collections_2.12-1.12.7.jar
-      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/command_2.12-1.12.7.jar
-      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/compiler-bridge_2.12-1.12.0.jar
-      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/compiler-interface-1.12.0.jar
-      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/completion_2.12-1.12.7.jar
-      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/config-1.4.2.jar
-      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/core-macros_2.12-1.12.7.jar
-      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/disruptor-3.4.2.jar
-      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/error_prone_annotations-2.4.0.jar
-      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/file-tree-views-2.1.12.jar
-      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/gigahorse-apache-http_2.12-0.9.3.jar
-      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/gigahorse-core_2.12-0.9.3.jar
-      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/io_2.12-1.10.5.jar
-      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/ipcsocket-1.6.3.jar
-      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/ivy-2.3.0-sbt-77cc781d727b367d3761f097d89f5a4762771d41.jar
-      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/jansi-2.4.1.jar
-      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/jline-2.14.7-sbt-9a88bc413e2b34a4580c001c654d1a7f4f65bf18.jar
-      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/jline-builtins-3.27.1.jar
-      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/jline-native-3.27.1.jar
-      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/jline-reader-3.27.1.jar
-      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/jline-style-3.27.1.jar
-      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/jline-terminal-3.27.1.jar
-      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/jline-terminal-jni-3.27.1.jar
-      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/jna-5.12.0.jar
-      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/jna-platform-5.12.0.jar
-      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/jsch-2.27.5.jar
-      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/launcher-interface-1.5.2.jar
-      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/librarymanagement-core_2.12-1.12.0.jar
-      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/librarymanagement-ivy_2.12-1.12.0.jar
-      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/lm-coursier-shaded_2.12-2.1.10.jar
-      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/log4j-api-2.25.3.jar
-      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/log4j-core-2.25.3.jar
-      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/log4j-slf4j-impl-2.25.3.jar
-      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/logic_2.12-1.12.7.jar
-      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/main-settings_2.12-1.12.7.jar
-      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/main_2.12-1.12.7.jar
-      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/protocol_2.12-1.12.7.jar
-      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/reactive-streams-1.0.3.jar
-      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/run_2.12-1.12.7.jar
-      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/sbinary_2.12-0.5.1.jar
-      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/sbt-1.12.7.jar
-      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/scala-collection-compat_2.12-2.13.0.jar
-      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/scala-compiler-2.12.21.jar
-      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/scala-library-2.12.21.jar
-      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/scala-parser-combinators_2.12-1.1.2.jar
-      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/scala-reflect-2.12.21.jar
-      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/scala-xml_2.12-2.3.0.jar
-      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/scripted-plugin_2.12-1.12.7.jar
-      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/shaded-apache-httpclient5-0.9.3.jar
-      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/shaded-jawn-parser_2.12-1.3.2.jar
-      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/shaded-scalajson_2.12-1.0.0-M4.jar
-      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/sjson-new-core_2.12-0.10.1.jar
-      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/sjson-new-murmurhash_2.12-0.10.1.jar
-      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/sjson-new-scalajson_2.12-0.10.1.jar
-      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/slf4j-api-1.7.36.jar
-      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/ssl-config-core_2.12-0.6.1.jar
-      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/task-system_2.12-1.12.7.jar
-      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/tasks_2.12-1.12.7.jar
-      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/template-resolver-0.1.jar
-      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/test-agent-1.12.7.jar
-      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/test-interface-1.0.jar
-      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/testing_2.12-1.12.7.jar
-      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/util-cache_2.12-1.12.7.jar
-      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/util-control_2.12-1.12.7.jar
-      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/util-interface-1.12.7.jar
-      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/util-logging_2.12-1.12.7.jar
-      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/util-position_2.12-1.12.7.jar
-      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/util-relation_2.12-1.12.7.jar
-      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/util-tracking_2.12-1.12.7.jar
-      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/zero-allocation-hashing-0.16.jar
-      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/zinc-apiinfo_2.12-1.12.0.jar
-      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/zinc-classfile_2.12-1.12.0.jar
-      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/zinc-classpath_2.12-1.12.0.jar
-      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/zinc-compile-core_2.12-1.12.0.jar
-      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/zinc-compile_2.12-1.12.0.jar
-      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/zinc-core_2.12-1.12.0.jar
-      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/zinc-lm-integration_2.12-1.12.7.jar
-      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/zinc-persist-core-assembly-1.12.0.jar
-      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/zinc-persist_2.12-1.12.0.jar
-      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.7/zinc_2.12-1.12.0.jar
+      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.8/actions_2.12-1.12.8.jar
+      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.8/caffeine-2.8.5.jar
+      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.8/checker-qual-3.4.1.jar
+      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.8/collections_2.12-1.12.8.jar
+      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.8/command_2.12-1.12.8.jar
+      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.8/compiler-bridge_2.12-1.12.0.jar
+      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.8/compiler-interface-1.12.0.jar
+      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.8/completion_2.12-1.12.8.jar
+      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.8/config-1.4.2.jar
+      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.8/core-macros_2.12-1.12.8.jar
+      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.8/disruptor-3.4.2.jar
+      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.8/error_prone_annotations-2.4.0.jar
+      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.8/file-tree-views-2.1.12.jar
+      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.8/gigahorse-apache-http_2.12-0.9.3.jar
+      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.8/gigahorse-core_2.12-0.9.3.jar
+      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.8/io_2.12-1.10.5.jar
+      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.8/ipcsocket-1.6.3.jar
+      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.8/ivy-2.3.0-sbt-77cc781d727b367d3761f097d89f5a4762771d41.jar
+      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.8/jansi-2.4.1.jar
+      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.8/jline-2.14.7-sbt-9a88bc413e2b34a4580c001c654d1a7f4f65bf18.jar
+      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.8/jline-builtins-3.27.1.jar
+      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.8/jline-native-3.27.1.jar
+      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.8/jline-reader-3.27.1.jar
+      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.8/jline-style-3.27.1.jar
+      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.8/jline-terminal-3.27.1.jar
+      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.8/jline-terminal-jni-3.27.1.jar
+      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.8/jna-5.12.0.jar
+      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.8/jna-platform-5.12.0.jar
+      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.8/jsch-2.27.5.jar
+      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.8/launcher-interface-1.5.2.jar
+      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.8/librarymanagement-core_2.12-1.12.0.jar
+      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.8/librarymanagement-ivy_2.12-1.12.0.jar
+      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.8/lm-coursier-shaded_2.12-2.1.10.jar
+      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.8/log4j-api-2.25.3.jar
+      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.8/log4j-core-2.25.3.jar
+      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.8/log4j-slf4j-impl-2.25.3.jar
+      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.8/logic_2.12-1.12.8.jar
+      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.8/main-settings_2.12-1.12.8.jar
+      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.8/main_2.12-1.12.8.jar
+      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.8/protocol_2.12-1.12.8.jar
+      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.8/reactive-streams-1.0.3.jar
+      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.8/run_2.12-1.12.8.jar
+      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.8/sbinary_2.12-0.5.1.jar
+      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.8/sbt-1.12.8.jar
+      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.8/scala-collection-compat_2.12-2.13.0.jar
+      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.8/scala-compiler-2.12.21.jar
+      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.8/scala-library-2.12.21.jar
+      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.8/scala-parser-combinators_2.12-1.1.2.jar
+      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.8/scala-reflect-2.12.21.jar
+      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.8/scala-xml_2.12-2.3.0.jar
+      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.8/scripted-plugin_2.12-1.12.8.jar
+      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.8/shaded-apache-httpclient5-0.9.3.jar
+      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.8/shaded-jawn-parser_2.12-1.3.2.jar
+      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.8/shaded-scalajson_2.12-1.0.0-M4.jar
+      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.8/sjson-new-core_2.12-0.10.1.jar
+      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.8/sjson-new-murmurhash_2.12-0.10.1.jar
+      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.8/sjson-new-scalajson_2.12-0.10.1.jar
+      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.8/slf4j-api-1.7.36.jar
+      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.8/ssl-config-core_2.12-0.6.1.jar
+      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.8/task-system_2.12-1.12.8.jar
+      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.8/tasks_2.12-1.12.8.jar
+      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.8/template-resolver-0.1.jar
+      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.8/test-agent-1.12.8.jar
+      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.8/test-interface-1.0.jar
+      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.8/testing_2.12-1.12.8.jar
+      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.8/util-cache_2.12-1.12.8.jar
+      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.8/util-control_2.12-1.12.8.jar
+      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.8/util-interface-1.12.8.jar
+      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.8/util-logging_2.12-1.12.8.jar
+      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.8/util-position_2.12-1.12.8.jar
+      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.8/util-relation_2.12-1.12.8.jar
+      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.8/util-tracking_2.12-1.12.8.jar
+      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.8/zero-allocation-hashing-0.16.jar
+      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.8/zinc-apiinfo_2.12-1.12.0.jar
+      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.8/zinc-classfile_2.12-1.12.0.jar
+      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.8/zinc-classpath_2.12-1.12.0.jar
+      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.8/zinc-compile-core_2.12-1.12.0.jar
+      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.8/zinc-compile_2.12-1.12.0.jar
+      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.8/zinc-core_2.12-1.12.0.jar
+      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.8/zinc-lm-integration_2.12-1.12.8.jar
+      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.8/zinc-persist-core-assembly-1.12.0.jar
+      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.8/zinc-persist_2.12-1.12.0.jar
+      /Users/vasil/.sbt-structure-global/boot/scala-2.12.21/org.scala-sbt/sbt/1.12.8/zinc_2.12-1.12.0.jar
 
       /Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/com/eed3si9n/gigahorse-apache-http_2.12/0.9.3/gigahorse-apache-http_2.12-0.9.3-sources.jar
       /Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/com/eed3si9n/gigahorse-core_2.12/0.9.3/gigahorse-core_2.12-0.9.3-sources.jar
@@ -138,13 +138,13 @@
       /Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/org/scala-lang/scala-compiler/2.12.21/scala-compiler-2.12.21-sources.jar
       /Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/org/scala-lang/scala-library/2.12.21/scala-library-2.12.21-sources.jar
       /Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/org/scala-lang/scala-reflect/2.12.21/scala-reflect-2.12.21-sources.jar
-      /Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/org/scala-sbt/actions_2.12/1.12.7/actions_2.12-1.12.7-sources.jar
-      /Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/org/scala-sbt/collections_2.12/1.12.7/collections_2.12-1.12.7-sources.jar
-      /Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/org/scala-sbt/command_2.12/1.12.7/command_2.12-1.12.7-sources.jar
+      /Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/org/scala-sbt/actions_2.12/1.12.8/actions_2.12-1.12.8-sources.jar
+      /Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/org/scala-sbt/collections_2.12/1.12.8/collections_2.12-1.12.8-sources.jar
+      /Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/org/scala-sbt/command_2.12/1.12.8/command_2.12-1.12.8-sources.jar
       /Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/org/scala-sbt/compiler-bridge_2.12/1.12.0/compiler-bridge_2.12-1.12.0-sources.jar
       /Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/org/scala-sbt/compiler-interface/1.12.0/compiler-interface-1.12.0-sources.jar
-      /Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/org/scala-sbt/completion_2.12/1.12.7/completion_2.12-1.12.7-sources.jar
-      /Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/org/scala-sbt/core-macros_2.12/1.12.7/core-macros_2.12-1.12.7-sources.jar
+      /Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/org/scala-sbt/completion_2.12/1.12.8/completion_2.12-1.12.8-sources.jar
+      /Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/org/scala-sbt/core-macros_2.12/1.12.8/core-macros_2.12-1.12.8-sources.jar
       /Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/org/scala-sbt/io_2.12/1.10.5/io_2.12-1.10.5-sources.jar
       /Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/org/scala-sbt/ipcsocket/ipcsocket/1.6.3/ipcsocket-1.6.3-sources.jar
       /Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/org/scala-sbt/ivy/ivy/2.3.0-sbt-77cc781d727b367d3761f097d89f5a4762771d41/ivy-2.3.0-sbt-77cc781d727b367d3761f097d89f5a4762771d41-sources.jar
@@ -152,34 +152,34 @@
       /Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/org/scala-sbt/launcher-interface/1.5.2/launcher-interface-1.5.2-sources.jar
       /Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/org/scala-sbt/librarymanagement-core_2.12/1.12.0/librarymanagement-core_2.12-1.12.0-sources.jar
       /Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/org/scala-sbt/librarymanagement-ivy_2.12/1.12.0/librarymanagement-ivy_2.12-1.12.0-sources.jar
-      /Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/org/scala-sbt/logic_2.12/1.12.7/logic_2.12-1.12.7-sources.jar
-      /Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/org/scala-sbt/main-settings_2.12/1.12.7/main-settings_2.12-1.12.7-sources.jar
-      /Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/org/scala-sbt/main_2.12/1.12.7/main_2.12-1.12.7-sources.jar
-      /Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/org/scala-sbt/protocol_2.12/1.12.7/protocol_2.12-1.12.7-sources.jar
-      /Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/org/scala-sbt/run_2.12/1.12.7/run_2.12-1.12.7-sources.jar
+      /Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/org/scala-sbt/logic_2.12/1.12.8/logic_2.12-1.12.8-sources.jar
+      /Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/org/scala-sbt/main-settings_2.12/1.12.8/main-settings_2.12-1.12.8-sources.jar
+      /Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/org/scala-sbt/main_2.12/1.12.8/main_2.12-1.12.8-sources.jar
+      /Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/org/scala-sbt/protocol_2.12/1.12.8/protocol_2.12-1.12.8-sources.jar
+      /Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/org/scala-sbt/run_2.12/1.12.8/run_2.12-1.12.8-sources.jar
       /Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/org/scala-sbt/sbinary_2.12/0.5.1/sbinary_2.12-0.5.1-sources.jar
-      /Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/org/scala-sbt/sbt/1.12.7/sbt-1.12.7-sources.jar
-      /Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/org/scala-sbt/scripted-plugin_2.12/1.12.7/scripted-plugin_2.12-1.12.7-sources.jar
-      /Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/org/scala-sbt/task-system_2.12/1.12.7/task-system_2.12-1.12.7-sources.jar
-      /Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/org/scala-sbt/tasks_2.12/1.12.7/tasks_2.12-1.12.7-sources.jar
+      /Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/org/scala-sbt/sbt/1.12.8/sbt-1.12.8-sources.jar
+      /Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/org/scala-sbt/scripted-plugin_2.12/1.12.8/scripted-plugin_2.12-1.12.8-sources.jar
+      /Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/org/scala-sbt/task-system_2.12/1.12.8/task-system_2.12-1.12.8-sources.jar
+      /Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/org/scala-sbt/tasks_2.12/1.12.8/tasks_2.12-1.12.8-sources.jar
       /Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/org/scala-sbt/template-resolver/0.1/template-resolver-0.1-sources.jar
-      /Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/org/scala-sbt/test-agent/1.12.7/test-agent-1.12.7-sources.jar
+      /Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/org/scala-sbt/test-agent/1.12.8/test-agent-1.12.8-sources.jar
       /Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/org/scala-sbt/test-interface/1.0/test-interface-1.0-sources.jar
-      /Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/org/scala-sbt/testing_2.12/1.12.7/testing_2.12-1.12.7-sources.jar
-      /Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/org/scala-sbt/util-cache_2.12/1.12.7/util-cache_2.12-1.12.7-sources.jar
-      /Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/org/scala-sbt/util-control_2.12/1.12.7/util-control_2.12-1.12.7-sources.jar
-      /Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/org/scala-sbt/util-interface/1.12.7/util-interface-1.12.7-sources.jar
-      /Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/org/scala-sbt/util-logging_2.12/1.12.7/util-logging_2.12-1.12.7-sources.jar
-      /Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/org/scala-sbt/util-position_2.12/1.12.7/util-position_2.12-1.12.7-sources.jar
-      /Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/org/scala-sbt/util-relation_2.12/1.12.7/util-relation_2.12-1.12.7-sources.jar
-      /Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/org/scala-sbt/util-tracking_2.12/1.12.7/util-tracking_2.12-1.12.7-sources.jar
+      /Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/org/scala-sbt/testing_2.12/1.12.8/testing_2.12-1.12.8-sources.jar
+      /Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/org/scala-sbt/util-cache_2.12/1.12.8/util-cache_2.12-1.12.8-sources.jar
+      /Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/org/scala-sbt/util-control_2.12/1.12.8/util-control_2.12-1.12.8-sources.jar
+      /Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/org/scala-sbt/util-interface/1.12.8/util-interface-1.12.8-sources.jar
+      /Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/org/scala-sbt/util-logging_2.12/1.12.8/util-logging_2.12-1.12.8-sources.jar
+      /Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/org/scala-sbt/util-position_2.12/1.12.8/util-position_2.12-1.12.8-sources.jar
+      /Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/org/scala-sbt/util-relation_2.12/1.12.8/util-relation_2.12-1.12.8-sources.jar
+      /Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/org/scala-sbt/util-tracking_2.12/1.12.8/util-tracking_2.12-1.12.8-sources.jar
       /Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/org/scala-sbt/zinc-apiinfo_2.12/1.12.0/zinc-apiinfo_2.12-1.12.0-sources.jar
       /Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/org/scala-sbt/zinc-classfile_2.12/1.12.0/zinc-classfile_2.12-1.12.0-sources.jar
       /Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/org/scala-sbt/zinc-classpath_2.12/1.12.0/zinc-classpath_2.12-1.12.0-sources.jar
       /Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/org/scala-sbt/zinc-compile-core_2.12/1.12.0/zinc-compile-core_2.12-1.12.0-sources.jar
       /Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/org/scala-sbt/zinc-compile_2.12/1.12.0/zinc-compile_2.12-1.12.0-sources.jar
       /Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/org/scala-sbt/zinc-core_2.12/1.12.0/zinc-core_2.12-1.12.0-sources.jar
-      /Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/org/scala-sbt/zinc-lm-integration_2.12/1.12.7/zinc-lm-integration_2.12-1.12.7-sources.jar
+      /Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/org/scala-sbt/zinc-lm-integration_2.12/1.12.8/zinc-lm-integration_2.12-1.12.8-sources.jar
       /Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/org/scala-sbt/zinc-persist-core-assembly/1.12.0/zinc-persist-core-assembly-1.12.0-sources.jar
       /Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/org/scala-sbt/zinc-persist_2.12/1.12.0/zinc-persist_2.12-1.12.0-sources.jar
       /Users/vasil/.sbt-structure-global/coursier/cache/https/repo1.maven.org/maven2/org/scala-sbt/zinc_2.12/1.12.0/zinc_2.12-1.12.0-sources.jar
