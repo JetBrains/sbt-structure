@@ -397,10 +397,34 @@ object ProjectExtractor extends SbtStateOps with TaskOps {
       val scalaInstanceResult: Result[Option[ScalaInstance]] =
         taskInCompile(Keys.scalaInstance).onlyIf(options.download).result.value
 
-      // In some peculiar setups there might be no scala instance configured (for example in Scala 3 repository)
-      // In this case we still shouldn't fail the import process
+      // In some peculiar setups there might be no Scala instance configured.
+      // This used to be the case in the Scala 3 repository, but it no longer is —
+      // modules that previously had no scalaInstance now have one, as it was added in commit
+      // https://github.com/scala/scala3/commit/41209879c311f754848f53c07ef1575b79512c3 (see https://youtrack.jetbrains.com/issue/SCL-24321).
+      // So this can no longer be reproduced on the current main branch of the Scala 3 repository, but it can still be reproduced by e.g., switching to the 3.7.3 tag.
+      //
+      // However, this can still occur in real projects: as explained in the sbt docs (https://www.scala-sbt.org/1.x/docs/Configuring-Scala.html#Configuring+Scala+tool+dependencies),
+      // if the user doesn't want an automatically managed dependency on the Scala library, they should set:
+      //   managedScalaInstance := false
+      // When `scalaInstance` is called in such a setup, "Missing Scala tool configuration" is thrown.
+      // We want to ignore this error, as it is a valid case to not depend on the Scala library.
+      // The remaining errors are thrown to avoid silently ignoring important issues (see https://youtrack.jetbrains.com/issue/SCL-25275).
+      val isMissingScalaTool = (inc: Incomplete) =>
+        inc.causes.exists { cause =>
+          cause.directCause.exists { throwable =>
+            val msg = throwable.getMessage
+            msg != null && msg.contains("Missing Scala tool configuration")
+          }
+        }
+
       val scalaInstance: Option[ScalaInstance] =
-        scalaInstanceResult.toEither.toOption.flatten
+        scalaInstanceResult.toEither match {
+          case Right(value) => value
+          case Left(incomplete) if isMissingScalaTool(incomplete) =>
+            None
+          case Left(incomplete) =>
+            throw incomplete
+        }
 
       val scalaCompilerBridgeBinaryJar =
         PluginCompat.myScalaCompilerBridgeBinaryJar.value
