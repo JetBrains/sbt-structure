@@ -13,6 +13,7 @@ object SbtStructureLoader {
     sbtStructureOptions: String,
     pluginFile: File,
     runOptions: RunCommonOptions,
+    expectedError: Option[String] = None
   ): LoadResult = {
     val structureFile = FileUtils.createTempFile("sbt-structure", ".xml")
     val sbtStructureOptionsPatched = s"download prettyPrint generateManagedSources $sbtStructureOptions"
@@ -30,21 +31,34 @@ object SbtStructureLoader {
       runOptions
     )
 
-    assert(
-      processRunResult.exitCode == 0,
-      s"Process exited with non-zero code: ${processRunResult.exitCode}"
-    )
-    assert(
-      structureFile.exists,
-      "File must be created: " + structureFile.getPath
-    )
+    expectedError match {
+      case Some(errorString) =>
+        assert(
+          processRunResult.exitCode != 0,
+          "Process was expected to fail but exited with code 0"
+        )
+        assert(
+          processRunResult.processOutput.contains(errorString),
+          s"Process output does not contain expected error string '$errorString'.\nProcess output:\n${processRunResult.processOutput}"
+        )
+        LoadResult("", processRunResult)
+      case None =>
+        assert(
+          processRunResult.exitCode == 0,
+          s"Process exited with non-zero code: ${processRunResult.exitCode}"
+        )
+        assert(
+          structureFile.exists,
+          "File must be created: " + structureFile.getPath
+        )
 
-    val structureString = FileUtils.read(structureFile)
-    assert(
-      structureString.nonEmpty,
-      "structure dump was empty for project " + project.getPath
-    )
-    LoadResult(structureString, processRunResult)
+        val structureString = FileUtils.read(structureFile)
+        assert(
+          structureString.nonEmpty,
+          "structure dump was empty for project " + project.getPath
+        )
+        LoadResult(structureString, processRunResult)
+    }
   }
 
   private def scopedSbtSetting(setting: String, scope: String, sbtVersion: Version): String = {

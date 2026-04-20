@@ -27,6 +27,11 @@ class ExtractStructureIntegrationTest extends AnyFreeSpecLike {
   import org.jetbrains.sbt.integrationTests.utils.LatestSbtVersions.*
   import org.jetbrains.sbt.integrationTests.utils.SbtOptionsBuilder.*
 
+  private val ScalaInstanceCustomError = "Custom scalaInstance error for testing"
+  private val MissingScalaLibraryJarError = "Missing scala-library"
+  // This error is only thrown for Scala 2.13 in sbt 1.10+
+  private val IncompatibleScalaVersionError = "To support backwards-only binary compatibility (SIP-51)"
+
   /*
   The description of some tests, if needed:
   - `bsp-disabled-project` - checks that disabling the entire project with bspEnabled := true works
@@ -66,16 +71,28 @@ class ExtractStructureIntegrationTest extends AnyFreeSpecLike {
     "1.0" - {
       "simple" in { testProject("simple", SbtVersion_1_0, ResolveSourcesAndSbtClassifiers) }
       "prod_test_sources_separated" in { testProject("prod_test_sources_separated", SbtVersion_1_0, ResolveSourcesAndSbtClassifiersAndSeparateProdTestSources) }
+      "missing-scala-tool-config" in { testProject("missing-scala-tool-config", SbtVersion_1_0, ResolveSourcesAndSbtClassifiers) }
+      "scala-instance-error" in { testProjectShouldFailWith("scala-instance-error", SbtVersion_1_0, ResolveSourcesAndSbtClassifiers, ScalaInstanceCustomError) }
+      "missing-scala-library-jar" in { testProjectShouldFailWith("missing-scala-library-jar", SbtVersion_1_0, ResolveSourcesAndSbtClassifiers, MissingScalaLibraryJarError) }
+      "unmanaged-scala-instance-ok" in { testProject("unmanaged-scala-instance-ok", SbtVersion_1_0, ResolveSourcesAndSbtClassifiers) }
     }
     "1.1" - {
       "simple" in { testProject("simple", SbtVersion_1_1, ResolveSourcesAndSbtClassifiers) }
       "prod_test_sources_separated" in { testProject("prod_test_sources_separated", SbtVersion_1_1, ResolveSourcesAndSbtClassifiersAndSeparateProdTestSources) }
+      "missing-scala-tool-config" in { testProject("missing-scala-tool-config", SbtVersion_1_1, ResolveSourcesAndSbtClassifiers) }
+      "scala-instance-error" in { testProjectShouldFailWith("scala-instance-error", SbtVersion_1_1, ResolveSourcesAndSbtClassifiers, ScalaInstanceCustomError) }
+      "missing-scala-library-jar" in { testProjectShouldFailWith("missing-scala-library-jar", SbtVersion_1_1, ResolveSourcesAndSbtClassifiers, MissingScalaLibraryJarError) }
+      "unmanaged-scala-instance-ok" in { testProject("unmanaged-scala-instance-ok", SbtVersion_1_1, ResolveSourcesAndSbtClassifiers) }
     }
     "1.2" - {
       "custom-source-generator" in { testProject("custom-source-generator", SbtVersion_1_2, ResolveSourcesAndSbtClassifiersAndSeparateProdTestSources) }
       "simple" in { testProject("simple", SbtVersion_1_2, ResolveSourcesAndSbtClassifiers) }
       "prod_test_sources_separated" in { testProject("prod_test_sources_separated", SbtVersion_1_2, ResolveSourcesAndSbtClassifiersAndSeparateProdTestSources) }
       "source-generator-failure" in { testProject("source-generator-failure", SbtVersion_1_2, ResolveSourcesAndSbtClassifiersAndSeparateProdTestSources, errorsExpected = true) }
+      "missing-scala-tool-config" in { testProject("missing-scala-tool-config", SbtVersion_1_2, ResolveSourcesAndSbtClassifiers) }
+      "scala-instance-error" in { testProjectShouldFailWith("scala-instance-error", SbtVersion_1_2, ResolveSourcesAndSbtClassifiers, ScalaInstanceCustomError) }
+      "missing-scala-library-jar" in { testProjectShouldFailWith("missing-scala-library-jar", SbtVersion_1_2, ResolveSourcesAndSbtClassifiers, MissingScalaLibraryJarError) }
+      "unmanaged-scala-instance-ok" in { testProject("unmanaged-scala-instance-ok", SbtVersion_1_2, ResolveSourcesAndSbtClassifiers) }
     }
     "1.3" - {
       "simple" in { testProject("simple", SbtVersion_1_3, ResolveSourcesAndSbtClassifiers) }
@@ -84,27 +101,47 @@ class ExtractStructureIntegrationTest extends AnyFreeSpecLike {
       // had its local copy of `bspEnabled` https://github.com/scalacenter/sbt-scalafix/commit/140ccb81c21b5eeca25763135acce1ac7ca3fb44.
       // The same as we have in org.jetbrains.sbt.extractors.SettingKeys.bspEnabled
       "scalafix-config-disabled" in { testProject("scalafix-config-disabled", SbtVersion_1_3, ResolveSourcesAndSbtClassifiers) }
+      "missing-scala-tool-config" in { testProject("missing-scala-tool-config", SbtVersion_1_3, ResolveSourcesAndSbtClassifiers) }
+      "scala-instance-error" in { testProjectShouldFailWith("scala-instance-error", SbtVersion_1_3, ResolveSourcesAndSbtClassifiers, ScalaInstanceCustomError) }
+      "missing-scala-library-jar" in { testProjectShouldFailWith("missing-scala-library-jar", SbtVersion_1_3, ResolveSourcesAndSbtClassifiers, MissingScalaLibraryJarError) }
+      "unmanaged-scala-instance-ok" in { testProject("unmanaged-scala-instance-ok", SbtVersion_1_3, ResolveSourcesAndSbtClassifiers) }
     }
     "1.4" - {
       "simple" in { testProject("simple", SbtVersion_1_4, ResolveSourcesAndSbtClassifiers) }
       "prod_test_sources_separated" in { testProject("prod_test_sources_separated", SbtVersion_1_4, ResolveSourcesAndSbtClassifiersAndSeparateProdTestSources) }
       "bsp-disabled-project" in { testProject("bsp-disabled-project", SbtVersion_1_4, ResolveSourcesAndSbtClassifiersAndSeparateProdTestSources) }
       "scalafix-config-disabled" in { testProject("scalafix-config-disabled", SbtVersion_1_4, ResolveSourcesAndSbtClassifiersAndSeparateProdTestSources) }
+      "missing-scala-tool-config" in { testProject("missing-scala-tool-config", SbtVersion_1_4, ResolveSourcesAndSbtClassifiers) }
+      "scala-instance-error" in { testProjectShouldFailWith("scala-instance-error", SbtVersion_1_4, ResolveSourcesAndSbtClassifiers, ScalaInstanceCustomError) }
+      "missing-scala-library-jar" in { testProjectShouldFailWith("missing-scala-library-jar", SbtVersion_1_4, ResolveSourcesAndSbtClassifiers, MissingScalaLibraryJarError) }
+      "unmanaged-scala-instance-ok" in { testProject("unmanaged-scala-instance-ok", SbtVersion_1_4, ResolveSourcesAndSbtClassifiers) }
     }
 
     "1.5" - {
       "simple" in { testProject("simple", SbtVersion_1_5, ResolveSourcesAndSbtClassifiers) }
       "scala3 simple" in { testProject("simple_scala3", SbtVersion_1_5, ResolveSourcesAndSbtClassifiers) }
       "prod_test_sources_separated" in { testProject("prod_test_sources_separated", SbtVersion_1_5, ResolveSourcesAndSbtClassifiersAndSeparateProdTestSources) }
+      "missing-scala-tool-config" in { testProject("missing-scala-tool-config", SbtVersion_1_5, ResolveSourcesAndSbtClassifiers) }
+      "scala-instance-error" in { testProjectShouldFailWith("scala-instance-error", SbtVersion_1_5, ResolveSourcesAndSbtClassifiers, ScalaInstanceCustomError) }
+      "missing-scala-library-jar" in { testProjectShouldFailWith("missing-scala-library-jar", SbtVersion_1_5, ResolveSourcesAndSbtClassifiers, MissingScalaLibraryJarError) }
+      "unmanaged-scala-instance-ok" in { testProject("unmanaged-scala-instance-ok", SbtVersion_1_5, ResolveSourcesAndSbtClassifiers) }
     }
     "1.6" - {
       "simple" in { testProject("simple", SbtVersion_1_6, ResolveSourcesAndSbtClassifiers) }
       "prod_test_sources_separated" in { testProject("prod_test_sources_separated", SbtVersion_1_6, ResolveSourcesAndSbtClassifiersAndSeparateProdTestSources) }
+      "missing-scala-tool-config" in { testProject("missing-scala-tool-config", SbtVersion_1_6, ResolveSourcesAndSbtClassifiers) }
+      "scala-instance-error" in { testProjectShouldFailWith("scala-instance-error", SbtVersion_1_6, ResolveSourcesAndSbtClassifiers, ScalaInstanceCustomError) }
+      "missing-scala-library-jar" in { testProjectShouldFailWith("missing-scala-library-jar", SbtVersion_1_6, ResolveSourcesAndSbtClassifiers, MissingScalaLibraryJarError) }
+      "unmanaged-scala-instance-ok" in { testProject("unmanaged-scala-instance-ok", SbtVersion_1_6, ResolveSourcesAndSbtClassifiers) }
     }
     "1.7" - {
       "simple" in { testProject("simple", SbtVersion_1_7, ResolveSourcesAndSbtClassifiers) }
       "compile-order" in { testProject("compile-order", SbtVersion_1_7, ResolveSourcesAndSbtClassifiers) }
       "prod_test_sources_separated" in { testProject("prod_test_sources_separated", SbtVersion_1_7, ResolveSourcesAndSbtClassifiersAndSeparateProdTestSources) }
+      "missing-scala-tool-config" in { testProject("missing-scala-tool-config", SbtVersion_1_7, ResolveSourcesAndSbtClassifiers)}
+      "scala-instance-error" in { testProjectShouldFailWith("scala-instance-error", SbtVersion_1_7, ResolveSourcesAndSbtClassifiers, ScalaInstanceCustomError) }
+      "missing-scala-library-jar" in { testProjectShouldFailWith("missing-scala-library-jar", SbtVersion_1_7, ResolveSourcesAndSbtClassifiers, MissingScalaLibraryJarError) }
+      "unmanaged-scala-instance-ok" in { testProject("unmanaged-scala-instance-ok", SbtVersion_1_7, ResolveSourcesAndSbtClassifiers) }
     }
     "1.8" - {
       "simple" in { testProject("simple", SbtVersion_1_8, ResolveSourcesAndSbtClassifiers) }
@@ -112,6 +149,10 @@ class ExtractStructureIntegrationTest extends AnyFreeSpecLike {
       "bsp-disabled-project" in { testProject("bsp-disabled-project", SbtVersion_1_8, ResolveSourcesAndSbtClassifiersAndSeparateProdTestSources) }
       "bsp-disabled-test-config" in { testProject("bsp-disabled-test-config", SbtVersion_1_8, ResolveSourcesAndSbtClassifiersAndSeparateProdTestSources) }
       "scalafix-config-disabled" in { testProject("scalafix-config-disabled", SbtVersion_1_8, ResolveSourcesAndSbtClassifiersAndSeparateProdTestSources) }
+      "missing-scala-tool-config" in { testProject("missing-scala-tool-config", SbtVersion_1_8, ResolveSourcesAndSbtClassifiers) }
+      "scala-instance-error" in { testProjectShouldFailWith("scala-instance-error", SbtVersion_1_8, ResolveSourcesAndSbtClassifiers, ScalaInstanceCustomError) }
+      "missing-scala-library-jar" in { testProjectShouldFailWith("missing-scala-library-jar", SbtVersion_1_8, ResolveSourcesAndSbtClassifiers, MissingScalaLibraryJarError) }
+      "unmanaged-scala-instance-ok" in { testProject("unmanaged-scala-instance-ok", SbtVersion_1_8, ResolveSourcesAndSbtClassifiers) }
     }
 
     "1.9" - {
@@ -124,22 +165,47 @@ class ExtractStructureIntegrationTest extends AnyFreeSpecLike {
       "internal_config" in { testProject("internal_config", SbtVersion_1_9, options = ResolveSources) }
       "dependency_resolve_sbt_classifiers_prod_test_sources_separated" in { testProject("dependency_resolve_sbt_classifiers_prod_test_sources_separated", SbtVersion_1_9, options = ResolveSbtClassifiersAndSeparateProdTestSources) }
       "multipleProjectsDeps" in { testProject("multipleProjectsDeps", SbtVersion_1_9, options = ResolveNoneAndSeparateProdTestSources) }
+      "missing-scala-tool-config" in { testProject("missing-scala-tool-config", SbtVersion_1_9, ResolveSourcesAndSbtClassifiers) }
+      "scala-instance-error" in { testProjectShouldFailWith("scala-instance-error", SbtVersion_1_9, ResolveSourcesAndSbtClassifiers, ScalaInstanceCustomError) }
+      "missing-scala-library-jar" in { testProjectShouldFailWith("missing-scala-library-jar", SbtVersion_1_9, ResolveSourcesAndSbtClassifiers, MissingScalaLibraryJarError) }
+      "unmanaged-scala-instance-ok" in { testProject("unmanaged-scala-instance-ok", SbtVersion_1_9, ResolveSourcesAndSbtClassifiers) }
     }
     "1.10" - {
       "custom-source-generator" in { testProject("custom-source-generator", SbtVersion_1_10, ResolveSourcesAndSbtClassifiers) }
       "simple" in { testProject("simple", SbtVersion_1_10, ResolveSourcesAndSbtClassifiers) }
       "prod_test_sources_separated" in { testProject("prod_test_sources_separated", SbtVersion_1_10, ResolveSourcesAndSbtClassifiersAndSeparateProdTestSources) }
       "source-generator-failure" in { testProject("source-generator-failure", SbtVersion_1_10, ResolveSourcesAndSbtClassifiers, errorsExpected = true) }
+      "missing-scala-tool-config" in { testProject("missing-scala-tool-config", SbtVersion_1_10, ResolveSourcesAndSbtClassifiers) }
+      "scala-instance-error" in { testProjectShouldFailWith("scala-instance-error", SbtVersion_1_10, ResolveSourcesAndSbtClassifiers, ScalaInstanceCustomError) }
+      "missing-scala-library-jar" in { testProjectShouldFailWith("missing-scala-library-jar", SbtVersion_1_10, ResolveSourcesAndSbtClassifiers, MissingScalaLibraryJarError) }
+      "unmanaged-scala-instance-ok" in { testProject("unmanaged-scala-instance-ok", SbtVersion_1_10, ResolveSourcesAndSbtClassifiers) }
+      "unmanaged-incompatible-scala" in { testProjectShouldFailWith("unmanaged-incompatible-scala", SbtVersion_1_10, ResolveSourcesAndSbtClassifiers, IncompatibleScalaVersionError) }
+      "managed-incompatible-scala" in { testProjectShouldFailWith("managed-incompatible-scala", SbtVersion_1_10, ResolveSourcesAndSbtClassifiers, IncompatibleScalaVersionError) }
     }
     "1.11" - {
       "buildinfo" in { testProject("buildinfo", SbtVersion_1_11, ResolveSourcesAndSbtClassifiersAndSeparateProdTestSources) }
       "custom-source-generator" in { testProject("custom-source-generator", SbtVersion_1_11, ResolveSourcesAndSbtClassifiersAndSeparateProdTestSources) }
       "source-generator-failure" in { testProject("source-generator-failure", SbtVersion_1_11, ResolveSourcesAndSbtClassifiersAndSeparateProdTestSources, errorsExpected = true) }
+      "missing-scala-tool-config" in { testProject("missing-scala-tool-config", SbtVersion_1_11, ResolveSourcesAndSbtClassifiers) }
+      "scala-instance-error" in { testProjectShouldFailWith("scala-instance-error", SbtVersion_1_11, ResolveSourcesAndSbtClassifiers, ScalaInstanceCustomError) }
+      "missing-scala-library-jar" in { testProjectShouldFailWith("missing-scala-library-jar", SbtVersion_1_11, ResolveSourcesAndSbtClassifiers, MissingScalaLibraryJarError) }
+      "unmanaged-scala-instance-ok" in { testProject("unmanaged-scala-instance-ok", SbtVersion_1_11, ResolveSourcesAndSbtClassifiers) }
+      "unmanaged-incompatible-scala" in { testProjectShouldFailWith("unmanaged-incompatible-scala", SbtVersion_1_11, ResolveSourcesAndSbtClassifiers, IncompatibleScalaVersionError) }
+      "managed-incompatible-scala" in { testProjectShouldFailWith("managed-incompatible-scala", SbtVersion_1_11, ResolveSourcesAndSbtClassifiers, IncompatibleScalaVersionError) }
     }
     "1.12" - {
       "buildinfo" in { testProject("buildinfo", SbtVersion_1_12, ResolveSourcesAndSbtClassifiersAndSeparateProdTestSources) }
       "custom-source-generator" in { testProject("custom-source-generator", SbtVersion_1_12, ResolveSourcesAndSbtClassifiersAndSeparateProdTestSources) }
       "source-generator-failure" in { testProject("source-generator-failure", SbtVersion_1_12, ResolveSourcesAndSbtClassifiersAndSeparateProdTestSources, errorsExpected = true) }
+      // Contains scala instance with 0.0.0 version (see https://youtrack.jetbrains.com/issue/SCL-25316)
+      "missing-scala-tool-config" in { testProject("missing-scala-tool-config", SbtVersion_1_12, ResolveSourcesAndSbtClassifiers) }
+      "scala-instance-error" in { testProjectShouldFailWith("scala-instance-error", SbtVersion_1_12, ResolveSourcesAndSbtClassifiers, ScalaInstanceCustomError) }
+      "missing-scala-library-jar" in { testProject("missing-scala-library-jar", SbtVersion_1_12, ResolveSourcesAndSbtClassifiers) }
+      // Contains scala instance with 0.0.0 version (see https://youtrack.jetbrains.com/issue/SCL-25316)
+      "unmanaged-scala-instance-ok" in { testProject("unmanaged-scala-instance-ok", SbtVersion_1_12, ResolveSourcesAndSbtClassifiers) }
+      // Contains scala instance with 0.0.0 version (see https://youtrack.jetbrains.com/issue/SCL-25316)
+      "unmanaged-incompatible-scala" in { testProject("unmanaged-incompatible-scala", SbtVersion_1_12, ResolveSourcesAndSbtClassifiers) }
+      "managed-incompatible-scala" in { testProjectShouldFailWith("managed-incompatible-scala", SbtVersion_1_12, ResolveSourcesAndSbtClassifiers, IncompatibleScalaVersionError) }
     }
 
     // In sbt 2.0.0-RC7, a binary compatibility breaking change was made which removed the
@@ -168,6 +234,15 @@ class ExtractStructureIntegrationTest extends AnyFreeSpecLike {
       "bsp-disabled-project" in { testProject("bsp-disabled-project", SbtVersion_2, options) }
       "bsp-disabled-test-config" in { testProject("bsp-disabled-test-config", SbtVersion_2, options) }
       "scalafix-config-disabled" in { testProject("scalafix-config-disabled", SbtVersion_2, options) }
+      // Contains scala instance with 0.0.0 version (see https://youtrack.jetbrains.com/issue/SCL-25316)
+      "missing-scala-tool-config" in { testProject("missing-scala-tool-config", SbtVersion_2, ResolveSourcesAndSbtClassifiers) }
+      "scala-instance-error" in { testProjectShouldFailWith("scala-instance-error", SbtVersion_2, ResolveSourcesAndSbtClassifiers, ScalaInstanceCustomError) }
+      "missing-scala-library-jar" in { testProject("missing-scala-library-jar", SbtVersion_2, ResolveSourcesAndSbtClassifiers) }
+      // Contains scala instance with 0.0.0 version (see https://youtrack.jetbrains.com/issue/SCL-25316)
+      "unmanaged-scala-instance-ok" in { testProject("unmanaged-scala-instance-ok", SbtVersion_2, ResolveSourcesAndSbtClassifiers) }
+      // Contains scala instance with 0.0.0 version (see https://youtrack.jetbrains.com/issue/SCL-25316)
+      "unmanaged-incompatible-scala" in { testProject("unmanaged-incompatible-scala", SbtVersion_2, ResolveSourcesAndSbtClassifiers) }
+      "managed-incompatible-scala" in { testProjectShouldFailWith("managed-incompatible-scala", SbtVersion_2, ResolveSourcesAndSbtClassifiers, IncompatibleScalaVersionError) }
     }
   }
 
@@ -298,5 +373,33 @@ class ExtractStructureIntegrationTest extends AnyFreeSpecLike {
     } finally {
       dumpFiles()
     }
+  }
+
+  private def testProjectShouldFailWith(
+    projectDirName: String,
+    sbtVersionFull: Version,
+    options: String,
+    expectedError: String,
+  ): Unit = {
+    val runOptions = CurrentEnvironment.buildSbtRunCommonOptions(sbtVersionFull)
+    import runOptions.sbtVersionShort
+
+    val projectDir = TestDataRoot / sbtVersionShort.presentation / projectDirName
+
+    println(s"Running test (expected failure): $projectDirName, sbtVersion: $sbtVersionFull, path: $projectDir")
+
+    withClue(s"Test data folder doesn't exist: $projectDir") {
+      projectDir must exist
+    }
+
+    val pluginClassesDir: File = PluginArtifactsUtils.getPluginUnpublishedClassesDirectory(sbtVersionShort)
+
+    SbtStructureLoader.dumpSbtStructure(
+      projectDir,
+      options,
+      pluginFile = pluginClassesDir,
+      runOptions = runOptions,
+      expectedError = Some(expectedError),
+    )
   }
 }
