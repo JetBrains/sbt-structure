@@ -242,7 +242,7 @@ class ExtractStructureIntegrationTest extends AnyFreeSpecLike {
       // Contains scala instance with 0.0.0 version (see https://youtrack.jetbrains.com/issue/SCL-25316)
       "unmanaged-scala-instance-ok" in { testProject("unmanaged-scala-instance-ok", SbtVersion_2, ResolveSourcesAndSbtClassifiers) }
       // Contains scala instance with 0.0.0 version (see https://youtrack.jetbrains.com/issue/SCL-25316)
-      "unmanaged-incompatible-scala" in { testProject("unmanaged-incompatible-scala", SbtVersion_2, ResolveSourcesAndSbtClassifiers) }
+      "unmanaged-incompatible-scala" in { testProjectShouldFailWith("unmanaged-incompatible-scala", SbtVersion_2, ResolveSourcesAndSbtClassifiers, UnmanagedIncompatibleScalaVersionError) }
       "managed-incompatible-scala" in { testProjectShouldFailWith("managed-incompatible-scala", SbtVersion_2, ResolveSourcesAndSbtClassifiers, ManagedIncompatibleScalaVersionError) }
     }
   }
