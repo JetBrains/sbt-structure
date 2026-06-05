@@ -10,3 +10,5 @@ structure-*-actual.xml
 !.idea/vcs.xml
 .bloop
 .bsp
+# Can be generated in tests (org.jetbrains.sbt.integrationTests.utils.SbtLauncherUtils)
+sbt-launcher/sbt-launch.jar
