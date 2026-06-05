@@ -151,6 +151,18 @@ trait DataSerializers {
     }
   }
 
+  implicit val kotlinDataSerializer: XmlSerializer[KotlinData] = new XmlSerializer[KotlinData] {
+    override def serialize(what: KotlinData): Elem =
+      <kotlin>
+        { what.options.sortBy(_.configuration.name).map(_.serialize) }
+      </kotlin>
+
+    override def deserialize(what: Node): Either[Throwable,KotlinData] = {
+      val options = (what \ "compilerOptions").deserialize[CompilerOptions]
+      Right(KotlinData(options))
+    }
+  }
+
   implicit val scalaDataSerializer: XmlSerializer[ScalaData] = new XmlSerializer[ScalaData] {
     override def serialize(what: ScalaData): Elem =
       <scala>
@@ -484,6 +496,7 @@ trait DataSerializers {
         {what.basePackages.map(name => <basePackage>{name}</basePackage>)}
         <target>{what.target.path}</target>
         {what.java.map(_.serialize).toSeq}
+        {what.kotlin.map(_.serialize).toSeq}
         {what.scala.map(_.serialize).toSeq}
         <compileOrder>{what.compileOrder}</compileOrder>
         {what.configurations.sortBy(_.id).map(_.serialize)}
@@ -513,6 +526,7 @@ trait DataSerializers {
 
       val configurations = (what \ "configuration").deserialize[ConfigurationData]
       val java = (what \ "java").deserialize[JavaData].headOption
+      val kotlin = (what \ "kotlin").deserialize[KotlinData].headOption
       val scala = (what \ "scala").deserialize[ScalaData].headOption
       val compileOrder = (what \ "compileOrder").text
       val resolvers = (what \ "resolver").deserialize[ResolverData].toSet
@@ -528,9 +542,11 @@ trait DataSerializers {
 
       val tryDeps = (what \ "dependencies").deserializeOne[DependencyData]
       tryDeps.right.map { dependencies =>
+        val languages = LanguageData(java, scala, kotlin, compileOrder)
         ProjectData(id, buildURI, name, organization, version, base, packagePrefix, basePackages,
-          target, configurations, java, scala, compileOrder,
-          dependencies, resolvers, play2, settings, tasks, commands, mainSourceDirectories, testSourceDirectories, generatedManagedSources)
+          target, configurations, languages,
+          dependencies, resolvers, play2, settings, tasks, commands, mainSourceDirectories, testSourceDirectories, generatedManagedSources
+        )
       }
 
     }

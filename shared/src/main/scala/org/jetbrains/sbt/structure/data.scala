@@ -67,9 +67,7 @@ case class ProjectData(
   basePackages: Seq[String],
   target: File,
   configurations: Seq[ConfigurationData],
-  java: Option[JavaData],
-  scala: Option[ScalaData],
-  compileOrder: String,
+   languages: LanguageData,
   dependencies: DependencyData,
   resolvers: Set[ResolverData],
   play2: Option[Play2Data],
@@ -79,7 +77,12 @@ case class ProjectData(
   mainSourceDirectories: Seq[File],
   testSourceDirectories: Seq[File],
   generatedManagedSources: Boolean
-)
+) {
+  def java: Option[JavaData] = languages.java
+  def scala: Option[ScalaData] = languages.scala
+  def kotlin: Option[KotlinData] = languages.kotlin
+  def compileOrder: String = languages.compileOrder
+}
 
 case class SettingData(label: String, description: Option[String], rank: Int, stringValue: Option[String])
 case class TaskData(label: String, description: Option[String], rank: Int)
@@ -130,6 +133,15 @@ case class DirectoryData(file: File, managed: Boolean)
 case class CompilerOptions(configuration: Configuration, options: Seq[String])
 
 case class JavaData(home: Option[File], options: Seq[CompilerOptions])
+
+case class KotlinData(options: Seq[CompilerOptions])
+
+case class LanguageData(
+  java: Option[JavaData],
+  scala: Option[ScalaData],
+  kotlin: Option[KotlinData],
+  compileOrder: String
+)
 
 /**
  * Analog of `sbt.internal.inc.ScalaInstance`

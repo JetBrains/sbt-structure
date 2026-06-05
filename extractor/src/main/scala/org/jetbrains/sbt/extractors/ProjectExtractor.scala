@@ -8,7 +8,6 @@ import sbt.Def.Initialize
 import sbt.internal.inc.ScalaInstance
 import sbt.jetbrains.PluginCompat
 import sbt.jetbrains.PluginCompat._
-import sbt.jetbrains.SeqOpsCompat._
 import sbt.{Def, File, Configuration as SbtConfiguration, *}
 
 import scala.collection.Seq
@@ -39,6 +38,7 @@ class ProjectExtractor(
   scalacOptions: Seq[CompilerOptions],
   javaHome: Option[File],
   javacOptions: Seq[CompilerOptions],
+  kotlincOptions: Seq[CompilerOptions],
   compileOrder: CompileOrder,
   sourceConfigurations: Seq[sbt.Configuration],
   testConfigurations: Seq[sbt.Configuration],
@@ -98,9 +98,12 @@ class ProjectExtractor(
       basePackages,
       target,
       configurations,
-      extractJava,
-      extractScala,
-      compileOrder.toString,
+      LanguageData(
+        extractJava,
+        extractScala,
+        extractKotlin,
+        compileOrder.toString
+      ),
       dependencies,
       resolvers,
       play2,
@@ -296,6 +299,11 @@ class ProjectExtractor(
       Some(JavaData(javaHome, javacOptions))
     else None
 
+  private def extractKotlin: Option[KotlinData] =
+    if (kotlincOptions.nonEmpty)
+      Some(KotlinData(kotlincOptions))
+    else None
+
   private def mergeConfigurations(
     configurations: Seq[ConfigurationData]
   ): Seq[ConfigurationData] =
@@ -312,6 +320,9 @@ class ProjectExtractor(
 }
 
 object ProjectExtractor extends SbtStateOps with TaskOps {
+  // Comes from sbt-kotlin-plugin's kotlin.Keys.kotlincOptions setting:
+  // https://github.com/JetBrains/sbt-kotlin-plugin/blob/7b10f959cb98365e5b697c7e68c934414a5e8088/src/main/scala/kotlin/Keys.scala#L17-L18
+  private val KotlincOptionsKey = SettingKey[PluginCompat.SeqFromStdLib[String]]("kotlinc-options")
 
   private def settingInConfiguration[T](
     key: SettingKey[scala.collection.immutable.Seq[T]]
@@ -331,6 +342,11 @@ object ProjectExtractor extends SbtStateOps with TaskOps {
   private def taskInConfig[T](key: TaskKey[T], config: SbtConfiguration)
     (implicit projectRef: ProjectRef, state: State) =
     (projectRef / config / key).get(state)
+
+  private def kotlincOptionsInConfig(config: SbtConfiguration)(implicit projectRef: ProjectRef, state: State): Seq[String] =
+    (projectRef / config / KotlincOptionsKey)
+      .find(state).map(_.toSeq)
+      .getOrElse(Seq.empty)
 
   private def generateManagedSourcesTaskDef: Initialize[Task[Seq[File]]] = Def.taskDyn {
     val name = (Compile / Keys.name).value
@@ -449,6 +465,13 @@ object ProjectExtractor extends SbtStateOps with TaskOps {
         )
       )
 
+      val kotlincOptions = mapToCompilerOptions(
+        Seq(
+          (Configuration.Compile, kotlincOptionsInConfig(Compile)),
+          (Configuration.Test, kotlincOptionsInConfig(Test))
+        )
+      )
+
       val name = (projectRef / Compile / Keys.name).value
       val organization = (projectRef / Compile / Keys.organization).value
       val version = (projectRef / Compile / Keys.version).value
@@ -493,6 +516,7 @@ object ProjectExtractor extends SbtStateOps with TaskOps {
         scalacOptions,
         javaHome,
         javacOptions,
+        kotlincOptions,
         compileOrder,
         StructureKeys.sourceConfigurations.value,
         StructureKeys.testConfigurations.value,

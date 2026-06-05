@@ -24,4 +24,17 @@ class DataSerializersTest extends AnyFunSuiteLike {
     val dataDeserialized = scalaDataSerializer.deserialize(elem)
     dataDeserialized shouldBe Right(data)
   }
+
+  test("kotlinDataSerializer") {
+    val data = KotlinData(
+      Seq(
+        CompilerOptions(Configuration.Compile, Seq("-Xjsr305=strict")),
+        CompilerOptions(Configuration.Test, Seq("-Xcontext-receivers"))
+      )
+    )
+
+    val elem = kotlinDataSerializer.serialize(data)
+    val dataDeserialized = kotlinDataSerializer.deserialize(elem)
+    dataDeserialized shouldBe Right(data)
+  }
 }

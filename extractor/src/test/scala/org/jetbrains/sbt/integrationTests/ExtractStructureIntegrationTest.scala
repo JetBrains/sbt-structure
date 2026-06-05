@@ -197,6 +197,7 @@ class ExtractStructureIntegrationTest extends AnyFreeSpecLike {
     "1.12" - {
       "buildinfo" in { testProject("buildinfo", SbtVersion_1_12, ResolveSourcesAndSbtClassifiersAndSeparateProdTestSources) }
       "custom-source-generator" in { testProject("custom-source-generator", SbtVersion_1_12, ResolveSourcesAndSbtClassifiersAndSeparateProdTestSources) }
+      "kotlinc-options" in { testProject("kotlinc-options", SbtVersion_1_12, ResolveSourcesAndSbtClassifiersAndSeparateProdTestSources) }
       "source-generator-failure" in { testProject("source-generator-failure", SbtVersion_1_12, ResolveSourcesAndSbtClassifiersAndSeparateProdTestSources, errorsExpected = true) }
       // Contains scala instance with 0.0.0 version (see https://youtrack.jetbrains.com/issue/SCL-25316)
       "missing-scala-tool-config" in { testProject("missing-scala-tool-config", SbtVersion_1_12, ResolveSourcesAndSbtClassifiers) }
@@ -231,6 +232,7 @@ class ExtractStructureIntegrationTest extends AnyFreeSpecLike {
       "simple" in { testProject("simple", SbtVersion_2, options) }
       "buildinfo" in { testProject("buildinfo", SbtVersion_2, options) }
       "custom-source-generator" in { testProject("custom-source-generator", SbtVersion_2, options) }
+      "kotlinc-options" in { testProject("kotlinc-options", SbtVersion_2, options) }
       "source-generator-failure" in { testProject("source-generator-failure", SbtVersion_2, options, errorsExpected = true) }
       "bsp-disabled-project" in { testProject("bsp-disabled-project", SbtVersion_2, options) }
       "bsp-disabled-test-config" in { testProject("bsp-disabled-test-config", SbtVersion_2, options) }
