@@ -35,7 +35,7 @@ object SbtStructureLoader {
         Seq(
           setOptionsCommand,
           applyCreateTasksCommand,
-          s"""*/*:dumpStructureTo "${path(structureFile)}""""
+          dumpStructureToCommand(structureFile, sbtVersion)
         )
       }
 
@@ -81,5 +81,13 @@ object SbtStructureLoader {
       s"""($scope / $setting)"""
     else
       s"""$setting in $scope"""
+  }
+
+  private def dumpStructureToCommand(outputFile: File, sbtVersion: Version): String = {
+    val outputPath = path(outputFile)
+    if (sbtVersion.major(1) == Version("2"))
+      s"""dumpStructureTo "$outputPath""""
+    else
+      s"""*/*:dumpStructureTo "$outputPath""""
   }
 }
