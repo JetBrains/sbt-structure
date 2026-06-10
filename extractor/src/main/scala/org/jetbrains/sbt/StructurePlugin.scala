@@ -15,8 +15,7 @@ object StructurePlugin extends AutoPlugin {
 
   override lazy val globalSettings: Seq[Setting[?]] = Seq(
     StructureKeys.sbtStructureOutputFile := retrieveOutputFile.orElse(None),
-    StructureKeys.sbtStructureOptions := retrieveOptions.getOrElse("prettyPrint download"),
-    StructureKeys.dumpStructureTo := PluginOnlyTasksCompat.dumpStructureTo.evaluated,
+    StructureKeys.sbtStructureOptions := retrieveOptions.getOrElse("prettyPrint download")
   ) ++ CreateTasks.globalSettings
 
   /**
@@ -33,14 +32,14 @@ object StructurePlugin extends AutoPlugin {
       .filter(_.nonEmpty)
 
   /**
-   * Optional output file for the `dumpStructure` task, taken from the
+   * Optional output file for the deprecated `dumpStructure` task, taken from the
    * `sbt.structure.outputFile` system property if defined.
    */
   private def retrieveOutputFile: Option[File] =
     getSysProp("sbt.structure.outputFile").map(file)
 
   /**
-   * Optional command-line style options for `dumpStructure`, taken from the
+   * Optional command-line style options for structure dump tasks, taken from the
    * `sbt.structure.options` system property if defined.
    */
   private def retrieveOptions: Option[String] =

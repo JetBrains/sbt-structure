@@ -5,12 +5,15 @@ import sbt.*
 import sbt.jetbrains.PluginCompat
 import sbt.jetbrains.PluginCompat.*
 
+import scala.annotation.nowarn
+
 object CreateTasks extends (State => State) with SbtStateOps {
 
   lazy val globalSettings: Seq[Setting[?]] = Seq[Setting[?]](
     Keys.commands ++= Seq(UtilityTasks.preferScala2, UtilityTasks.setSbtStructureOptionsProperty),
     StructureKeys.sbtStructureOpts := StructureKeys.sbtStructureOptions.apply(Options.readFromString).value,
-    StructureKeys.dumpStructure := UtilityTasks.dumpStructure.value,
+    deprecatedDumpStructureSetting,
+    StructureKeys.dumpStructureTo := PluginOnlyTasksCompat.dumpStructureTo.evaluated,
     StructureKeys.acceptedProjects := UtilityTasks.acceptedProjects.value,
     StructureKeys.extractProjects := UtilityTasks.extractProjects.value,
     StructureKeys.extractBuilds := UtilityTasks.extractBuilds.value,
@@ -46,4 +49,12 @@ object CreateTasks extends (State => State) with SbtStateOps {
 
   def apply(state: State): State =
     applySettings(state, globalSettings, projectSettings)
+
+  @nowarn("cat=deprecation")
+  private lazy val deprecatedDumpStructureSetting: Setting[?] = {
+    // dumpStructure is deprecated for external callers, but CreateTasks still binds it for
+    // legacy side-loaded import clients. New callers should use dumpStructureTo.
+    //noinspection ScalaDeprecation
+    StructureKeys.dumpStructure := UtilityTasks.dumpStructure.value
+  }
 }

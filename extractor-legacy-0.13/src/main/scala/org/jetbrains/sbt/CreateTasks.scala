@@ -3,13 +3,15 @@ package org.jetbrains.sbt
 import org.jetbrains.sbt.extractors._
 import sbt._
 
+import scala.language.reflectiveCalls
 
 object CreateTasks extends (State => State) with SbtStateOps {
 
   lazy val globalSettings: Seq[Setting[_]] = Seq[Setting[_]](
     Keys.commands ++= Seq(UtilityTasks.preferScala2, UtilityTasks.setSbtStructureOptionsProperty),
     StructureKeys.sbtStructureOpts := StructureKeys.sbtStructureOptions.apply(Options.readFromString).value,
-    StructureKeys.dumpStructure := UtilityTasks.dumpStructure.value,
+    deprecatedDumpStructureSetting,
+    StructureKeys.dumpStructureTo := PluginOnlyTasksCompat.dumpStructureTo.evaluated,
     StructureKeys.acceptedProjects := UtilityTasks.acceptedProjects.value,
     StructureKeys.extractProjects := UtilityTasks.extractProjects.value,
     StructureKeys.extractBuilds := UtilityTasks.extractBuilds.value,
@@ -48,4 +50,14 @@ object CreateTasks extends (State => State) with SbtStateOps {
   def apply(state: State): State =
     applySettings(state, globalSettings, projectSettings)
 
+  private type DeprecatedDumpStructureKey = { val dumpStructure: TaskKey[Unit] }
+
+  private def deprecatedDumpStructureKey: TaskKey[Unit] = {
+    // Scala 2.10 has no scala.annotation.nowarn. This local structural access is the
+    // compatibility-only suppression for the deprecated key while resolving the same task.
+    StructureKeys.asInstanceOf[DeprecatedDumpStructureKey].dumpStructure
+  }
+
+  private lazy val deprecatedDumpStructureSetting: Setting[_] =
+    deprecatedDumpStructureKey := UtilityTasks.dumpStructure.value
 }

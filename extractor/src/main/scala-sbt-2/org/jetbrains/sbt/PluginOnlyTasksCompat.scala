@@ -11,7 +11,6 @@ private object PluginOnlyTasksCompat {
 
   private val targetFileParser = DefaultParsers.fileParser(file("/"))
 
-  // this task is not compatible with old sbt versions (0.13.0) and only available as part of the StructurePlugin
   lazy val dumpStructureTo: Def.Initialize[InputTask[File]] = Def.inputTaskDyn {
     val outputFile = targetFileParser.parsed
     val options = StructureKeys.sbtStructureOpts.value

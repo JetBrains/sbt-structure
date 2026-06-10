@@ -249,6 +249,25 @@ class ExtractStructureIntegrationTest extends AnyFreeSpecLike {
     }
   }
 
+  "deprecated dumpStructure side-loaded compatibility" - {
+    "sbt 0.13 simple" in {
+      testProject("simple", SbtVersion_0_13, ResolveSourcesAndSbtClassifiers, useDeprecatedDumpStructure = true)
+    }
+
+    "1.1 simple" in {
+      testProject("simple", SbtVersion_1_1, ResolveSourcesAndSbtClassifiers, useDeprecatedDumpStructure = true)
+    }
+
+    "1.12 latest buildinfo" in {
+      testProject("buildinfo", SbtVersion_1_12, ResolveSourcesAndSbtClassifiersAndSeparateProdTestSources, useDeprecatedDumpStructure = true)
+    }
+
+    "2.0 latest simple" in {
+      val options = SbtOptionsBuilder().sources /*.sbtClassifiers*/.separateProdTestSources.result
+      testProject("simple", SbtVersion_2, options, useDeprecatedDumpStructure = true)
+    }
+  }
+
 
   private def testProject_013(
     project: String,
@@ -267,7 +286,8 @@ class ExtractStructureIntegrationTest extends AnyFreeSpecLike {
     projectDirName: String,
     sbtVersionFull: Version,
     options: String,
-    errorsExpected: Boolean = false
+    errorsExpected: Boolean = false,
+    useDeprecatedDumpStructure: Boolean = false
   ): Unit = {
     val runOptions = CurrentEnvironment.buildSbtRunCommonOptions(sbtVersionFull, errorsExpected)
     import runOptions.sbtVersionShort
@@ -278,7 +298,8 @@ class ExtractStructureIntegrationTest extends AnyFreeSpecLike {
       else
         TestDataRoot / sbtVersionShort.presentation / projectDirName
 
-    println(s"Running test: $projectDirName, sbtVersion: $sbtVersionFull, path: $projectDir")
+    val importCommand = if (useDeprecatedDumpStructure) "dumpStructure" else "dumpStructureTo"
+    println(s"Running test: $projectDirName, sbtVersion: $sbtVersionFull, importCommand: $importCommand, path: $projectDir")
 
     withClue(s"Test data folder doesn't exist: $projectDir") {
       projectDir must exist
@@ -329,6 +350,7 @@ class ExtractStructureIntegrationTest extends AnyFreeSpecLike {
       options,
       pluginFile = pluginClassesDir,
       runOptions = runOptions,
+      useDeprecatedDumpStructure = useDeprecatedDumpStructure,
     )
     val actualXmlStringNotSanitized = loadResult.structure.normalizeFilePathSeparatorsInXml
 

@@ -74,7 +74,7 @@ object UtilityTasks extends SbtStateOps {
     Def.task {
       val structure = StructureKeys.extractStructure.value
       val options = StructureKeys.sbtStructureOpts.value
-      val outputFile = StructureKeys.sbtStructureOutputFile.value
+      val outputFile = StructureKeys.sbtStructureOutputFile.?.value.flatten
 
       val outputText = {
         if (options.prettyPrint)

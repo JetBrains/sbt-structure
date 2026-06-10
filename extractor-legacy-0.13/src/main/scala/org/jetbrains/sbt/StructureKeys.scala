@@ -28,17 +28,18 @@ object StructureKeys {
 
   val sbtStructureOpts: SettingKey[Options] = SettingKey("ssOptions", "options for dumpStructure task", rank = DSetting)
   /**
-   * Options for `dumpStructure` task as a single string.
+   * Options for structure dump tasks as a single string.
    * May be initialized from the `sbt.structure.options` system property.
    */
   val sbtStructureOptions: SettingKey[String] = SettingKey("sbtStructureOptions", "options for dumpStructure task as string", rank = DSetting)
   /**
-   * Output file for the `dumpStructure` task.
+   * Output file for the deprecated `dumpStructure` task.
    * May be initialized from the `sbt.structure.outputFile` system property.
    */
   val sbtStructureOutputFile: SettingKey[Option[File]] = SettingKey("sbtStructureOutputFile", "output file for dumpStructure task",rank = DSetting)
 
   val loadOptions: TaskKey[Options] = TaskKey("ssLoadOptions", "load options from ssOptionsFile if available", rank = Invisible)
+  @deprecated("Use dumpStructureTo and pass the output file explicitly.", "sbt-structure 2026.2.2")
   val dumpStructure: TaskKey[Unit] = TaskKey("dumpStructure", "dump project structure to XML readable by IntelliJ", rank = DTask)
   val dumpStructureTo: InputKey[File] = InputKey("dumpStructureTo", "dump structure to specified file using provided command line options", rank = DTask)
 }

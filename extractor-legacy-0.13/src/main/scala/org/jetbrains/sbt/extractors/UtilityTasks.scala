@@ -61,7 +61,7 @@ object UtilityTasks extends SbtStateOps {
   lazy val dumpStructure: Initialize[Task[Unit]] = Def.task {
     val structure = StructureKeys.extractStructure.value
     val options = StructureKeys.sbtStructureOpts.value
-    val outputFile = StructureKeys.sbtStructureOutputFile.value
+    val outputFile = StructureKeys.sbtStructureOutputFile.?.value.flatten
     val log = Keys.streams.value.log
 
     val outputText = {

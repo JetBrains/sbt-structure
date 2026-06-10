@@ -67,36 +67,45 @@ To write the xml to a file, run:
     set org.jetbrains.sbt.StructureKeys.sbtStructureOptions in Global := "prettyPrint download"
     */*:dumpStructureTo structure.xml
     
-The `dumpStructure` task uses the settings described below, the `dumpStructureTo` task takes `sbtStructureFile` as parameter instead.
+The deprecated `dumpStructure` task uses the settings described below. Prefer `dumpStructureTo`, which takes the output file as an argument instead.
 
 
 #### Sideloading
 
 This is the way Intellij-Scala imports projects by default.
 
-Extractor is run in several steps:
+The preferred side-loading flow is:
 
-- Configure it by defining `sbt-structure-output-file` and
-  `sbt-structure-options` settings in `Global` scope.
-- Create necessary tasks by applying extractor's jar to your project
-- Run `dumpStructure` task in `Global` scope
+- Configure it by defining the `sbtStructureOptions` setting in `Global` scope.
+- Create necessary tasks by applying the extractor jar to your project.
+- Run the `dumpStructureTo` task with the target XML file.
 
-Here is an example of how to run extractor from sbt REPL:
+Here is an example of the preferred approach from sbt REPL:
+
+```scala
+set SettingKey[String]("sbtStructureOptions") in Global := "prettyPrint download"
+apply -cp <path-to-extractor-jar> org.jetbrains.sbt.CreateTasks
+*/*:dumpStructureTo "structure.xml"
+```
+
+The deprecated `dumpStructure` task is still available for compatibility with old
+side-loaded import clients. It reads the output file from `sbtStructureOutputFile`
+and writes to stdout if that setting is `None`:
 
 ```scala
 set SettingKey[Option[File]]("sbtStructureOutputFile") in Global := Some(file("structure.xml"))
 set SettingKey[String]("sbtStructureOptions") in Global := "prettyPrint download"
 apply -cp <path-to-extractor-jar> org.jetbrains.sbt.CreateTasks
-*/*:dumpStructure
+dumpStructure
 ```
 
 #### Settings
 
-`sbt-structure-options` contains space-separated list of options.
-`sbt-structure-output-file` points to a file where structure will be written; if
-it is set to `None` then structure will be dump into stdout.
+`sbtStructureOptions` contains a space-separated list of options.
+`sbtStructureOutputFile` points to a file where the deprecated `dumpStructure`
+task writes the structure; if it is set to `None`, the structure is dumped to stdout.
 
-Available options to set in `sbt-structure-options`:
+Available options to set in `sbtStructureOptions`:
 
 - `download`
 

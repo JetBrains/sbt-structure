@@ -13,17 +13,31 @@ object SbtStructureLoader {
     sbtStructureOptions: String,
     pluginFile: File,
     runOptions: RunCommonOptions,
-    expectedError: Option[String] = None
+    expectedError: Option[String] = None,
+    useDeprecatedDumpStructure: Boolean = false
   ): LoadResult = {
-    val structureFile = FileUtils.createTempFile("sbt-structure", ".xml")
+    val structureFile = FileUtils.createTempFile("sbt structure", ".xml")
     val sbtStructureOptionsPatched = s"download prettyPrint generateManagedSources $sbtStructureOptions"
     val sbtVersion = runOptions.sbtVersion
-    val sbtCommands: Seq[String] = Seq(
-      s"""set ${scopedSbtSetting("""SettingKey[Option[File]]("sbtStructureOutputFile")""", "Global", sbtVersion)} := Some(file("${path(structureFile)}"))""",
-      s"""set ${scopedSbtSetting("""SettingKey[String]("sbtStructureOptions")""", "Global", sbtVersion)} := "$sbtStructureOptionsPatched"""",
-      s"""apply -cp ${path(pluginFile)} org.jetbrains.sbt.CreateTasks""",
-      s"""dumpStructure"""
-    )
+    val setOptionsCommand =
+      s"""set ${scopedSbtSetting("""SettingKey[String]("sbtStructureOptions")""", "Global", sbtVersion)} := "$sbtStructureOptionsPatched""""
+    val applyCreateTasksCommand =
+      s"""apply -cp ${path(pluginFile)} org.jetbrains.sbt.CreateTasks"""
+    val sbtCommands: Seq[String] =
+      if (useDeprecatedDumpStructure) {
+        Seq(
+          s"""set ${scopedSbtSetting("""SettingKey[Option[File]]("sbtStructureOutputFile")""", "Global", sbtVersion)} := Some(file("${path(structureFile)}"))""",
+          setOptionsCommand,
+          applyCreateTasksCommand,
+          s"""dumpStructure"""
+        )
+      } else {
+        Seq(
+          setOptionsCommand,
+          applyCreateTasksCommand,
+          s"""*/*:dumpStructureTo "${path(structureFile)}""""
+        )
+      }
 
     val processRunResult = SbtProcessRunner.runSbtProcess(
       project,
