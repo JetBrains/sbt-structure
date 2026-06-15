@@ -203,9 +203,7 @@ class ExtractStructureIntegrationTest extends AnyFreeSpecLike {
       "missing-scala-tool-config" in { testProject("missing-scala-tool-config", SbtVersion_1_12, ResolveSourcesAndSbtClassifiers) }
       "scala-instance-error" in { testProjectShouldFailWith("scala-instance-error", SbtVersion_1_12, ResolveSourcesAndSbtClassifiers, ScalaInstanceCustomError) }
       "missing-scala-library-jar" in { testProject("missing-scala-library-jar", SbtVersion_1_12, ResolveSourcesAndSbtClassifiers) }
-      // Contains scala instance with 0.0.0 version (see https://youtrack.jetbrains.com/issue/SCL-25316)
       "unmanaged-scala-instance-ok" in { testProject("unmanaged-scala-instance-ok", SbtVersion_1_12, ResolveSourcesAndSbtClassifiers) }
-      // Contains scala instance with 0.0.0 version (see https://youtrack.jetbrains.com/issue/SCL-25316)
       "unmanaged-incompatible-scala" in { testProjectShouldFailWith("unmanaged-incompatible-scala", SbtVersion_1_12, ResolveSourcesAndSbtClassifiers, UnmanagedIncompatibleScalaVersionError) }
       "managed-incompatible-scala" in { testProjectShouldFailWith("managed-incompatible-scala", SbtVersion_1_12, ResolveSourcesAndSbtClassifiers, ManagedIncompatibleScalaVersionError) }
     }
@@ -241,9 +239,7 @@ class ExtractStructureIntegrationTest extends AnyFreeSpecLike {
       "missing-scala-tool-config" in { testProject("missing-scala-tool-config", SbtVersion_2, ResolveSourcesAndSbtClassifiers) }
       "scala-instance-error" in { testProjectShouldFailWith("scala-instance-error", SbtVersion_2, ResolveSourcesAndSbtClassifiers, ScalaInstanceCustomError) }
       "missing-scala-library-jar" in { testProject("missing-scala-library-jar", SbtVersion_2, ResolveSourcesAndSbtClassifiers) }
-      // Contains scala instance with 0.0.0 version (see https://youtrack.jetbrains.com/issue/SCL-25316)
       "unmanaged-scala-instance-ok" in { testProject("unmanaged-scala-instance-ok", SbtVersion_2, ResolveSourcesAndSbtClassifiers) }
-      // Contains scala instance with 0.0.0 version (see https://youtrack.jetbrains.com/issue/SCL-25316)
       "unmanaged-incompatible-scala" in { testProjectShouldFailWith("unmanaged-incompatible-scala", SbtVersion_2, ResolveSourcesAndSbtClassifiers, UnmanagedIncompatibleScalaVersionError) }
       "managed-incompatible-scala" in { testProjectShouldFailWith("managed-incompatible-scala", SbtVersion_2, ResolveSourcesAndSbtClassifiers, ManagedIncompatibleScalaVersionError) }
     }
