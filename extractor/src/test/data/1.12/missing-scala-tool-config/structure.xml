@@ -187,13 +187,6 @@
     <version>0.1.0-SNAPSHOT</version>
     <base>$BASE</base>
     <target>$BASE/target</target>
-    <scala>
-      <version>0.0.0</version>
-      <libraryJars/>
-      <compilerJars/>
-      <extraJars/>
-      <compilerBridgeBinaryJar>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-lang/scala2-sbt-bridge/2.13.16/scala2-sbt-bridge-2.13.16.jar</compilerBridgeBinaryJar>
-    </scala>
     <compileOrder>Mixed</compileOrder>
     <configuration id="compile">
       <sources>$BASE/src/main/java</sources>

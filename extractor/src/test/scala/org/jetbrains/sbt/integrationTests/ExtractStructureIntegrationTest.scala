@@ -188,6 +188,8 @@ class ExtractStructureIntegrationTest extends AnyFreeSpecLike {
       "custom-source-generator" in { testProject("custom-source-generator", SbtVersion_1_11, ResolveSourcesAndSbtClassifiersAndSeparateProdTestSources) }
       "source-generator-failure" in { testProject("source-generator-failure", SbtVersion_1_11, ResolveSourcesAndSbtClassifiersAndSeparateProdTestSources, errorsExpected = true) }
       "missing-scala-tool-config" in { testProject("missing-scala-tool-config", SbtVersion_1_11, ResolveSourcesAndSbtClassifiers) }
+      "maanged-scala-auto-scala-library-disabled" in { testProject("maanged-scala-auto-scala-library-disabled", SbtVersion_1_11, ResolveSourcesAndSbtClassifiers) }
+      "auto-scala-library-disabled" in { testProject("auto-scala-library-disabled", SbtVersion_1_11, ResolveSourcesAndSbtClassifiers) }
       "scala-instance-error" in { testProjectShouldFailWith("scala-instance-error", SbtVersion_1_11, ResolveSourcesAndSbtClassifiers, ScalaInstanceCustomError) }
       "missing-scala-library-jar" in { testProjectShouldFailWith("missing-scala-library-jar", SbtVersion_1_11, ResolveSourcesAndSbtClassifiers, MissingScalaLibraryJarError) }
       "unmanaged-scala-instance-ok" in { testProject("unmanaged-scala-instance-ok", SbtVersion_1_11, ResolveSourcesAndSbtClassifiers) }
@@ -199,13 +201,12 @@ class ExtractStructureIntegrationTest extends AnyFreeSpecLike {
       "custom-source-generator" in { testProject("custom-source-generator", SbtVersion_1_12, ResolveSourcesAndSbtClassifiersAndSeparateProdTestSources) }
       "kotlinc-options" in { testProject("kotlinc-options", SbtVersion_1_12, ResolveSourcesAndSbtClassifiersAndSeparateProdTestSources) }
       "source-generator-failure" in { testProject("source-generator-failure", SbtVersion_1_12, ResolveSourcesAndSbtClassifiersAndSeparateProdTestSources, errorsExpected = true) }
-      // Contains scala instance with 0.0.0 version (see https://youtrack.jetbrains.com/issue/SCL-25316)
       "missing-scala-tool-config" in { testProject("missing-scala-tool-config", SbtVersion_1_12, ResolveSourcesAndSbtClassifiers) }
+      "maanged-scala-auto-scala-library-disabled" in { testProject("maanged-scala-auto-scala-library-disabled", SbtVersion_1_12, ResolveSourcesAndSbtClassifiers) }
+      "auto-scala-library-disabled" in { testProject("auto-scala-library-disabled", SbtVersion_1_12, ResolveSourcesAndSbtClassifiers) }
       "scala-instance-error" in { testProjectShouldFailWith("scala-instance-error", SbtVersion_1_12, ResolveSourcesAndSbtClassifiers, ScalaInstanceCustomError) }
       "missing-scala-library-jar" in { testProject("missing-scala-library-jar", SbtVersion_1_12, ResolveSourcesAndSbtClassifiers) }
-      // Contains scala instance with 0.0.0 version (see https://youtrack.jetbrains.com/issue/SCL-25316)
       "unmanaged-scala-instance-ok" in { testProject("unmanaged-scala-instance-ok", SbtVersion_1_12, ResolveSourcesAndSbtClassifiers) }
-      // Contains scala instance with 0.0.0 version (see https://youtrack.jetbrains.com/issue/SCL-25316)
       "unmanaged-incompatible-scala" in { testProjectShouldFailWith("unmanaged-incompatible-scala", SbtVersion_1_12, ResolveSourcesAndSbtClassifiers, UnmanagedIncompatibleScalaVersionError) }
       "managed-incompatible-scala" in { testProjectShouldFailWith("managed-incompatible-scala", SbtVersion_1_12, ResolveSourcesAndSbtClassifiers, ManagedIncompatibleScalaVersionError) }
     }
@@ -237,13 +238,12 @@ class ExtractStructureIntegrationTest extends AnyFreeSpecLike {
       "bsp-disabled-project" in { testProject("bsp-disabled-project", SbtVersion_2, options) }
       "bsp-disabled-test-config" in { testProject("bsp-disabled-test-config", SbtVersion_2, options) }
       "scalafix-config-disabled" in { testProject("scalafix-config-disabled", SbtVersion_2, options) }
-      // Contains scala instance with 0.0.0 version (see https://youtrack.jetbrains.com/issue/SCL-25316)
       "missing-scala-tool-config" in { testProject("missing-scala-tool-config", SbtVersion_2, ResolveSourcesAndSbtClassifiers) }
+      "maanged-scala-auto-scala-library-disabled" in { testProject("maanged-scala-auto-scala-library-disabled", SbtVersion_2, ResolveSourcesAndSbtClassifiers) }
+      "auto-scala-library-disabled" in { testProject("auto-scala-library-disabled", SbtVersion_2, ResolveSourcesAndSbtClassifiers) }
       "scala-instance-error" in { testProjectShouldFailWith("scala-instance-error", SbtVersion_2, ResolveSourcesAndSbtClassifiers, ScalaInstanceCustomError) }
       "missing-scala-library-jar" in { testProject("missing-scala-library-jar", SbtVersion_2, ResolveSourcesAndSbtClassifiers) }
-      // Contains scala instance with 0.0.0 version (see https://youtrack.jetbrains.com/issue/SCL-25316)
       "unmanaged-scala-instance-ok" in { testProject("unmanaged-scala-instance-ok", SbtVersion_2, ResolveSourcesAndSbtClassifiers) }
-      // Contains scala instance with 0.0.0 version (see https://youtrack.jetbrains.com/issue/SCL-25316)
       "unmanaged-incompatible-scala" in { testProjectShouldFailWith("unmanaged-incompatible-scala", SbtVersion_2, ResolveSourcesAndSbtClassifiers, UnmanagedIncompatibleScalaVersionError) }
       "managed-incompatible-scala" in { testProjectShouldFailWith("managed-incompatible-scala", SbtVersion_2, ResolveSourcesAndSbtClassifiers, ManagedIncompatibleScalaVersionError) }
     }
