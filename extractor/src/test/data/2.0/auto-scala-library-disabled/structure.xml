@@ -185,33 +185,47 @@
     <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/slf4j/slf4j-api/1.7.28/slf4j-api-1.7.28-sources.jar</sources>
   </build>
   <project>
-    <id>missing-scala-tool-config</id>
+    <id>auto-scala-library-disabled</id>
     <buildURI>$URI_BASE</buildURI>
-    <name>missing-scala-tool-config</name>
+    <name>auto-scala-library-disabled</name>
     <organization>default</organization>
     <version>0.1.0-SNAPSHOT</version>
     <base>$BASE</base>
-    <target>$BASE/target/out/jvm/scala-2.13.16/missing-scala-tool-config</target>
+    <target>$BASE/target/out/jvm/scala-2.13.16/auto-scala-library-disabled</target>
+    <scala>
+      <version>2.13.16</version>
+      <libraryJars>
+        <jar>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-lang/scala-library/2.13.16/scala-library-2.13.16.jar</jar>
+      </libraryJars>
+      <compilerJars>
+        <jar>$COURSIER/cache/https/repo1.maven.org/maven2/io/github/java-diff-utils/java-diff-utils/4.15/java-diff-utils-4.15.jar</jar>
+        <jar>$COURSIER/cache/https/repo1.maven.org/maven2/org/jline/jline/3.27.1/jline-3.27.1-jdk8.jar</jar>
+        <jar>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-lang/scala-compiler/2.13.16/scala-compiler-2.13.16.jar</jar>
+        <jar>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-lang/scala-reflect/2.13.16/scala-reflect-2.13.16.jar</jar>
+      </compilerJars>
+      <extraJars/>
+      <compilerBridgeBinaryJar>$HOME/.sbt-structure-global/2.0/cache/v2/cas/sha256-776ef74d8bc1222f4b6e7b5dc5dd1f0abfc97ab853cb4932292dee0b32111906-271996</compilerBridgeBinaryJar>
+    </scala>
     <compileOrder>Mixed</compileOrder>
     <configuration id="compile">
       <sources>$BASE/src/main/java</sources>
       <sources>$BASE/src/main/scala</sources>
       <sources>$BASE/src/main/scala-2</sources>
       <sources>$BASE/src/main/scala-2.13</sources>
-      <sources managed="true">$BASE/target/out/jvm/scala-2.13.16/missing-scala-tool-config/src_managed/main</sources>
+      <sources managed="true">$BASE/target/out/jvm/scala-2.13.16/auto-scala-library-disabled/src_managed/main</sources>
       <resources>$BASE/src/main/resources</resources>
-      <resources managed="true">$BASE/target/out/jvm/scala-2.13.16/missing-scala-tool-config/resource_managed/main</resources>
-      <classes>$BASE/target/out/jvm/scala-2.13.16/missing-scala-tool-config/classes</classes>
+      <resources managed="true">$BASE/target/out/jvm/scala-2.13.16/auto-scala-library-disabled/resource_managed/main</resources>
+      <classes>$BASE/target/out/jvm/scala-2.13.16/auto-scala-library-disabled/classes</classes>
     </configuration>
     <configuration id="test">
       <sources>$BASE/src/test/java</sources>
       <sources>$BASE/src/test/scala</sources>
       <sources>$BASE/src/test/scala-2</sources>
       <sources>$BASE/src/test/scala-2.13</sources>
-      <sources managed="true">$BASE/target/out/jvm/scala-2.13.16/missing-scala-tool-config/src_managed/test</sources>
+      <sources managed="true">$BASE/target/out/jvm/scala-2.13.16/auto-scala-library-disabled/src_managed/test</sources>
       <resources>$BASE/src/test/resources</resources>
-      <resources managed="true">$BASE/target/out/jvm/scala-2.13.16/missing-scala-tool-config/resource_managed/test</resources>
-      <classes>$BASE/target/out/jvm/scala-2.13.16/missing-scala-tool-config/test-classes</classes>
+      <resources managed="true">$BASE/target/out/jvm/scala-2.13.16/auto-scala-library-disabled/resource_managed/test</resources>
+      <classes>$BASE/target/out/jvm/scala-2.13.16/auto-scala-library-disabled/test-classes</classes>
     </configuration>
     <dependencies>
       <projects>
@@ -514,6 +528,11 @@
       <rank>10000</rank>
     </setting>
     <setting>
+      <label>autoScalaLibrary</label>
+      <description>Adds a dependency on scala-library if true.</description>
+      <rank>10</rank>
+    </setting>
+    <setting>
       <label>baseDirectory</label>
       <description>The base directory. Depending on the scope, this is the base directory for the build, project, configuration, or task.</description>
       <rank>11</rank>
@@ -647,11 +666,6 @@
       <label>artifact</label>
       <description>Describes an artifact.</description>
       <rank>41</rank>
-    </setting>
-    <setting>
-      <label>managedScalaInstance</label>
-      <description>Automatically obtains Scala tools as managed dependencies if true.</description>
-      <rank>40</rank>
     </setting>
     <setting>
       <label>semanticdbOptions</label>

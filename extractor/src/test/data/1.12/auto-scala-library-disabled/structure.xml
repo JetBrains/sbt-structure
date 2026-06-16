@@ -1,123 +1,122 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<structure sbt="2.0.0">
+<structure sbt="1.12.12">
   <build>
     <uri>$URI_BASE</uri>
-    <import>import _root_.sbt.*</import>
-    <import>import _root_.sbt.BareBuildSyntax.*</import>
-    <import>import _root_.sbt.Keys.*</import>
-    <import>import _root_.sbt.ScriptedPlugin.autoImport.*, _root_.sbt.ScriptedPlugin.autoImport.given, _root_.sbt.plugins.JUnitXmlReportPlugin.autoImport.*, _root_.sbt.plugins.JUnitXmlReportPlugin.autoImport.given, _root_.sbt.plugins.DependencyTreePlugin.autoImport.*, _root_.sbt.plugins.DependencyTreePlugin.autoImport.given</import>
-    <import>import _root_.sbt.given</import>
-    <import>import _root_.sbt.librarymanagement.LibraryManagementCodec.given</import>
-    <import>import _root_.sbt.nio.Keys.*</import>
-    <import>import _root_.sbt.plugins.IvyPlugin, _root_.sbt.plugins.JvmPlugin, _root_.sbt.plugins.CorePlugin, _root_.sbt.ScriptedPlugin, _root_.sbt.plugins.SbtPlugin, _root_.sbt.plugins.SemanticdbPlugin, _root_.sbt.plugins.JUnitXmlReportPlugin, _root_.sbt.plugins.Giter8TemplatePlugin, _root_.sbt.plugins.DependencyTreePlugin</import>
-    <import>import _root_.sbt.util.CacheImplicits.given</import>
+    <import>import _root_.sbt.Keys._</import>
+    <import>import _root_.sbt.ScriptedPlugin.autoImport._, _root_.sbt.plugins.JUnitXmlReportPlugin.autoImport._, _root_.sbt.plugins.MiniDependencyTreePlugin.autoImport._</import>
+    <import>import _root_.sbt._</import>
+    <import>import _root_.sbt.nio.Keys._</import>
+    <import>import _root_.sbt.plugins.IvyPlugin, _root_.sbt.plugins.JvmPlugin, _root_.sbt.plugins.CorePlugin, _root_.sbt.ScriptedPlugin, _root_.sbt.plugins.SbtPlugin, _root_.sbt.plugins.SemanticdbPlugin, _root_.sbt.plugins.JUnitXmlReportPlugin, _root_.sbt.plugins.Giter8TemplatePlugin, _root_.sbt.plugins.MiniDependencyTreePlugin</import>
     <import>import _root_.scala.xml.{TopScope=&gt;$scope}</import>
-    <classes>$SBT_BOOT/scala-3.8.4/lib/scala-asm-9.9.0-scala-1.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/lib/scala-library.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/lib/scala3-compiler_3-3.8.4.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/lib/scala3-interfaces-3.8.4.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/lib/scala3-library_3-3.8.4.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/lib/tasty-core_3-3.8.4.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.0/actions_3-2.0.0.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.0/build-file_3-2.0.0.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.0/caffeine-2.8.5.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.0/checker-qual-3.4.1.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.0/collections_3-2.0.0.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.0/command_3-2.0.0.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.0/compiler-interface-2.0.0.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.0/completion_3-2.0.0.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.0/config-1.4.5.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.0/core-macros_3-2.0.0.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.0/disruptor-3.4.2.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.0/error_prone_annotations-2.4.0.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.0/file-tree-views-2.1.12.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.0/gigahorse-apache-http_3-0.9.4.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.0/gigahorse-core_3-0.9.4.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.0/io_3-1.12.1.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.0/ipcsocket-1.6.3.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.0/ivy-2.3.0-sbt-77cc781d727b367d3761f097d89f5a4762771d41.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.0/jansi-2.4.1.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.0/jline-2.14.7-sbt-9a88bc413e2b34a4580c001c654d1a7f4f65bf18.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.0/jline-builtins-3.27.1.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.0/jline-native-3.27.1.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.0/jline-reader-3.27.1.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.0/jline-style-3.27.1.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.0/jline-terminal-3.27.1.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.0/jline-terminal-jni-3.27.1.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.0/jna-5.12.0.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.0/jna-platform-5.12.0.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.0/jsch-0.2.23.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.0/launcher-interface-1.6.0.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.0/librarymanagement-core_3-2.0.0.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.0/librarymanagement-coursier_3-2.0.0.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.0/librarymanagement-ivy_3-2.0.0.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.0/logic_3-2.0.0.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.0/main-settings_3-2.0.0.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.0/main_3-2.0.0.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.0/protocol_3-2.0.0.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.0/reactive-streams-1.0.3.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.0/run_3-2.0.0.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.0/sbinary_3-0.5.1.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.0/sbt-2.0.0.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.0/scala-asm-9.9.0-scala-1.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.0/scala-collection-compat_3-2.14.0.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.0/scala-library-3.8.4.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.0/scala-parallel-collections_3-1.2.0.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.0/scala-parser-combinators_3-2.1.0.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.0/scala-xml_3-2.4.0.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.0/scala3-compiler_3-3.8.4.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.0/scala3-interfaces-3.8.4.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.0/scala3-library_3-3.8.4.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.0/shaded-apache-httpclient5-0.9.4.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.0/shaded-gson-2.13.1.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.0/shaded-jawn-parser_3-1.3.2.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.0/shaded-scalajson_3-1.0.0-M4.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.0/sjson-new-core_3-0.15.0.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.0/sjson-new-murmurhash_3-0.15.0.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.0/sjson-new-scalajson_3-0.15.0.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.0/slf4j-api-1.7.28.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.0/ssl-config-core_3-0.7.1.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.0/task-system_3-2.0.0.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.0/tasks_3-2.0.0.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.0/tasty-core_3-3.8.4.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.0/template-resolver-0.1.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.0/test-interface-1.0.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.0/testing_3-2.0.0.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.0/util-cache_3-2.0.0.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.0/util-control_3-2.0.0.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.0/util-core_3-2.0.0.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.0/util-interface-2.0.0.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.0/util-logging_3-2.0.0.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.0/util-position_3-2.0.0.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.0/util-relation_3-2.0.0.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.0/util-tracking_3-2.0.0.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.0/worker-2.0.0.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.0/zinc-apiinfo_3-2.0.0.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.0/zinc-classfile_3-2.0.0.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.0/zinc-classpath_3-2.0.0.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.0/zinc-compile-core_3-2.0.0.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.0/zinc-core_3-2.0.0.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.0/zinc-lm-integration_3-2.0.0.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.0/zinc-persist_3-2.0.0.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.0/zinc_3-2.0.0.jar</classes>
-    <classes>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-lang/scala3-library_3/3.8.4/scala3-library_3-3.8.4.jar</classes>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/com/eed3si9n/gigahorse-apache-http_3/0.9.4/gigahorse-apache-http_3-0.9.4-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/com/eed3si9n/gigahorse-core_3/0.9.4/gigahorse-core_3-0.9.4-sources.jar</sources>
+    <classes>$SBT_BOOT/scala-2.12.21/lib/scala-compiler.jar</classes>
+    <classes>$SBT_BOOT/scala-2.12.21/lib/scala-library.jar</classes>
+    <classes>$SBT_BOOT/scala-2.12.21/lib/scala-reflect.jar</classes>
+    <classes>$SBT_BOOT/scala-2.12.21/lib/scala-xml_2.12-2.3.0.jar</classes>
+    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.12/actions_2.12-1.12.12.jar</classes>
+    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.12/caffeine-2.8.5.jar</classes>
+    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.12/checker-qual-3.4.1.jar</classes>
+    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.12/collections_2.12-1.12.12.jar</classes>
+    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.12/command_2.12-1.12.12.jar</classes>
+    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.12/compiler-bridge_2.12-1.12.0.jar</classes>
+    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.12/compiler-interface-1.12.0.jar</classes>
+    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.12/completion_2.12-1.12.12.jar</classes>
+    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.12/config-1.4.5.jar</classes>
+    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.12/core-macros_2.12-1.12.12.jar</classes>
+    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.12/disruptor-3.4.2.jar</classes>
+    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.12/error_prone_annotations-2.4.0.jar</classes>
+    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.12/file-tree-views-2.1.12.jar</classes>
+    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.12/gigahorse-apache-http_2.12-0.9.4.jar</classes>
+    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.12/gigahorse-core_2.12-0.9.4.jar</classes>
+    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.12/io_2.12-1.12.0.jar</classes>
+    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.12/ipcsocket-1.6.3.jar</classes>
+    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.12/ivy-2.3.0-sbt-77cc781d727b367d3761f097d89f5a4762771d41.jar</classes>
+    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.12/jansi-2.4.1.jar</classes>
+    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.12/jline-2.14.7-sbt-9a88bc413e2b34a4580c001c654d1a7f4f65bf18.jar</classes>
+    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.12/jline-builtins-3.27.1.jar</classes>
+    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.12/jline-native-3.27.1.jar</classes>
+    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.12/jline-reader-3.27.1.jar</classes>
+    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.12/jline-style-3.27.1.jar</classes>
+    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.12/jline-terminal-3.27.1.jar</classes>
+    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.12/jline-terminal-jni-3.27.1.jar</classes>
+    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.12/jna-5.12.0.jar</classes>
+    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.12/jna-platform-5.12.0.jar</classes>
+    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.12/jsch-2.27.5.jar</classes>
+    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.12/launcher-interface-1.6.1.jar</classes>
+    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.12/librarymanagement-core_2.12-1.12.2.jar</classes>
+    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.12/librarymanagement-ivy_2.12-1.12.2.jar</classes>
+    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.12/lm-coursier-shaded_2.12-2.1.13.jar</classes>
+    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.12/log4j-api-2.25.4.jar</classes>
+    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.12/log4j-core-2.25.4.jar</classes>
+    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.12/log4j-slf4j-impl-2.25.4.jar</classes>
+    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.12/logic_2.12-1.12.12.jar</classes>
+    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.12/main-settings_2.12-1.12.12.jar</classes>
+    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.12/main_2.12-1.12.12.jar</classes>
+    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.12/protocol_2.12-1.12.12.jar</classes>
+    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.12/reactive-streams-1.0.3.jar</classes>
+    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.12/run_2.12-1.12.12.jar</classes>
+    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.12/sbinary_2.12-0.5.1.jar</classes>
+    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.12/sbt-1.12.12.jar</classes>
+    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.12/scala-collection-compat_2.12-2.14.0.jar</classes>
+    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.12/scala-compiler-2.12.21.jar</classes>
+    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.12/scala-library-2.12.21.jar</classes>
+    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.12/scala-parser-combinators_2.12-1.1.2.jar</classes>
+    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.12/scala-reflect-2.12.21.jar</classes>
+    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.12/scala-xml_2.12-2.3.0.jar</classes>
+    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.12/scripted-plugin_2.12-1.12.12.jar</classes>
+    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.12/shaded-apache-httpclient5-0.9.4.jar</classes>
+    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.12/shaded-jawn-parser_2.12-1.3.2.jar</classes>
+    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.12/shaded-scalajson_2.12-1.0.0-M4.jar</classes>
+    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.12/sjson-new-core_2.12-0.10.1.jar</classes>
+    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.12/sjson-new-murmurhash_2.12-0.10.1.jar</classes>
+    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.12/sjson-new-scalajson_2.12-0.10.1.jar</classes>
+    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.12/slf4j-api-1.7.36.jar</classes>
+    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.12/ssl-config-core_2.12-0.7.1.jar</classes>
+    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.12/task-system_2.12-1.12.12.jar</classes>
+    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.12/tasks_2.12-1.12.12.jar</classes>
+    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.12/template-resolver-0.1.jar</classes>
+    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.12/test-agent-1.12.12.jar</classes>
+    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.12/test-interface-1.0.jar</classes>
+    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.12/testing_2.12-1.12.12.jar</classes>
+    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.12/util-cache_2.12-1.12.12.jar</classes>
+    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.12/util-control_2.12-1.12.12.jar</classes>
+    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.12/util-interface-1.12.12.jar</classes>
+    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.12/util-logging_2.12-1.12.12.jar</classes>
+    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.12/util-position_2.12-1.12.12.jar</classes>
+    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.12/util-relation_2.12-1.12.12.jar</classes>
+    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.12/util-tracking_2.12-1.12.12.jar</classes>
+    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.12/zero-allocation-hashing-0.16.jar</classes>
+    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.12/zinc-apiinfo_2.12-1.12.0.jar</classes>
+    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.12/zinc-classfile_2.12-1.12.0.jar</classes>
+    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.12/zinc-classpath_2.12-1.12.0.jar</classes>
+    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.12/zinc-compile-core_2.12-1.12.0.jar</classes>
+    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.12/zinc-compile_2.12-1.12.0.jar</classes>
+    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.12/zinc-core_2.12-1.12.0.jar</classes>
+    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.12/zinc-lm-integration_2.12-1.12.12.jar</classes>
+    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.12/zinc-persist-core-assembly-1.12.0.jar</classes>
+    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.12/zinc-persist_2.12-1.12.0.jar</classes>
+    <classes>$SBT_BOOT/scala-2.12.21/org.scala-sbt/sbt/1.12.12/zinc_2.12-1.12.0.jar</classes>
+    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/com/eed3si9n/gigahorse-apache-http_2.12/0.9.4/gigahorse-apache-http_2.12-0.9.4-sources.jar</sources>
+    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/com/eed3si9n/gigahorse-core_2.12/0.9.4/gigahorse-core_2.12-0.9.4-sources.jar</sources>
     <sources>$COURSIER/cache/https/repo1.maven.org/maven2/com/eed3si9n/shaded-apache-httpclient5/0.9.4/shaded-apache-httpclient5-0.9.4-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/com/eed3si9n/shaded-jawn-parser_3/1.3.2/shaded-jawn-parser_3-1.3.2-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/com/eed3si9n/shaded-scalajson_3/1.0.0-M4/shaded-scalajson_3-1.0.0-M4-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/com/eed3si9n/sjson-new-core_3/0.15.0/sjson-new-core_3-0.15.0-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/com/eed3si9n/sjson-new-murmurhash_3/0.15.0/sjson-new-murmurhash_3-0.15.0-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/com/eed3si9n/sjson-new-scalajson_3/0.15.0/sjson-new-scalajson_3-0.15.0-sources.jar</sources>
+    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/com/eed3si9n/shaded-jawn-parser_2.12/1.3.2/shaded-jawn-parser_2.12-1.3.2-sources.jar</sources>
+    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/com/eed3si9n/shaded-scalajson_2.12/1.0.0-M4/shaded-scalajson_2.12-1.0.0-M4-sources.jar</sources>
+    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/com/eed3si9n/sjson-new-core_2.12/0.10.1/sjson-new-core_2.12-0.10.1-sources.jar</sources>
+    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/com/eed3si9n/sjson-new-murmurhash_2.12/0.10.1/sjson-new-murmurhash_2.12-0.10.1-sources.jar</sources>
+    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/com/eed3si9n/sjson-new-scalajson_2.12/0.10.1/sjson-new-scalajson_2.12-0.10.1-sources.jar</sources>
     <sources>$COURSIER/cache/https/repo1.maven.org/maven2/com/github/ben-manes/caffeine/caffeine/2.8.5/caffeine-2.8.5-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/com/github/mwiede/jsch/0.2.23/jsch-0.2.23-sources.jar</sources>
+    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/com/github/mwiede/jsch/2.27.5/jsch-2.27.5-sources.jar</sources>
     <sources>$COURSIER/cache/https/repo1.maven.org/maven2/com/google/errorprone/error_prone_annotations/2.4.0/error_prone_annotations-2.4.0-sources.jar</sources>
     <sources>$COURSIER/cache/https/repo1.maven.org/maven2/com/lmax/disruptor/3.4.2/disruptor-3.4.2-sources.jar</sources>
     <sources>$COURSIER/cache/https/repo1.maven.org/maven2/com/swoval/file-tree-views/2.1.12/file-tree-views-2.1.12-sources.jar</sources>
     <sources>$COURSIER/cache/https/repo1.maven.org/maven2/com/typesafe/config/1.4.5/config-1.4.5-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/com/typesafe/ssl-config-core_3/0.7.1/ssl-config-core_3-0.7.1-sources.jar</sources>
+    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/com/typesafe/ssl-config-core_2.12/0.7.1/ssl-config-core_2.12-0.7.1-sources.jar</sources>
+    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/io/get-coursier/lm-coursier-shaded_2.12/2.1.13/lm-coursier-shaded_2.12-2.1.13-sources.jar</sources>
     <sources>$COURSIER/cache/https/repo1.maven.org/maven2/net/java/dev/jna/jna-platform/5.12.0/jna-platform-5.12.0-sources.jar</sources>
     <sources>$COURSIER/cache/https/repo1.maven.org/maven2/net/java/dev/jna/jna/5.12.0/jna-5.12.0-sources.jar</sources>
+    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/net/openhft/zero-allocation-hashing/0.16/zero-allocation-hashing-0.16-sources.jar</sources>
+    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/apache/logging/log4j/log4j-api/2.25.4/log4j-api-2.25.4-sources.jar</sources>
+    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/apache/logging/log4j/log4j-core/2.25.4/log4j-core-2.25.4-sources.jar</sources>
+    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/apache/logging/log4j/log4j-slf4j-impl/2.25.4/log4j-slf4j-impl-2.25.4-sources.jar</sources>
     <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/checkerframework/checker-qual/3.4.1/checker-qual-3.4.1-sources.jar</sources>
     <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/fusesource/jansi/jansi/2.4.1/jansi-2.4.1-sources.jar</sources>
     <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/jline/jline-builtins/3.27.1/jline-builtins-3.27.1-sources.jar</sources>
@@ -127,91 +126,101 @@
     <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/jline/jline-terminal-jni/3.27.1/jline-terminal-jni-3.27.1-sources.jar</sources>
     <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/jline/jline-terminal/3.27.1/jline-terminal-3.27.1-sources.jar</sources>
     <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/reactivestreams/reactive-streams/1.0.3/reactive-streams-1.0.3-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-lang/modules/scala-asm/9.9.0-scala-1/scala-asm-9.9.0-scala-1-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-lang/modules/scala-collection-compat_3/2.14.0/scala-collection-compat_3-2.14.0-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-lang/modules/scala-parallel-collections_3/1.2.0/scala-parallel-collections_3-1.2.0-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-lang/modules/scala-parser-combinators_3/2.1.0/scala-parser-combinators_3-2.1.0-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-lang/modules/scala-xml_3/2.4.0/scala-xml_3-2.4.0-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-lang/scala-library/3.8.4/scala-library-3.8.4-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-lang/scala3-compiler_3/3.8.4/scala3-compiler_3-3.8.4-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-lang/scala3-interfaces/3.8.4/scala3-interfaces-3.8.4-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-lang/scala3-library_3/3.8.4/scala3-library_3-3.8.4-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-lang/tasty-core_3/3.8.4/tasty-core_3-3.8.4-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/actions_3/2.0.0/actions_3-2.0.0-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/build-file_3/2.0.0/build-file_3-2.0.0-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/collections_3/2.0.0/collections_3-2.0.0-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/command_3/2.0.0/command_3-2.0.0-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/compiler-interface/2.0.0/compiler-interface-2.0.0-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/completion_3/2.0.0/completion_3-2.0.0-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/core-macros_3/2.0.0/core-macros_3-2.0.0-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/gson/shaded-gson/2.13.1/shaded-gson-2.13.1-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/io_3/1.12.1/io_3-1.12.1-sources.jar</sources>
+    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-lang/modules/scala-collection-compat_2.12/2.14.0/scala-collection-compat_2.12-2.14.0-sources.jar</sources>
+    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-lang/modules/scala-parser-combinators_2.12/1.1.2/scala-parser-combinators_2.12-1.1.2-sources.jar</sources>
+    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-lang/modules/scala-xml_2.12/2.3.0/scala-xml_2.12-2.3.0-sources.jar</sources>
+    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-lang/scala-compiler/2.12.21/scala-compiler-2.12.21-sources.jar</sources>
+    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-lang/scala-library/2.12.21/scala-library-2.12.21-sources.jar</sources>
+    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-lang/scala-reflect/2.12.21/scala-reflect-2.12.21-sources.jar</sources>
+    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/actions_2.12/1.12.12/actions_2.12-1.12.12-sources.jar</sources>
+    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/collections_2.12/1.12.12/collections_2.12-1.12.12-sources.jar</sources>
+    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/command_2.12/1.12.12/command_2.12-1.12.12-sources.jar</sources>
+    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/compiler-bridge_2.12/1.12.0/compiler-bridge_2.12-1.12.0-sources.jar</sources>
+    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/compiler-interface/1.12.0/compiler-interface-1.12.0-sources.jar</sources>
+    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/completion_2.12/1.12.12/completion_2.12-1.12.12-sources.jar</sources>
+    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/core-macros_2.12/1.12.12/core-macros_2.12-1.12.12-sources.jar</sources>
+    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/io_2.12/1.12.0/io_2.12-1.12.0-sources.jar</sources>
     <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/ipcsocket/ipcsocket/1.6.3/ipcsocket-1.6.3-sources.jar</sources>
     <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/ivy/ivy/2.3.0-sbt-77cc781d727b367d3761f097d89f5a4762771d41/ivy-2.3.0-sbt-77cc781d727b367d3761f097d89f5a4762771d41-sources.jar</sources>
     <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/jline/jline/2.14.7-sbt-9a88bc413e2b34a4580c001c654d1a7f4f65bf18/jline-2.14.7-sbt-9a88bc413e2b34a4580c001c654d1a7f4f65bf18-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/launcher-interface/1.6.0/launcher-interface-1.6.0-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/librarymanagement-core_3/2.0.0/librarymanagement-core_3-2.0.0-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/librarymanagement-coursier_3/2.0.0/librarymanagement-coursier_3-2.0.0-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/librarymanagement-ivy_3/2.0.0/librarymanagement-ivy_3-2.0.0-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/logic_3/2.0.0/logic_3-2.0.0-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/main-settings_3/2.0.0/main-settings_3-2.0.0-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/main_3/2.0.0/main_3-2.0.0-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/protocol_3/2.0.0/protocol_3-2.0.0-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/run_3/2.0.0/run_3-2.0.0-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/sbinary_3/0.5.1/sbinary_3-0.5.1-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/sbt/2.0.0/sbt-2.0.0-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/task-system_3/2.0.0/task-system_3-2.0.0-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/tasks_3/2.0.0/tasks_3-2.0.0-sources.jar</sources>
+    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/launcher-interface/1.6.1/launcher-interface-1.6.1-sources.jar</sources>
+    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/librarymanagement-core_2.12/1.12.2/librarymanagement-core_2.12-1.12.2-sources.jar</sources>
+    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/librarymanagement-ivy_2.12/1.12.2/librarymanagement-ivy_2.12-1.12.2-sources.jar</sources>
+    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/logic_2.12/1.12.12/logic_2.12-1.12.12-sources.jar</sources>
+    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/main-settings_2.12/1.12.12/main-settings_2.12-1.12.12-sources.jar</sources>
+    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/main_2.12/1.12.12/main_2.12-1.12.12-sources.jar</sources>
+    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/protocol_2.12/1.12.12/protocol_2.12-1.12.12-sources.jar</sources>
+    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/run_2.12/1.12.12/run_2.12-1.12.12-sources.jar</sources>
+    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/sbinary_2.12/0.5.1/sbinary_2.12-0.5.1-sources.jar</sources>
+    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/sbt/1.12.12/sbt-1.12.12-sources.jar</sources>
+    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/scripted-plugin_2.12/1.12.12/scripted-plugin_2.12-1.12.12-sources.jar</sources>
+    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/task-system_2.12/1.12.12/task-system_2.12-1.12.12-sources.jar</sources>
+    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/tasks_2.12/1.12.12/tasks_2.12-1.12.12-sources.jar</sources>
     <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/template-resolver/0.1/template-resolver-0.1-sources.jar</sources>
+    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/test-agent/1.12.12/test-agent-1.12.12-sources.jar</sources>
     <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/test-interface/1.0/test-interface-1.0-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/testing_3/2.0.0/testing_3-2.0.0-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/util-cache_3/2.0.0/util-cache_3-2.0.0-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/util-control_3/2.0.0/util-control_3-2.0.0-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/util-core_3/2.0.0/util-core_3-2.0.0-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/util-interface/2.0.0/util-interface-2.0.0-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/util-logging_3/2.0.0/util-logging_3-2.0.0-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/util-position_3/2.0.0/util-position_3-2.0.0-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/util-relation_3/2.0.0/util-relation_3-2.0.0-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/util-tracking_3/2.0.0/util-tracking_3-2.0.0-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/worker/2.0.0/worker-2.0.0-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/zinc-apiinfo_3/2.0.0/zinc-apiinfo_3-2.0.0-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/zinc-classfile_3/2.0.0/zinc-classfile_3-2.0.0-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/zinc-classpath_3/2.0.0/zinc-classpath_3-2.0.0-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/zinc-compile-core_3/2.0.0/zinc-compile-core_3-2.0.0-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/zinc-core_3/2.0.0/zinc-core_3-2.0.0-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/zinc-lm-integration_3/2.0.0/zinc-lm-integration_3-2.0.0-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/zinc-persist_3/2.0.0/zinc-persist_3-2.0.0-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/zinc_3/2.0.0/zinc_3-2.0.0-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/slf4j/slf4j-api/1.7.28/slf4j-api-1.7.28-sources.jar</sources>
+    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/testing_2.12/1.12.12/testing_2.12-1.12.12-sources.jar</sources>
+    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/util-cache_2.12/1.12.12/util-cache_2.12-1.12.12-sources.jar</sources>
+    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/util-control_2.12/1.12.12/util-control_2.12-1.12.12-sources.jar</sources>
+    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/util-interface/1.12.12/util-interface-1.12.12-sources.jar</sources>
+    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/util-logging_2.12/1.12.12/util-logging_2.12-1.12.12-sources.jar</sources>
+    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/util-position_2.12/1.12.12/util-position_2.12-1.12.12-sources.jar</sources>
+    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/util-relation_2.12/1.12.12/util-relation_2.12-1.12.12-sources.jar</sources>
+    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/util-tracking_2.12/1.12.12/util-tracking_2.12-1.12.12-sources.jar</sources>
+    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/zinc-apiinfo_2.12/1.12.0/zinc-apiinfo_2.12-1.12.0-sources.jar</sources>
+    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/zinc-classfile_2.12/1.12.0/zinc-classfile_2.12-1.12.0-sources.jar</sources>
+    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/zinc-classpath_2.12/1.12.0/zinc-classpath_2.12-1.12.0-sources.jar</sources>
+    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/zinc-compile-core_2.12/1.12.0/zinc-compile-core_2.12-1.12.0-sources.jar</sources>
+    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/zinc-compile_2.12/1.12.0/zinc-compile_2.12-1.12.0-sources.jar</sources>
+    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/zinc-core_2.12/1.12.0/zinc-core_2.12-1.12.0-sources.jar</sources>
+    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/zinc-lm-integration_2.12/1.12.12/zinc-lm-integration_2.12-1.12.12-sources.jar</sources>
+    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/zinc-persist-core-assembly/1.12.0/zinc-persist-core-assembly-1.12.0-sources.jar</sources>
+    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/zinc-persist_2.12/1.12.0/zinc-persist_2.12-1.12.0-sources.jar</sources>
+    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/zinc_2.12/1.12.0/zinc_2.12-1.12.0-sources.jar</sources>
+    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/slf4j/slf4j-api/1.7.36/slf4j-api-1.7.36-sources.jar</sources>
   </build>
   <project>
-    <id>missing-scala-tool-config</id>
+    <id>auto-scala-library-disabled</id>
     <buildURI>$URI_BASE</buildURI>
-    <name>missing-scala-tool-config</name>
+    <name>auto-scala-library-disabled</name>
     <organization>default</organization>
     <version>0.1.0-SNAPSHOT</version>
     <base>$BASE</base>
-    <target>$BASE/target/out/jvm/scala-2.13.16/missing-scala-tool-config</target>
+    <target>$BASE/target</target>
+    <scala>
+      <version>2.13.16</version>
+      <libraryJars>
+        <jar>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-lang/scala-library/2.13.16/scala-library-2.13.16.jar</jar>
+      </libraryJars>
+      <compilerJars>
+        <jar>$COURSIER/cache/https/repo1.maven.org/maven2/io/github/java-diff-utils/java-diff-utils/4.15/java-diff-utils-4.15.jar</jar>
+        <jar>$COURSIER/cache/https/repo1.maven.org/maven2/org/jline/jline/3.27.1/jline-3.27.1-jdk8.jar</jar>
+        <jar>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-lang/scala-compiler/2.13.16/scala-compiler-2.13.16.jar</jar>
+        <jar>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-lang/scala-reflect/2.13.16/scala-reflect-2.13.16.jar</jar>
+      </compilerJars>
+      <extraJars/>
+      <compilerBridgeBinaryJar>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-lang/scala2-sbt-bridge/2.13.16/scala2-sbt-bridge-2.13.16.jar</compilerBridgeBinaryJar>
+    </scala>
     <compileOrder>Mixed</compileOrder>
     <configuration id="compile">
       <sources>$BASE/src/main/java</sources>
       <sources>$BASE/src/main/scala</sources>
       <sources>$BASE/src/main/scala-2</sources>
       <sources>$BASE/src/main/scala-2.13</sources>
-      <sources managed="true">$BASE/target/out/jvm/scala-2.13.16/missing-scala-tool-config/src_managed/main</sources>
+      <sources managed="true">$BASE/target/scala-2.13/src_managed/main</sources>
       <resources>$BASE/src/main/resources</resources>
-      <resources managed="true">$BASE/target/out/jvm/scala-2.13.16/missing-scala-tool-config/resource_managed/main</resources>
-      <classes>$BASE/target/out/jvm/scala-2.13.16/missing-scala-tool-config/classes</classes>
+      <resources managed="true">$BASE/target/scala-2.13/resource_managed/main</resources>
+      <classes>$BASE/target/scala-2.13/classes</classes>
     </configuration>
     <configuration id="test">
       <sources>$BASE/src/test/java</sources>
       <sources>$BASE/src/test/scala</sources>
       <sources>$BASE/src/test/scala-2</sources>
       <sources>$BASE/src/test/scala-2.13</sources>
-      <sources managed="true">$BASE/target/out/jvm/scala-2.13.16/missing-scala-tool-config/src_managed/test</sources>
+      <sources managed="true">$BASE/target/scala-2.13/src_managed/test</sources>
       <resources>$BASE/src/test/resources</resources>
-      <resources managed="true">$BASE/target/out/jvm/scala-2.13.16/missing-scala-tool-config/resource_managed/test</resources>
-      <classes>$BASE/target/out/jvm/scala-2.13.16/missing-scala-tool-config/test-classes</classes>
+      <resources managed="true">$BASE/target/scala-2.13/resource_managed/test</resources>
+      <classes>$BASE/target/scala-2.13/test-classes</classes>
     </configuration>
     <dependencies>
       <projects>
@@ -239,14 +248,19 @@
       <rank>9</rank>
     </setting>
     <setting>
-      <label>compileAnalysisTargetRoot</label>
-      <description>The output directory to produce Zinc Analysis files</description>
-      <rank>10000</rank>
-    </setting>
-    <setting>
       <label>testReportsDirectory</label>
       <description>Directory for outputting junit test reports.</description>
       <rank>11</rank>
+    </setting>
+    <setting>
+      <label>classLoaderLayeringStrategy</label>
+      <description>Creates the classloader layering strategy for the particular configuration.</description>
+      <rank>25</rank>
+    </setting>
+    <setting>
+      <label>compileAnalysisTargetRoot</label>
+      <description>The output directory to produce Zinc Analysis files</description>
+      <rank>10000</rank>
     </setting>
     <setting>
       <label>name</label>
@@ -254,13 +268,18 @@
       <rank>9</rank>
     </setting>
     <setting>
-      <label>scalaEarlyVersion</label>
-      <description>The Scala version substring describing the binary compatibility, except for prereleases it returns the binary version of the release.</description>
+      <label>retrieveConfiguration</label>
+      <description>Configures retrieving dependencies to the current build.</description>
       <rank>10000</rank>
     </setting>
     <setting>
-      <label>retrieveConfiguration</label>
-      <description>Configures retrieving dependencies to the current build.</description>
+      <label>pushRemoteCacheArtifact</label>
+      <description>Enables publishing an artifact to remote cache.</description>
+      <rank>25</rank>
+    </setting>
+    <setting>
+      <label>makePomConfiguration</label>
+      <description>Configuration for generating a pom.</description>
       <rank>10000</rank>
     </setting>
     <setting>
@@ -272,16 +291,6 @@
       <label>projectInfo</label>
       <description>Addition project information like formal name, homepage, licenses etc.</description>
       <rank>100</rank>
-    </setting>
-    <setting>
-      <label>connectInput</label>
-      <description>If true, connects standard input when running a main class forked.</description>
-      <rank>100</rank>
-    </setting>
-    <setting>
-      <label>makePomConfiguration</label>
-      <description>Configuration for generating a pom.</description>
-      <rank>10000</rank>
     </setting>
     <setting>
       <label>resourceDirectories</label>
@@ -297,6 +306,11 @@
       <label>csrCacheDirectory</label>
       <description>Coursier cache directory. Uses -Dsbt.coursier.home or Coursier's default.</description>
       <rank>100</rank>
+    </setting>
+    <setting>
+      <label>internalDependencyConfigurations</label>
+      <description>The project configurations that this configuration depends on</description>
+      <rank>25</rank>
     </setting>
     <setting>
       <label>history</label>
@@ -317,6 +331,11 @@
       <label>scalaSource</label>
       <description>Default Scala source directory.</description>
       <rank>10</rank>
+    </setting>
+    <setting>
+      <label>dependencyTreeCrossProjectId</label>
+      <description/>
+      <rank>25</rank>
     </setting>
     <setting>
       <label>description</label>
@@ -344,11 +363,6 @@
       <rank>11</rank>
     </setting>
     <setting>
-      <label>evictionErrorLevel</label>
-      <description>The log level for the detected eviction errors. Level.Error will throw an error.</description>
-      <rank>10000</rank>
-    </setting>
-    <setting>
       <label>sbtBinaryVersion</label>
       <description>Defines the binary compatibility version substring.</description>
       <rank>39</rank>
@@ -359,14 +373,9 @@
       <rank>100</rank>
     </setting>
     <setting>
-      <label>assumedEvictionErrorLevel</label>
-      <description>The log level for the assumed eviction errors. Level.Error will throw an error.</description>
-      <rank>10000</rank>
-    </setting>
-    <setting>
-      <label>dependencyLockFile</label>
-      <description>The location of the dependency lock file.</description>
-      <rank>100</rank>
+      <label>outputFileStamper</label>
+      <description>Toggles the file stamping implementation used to determine whether or not a file has been modified.</description>
+      <rank>25</rank>
     </setting>
     <setting>
       <label>semanticdbCompilerPlugin</label>
@@ -404,6 +413,11 @@
       <rank>11</rank>
     </setting>
     <setting>
+      <label>persistJarClasspath</label>
+      <description>Toggles whether or not to cache jar classpath entries between command evaluations</description>
+      <rank>25</rank>
+    </setting>
+    <setting>
       <label>scalaVersion</label>
       <description>The version of Scala used for building.</description>
       <rank>9</rank>
@@ -414,24 +428,14 @@
       <rank>200</rank>
     </setting>
     <setting>
-      <label>crossVersion</label>
-      <description>Configures handling of the Scala version when cross-building.</description>
-      <rank>100</rank>
-    </setting>
-    <setting>
-      <label>fork</label>
-      <description>If true, forks a new JVM when running. If false, runs in the same JVM as the build.</description>
-      <rank>10</rank>
-    </setting>
-    <setting>
-      <label>earlyCompileAnalysisTargetRoot</label>
-      <description>The output directory to produce Zinc Analysis files</description>
-      <rank>10000</rank>
-    </setting>
-    <setting>
       <label>ivyConfigurations</label>
       <description>The defined configurations for dependency management. This may be different from the configurations for Project settings.</description>
       <rank>40</rank>
+    </setting>
+    <setting>
+      <label>earlyOutput</label>
+      <description>JAR file for pickles used for build pipelining</description>
+      <rank>25</rank>
     </setting>
     <setting>
       <label>sbtDependency</label>
@@ -439,9 +443,24 @@
       <rank>41</rank>
     </setting>
     <setting>
+      <label>crossVersion</label>
+      <description>Configures handling of the Scala version when cross-building.</description>
+      <rank>100</rank>
+    </setting>
+    <setting>
+      <label>earlyCompileAnalysisTargetRoot</label>
+      <description>The output directory to produce Zinc Analysis files</description>
+      <rank>10000</rank>
+    </setting>
+    <setting>
       <label>transitiveClassifiers</label>
       <description>List of classifiers used for transitively obtaining extra artifacts for sbt or declared dependencies.</description>
       <rank>40</rank>
+    </setting>
+    <setting>
+      <label>bgHashClasspath</label>
+      <description>Toggles whether to use a hash or the last modified time to stamp the classpath jars</description>
+      <rank>25</rank>
     </setting>
     <setting>
       <label>updateConfiguration</label>
@@ -454,6 +473,11 @@
       <rank>40</rank>
     </setting>
     <setting>
+      <label>testResultLogger</label>
+      <description>Logs results after a test task completes.</description>
+      <rank>20000</rank>
+    </setting>
+    <setting>
       <label>resourceManaged</label>
       <description>Default managed resource directory, used when generating resources.</description>
       <rank>40</rank>
@@ -464,9 +488,9 @@
       <rank>100</rank>
     </setting>
     <setting>
-      <label>testResultLogger</label>
-      <description>Logs results after a test task completes.</description>
-      <rank>20000</rank>
+      <label>fileInputs</label>
+      <description>The file globs that are used by a task. This setting will generally be scoped per task. It will also be used to determine the sources to watch during continuous execution.</description>
+      <rank>25</rank>
     </setting>
     <setting>
       <label>resourceDirectory</label>
@@ -484,6 +508,11 @@
       <rank>10000</rank>
     </setting>
     <setting>
+      <label>overrideBuildResolvers</label>
+      <description>Whether or not all the build resolvers should be overridden with what's defined from the launcher.</description>
+      <rank>41</rank>
+    </setting>
+    <setting>
       <label>javaSource</label>
       <description>Default Java source directory.</description>
       <rank>10</rank>
@@ -494,18 +523,13 @@
       <rank>10000</rank>
     </setting>
     <setting>
-      <label>overrideBuildResolvers</label>
-      <description>Whether or not all the build resolvers should be overridden with what's defined from the launcher.</description>
-      <rank>41</rank>
+      <label>remoteCacheResolvers</label>
+      <description>Resolvers for remote cache.</description>
+      <rank>25</rank>
     </setting>
     <setting>
       <label>watchForceTriggerOnAnyChange</label>
       <description>Force the watch process to rerun the current task(s) if any relevant source change is detected regardless of whether or not the underlying file has actually changed.</description>
-      <rank>10000</rank>
-    </setting>
-    <setting>
-      <label>outputPath</label>
-      <description>Path of the output directory relative from the rootOutputDirectory.</description>
       <rank>10000</rank>
     </setting>
     <setting>
@@ -514,9 +538,19 @@
       <rank>10000</rank>
     </setting>
     <setting>
+      <label>autoScalaLibrary</label>
+      <description>Adds a dependency on scala-library if true.</description>
+      <rank>10</rank>
+    </setting>
+    <setting>
       <label>baseDirectory</label>
       <description>The base directory. Depending on the scope, this is the base directory for the build, project, configuration, or task.</description>
       <rank>11</rank>
+    </setting>
+    <setting>
+      <label>csrSameVersions</label>
+      <description>Modules to keep at the same version.</description>
+      <rank>25</rank>
     </setting>
     <setting>
       <label>classDirectory</label>
@@ -559,6 +593,11 @@
       <rank>100</rank>
     </setting>
     <setting>
+      <label>thisProject</label>
+      <description>Provides the current project for the referencing scope.</description>
+      <rank>100</rank>
+    </setting>
+    <setting>
       <label>sourceDirectory</label>
       <description>Default directory containing sources.</description>
       <rank>11</rank>
@@ -567,11 +606,6 @@
       <label>managedSourceDirectories</label>
       <description>Managed source directories, which contain sources generated by the build.</description>
       <rank>40</rank>
-    </setting>
-    <setting>
-      <label>thisProject</label>
-      <description>Provides the current project for the referencing scope.</description>
-      <rank>100</rank>
     </setting>
     <setting>
       <label>isSnapshot</label>
@@ -584,6 +618,11 @@
       <rank>11</rank>
     </setting>
     <setting>
+      <label>crossSbtVersions</label>
+      <description>The versions of Sbt used when cross-building an sbt plugin.</description>
+      <rank>25</rank>
+    </setting>
+    <setting>
       <label>evictionWarningOptions</label>
       <description>Options on eviction warnings after resolving managed dependencies.</description>
       <rank>10000</rank>
@@ -594,14 +633,19 @@
       <rank>11</rank>
     </setting>
     <setting>
-      <label>crossScalaVersions</label>
-      <description>The versions of Scala used when cross-building.</description>
-      <rank>39</rank>
+      <label>backendOutput</label>
+      <description>Directory or JAR file for compiled classes and copied resources</description>
+      <rank>25</rank>
     </setting>
     <setting>
       <label>bspInternalDependencyConfigurations</label>
       <description>The project configurations that this configuration depends on, possibly transitively</description>
       <rank>10000</rank>
+    </setting>
+    <setting>
+      <label>crossScalaVersions</label>
+      <description>The versions of Scala used when cross-building.</description>
+      <rank>39</rank>
     </setting>
     <setting>
       <label>libraryDependencies</label>
@@ -629,6 +673,11 @@
       <rank>40</rank>
     </setting>
     <setting>
+      <label>publishMavenStyle</label>
+      <description>Configures whether to generate and publish a pom (true) or Ivy file (false).</description>
+      <rank>40</rank>
+    </setting>
+    <setting>
       <label>scalaModuleInfo</label>
       <description>Configures how Scala dependencies are checked, filtered, and injected.</description>
       <rank>100</rank>
@@ -639,6 +688,11 @@
       <rank>100</rank>
     </setting>
     <setting>
+      <label>watched</label>
+      <description>Continuous execution configuration.</description>
+      <rank>1000</rank>
+    </setting>
+    <setting>
       <label>updateOptions</label>
       <description>Options for resolving managed dependencies.</description>
       <rank>10000</rank>
@@ -647,11 +701,6 @@
       <label>artifact</label>
       <description>Describes an artifact.</description>
       <rank>41</rank>
-    </setting>
-    <setting>
-      <label>managedScalaInstance</label>
-      <description>Automatically obtains Scala tools as managed dependencies if true.</description>
-      <rank>40</rank>
     </setting>
     <setting>
       <label>semanticdbOptions</label>
@@ -679,14 +728,39 @@
       <rank>20000</rank>
     </task>
     <task>
+      <label>dependencyClasspathAsJars</label>
+      <description>The classpath consisting of internal and external, managed and unmanaged dependencies, all as JARs.</description>
+      <rank>17</rank>
+    </task>
+    <task>
+      <label>csrResolvers</label>
+      <description/>
+      <rank>17</rank>
+    </task>
+    <task>
       <label>allCredentials</label>
       <description>Aggregated credentials across current and root subprojects. Do not rewire this task.</description>
       <rank>20000</rank>
     </task>
     <task>
+      <label>manipulateBytecode</label>
+      <description>Manipulates generated bytecode</description>
+      <rank>30</rank>
+    </task>
+    <task>
+      <label>remoteCacheIdCandidates</label>
+      <description>Remote cache ids to pull.</description>
+      <rank>17</rank>
+    </task>
+    <task>
+      <label>pullRemoteCache</label>
+      <description>Retrieve remote cache.</description>
+      <rank>17</rank>
+    </task>
+    <task>
       <label>test</label>
-      <description>Executes the tests that either failed before, were not run or whose transitive dependencies changed, among those provided as arguments.</description>
-      <rank>5</rank>
+      <description>Executes all tests.</description>
+      <rank>4</rank>
     </task>
     <task>
       <label>mappings</label>
@@ -699,14 +773,14 @@
       <rank>4</rank>
     </task>
     <task>
-      <label>manipulateBytecode</label>
-      <description>Manipulates generated bytecode</description>
+      <label>deliverLocal</label>
+      <description>Generates the Ivy file for publishing to the local repository.</description>
       <rank>30</rank>
     </task>
     <task>
-      <label>bspCompileTask</label>
-      <description/>
-      <rank>20000</rank>
+      <label>compileProgress</label>
+      <description>Callback used by the compiler to report phase progress</description>
+      <rank>17</rank>
     </task>
     <task>
       <label>classpathConfiguration</label>
@@ -714,14 +788,14 @@
       <rank>200</rank>
     </task>
     <task>
+      <label>testFilter</label>
+      <description>Filter controlling whether the test is executed</description>
+      <rank>20000</rank>
+    </task>
+    <task>
       <label>productDirectories</label>
       <description>Base directories of build products.</description>
       <rank>200</rank>
-    </task>
-    <task>
-      <label>unmanagedSourcesVF</label>
-      <description>Unmanaged sources, which are manually created.</description>
-      <rank>29</rank>
     </task>
     <task>
       <label>externalDependencyClasspath</label>
@@ -739,29 +813,19 @@
       <rank>29</rank>
     </task>
     <task>
-      <label>deliverLocal</label>
-      <description>Generates the Ivy file for publishing to the local repository.</description>
-      <rank>30</rank>
-    </task>
-    <task>
-      <label>testOptionDigests</label>
-      <description>Digest for testOptions</description>
-      <rank>20000</rank>
-    </task>
-    <task>
-      <label>testFilter</label>
-      <description>Filter controlling whether the test is executed</description>
-      <rank>20000</rank>
-    </task>
-    <task>
-      <label>scalaInstanceConfig</label>
-      <description>Defines the Scala instance configuration.</description>
-      <rank>20000</rank>
-    </task>
-    <task>
       <label>moduleSettings</label>
       <description>Module settings, which configure dependency management for a specific module, such as a project.</description>
       <rank>20000</rank>
+    </task>
+    <task>
+      <label>internalDependencyPicklePath</label>
+      <description>The internal (inter-project) pickles. This task is promise-blocked.</description>
+      <rank>17</rank>
+    </task>
+    <task>
+      <label>remoteCachePom</label>
+      <description>Generates a pom for publishing when publishing Maven-style.</description>
+      <rank>17</rank>
     </task>
     <task>
       <label>compileIncSetup</label>
@@ -769,14 +833,19 @@
       <rank>20000</rank>
     </task>
     <task>
-      <label>unmanagedResourcesVF</label>
-      <description>Unmanaged resources, which are manually created.</description>
-      <rank>29</rank>
+      <label>bgRunMain</label>
+      <description>Start a provided main class as a background job</description>
+      <rank>5</rank>
     </task>
     <task>
-      <label>definedTestDigests</label>
-      <description>Provides a unique digest of defined tests.</description>
-      <rank>20000</rank>
+      <label>consoleProject</label>
+      <description>Starts the Scala interpreter with the sbt and the build definition on the classpath and useful imports.</description>
+      <rank>6</rank>
+    </task>
+    <task>
+      <label>cleanIvy</label>
+      <description>Deletes the ivy cached resolution</description>
+      <rank>17</rank>
     </task>
     <task>
       <label>allDependencies</label>
@@ -789,14 +858,9 @@
       <rank>31</rank>
     </task>
     <task>
-      <label>testFull</label>
-      <description>Executes all tests.</description>
-      <rank>4</rank>
-    </task>
-    <task>
-      <label>scalaCompilerBridgeJars</label>
-      <description>The compiler bridge JAR.</description>
-      <rank>20000</rank>
+      <label>dependencyTreeModuleGraph0</label>
+      <description>The dependency graph for a project</description>
+      <rank>17</rank>
     </task>
     <task>
       <label>externalResolvers</label>
@@ -819,14 +883,14 @@
       <rank>200</rank>
     </task>
     <task>
+      <label>fgRunMain</label>
+      <description>Start a provided main class as a foreground job</description>
+      <rank>5</rank>
+    </task>
+    <task>
       <label>apiMappings</label>
       <description>Mappings from classpath entry to API documentation base URL.</description>
       <rank>41</rank>
-    </task>
-    <task>
-      <label>scalaCompilerBridgeBin</label>
-      <description>Optionally, the jar of the compiler bridge. When not None, this takes precedence over scalaCompilerBridgeSource</description>
-      <rank>20000</rank>
     </task>
     <task>
       <label>dependencyClasspath</label>
@@ -839,9 +903,19 @@
       <rank>20000</rank>
     </task>
     <task>
+      <label>exportedProductJarsNoTracking</label>
+      <description>Just the exported classpath as JARs without triggering the compilation.</description>
+      <rank>17</rank>
+    </task>
+    <task>
       <label>packageDoc</label>
       <description>Produces a documentation artifact, such as a jar containing API documentation.</description>
       <rank>6</rank>
+    </task>
+    <task>
+      <label>scalaCompilerBridgeBinaryJar</label>
+      <description>Optionally, the jar of the compiler bridge. When not None, this takes precedence over scalaCompilerBridgeSource</description>
+      <rank>100</rank>
     </task>
     <task>
       <label>earlyCompileAnalysisFile</label>
@@ -879,9 +953,29 @@
       <rank>10000</rank>
     </task>
     <task>
+      <label>auxiliaryClassFiles</label>
+      <description>The auxiliary class files that must be managed by Zinc (for instance the TASTy files)</description>
+      <rank>17</rank>
+    </task>
+    <task>
       <label>printWarnings</label>
       <description>Shows warnings from compilation, including ones that weren't printed initially.</description>
       <rank>29</rank>
+    </task>
+    <task>
+      <label>watch</label>
+      <description>Watch a task (or multiple tasks) and rebuild when its file inputs change or user input is received. The semantics are more or less the same as the `~` command except that it cannot transform the state on exit. This means that it cannot be used to reload the build.</description>
+      <rank>10000</rank>
+    </task>
+    <task>
+      <label>exportedProductsIfMissing</label>
+      <description>Build products that go on the exported classpath if missing.</description>
+      <rank>200</rank>
+    </task>
+    <task>
+      <label>projectResolver</label>
+      <description>Resolver that handles inter-project dependencies.</description>
+      <rank>20000</rank>
     </task>
     <task>
       <label>bspBuildTargetResourcesItem</label>
@@ -904,18 +998,13 @@
       <rank>4</rank>
     </task>
     <task>
+      <label>fullClasspathAsJars</label>
+      <description>The exported classpath, consisting of build products and unmanaged and managed, internal and external dependencies, all as JARs.</description>
+      <rank>17</rank>
+    </task>
+    <task>
       <label>unresolvedWarningConfiguration</label>
       <description>Configuration for unresolved dependency warning.</description>
-      <rank>20000</rank>
-    </task>
-    <task>
-      <label>exportedProductsIfMissing</label>
-      <description>Build products that go on the exported classpath if missing.</description>
-      <rank>200</rank>
-    </task>
-    <task>
-      <label>projectResolver</label>
-      <description>Resolver that handles inter-project dependencies.</description>
       <rank>20000</rank>
     </task>
     <task>
@@ -934,19 +1023,9 @@
       <rank>20000</rank>
     </task>
     <task>
-      <label>packageOptions</label>
-      <description>Options for packaging.</description>
-      <rank>30</rank>
-    </task>
-    <task>
-      <label>managedSourcesVF</label>
-      <description>Sources generated by the build.</description>
-      <rank>30</rank>
-    </task>
-    <task>
-      <label>compileAnalysisFilename</label>
-      <description>Defines the filename used for compileAnalysisFile.</description>
-      <rank>20000</rank>
+      <label>packageCache</label>
+      <description>Produces the main artifact for caching.</description>
+      <rank>17</rank>
     </task>
     <task>
       <label>bspBuildTargetJavacOptionsItem</label>
@@ -959,6 +1038,16 @@
       <rank>20000</rank>
     </task>
     <task>
+      <label>packageOptions</label>
+      <description>Options for packaging.</description>
+      <rank>30</rank>
+    </task>
+    <task>
+      <label>compileAnalysisFilename</label>
+      <description>Defines the filename used for compileAnalysisFile.</description>
+      <rank>20000</rank>
+    </task>
+    <task>
       <label>fullResolvers</label>
       <description>Combines the project resolver, default resolvers, and user-defined resolvers.</description>
       <rank>200</rank>
@@ -967,21 +1056,6 @@
       <label>exportedProducts</label>
       <description>Build products that go on the exported classpath.</description>
       <rank>200</rank>
-    </task>
-    <task>
-      <label>filteredDependencyClasspath</label>
-      <description>The dependency classpath filtered by dependencyMode. Only affects compilation, not runtime classpaths.</description>
-      <rank>31</rank>
-    </task>
-    <task>
-      <label>otherResolvers</label>
-      <description>Resolvers not included in the main resolver chain, such as those in module configurations.</description>
-      <rank>100</rank>
-    </task>
-    <task>
-      <label>testExecution</label>
-      <description>Settings controlling test execution</description>
-      <rank>20000</rank>
     </task>
     <task>
       <label>runner</label>
@@ -999,6 +1073,11 @@
       <rank>20000</rank>
     </task>
     <task>
+      <label>remoteCacheArtifacts</label>
+      <description>Remote cache artifact definitions.</description>
+      <rank>17</rank>
+    </task>
+    <task>
       <label>compileInputs</label>
       <description>Collects all inputs needed for compilation.</description>
       <rank>20000</rank>
@@ -1006,6 +1085,16 @@
     <task>
       <label>products</label>
       <description>Build products that get packaged.</description>
+      <rank>31</rank>
+    </task>
+    <task>
+      <label>otherResolvers</label>
+      <description>Resolvers not included in the main resolver chain, such as those in module configurations.</description>
+      <rank>100</rank>
+    </task>
+    <task>
+      <label>testExecution</label>
+      <description>Settings controlling test execution</description>
       <rank>20000</rank>
     </task>
     <task>
@@ -1041,7 +1130,7 @@
     <task>
       <label>unmanagedResources</label>
       <description>Unmanaged resources, which are manually created.</description>
-      <rank>20000</rank>
+      <rank>29</rank>
     </task>
     <task>
       <label>mainClass</label>
@@ -1064,14 +1153,14 @@
       <rank>6</rank>
     </task>
     <task>
-      <label>testSelected</label>
-      <description>Executes the tests provided as arguments or all tests if no arguments are provided. Used internally by testOnly command.</description>
-      <rank>31</rank>
-    </task>
-    <task>
       <label>scalacOptions</label>
       <description>Options for the Scala compiler.</description>
       <rank>29</rank>
+    </task>
+    <task>
+      <label>dependencyVirtualClasspath</label>
+      <description>The classpath consisting of internal and external, managed and unmanaged dependencies.</description>
+      <rank>200</rank>
     </task>
     <task>
       <label>makeIvyXmlLocalConfiguration</label>
@@ -1079,14 +1168,14 @@
       <rank>10000</rank>
     </task>
     <task>
-      <label>extraTestDigests</label>
-      <description>Extra digests that would invalidate test caching</description>
-      <rank>20000</rank>
-    </task>
-    <task>
       <label>packageSrc</label>
       <description>Produces a source artifact, such as a jar containing sources and resources.</description>
       <rank>6</rank>
+    </task>
+    <task>
+      <label>unmanagedJars</label>
+      <description>Classpath entries for the current project (shallow) that are manually managed.</description>
+      <rank>29</rank>
     </task>
     <task>
       <label>runMain</label>
@@ -1099,19 +1188,9 @@
       <rank>30</rank>
     </task>
     <task>
-      <label>unmanagedJars</label>
-      <description>Classpath entries for the current project (shallow) that are manually managed.</description>
-      <rank>29</rank>
-    </task>
-    <task>
       <label>evicted</label>
       <description>Display detailed eviction warnings.</description>
       <rank>200</rank>
-    </task>
-    <task>
-      <label>dependencyLock</label>
-      <description>Generates a dependency lock file from the current resolution.</description>
-      <rank>30</rank>
     </task>
     <task>
       <label>publish</label>
@@ -1124,8 +1203,38 @@
       <rank>20000</rank>
     </task>
     <task>
+      <label>externalHooks</label>
+      <description>The external hooks used by zinc.</description>
+      <rank>17</rank>
+    </task>
+    <task>
+      <label>collectAnalyses</label>
+      <description>Collect analysis file locations for later use.</description>
+      <rank>17</rank>
+    </task>
+    <task>
       <label>bspBuildTargetDependencySourcesItem</label>
       <description/>
+      <rank>20000</rank>
+    </task>
+    <task>
+      <label>bgRun</label>
+      <description>Start an application's default main class as a background job</description>
+      <rank>5</rank>
+    </task>
+    <task>
+      <label>exportedProductJars</label>
+      <description>Build products that go on the exported classpath as JARs.</description>
+      <rank>17</rank>
+    </task>
+    <task>
+      <label>allInputFiles</label>
+      <description>All of the file inputs for a task excluding directories and hidden files.</description>
+      <rank>17</rank>
+    </task>
+    <task>
+      <label>publishM2Configuration</label>
+      <description>Configuration for publishing to the local Maven repository.</description>
       <rank>20000</rank>
     </task>
     <task>
@@ -1134,19 +1243,9 @@
       <rank>31</rank>
     </task>
     <task>
-      <label>publishM2Configuration</label>
-      <description>Configuration for publishing to the local Maven repository.</description>
-      <rank>20000</rank>
-    </task>
-    <task>
-      <label>scalaDynVersion</label>
-      <description>Resolves dynamic Scala version strings like '3-latest.candidate' to concrete versions.</description>
-      <rank>10000</rank>
-    </task>
-    <task>
-      <label>managedResourcesVF</label>
-      <description>Resources generated by the build.</description>
-      <rank>30</rank>
+      <label>changedInputFiles</label>
+      <description>The changed files for a task</description>
+      <rank>17</rank>
     </task>
     <task>
       <label>selectMainClass</label>
@@ -1154,24 +1253,14 @@
       <rank>31</rank>
     </task>
     <task>
+      <label>asString</label>
+      <description>Provides the string value for the task it is scoped for</description>
+      <rank>17</rank>
+    </task>
+    <task>
       <label>compileIncremental</label>
       <description>Actually runs the incremental compilation</description>
       <rank>20000</rank>
-    </task>
-    <task>
-      <label>resourceDigests</label>
-      <description>All resource files, both managed and unmanaged.</description>
-      <rank>30</rank>
-    </task>
-    <task>
-      <label>managedResources</label>
-      <description>Resources generated by the build.</description>
-      <rank>20000</rank>
-    </task>
-    <task>
-      <label>exportedProductsNoTracking</label>
-      <description>Just the exported classpath without triggering the compilation.</description>
-      <rank>200</rank>
     </task>
     <task>
       <label>streams</label>
@@ -1179,9 +1268,34 @@
       <rank>20000</rank>
     </task>
     <task>
+      <label>csrProject</label>
+      <description/>
+      <rank>17</rank>
+    </task>
+    <task>
+      <label>managedResources</label>
+      <description>Resources generated by the build.</description>
+      <rank>30</rank>
+    </task>
+    <task>
+      <label>watchTransitiveSources</label>
+      <description>Defines the sources in all projects for continuous execution to watch.</description>
+      <rank>100</rank>
+    </task>
+    <task>
+      <label>exportedProductsNoTracking</label>
+      <description>Just the exported classpath without triggering the compilation.</description>
+      <rank>200</rank>
+    </task>
+    <task>
       <label>testOptions</label>
       <description>Options for running tests.</description>
       <rank>29</rank>
+    </task>
+    <task>
+      <label>pushRemoteCacheConfiguration</label>
+      <description/>
+      <rank>17</rank>
     </task>
     <task>
       <label>packagedArtifacts</label>
@@ -1199,14 +1313,19 @@
       <rank>20000</rank>
     </task>
     <task>
-      <label>sourcesVF</label>
-      <description>All sources, both managed and unmanaged.</description>
-      <rank>30</rank>
+      <label>publisher</label>
+      <description>Provides the sbt interface to publisher</description>
+      <rank>17</rank>
     </task>
     <task>
       <label>managedSources</label>
       <description>Sources generated by the build.</description>
-      <rank>20000</rank>
+      <rank>30</rank>
+    </task>
+    <task>
+      <label>dependencyTree</label>
+      <description>Prints an ascii tree of all the dependencies to the console</description>
+      <rank>17</rank>
     </task>
     <task>
       <label>bspBuildTargetOutputPathsItem</label>
@@ -1214,14 +1333,9 @@
       <rank>20000</rank>
     </task>
     <task>
-      <label>dependencyLockCheck</label>
-      <description>Checks if the dependency lock file is up-to-date.</description>
-      <rank>30</rank>
-    </task>
-    <task>
-      <label>cleanFiles</label>
-      <description>The files to recursively delete during a clean.</description>
-      <rank>40</rank>
+      <label>dependencyPicklePath</label>
+      <description>The classpath consisting of internal pickles and external, managed and unmanaged dependencies. This task is promise-blocked.</description>
+      <rank>17</rank>
     </task>
     <task>
       <label>transitiveUpdate</label>
@@ -1234,6 +1348,16 @@
       <rank>20000</rank>
     </task>
     <task>
+      <label>internalDependencyAsJars</label>
+      <description>The internal (inter-project) classpath as JARs.</description>
+      <rank>17</rank>
+    </task>
+    <task>
+      <label>csrPublications</label>
+      <description/>
+      <rank>17</rank>
+    </task>
+    <task>
       <label>consoleQuick</label>
       <description>Starts the Scala interpreter with the project dependencies on the classpath.</description>
       <rank>5</rank>
@@ -1242,6 +1366,11 @@
       <label>csrExtraProjects</label>
       <description/>
       <rank>200</rank>
+    </task>
+    <task>
+      <label>cleanFiles</label>
+      <description>The files to recursively delete during a clean.</description>
+      <rank>40</rank>
     </task>
     <task>
       <label>publishConfiguration</label>
@@ -1254,19 +1383,19 @@
       <rank>200</rank>
     </task>
     <task>
+      <label>exportedProductJarsIfMissing</label>
+      <description>Build products that go on the exported classpath as JARs if missing.</description>
+      <rank>17</rank>
+    </task>
+    <task>
       <label>resources</label>
       <description>All resource files, both managed and unmanaged.</description>
-      <rank>20000</rank>
+      <rank>30</rank>
     </task>
     <task>
-      <label>tastyFilesVF</label>
-      <description>Returns the TASTy files produced by compilation</description>
-      <rank>20000</rank>
-    </task>
-    <task>
-      <label>discoveredSbtPlugins</label>
-      <description>The names of sbt plugin-related modules (modules that extend Build, Plugin, AutoPlugin) defined by this project.</description>
-      <rank>200</rank>
+      <label>csrFallbackDependencies</label>
+      <description/>
+      <rank>17</rank>
     </task>
     <task>
       <label>compileOptions</label>
@@ -1274,9 +1403,9 @@
       <rank>20000</rank>
     </task>
     <task>
-      <label>bspBuildTargetSourcesItem</label>
-      <description/>
-      <rank>20000</rank>
+      <label>discoveredSbtPlugins</label>
+      <description>The names of sbt plugin-related modules (modules that extend Build, Plugin, AutoPlugin) defined by this project.</description>
+      <rank>200</rank>
     </task>
     <task>
       <label>bspBuildTargetCompileItem</label>
@@ -1287,6 +1416,16 @@
       <label>scalaCompilerBridgeResolvers</label>
       <description>Resolvers used to resolve compiler bridges.</description>
       <rank>100</rank>
+    </task>
+    <task>
+      <label>fgRun</label>
+      <description>Start an application's default main class as a foreground job</description>
+      <rank>5</rank>
+    </task>
+    <task>
+      <label>bspBuildTargetSourcesItem</label>
+      <description/>
+      <rank>20000</rank>
     </task>
     <task>
       <label>compileAnalysisFile</label>
@@ -1304,9 +1443,19 @@
       <rank>20000</rank>
     </task>
     <task>
+      <label>csrSbtResolvers</label>
+      <description>Resolvers used for sbt artifacts.</description>
+      <rank>17</rank>
+    </task>
+    <task>
       <label>dependencyResolution</label>
       <description>Provides the sbt interface to dependency resolution.</description>
       <rank>200</rank>
+    </task>
+    <task>
+      <label>dependencyTreeModuleGraphStore</label>
+      <description>The stored module-graph from the last run</description>
+      <rank>17</rank>
     </task>
     <task>
       <label>bootResolvers</label>
@@ -1329,14 +1478,34 @@
       <rank>5</rank>
     </task>
     <task>
+      <label>changedOutputFiles</label>
+      <description>The files that have changed since the last task run.</description>
+      <rank>17</rank>
+    </task>
+    <task>
       <label>makeIvyXmlConfiguration</label>
       <description>Configuration for generating ivy.xml.</description>
       <rank>10000</rank>
     </task>
     <task>
+      <label>allOutputFiles</label>
+      <description>All of the file outputs for a task excluding directories and hidden files.</description>
+      <rank>17</rank>
+    </task>
+    <task>
       <label>exportedPickles</label>
       <description>Build products that go on the exported compilation classpath as JARs. Note this is promise-blocked.</description>
       <rank>20000</rank>
+    </task>
+    <task>
+      <label>dependencyTreeIgnoreMissingUpdate</label>
+      <description>update used for dependencyTree task</description>
+      <rank>17</rank>
+    </task>
+    <task>
+      <label>pushRemoteCache</label>
+      <description>Push remote cache to the cache server.</description>
+      <rank>17</rank>
     </task>
     <task>
       <label>bspBuildTargetJvmEnvironmentItem</label>
@@ -1356,7 +1525,7 @@
     <task>
       <label>sources</label>
       <description>All sources, both managed and unmanaged.</description>
-      <rank>20000</rank>
+      <rank>30</rank>
     </task>
     <task>
       <label>console</label>
@@ -1364,13 +1533,23 @@
       <rank>4</rank>
     </task>
     <task>
+      <label>remoteCacheId</label>
+      <description>Unique identifier for the remote cache.</description>
+      <rank>17</rank>
+    </task>
+    <task>
       <label>unmanagedSources</label>
       <description>Unmanaged sources, which are manually created.</description>
-      <rank>20000</rank>
+      <rank>29</rank>
+    </task>
+    <task>
+      <label>remoteCacheProjectId</label>
+      <description>ModuleID used for remote cache JARs.</description>
+      <rank>17</rank>
     </task>
     <task>
       <label>bspBuildTargetRun</label>
-      <description>Corresponds to buildTarget/run request</description>
+      <description>Implementation of buildTarget/run</description>
       <rank>20000</rank>
     </task>
     <task>
@@ -1389,11 +1568,6 @@
       <rank>6</rank>
     </task>
     <task>
-      <label>docVF</label>
-      <description>Generates API documentation.</description>
-      <rank>6</rank>
-    </task>
-    <task>
       <label>tastyFiles</label>
       <description>Returns the TASTy files produced by compilation</description>
       <rank>20000</rank>
@@ -1407,6 +1581,11 @@
       <label>bspBuildTarget</label>
       <description>Description of the BSP build targets</description>
       <rank>20000</rank>
+    </task>
+    <task>
+      <label>csrRecursiveResolvers</label>
+      <description>Resolvers of the current project, plus those of all from its inter-dependency projects</description>
+      <rank>17</rank>
     </task>
     <task>
       <label>scalaCompilerBridgeDependencyResolution</label>
@@ -1429,14 +1608,19 @@
       <rank>30</rank>
     </task>
     <task>
-      <label>resourcesVF</label>
-      <description>All resource files, both managed and unmanaged.</description>
-      <rank>30</rank>
+      <label>testQuick</label>
+      <description>Executes the tests that either failed before, were not run or whose transitive dependencies changed, among those provided as arguments.</description>
+      <rank>5</rank>
     </task>
     <task>
-      <label>testQuick</label>
-      <description>Alias for test.</description>
-      <rank>200</rank>
+      <label>toFile</label>
+      <description>Writes the task value to the given file</description>
+      <rank>5</rank>
+    </task>
+    <task>
+      <label>remoteCacheArtifact</label>
+      <description>The remote cache artifact definition.</description>
+      <rank>17</rank>
     </task>
     <task>
       <label>updateClassifiers</label>
@@ -1447,6 +1631,11 @@
       <label>bootIvyConfiguration</label>
       <description>General dependency management (Ivy) settings, configured to retrieve sbt's components.</description>
       <rank>20000</rank>
+    </task>
+    <task>
+      <label>csrInterProjectDependencies</label>
+      <description>Projects the current project depends on, possibly transitively</description>
+      <rank>17</rank>
     </task>
     <task>
       <label>fullClasspath</label>
@@ -1592,6 +1781,13 @@
       </help>
     </command>
     <command>
+      <name>last-grep</name>
+      <help>
+        <cmd>last-grep</cmd>
+        <desc>Shows lines from the last output for 'key' that match 'pattern'.</desc>
+      </help>
+    </command>
+    <command>
       <name>lastGrep</name>
       <help>
         <cmd>lastGrep</cmd>
@@ -1620,15 +1816,6 @@
     </command>
     <command>
       <name>clearCaches</name>
-    </command>
-    <command>
-      <name>cleanFull</name>
-    </command>
-    <command>
-      <name>testOnly</name>
-    </command>
-    <command>
-      <name>alias</name>
     </command>
     <command>
       <name>resumeFromFailure</name>
@@ -1693,6 +1880,9 @@
     </command>
     <command>
       <name>&lt;</name>
+    </command>
+    <command>
+      <name>alias</name>
     </command>
     <command>
       <name>bspReload</name>
