@@ -1,7 +1,7 @@
 package org.jetbrains.sbt.dump.extract
 
 import org.jetbrains.sbt.dump.extract.DependenciesExtractor.{ProductionType, ProjectType, TestType}
-import org.jetbrains.sbt.dump.extract.compat.DependenciesExtractorCompat
+import org.jetbrains.sbt.compat.DependenciesExtractorCompat
 import org.jetbrains.sbt.structure.*
 import org.jetbrains.sbt.{ModulesOps, ProjectRefOps, SbtStateOps, StructureKeys, TaskOps}
 import sbt.internal.BuildDependencies

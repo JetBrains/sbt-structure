@@ -1,6 +1,6 @@
 package org.jetbrains.sbt.dump.workflow
 
-import org.jetbrains.sbt.dump.compat.PluginOnlyTasksCompat
+import org.jetbrains.sbt.compat.PluginOnlyTasksCompat
 import org.jetbrains.sbt.dump.extract.*
 import org.jetbrains.sbt.runtime.SbtStateOps
 import org.jetbrains.sbt.{Options, StructureKeys}

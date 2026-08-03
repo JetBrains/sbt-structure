@@ -1,4 +1,4 @@
-package org.jetbrains.sbt.dump.compat
+package org.jetbrains.sbt.compat
 
 import org.jetbrains.sbt.{StructureKeys, newXmlPrettyPrinter}
 import org.jetbrains.sbt.dump.workflow.UtilityTasks.writeToFile

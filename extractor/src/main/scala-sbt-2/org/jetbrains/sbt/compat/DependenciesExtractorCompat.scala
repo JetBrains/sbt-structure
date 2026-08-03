@@ -1,4 +1,4 @@
-package org.jetbrains.sbt.dump.extract.compat
+package org.jetbrains.sbt.compat
 
 import org.jetbrains.sbt.runtime.ModulesOps
 import org.jetbrains.sbt.structure.*
