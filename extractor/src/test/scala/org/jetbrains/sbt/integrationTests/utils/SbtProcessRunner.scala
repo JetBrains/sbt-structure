@@ -16,6 +16,7 @@ object SbtProcessRunner {
     sbtIvyHome: File,
     // note, since 1.3 the coursier is used by default instead of Ivy
     sbtCoursierHome: File,
+    launcherOptions: Seq[String] = Seq.empty,
     verbose: Boolean = true,
     errorsExpected: Boolean = false
   )
@@ -60,8 +61,7 @@ object SbtProcessRunner {
       //"-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=*:5321",
 
       "-jar", SbtLauncherUtils.sbtLauncherPath,
-      s"< ${path(commandsFile)}"
-    )
+    ) ++ runOptions.launcherOptions ++ Seq(s"< ${path(commandsFile)}")
 
     val envVars = Seq(
       // It's not enough to specify "-Dsbt.coursier.home" property,

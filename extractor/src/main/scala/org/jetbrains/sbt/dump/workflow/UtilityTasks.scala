@@ -239,6 +239,7 @@ object UtilityTasks extends org.jetbrains.sbt.runtime.SbtStateOps {
     }
 
   def writeToFile(file: File, xml: String): Unit = {
+    // TODO(SCL-18489): migrate the primary structure response to the atomic sibling-file replacement used by dumpSbtSourcesTo.
     val writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), "UTF-8"))
     try {
       writer.write("""<?xml version="1.0" encoding="UTF-8"?>""")

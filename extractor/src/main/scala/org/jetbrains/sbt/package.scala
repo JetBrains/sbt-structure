@@ -17,6 +17,11 @@ package object sbt {
   val UpdateReportAdapter = runtime.UpdateReportAdapter
   type ModuleReportAdapter = runtime.ModuleReportAdapter
   val ModuleReportAdapter = runtime.ModuleReportAdapter
+  type SbtSourcesReport = sources.SbtSourcesReport
+  val SbtSourcesReport = sources.SbtSourcesReport
+  type SbtBuildSources = sources.SbtBuildSources
+  val SbtBuildSources = sources.SbtBuildSources
+  val SbtSourcesXml = sources.SbtSourcesXml
 
   def newXmlPrettyPrinter: PrettyPrinter = new PrettyPrinter(MaxXmlWidthInTests.getOrElse(180), 2) {
     override protected def traverse(node: Node, pscope: NamespaceBinding, ind: Int): Unit = {
