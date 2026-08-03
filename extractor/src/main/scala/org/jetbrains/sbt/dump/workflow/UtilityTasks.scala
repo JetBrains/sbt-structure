@@ -210,6 +210,9 @@ object UtilityTasks extends org.jetbrains.sbt.runtime.SbtStateOps {
     buffer.toSeq
   }
 
+  def sbtClassifiers(options: Options): Seq[String] =
+    if (options.resolveSbtClassifiers) Seq(Artifact.SourceClassifier) else Seq.empty
+
   /**
    * Detect whether the JvmPlugin is enabled for the given project.
    * Prior to 0.13.8 SBT had this one enabled by default for all projects.

@@ -30,7 +30,10 @@ object PluginCompat extends SeqOpsCompat with ClassathOpsCompat with CoursierLog
      * This is required to mute working for the unused key defined in<br>
      * [[org.jetbrains.sbt.CreateTasks.projectSettings]]
      */
-    Keys.excludeLintKeys += Keys.updateClassifiers / Keys.transitiveClassifiers,
+    Keys.excludeLintKeys ++= Set(
+      Keys.updateClassifiers / Keys.transitiveClassifiers,
+      Keys.updateSbtClassifiers / Keys.transitiveClassifiers,
+    ),
   )
 
   private val oldScalaCompilerBridgeBinaryJarImpl: Def.Initialize[Task[Option[File]]] = {

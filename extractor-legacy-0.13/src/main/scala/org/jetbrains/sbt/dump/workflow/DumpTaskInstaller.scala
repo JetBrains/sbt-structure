@@ -31,6 +31,13 @@ object DumpTaskInstaller extends (State => State) with SbtStateOps {
       //but `transitiveClassifiers` value can't be empty anyway
       if (classifiers.nonEmpty) classifiers else oldValue
     },
+    Keys.transitiveClassifiers.in(Keys.updateSbtClassifiers) := {
+      val oldValue = Keys.transitiveClassifiers.in(Keys.updateSbtClassifiers).value
+      val classifiers = UtilityTasks.sbtClassifiers(StructureKeys.sbtStructureOpts.value)
+      //when we don't resolve SBT sources `updateSbtClassifiers` won't be called
+      //but `transitiveClassifiers` value can't be empty anyway
+      if (classifiers.nonEmpty) classifiers else oldValue
+    },
     StructureKeys.dependencyConfigurations := UtilityTasks.dependencyConfigurations.value,
     StructureKeys.testConfigurations := UtilityTasks.testConfigurations.value,
     StructureKeys.sourceConfigurations := UtilityTasks.sourceConfigurations.value,

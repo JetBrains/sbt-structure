@@ -173,6 +173,9 @@ object UtilityTasks extends org.jetbrains.sbt.runtime.SbtStateOps {
     buffer
   }
 
+  def sbtClassifiers(options: Options): Seq[String] =
+    if (options.resolveSbtClassifiers) Seq(Artifact.SourceClassifier) else Seq.empty
+
   private def areNecessaryPluginsLoaded(project: ResolvedProject): Boolean = {
     // Here is a hackish way to test whether project has JvmPlugin enabled.
     // Prior to 0.13.8 SBT had this one enabled by default for all projects.
