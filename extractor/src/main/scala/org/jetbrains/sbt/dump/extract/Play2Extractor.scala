@@ -1,4 +1,4 @@
-package org.jetbrains.sbt.extractors
+package org.jetbrains.sbt.dump.extract
 
 import org.jetbrains.sbt.{SbtStateOps, TaskOps}
 import org.jetbrains.sbt.structure._

@@ -1,4 +1,4 @@
-package org.jetbrains.sbt.extractors
+package org.jetbrains.sbt.dump.extract.compat
 
 import sbt.{Configuration, Test}
 

@@ -1,7 +1,7 @@
 package org.jetbrains.sbt.dump.workflow
 
 import org.jetbrains.sbt.dump.compat.PluginOnlyTasksCompat
-import org.jetbrains.sbt.extractors._
+import org.jetbrains.sbt.dump.extract._
 import org.jetbrains.sbt.runtime.SbtStateOps
 import org.jetbrains.sbt.{Options, StructureKeys}
 import sbt._
@@ -19,7 +19,7 @@ object DumpTaskInstaller extends (State => State) with SbtStateOps {
     StructureKeys.extractProjects := UtilityTasks.extractProjects.value,
     StructureKeys.extractBuilds := UtilityTasks.extractBuilds.value,
     StructureKeys.extractRepository := RepositoryExtractor.taskDef.value,
-    StructureKeys.extractStructure := org.jetbrains.sbt.extractors.extractStructure.value,
+    StructureKeys.extractStructure := org.jetbrains.sbt.dump.extract.extractStructure.value,
     StructureKeys.localCachePath := UtilityTasks.localCachePath.value
   )
 

@@ -16,7 +16,7 @@ private[sbt] object PluginOnlyTasksCompat {
     val options = StructureKeys.sbtStructureOpts.value
 
     val log = Keys.streams.value.log
-    val structureTask = org.jetbrains.sbt.extractors.extractStructure
+    val structureTask = org.jetbrains.sbt.dump.extract.extractStructure
 
     Def.task {
       val structure = structureTask.value.serialize

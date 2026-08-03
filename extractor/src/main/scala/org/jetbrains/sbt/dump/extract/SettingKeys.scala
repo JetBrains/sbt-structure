@@ -1,4 +1,4 @@
-package org.jetbrains.sbt.extractors
+package org.jetbrains.sbt.dump.extract
 
 import java.io.File
 import sbt.SettingKey
@@ -35,5 +35,4 @@ object SettingKeys {
    */
   val bspEnabled: SettingKey[Boolean] = SettingKey[Boolean]("bspEnabled")
 }
-
 

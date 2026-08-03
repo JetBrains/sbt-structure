@@ -100,7 +100,7 @@ class ExtractStructureIntegrationTest extends AnyFreeSpecLike {
       "prod_test_sources_separated" in { testProject("prod_test_sources_separated", SbtVersion_1_3, ResolveSourcesAndSbtClassifiersAndSeparateProdTestSources) }
       // scalafix sources are not present even in sbt 1.3 (`bspEnabled` key was introduced in sbt 1.4), because for versions < 1.4 they
       // had its local copy of `bspEnabled` https://github.com/scalacenter/sbt-scalafix/commit/140ccb81c21b5eeca25763135acce1ac7ca3fb44.
-      // The same as we have in org.jetbrains.sbt.extractors.SettingKeys.bspEnabled
+      // The same as we have in org.jetbrains.sbt.dump.extract.SettingKeys.bspEnabled
       "scalafix-config-disabled" in { testProject("scalafix-config-disabled", SbtVersion_1_3, ResolveSourcesAndSbtClassifiers) }
       "missing-scala-tool-config" in { testProject("missing-scala-tool-config", SbtVersion_1_3, ResolveSourcesAndSbtClassifiers) }
       "scala-instance-error" in { testProjectShouldFailWith("scala-instance-error", SbtVersion_1_3, ResolveSourcesAndSbtClassifiers, ScalaInstanceCustomError) }

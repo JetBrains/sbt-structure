@@ -1,7 +1,7 @@
 package org.jetbrains.sbt.dump.workflow
 
 import org.jetbrains.sbt._
-import org.jetbrains.sbt.extractors.SettingKeys
+import org.jetbrains.sbt.dump.extract.SettingKeys
 import org.jetbrains.sbt.structure.ProjectData
 import org.jetbrains.sbt.structure.XmlSerializer._
 import sbt.Def.Initialize

@@ -1,22 +1,15 @@
-package org.jetbrains.sbt
-package extractors
+package org.jetbrains.sbt.dump.extract
 
-import org.jetbrains.sbt.dump.workflow.UtilityTasks.isPluginLoaded
-import org.jetbrains.sbt.CreateTasks.SettingKeyOps
-import org.jetbrains.sbt.structure.*
+import org.jetbrains.sbt._
+import org.jetbrains.sbt.structure._
 import sbt.Def.Initialize
-import sbt.internal.inc.ScalaInstance
-import sbt.jetbrains.PluginCompat
-import sbt.jetbrains.PluginCompat._
-import sbt.{Def, File, Configuration as SbtConfiguration, *}
+import sbt.{Def, File, Configuration => SbtConfiguration, _}
 
-import scala.collection.Seq
 import scala.reflect.ClassTag
 import scala.util.{Failure, Success, Try}
 
 class ProjectExtractor(
   projectRef: ProjectRef,
-  resolvedProject: ResolvedProject,
   name: String,
   organization: String,
   version: String,
@@ -48,22 +41,16 @@ class ProjectExtractor(
   taskData: Seq[TaskData],
   commandData: Seq[CommandData],
   mainSourceDirectories: Seq[File],
-  testSourceDirectories: Seq[File],
-  isMainTestEnabled: Boolean
+  testSourceDirectories: Seq[File]
 ) {
 
-  private[extractors] def extract(implicit state: State): ProjectData = {
+  private[extract] def extract: ProjectData = {
 
     val resolvers = allResolvers.collect {
       case repo: MavenRepository => ResolverData(repo.name, repo.root)
     }.toSet
 
     /**
-     * TODO
-     *  In sbt-jmh plugin version 0.4.4 (released in 2023), they added bspEnabled := false to the Jmh configuration,
-     *  so for plugins using this version or newer, this workaround is no longer required.
-     *  I kept it only to support plugin versions below 0.4.4, but it could be removed in a year or two.
-     *
      * Ignore "jmh" configuration.<br>
      * This is a dirty WORKAROUND for https://youtrack.jetbrains.com/issue/SCL-13127<br>
      * "jmh" configuration is defined in some strange way:<br>
@@ -82,7 +69,7 @@ class ProjectExtractor(
     def isJmhConfiguration(config: sbt.Configuration): Boolean =
       config.name.toLowerCase == "jmh"
 
-    val compileConfigurationsData = sourceConfigurations.flatMap(extractConfiguration(Compile.name, webAssetsDirsToExclude))
+    val compileConfigurationsData = sourceConfigurations.flatMap(extractConfiguration(Compile.name))
     val testConfigurationData = testConfigurations
       .filterNot(isJmhConfiguration)
       .flatMap(extractConfiguration(Test.name))
@@ -117,60 +104,22 @@ class ProjectExtractor(
     )
   }
 
-  /**
-   * This is a workaround for SCL-24518.
-   *
-   * The `sbt-web-scalajs-bundler` plugin internally uses the `sbt-web-scalajs` plugin, which modifies
-   * `unmanagedSourceDirectories`` in the `Assets`` configuration (`Assets` configuration comes from the https://github.com/sbt/sbt-web).
-   * Specifically, it extends `Assets/unmanagedSourceDirectories` with source directories from all Scala.js modules and their dependencies
-   * (see more info: https://github.com/vmunier/sbt-web-scalajs/blob/a3cf9ecc01506264929c463fe297ef2e11a3d439/src/main/scala/webscalajs/WebScalaJS.scala#L45).
-   * All these tracked directories are saved in the `monitoredScalaJSDirectories`` setting.
-   *
-   * '''Why is this exclusion necessary?'''
-   *
-   * When a module has WebScalaJS enabled, its `Assets/unmanagedSourceDirectories` includes source directories from all
-   * Scala.js modules and their dependencies. This creates a situation where its source directories overlap
-   * with source directories from other modules (e.g., the Scala.js modules whose directories were used to populate the `monitoredScalaJSDirectories` setting).
-   * When this overlap occurs, the Scala plugin creates shared source modules for these directories, which are unnecessary and cause problems (e.g., the wrong representative project is picked).
-   * Excluding `monitoredScalaJSDirectories`` from `unmanagedSourceDirectories` prevents this problem.
-   *
-   */
-  private def webAssetsDirsToExclude(implicit state: State): Seq[File] = {
-    val shouldExcludeWebAssets =
-      isMainTestEnabled && isPluginLoaded(resolvedProject, pluginId = "webscalajs.WebScalaJS", defaultValue = false)
-
-    if (shouldExcludeWebAssets) {
-      val assetsConfig = sourceConfigurations.find(_.name == "web-assets") // the name of Assets config comes from https://github.com/sbt/sbt-web/blob/1c400a3fb863e57a0475f71419d43f4055b7ec45/src/main/scala/com/typesafe/sbt/web/SbtWeb.scala#L19
-      assetsConfig.fold(Seq.empty[File]) { config =>
-        (projectRef / config / SettingKeys.monitoredScalaJSDirectories).getValueOrElse(state, Nil)
-      }
-    } else {
-      Nil
-    }
-  }
-
   private def extractConfiguration(
-    ideConfig: String,
-    toExclude: Seq[File] = Nil
+    ideConfig: String
   )(configuration: sbt.Configuration): Option[ConfigurationData] =
     classDirectory(configuration).map { sbtOutput =>
-      def filterAndMap(dirs: Seq[File], managed: Boolean): Seq[DirectoryData] =
-        dirs
-          .filterNot(toExclude.contains)
-          .map(DirectoryData(_, managed = managed))
-
       val sources = {
         val managed = managedSourceDirectories(configuration)
         val unmanaged = unmanagedSourceDirectories(configuration)
-        filterAndMap(managed, managed = true) ++
-          filterAndMap(unmanaged, managed = false)
+        managed.map(DirectoryData(_, managed = true)) ++
+          unmanaged.map(DirectoryData(_, managed = false))
       }
 
       val resources = {
         val managed = managedResourceDirectories(configuration)
         val unmanaged = unmanagedResourceDirectories(configuration)
-        filterAndMap(managed, managed = true)  ++
-          filterAndMap(unmanaged, managed = false)
+        managed.map(DirectoryData(_, managed = true)) ++
+          unmanaged.map(DirectoryData(_, managed = false))
       }
 
       val output = ideOutputDirectory(configuration).getOrElse(sbtOutput)
@@ -302,7 +251,8 @@ class ProjectExtractor(
   private def extractKotlin: Option[KotlinData] =
     if (kotlincOptions.nonEmpty)
       Some(KotlinData(kotlincOptions))
-    else None
+    else
+      None
 
   private def mergeConfigurations(
     configurations: Seq[ConfigurationData]
@@ -322,109 +272,40 @@ class ProjectExtractor(
 object ProjectExtractor extends SbtStateOps with TaskOps {
   // Comes from sbt-kotlin-plugin's kotlin.Keys.kotlincOptions setting:
   // https://github.com/JetBrains/sbt-kotlin-plugin/blob/7b10f959cb98365e5b697c7e68c934414a5e8088/src/main/scala/kotlin/Keys.scala#L17-L18
-  private val KotlincOptionsKey = SettingKey[PluginCompat.SeqFromStdLib[String]]("kotlinc-options")
+  private val KotlincOptionsKey = SettingKey[Seq[String]]("kotlinc-options")
 
   private def settingInConfiguration[T](
-    key: SettingKey[scala.collection.immutable.Seq[T]]
-  )(implicit projectRef: ProjectRef, state: State): SbtConfiguration => scala.collection.immutable.Seq[T] =
+    key: SettingKey[Seq[T]]
+  )(implicit projectRef: ProjectRef, state: State) =
     (conf: sbt.Configuration) =>
-      (projectRef / conf / key).getValueOrElse(state, scala.collection.immutable.Seq.empty)
+      key.in(projectRef, conf).getOrElse(state, Seq.empty)
 
-  private def settingInConfiguration[T](
-    key: SettingKey[scala.collection.Seq[T]]
-  )(implicit projectRef: ProjectRef, state: State, d: DummyImplicit): SbtConfiguration => scala.collection.Seq[T] =
-    (conf: sbt.Configuration) =>
-      (projectRef / conf / key).getValueOrElse(state, scala.collection.Seq.empty)
-
-  private def taskInCompile[T](key: TaskKey[T])(implicit projectRef: ProjectRef, state: State) =
-    (projectRef / Compile / key).get(state)
-
+  private def taskInCompile[T](key: TaskKey[T])(implicit projectRef: ProjectRef,
+                                                state: State) =
+    key.in(projectRef, Compile).get(state)
   private def taskInConfig[T](key: TaskKey[T], config: SbtConfiguration)
     (implicit projectRef: ProjectRef, state: State) =
-    (projectRef / config / key).get(state)
+    key.in(projectRef, config).get(state)
 
   private def kotlincOptionsInConfig(config: SbtConfiguration)(implicit projectRef: ProjectRef, state: State): Seq[String] =
-    (projectRef / config / KotlincOptionsKey)
-      .find(state).map(_.toSeq)
+    KotlincOptionsKey
+      .in(projectRef, config)
+      .find(state)
       .getOrElse(Seq.empty)
 
   private def generateManagedSourcesTaskDef: Initialize[Task[Seq[File]]] = Def.taskDyn {
-    val name = (Compile / Keys.name).value
+    val name = Keys.name.in(Compile).value
     val log = Keys.streams.value.log
-    val hasGenerators = (Compile / Keys.sourceGenerators).value.nonEmpty || (Test / Keys.sourceGenerators).value.nonEmpty
+    val hasGenerators = Keys.sourceGenerators.in(Compile).value.nonEmpty || Keys.sourceGenerators.in(Test).value.nonEmpty
     if (hasGenerators) {
       log.info(s"Generating managed sources in $name / Compile, $name / Test...")
       Def.task {
-        val inCompile = (Compile / Keys.managedSources).value
-        val inTest = (Test / Keys.managedSources).value
+        val inCompile = Keys.managedSources.in(Compile).value
+        val inTest = Keys.managedSources.in(Test).value
         inCompile ++ inTest
       }
     } else {
       Def.task[Seq[File]](Seq.empty)
-    }
-  }
-
-  /** Resolves and returns a tuple of:
-   *  - `Option[ScalaInstance]` - the resolved Scala instance, or `None` if not available
-   *  - `Option[File]` - the Scala compiler bridge binary jar (`None` if the Scala instance is empty)
-   *  - `String` - the Scala organization
-   */
-  private def resolveScalaInstanceAndBridgeJar: Initialize[Task[(Option[ScalaInstance], Option[File], String)]] = Def.taskDyn {
-    implicit val state: State = Keys.state.value
-    implicit val projectRef: ProjectRef = Keys.thisProjectRef.value
-    val options = StructureKeys.sbtStructureOpts.value
-
-    Def.taskDyn {
-      val scalaOrganization =
-        (projectRef / Compile / Keys.scalaOrganization).value
-      val scalaInstanceResult: Result[Option[ScalaInstance]] =
-        taskInCompile(Keys.scalaInstance).onlyIf(options.download).result.value
-
-      // In some setups there might be no Scala instance configured.
-      // This used to be the case in the Scala 3 repository, but it no longer is —
-      // modules that previously had no scalaInstance now have one, as it was added in commit
-      // https://github.com/scala/scala3/commit/41209879c311f754848f53c07ef1575b79512c3 (see https://youtrack.jetbrains.com/issue/SCL-24321).
-      // So this can no longer be reproduced on the current main branch of the Scala 3 repository, but it can still be reproduced by e.g., switching to the 3.7.3 tag.
-      //
-      // However, this can still occur in real projects: as explained in the sbt docs (https://www.scala-sbt.org/1.x/docs/Configuring-Scala.html#Configuring+Scala+tool+dependencies),
-      // if the user doesn't want an automatically managed dependency on the Scala library, they should set:
-      //   managedScalaInstance := false
-      // When `scalaInstance` is called in such a setup, "Missing Scala tool configuration" is thrown.
-      // We want to ignore this error, as it is a valid case to not depend on the Scala library.
-      // The remaining errors are thrown to avoid silently ignoring important issues (see https://youtrack.jetbrains.com/issue/SCL-25275).
-      val isMissingScalaTool = (inc: Incomplete) =>
-        inc.causes.exists { cause =>
-          cause.directCause.exists { throwable =>
-            val msg = throwable.getMessage
-            msg != null && msg.contains("Missing Scala tool configuration")
-          }
-        }
-
-      // Since sbt 1.12.0, when `managedScalaInstance` is set to `false`, an empty Scala instance with version 0.0.0 is returned.
-      // This differs from earlier sbt versions, where a "Missing Scala tool configuration" exception was thrown (which is already handled above).
-      //
-      // Additionally, since sbt 1.12.11, the empty Scala instance is returned only when
-      // `managedScalaInstance` is set to `false` and the configurations do not contain `ScalaTool` config (https://github.com/sbt/sbt/issues/9105).
-      //
-      // Scala instances with version `0.0.0` and no jars inside are not useful and should not appear in the Project Structure, so we filter them out.
-      val isVersion0 = (instance: ScalaInstance) =>
-        instance.actualVersion == "0.0.0"
-
-      val scalaInstance = scalaInstanceResult.toEither match {
-        case Right(Some(instance)) if isVersion0(instance) =>
-          None
-        case Right(value) =>
-          value
-        case Left(incomplete) if isMissingScalaTool(incomplete) =>
-          None
-        case Left(incomplete) =>
-          throw incomplete
-      }
-
-      if (scalaInstance.nonEmpty)
-        Def.task { (scalaInstance, PluginCompat.myScalaCompilerBridgeBinaryJar.value, scalaOrganization) }
-      else
-        Def.task { (scalaInstance, Option.empty[File], scalaOrganization) }
     }
   }
 
@@ -434,31 +315,34 @@ object ProjectExtractor extends SbtStateOps with TaskOps {
     implicit val projectRef: ProjectRef = sbt.Keys.thisProjectRef.value
 
     val idePackagePrefix =
-      (projectRef / SettingKeys.idePackagePrefix).find(state).flatten
+      SettingKeys.idePackagePrefix.in(projectRef).find(state).flatten
 
     val basePackages =
-      (projectRef / SettingKeys.ideBasePackages)
+      SettingKeys.ideBasePackages
+        .in(projectRef)
         .find(state)
         .orElse(
-          (projectRef / SettingKeys.sbtIdeaBasePackage).find(state).map(_.toSeq)
+          SettingKeys.sbtIdeaBasePackage.in(projectRef).find(state).map(_.toSeq)
         )
         .getOrElse(Seq.empty)
 
     def classDirectory(conf: sbt.Configuration) =
-      (projectRef / conf / Keys.classDirectory).find(state)
+      Keys.classDirectory.in(projectRef, conf).find(state)
 
     val excludedDirectories =
-      (projectRef / SettingKeys.ideExcludedDirectories)
+      SettingKeys.ideExcludedDirectories
+        .in(projectRef)
         .find(state)
         .orElse(
-          (projectRef / SettingKeys.sbtIdeaExcludeFolders)
+          SettingKeys.sbtIdeaExcludeFolders
+            .in(projectRef)
             .find(state)
             .map(_.map(file))
         )
         .getOrElse(Seq.empty)
 
     def ideOutputDirectory(conf: sbt.Configuration) =
-      (projectRef / conf / SettingKeys.ideOutputDirectory).find(state).flatten
+      SettingKeys.ideOutputDirectory.in(projectRef, conf).find(state).flatten
 
     val options = StructureKeys.sbtStructureOpts.value
 
@@ -472,12 +356,16 @@ object ProjectExtractor extends SbtStateOps with TaskOps {
       settingInConfiguration(Keys.unmanagedResourceDirectories)
 
     Def.taskDyn {
-      val (scalaInstance, scalaCompilerBridgeBinaryJar, scalaOrganization) = resolveScalaInstanceAndBridgeJar.value
+      val scalaOrganization =
+        Keys.scalaOrganization.in(projectRef, Compile).value
+      val scalaInstance =
+        taskInCompile(Keys.scalaInstance).onlyIf(options.download).value
 
-      def mapToCompilerOptions(configToOptions: Seq[(Configuration, Seq[String])]) =
-        configToOptions.collect { case (config, options) if options.nonEmpty =>
+      def mapToCompilerOptions(configToOptions: Seq[(Configuration, Seq[String])]) = {
+        configToOptions.collect { case(config, options) if options.nonEmpty =>
           CompilerOptions(config, options)
         }
+      }
 
       val scalacOptions = mapToCompilerOptions(
         Seq(
@@ -500,29 +388,26 @@ object ProjectExtractor extends SbtStateOps with TaskOps {
         )
       )
 
-      val name = (projectRef / Compile / Keys.name).value
-      val organization = (projectRef / Compile / Keys.organization).value
-      val version = (projectRef / Compile / Keys.version).value
-      val base = (projectRef / Compile / Keys.baseDirectory).value
-      val target = (projectRef / Compile / Keys.target).value
-      val javaHome = (projectRef / Compile / Keys.javaHome).value
-      val compileOrder = (projectRef / Compile / Keys.compileOrder).value
+      val name = Keys.name.in(projectRef, Compile).value
+      val organization = Keys.organization.in(projectRef, Compile).value
+      val version = Keys.version.in(projectRef, Compile).value
+      val base = Keys.baseDirectory.in(projectRef, Compile).value
+      val target = Keys.target.in(projectRef, Compile).value
+      val javaHome = Keys.javaHome.in(projectRef, Compile).value
+      val compileOrder = Keys.compileOrder.in(projectRef, Compile).value
 
       val sourceConfigurations = StructureKeys.sourceConfigurations.value
       val testConfigurations = StructureKeys.testConfigurations.value
 
-      val mainSourceDirectories = (projectRef / Keys.sourceDirectory)
+      val mainSourceDirectories = Keys.sourceDirectory.in(projectRef)
         .forAllConfigurations(state, sourceConfigurations)
         .map(_._2).distinct
-      val testSourceDirectories = (projectRef / Keys.sourceDirectory)
+      val testSourceDirectories = Keys.sourceDirectory.in(projectRef)
         .forAllConfigurations(state, testConfigurations)
         .map(_._2).distinct
 
-      val resolvedProject = Keys.thisProject.value
-
       val projectData = new ProjectExtractor(
         projectRef,
-        resolvedProject,
         name,
         organization,
         version,
@@ -540,7 +425,7 @@ object ProjectExtractor extends SbtStateOps with TaskOps {
         ideOutputDirectory,
         scalaOrganization,
         scalaInstance,
-        scalaCompilerBridgeBinaryJar,
+        scalaCompilerBridgeBinaryJar = None,
         scalacOptions,
         javaHome,
         javacOptions,
@@ -554,23 +439,19 @@ object ProjectExtractor extends SbtStateOps with TaskOps {
         StructureKeys.taskData.value,
         StructureKeys.commandData.value.distinct,
         mainSourceDirectories,
-        testSourceDirectories,
-        options.separateProdAndTestSources
+        testSourceDirectories
       ).extract
 
       if (options.generateManagedSources) {
         Def.task {
           val log = Keys.streams.value.log
-          // Need to use `.toEither` because Result, Inc and Value are top level definitions in
-          // sbt 1/Scala 2 and an enum in sbt 2/Scala 3 (Inc and Value are defined inside the Result companion object),
-          // and are therefore not source compatible.
-          val managedSources = generateManagedSourcesTaskDef.result.value.toEither match {
-            case Left(cause) =>
+          val managedSources = generateManagedSourcesTaskDef.result.value match {
+            case Inc(cause: Incomplete) =>
               log.warn(s"Generating managed sources failed in $name. Continuing with the project import. The stack trace of the failure is printed below:")
               val trace = stackTraceAsString(cause)
               log.warn(trace)
               Seq.empty
-            case Right(sources) => sources
+            case Value(sources) => sources
           }
           projectData.copy(generatedManagedSources = managedSources.nonEmpty)
         }

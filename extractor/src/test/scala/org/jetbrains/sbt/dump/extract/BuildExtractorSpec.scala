@@ -1,6 +1,6 @@
-package org.jetbrains.sbt
-package extractors
+package org.jetbrains.sbt.dump.extract
 
+import org.jetbrains.sbt.{LoadedBuildUnitAdapter, ModuleReportAdapter, UpdateReportAdapter}
 import org.jetbrains.sbt.structure._
 import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.must.Matchers.{convertToAnyMustWrapper, equal}

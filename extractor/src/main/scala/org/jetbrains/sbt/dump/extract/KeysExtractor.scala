@@ -1,4 +1,4 @@
-package org.jetbrains.sbt.extractors
+package org.jetbrains.sbt.dump.extract
 
 import org.jetbrains.sbt.StructureKeys
 import org.jetbrains.sbt.structure.{CommandData, SettingData, TaskData}

@@ -1,13 +1,15 @@
-package org.jetbrains.sbt.extractors
+package org.jetbrains.sbt.dump.extract
 
 import java.io.File
 
 import org.jetbrains.sbt.{LoadedBuildUnitAdapter, SbtStateOps, StructureKeys, TaskOps, UpdateReportAdapter}
 import org.jetbrains.sbt.structure.BuildData
 import sbt._
+import sbt.jetbrains.PluginCompat._
+import scala.collection.Seq
 
 class BuildExtractor(unit: LoadedBuildUnitAdapter, updateSbtClassifiers: Option[UpdateReportAdapter]) {
-  private[extractors] def extract: BuildData = {
+  private[extract] def extract: BuildData = {
     val (docs, sources) = extractSbtClassifiers
     BuildData(unit.uri, unit.imports, unit.pluginsClasspath.map(_.data), docs, sources)
   }
@@ -28,7 +30,7 @@ object BuildExtractor extends SbtStateOps with TaskOps {
     val unit = LoadedBuildUnitAdapter(structure(state).units(projectRef.build))
 
     Def.task {
-      Keys.updateSbtClassifiers.in(projectRef).get(state)
+      (projectRef / Keys.updateSbtClassifiers).get(state)
         .onlyIf(options.download && options.resolveSbtClassifiers)
         .map { updateClassifiersOpt =>
           new BuildExtractor(unit, updateClassifiersOpt.map(new UpdateReportAdapter(_))).extract

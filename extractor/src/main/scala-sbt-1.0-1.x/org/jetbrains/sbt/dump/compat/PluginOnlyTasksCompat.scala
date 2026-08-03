@@ -17,7 +17,7 @@ private[sbt] object PluginOnlyTasksCompat {
     val options = StructureKeys.sbtStructureOpts.value
 
     val log = Keys.streams.value.log
-    val extractStructure = org.jetbrains.sbt.extractors.extractStructure
+    val extractStructure = org.jetbrains.sbt.dump.extract.extractStructure
 
     val isFailedReload = PluginCompat.isFailedReload.value
     if (!isFailedReload) {

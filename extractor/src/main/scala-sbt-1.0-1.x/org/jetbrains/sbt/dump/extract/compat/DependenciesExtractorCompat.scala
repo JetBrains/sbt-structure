@@ -1,6 +1,6 @@
-package org.jetbrains.sbt.extractors
+package org.jetbrains.sbt.dump.extract.compat
 
-import org.jetbrains.sbt.ModulesOps
+import org.jetbrains.sbt.runtime.ModulesOps
 import org.jetbrains.sbt.structure.*
 import sbt.{Keys, Configuration as SbtConfiguration}
 

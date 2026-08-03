@@ -21,7 +21,7 @@ private[sbt] object PluginOnlyTasksCompat {
     val isFailedReload = PluginCompat.isFailedReload.value
     if (!isFailedReload) {
       Def.task {
-        val structure = org.jetbrains.sbt.extractors.extractStructure.value.serialize
+        val structure = org.jetbrains.sbt.dump.extract.extractStructure.value.serialize
         val outputText = {
           if (options.prettyPrint) newXmlPrettyPrinter.format(structure)
           else xml.Utility.trim(structure).mkString

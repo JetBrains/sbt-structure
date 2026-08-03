@@ -1,4 +1,4 @@
-package org.jetbrains.sbt.extractors
+package org.jetbrains.sbt.dump.extract
 
 import org.jetbrains.sbt.structure.{ModuleData, ModuleIdentifier, RepositoryData}
 import org.jetbrains.sbt.{ModuleReportAdapter, ModulesOps, Options, SbtStateOps, StructureKeys, TaskOps, UpdateReportAdapter}
@@ -15,7 +15,7 @@ class RepositoryExtractor(
   projectToConfigurationsName: Map[ProjectRef, Seq[String]]
 ) extends ModulesOps {
 
-  private[extractors] def extract: RepositoryData = {
+  private[extract] def extract: RepositoryData = {
     val moduleReports = fixModulesIdsToSupportClassifiers(allModulesWithDocs)
     val modulesReportsByIdentifier = groupByModuleIdentifiers(moduleReports)
     val modulesData = modulesReportsByIdentifier.toSeq.map((createModuleData _).tupled)

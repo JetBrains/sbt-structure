@@ -1,7 +1,7 @@
-package org.jetbrains.sbt
-package extractors
+package org.jetbrains.sbt.dump.extract
 
-import org.jetbrains.sbt.extractors.DependenciesExtractor.ProductionType
+import org.jetbrains.sbt.ProjectRefOps
+import org.jetbrains.sbt.dump.extract.DependenciesExtractor.ProductionType
 import org.jetbrains.sbt.structure._
 import org.scalatest.freespec.AnyFreeSpecLike
 import org.scalatest.matchers.must.Matchers.{contain, convertToAnyMustWrapper}

@@ -1,7 +1,7 @@
-package org.jetbrains.sbt
-package extractors
+package org.jetbrains.sbt.dump.extract
 
-import org.jetbrains.sbt.extractors.DependenciesExtractor.{ProductionType, ProjectType, TestType}
+import org.jetbrains.sbt.dump.extract.DependenciesExtractor.{ProductionType, ProjectType, TestType}
+import org.jetbrains.sbt._
 import org.jetbrains.sbt.structure._
 import sbt.{Configuration => SbtConfiguration, _}
 
@@ -21,7 +21,7 @@ class DependenciesExtractor(unmanagedClasspath: SbtConfiguration => Keys.Classpa
   private lazy val IDEAScopes = Seq(Configuration.Compile, Configuration.Runtime, Configuration.Provided, Configuration.Test).map(_.name)
   private lazy val sourceConfigurationsNames = sourceConfigurations.map(_.name)
 
-  private[extractors] def extract: DependencyData = {
+  private[extract] def extract: DependencyData = {
     val projectDependencies =
       if (separateProdTestSources) separatedSourcesProjectDependencies
       else transitiveProjectDependencies
@@ -244,7 +244,7 @@ class DependenciesExtractor(unmanagedClasspath: SbtConfiguration => Keys.Classpa
    *  .dependsOn(dummy % "customtest;customcompile")
    * }}}
    * Without performing the action of this method, `customtest` configuration will be mapped to `Configuration.Test` in
-   * [[org.jetbrains.sbt.extractors.DependenciesExtractor.mapConfigurations]] and then in the scala plugin, scope for this dependency
+   * [[org.jetbrains.sbt.dump.extract.DependenciesExtractor.mapConfigurations]] and then in the scala plugin, scope for this dependency
    * would be calculated to `TEST` (in [[org.jetbrains.sbt.project.SbtProjectResolver.scopeFor]]) which would not be truth,
    * because now the scope for `dummy` dependency should be `COMPILE`.
    *
@@ -360,7 +360,7 @@ object DependenciesExtractor extends SbtStateOps with TaskOps {
    *   Seq(ProjectDependency(proj2, compile))
    * }}}
    *
-   * @see [[org.jetbrains.sbt.extractors.DependenciesExtractor.retrieveTransitiveProjectDependencies]]
+   * @see [[org.jetbrains.sbt.dump.extract.DependenciesExtractor.retrieveTransitiveProjectDependencies]]
    */
   private case class ProjectDependency(project: ProjectRef, configuration: String)
   private object ProjectDependency {
@@ -396,9 +396,9 @@ object DependenciesExtractor extends SbtStateOps with TaskOps {
 
   private case class ProjectConfigurations(source: Seq[String], test: Seq[String])
 
-  private[extractors] sealed abstract class ProjectType(val project: ProjectRef)
-  private[extractors] case class ProductionType(override val project: ProjectRef) extends ProjectType(project)
-  private[extractors] case class TestType(override val project: ProjectRef) extends ProjectType(project)
+  private[extract] sealed abstract class ProjectType(val project: ProjectRef)
+  private[extract] case class ProductionType(override val project: ProjectRef) extends ProjectType(project)
+  private[extract] case class TestType(override val project: ProjectRef) extends ProjectType(project)
 
   object ProjectType {
     def unapply(projectType: ProjectType): Option[ProjectRef] = Some(projectType.project)
