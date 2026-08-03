@@ -1,6 +1,6 @@
 package org.jetbrains.sbt
 
-import sbt.Keys.managedSources
+import org.jetbrains.sbt.managedsources.ManagedSourcesTasks
 //noinspection scala2InSource3
 import sbt._
 
@@ -20,10 +20,8 @@ object GenerateAllManagedSourcesPlugin extends AutoPlugin {
 
   import autoImport.ideaGenerateAllManagedSources
 
-  private val scopeFilter = ScopeFilter(inAnyProject, inConfigurations(Compile, Test))
-
   //noinspection scala2InSource3
   override lazy val globalSettings: Seq[Def.Setting[_]] = Seq(
-    ideaGenerateAllManagedSources := { managedSources.all(scopeFilter).value.flatten }
+    ideaGenerateAllManagedSources := ManagedSourcesTasks.generateAll.value
   )
 }
