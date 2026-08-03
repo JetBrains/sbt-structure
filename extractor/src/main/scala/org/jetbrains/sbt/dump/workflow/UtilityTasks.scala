@@ -1,6 +1,7 @@
-package org.jetbrains.sbt.extractors
+package org.jetbrains.sbt.dump.workflow
 
 import org.jetbrains.sbt._
+import org.jetbrains.sbt.extractors.{SettingKeys, UtilityTasksCompat}
 import org.jetbrains.sbt.structure.{BuildData, ProjectData}
 import org.jetbrains.sbt.structure.XmlSerializer._
 import sbt.Def.Initialize
@@ -14,7 +15,7 @@ import sbt.jetbrains.PluginCompat._
 import org.jetbrains.sbt.structure.structureDataSerializer
 
 
-object UtilityTasks extends SbtStateOps {
+object UtilityTasks extends org.jetbrains.sbt.runtime.SbtStateOps {
 
   /*
     Selects Scala 2 in Scala 3 projects that contain Scala 2 in crossScalaVersions.

@@ -1,7 +1,7 @@
 package org.jetbrains.sbt
 package extractors
 
-import org.jetbrains.sbt.extractors.UtilityTasks.isPluginLoaded
+import org.jetbrains.sbt.dump.workflow.UtilityTasks.isPluginLoaded
 import org.jetbrains.sbt.CreateTasks.SettingKeyOps
 import org.jetbrains.sbt.structure.*
 import sbt.Def.Initialize

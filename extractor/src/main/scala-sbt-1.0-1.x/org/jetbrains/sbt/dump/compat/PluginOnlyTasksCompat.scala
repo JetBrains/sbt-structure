@@ -1,7 +1,7 @@
 package org.jetbrains.sbt.dump.compat
 
 import org.jetbrains.sbt.{StructureKeys, newXmlPrettyPrinter}
-import org.jetbrains.sbt.extractors.UtilityTasks.writeToFile
+import org.jetbrains.sbt.dump.workflow.UtilityTasks.writeToFile
 import org.jetbrains.sbt.structure.XmlSerializer.*
 import org.jetbrains.sbt.structure.structureDataSerializer
 import sbt.*

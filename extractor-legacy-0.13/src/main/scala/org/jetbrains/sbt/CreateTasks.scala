@@ -1,64 +1,13 @@
 package org.jetbrains.sbt
 
-import org.jetbrains.sbt.dump.compat.PluginOnlyTasksCompat
-import org.jetbrains.sbt.extractors._
+import org.jetbrains.sbt.dump.workflow.DumpTaskInstaller
 import sbt._
 
-import scala.language.reflectiveCalls
-
+/** Stable side-loading entry point for the structure-dump task installer. */
 object CreateTasks extends (State => State) with SbtStateOps {
-
-  lazy val globalSettings: Seq[Setting[_]] = Seq[Setting[_]](
-    Keys.commands ++= Seq(UtilityTasks.preferScala2, UtilityTasks.setSbtStructureOptionsProperty),
-    StructureKeys.sbtStructureOpts := StructureKeys.sbtStructureOptions.apply(Options.readFromString).value,
-    deprecatedDumpStructureSetting,
-    StructureKeys.dumpStructureTo := PluginOnlyTasksCompat.dumpStructureTo.evaluated,
-    StructureKeys.acceptedProjects := UtilityTasks.acceptedProjects.value,
-    StructureKeys.extractProjects := UtilityTasks.extractProjects.value,
-    StructureKeys.extractBuilds := UtilityTasks.extractBuilds.value,
-    StructureKeys.extractRepository := RepositoryExtractor.taskDef.value,
-    StructureKeys.extractStructure := extractors.extractStructure.value,
-    StructureKeys.localCachePath := UtilityTasks.localCachePath.value
-  )
-
-  lazy val projectSettings: Seq[Setting[_]] = Seq[Setting[_]](
-    Keys.transitiveClassifiers.in(Keys.updateClassifiers) := {
-      val oldValue = Keys.transitiveClassifiers.in(Keys.updateClassifiers).value
-      val classifiers = UtilityTasks.librariesClassifiers(StructureKeys.sbtStructureOpts.value)
-      //when we don't resolve sources and javadocs `updateClassifiers` won't be called
-      //but `transitiveClassifiers` value can't be empty anyway
-      if (classifiers.nonEmpty) classifiers else oldValue
-    },
-    StructureKeys.dependencyConfigurations := UtilityTasks.dependencyConfigurations.value,
-    StructureKeys.testConfigurations := UtilityTasks.testConfigurations.value,
-    StructureKeys.sourceConfigurations := UtilityTasks.sourceConfigurations.value,
-
-    StructureKeys.extractPlay2 := Play2Extractor.taskDef.value,
-    StructureKeys.extractBuild := BuildExtractor.taskDef.value,
-    StructureKeys.extractDependencies := DependenciesExtractor.taskDef.value,
-    StructureKeys.extractProject := ProjectExtractor.taskDef.value,
-
-    StructureKeys.allKeys := KeysExtractor.allKeys.value,
-    StructureKeys.taskData := KeysExtractor.taskData.value,
-    StructureKeys.settingData := KeysExtractor.settingData.value,
-    StructureKeys.commandData := KeysExtractor.commandData.value,
-
-    StructureKeys.allConfigurationsWithSource := UtilityTasks.allConfigurationsWithSource.value
-  )
-
-
+  lazy val globalSettings: Seq[Setting[_]] = DumpTaskInstaller.globalSettings
+  lazy val projectSettings: Seq[Setting[_]] = DumpTaskInstaller.projectSettings
 
   def apply(state: State): State =
-    applySettings(state, globalSettings, projectSettings)
-
-  private type DeprecatedDumpStructureKey = { val dumpStructure: TaskKey[Unit] }
-
-  private def deprecatedDumpStructureKey: TaskKey[Unit] = {
-    // Scala 2.10 has no scala.annotation.nowarn. This local structural access is the
-    // compatibility-only suppression for the deprecated key while resolving the same task.
-    StructureKeys.asInstanceOf[DeprecatedDumpStructureKey].dumpStructure
-  }
-
-  private lazy val deprecatedDumpStructureSetting: Setting[_] =
-    deprecatedDumpStructureKey := UtilityTasks.dumpStructure.value
+    DumpTaskInstaller(state)
 }

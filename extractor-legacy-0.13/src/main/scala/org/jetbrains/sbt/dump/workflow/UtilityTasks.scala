@@ -1,6 +1,7 @@
-package org.jetbrains.sbt.extractors
+package org.jetbrains.sbt.dump.workflow
 
 import org.jetbrains.sbt._
+import org.jetbrains.sbt.extractors.SettingKeys
 import org.jetbrains.sbt.structure.ProjectData
 import org.jetbrains.sbt.structure.XmlSerializer._
 import sbt.Def.Initialize
@@ -11,7 +12,7 @@ import scala.collection.mutable.ArrayBuffer
 // don't remove this import: sbt.jetbrains.apiAdapter._ -- it shadows some symbols for sbt 1.0 compatibility
 import scala.language.reflectiveCalls
 
-object UtilityTasks extends SbtStateOps {
+object UtilityTasks extends org.jetbrains.sbt.runtime.SbtStateOps {
 
   /*
     Selects Scala 2 in Scala 3 projects that contain Scala 2 in crossScalaVersions.

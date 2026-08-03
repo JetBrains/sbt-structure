@@ -1,0 +1,63 @@
+package org.jetbrains.sbt.dump.workflow
+
+import org.jetbrains.sbt.dump.compat.PluginOnlyTasksCompat
+import org.jetbrains.sbt.extractors.*
+import org.jetbrains.sbt.runtime.SbtStateOps
+import org.jetbrains.sbt.{Options, StructureKeys}
+import sbt.*
+import sbt.jetbrains.PluginCompat
+import sbt.jetbrains.PluginCompat.*
+
+import scala.annotation.nowarn
+
+object DumpTaskInstaller extends (State => State) with SbtStateOps {
+
+  lazy val globalSettings: Seq[Setting[?]] = Seq[Setting[?]](
+    Keys.commands ++= Seq(UtilityTasks.preferScala2, UtilityTasks.setSbtStructureOptionsProperty),
+    StructureKeys.sbtStructureOpts := StructureKeys.sbtStructureOptions.apply(Options.readFromString).value,
+    deprecatedDumpStructureSetting,
+    StructureKeys.dumpStructureTo := PluginOnlyTasksCompat.dumpStructureTo.evaluated,
+    StructureKeys.acceptedProjects := UtilityTasks.acceptedProjects.value,
+    StructureKeys.extractProjects := UtilityTasks.extractProjects.value,
+    StructureKeys.extractBuilds := UtilityTasks.extractBuilds.value,
+    StructureKeys.extractRepository := RepositoryExtractor.taskDef.value,
+    StructureKeys.extractStructure := org.jetbrains.sbt.extractors.extractStructure.value,
+    StructureKeys.localCachePath := UtilityTasks.localCachePath.value
+  ) ++ PluginCompat.artifactDownloadLoggerSettings ++ PluginCompat.globalSettingsSbtSpecific
+
+  lazy val projectSettings: Seq[Setting[?]] = Seq[Setting[?]](
+    Keys.updateClassifiers / Keys.transitiveClassifiers := {
+      val oldValue = (Keys.updateClassifiers / Keys.transitiveClassifiers).value
+      val classifiers = UtilityTasks.librariesClassifiers(StructureKeys.sbtStructureOpts.value)
+      //when we don't resolve sources and javadocs `updateClassifiers` won't be called
+      //but `transitiveClassifiers` value can't be empty anyway
+      (if (classifiers.nonEmpty) classifiers else oldValue).toSbtSeqType
+    },
+    StructureKeys.dependencyConfigurations := UtilityTasks.dependencyConfigurations.value,
+    StructureKeys.testConfigurations := UtilityTasks.testConfigurations.value,
+    StructureKeys.sourceConfigurations := UtilityTasks.sourceConfigurations.value,
+
+    StructureKeys.extractPlay2 := Play2Extractor.taskDef.value,
+    StructureKeys.extractBuild := BuildExtractor.taskDef.value,
+    StructureKeys.extractDependencies := DependenciesExtractor.taskDef.value,
+    StructureKeys.extractProject := ProjectExtractor.taskDef.value,
+
+    StructureKeys.allKeys := KeysExtractor.allKeys.value,
+    StructureKeys.taskData := KeysExtractor.taskData.value,
+    StructureKeys.settingData := KeysExtractor.settingData.value,
+    StructureKeys.commandData := KeysExtractor.commandData.value,
+
+    StructureKeys.allConfigurationsWithSource := UtilityTasks.allConfigurationsWithSource.value
+  )
+
+  def apply(state: State): State =
+    applySettings(state, globalSettings, projectSettings)
+
+  @nowarn("cat=deprecation")
+  private lazy val deprecatedDumpStructureSetting: Setting[?] = {
+    // dumpStructure is deprecated for external callers, but CreateTasks still binds it for
+    // legacy side-loaded import clients. New callers should use dumpStructureTo.
+    //noinspection ScalaDeprecation
+    StructureKeys.dumpStructure := UtilityTasks.dumpStructure.value
+  }
+}
