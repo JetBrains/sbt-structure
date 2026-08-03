@@ -8,6 +8,9 @@ import scala.xml.{Elem, NamespaceBinding, Node, PrettyPrinter}
 package object sbt {
   var MaxXmlWidthInTests: Option[Int] = None
 
+  type Options = config.Options
+  val Options = config.Options
+  val StructureKeys = config.StructureKeys
   type LoadedBuildUnitAdapter = runtime.LoadedBuildUnitAdapter
   val LoadedBuildUnitAdapter = runtime.LoadedBuildUnitAdapter
   type UpdateReportAdapter = runtime.UpdateReportAdapter

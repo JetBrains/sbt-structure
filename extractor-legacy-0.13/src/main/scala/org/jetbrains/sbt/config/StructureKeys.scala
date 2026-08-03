@@ -1,4 +1,4 @@
-package org.jetbrains.sbt
+package org.jetbrains.sbt.config
 
 import org.jetbrains.sbt.structure._
 import sbt.KeyRanks._

@@ -1,4 +1,4 @@
-package org.jetbrains.sbt
+package org.jetbrains.sbt.config
 
 final case class Options(download: Boolean = false,
                          resolveSourceClassifiers: Boolean = false,
@@ -16,7 +16,7 @@ object Options {
    * @param optionsString comma-separated or space-separated list of options, example
    */
   def readFromString(optionsString: String): Options = {
-    val options = ComaOrSpacesRegex.split(optionsString).map(_.trim).filter(_.nonEmpty)
+    val options = ComaOrSpacesRegex.split(optionsString).toSeq.map(_.trim).filter(_.nonEmpty)
     readFromSeq(options)
   }
 
@@ -41,4 +41,3 @@ object Options {
     val GenerateManagedSources = "generateManagedSources"
   }
 }
-

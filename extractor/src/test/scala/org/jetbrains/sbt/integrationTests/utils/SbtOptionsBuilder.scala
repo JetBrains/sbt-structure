@@ -1,6 +1,6 @@
 package org.jetbrains.sbt.integrationTests.utils
 
-import org.jetbrains.sbt.Options.Keys
+import org.jetbrains.sbt.config.Options.Keys
 
 import scala.collection.mutable
 
