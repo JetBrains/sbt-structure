@@ -1,4 +1,4 @@
-package org.jetbrains.sbt
+package org.jetbrains.sbt.runtime
 
 import sbt.*
 import sbt.internal.LoadedBuildUnit

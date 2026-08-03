@@ -8,6 +8,13 @@ import scala.xml.{Elem, NamespaceBinding, Node, PrettyPrinter}
 package object sbt {
   var MaxXmlWidthInTests: Option[Int] = None
 
+  type LoadedBuildUnitAdapter = runtime.LoadedBuildUnitAdapter
+  val LoadedBuildUnitAdapter = runtime.LoadedBuildUnitAdapter
+  type UpdateReportAdapter = runtime.UpdateReportAdapter
+  val UpdateReportAdapter = runtime.UpdateReportAdapter
+  type ModuleReportAdapter = runtime.ModuleReportAdapter
+  val ModuleReportAdapter = runtime.ModuleReportAdapter
+
   def newXmlPrettyPrinter: PrettyPrinter = new PrettyPrinter(MaxXmlWidthInTests.getOrElse(180), 2) {
     override protected def traverse(node: Node, pscope: NamespaceBinding, ind: Int): Unit = {
       import org.jetbrains.sbt.structure.DataSerializers.*
