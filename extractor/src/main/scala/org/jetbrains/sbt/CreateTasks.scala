@@ -1,5 +1,6 @@
 package org.jetbrains.sbt
 
+import org.jetbrains.sbt.dump.compat.PluginOnlyTasksCompat
 import org.jetbrains.sbt.extractors.*
 import sbt.*
 import sbt.jetbrains.PluginCompat

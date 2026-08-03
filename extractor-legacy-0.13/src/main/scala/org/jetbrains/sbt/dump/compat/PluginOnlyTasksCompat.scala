@@ -1,12 +1,13 @@
-package org.jetbrains.sbt
+package org.jetbrains.sbt.dump.compat
 
+import org.jetbrains.sbt.{StructureKeys, newXmlPrettyPrinter}
 import org.jetbrains.sbt.extractors.UtilityTasks.writeToFile
 import org.jetbrains.sbt.structure.XmlSerializer._
 import org.jetbrains.sbt.structure.structureDataSerializer
 import sbt._
 import sbt.complete.DefaultParsers
 
-private object PluginOnlyTasksCompat {
+private[sbt] object PluginOnlyTasksCompat {
 
   private val targetFileParser = DefaultParsers.fileParser(file("/"))
 
@@ -15,7 +16,7 @@ private object PluginOnlyTasksCompat {
     val options = StructureKeys.sbtStructureOpts.value
 
     val log = Keys.streams.value.log
-    val structureTask = extractors.extractStructure
+    val structureTask = org.jetbrains.sbt.extractors.extractStructure
 
     Def.task {
       val structure = structureTask.value.serialize
