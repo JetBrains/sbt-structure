@@ -15,6 +15,33 @@ object PluginCompat extends SeqOpsCompat with ClassathOpsCompat with CoursierLog
   def isTaskOrInputTask(attributeKey: AttributeKey[_]): Boolean =
     attributeKey.tag.isTaskOrInputTask
 
+  /**
+   * In sbt 2, `scalacOptions` can contain paths with placeholders instead of absolute ones, e.g.
+   * `-Xplugin:${CSR_CACHE}/.../better-monadic-for.jar`. Returns a resolver that replaces these
+   * placeholders with real paths using sbt's `rootPaths` map, the same way sbt 2 does it in
+   * `Compiler.resolveVirtualizedScalacOptions`.
+   *
+   * @see [[https://youtrack.jetbrains.com/issue/SCL-25761]]
+   * @see [[https://github.com/sbt/sbt/blob/de1b5ee9eaff469f3b0e11d20d7fed31a13ba4e1/main/src/main/scala/sbt/internal/Compiler.scala#L462]]
+   */
+  def scalacOptionsResolver: Def.Initialize[Task[Seq[String] => Seq[String]]] =
+    Def.task {
+      val rootPaths = Keys.rootPaths.value
+
+      def convertValue(value: String): String =
+        rootPaths.find((key, _) => value.startsWith(s"$${$key}/")) match
+          case Some((key, p)) => p.resolve(value.stripPrefix(s"$${$key}/")).toString()
+          case None           => value
+
+      (options: Seq[String]) =>
+        options.map { option =>
+          // Mirrors zinc `resolveVirtualizedScalacOptions`, which skips the split/rejoin when there is no `$`.
+          // https://github.com/sbt/zinc/blob/0f7893d80893ae93dd745769dfbee351d29d2480/zinc/src/main/scala/sbt/internal/inc/MixedAnalyzingCompiler.scala#L162
+          if (!option.contains("$")) option
+          else option.split(":").map(_.split(",").map(convertValue).mkString(",")).mkString(":")
+        }
+    }
+
   def throwExceptionIfUpdateFailed(result: Result[Map[sbt.Configuration,Keys.Classpath]]): Map[sbt.Configuration, Keys.Classpath] =
     result match {
       case Result.Value(classpath) =>

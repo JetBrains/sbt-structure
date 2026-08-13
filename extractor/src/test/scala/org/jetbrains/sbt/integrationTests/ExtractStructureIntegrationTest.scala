@@ -198,6 +198,7 @@ class ExtractStructureIntegrationTest extends AnyFreeSpecLike {
     }
     "1.12" - {
       "buildinfo" in { testProject("buildinfo", SbtVersion_1_12, ResolveSourcesAndSbtClassifiersAndSeparateProdTestSources) }
+      "compiler-plugin" in { testProject("compiler-plugin", SbtVersion_1_12, ResolveSourcesAndSbtClassifiersAndSeparateProdTestSources) }
       "custom-source-generator" in { testProject("custom-source-generator", SbtVersion_1_12, ResolveSourcesAndSbtClassifiersAndSeparateProdTestSources) }
       "kotlinc-options" in { testProject("kotlinc-options", SbtVersion_1_12, ResolveSourcesAndSbtClassifiersAndSeparateProdTestSources) }
       "source-generator-failure" in { testProject("source-generator-failure", SbtVersion_1_12, ResolveSourcesAndSbtClassifiersAndSeparateProdTestSources, errorsExpected = true) }
@@ -232,6 +233,7 @@ class ExtractStructureIntegrationTest extends AnyFreeSpecLike {
       val options = SbtOptionsBuilder().sources /*.sbtClassifiers*/.separateProdTestSources.result
       "simple" in { testProject("simple", SbtVersion_2, options) }
       "buildinfo" in { testProject("buildinfo", SbtVersion_2, options) }
+      "compiler-plugin" in { testProject("compiler-plugin", SbtVersion_2, options) }
       "custom-source-generator" in { testProject("custom-source-generator", SbtVersion_2, options) }
       "kotlinc-options" in { testProject("kotlinc-options", SbtVersion_2, options) }
       "source-generator-failure" in { testProject("source-generator-failure", SbtVersion_2, options, errorsExpected = true) }

@@ -479,10 +479,11 @@ object ProjectExtractor extends SbtStateOps with TaskOps {
           CompilerOptions(config, options)
         }
 
+      val resolveScalacOptions = PluginCompat.scalacOptionsResolver.value
       val scalacOptions = mapToCompilerOptions(
         Seq(
-          (Configuration.Compile, taskInConfig(Keys.scalacOptions, Compile).onlyIf(options.download).value.getOrElse(Seq.empty)),
-          (Configuration.Test, taskInConfig(Keys.scalacOptions, Test).onlyIf(options.download).value.getOrElse(Seq.empty))
+          (Configuration.Compile, resolveScalacOptions(taskInConfig(Keys.scalacOptions, Compile).onlyIf(options.download).value.getOrElse(Seq.empty))),
+          (Configuration.Test, resolveScalacOptions(taskInConfig(Keys.scalacOptions, Test).onlyIf(options.download).value.getOrElse(Seq.empty)))
         )
       )
 

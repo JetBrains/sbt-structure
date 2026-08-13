@@ -1,6 +1,6 @@
 package sbt.jetbrains
 
-import sbt.{AttributeKey, Incomplete, InputTask, Keys, Result, Scope, Setting, Settings, Task}
+import sbt.{AttributeKey, Def, Incomplete, InputTask, Keys, Result, Scope, Setting, Settings, Task}
 
 trait PluginCompatCommonSbt1 extends SeqOpsCompat with ClassathOpsCompat {
 
@@ -27,4 +27,11 @@ trait PluginCompatCommonSbt1 extends SeqOpsCompat with ClassathOpsCompat {
     }
 
     val globalSettingsSbtSpecific: Seq[Setting[?]] = Nil
+
+  /**
+   * In sbt 1.x, `scalacOptions` already contains absolute `-Xplugin` paths, so there is nothing to
+   * resolve, and we just return the options as-is.
+   */
+  def scalacOptionsResolver: Def.Initialize[Task[Seq[String] => Seq[String]]] =
+    Def.task((options: Seq[String]) => options)
 }
