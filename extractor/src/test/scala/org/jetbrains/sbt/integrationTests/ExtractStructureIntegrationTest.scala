@@ -211,6 +211,21 @@ class ExtractStructureIntegrationTest extends AnyFreeSpecLike {
       "unmanaged-incompatible-scala" in { testProjectShouldFailWith("unmanaged-incompatible-scala", SbtVersion_1_12, ResolveSourcesAndSbtClassifiers, UnmanagedIncompatibleScalaVersionError) }
       "managed-incompatible-scala" in { testProjectShouldFailWith("managed-incompatible-scala", SbtVersion_1_12, ResolveSourcesAndSbtClassifiers, ManagedIncompatibleScalaVersionError) }
     }
+    "1.13" - {
+      "buildinfo" in { testProject("buildinfo", SbtVersion_1_13, ResolveSourcesAndSbtClassifiersAndSeparateProdTestSources) }
+      "compiler-plugin" in { testProject("compiler-plugin", SbtVersion_1_13, ResolveSourcesAndSbtClassifiersAndSeparateProdTestSources) }
+      "custom-source-generator" in { testProject("custom-source-generator", SbtVersion_1_13, ResolveSourcesAndSbtClassifiersAndSeparateProdTestSources) }
+      "kotlinc-options" in { testProject("kotlinc-options", SbtVersion_1_13, ResolveSourcesAndSbtClassifiersAndSeparateProdTestSources) }
+      "source-generator-failure" in { testProject("source-generator-failure", SbtVersion_1_13, ResolveSourcesAndSbtClassifiersAndSeparateProdTestSources, errorsExpected = true) }
+      "missing-scala-tool-config" in { testProject("missing-scala-tool-config", SbtVersion_1_13, ResolveSourcesAndSbtClassifiers) }
+      "maanged-scala-auto-scala-library-disabled" in { testProject("maanged-scala-auto-scala-library-disabled", SbtVersion_1_13, ResolveSourcesAndSbtClassifiers) }
+      "auto-scala-library-disabled" in { testProject("auto-scala-library-disabled", SbtVersion_1_13, ResolveSourcesAndSbtClassifiers) }
+      "scala-instance-error" in { testProjectShouldFailWith("scala-instance-error", SbtVersion_1_13, ResolveSourcesAndSbtClassifiers, ScalaInstanceCustomError) }
+      "missing-scala-library-jar" in { testProject("missing-scala-library-jar", SbtVersion_1_13, ResolveSourcesAndSbtClassifiers) }
+      "unmanaged-scala-instance-ok" in { testProject("unmanaged-scala-instance-ok", SbtVersion_1_13, ResolveSourcesAndSbtClassifiers) }
+      "unmanaged-incompatible-scala" in { testProjectShouldFailWith("unmanaged-incompatible-scala", SbtVersion_1_13, ResolveSourcesAndSbtClassifiers, UnmanagedIncompatibleScalaVersionError) }
+      "managed-incompatible-scala" in { testProjectShouldFailWith("managed-incompatible-scala", SbtVersion_1_13, ResolveSourcesAndSbtClassifiers, ManagedIncompatibleScalaVersionError) }
+    }
 
     // In sbt 2.0.0-RC7, a binary compatibility breaking change was made which removed the
     // scalaCompilerBridgeBinaryJar key which we rely on.
