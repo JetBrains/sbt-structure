@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<structure sbt="2.0.7">
+<structure sbt="2.0.8">
   <build>
     <uri>$URI_BASE</uri>
     <import>import _root_.sbt.*</import>
@@ -18,88 +18,88 @@
     <classes>$SBT_BOOT/scala-3.8.4/lib/scala3-interfaces-3.8.4.jar</classes>
     <classes>$SBT_BOOT/scala-3.8.4/lib/scala3-library_3-3.8.4.jar</classes>
     <classes>$SBT_BOOT/scala-3.8.4/lib/tasty-core_3-3.8.4.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.7/actions_3-2.0.7.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.7/build-file_3-2.0.7.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.7/caffeine-2.8.5.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.7/checker-qual-3.4.1.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.7/collections_3-2.0.7.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.7/command_3-2.0.7.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.7/compiler-interface-2.0.4.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.7/completion_3-2.0.7.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.7/config-1.4.5.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.7/core-macros_3-2.0.7.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.7/disruptor-3.4.2.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.7/error_prone_annotations-2.4.0.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.7/file-tree-views-2.1.12.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.7/gigahorse-apache-http_3-0.9.4.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.7/gigahorse-core_3-0.9.4.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.7/io_3-1.12.2.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.7/ipcsocket-1.8.0.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.7/ivy-2.3.0-sbt-f686954b0021a5c3245766ced0cdaeca8ba2fd7a.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.7/jansi-2.4.1.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.7/jline-2.14.7-sbt-9a88bc413e2b34a4580c001c654d1a7f4f65bf18.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.7/jline-builtins-3.27.1.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.7/jline-native-3.27.1.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.7/jline-reader-3.27.1.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.7/jline-style-3.27.1.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.7/jline-terminal-3.27.1.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.7/jline-terminal-jni-3.27.1.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.7/jna-5.19.0.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.7/jna-platform-5.19.0.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.7/jsch-0.2.23.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.7/launcher-interface-1.6.2.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.7/librarymanagement-core_3-2.0.7.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.7/librarymanagement-coursier_3-2.0.7.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.7/librarymanagement-ivy_3-2.0.7.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.7/logic_3-2.0.7.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.7/main-settings_3-2.0.7.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.7/main_3-2.0.7.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.7/protocol_3-2.0.7.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.7/reactive-streams-1.0.3.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.7/run_3-2.0.7.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.7/sbinary_3-0.5.1.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.7/sbt-2.0.7.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.7/scala-asm-9.9.0-scala-1.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.7/scala-collection-compat_3-2.14.0.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.7/scala-library-3.8.4.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.7/scala-parallel-collections_3-1.2.0.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.7/scala-parser-combinators_3-2.1.0.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.7/scala-xml_3-2.4.0.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.7/scala3-compiler_3-3.8.4.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.7/scala3-interfaces-3.8.4.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.7/scala3-library_3-3.8.4.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.7/shaded-apache-httpclient5-0.9.4.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.7/shaded-gson-2.13.1.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.7/shaded-jawn-parser_3-1.7.0.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.7/shaded-scalajson_3-1.0.0-M4.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.7/sjson-new-core_3-0.15.1.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.7/sjson-new-murmurhash_3-0.15.1.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.7/sjson-new-scalajson_3-0.15.1.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.7/slf4j-api-1.7.28.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.7/ssl-config-core_3-0.7.1.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.7/task-system_3-2.0.7.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.7/tasks_3-2.0.7.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.7/tasty-core_3-3.8.4.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.7/template-resolver-0.1.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.7/test-interface-1.0.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.7/testing_3-2.0.7.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.7/util-cache_3-2.0.7.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.7/util-control_3-2.0.7.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.7/util-core_3-2.0.7.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.7/util-interface-2.0.7.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.7/util-logging_3-2.0.7.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.7/util-position_3-2.0.7.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.7/util-relation_3-2.0.7.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.7/util-tracking_3-2.0.7.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.7/worker-2.0.7.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.7/zinc-apiinfo_3-2.0.4.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.7/zinc-classfile_3-2.0.4.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.7/zinc-classpath_3-2.0.4.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.7/zinc-compile-core_3-2.0.4.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.7/zinc-core_3-2.0.4.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.7/zinc-lm-integration_3-2.0.7.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.7/zinc-persist_3-2.0.4.jar</classes>
-    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.7/zinc_3-2.0.4.jar</classes>
+    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.8/actions_3-2.0.8.jar</classes>
+    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.8/build-file_3-2.0.8.jar</classes>
+    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.8/caffeine-2.8.5.jar</classes>
+    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.8/checker-qual-3.4.1.jar</classes>
+    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.8/collections_3-2.0.8.jar</classes>
+    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.8/command_3-2.0.8.jar</classes>
+    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.8/compiler-interface-2.0.4.jar</classes>
+    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.8/completion_3-2.0.8.jar</classes>
+    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.8/config-1.4.5.jar</classes>
+    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.8/core-macros_3-2.0.8.jar</classes>
+    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.8/disruptor-3.4.2.jar</classes>
+    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.8/error_prone_annotations-2.4.0.jar</classes>
+    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.8/file-tree-views-2.1.12.jar</classes>
+    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.8/gigahorse-apache-http_3-0.9.4.jar</classes>
+    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.8/gigahorse-core_3-0.9.4.jar</classes>
+    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.8/io_3-1.12.2.jar</classes>
+    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.8/ipcsocket-1.8.0.jar</classes>
+    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.8/ivy-2.3.0-sbt-f686954b0021a5c3245766ced0cdaeca8ba2fd7a.jar</classes>
+    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.8/jansi-2.4.1.jar</classes>
+    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.8/jline-2.14.7-sbt-9a88bc413e2b34a4580c001c654d1a7f4f65bf18.jar</classes>
+    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.8/jline-builtins-3.27.1.jar</classes>
+    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.8/jline-native-3.27.1.jar</classes>
+    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.8/jline-reader-3.27.1.jar</classes>
+    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.8/jline-style-3.27.1.jar</classes>
+    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.8/jline-terminal-3.27.1.jar</classes>
+    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.8/jline-terminal-jni-3.27.1.jar</classes>
+    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.8/jna-5.19.0.jar</classes>
+    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.8/jna-platform-5.19.0.jar</classes>
+    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.8/jsch-0.2.23.jar</classes>
+    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.8/launcher-interface-1.6.2.jar</classes>
+    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.8/librarymanagement-core_3-2.0.8.jar</classes>
+    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.8/librarymanagement-coursier_3-2.0.8.jar</classes>
+    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.8/librarymanagement-ivy_3-2.0.8.jar</classes>
+    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.8/logic_3-2.0.8.jar</classes>
+    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.8/main-settings_3-2.0.8.jar</classes>
+    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.8/main_3-2.0.8.jar</classes>
+    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.8/protocol_3-2.0.8.jar</classes>
+    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.8/reactive-streams-1.0.3.jar</classes>
+    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.8/run_3-2.0.8.jar</classes>
+    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.8/sbinary_3-0.5.1.jar</classes>
+    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.8/sbt-2.0.8.jar</classes>
+    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.8/scala-asm-9.9.0-scala-1.jar</classes>
+    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.8/scala-collection-compat_3-2.14.0.jar</classes>
+    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.8/scala-library-3.8.4.jar</classes>
+    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.8/scala-parallel-collections_3-1.2.0.jar</classes>
+    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.8/scala-parser-combinators_3-2.1.0.jar</classes>
+    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.8/scala-xml_3-2.4.0.jar</classes>
+    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.8/scala3-compiler_3-3.8.4.jar</classes>
+    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.8/scala3-interfaces-3.8.4.jar</classes>
+    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.8/scala3-library_3-3.8.4.jar</classes>
+    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.8/shaded-apache-httpclient5-0.9.4.jar</classes>
+    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.8/shaded-gson-2.13.1.jar</classes>
+    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.8/shaded-jawn-parser_3-1.7.0.jar</classes>
+    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.8/shaded-scalajson_3-1.0.0-M4.jar</classes>
+    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.8/sjson-new-core_3-0.15.1.jar</classes>
+    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.8/sjson-new-murmurhash_3-0.15.1.jar</classes>
+    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.8/sjson-new-scalajson_3-0.15.1.jar</classes>
+    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.8/slf4j-api-1.7.28.jar</classes>
+    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.8/ssl-config-core_3-0.7.1.jar</classes>
+    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.8/task-system_3-2.0.8.jar</classes>
+    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.8/tasks_3-2.0.8.jar</classes>
+    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.8/tasty-core_3-3.8.4.jar</classes>
+    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.8/template-resolver-0.1.jar</classes>
+    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.8/test-interface-1.0.jar</classes>
+    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.8/testing_3-2.0.8.jar</classes>
+    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.8/util-cache_3-2.0.8.jar</classes>
+    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.8/util-control_3-2.0.8.jar</classes>
+    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.8/util-core_3-2.0.8.jar</classes>
+    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.8/util-interface-2.0.8.jar</classes>
+    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.8/util-logging_3-2.0.8.jar</classes>
+    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.8/util-position_3-2.0.8.jar</classes>
+    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.8/util-relation_3-2.0.8.jar</classes>
+    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.8/util-tracking_3-2.0.8.jar</classes>
+    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.8/worker-2.0.8.jar</classes>
+    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.8/zinc-apiinfo_3-2.0.4.jar</classes>
+    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.8/zinc-classfile_3-2.0.4.jar</classes>
+    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.8/zinc-classpath_3-2.0.4.jar</classes>
+    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.8/zinc-compile-core_3-2.0.4.jar</classes>
+    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.8/zinc-core_3-2.0.4.jar</classes>
+    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.8/zinc-lm-integration_3-2.0.8.jar</classes>
+    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.8/zinc-persist_3-2.0.4.jar</classes>
+    <classes>$SBT_BOOT/scala-3.8.4/org.scala-sbt/sbt/2.0.8/zinc_3-2.0.4.jar</classes>
     <classes>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-lang/scala3-library_3/3.8.4/scala3-library_3-3.8.4.jar</classes>
     <sources>$COURSIER/cache/https/repo1.maven.org/maven2/com/eed3si9n/gigahorse-apache-http_3/0.9.4/gigahorse-apache-http_3-0.9.4-sources.jar</sources>
     <sources>$COURSIER/cache/https/repo1.maven.org/maven2/com/eed3si9n/gigahorse-core_3/0.9.4/gigahorse-core_3-0.9.4-sources.jar</sources>
@@ -137,49 +137,49 @@
     <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-lang/scala3-interfaces/3.8.4/scala3-interfaces-3.8.4-sources.jar</sources>
     <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-lang/scala3-library_3/3.8.4/scala3-library_3-3.8.4-sources.jar</sources>
     <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-lang/tasty-core_3/3.8.4/tasty-core_3-3.8.4-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/actions_3/2.0.7/actions_3-2.0.7-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/build-file_3/2.0.7/build-file_3-2.0.7-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/collections_3/2.0.7/collections_3-2.0.7-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/command_3/2.0.7/command_3-2.0.7-sources.jar</sources>
+    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/actions_3/2.0.8/actions_3-2.0.8-sources.jar</sources>
+    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/build-file_3/2.0.8/build-file_3-2.0.8-sources.jar</sources>
+    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/collections_3/2.0.8/collections_3-2.0.8-sources.jar</sources>
+    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/command_3/2.0.8/command_3-2.0.8-sources.jar</sources>
     <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/compiler-interface/2.0.4/compiler-interface-2.0.4-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/completion_3/2.0.7/completion_3-2.0.7-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/core-macros_3/2.0.7/core-macros_3-2.0.7-sources.jar</sources>
+    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/completion_3/2.0.8/completion_3-2.0.8-sources.jar</sources>
+    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/core-macros_3/2.0.8/core-macros_3-2.0.8-sources.jar</sources>
     <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/gson/shaded-gson/2.13.1/shaded-gson-2.13.1-sources.jar</sources>
     <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/io_3/1.12.2/io_3-1.12.2-sources.jar</sources>
     <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/ipcsocket/ipcsocket/1.8.0/ipcsocket-1.8.0-sources.jar</sources>
     <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/ivy/ivy/2.3.0-sbt-f686954b0021a5c3245766ced0cdaeca8ba2fd7a/ivy-2.3.0-sbt-f686954b0021a5c3245766ced0cdaeca8ba2fd7a-sources.jar</sources>
     <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/jline/jline/2.14.7-sbt-9a88bc413e2b34a4580c001c654d1a7f4f65bf18/jline-2.14.7-sbt-9a88bc413e2b34a4580c001c654d1a7f4f65bf18-sources.jar</sources>
     <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/launcher-interface/1.6.2/launcher-interface-1.6.2-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/librarymanagement-core_3/2.0.7/librarymanagement-core_3-2.0.7-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/librarymanagement-coursier_3/2.0.7/librarymanagement-coursier_3-2.0.7-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/librarymanagement-ivy_3/2.0.7/librarymanagement-ivy_3-2.0.7-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/logic_3/2.0.7/logic_3-2.0.7-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/main-settings_3/2.0.7/main-settings_3-2.0.7-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/main_3/2.0.7/main_3-2.0.7-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/protocol_3/2.0.7/protocol_3-2.0.7-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/run_3/2.0.7/run_3-2.0.7-sources.jar</sources>
+    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/librarymanagement-core_3/2.0.8/librarymanagement-core_3-2.0.8-sources.jar</sources>
+    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/librarymanagement-coursier_3/2.0.8/librarymanagement-coursier_3-2.0.8-sources.jar</sources>
+    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/librarymanagement-ivy_3/2.0.8/librarymanagement-ivy_3-2.0.8-sources.jar</sources>
+    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/logic_3/2.0.8/logic_3-2.0.8-sources.jar</sources>
+    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/main-settings_3/2.0.8/main-settings_3-2.0.8-sources.jar</sources>
+    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/main_3/2.0.8/main_3-2.0.8-sources.jar</sources>
+    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/protocol_3/2.0.8/protocol_3-2.0.8-sources.jar</sources>
+    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/run_3/2.0.8/run_3-2.0.8-sources.jar</sources>
     <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/sbinary_3/0.5.1/sbinary_3-0.5.1-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/sbt/2.0.7/sbt-2.0.7-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/task-system_3/2.0.7/task-system_3-2.0.7-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/tasks_3/2.0.7/tasks_3-2.0.7-sources.jar</sources>
+    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/sbt/2.0.8/sbt-2.0.8-sources.jar</sources>
+    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/task-system_3/2.0.8/task-system_3-2.0.8-sources.jar</sources>
+    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/tasks_3/2.0.8/tasks_3-2.0.8-sources.jar</sources>
     <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/template-resolver/0.1/template-resolver-0.1-sources.jar</sources>
     <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/test-interface/1.0/test-interface-1.0-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/testing_3/2.0.7/testing_3-2.0.7-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/util-cache_3/2.0.7/util-cache_3-2.0.7-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/util-control_3/2.0.7/util-control_3-2.0.7-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/util-core_3/2.0.7/util-core_3-2.0.7-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/util-interface/2.0.7/util-interface-2.0.7-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/util-logging_3/2.0.7/util-logging_3-2.0.7-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/util-position_3/2.0.7/util-position_3-2.0.7-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/util-relation_3/2.0.7/util-relation_3-2.0.7-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/util-tracking_3/2.0.7/util-tracking_3-2.0.7-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/worker/2.0.7/worker-2.0.7-sources.jar</sources>
+    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/testing_3/2.0.8/testing_3-2.0.8-sources.jar</sources>
+    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/util-cache_3/2.0.8/util-cache_3-2.0.8-sources.jar</sources>
+    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/util-control_3/2.0.8/util-control_3-2.0.8-sources.jar</sources>
+    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/util-core_3/2.0.8/util-core_3-2.0.8-sources.jar</sources>
+    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/util-interface/2.0.8/util-interface-2.0.8-sources.jar</sources>
+    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/util-logging_3/2.0.8/util-logging_3-2.0.8-sources.jar</sources>
+    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/util-position_3/2.0.8/util-position_3-2.0.8-sources.jar</sources>
+    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/util-relation_3/2.0.8/util-relation_3-2.0.8-sources.jar</sources>
+    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/util-tracking_3/2.0.8/util-tracking_3-2.0.8-sources.jar</sources>
+    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/worker/2.0.8/worker-2.0.8-sources.jar</sources>
     <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/zinc-apiinfo_3/2.0.4/zinc-apiinfo_3-2.0.4-sources.jar</sources>
     <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/zinc-classfile_3/2.0.4/zinc-classfile_3-2.0.4-sources.jar</sources>
     <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/zinc-classpath_3/2.0.4/zinc-classpath_3-2.0.4-sources.jar</sources>
     <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/zinc-compile-core_3/2.0.4/zinc-compile-core_3-2.0.4-sources.jar</sources>
     <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/zinc-core_3/2.0.4/zinc-core_3-2.0.4-sources.jar</sources>
-    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/zinc-lm-integration_3/2.0.7/zinc-lm-integration_3-2.0.7-sources.jar</sources>
+    <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/zinc-lm-integration_3/2.0.8/zinc-lm-integration_3-2.0.8-sources.jar</sources>
     <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/zinc-persist_3/2.0.4/zinc-persist_3-2.0.4-sources.jar</sources>
     <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/zinc_3/2.0.4/zinc_3-2.0.4-sources.jar</sources>
     <sources>$COURSIER/cache/https/repo1.maven.org/maven2/org/slf4j/slf4j-api/1.7.28/slf4j-api-1.7.28-sources.jar</sources>
