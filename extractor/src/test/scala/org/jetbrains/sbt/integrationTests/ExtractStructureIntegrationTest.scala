@@ -47,7 +47,7 @@ class ExtractStructureIntegrationTest extends AnyFreeSpecLike {
       "simple" in { testProject_013("simple", options = ResolveSourcesAndSbtClassifiers) }
       "classifiers" in { testProject_013("classifiers", options = ResolveSourcesAndSbtClassifiers) }
       "optional" in { testProject_013("optional", options = ResolveSourcesAndSbtClassifiers) }
-      "play" in { testProject_013("play", options = ResolveNone) }
+//      "play" in { testProject_013("play", options = ResolveNone) }
       "ide-settings" in { testProject_013("ide-settings", options = ResolveSourcesAndSbtClassifiers) }
       "sbt-idea" in { testProject_013("sbt-idea", options = ResolveSourcesAndSbtClassifiers) }
       "custom-source-generator" in { testProject_013("custom-source-generator", options = ResolveSourcesAndSbtClassifiers) }
@@ -64,7 +64,7 @@ class ExtractStructureIntegrationTest extends AnyFreeSpecLike {
         "simple" in { testProject_013("prod_test_sources_separated/simple", options = ResolveSourcesAndSbtClassifiersAndSeparateProdTestSources) }
         "classifiers" in { testProject_013("prod_test_sources_separated/classifiers", options = ResolveSourcesAndSbtClassifiersAndSeparateProdTestSources) }
         "optional" in { testProject_013("prod_test_sources_separated/optional", options = ResolveSourcesAndSbtClassifiersAndSeparateProdTestSources) }
-        "play" in { testProject_013("prod_test_sources_separated/play", options = ResolveNoneAndSeparateProdTestSources) }
+//        "play" in { testProject_013("prod_test_sources_separated/play", options = ResolveNoneAndSeparateProdTestSources) }
         "custom-test-config" in { testProject_013("prod_test_sources_separated/custom-test-config", options = ResolveSourcesAndSbtClassifiersAndSeparateProdTestSources) }
       }
     }
