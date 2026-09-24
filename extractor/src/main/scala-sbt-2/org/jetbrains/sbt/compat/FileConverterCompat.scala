@@ -1,6 +1,7 @@
 package org.jetbrains.sbt.compat
 
 import org.jetbrains.sbt.config.StructureKeys
+import sbt.internal.BuildUnit
 import sbt.{Keys, Setting}
 import xsbti.FileConverter
 
@@ -10,3 +11,6 @@ object FileConverterCompat:
   lazy val Settings: Seq[Setting[?]] = Seq(
     StructureKeys.fileConverterCompat := FileConverterCompat(Keys.fileConverter.value)
   )
+
+  def forBuildUnit(unit: BuildUnit): FileConverterCompat =
+    FileConverterCompat(unit.converter)

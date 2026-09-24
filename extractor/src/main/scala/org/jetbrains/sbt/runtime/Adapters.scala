@@ -7,7 +7,7 @@ import sbt.jetbrains.PluginCompat.*
 
 import scala.collection.Seq
 
-case class LoadedBuildUnitAdapter(delegate: LoadedBuildUnit, converter: FileConverterCompat) {
+case class LoadedBuildUnitAdapter(delegate: LoadedBuildUnit) {
 
   def uri: URI =
     delegate.unit.uri
@@ -16,7 +16,7 @@ case class LoadedBuildUnitAdapter(delegate: LoadedBuildUnit, converter: FileConv
     delegate.imports.toImmutableSeq
 
   def pluginsClasspath: Seq[Attributed[File]] = {
-    implicit val givenConverter: FileConverterCompat = converter
+    implicit val givenConverter: FileConverterCompat = FileConverterCompat.forBuildUnit(delegate.unit)
     toAttributedFiles(delegate.unit.plugins.pluginData.dependencyClasspath).toImmutableSeq
   }
 }

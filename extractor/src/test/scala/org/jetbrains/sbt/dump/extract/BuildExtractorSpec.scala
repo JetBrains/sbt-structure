@@ -26,7 +26,7 @@ class BuildExtractorSpec extends AnyFreeSpec {
   val stubImports: Seq[String] = Seq("import foo.bar", "import bar.baz")
   val stubPlugins: Seq[File] = Seq("foo.jar").map(file)
 
-  val stubLoadedBuildUnitAdapter: LoadedBuildUnitAdapter = new LoadedBuildUnitAdapter(null, FileConverterCompat()) {
+  val stubLoadedBuildUnitAdapter: LoadedBuildUnitAdapter = new LoadedBuildUnitAdapter(null) {
     override def uri = stubURI
     override def imports: Seq[String] = stubImports
     override def pluginsClasspath: Seq[Attributed[File]] =

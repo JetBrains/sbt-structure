@@ -27,8 +27,7 @@ object BuildExtractor extends SbtStateOps with TaskOps {
     val state = Keys.state.value
     val projectRef = Keys.thisProjectRef.value
     val options = StructureKeys.sbtStructureOpts.value
-    val converter = StructureKeys.fileConverterCompat.value
-    val unit = LoadedBuildUnitAdapter(structure(state).units(projectRef.build), converter)
+    val unit = LoadedBuildUnitAdapter(structure(state).units(projectRef.build))
 
     Def.task {
       (projectRef / Keys.updateSbtClassifiers).get(state)

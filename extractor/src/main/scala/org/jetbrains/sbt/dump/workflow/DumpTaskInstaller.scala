@@ -23,7 +23,7 @@ object DumpTaskInstaller extends (State => State) with SbtStateOps {
     StructureKeys.extractRepository := RepositoryExtractor.taskDef.value,
     StructureKeys.extractStructure := org.jetbrains.sbt.dump.extract.extractStructure.value,
     StructureKeys.localCachePath := UtilityTasks.localCachePath.value
-  ) ++ PluginCompat.artifactDownloadLoggerSettings ++ PluginCompat.globalSettingsSbtSpecific
+  ) ++ PluginCompat.artifactDownloadLoggerSettings ++ PluginCompat.globalSettingsSbtSpecific ++ FileConverterCompat.Settings
 
   lazy val projectSettings: Seq[Setting[?]] = Seq[Setting[?]](
     Keys.updateClassifiers / Keys.transitiveClassifiers := {
@@ -55,7 +55,7 @@ object DumpTaskInstaller extends (State => State) with SbtStateOps {
     StructureKeys.commandData := KeysExtractor.commandData.value,
 
     StructureKeys.allConfigurationsWithSource := UtilityTasks.allConfigurationsWithSource.value
-  ) ++ FileConverterCompat.Settings
+  )
 
   def apply(state: State): State =
     applySettings(state, globalSettings, projectSettings)
