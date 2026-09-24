@@ -1,6 +1,7 @@
 package org.jetbrains.sbt.dump.extract
 
 import org.jetbrains.sbt.ProjectRefOps
+import org.jetbrains.sbt.compat.FileConverterCompat
 import org.jetbrains.sbt.dump.extract.DependenciesExtractor.ProductionType
 import org.jetbrains.sbt.structure.*
 import org.scalatest.freespec.AnyFreeSpecLike
@@ -37,7 +38,8 @@ class DependenciesExtractorSpec_ProdTestSourcesSeparatedEnabled extends AnyFreeS
         configurationToProjectDeps = Map(
           sbt.Test -> Seq(ProductionType(projects(1))),
           sbt.Compile -> Nil
-        )
+        ),
+        converter = FileConverterCompat()
       ).extract
 
       val expected = DependencyData(
@@ -94,7 +96,8 @@ class DependenciesExtractorSpec_ProdTestSourcesSeparatedEnabled extends AnyFreeS
         configurationToProjectDeps = Map(
           sbt.Test -> Seq(ProductionType(projects(1))),
           sbt.Compile -> Nil,
-        )
+        ),
+        converter = FileConverterCompat()
       ).extract
 
       val expected = DependencyData(
@@ -163,7 +166,8 @@ class DependenciesExtractorSpec_ProdTestSourcesSeparatedEnabled extends AnyFreeS
         configurationToProjectDeps = Map(
           sbt.Test -> Seq(ProductionType(projects(1))),
           CustomConf -> Nil
-        )
+        ),
+        converter = FileConverterCompat()
       ).extract
 
       val expected = DependencyData(
@@ -230,7 +234,8 @@ class DependenciesExtractorSpec_ProdTestSourcesSeparatedEnabled extends AnyFreeS
         configurationToProjectDeps = Map(
           sbt.Test -> Seq(ProductionType(projects(1))),
           sbt.Compile -> Nil
-        )
+        ),
+        converter = FileConverterCompat()
       ).extract
 
       val expectedModules = Seq(toIdentifier(moduleId), toIdentifier(moduleId).copy(classifier = "tests")).map {
@@ -294,7 +299,8 @@ class DependenciesExtractorSpec_ProdTestSourcesSeparatedEnabled extends AnyFreeS
           sbt.Test -> Seq(ProductionType(projects(1))),
           sbt.Runtime -> Seq(ProductionType(projects(1))),
           sbt.Compile -> Seq(ProductionType(projects(1))),
-        )
+        ),
+        converter = FileConverterCompat()
       ).extract
 
       val expected = DependencyData(
@@ -380,7 +386,8 @@ class DependenciesExtractorSpec_ProdTestSourcesSeparatedEnabled extends AnyFreeS
           sbt.Test -> Seq(ProductionType(projects(1))),
           sbt.Compile -> Seq(ProductionType(projects(1))),
           sbt.Runtime -> Nil
-        )
+        ),
+        converter = FileConverterCompat()
       ).extract
 
       val expected = DependencyData(
@@ -469,7 +476,8 @@ class DependenciesExtractorSpec_ProdTestSourcesSeparatedEnabled extends AnyFreeS
           sbt.Test -> Nil,
           sbt.Runtime -> Nil,
           CustomConf -> Seq(ProductionType(projects(1)))
-        )
+        ),
+        converter = FileConverterCompat()
       ).extract
 
       val expected = DependencyData(

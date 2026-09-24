@@ -4,7 +4,7 @@ import org.jetbrains.sbt.compat.FileConverterCompat
 import sbt.Attributed
 
 import java.io.File
-import java.nio.file.Path as NioPath
+import java.nio.file.{Path => NioPath}
 
 object ClasspathOpsCompat extends ClasspathOpsCompat
 

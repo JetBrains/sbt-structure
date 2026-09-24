@@ -1,6 +1,7 @@
 package org.jetbrains.sbt.dump.extract
 
 import org.jetbrains.sbt.{LoadedBuildUnitAdapter, ModuleReportAdapter, UpdateReportAdapter}
+import org.jetbrains.sbt.compat.FileConverterCompat
 import org.jetbrains.sbt.structure._
 import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.must.Matchers.{convertToAnyMustWrapper, equal}
@@ -25,7 +26,7 @@ class BuildExtractorSpec extends AnyFreeSpec {
   val stubImports: Seq[String] = Seq("import foo.bar", "import bar.baz")
   val stubPlugins: Seq[File] = Seq("foo.jar").map(file)
 
-  val stubLoadedBuildUnitAdapter: LoadedBuildUnitAdapter = new LoadedBuildUnitAdapter(null) {
+  val stubLoadedBuildUnitAdapter: LoadedBuildUnitAdapter = new LoadedBuildUnitAdapter(null, FileConverterCompat()) {
     override def uri = stubURI
     override def imports: Seq[String] = stubImports
     override def pluginsClasspath: Seq[Attributed[File]] =
