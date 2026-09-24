@@ -5,9 +5,9 @@ import sbt.Attributed
 import java.nio.file.{Path => NioPath}
 import java.io.File
 
-object ClassathOpsCompat extends ClassathOpsCompat
+object ClasspathOpsCompat extends ClasspathOpsCompat
 
-trait ClassathOpsCompat {
+trait ClasspathOpsCompat {
   type FileRef = java.io.File
   type Out = java.io.File
 

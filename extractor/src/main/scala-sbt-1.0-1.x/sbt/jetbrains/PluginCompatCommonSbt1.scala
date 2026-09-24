@@ -2,7 +2,7 @@ package sbt.jetbrains
 
 import sbt.{AttributeKey, Def, Incomplete, InputTask, Keys, Result, Scope, Setting, Settings, Task}
 
-trait PluginCompatCommonSbt1 extends SeqOpsCompat with ClassathOpsCompat {
+trait PluginCompatCommonSbt1 extends SeqOpsCompat with ClasspathOpsCompat {
 
   type SbtSettings = Settings[Scope]
 

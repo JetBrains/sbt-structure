@@ -3,7 +3,7 @@ package sbt.jetbrains
 import sbt.*
 import scala.util.Try
 
-object PluginCompat extends SeqOpsCompat with ClassathOpsCompat with CoursierLoggerSettingsCompat:
+object PluginCompat extends SeqOpsCompat with ClasspathOpsCompat with CoursierLoggerSettingsCompat:
 
   type SbtSettings = Settings
 

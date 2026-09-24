@@ -6,9 +6,9 @@ import xsbti.{FileConverter, HashedVirtualFileRef, VirtualFile}
 import java.io.File
 import java.nio.file.Path as NioPath
 
-object ClassathOpsCompat extends ClassathOpsCompat
+object ClasspathOpsCompat extends ClasspathOpsCompat
 
-trait ClassathOpsCompat {
+trait ClasspathOpsCompat {
   type FileRef = HashedVirtualFileRef
   type Out = VirtualFile
 
