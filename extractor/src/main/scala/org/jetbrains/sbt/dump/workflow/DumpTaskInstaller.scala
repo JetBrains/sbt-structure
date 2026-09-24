@@ -1,6 +1,6 @@
 package org.jetbrains.sbt.dump.workflow
 
-import org.jetbrains.sbt.compat.PluginOnlyTasksCompat
+import org.jetbrains.sbt.compat.{FileConverterCompat, PluginOnlyTasksCompat}
 import org.jetbrains.sbt.dump.extract.*
 import org.jetbrains.sbt.runtime.SbtStateOps
 import org.jetbrains.sbt.{Options, StructureKeys}
@@ -55,7 +55,7 @@ object DumpTaskInstaller extends (State => State) with SbtStateOps {
     StructureKeys.commandData := KeysExtractor.commandData.value,
 
     StructureKeys.allConfigurationsWithSource := UtilityTasks.allConfigurationsWithSource.value
-  )
+  ) ++ FileConverterCompat.Settings
 
   def apply(state: State): State =
     applySettings(state, globalSettings, projectSettings)
