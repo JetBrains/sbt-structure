@@ -101,7 +101,7 @@
     <classes>$SBT_BOOT/scala-3.9.0/org.scala-sbt/sbt/2.1.0-M2/zinc-persist_3-2.1.0-M4.jar</classes>
     <classes>$SBT_BOOT/scala-3.9.0/org.scala-sbt/sbt/2.1.0-M2/zinc_3-2.1.0-M4.jar</classes>
     <classes>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-lang/scala3-library_3/3.9.0/scala3-library_3-3.9.0.jar</classes>
-    <classes>$BASE/${OUT}/jvm/scala-3.9.0/bsp-disabled-test-config-build/bsp-disabled-test-config-build_sbt2_3-0.1.0-SNAPSHOT.jar</classes>
+    <classes>$BASE/target/out/jvm/scala-3.9.0/bsp-disabled-test-config-build/bsp-disabled-test-config-build_sbt2_3-0.1.0-SNAPSHOT.jar</classes>
   </build>
   <project>
     <id>root</id>
@@ -1351,11 +1351,6 @@
       <rank>20000</rank>
     </task>
     <task>
-      <label>exportedProductsVersionedNoTracking</label>
-      <description>Just the exported classpath, packaged with the versioned artifact, without triggering the compilation.</description>
-      <rank>200</rank>
-    </task>
-    <task>
       <label>copyResources</label>
       <description>Copies resources to the output directory.</description>
       <rank>6</rank>
@@ -1364,6 +1359,11 @@
       <label>docVF</label>
       <description>Generates API documentation.</description>
       <rank>6</rank>
+    </task>
+    <task>
+      <label>exportedProductsVersionedNoTracking</label>
+      <description>Just the exported classpath, packaged with the versioned artifact, without triggering the compilation.</description>
+      <rank>200</rank>
     </task>
     <task>
       <label>tastyFiles</label>
@@ -2924,11 +2924,6 @@
       <rank>20000</rank>
     </task>
     <task>
-      <label>exportedProductsVersionedNoTracking</label>
-      <description>Just the exported classpath, packaged with the versioned artifact, without triggering the compilation.</description>
-      <rank>200</rank>
-    </task>
-    <task>
       <label>copyResources</label>
       <description>Copies resources to the output directory.</description>
       <rank>6</rank>
@@ -2937,6 +2932,11 @@
       <label>docVF</label>
       <description>Generates API documentation.</description>
       <rank>6</rank>
+    </task>
+    <task>
+      <label>exportedProductsVersionedNoTracking</label>
+      <description>Just the exported classpath, packaged with the versioned artifact, without triggering the compilation.</description>
+      <rank>200</rank>
     </task>
     <task>
       <label>tastyFiles</label>
@@ -4485,11 +4485,6 @@
       <rank>20000</rank>
     </task>
     <task>
-      <label>exportedProductsVersionedNoTracking</label>
-      <description>Just the exported classpath, packaged with the versioned artifact, without triggering the compilation.</description>
-      <rank>200</rank>
-    </task>
-    <task>
       <label>copyResources</label>
       <description>Copies resources to the output directory.</description>
       <rank>6</rank>
@@ -4498,6 +4493,11 @@
       <label>docVF</label>
       <description>Generates API documentation.</description>
       <rank>6</rank>
+    </task>
+    <task>
+      <label>exportedProductsVersionedNoTracking</label>
+      <description>Just the exported classpath, packaged with the versioned artifact, without triggering the compilation.</description>
+      <rank>200</rank>
     </task>
     <task>
       <label>tastyFiles</label>
