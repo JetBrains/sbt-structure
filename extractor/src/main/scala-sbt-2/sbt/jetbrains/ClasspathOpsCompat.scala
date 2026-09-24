@@ -1,7 +1,8 @@
 package sbt.jetbrains
 
+import org.jetbrains.sbt.compat.FileConverterCompat
 import sbt.Attributed
-import xsbti.{FileConverter, HashedVirtualFileRef, VirtualFile}
+import xsbti.{HashedVirtualFileRef, VirtualFile}
 
 import java.io.File
 import java.nio.file.Path as NioPath
@@ -12,24 +13,21 @@ trait ClasspathOpsCompat {
   type FileRef = HashedVirtualFileRef
   type Out = VirtualFile
 
-  private val conv: FileConverter = sbt.internal.inc.PlainVirtualFileConverter.converter
+  def toNioPath(a: Attributed[HashedVirtualFileRef])(using converter: FileConverterCompat): NioPath =
+    converter.underlying.toPath(a.data)
 
-  def toNioPath(a: Attributed[HashedVirtualFileRef]): NioPath =
-    conv.toPath(a.data)
-
-  inline def toFile(a: Attributed[HashedVirtualFileRef]): File =
+  inline def toFile(a: Attributed[HashedVirtualFileRef])(using converter: FileConverterCompat): File =
     toNioPath(a).toFile()
 
-  def toNioPaths(cp: Seq[Attributed[HashedVirtualFileRef]]): Seq[NioPath] =
+  def toNioPaths(cp: Seq[Attributed[HashedVirtualFileRef]])(using converter: FileConverterCompat): Seq[NioPath] =
     cp.map(toNioPath).toVector
 
-  inline def toFiles(cp: Seq[Attributed[HashedVirtualFileRef]]): Seq[File] =
+  inline def toFiles(cp: Seq[Attributed[HashedVirtualFileRef]])(using converter: FileConverterCompat): Seq[File] =
     toNioPaths(cp).map(_.toFile())
 
-  inline def toAttributedFiles(cp: Seq[Attributed[HashedVirtualFileRef]]): Seq[Attributed[File]] =
+  inline def toAttributedFiles(cp: Seq[Attributed[HashedVirtualFileRef]])(using converter: FileConverterCompat): Seq[Attributed[File]] =
     cp.map { item =>
-      val file = conv.toPath(item.data).toFile
+      val file = converter.underlying.toPath(item.data).toFile
       Attributed(file)(item.metadata)
     }
 }
-

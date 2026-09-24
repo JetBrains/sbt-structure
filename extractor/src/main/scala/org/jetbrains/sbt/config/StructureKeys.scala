@@ -1,5 +1,6 @@
 package org.jetbrains.sbt.config
 
+import org.jetbrains.sbt.compat.FileConverterCompat
 import org.jetbrains.sbt.structure.*
 import sbt.KeyRanks.*
 import sbt.{Configuration, *}
@@ -12,6 +13,8 @@ object StructureKeys {
   val dependencyConfigurations: SettingKey[Seq[Configuration]] = SettingKey("ssDependencyConfigurations", description = "", rank = Invisible)
   val sourceConfigurations: SettingKey[Seq[Configuration]] = SettingKey("ssSourceConfigurations", description = "", rank = Invisible)
   val testConfigurations: SettingKey[Seq[Configuration]] = SettingKey("ssTestConfigurations", description = "", rank = Invisible)
+
+  @transient val fileConverterCompat: SettingKey[FileConverterCompat] = SettingKey("ssFileConverterCompat", description = "", rank = Invisible)
   @transient val acceptedProjects: TaskKey[Seq[ProjectRef]] = TaskKey("ssAcceptedProjects", description = "", rank = Invisible)
 
   @transient val extractPlay2: TaskKey[Option[Play2Data]] = TaskKey("ssExtractPlay2", description = "", rank = Invisible)
