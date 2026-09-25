@@ -5,6 +5,7 @@ import org.jetbrains.sbt.dump.extract.DependenciesExtractor.{ProductionType, Pro
 import org.jetbrains.sbt.structure.*
 import org.jetbrains.sbt.{ModulesOps, ProjectRefOps, SbtStateOps, StructureKeys, TaskOps}
 import sbt.internal.BuildDependencies
+import sbt.jetbrains.PluginCompat
 import sbt.jetbrains.PluginCompat.*
 import sbt.{Configuration as SbtConfiguration, *}
 
@@ -232,7 +233,7 @@ object DependenciesExtractor extends SbtStateOps with TaskOps {
     //example: Seq(compile, runtime)
     val sourceConfigurations = StructureKeys.sourceConfigurations.value
     val buildDependencies = Keys.buildDependencies.value
-    val converter = StructureKeys.fileConverterCompat.value
+    val converter = PluginCompat.fileConverterCompat.value
 
     val unmanagedClasspathTask =
       (projectRef / sbt.Keys.unmanagedClasspath)

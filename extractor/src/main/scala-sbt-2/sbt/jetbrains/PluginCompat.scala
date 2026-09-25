@@ -1,5 +1,6 @@
 package sbt.jetbrains
 
+import org.jetbrains.sbt.compat.FileConverterCompat
 import sbt.*
 import scala.util.Try
 
@@ -101,6 +102,10 @@ object PluginCompat extends SeqOpsCompat with ClasspathOpsCompat with CoursierLo
         files.headOption
       }
     }
+  }
+
+  def fileConverterCompat: Def.Initialize[FileConverterCompat] = Def.setting {
+    FileConverterCompat(Keys.fileConverter.value)
   }
 
 end PluginCompat

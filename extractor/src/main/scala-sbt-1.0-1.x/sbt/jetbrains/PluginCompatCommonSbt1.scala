@@ -1,5 +1,6 @@
 package sbt.jetbrains
 
+import org.jetbrains.sbt.compat.FileConverterCompat
 import sbt.{AttributeKey, Def, Incomplete, InputTask, Keys, Result, Scope, Setting, Settings, Task}
 
 trait PluginCompatCommonSbt1 extends SeqOpsCompat with ClasspathOpsCompat {
@@ -34,4 +35,7 @@ trait PluginCompatCommonSbt1 extends SeqOpsCompat with ClasspathOpsCompat {
    */
   def scalacOptionsResolver: Def.Initialize[Task[Seq[String] => Seq[String]]] =
     Def.task((options: Seq[String]) => options)
+
+  def fileConverterCompat: Def.Initialize[FileConverterCompat] =
+    Def.setting(FileConverterCompat())
 }

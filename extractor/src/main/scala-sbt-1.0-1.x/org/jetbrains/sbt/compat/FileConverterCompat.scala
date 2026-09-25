@@ -1,7 +1,6 @@
 package org.jetbrains.sbt.compat
 
-import org.jetbrains.sbt.config.StructureKeys
-import sbt.{PluginData, Setting}
+import sbt.PluginData
 
 /**
  * This class exists to pretend that we have a `xsbti.FileConverter`. It is an interface which exists since sbt 1.4.x.
@@ -13,10 +12,6 @@ import sbt.{PluginData, Setting}
 case class FileConverterCompat()
 
 object FileConverterCompat {
-  lazy val Settings: Seq[Setting[?]] = Seq(
-    StructureKeys.fileConverterCompat := FileConverterCompat()
-  )
-
   def forPluginData(pluginData: PluginData): FileConverterCompat =
     FileConverterCompat()
 }

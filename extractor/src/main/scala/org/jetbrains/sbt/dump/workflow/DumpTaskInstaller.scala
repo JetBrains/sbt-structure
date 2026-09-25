@@ -1,6 +1,6 @@
 package org.jetbrains.sbt.dump.workflow
 
-import org.jetbrains.sbt.compat.{FileConverterCompat, PluginOnlyTasksCompat}
+import org.jetbrains.sbt.compat.PluginOnlyTasksCompat
 import org.jetbrains.sbt.dump.extract.*
 import org.jetbrains.sbt.runtime.SbtStateOps
 import org.jetbrains.sbt.{Options, StructureKeys}
@@ -23,7 +23,7 @@ object DumpTaskInstaller extends (State => State) with SbtStateOps {
     StructureKeys.extractRepository := RepositoryExtractor.taskDef.value,
     StructureKeys.extractStructure := org.jetbrains.sbt.dump.extract.extractStructure.value,
     StructureKeys.localCachePath := UtilityTasks.localCachePath.value
-  ) ++ PluginCompat.artifactDownloadLoggerSettings ++ PluginCompat.globalSettingsSbtSpecific ++ FileConverterCompat.Settings
+  ) ++ PluginCompat.artifactDownloadLoggerSettings ++ PluginCompat.globalSettingsSbtSpecific
 
   lazy val projectSettings: Seq[Setting[?]] = Seq[Setting[?]](
     Keys.updateClassifiers / Keys.transitiveClassifiers := {
