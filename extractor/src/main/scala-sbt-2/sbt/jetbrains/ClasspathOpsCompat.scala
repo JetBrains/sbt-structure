@@ -27,7 +27,7 @@ trait ClasspathOpsCompat {
 
   inline def toAttributedFiles(cp: Seq[Attributed[HashedVirtualFileRef]])(using converter: FileConverterCompat): Seq[Attributed[File]] =
     cp.map { item =>
-      val file = converter.underlying.toPath(item.data).toFile
+      val file = toFile(item)
       Attributed(file)(item.metadata)
     }
 }
