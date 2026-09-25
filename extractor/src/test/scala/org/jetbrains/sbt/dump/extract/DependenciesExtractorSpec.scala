@@ -3,10 +3,10 @@ package org.jetbrains.sbt.dump.extract
 import org.jetbrains.sbt.ProjectRefOps
 import org.jetbrains.sbt.compat.FileConverterCompat
 import org.jetbrains.sbt.dump.extract.DependenciesExtractor.ProductionType
-import org.jetbrains.sbt.structure._
+import org.jetbrains.sbt.structure.*
 import org.scalatest.freespec.AnyFreeSpecLike
 import org.scalatest.matchers.must.Matchers.{contain, convertToAnyMustWrapper}
-import sbt.{Attributed, globFilter => _, _}
+import sbt.{Attributed, Configuration as _, globFilter as _, *}
 
 import scala.collection.Seq
 

@@ -6,7 +6,7 @@ import org.jetbrains.sbt.dump.extract.DependenciesExtractor.ProductionType
 import org.jetbrains.sbt.structure.*
 import org.scalatest.freespec.AnyFreeSpecLike
 import org.scalatest.matchers.must.Matchers.{contain, convertToAnyMustWrapper}
-import sbt.{Attributed, globFilter as _, *}
+import sbt.{Attributed, Configuration as _, globFilter as _, *}
 
 import scala.collection.Seq
 
