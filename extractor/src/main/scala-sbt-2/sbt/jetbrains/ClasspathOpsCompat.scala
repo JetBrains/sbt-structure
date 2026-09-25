@@ -23,7 +23,7 @@ trait ClasspathOpsCompat {
     cp.map(toNioPath).toVector
 
   inline def toFiles(cp: Seq[Attributed[HashedVirtualFileRef]])(using converter: FileConverterCompat): Seq[File] =
-    toNioPaths(cp).map(_.toFile())
+    cp.map(toFile).toVector
 
   inline def toAttributedFiles(cp: Seq[Attributed[HashedVirtualFileRef]])(using converter: FileConverterCompat): Seq[Attributed[File]] =
     cp.map { item =>
