@@ -12,7 +12,6 @@ import sbt.PluginData
 case class FileConverterCompat()
 
 object FileConverterCompat {
-  val Instance: FileConverterCompat = FileConverterCompat()
-
-  def forPluginData(pluginData: PluginData): FileConverterCompat = Instance
+  def forPluginData(pluginData: PluginData): FileConverterCompat =
+    FileConverterCompat()
 }
