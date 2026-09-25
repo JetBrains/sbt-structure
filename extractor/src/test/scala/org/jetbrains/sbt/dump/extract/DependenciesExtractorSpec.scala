@@ -12,8 +12,6 @@ import scala.collection.Seq
 
 class DependenciesExtractorSpec extends AnyFreeSpecLike {
 
-  private val converterCompatDummy: FileConverterCompat = FileConverterCompat()
-
   val projects: Seq[ProjectRef] =
     Seq("project-1", "project-2").map(ProjectRef(file("/tmp/test-project"), _))
   val emptyClasspath: sbt.Configuration => Keys.Classpath = _ => Nil
@@ -42,7 +40,7 @@ class DependenciesExtractorSpec extends AnyFreeSpecLike {
           sbt.Runtime -> Seq(ProductionType(projects(1))),
           sbt.Test -> Seq(ProductionType(projects(1))),
         ),
-        converter = converterCompatDummy
+        converter = FileConverterCompat.Instance
       ).extract
 
       val expected = DependencyData(
@@ -94,7 +92,7 @@ class DependenciesExtractorSpec extends AnyFreeSpecLike {
           sbt.Runtime -> Seq(ProductionType(projects(1))),
           sbt.Test -> Seq(ProductionType(projects(1))),
         ),
-        converter = converterCompatDummy
+        converter = FileConverterCompat.Instance
       ).extract
 
       val expected = DependencyData(
@@ -162,7 +160,7 @@ class DependenciesExtractorSpec extends AnyFreeSpecLike {
           sbt.Test -> Seq(ProductionType(projects(1))),
           CustomConf -> Nil,
         ),
-        converter = converterCompatDummy
+        converter = FileConverterCompat.Instance
       ).extract
 
       val expected = DependencyData(
@@ -226,7 +224,7 @@ class DependenciesExtractorSpec extends AnyFreeSpecLike {
           sbt.Runtime -> Seq(ProductionType(projects(1))),
           sbt.Test -> Seq(ProductionType(projects(1)))
         ),
-        converter = converterCompatDummy
+        converter = FileConverterCompat.Instance
       ).extract
 
       val expectedModules = Seq(toIdentifier(moduleId), toIdentifier(moduleId).copy(classifier = "tests")).map {
@@ -280,7 +278,7 @@ class DependenciesExtractorSpec extends AnyFreeSpecLike {
           sbt.Runtime -> Seq(ProductionType(projects(1))),
           sbt.Test -> Seq(ProductionType(projects(1))),
         ),
-        converter = converterCompatDummy
+        converter = FileConverterCompat.Instance
       ).extract
 
       val expected = DependencyData(
@@ -336,7 +334,7 @@ class DependenciesExtractorSpec extends AnyFreeSpecLike {
           sbt.Runtime -> Seq(ProductionType(projects(1))),
           sbt.Test -> Seq(ProductionType(projects(1))),
         ),
-        converter = converterCompatDummy
+        converter = FileConverterCompat.Instance
       ).extract
 
       val expected = DependencyData(
@@ -379,7 +377,7 @@ class DependenciesExtractorSpec extends AnyFreeSpecLike {
           sbt.Runtime -> Seq(ProductionType(projects(1))),
           sbt.Test -> Seq(ProductionType(projects(1))),
         ),
-        converter = converterCompatDummy
+        converter = FileConverterCompat.Instance
       ).extract
 
       val productionDependencies = Seq(
@@ -407,7 +405,7 @@ class DependenciesExtractorSpec extends AnyFreeSpecLike {
           sbt.Test -> Seq(ProductionType(projects(1))),
           sbt.Runtime -> Nil,
         ),
-        converter = converterCompatDummy
+        converter = FileConverterCompat.Instance
       ).extract
 
       val expected = DependencyData(
@@ -435,7 +433,7 @@ class DependenciesExtractorSpec extends AnyFreeSpecLike {
           sbt.Runtime -> Nil,
           CustomConf -> Nil,
         ),
-        converter = converterCompatDummy
+        converter = FileConverterCompat.Instance
       ).extract
 
       val expected = DependencyData(

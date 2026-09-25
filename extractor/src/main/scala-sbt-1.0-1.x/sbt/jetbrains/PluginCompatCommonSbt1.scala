@@ -37,5 +37,5 @@ trait PluginCompatCommonSbt1 extends SeqOpsCompat with ClasspathOpsCompat {
     Def.task((options: Seq[String]) => options)
 
   def fileConverterCompat: Def.Initialize[FileConverterCompat] =
-    Def.setting(FileConverterCompat())
+    Def.setting(FileConverterCompat.Instance)
 }
