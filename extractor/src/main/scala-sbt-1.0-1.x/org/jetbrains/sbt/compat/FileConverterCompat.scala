@@ -1,8 +1,7 @@
 package org.jetbrains.sbt.compat
 
-import sbt.Setting
 import org.jetbrains.sbt.config.StructureKeys
-import sbt.internal.BuildUnit
+import sbt.{PluginData, Setting}
 
 /**
  * This class exists to pretend that we have a `xsbti.FileConverter`. It is an interface which exists since sbt 1.4.x.
@@ -18,5 +17,6 @@ object FileConverterCompat {
     StructureKeys.fileConverterCompat := FileConverterCompat()
   )
 
-  def forBuildUnit(unit: BuildUnit): FileConverterCompat = FileConverterCompat()
+  def forPluginData(pluginData: PluginData): FileConverterCompat =
+    FileConverterCompat()
 }

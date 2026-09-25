@@ -16,7 +16,7 @@ case class LoadedBuildUnitAdapter(delegate: LoadedBuildUnit) {
     delegate.imports.toImmutableSeq
 
   def pluginsClasspath: Seq[Attributed[File]] = {
-    implicit val givenConverter: FileConverterCompat = FileConverterCompat.forBuildUnit(delegate.unit)
+    implicit val givenConverter: FileConverterCompat = FileConverterCompat.forPluginData(delegate.unit.plugins.pluginData)
     toAttributedFiles(delegate.unit.plugins.pluginData.dependencyClasspath).toImmutableSeq
   }
 }

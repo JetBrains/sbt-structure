@@ -1,8 +1,7 @@
 package org.jetbrains.sbt.compat
 
 import org.jetbrains.sbt.config.StructureKeys
-import sbt.internal.BuildUnit
-import sbt.{Keys, Setting}
+import sbt.{Keys, PluginData, Setting}
 import xsbti.FileConverter
 
 case class FileConverterCompat(underlying: FileConverter)
@@ -12,5 +11,5 @@ object FileConverterCompat:
     StructureKeys.fileConverterCompat := FileConverterCompat(Keys.fileConverter.value)
   )
 
-  def forBuildUnit(unit: BuildUnit): FileConverterCompat =
-    FileConverterCompat(unit.converter)
+  def forPluginData(pluginData: PluginData): FileConverterCompat =
+    FileConverterCompat(pluginData.converter)
