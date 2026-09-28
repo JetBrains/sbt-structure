@@ -1,15 +1,19 @@
 package org.jetbrains.sbt.dump.extract
 
 import org.jetbrains.sbt.ProjectRefOps
+import org.jetbrains.sbt.compat.FileConverterCompat
 import org.jetbrains.sbt.dump.extract.DependenciesExtractor.ProductionType
-import org.jetbrains.sbt.structure._
+import org.jetbrains.sbt.structure.*
 import org.scalatest.freespec.AnyFreeSpecLike
 import org.scalatest.matchers.must.Matchers.{contain, convertToAnyMustWrapper}
-import sbt.{Configuration => SbtConfiguration, Attributed, globFilter => _, _}
+import sbt.{Attributed, Configuration as _, globFilter as _, *}
 
 import scala.collection.Seq
 
 class DependenciesExtractorSpec extends AnyFreeSpecLike {
+
+  private val converterDummyFunction: sbt.Configuration => FileConverterCompat =
+    _ => FileConverterCompat()
 
   val projects: Seq[ProjectRef] =
     Seq("project-1", "project-2").map(ProjectRef(file("/tmp/test-project"), _))
@@ -38,7 +42,8 @@ class DependenciesExtractorSpec extends AnyFreeSpecLike {
           sbt.Compile -> Seq(ProductionType(projects(1))),
           sbt.Runtime -> Seq(ProductionType(projects(1))),
           sbt.Test -> Seq(ProductionType(projects(1))),
-        )
+        ),
+        converterFor = converterDummyFunction
       ).extract
 
       val expected = DependencyData(
@@ -89,7 +94,8 @@ class DependenciesExtractorSpec extends AnyFreeSpecLike {
           sbt.Compile -> Seq(ProductionType(projects(1))),
           sbt.Runtime -> Seq(ProductionType(projects(1))),
           sbt.Test -> Seq(ProductionType(projects(1))),
-        )
+        ),
+        converterFor = converterDummyFunction
       ).extract
 
       val expected = DependencyData(
@@ -156,7 +162,8 @@ class DependenciesExtractorSpec extends AnyFreeSpecLike {
           sbt.Runtime -> Seq(ProductionType(projects(1))),
           sbt.Test -> Seq(ProductionType(projects(1))),
           CustomConf -> Nil,
-        )
+        ),
+        converterFor = converterDummyFunction
       ).extract
 
       val expected = DependencyData(
@@ -219,7 +226,8 @@ class DependenciesExtractorSpec extends AnyFreeSpecLike {
           sbt.Compile -> Seq(ProductionType(projects(1))),
           sbt.Runtime -> Seq(ProductionType(projects(1))),
           sbt.Test -> Seq(ProductionType(projects(1)))
-        )
+        ),
+        converterFor = converterDummyFunction
       ).extract
 
       val expectedModules = Seq(toIdentifier(moduleId), toIdentifier(moduleId).copy(classifier = "tests")).map {
@@ -272,7 +280,8 @@ class DependenciesExtractorSpec extends AnyFreeSpecLike {
           sbt.Compile -> Seq(ProductionType(projects(1))),
           sbt.Runtime -> Seq(ProductionType(projects(1))),
           sbt.Test -> Seq(ProductionType(projects(1))),
-        )
+        ),
+        converterFor = converterDummyFunction
       ).extract
 
       val expected = DependencyData(
@@ -327,7 +336,8 @@ class DependenciesExtractorSpec extends AnyFreeSpecLike {
           sbt.Compile -> Seq(ProductionType(projects(1))),
           sbt.Runtime -> Seq(ProductionType(projects(1))),
           sbt.Test -> Seq(ProductionType(projects(1))),
-        )
+        ),
+        converterFor = converterDummyFunction
       ).extract
 
       val expected = DependencyData(
@@ -369,7 +379,8 @@ class DependenciesExtractorSpec extends AnyFreeSpecLike {
           sbt.Compile -> Seq(ProductionType(projects(1))),
           sbt.Runtime -> Seq(ProductionType(projects(1))),
           sbt.Test -> Seq(ProductionType(projects(1))),
-        )
+        ),
+        converterFor = converterDummyFunction
       ).extract
 
       val productionDependencies = Seq(
@@ -396,7 +407,8 @@ class DependenciesExtractorSpec extends AnyFreeSpecLike {
           sbt.Compile -> Seq(ProductionType(projects(1))),
           sbt.Test -> Seq(ProductionType(projects(1))),
           sbt.Runtime -> Nil,
-        )
+        ),
+        converterFor = converterDummyFunction
       ).extract
 
       val expected = DependencyData(
@@ -423,7 +435,8 @@ class DependenciesExtractorSpec extends AnyFreeSpecLike {
           sbt.Test -> Seq(ProductionType(projects(1))),
           sbt.Runtime -> Nil,
           CustomConf -> Nil,
-        )
+        ),
+        converterFor = converterDummyFunction
       ).extract
 
       val expected = DependencyData(

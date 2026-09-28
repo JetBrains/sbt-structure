@@ -1,10 +1,11 @@
 package org.jetbrains.sbt.dump.extract
 
+import org.jetbrains.sbt.compat.{DependenciesExtractorCompat, FileConverterCompat}
 import org.jetbrains.sbt.dump.extract.DependenciesExtractor.{ProductionType, ProjectType, TestType}
-import org.jetbrains.sbt.compat.DependenciesExtractorCompat
 import org.jetbrains.sbt.structure.*
 import org.jetbrains.sbt.{ModulesOps, ProjectRefOps, SbtStateOps, StructureKeys, TaskOps}
 import sbt.internal.BuildDependencies
+import sbt.jetbrains.PluginCompat
 import sbt.jetbrains.PluginCompat.*
 import sbt.{Configuration as SbtConfiguration, *}
 
@@ -18,7 +19,8 @@ class DependenciesExtractor(project: ProjectRef,
                             testConfigurations: Seq[SbtConfiguration],
                             sourceConfigurations: Seq[SbtConfiguration],
                             separateProdTestSources: Boolean,
-                            configurationToProjectDeps: SbtConfiguration => Seq[ProjectType])
+                            configurationToProjectDeps: SbtConfiguration => Seq[ProjectType],
+                            converterFor: SbtConfiguration => FileConverterCompat)
   extends ModulesOps {
 
   private lazy val testConfigurationNames = testConfigurations.map(_.name)
@@ -87,8 +89,10 @@ class DependenciesExtractor(project: ProjectRef,
       Dependencies(dependencies, Seq.empty)
     }
 
-  private def jarsIn(configuration: SbtConfiguration): Seq[File] =
+  private def jarsIn(configuration: SbtConfiguration): Seq[File] = {
+    implicit val givenConverter: FileConverterCompat = converterFor(configuration)
     toFiles(unmanagedClasspath(configuration))
+  }
 
   private def forAllConfigurations[T](fn: SbtConfiguration => Seq[T]): Seq[(T, Seq[Configuration])] =
     forConfigurations(dependencyConfigurations, fn)
@@ -289,7 +293,8 @@ object DependenciesExtractor extends SbtStateOps with TaskOps {
           testConfigurations,
           sourceConfigurations,
           options.separateProdAndTestSources,
-          conf => projectDependencies.getOrElse(Configuration(conf.name), Seq.empty)
+          conf => projectDependencies.getOrElse(Configuration(conf.name), Seq.empty),
+          conf => PluginCompat.fileConverterCompat(state, projectRef, conf)
         )
         extractor.extract
       }).value
