@@ -1,5 +1,6 @@
 package org.jetbrains.sbt.runtime
 
+import org.jetbrains.sbt.compat.FileConverterCompat
 import sbt.*
 import sbt.internal.LoadedBuildUnit
 import sbt.jetbrains.PluginCompat.*
@@ -14,8 +15,11 @@ case class LoadedBuildUnitAdapter(delegate: LoadedBuildUnit) {
   def imports: Seq[String] =
     delegate.imports.toImmutableSeq
 
-  def pluginsClasspath: Seq[Attributed[File]] =
-    toAttributedFiles(delegate.unit.plugins.pluginData.dependencyClasspath).toImmutableSeq
+  def pluginsClasspath: Seq[Attributed[File]] = {
+    val pluginData = delegate.unit.plugins.pluginData
+    implicit val givenConverter: FileConverterCompat = FileConverterCompat.forPluginData(pluginData)
+    toAttributedFiles(pluginData.dependencyClasspath).toImmutableSeq
+  }
 }
 
 case class UpdateReportAdapter(configurationToModule: Map[String, Seq[ModuleReportAdapter]]) {
