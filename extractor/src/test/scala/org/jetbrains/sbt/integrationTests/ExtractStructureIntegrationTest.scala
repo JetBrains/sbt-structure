@@ -225,6 +225,7 @@ class ExtractStructureIntegrationTest extends AnyFreeSpecLike {
       "unmanaged-scala-instance-ok" in { testProject("unmanaged-scala-instance-ok", SbtVersion_1_13, ResolveSourcesAndSbtClassifiers) }
       "unmanaged-incompatible-scala" in { testProjectShouldFailWith("unmanaged-incompatible-scala", SbtVersion_1_13, ResolveSourcesAndSbtClassifiers, UnmanagedIncompatibleScalaVersionError) }
       "managed-incompatible-scala" in { testProjectShouldFailWith("managed-incompatible-scala", SbtVersion_1_13, ResolveSourcesAndSbtClassifiers, ManagedIncompatibleScalaVersionError) }
+      "standalone-twirl" in { testProject("standalone-twirl", SbtVersion_1_13, ResolveSourcesAndSbtClassifiersAndSeparateProdTestSources) }
     }
 
     // In sbt 2.0.0-RC7, a binary compatibility breaking change was made which removed the
@@ -263,6 +264,7 @@ class ExtractStructureIntegrationTest extends AnyFreeSpecLike {
       "unmanaged-scala-instance-ok" in { testProject("unmanaged-scala-instance-ok", SbtVersion_2_0, ResolveSourcesAndSbtClassifiers) }
       "unmanaged-incompatible-scala" in { testProjectShouldFailWith("unmanaged-incompatible-scala", SbtVersion_2_0, ResolveSourcesAndSbtClassifiers, UnmanagedIncompatibleScalaVersionError) }
       "managed-incompatible-scala" in { testProjectShouldFailWith("managed-incompatible-scala", SbtVersion_2_0, ResolveSourcesAndSbtClassifiers, ManagedIncompatibleScalaVersionError) }
+      "standalone-twirl" in { testProject("standalone-twirl", SbtVersion_2_0, options) }
     }
 
     "2.1" - {

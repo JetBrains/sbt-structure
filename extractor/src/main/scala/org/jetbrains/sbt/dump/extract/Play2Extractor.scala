@@ -10,16 +10,18 @@ object Play2Extractor extends SbtStateOps with TaskOps {
   def taskDef: Def.Initialize[Task[Option[Play2Data]]] = Def.task {
     val state = sbt.Keys.state.value
     val projectRef = sbt.Keys.thisProjectRef.value
+    val templateImports = (projectRef / Compile / Keys.templateImports).find(state)
+      .orElse((projectRef / Keys.templateImports).find(state))
 
     for {
       _ <- (projectRef / Keys.playPlugin).find(state)
         .orElse((projectRef / Keys.playPlugin_prior_to_2_4_0).find(state))
+        // sbt-twirl is also used without Play. Keep the existing data format for older IDEs.
+        .orElse(templateImports.map(_ => true))
       sourceDirectory <- (projectRef / Compile / sbt.Keys.sourceDirectory).find(state)
     } yield {
       val playVersion =
         (projectRef / Keys.playVersion).find(state)
-      val templateImports =
-        (projectRef / Keys.templateImports).getValueOrElse(state, Seq.empty)
       val routesImports =
         (projectRef / Keys.routesImports).find(state)
           .orElse((projectRef / Keys.routesImports_prior_to_2_4_0).find(state))
@@ -27,7 +29,7 @@ object Play2Extractor extends SbtStateOps with TaskOps {
       val confDirectory =
         (projectRef / Keys.confDirectory).find(state)
 
-      Play2Data(playVersion, fixTemplateImports(templateImports),
+      Play2Data(playVersion, fixTemplateImports(templateImports.getOrElse(Seq.empty)),
         routesImports, confDirectory, sourceDirectory)
     }
   }
