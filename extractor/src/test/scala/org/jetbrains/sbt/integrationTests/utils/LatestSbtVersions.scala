@@ -15,8 +15,8 @@ object LatestSbtVersions {
   val SbtVersion_1_10: Version = Version("1.10.11")
   val SbtVersion_1_11: Version = Version("1.11.7")
   val SbtVersion_1_12: Version = Version("1.12.15")
-  val SbtVersion_1_13: Version = Version("1.13.0")
+  val SbtVersion_1_13: Version = Version("1.13.1")
   val SbtVersion_2_legacy: Version = Version("2.0.0-RC6") // There was a binary breakage regarding `scalaCompilerBridgeBinaryJar` which we work around.
-  val SbtVersion_2_0: Version = Version("2.0.11")
-  val SbtVersion_2_1: Version = Version("2.1.0-RC1")
+  val SbtVersion_2_0: Version = Version("2.0.12")
+  val SbtVersion_2_1: Version = Version("2.1.0-RC2")
 }
