@@ -43,6 +43,7 @@ object DumpTaskInstaller extends (State => State) with SbtStateOps {
     StructureKeys.sourceConfigurations := UtilityTasks.sourceConfigurations.value,
 
     StructureKeys.extractPlay2 := Play2Extractor.taskDef.value,
+    StructureKeys.extractTwirl := TwirlExtractor.taskDef.value,
     StructureKeys.extractBuild := BuildExtractor.taskDef.value,
     StructureKeys.extractDependencies := DependenciesExtractor.taskDef.value,
     StructureKeys.extractProject := ProjectExtractor.taskDef.value,

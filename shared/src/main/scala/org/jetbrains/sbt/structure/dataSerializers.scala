@@ -463,9 +463,6 @@ trait DataSerializers {
     override def serialize(what: Play2Data): Elem =
       <play2>
         {what.playVersion.toSeq.map(ver => <version>{ver}</version> )}
-        <templatesImports>
-          {what.templatesImports.map(imp => <import>{imp}</import>)}
-        </templatesImports>
         <routesImports>
           {what.routesImports.map(imp => <import>{imp}</import>)}
         </routesImports>
@@ -475,11 +472,24 @@ trait DataSerializers {
 
     override def deserialize(what: Node): Either[Throwable,Play2Data] = {
       val playVersion       = (what \ "version").map(_.text).headOption
-      val templatesImports  = (what \ "templatesImports" \ "import").map(_.text)
       val routesImports     = (what \ "routesImports" \ "import").map(_.text)
       val confDirectory     = (what \ "confDirectory").map(_.text).headOption
       val sourceDirectory   = (what ! "sourceDirectory").text
-      Right(Play2Data(playVersion, templatesImports, routesImports, confDirectory.map(_.file), sourceDirectory.file))
+      Right(Play2Data(playVersion, routesImports, confDirectory.map(_.file), sourceDirectory.file))
+    }
+  }
+
+  implicit val twirlDataSerializer: XmlSerializer[TwirlData] = new XmlSerializer[TwirlData] {
+    override def serialize(what: TwirlData): Elem =
+      <twirl>
+        <templateImports>
+          {what.templateImports.map(imp => <import>{imp}</import>)}
+        </templateImports>
+      </twirl>
+
+    override def deserialize(what: Node): Either[Throwable, TwirlData] = {
+      val templateImports = (what \ "templateImports" \ "import").map(_.text)
+      Right(TwirlData(templateImports))
     }
   }
 
@@ -503,6 +513,7 @@ trait DataSerializers {
         {what.dependencies.serialize}
         {what.resolvers.map(_.serialize).toSeq}
         {what.play2.map(_.serialize).toSeq}
+        {what.twirl.map(_.serialize).toSeq}
         {what.settings.map(_.serialize)}
         {what.tasks.map(_.serialize)}
         {what.commands.map(_.serialize)}
@@ -531,6 +542,7 @@ trait DataSerializers {
       val compileOrder = (what \ "compileOrder").text
       val resolvers = (what \ "resolver").deserialize[ResolverData].toSet
       val play2 = (what \ "play2").deserialize[Play2Data].headOption
+      val twirl = (what \ "twirl").deserialize[TwirlData].headOption
 
       val settings = (what \ "setting").deserialize[SettingData]
       val tasks = (what \ "task").deserialize[TaskData]
@@ -545,7 +557,8 @@ trait DataSerializers {
         val languages = LanguageData(java, scala, kotlin, compileOrder)
         ProjectData(id, buildURI, name, organization, version, base, packagePrefix, basePackages,
           target, configurations, languages,
-          dependencies, resolvers, play2, settings, tasks, commands, mainSourceDirectories, testSourceDirectories, generatedManagedSources
+          dependencies, resolvers, play2, twirl,
+          settings, tasks, commands, mainSourceDirectories, testSourceDirectories, generatedManagedSources
         )
       }
 
