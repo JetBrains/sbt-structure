@@ -7994,9 +7994,11 @@
   <repository>
     <module organization="org.scala-lang" name="scala3-library_3" revision="3.9.0" artifactType="jar" classifier="">
       <jar>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-lang/scala3-library_3/3.9.0/scala3-library_3-3.9.0.jar</jar>
+      <src>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-lang/scala3-library_3/3.9.0/scala3-library_3-3.9.0-sources.jar</src>
     </module>
     <module organization="org.scala-lang" name="scala-library" revision="3.9.0" artifactType="jar" classifier="">
       <jar>$SBT_BOOT/scala-3.9.0/lib/scala-library.jar</jar>
+      <src>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-lang/scala-library/3.9.0/scala-library-3.9.0-sources.jar</src>
     </module>
   </repository>
   <localCachePath>$IVY2</localCachePath>
