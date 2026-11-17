@@ -10,7 +10,7 @@ trait SeqOpsCompat:
   implicit def seqToImmutableSeq[T](seq: scala.collection.Seq[T]): scala.collection.immutable.Seq[T] = {
     val builder = scala.collection.immutable.Seq.newBuilder[T]
     builder ++= seq
-    builder.result
+    builder.result()
   }
 
   extension [T](value: scala.collection.Seq[T])

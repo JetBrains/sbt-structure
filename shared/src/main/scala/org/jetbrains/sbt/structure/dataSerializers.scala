@@ -51,7 +51,7 @@ private object Helpers {
   implicit def seqToImmutableSeq[T](seq: scala.collection.Seq[T]): scala.collection.immutable.Seq[T] = {
     val builder = scala.collection.immutable.Seq.newBuilder[T]
     builder ++= seq
-    builder.result
+    builder.result()
   }
 
   // sbt provides bad uris with spaces for local resolvers

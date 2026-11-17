@@ -21,7 +21,7 @@ object GenerateAllManagedSourcesPlugin extends AutoPlugin {
   import autoImport.ideaGenerateAllManagedSources
 
   //noinspection scala2InSource3
-  override lazy val globalSettings: Seq[Def.Setting[_]] = Seq(
+  override lazy val globalSettings: Seq[Def.Setting[?]] = Seq(
     ideaGenerateAllManagedSources := ManagedSourcesTasks.generateAll.value
   )
 }

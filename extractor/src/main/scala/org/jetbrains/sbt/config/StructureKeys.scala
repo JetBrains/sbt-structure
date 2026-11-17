@@ -27,7 +27,7 @@ object StructureKeys {
   @transient val taskData: TaskKey[Seq[TaskData]] = TaskKey("taskData", description = "", rank = Invisible)
   @transient val commandData: TaskKey[Seq[CommandData]] = TaskKey("commandData", description = "", rank = Invisible)
   @transient val localCachePath: TaskKey[Option[File]] = TaskKey("localCachePath", description = "", rank = Invisible)
-  @transient val allKeys: TaskKey[Seq[AttributeKey[_]]] = TaskKey("allKeys", description = "", rank = Invisible)
+  @transient val allKeys: TaskKey[Seq[AttributeKey[?]]] = TaskKey("allKeys", description = "", rank = Invisible)
   val allConfigurationsWithSource: SettingKey[Seq[Configuration]] = SettingKey("allConfigurationsWithSource", description = "", rank = Invisible)
 
   val sbtStructureOpts: SettingKey[Options] = SettingKey("ssOptions", "options for dumpStructure task", rank = DSetting)

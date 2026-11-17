@@ -60,7 +60,7 @@ class RepositoryExtractor(
   private lazy val allClasspathTypes: Set[String] = projects.map(classpathTypes).reduce((a, b) => a.union(b))
 
   private def fixModulesIdsToSupportClassifiers(modules: Seq[ModuleReportAdapter]): Seq[ModuleReportAdapter] =
-    modules.map(r => r.copy(moduleId = r.moduleId.artifacts(r.artifacts.map(_._1): _*)))
+    modules.map(r => r.copy(moduleId = r.moduleId.artifacts(r.artifacts.map(_._1)*)))
 
   private def groupByModuleIdentifiers(modules: Seq[ModuleReportAdapter]): mutable.LinkedHashMap[ModuleIdentifier, Seq[ModuleReportAdapter]] = {
     val modulesWithIds = modules.flatMap { module =>

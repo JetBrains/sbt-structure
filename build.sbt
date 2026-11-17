@@ -49,13 +49,16 @@ lazy val sbtStructure = project.in(file("."))
 // when calculating pluginCrossBuild / sbtVersion
 val scala212_Earlier: String = "2.12.20" //used for sbt < 1.3
 val scala212: String = "2.12.21" //used for sbt >= 1.3
-val scala3: String = "3.7.4" //used for sbt 2
+val scala3: String = "3.7.4" // public core library baseline
+val scala3Plugin: String = "3.9.0" // sbt 2 plugin compiler
 val Scala_2_10_Legacy = "2.10.7"
 
 val SbtVersion_1_0 = "1.0.0"
 val SbtVersion_1_3 = "1.3.0"
-val SbtVersion_2 = "2.0.0-RC7" //TODO: update to the latest?
+val SbtVersion_2 = "2.1.0"
 val SbtVersion_0_13_Legacy = "0.13.17"
+
+ThisBuild / scalaVersion := scala212
 
 val CommonSharedCoreDataSourcesSettings: Seq[Def.Setting[Seq[File]]] = Seq(
   Compile / unmanagedSourceDirectories +=
@@ -67,12 +70,15 @@ lazy val javaReleaseSettings: Seq[Setting[?]] = Seq(
     scalaVersion.value match {
       // Scala 2.10 has no support for the -release flag
       case `Scala_2_10_Legacy` => Seq.empty
-      // TODO: Use --release 17 for Scala 3 after we start compiling the plugin against Scala 3.8+ and sbt 2.0.0-RC9+.
+      case `scala3Plugin` => Seq("--release", "17")
       case _ => Seq("--release", "8")
     }
   },
-  // TODO: Use --release 17 fort Scala 3 after we start compiling the plugin against Scala 3.8+ and sbt 2.0.0-RC9+.
-  javacOptions ++= Seq("--release", "8")
+  javacOptions ++= Seq("--release", if (scalaVersion.value == scala3Plugin) "17" else "8"),
+  scalacOptions ++= {
+    if (scalaBinaryVersion.value == "2.12" || scalaBinaryVersion.value == "2.13") Seq("-Xsource:3")
+    else Nil
+  }
 )
 
 lazy val core = project.in(file("core"))
@@ -119,7 +125,7 @@ lazy val extractor = project.in(file("extractor"))
     crossScalaVersions := Seq(
       scala212_Earlier,
       scala212,
-      scala3,
+      scala3Plugin,
     ),
     crossSbtVersions := Seq(
       SbtVersion_1_0,
@@ -132,7 +138,7 @@ lazy val extractor = project.in(file("extractor"))
       scalaVer match {
         case `scala212_Earlier` => SbtVersion_1_0
         case `scala212` => SbtVersion_1_3
-        case `scala3` => SbtVersion_2
+        case `scala3Plugin` => SbtVersion_2
         case _ =>
           throw new AssertionError(s"Unexpected scala version $scalaVer")
       }

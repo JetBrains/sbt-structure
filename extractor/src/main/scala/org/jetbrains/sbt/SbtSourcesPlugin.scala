@@ -26,11 +26,11 @@ object SbtSourcesPlugin extends AutoPlugin {
   private val targetFileParser = DefaultParsers.fileParser(file("/"))
   @transient private val resolveSbtSources = taskKey[SbtSourcesReport]("Resolve sources for SBT and build-definition plugins")
 
-  override lazy val projectSettings: Seq[Setting[_]] = Seq(
+  override lazy val projectSettings: Seq[Setting[?]] = Seq(
     Keys.updateSbtClassifiers / Keys.transitiveClassifiers := Seq(Artifact.SourceClassifier).toSbtSeqType
   )
 
-  override lazy val globalSettings: Seq[Setting[_]] = Seq(
+  override lazy val globalSettings: Seq[Setting[?]] = Seq(
     resolveSbtSources := SbtSourcesTask.taskDef.value,
     dumpSbtSourcesTo := {
       val outputFile = targetFileParser.parsed

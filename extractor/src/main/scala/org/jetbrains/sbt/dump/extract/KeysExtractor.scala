@@ -18,7 +18,7 @@ object KeysExtractor {
   /** Maximum length of toString'ed setting value exported. */
   val maxValueStringLength = 103
 
-  val allKeys: Def.Initialize[Task[Seq[AttributeKey[_]]]] = Def.task (
+  val allKeys: Def.Initialize[Task[Seq[AttributeKey[?]]]] = Def.task (
     try {
       BuiltinCommands
         .allTaskAndSettingKeys(Keys.state.value)
@@ -71,7 +71,7 @@ object KeysExtractor {
   }
 
 
-  private def settingStringValue(extracted: Extracted, key: AttributeKey[_]) = for {
+  private def settingStringValue(extracted: Extracted, key: AttributeKey[?]) = for {
     value <- extracted.getOpt(SettingKey(key))
     // only get a display string if it has a chance of being meaningful to the user, ie is redefined
     if value != null && (value.getClass.getMethod("toString").getDeclaringClass ne classOf[Any])

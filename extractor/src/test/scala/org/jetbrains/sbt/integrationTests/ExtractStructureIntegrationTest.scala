@@ -228,45 +228,7 @@ class ExtractStructureIntegrationTest extends AnyFreeSpecLike {
       "standalone-twirl" in { testProject("standalone-twirl", SbtVersion_1_13, ResolveSourcesAndSbtClassifiersAndSeparateProdTestSources) }
     }
 
-    // In sbt 2.0.0-RC7, a binary compatibility breaking change was made which removed the
-    // scalaCompilerBridgeBinaryJar key which we rely on.
-    // We have put a compatibility task in place which makes sure that project imports can still be done
-    // using sbt pre 2.0.0-RC7.
-    // https://github.com/sbt/sbt/commit/68b2b7d0251d9bf352739f904d64590e9e9e8396
-    "2.0.0-RC6" - {
-      // TODO: uncomment sbtClassifiers when https://github.com/sbt/sbt/pull/8024 is uploaded
-      // (and update sbt version)
-      val options = SbtOptionsBuilder().sources /*.sbtClassifiers*/.separateProdTestSources.result
-      "simple" in { testProject("simple", SbtVersion_2_legacy, options) }
-      "buildinfo" in { testProject("buildinfo", SbtVersion_2_legacy, options) }
-      "custom-source-generator" in { testProject("custom-source-generator", SbtVersion_2_legacy, options) }
-      "source-generator-failure" in { testProject("source-generator-failure", SbtVersion_2_legacy, options, errorsExpected = true) }
-    }
-
-    "2.0" - {
-      // TODO: uncomment sbtClassifiers when https://github.com/sbt/sbt/pull/8024 is uploaded
-      // (and update sbt version)
-      val options = SbtOptionsBuilder().sources /*.sbtClassifiers*/.separateProdTestSources.result
-      "simple" in { testProject("simple", SbtVersion_2_0, options) }
-      "buildinfo" in { testProject("buildinfo", SbtVersion_2_0, options) }
-      "compiler-plugin" in { testProject("compiler-plugin", SbtVersion_2_0, options) }
-      "custom-source-generator" in { testProject("custom-source-generator", SbtVersion_2_0, options) }
-      "kotlinc-options" in { testProject("kotlinc-options", SbtVersion_2_0, options) }
-      "source-generator-failure" in { testProject("source-generator-failure", SbtVersion_2_0, options, errorsExpected = true) }
-      "bsp-disabled-project" in { testProject("bsp-disabled-project", SbtVersion_2_0, options) }
-      "bsp-disabled-test-config" in { testProject("bsp-disabled-test-config", SbtVersion_2_0, options) }
-      "scalafix-config-disabled" in { testProject("scalafix-config-disabled", SbtVersion_2_0, options) }
-      "missing-scala-tool-config" in { testProject("missing-scala-tool-config", SbtVersion_2_0, ResolveSourcesAndSbtClassifiers) }
-      "maanged-scala-auto-scala-library-disabled" in { testProject("maanged-scala-auto-scala-library-disabled", SbtVersion_2_0, ResolveSourcesAndSbtClassifiers) }
-      "auto-scala-library-disabled" in { testProject("auto-scala-library-disabled", SbtVersion_2_0, ResolveSourcesAndSbtClassifiers) }
-      "scala-instance-error" in { testProjectShouldFailWith("scala-instance-error", SbtVersion_2_0, ResolveSourcesAndSbtClassifiers, ScalaInstanceCustomError) }
-      "missing-scala-library-jar" in { testProject("missing-scala-library-jar", SbtVersion_2_0, ResolveSourcesAndSbtClassifiers) }
-      "unmanaged-scala-instance-ok" in { testProject("unmanaged-scala-instance-ok", SbtVersion_2_0, ResolveSourcesAndSbtClassifiers) }
-      "unmanaged-incompatible-scala" in { testProjectShouldFailWith("unmanaged-incompatible-scala", SbtVersion_2_0, ResolveSourcesAndSbtClassifiers, UnmanagedIncompatibleScalaVersionError) }
-      "managed-incompatible-scala" in { testProjectShouldFailWith("managed-incompatible-scala", SbtVersion_2_0, ResolveSourcesAndSbtClassifiers, ManagedIncompatibleScalaVersionError) }
-      "standalone-twirl" in { testProject("standalone-twirl", SbtVersion_2_0, options) }
-    }
-
+    // Scala 3.9-built plugins require sbt 2.1 or newer.
     "2.1" - {
       // TODO: uncomment sbtClassifiers when https://github.com/sbt/sbt/pull/8024 is uploaded
       // (and update sbt version)
@@ -288,6 +250,7 @@ class ExtractStructureIntegrationTest extends AnyFreeSpecLike {
       "unmanaged-scala-instance-ok" in { testProject("unmanaged-scala-instance-ok", SbtVersion_2_1, ResolveSourcesAndSbtClassifiers) }
       "unmanaged-incompatible-scala" in { testProjectShouldFailWith("unmanaged-incompatible-scala", SbtVersion_2_1, ResolveSourcesAndSbtClassifiers, UnmanagedIncompatibleScalaVersionError) }
       "managed-incompatible-scala" in { testProjectShouldFailWith("managed-incompatible-scala", SbtVersion_2_1, ResolveSourcesAndSbtClassifiers, ManagedIncompatibleScalaVersionError) }
+      "standalone-twirl" in { testProject("standalone-twirl", SbtVersion_2_1, options) }
     }
   }
 
@@ -302,11 +265,6 @@ class ExtractStructureIntegrationTest extends AnyFreeSpecLike {
 
     "1.12 latest buildinfo" in {
       testProject("buildinfo", SbtVersion_1_12, ResolveSourcesAndSbtClassifiersAndSeparateProdTestSources, useDeprecatedDumpStructure = true)
-    }
-
-    "2.0 latest simple" in {
-      val options = SbtOptionsBuilder().sources /*.sbtClassifiers*/.separateProdTestSources.result
-      testProject("simple", SbtVersion_2_0, options, useDeprecatedDumpStructure = true)
     }
 
     "2.1 latest simple" in {
@@ -339,11 +297,7 @@ class ExtractStructureIntegrationTest extends AnyFreeSpecLike {
     val runOptions = CurrentEnvironment.buildSbtRunCommonOptions(sbtVersionFull, errorsExpected)
     import runOptions.sbtVersionShort
 
-    val projectDir =
-      if (sbtVersionFull == SbtVersion_2_legacy)
-        TestDataRoot / SbtVersion_2_legacy.presentation / projectDirName
-      else
-        TestDataRoot / sbtVersionShort.presentation / projectDirName
+    val projectDir = TestDataRoot / sbtVersionShort.presentation / projectDirName
 
     val importCommand = if (useDeprecatedDumpStructure) "dumpStructure" else "dumpStructureTo"
     println(s"Running test: $projectDirName, sbtVersion: $sbtVersionFull, importCommand: $importCommand, path: $projectDir")

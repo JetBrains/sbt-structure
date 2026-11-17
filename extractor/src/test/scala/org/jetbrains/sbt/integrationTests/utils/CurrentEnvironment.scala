@@ -30,7 +30,12 @@ object CurrentEnvironment {
     else
       throw new UnsupportedOperationException("Unknown operating system.")
 
-  val JavaOldHome: File = findJvmInstallation("1.8")
+  private def isJavaHome(home: File): Boolean =
+    new File(home, if (OsName.contains("win")) "bin/java.exe" else "bin/java").isFile
+
+  val JavaOldHome: File = sys.env.get("JAVA_HOME_8_X64").map(new File(_)).filter(isJavaHome)
+    .orElse(sys.env.get("JAVA_HOME_11_X64").map(new File(_)).filter(isJavaHome))
+    .orElse(findJvmInstallation("1.8"))
     .orElse(findJvmInstallation("8"))
     .orElse(findJvmInstallation("11"))
     .getOrElse {
@@ -53,15 +58,15 @@ object CurrentEnvironment {
         val dirs = Option(folder.listFiles()).getOrElse(Array.empty).filter(_.isDirectory)
         dirs.filter(_.getName.contains(javaVersion))
       }
-      .headOption
       .map { root =>
         if (OsName.contains("mac"))
           root / "/Contents/Home"
         else
           root
       }
+      .find(isJavaHome)
 
-    jvmFolder.filter(_.exists())
+    jvmFolder
   }
 
   def buildSbtRunCommonOptions(sbtVersionFull: Version, errorsExpected: Boolean = false): RunCommonOptions = {

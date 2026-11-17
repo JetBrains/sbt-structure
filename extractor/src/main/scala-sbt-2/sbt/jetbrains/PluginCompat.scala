@@ -13,7 +13,7 @@ object PluginCompat extends SeqOpsCompat with ClasspathOpsCompat with CoursierLo
     sbt.Project.extract(state)
   }
 
-  def isTaskOrInputTask(attributeKey: AttributeKey[_]): Boolean =
+  def isTaskOrInputTask(attributeKey: AttributeKey[?]): Boolean =
     attributeKey.tag.isTaskOrInputTask
 
   /**
@@ -78,6 +78,7 @@ object PluginCompat extends SeqOpsCompat with ClasspathOpsCompat with CoursierLo
       val hasSbtBridge = ScalaArtifacts.isScala3(sv) || ZincLmUtil.hasScala2SbtBridge(sv)
       if hasSbtBridge && managed then
         val jar = ZincLmUtil.fetchDefaultBridgeModule(
+          scalaOrganization.value,
           sv,
           dependencyResolution.value,
           updateConfiguration.value,

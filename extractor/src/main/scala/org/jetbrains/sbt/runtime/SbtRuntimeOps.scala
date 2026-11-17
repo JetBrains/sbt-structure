@@ -10,7 +10,7 @@ import scala.collection.Seq
 
 trait SbtStateOps {
 
-  def applySettings(state: State, globalSettings: Seq[Setting[_]], projectSettings: Seq[Setting[_]]): State = {
+  def applySettings(state: State, globalSettings: Seq[Setting[?]], projectSettings: Seq[Setting[?]]): State = {
     val extracted = Project.extract(state)
     import extracted.{structure as extractedStructure, *}
     val transformedGlobalSettings = Project.transform(_ => GlobalScope, globalSettings.toSbtSeqType)
@@ -21,7 +21,7 @@ trait SbtStateOps {
   }
 
   // copied from sbt.internal.Load
-  private def transformSettings(thisScope: Scope, uri: URI, rootProject: URI => String, settings: Seq[Setting[_]]): Seq[Setting[_]] =
+  private def transformSettings(thisScope: Scope, uri: URI, rootProject: URI => String, settings: Seq[Setting[?]]): Seq[Setting[?]] =
     Project.transform(Scope.resolveScope(thisScope, uri, rootProject), settings.toSbtSeqType)
 
   // copied from sbt.internal.SessionSettings
