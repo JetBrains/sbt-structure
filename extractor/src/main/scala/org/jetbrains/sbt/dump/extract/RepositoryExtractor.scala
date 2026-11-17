@@ -34,16 +34,22 @@ class RepositoryExtractor(
       def onlySourcesAndDocs(artifacts: Seq[(Artifact, File)]): Seq[(Artifact, File)] =
         artifacts.collect { case (a, f) if a.`type` == Artifact.DocType || a.`type` == Artifact.SourceType => (a, f) }
 
+      // Since sbt 2.1, module IDs in the `updateClassifiers` report list the requested classifier artifacts
+      // (e.g. sources and javadoc) as explicit artifacts, so they no longer equal the module IDs in the `update` report.
+      // Before sbt 2.1, explicit artifacts were empty in both reports.
+      def withoutExplicitArtifacts(moduleId: ModuleID): ModuleID =
+        moduleId.withExplicitArtifacts(Vector.empty)
+
       val docModules = getModulesForProject(projectRef, updateClassifiersReportsFn)
 
       val docModulesByModuleId = docModules
-        .groupBy(_.moduleId)
+        .groupBy(r => withoutExplicitArtifacts(r.moduleId))
         .map { case (moduleId, reports) =>
           moduleId -> reports.flatMap(r => onlySourcesAndDocs(r.artifacts))
         }
 
       modulesWithoutDocs.map { report =>
-        val matchingDocs = docModulesByModuleId.getOrElse(report.moduleId, Seq.empty)
+        val matchingDocs = docModulesByModuleId.getOrElse(withoutExplicitArtifacts(report.moduleId), Seq.empty)
         ModuleReportAdapter(report.moduleId, report.artifacts ++ matchingDocs)
       }
     }

@@ -1755,6 +1755,7 @@
   <repository>
     <module organization="org.scala-lang" name="scala-library" revision="2.13.16" artifactType="jar" classifier="">
       <jar>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-lang/scala-library/2.13.16/scala-library-2.13.16.jar</jar>
+      <src>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-lang/scala-library/2.13.16/scala-library-2.13.16-sources.jar</src>
     </module>
   </repository>
   <localCachePath>$IVY2</localCachePath>

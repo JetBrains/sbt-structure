@@ -1693,24 +1693,31 @@
   <repository>
     <module organization="org.scala-lang" name="scala3-library_3" revision="3.6.2" artifactType="jar" classifier="">
       <jar>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-lang/scala3-library_3/3.6.2/scala3-library_3-3.6.2.jar</jar>
+      <src>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-lang/scala3-library_3/3.6.2/scala3-library_3-3.6.2-sources.jar</src>
     </module>
     <module organization="org.scalameta" name="munit_3" revision="0.7.29" artifactType="jar" classifier="">
       <jar>$COURSIER/cache/https/repo1.maven.org/maven2/org/scalameta/munit_3/0.7.29/munit_3-0.7.29.jar</jar>
+      <src>$COURSIER/cache/https/repo1.maven.org/maven2/org/scalameta/munit_3/0.7.29/munit_3-0.7.29-sources.jar</src>
     </module>
     <module organization="org.scala-lang" name="scala-library" revision="2.13.15" artifactType="jar" classifier="">
       <jar>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-lang/scala-library/2.13.15/scala-library-2.13.15.jar</jar>
+      <src>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-lang/scala-library/2.13.15/scala-library-2.13.15-sources.jar</src>
     </module>
     <module organization="org.scalameta" name="junit-interface" revision="0.7.29" artifactType="jar" classifier="">
       <jar>$COURSIER/cache/https/repo1.maven.org/maven2/org/scalameta/junit-interface/0.7.29/junit-interface-0.7.29.jar</jar>
+      <src>$COURSIER/cache/https/repo1.maven.org/maven2/org/scalameta/junit-interface/0.7.29/junit-interface-0.7.29-sources.jar</src>
     </module>
     <module organization="junit" name="junit" revision="4.13.2" artifactType="jar" classifier="">
       <jar>$COURSIER/cache/https/repo1.maven.org/maven2/junit/junit/4.13.2/junit-4.13.2.jar</jar>
+      <src>$COURSIER/cache/https/repo1.maven.org/maven2/junit/junit/4.13.2/junit-4.13.2-sources.jar</src>
     </module>
     <module organization="org.scala-sbt" name="test-interface" revision="1.0" artifactType="jar" classifier="">
       <jar>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/test-interface/1.0/test-interface-1.0.jar</jar>
+      <src>$COURSIER/cache/https/repo1.maven.org/maven2/org/scala-sbt/test-interface/1.0/test-interface-1.0-sources.jar</src>
     </module>
     <module organization="org.hamcrest" name="hamcrest-core" revision="1.3" artifactType="jar" classifier="">
       <jar>$COURSIER/cache/https/repo1.maven.org/maven2/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar</jar>
+      <src>$COURSIER/cache/https/repo1.maven.org/maven2/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3-sources.jar</src>
     </module>
   </repository>
   <localCachePath>$IVY2</localCachePath>
