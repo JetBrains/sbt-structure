@@ -10,14 +10,10 @@ object Play2Extractor extends SbtStateOps with TaskOps {
   def taskDef: Def.Initialize[Task[Option[Play2Data]]] = Def.task {
     val state = sbt.Keys.state.value
     val projectRef = sbt.Keys.thisProjectRef.value
-    val templateImports = (projectRef / Compile / Keys.templateImports).find(state)
-      .orElse((projectRef / Keys.templateImports).find(state))
 
     for {
       _ <- (projectRef / Keys.playPlugin).find(state)
         .orElse((projectRef / Keys.playPlugin_prior_to_2_4_0).find(state))
-        // sbt-twirl is also used without Play. Keep the existing data format for older IDEs.
-        .orElse(templateImports.map(_ => true))
       sourceDirectory <- (projectRef / Compile / sbt.Keys.sourceDirectory).find(state)
     } yield {
       val playVersion =
@@ -29,21 +25,14 @@ object Play2Extractor extends SbtStateOps with TaskOps {
       val confDirectory =
         (projectRef / Keys.confDirectory).find(state)
 
-      Play2Data(playVersion, fixTemplateImports(templateImports.getOrElse(Seq.empty)),
-        routesImports, confDirectory, sourceDirectory)
+      Play2Data(playVersion, routesImports, confDirectory, sourceDirectory)
     }
-  }
-
-  private def fixTemplateImports(imports: Seq[String]): Seq[String] = imports.map {
-    case "views.%format%._" => "views.xml._"
-    case value => value
   }
 
   private object Keys {
     val playPlugin_prior_to_2_4_0: SettingKey[Boolean] = SettingKey[Boolean]("play-plugin")
     val playPlugin: SettingKey[Boolean] = SettingKey[Boolean]("playPlugin")
     val playVersion: SettingKey[String] = SettingKey[String]("play-version")
-    val templateImports: SettingKey[Seq[String]] = SettingKey[Seq[String]]("twirl-template-imports")
     val routesImports_prior_to_2_4_0: SettingKey[Seq[String]] = SettingKey[Seq[String]]("play-routes-imports")
     val routesImports: SettingKey[Seq[String]] = SettingKey[Seq[String]]("playRoutesImports")
     val confDirectory: SettingKey[File] = SettingKey[File]("play-conf")

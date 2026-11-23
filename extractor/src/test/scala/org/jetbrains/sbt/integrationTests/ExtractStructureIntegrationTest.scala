@@ -53,6 +53,7 @@ class ExtractStructureIntegrationTest extends AnyFreeSpecLike {
       "custom-source-generator" in { testProject_013("custom-source-generator", options = ResolveSourcesAndSbtClassifiers) }
       "custom-test-config" in { testProject_013("custom-test-config", options = ResolveSourcesAndSbtClassifiers) }
       "source-generator-failure" in { testProject_013("source-generator-failure", options = ResolveSourcesAndSbtClassifiers) }
+      "standalone-twirl" in { testProject_013("standalone-twirl", options = ResolveSourcesAndSbtClassifiers) }
 
       "dependency_resolve_none" in { testProject_013("dependency_resolve_none", options = ResolveNone) }
       "dependency_resolve_none_with_explicit_classifiers" in { testProject_013("dependency_resolve_none_with_explicit_classifiers", options = ResolveNone) }

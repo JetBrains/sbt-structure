@@ -972,11 +972,6 @@
       <rank>200</rank>
     </task>
     <task>
-      <label>updateSbtClassifiers</label>
-      <description>Resolves and optionally retrieves classifiers, such as javadocs and sources, for sbt, transitively.</description>
-      <rank>29</rank>
-    </task>
-    <task>
       <label>compile</label>
       <description>Compiles sources.</description>
       <rank>4</rank>
@@ -985,6 +980,11 @@
       <label>publishM2</label>
       <description>Publishes artifacts to the local Maven repository.</description>
       <rank>5</rank>
+    </task>
+    <task>
+      <label>updateSbtClassifiers</label>
+      <description>Resolves and optionally retrieves classifiers, such as javadocs and sources, for sbt, transitively.</description>
+      <rank>29</rank>
     </task>
     <task>
       <label>unmanagedResources</label>
@@ -2555,11 +2555,6 @@
       <rank>200</rank>
     </task>
     <task>
-      <label>updateSbtClassifiers</label>
-      <description>Resolves and optionally retrieves classifiers, such as javadocs and sources, for sbt, transitively.</description>
-      <rank>29</rank>
-    </task>
-    <task>
       <label>compile</label>
       <description>Compiles sources.</description>
       <rank>4</rank>
@@ -2568,6 +2563,11 @@
       <label>publishM2</label>
       <description>Publishes artifacts to the local Maven repository.</description>
       <rank>5</rank>
+    </task>
+    <task>
+      <label>updateSbtClassifiers</label>
+      <description>Resolves and optionally retrieves classifiers, such as javadocs and sources, for sbt, transitively.</description>
+      <rank>29</rank>
     </task>
     <task>
       <label>unmanagedResources</label>

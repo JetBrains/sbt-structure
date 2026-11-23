@@ -185,8 +185,8 @@
       </jars>
     </dependencies>
     <resolver name="public" root="https://repo1.maven.org/maven2/"/>
-    <play2>
-      <templatesImports>
+    <twirl>
+      <templateImports>
         <import>_root_.play.twirl.api.TwirlFeatureImports._</import>
         <import>_root_.play.twirl.api.TwirlHelperImports._</import>
         <import>_root_.play.twirl.api.Html</import>
@@ -195,10 +195,8 @@
         <import>_root_.play.twirl.api.Xml</import>
         <import>support.Shared._</import>
         <import>support.CompileOnly._</import>
-      </templatesImports>
-      <routesImports></routesImports>
-      <sourceDirectory>$BASE/src/main</sourceDirectory>
-    </play2>
+      </templateImports>
+    </twirl>
     <setting>
       <label>artifacts</label>
       <description>The artifact definitions for the current module. Must be consistent with packagedArtifacts.</description>
@@ -1030,11 +1028,6 @@
       <rank>200</rank>
     </task>
     <task>
-      <label>updateSbtClassifiers</label>
-      <description>Resolves and optionally retrieves classifiers, such as javadocs and sources, for sbt, transitively.</description>
-      <rank>29</rank>
-    </task>
-    <task>
       <label>compile</label>
       <description>Compiles sources.</description>
       <rank>4</rank>
@@ -1043,6 +1036,11 @@
       <label>publishM2</label>
       <description>Publishes artifacts to the local Maven repository.</description>
       <rank>5</rank>
+    </task>
+    <task>
+      <label>updateSbtClassifiers</label>
+      <description>Resolves and optionally retrieves classifiers, such as javadocs and sources, for sbt, transitively.</description>
+      <rank>29</rank>
     </task>
     <task>
       <label>unmanagedResources</label>
@@ -1777,18 +1775,16 @@
       </jars>
     </dependencies>
     <resolver name="public" root="https://repo1.maven.org/maven2/"/>
-    <play2>
-      <templatesImports>
+    <twirl>
+      <templateImports>
         <import>_root_.play.twirl.api.TwirlFeatureImports._</import>
         <import>_root_.play.twirl.api.TwirlHelperImports._</import>
         <import>_root_.play.twirl.api.Html</import>
         <import>_root_.play.twirl.api.JavaScript</import>
         <import>_root_.play.twirl.api.Txt</import>
         <import>_root_.play.twirl.api.Xml</import>
-      </templatesImports>
-      <routesImports></routesImports>
-      <sourceDirectory>$BASE/defaultsOnly/src/main</sourceDirectory>
-    </play2>
+      </templateImports>
+    </twirl>
     <setting>
       <label>artifacts</label>
       <description>The artifact definitions for the current module. Must be consistent with packagedArtifacts.</description>
@@ -2620,11 +2616,6 @@
       <rank>200</rank>
     </task>
     <task>
-      <label>updateSbtClassifiers</label>
-      <description>Resolves and optionally retrieves classifiers, such as javadocs and sources, for sbt, transitively.</description>
-      <rank>29</rank>
-    </task>
-    <task>
       <label>compile</label>
       <description>Compiles sources.</description>
       <rank>4</rank>
@@ -2633,6 +2624,11 @@
       <label>publishM2</label>
       <description>Publishes artifacts to the local Maven repository.</description>
       <rank>5</rank>
+    </task>
+    <task>
+      <label>updateSbtClassifiers</label>
+      <description>Resolves and optionally retrieves classifiers, such as javadocs and sources, for sbt, transitively.</description>
+      <rank>29</rank>
     </task>
     <task>
       <label>unmanagedResources</label>
@@ -3367,11 +3363,9 @@
       </jars>
     </dependencies>
     <resolver name="public" root="https://repo1.maven.org/maven2/"/>
-    <play2>
-      <templatesImports></templatesImports>
-      <routesImports></routesImports>
-      <sourceDirectory>$BASE/emptyImports/src/main</sourceDirectory>
-    </play2>
+    <twirl>
+      <templateImports></templateImports>
+    </twirl>
     <setting>
       <label>artifacts</label>
       <description>The artifact definitions for the current module. Must be consistent with packagedArtifacts.</description>
@@ -4203,11 +4197,6 @@
       <rank>200</rank>
     </task>
     <task>
-      <label>updateSbtClassifiers</label>
-      <description>Resolves and optionally retrieves classifiers, such as javadocs and sources, for sbt, transitively.</description>
-      <rank>29</rank>
-    </task>
-    <task>
       <label>compile</label>
       <description>Compiles sources.</description>
       <rank>4</rank>
@@ -4216,6 +4205,11 @@
       <label>publishM2</label>
       <description>Publishes artifacts to the local Maven repository.</description>
       <rank>5</rank>
+    </task>
+    <task>
+      <label>updateSbtClassifiers</label>
+      <description>Resolves and optionally retrieves classifiers, such as javadocs and sources, for sbt, transitively.</description>
+      <rank>29</rank>
     </task>
     <task>
       <label>unmanagedResources</label>
@@ -5775,11 +5769,6 @@
       <rank>200</rank>
     </task>
     <task>
-      <label>updateSbtClassifiers</label>
-      <description>Resolves and optionally retrieves classifiers, such as javadocs and sources, for sbt, transitively.</description>
-      <rank>29</rank>
-    </task>
-    <task>
       <label>compile</label>
       <description>Compiles sources.</description>
       <rank>4</rank>
@@ -5788,6 +5777,11 @@
       <label>publishM2</label>
       <description>Publishes artifacts to the local Maven repository.</description>
       <rank>5</rank>
+    </task>
+    <task>
+      <label>updateSbtClassifiers</label>
+      <description>Resolves and optionally retrieves classifiers, such as javadocs and sources, for sbt, transitively.</description>
+      <rank>29</rank>
     </task>
     <task>
       <label>unmanagedResources</label>

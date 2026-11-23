@@ -15,6 +15,7 @@ object StructureKeys {
   @transient val acceptedProjects: TaskKey[Seq[ProjectRef]] = TaskKey("ssAcceptedProjects", description = "", rank = Invisible)
 
   @transient val extractPlay2: TaskKey[Option[Play2Data]] = TaskKey("ssExtractPlay2", description = "", rank = Invisible)
+  @transient val extractTwirl: TaskKey[Option[TwirlData]] = TaskKey("ssExtractTwirl", description = "", rank = Invisible)
   @transient val extractBuild: TaskKey[BuildData] = TaskKey("ssExtractBuild", description = "", rank = Invisible)
   @transient val extractBuilds: TaskKey[Seq[BuildData]] = TaskKey("ssExtractBuilds", description = "", rank = Invisible)
   @transient val extractDependencies: TaskKey[DependencyData] = TaskKey("ssExtractDependencies", description = "", rank = Invisible)
